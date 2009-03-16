@@ -70,7 +70,11 @@ abstract class Agent{
 		$this->_mName = $name;
 	}
 	
-	
+	/**
+	 * Saves agent's data to the database. Nit and Name must be set.
+	 * 
+	 * @return void
+	 */
 	public function save(){
 		if(empty($this->_mNit))
 			throw new Exception('Nit is empty.');
