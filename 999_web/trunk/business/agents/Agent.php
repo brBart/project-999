@@ -30,6 +30,16 @@ abstract class Agent{
 	private $_mStatus;
 	
 	/**
+	 * Agent constructor function. Receives the status for the created instance object. If created from database,
+	 * the status must be set to 1, otherwise set to 0. Due to the lack of experience... sorry.
+	 *
+	 * @param integer $status
+	 */
+	public function __construct($status){
+		$this->_mStatus = $status;
+	}
+	
+	/**
 	 * Returns the nit of the agent.
 	 *
 	 * @return string
@@ -54,10 +64,19 @@ abstract class Agent{
 	 * @return void
 	 */
 	public function setName($name){
-		if(is_null($name))
+		if(empty($name))
 			throw new Exception('Name is empty.');
 			
 		$this->_mName = $name;
+	}
+	
+	
+	public function save(){
+		if(empty($this->_mNit))
+			throw new Exception('Nit is empty.');
+			
+		if(empty($this->_mName))
+			throw new Exception('Name is empty.');
 	}
 }
 ?>
