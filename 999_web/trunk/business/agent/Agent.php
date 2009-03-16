@@ -30,12 +30,12 @@ abstract class Agent{
 	private $_mStatus;
 	
 	/**
-	 * Agent constructor function. Receives the status for the created instance object. If created from database,
-	 * the status must be set to 1, otherwise set to 0. Due to the lack of experience... sorry.
+	 * Agent constructor method. Receives the status for the created instance object. If created from database,
+	 * the status must be set to 1, otherwise set to 0 (default = 0). Due to the lack of experience... sorry.
 	 *
 	 * @param integer $status
 	 */
-	public function __construct($status){
+	public function __construct($status = 0){
 		$this->_mStatus = $status;
 	}
 	
