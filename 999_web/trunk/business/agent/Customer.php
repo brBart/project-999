@@ -36,7 +36,7 @@ class Customer extends Agent{
 			throw new Exception('Nit is empty.');
 		
 		try{
-			$customer = new CustomerDAM::getInstance($nit);
+			$customer = CustomerDAM::getInstance($nit);
 		} catch(Exception $e){
 			return new Customer($nit);
 		}
