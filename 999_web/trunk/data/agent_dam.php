@@ -33,7 +33,8 @@ class CustomerDAM{
 	 * @return boolean
 	 */
 	static public function exist($nit){
-		return true;
+		if($nit == '1725045-5')
+			return true;
 	}
 	
 	/**
