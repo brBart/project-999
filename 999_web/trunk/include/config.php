@@ -1,4 +1,9 @@
 <?php
+/**
+ * Configuration file. Sets the constants with path to the proyect's libraries.
+ * @author Roberto Oliveros
+ */
+
 // SITE_ROOT contains the full path to the proyect's root
 define('SITE_ROOT', dirname(dirname(__FILE__)));
 

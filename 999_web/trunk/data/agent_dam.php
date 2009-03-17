@@ -1,5 +1,6 @@
 <?php
 /**
+ * Library for the classes which access the database.
  * @package agentDAM
  */
 

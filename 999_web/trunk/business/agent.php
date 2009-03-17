@@ -1,5 +1,6 @@
 <?php
 /**
+ * Library with the business rules for the agents.
  * @package agent
  */
 
