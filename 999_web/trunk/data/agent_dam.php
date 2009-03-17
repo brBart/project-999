@@ -17,7 +17,13 @@ class CustomerDAM{
 	 * @return Customer
 	 */
 	static public function getInstance($nit){
-		return new Customer($nit);
+		if($nit == '1725045-5'){
+			$customer = new Customer('1725045-5', 1);
+			$customer->setData('Infodes');
+			return $customer;
+		}
+		else
+			throw new Exception();
 	}
 	
 	/**
@@ -31,12 +37,23 @@ class CustomerDAM{
 	}
 	
 	/**
+	 * Insert Customer's data to the database.
+	 *
+	 * @param Customer $customer
+	 * @return void
+	 */
+	static public function insert($customer){
+		// Code here...
+	}
+	
+	/**
 	 * Update Customer's data in the database.
 	 *
 	 * @param Customer $customer
+	 * @return void
 	 */
 	static public function update($customer){
-		//Code here...
+		// Code here...
 	}
 }
 ?>

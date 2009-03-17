@@ -4,8 +4,7 @@
  * @package agent
  */
 
-require_once('../include/config.php');
-require_once DATA_DIR . 'agent_dam.php';
+require_once ('data/agent_dam.php');
 
 /**
  * Defines common functionality for agents derived classes.
@@ -102,7 +101,7 @@ class Customer extends Agent{
 	 * @param string $nit
 	 * @param integer $status
 	 */
-	public function __construct($nit, $status){
+	public function __construct($nit, $status = 0){
 		parent::__construct($status);
 		
 		$this->_mNit = $nit;
@@ -115,7 +114,7 @@ class Customer extends Agent{
 	 * @param string $nit
 	 * @return Customer
 	 */
-	public function getInstance($nit){
+	static public function getInstance($nit){
 		if(empty($nit))
 			throw new Exception('Nit is empty.');
 		
