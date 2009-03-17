@@ -118,6 +118,11 @@ class Customer extends Agent{
 		if(empty($nit))
 			throw new Exception('Nit is empty.');
 		
+		$nit = strtoupper($nit);
+		if(!(preg_match('/(^[C][\/\\.]?[F][.]?$|^[0-9]+[-][0-9]$)/')))
+			throw new Exception('Invalid nit.');
+		
+		
 		try{
 			$customer = CustomerDAM::getInstance($nit);
 		} catch(Exception $e){
@@ -144,9 +149,10 @@ class Customer extends Agent{
 	public function save(){
 		parent::save();
 		
-		if(preg_match('/^c\\/f$/i',$this->_mNit))
+		$nit = strtoupper($this->_mNit);
+		if(($nit == 'C/F') || ($nit == 'C\F'))
 			return;
-			
+		
 		if($this->_mStatus == 0)
 			if(CustomerDAM::exist($this->_mNit))
 				throw new Exception('Customer already exist.');
