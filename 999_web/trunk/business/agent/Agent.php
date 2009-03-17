@@ -13,21 +13,21 @@ abstract class Agent{
 	 * Nit (Numero de Identificacion Tributaria) of the agent.
 	 * @var string
 	 */
-	private $_mNit;
+	protected $_mNit;
 	
 	/**
 	 * Name for the agent.
 	 *
 	 * @var string
 	 */
-	private $_mName;
+	protected $_mName;
 	
 	/**
 	 * Status of the object instance, e.g. unsaved = 0, saved = 1.
 	 *
 	 * @var unknown_type
 	 */
-	private $_mStatus;
+	protected $_mStatus;
 	
 	/**
 	 * Agent constructor method. Receives the status for the created instance object. If created from database,

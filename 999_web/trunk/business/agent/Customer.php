@@ -53,5 +53,26 @@ class Customer extends Agent{
 	public function setData($name){
 		$this->_mName = $name;
 	}
+	
+	/**
+	 * Saves Customer data to the database.
+	 * @return void
+	 */
+	public function save(){
+		parent::save();
+		
+		if(preg_match('/^c\\/f$/i',$this->_mNit))
+			return;
+			
+		if($this->_mStatus == 0)
+			if(CustomerDAM::exist($this->_mNit))
+				throw new Exception('Customer already exist.');
+			else{
+				CustomerDAM::insert($this);
+				$this->_mStatus = 1;
+			}
+		else
+			CustomerDAM::update($this);
+	}
 }
 ?>
