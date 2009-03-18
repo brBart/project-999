@@ -23,7 +23,7 @@ class CustomerDAM{
 			return $customer;
 		}
 		else
-			throw new Exception();
+			throw new Exception('Nit: ' . $nit . ', tuvo que haberse encontrado en la base de datos.');
 	}
 	
 	/**
@@ -35,6 +35,8 @@ class CustomerDAM{
 	static public function exist($nit){
 		if($nit == '1725045-5')
 			return true;
+		else
+			return false;
 	}
 	
 	/**
