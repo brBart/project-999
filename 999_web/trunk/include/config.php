@@ -4,10 +4,15 @@
  * @author Roberto Oliveros
  */
 
-// SITE_ROOT contains the full path to the proyect's root
-define('SITE_ROOT', dirname(dirname(__FILE__)));
+/**
+ * Use to identify if an object has just been created.
+ *
+ */
+define(JUST_CREATED, 0);
 
-// Libraries
-define('BUSINESS_DIR', SITE_ROOT . '/business/');
-define('DATA_DIR', SITE_ROOT . '/data/');
+/**
+ * Use to identify an object which's data was obtain from database.
+ *
+ */
+define(FROM_DATABASE, 1)
 ?>

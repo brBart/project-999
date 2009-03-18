@@ -18,7 +18,7 @@ class CustomerDAM{
 	 */
 	static public function getInstance($nit){
 		if($nit == '1725045-5'){
-			$customer = new Customer('1725045-5', 1);
+			$customer = new Customer('1725045-5', FROM_DATABASE);
 			$customer->setData('Infodes');
 			return $customer;
 		}
