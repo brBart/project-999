@@ -4,7 +4,8 @@
  * @package agent
  */
 
-require_once ('data/agent_dam.php');
+require_once('include/config.php');
+require_once('data/agent_dam.php');
 
 /**
  * Defines common functionality for agents derived classes.
@@ -34,11 +35,12 @@ abstract class Agent{
 	
 	/**
 	 * Agent constructor method. Receives the status for the created instance object. If created from database,
-	 * the status must be set to 1, otherwise set to 0 (default = 0). Due to the lack of experience... sorry.
+	 * the status must be set to 1 (const FROM_DATABASE), otherwise set to 0 (const JUST_CREATED). 
+	 * Due to the lack of experience... sorry.
 	 *
 	 * @param integer $status
 	 */
-	public function __construct($status = 0){
+	public function __construct($status){
 		$this->_mStatus = $status;
 	}
 	
@@ -109,12 +111,13 @@ abstract class Agent{
 class Customer extends Agent{
 	/**
 	 * Customer constructor method. Do not use, use Customer::getInstance instead. It is public because is called
-	 * from database layer corresponding class also. Lack of experience... sorry.
+	 * from database layer corresponding class also. Default $status = 0 (const JUST_CREATED). 
+	 * Lack of experience... sorry.
 	 *
 	 * @param string $nit
 	 * @param integer $status
 	 */
-	public function __construct($nit, $status = 0){
+	public function __construct($nit, $status = JUST_CREATED){
 		parent::__construct($status);
 		
 		$this->_mNit = $nit;
@@ -161,9 +164,9 @@ class Customer extends Agent{
 		if($this->_mNit == 'CF')
 			return;
 		
-		if($this->_mStatus == 0){
+		if($this->_mStatus == JUST_CREATED){
 			CustomerDAM::insert($this);
-			$this->_mStatus = 1;
+			$this->_mStatus = FROM_DATABASE;
 		}
 		else
 			CustomerDAM::update($this);
@@ -212,6 +215,18 @@ abstract class Organization extends Agent{
 	 * @var string
 	 */
 	protected $_mContact;
+	
+	/**
+	 * Organization constructor method.
+	 *
+	 * @param unknown_type $id
+	 * @param unknown_type $status
+	 */
+	public function __construct($id = null, $status = JUST_CREATED){
+		parent::__construct($status);
+		
+		$this->_mId = $id;
+	}
 	
 	/**
 	 * Returns object's id.
@@ -328,7 +343,14 @@ abstract class Organization extends Agent{
 		$this->_mContact = $contact;
 	}
 	
-	
-	
+	/**
+	 * Returns an instance of a organization class.
+	 *
+	 * @param integer $id
+	 * @return Organization
+	 */
+	abstract function getInstance($id){
+		
+	}
 }
 ?>
