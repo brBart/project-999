@@ -68,7 +68,7 @@ abstract class Agent{
 	 */
 	public function setName($name){
 		if(empty($name))
-			throw new Exception('Name is empty.');
+			throw new Exception('Ingrese el nombre.');
 			
 		$this->_mName = $name;
 	}
@@ -80,10 +80,23 @@ abstract class Agent{
 	 */
 	public function save(){
 		if(empty($this->_mNit))
-			throw new Exception('Nit is empty.');
+			throw new Exception('Ingrese el nit.');
 			
 		if(empty($this->_mName))
-			throw new Exception('Name is empty.');
+			throw new Exception('Ingrese el nombre');
+	}
+	
+	/**
+	 * Validates if a nit is correct. Returns true if it is or false otherwise.
+	 *
+	 * @param string $nit
+	 * @return boolean
+	 */
+	protected function validateNit($nit){
+		if(preg_match('/^[0-9]+[-][0-9]$/', $nit))
+			return true;
+		else
+			return false;
 	}
 }
 
@@ -109,26 +122,23 @@ class Customer extends Agent{
 	
 	/**
 	 * Returns an instance of a Customer with database data. If there is no match for the nit provided, a new
-	 * Customer is created and return.
+	 * Customer is created and return. Nit is validated, e.g. c/f, 1725045-5 are valids.
 	 *
 	 * @param string $nit
 	 * @return Customer
 	 */
 	static public function getInstance($nit){
-		if(empty($nit))
-			throw new Exception('Nit is empty.');
-		
-		if(preg_match('@([cC][/.\\]?[fF]\.?)@', $nit)){
+		if(preg_match('@^[cC][\\\/.]?([fF]$|[fF]\.?$)@', $nit)){
 			return new Customer('CF');   
 		}
-		elseif(preg_match('/^[0-9]+[-][0-9]$/', $nit)){
+		elseif($this->validateNit($nit)){
 			if(CustomerDAM::exist($nit))
 				return CustomerDAM::getInstance($nit);
 			else
 				return new Customer($nit);
 		}
 		else
-			throw new Exception('Invalid nit.');
+			throw new Exception('Nit invalido.');
 	}
 	
 	/**
@@ -158,5 +168,167 @@ class Customer extends Agent{
 		else
 			CustomerDAM::update($this);
 	}
+}
+
+
+/**
+ * Defines common functionality for a organizations derived classes.
+ * @package agent
+ * @author Roberto Oliveros
+ *
+ */
+abstract class Organization extends Agent{
+	/**
+	 * Internal object id.
+	 *
+	 * @var integer
+	 */
+	protected $_mId;
+	
+	/**
+	 * Organization's telephone number.
+	 *
+	 * @var string
+	 */
+	protected $_mTelephone;
+	
+	/**
+	 * Organization's address.
+	 *
+	 * @var string
+	 */
+	protected $_mAddress;
+	
+	/**
+	 * Organization's email address.
+	 *
+	 * @var string
+	 */
+	protected $_mEmail;
+	
+	/**
+	 * Organization's direct contact person.
+	 *
+	 * @var string
+	 */
+	protected $_mContact;
+	
+	/**
+	 * Returns object's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns organization's telephone number.
+	 *
+	 * @return string
+	 */
+	public function getTelephone(){
+		return $this->_mTelephone;
+	}
+	
+	/**
+	 * Returns organization's address.
+	 *
+	 * @return string
+	 */
+	public function getAddress(){
+		return $this->_mAddress;
+	}
+	
+	/**
+	 * Returns organization's email address.
+	 *
+	 * @return string
+	 */
+	public function getEmail(){
+		return $this->_mEmail;
+	}
+	
+	/**
+	 * Returns organization's direct contact person.
+	 *
+	 * @return string
+	 */
+	public function getContact(){
+		return $this->_mContact;
+	}
+	
+	/**
+	 * Returns object's status.
+	 *
+	 * @return integer
+	 */
+	public function getStatus(){
+		return $this->_mStatus;
+	}
+	
+	/**
+	 * Sets organization's nit. Nit is validated, e.g. 350682-7, 1725045-5 are valids, c/f or alikes are not.
+	 *
+	 * @param string $nit
+	 */
+	public function setNit($nit){
+		if($this->validateNit())
+			$this->_mNit = $nit;
+		else
+			throw new Exception('Nit invalido.');
+	}
+	
+	/**
+	 * Sets organization telephone number.
+	 *
+	 * @param string $telephone
+	 */
+	public function setTelephone($telephone){
+		if(empty($telephone))
+			throw new Exception('Ingrese telefono.');
+			
+		$this->_mTelephone = $telephone;
+	}
+	
+	/**
+	 * Sets organization's address.
+	 *
+	 * @param string $address
+	 */
+	public function setAddress($address){
+		if(empty($address))
+			throw new Exception('Ingrese direccion.');
+			
+		$this->_mAddress = $address;
+	}
+	
+	/**
+	 * Sets organization's email address. Note that must be a valid email format, e.g. anybody@whatever.com
+	 *
+	 * @param string $email
+	 */
+	public function setEmail($email){
+		$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
+		if(!(preg_match($pattern, $email)))
+			throw new Exception('Correo electronico invalido.');
+			
+		$this->_mEmail = $email;
+	}
+	
+	/**
+	 * Sets organization's direct contact person.
+	 *
+	 * @param string $contact
+	 */
+	public function setContact($contact){
+		if(empty($contact))
+			throw new Exception('Ingrese contacto.');
+			
+		$this->_mContact = $contact;
+	}
+	
+	
+	
 }
 ?>
