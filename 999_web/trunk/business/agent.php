@@ -27,9 +27,9 @@ abstract class Agent{
 	protected $_mName;
 	
 	/**
-	 * Status of the object instance, e.g. unsaved = 0, saved = 1.
+	 * Status of the object instance, e.g. JUST_CREATED or FROM_DATABASE.
 	 *
-	 * @var unknown_type
+	 * @var integer
 	 */
 	protected $_mStatus;
 	
@@ -89,6 +89,16 @@ abstract class Agent{
 	}
 	
 	/**
+	 * Set data provided by the database. Must be call only from the database layer corresponding class.
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	public function setData($name){
+		$this->_mName = $name;
+	}
+	
+	/**
 	 * Validates if a nit is correct. Returns true if it is or false otherwise.
 	 *
 	 * @param string $nit
@@ -134,23 +144,14 @@ class Customer extends Agent{
 			return new Customer('CF');   
 		}
 		elseif($this->validateNit($nit)){
-			if(CustomerDAM::exist($nit))
-				return CustomerDAM::getInstance($nit);
-			else
+			$customer = CustomerDAM::getInstance($nit);
+			if(!$customer)
 				return new Customer($nit);
+			else
+				return $customer;
 		}
 		else
 			throw new Exception('Nit invalido.');
-	}
-	
-	/**
-	 * Set data provided by the database. Must be call only from the database layer corresponding class.
-	 *
-	 * @param string $name
-	 * @return void
-	 */
-	public function setData($name){
-		$this->_mName = $name;
 	}
 	
 	/**
@@ -348,24 +349,57 @@ abstract class Organization extends Agent{
 	 * @param integer $id
 	 * @return Organization
 	 */
-	abstract function getInstance($id){
+	abstract public function getInstance($id){
 		
 	}
 	
 	/**
-	 * Sets the received organization object to null and returns true if the object's status == JUST_CREATED.
-	 * Otherwise just returns false.
+	 * Set data provided by the database. Must be call only from the database layer corresponding class.
+	 *
+	 * @param string $nit
+	 * @param string $name
+	 * @param string $telephone
+	 * @param string $address
+	 * @param string $email
+	 * @param string $contact
+	 */
+	public function setData($nit, $name, $telephone, $address, $email, $contact){
+		parent::setData($name);
+		
+		$this->_mNit = $nit;
+		$this->_mTelephone = $telephone;
+		$this->_mAddress = $address;
+		$this->_mEmail = $email;
+		$this->_mContact = $contact;
+	}
+	
+	/**
+	 * Sets the received organization object to null and returns true if the object's status == JUST_CREATED. Otherwise just returns false.
 	 *
 	 * @param Organization $organ
 	 * @return boolean
 	 */
-	static protected function delete(Organization $organ){
-		if ($organ->getStatus() == JUST_CREATED){
-			$organ = null;
+	static protected function delete(Organization $obj){
+		if ($obj->getStatus() == JUST_CREATED){
+			$obj = null;
 			return true;
 		}
 		else
 			return false;
+	}
+}
+
+
+/**
+ * Defines functionality for a supplier class, mostly used in receipts documents.
+ * 
+ * @package agent
+ * @author Roberto Oliveros
+ */
+class Supplier extends Organization{
+	
+	public function getInstance($id){
+		
 	}
 }
 ?>
