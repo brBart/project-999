@@ -35,8 +35,8 @@ abstract class Agent{
 	
 	/**
 	 * Agent constructor method. Receives the status for the created instance object. If created from database,
-	 * the status must be set to 1 (const FROM_DATABASE), otherwise set to 0 (const JUST_CREATED). 
-	 * Due to the lack of experience... sorry.
+	 * the status must be set to FROM_DATABASE, otherwise set to JUST_CREATED. Due to the lack of 
+	 * experience... sorry.
 	 *
 	 * @param integer $status
 	 */
@@ -111,8 +111,7 @@ abstract class Agent{
 class Customer extends Agent{
 	/**
 	 * Customer constructor method. Do not use, use Customer::getInstance instead. It is public because is called
-	 * from database layer corresponding class also. Default $status = 0 (const JUST_CREATED). 
-	 * Lack of experience... sorry.
+	 * from database layer corresponding class also. Lack of experience... sorry.
 	 *
 	 * @param string $nit
 	 * @param integer $status
@@ -219,8 +218,8 @@ abstract class Organization extends Agent{
 	/**
 	 * Organization constructor method.
 	 *
-	 * @param unknown_type $id
-	 * @param unknown_type $status
+	 * @param integer $id
+	 * @param integer $status
 	 */
 	public function __construct($id = null, $status = JUST_CREATED){
 		parent::__construct($status);
@@ -351,6 +350,22 @@ abstract class Organization extends Agent{
 	 */
 	abstract function getInstance($id){
 		
+	}
+	
+	/**
+	 * Sets the received organization object to null and returns true if the object's status == JUST_CREATED.
+	 * Otherwise just returns false.
+	 *
+	 * @param Organization $organ
+	 * @return boolean
+	 */
+	static protected function delete(Organization $organ){
+		if ($organ->getStatus() == JUST_CREATED){
+			$organ = null;
+			return true;
+		}
+		else
+			return false;
 	}
 }
 ?>
