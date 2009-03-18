@@ -14,5 +14,5 @@ define(JUST_CREATED, 0);
  * Use to identify an object which's data was obtain from database.
  *
  */
-define(FROM_DATABASE, 1)
+define(FROM_DATABASE, 1);
 ?>
