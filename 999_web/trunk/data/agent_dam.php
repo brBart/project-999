@@ -11,7 +11,7 @@
  */
 class CustomerDAM{
 	/**
-	 * Returns Customer instance object if a match for the nit providad was found in database.
+	 * Returns Customer instance object if a match for the nit providad was found in database. Null if not.
 	 *
 	 * @param string $nit
 	 * @return Customer
@@ -23,7 +23,7 @@ class CustomerDAM{
 			return $customer;
 		}
 		else
-			throw new Exception('Nit: ' . $nit . ', tuvo que haberse encontrado en la base de datos.');
+			return null;
 	}
 	
 	/**
