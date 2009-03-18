@@ -118,18 +118,17 @@ class Customer extends Agent{
 		if(empty($nit))
 			throw new Exception('Nit is empty.');
 		
-		$nit = strtoupper($nit);
-		if(!(preg_match('/(^[C][\/\\.]?[F][.]?$|^[0-9]+[-][0-9]$)/')))
-			throw new Exception('Invalid nit.');
-		
-		
-		try{
-			$customer = CustomerDAM::getInstance($nit);
-		} catch(Exception $e){
-			return new Customer($nit);
+		if(preg_match('@([cC][/.\\]?[fF]\.?)@', $nit)){
+			return new Customer('CF');   
 		}
-		
-		return $customer;
+		elseif(preg_match('/^[0-9]+[-][0-9]$/', $nit)){
+			if(CustomerDAM::exist($nit))
+				return CustomerDAM::getInstance($nit);
+			else
+				return new Customer($nit);
+		}
+		else
+			throw new Exception('Invalid nit.');
 	}
 	
 	/**
@@ -149,17 +148,13 @@ class Customer extends Agent{
 	public function save(){
 		parent::save();
 		
-		$nit = strtoupper($this->_mNit);
-		if(($nit == 'C/F') || ($nit == 'C\F'))
+		if($this->_mNit == 'CF')
 			return;
 		
-		if($this->_mStatus == 0)
-			if(CustomerDAM::exist($this->_mNit))
-				throw new Exception('Customer already exist.');
-			else{
-				CustomerDAM::insert($this);
-				$this->_mStatus = 1;
-			}
+		if($this->_mStatus == 0){
+			CustomerDAM::insert($this);
+			$this->_mStatus = 1;
+		}
 		else
 			CustomerDAM::update($this);
 	}
