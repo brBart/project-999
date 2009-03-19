@@ -77,7 +77,8 @@ class SupplierDAM{
 	static public function getInstance($id){
 		if($id == 123){
 			$supplier = new Supplier(123, FROM_DATABASE);
-			$supplier->setData('350682-7', 'Jose Gil', '24129999', '3a calle 7-32 z.1', 'info@josegil.net', 'Roberto');
+			$supplier->setData('350682-7', 'Jose Gil', '24129999', '3a calle 7-32 z.1',
+					'info@josegil.net', 'Roberto');
 			return $supplier;
 		}
 		else
