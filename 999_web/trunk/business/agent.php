@@ -76,7 +76,7 @@ abstract class Agent{
 	}
 	
 	/**
-	 * Saves agent's data to the database. Nit and Name must be set.
+	 * Proves if nit and name are set.
 	 * 
 	 * @return void
 	 */
@@ -155,7 +155,7 @@ class Customer extends Agent{
 	}
 	
 	/**
-	 * Saves Customer data to the database.
+	 * Saves Customer's data to the database.
 	 * @return void
 	 */
 	public function save(){
@@ -349,7 +349,7 @@ abstract class Organization extends Agent{
 	 * @param integer $id
 	 * @return Organization
 	 */
-	abstract public function getInstance($id){
+	static abstract public function getInstance($id){
 		
 	}
 	
@@ -397,9 +397,49 @@ abstract class Organization extends Agent{
  * @author Roberto Oliveros
  */
 class Supplier extends Organization{
+	/**
+	 * Returns a Supplier instance from database.
+	 *
+	 * @param integer $id
+	 * @return Supplier
+	 */
+	static public function getInstance($id){
+		if(!is_int($id))
+			throw new Exception('Id invalido.');
+			
+		return SupplierDAM::getInstance($id);
+	}
 	
-	public function getInstance($id){
+	/**
+	 * Saves Supplier's data to the database.
+	 * @return void
+	 */
+	public function save(){
+		parent::save();
 		
+		if($this->_mStatus == JUST_CREATED){
+			SupplierDAM::insert($this);
+			$this->_mStatus = FROM_DATABASE;
+		}
+		else
+			SupplierDAM::update($this);
+	}
+	
+	/**
+	 * Deletes Supplier from database.
+	 *
+	 * @param Supplier $obj
+	 * @return boolean
+	 */
+	static public function delete(Supplier $obj){
+		if(parent::delete($obj))
+			return true;
+			
+		if(!SupplierDAM::delete($obj))
+			return false;
+			
+		$obj = null;
+		return true;
 	}
 }
 ?>
