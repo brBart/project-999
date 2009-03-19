@@ -20,18 +20,18 @@ abstract class Agent{
 	protected $_mNit;
 	
 	/**
-	 * Name for the agent.
-	 *
-	 * @var string
-	 */
-	protected $_mName;
-	
-	/**
 	 * Status of the object instance, e.g. JUST_CREATED or FROM_DATABASE.
 	 *
 	 * @var integer
 	 */
 	protected $_mStatus;
+	
+	/**
+	 * Name for the agent.
+	 *
+	 * @var string
+	 */
+	private $_mName;
 	
 	/**
 	 * Agent constructor method. Receives the status for the created instance object. If created from database,
@@ -76,25 +76,15 @@ abstract class Agent{
 	}
 	
 	/**
-	 * Proves if nit and name are set.
-	 * 
-	 * @return void
-	 */
-	public function save(){
-		if(empty($this->_mNit))
-			throw new Exception('Ingrese el nit.');
-			
-		if(empty($this->_mName))
-			throw new Exception('Ingrese el nombre');
-	}
-	
-	/**
 	 * Set data provided by the database. Must be call only from the database layer corresponding class.
 	 *
 	 * @param string $name
 	 * @return void
 	 */
 	public function setData($name){
+		if(empty($name))
+			throw new Exception('Internal Error! Name must be provided.');
+		
 		$this->_mName = $name;
 	}
 	
@@ -109,6 +99,19 @@ abstract class Agent{
 			return true;
 		else
 			return false;
+	}
+	
+	/**
+	 * Proves if nit and name are set.
+	 * 
+	 * @return void
+	 */
+	protected function save(){
+		if(empty($this->_mNit))
+			throw new Exception('Ingrese el nit.');
+			
+		if(empty($this->_mName))
+			throw new Exception('Ingrese el nombre.');
 	}
 }
 
@@ -143,7 +146,7 @@ class Customer extends Agent{
 		if(preg_match('@^[cC][\\\/.]?([fF]$|[fF]\.?$)@', $nit)){
 			return new Customer('CF');   
 		}
-		elseif($this->validateNit($nit)){
+		elseif(self::validateNit($nit)){
 			$customer = CustomerDAM::getInstance($nit);
 			if(!$customer)
 				return new Customer($nit);
@@ -151,7 +154,7 @@ class Customer extends Agent{
 				return $customer;
 		}
 		else
-			throw new Exception('Nit invalido.');
+			throw new Exception('Nit inv&aacute;lido.');
 	}
 	
 	/**
@@ -186,35 +189,35 @@ abstract class Organization extends Agent{
 	 *
 	 * @var integer
 	 */
-	protected $_mId;
+	private $_mId;
 	
 	/**
 	 * Organization's telephone number.
 	 *
 	 * @var string
 	 */
-	protected $_mTelephone;
+	private $_mTelephone;
 	
 	/**
 	 * Organization's address.
 	 *
 	 * @var string
 	 */
-	protected $_mAddress;
+	private $_mAddress;
 	
 	/**
 	 * Organization's email address.
 	 *
 	 * @var string
 	 */
-	protected $_mEmail;
+	private $_mEmail;
 	
 	/**
 	 * Organization's direct contact person.
 	 *
 	 * @var string
 	 */
-	protected $_mContact;
+	private $_mContact;
 	
 	/**
 	 * Organization constructor method.
@@ -288,10 +291,10 @@ abstract class Organization extends Agent{
 	 * @param string $nit
 	 */
 	public function setNit($nit){
-		if($this->validateNit())
-			$this->_mNit = $nit;
-		else
-			throw new Exception('Nit invalido.');
+		if(!$this->validateNit($nit))
+			throw new Exception('Nit inv&aacute;lido.');
+			
+		$this->_mNit = $nit;
 	}
 	
 	/**
@@ -313,7 +316,7 @@ abstract class Organization extends Agent{
 	 */
 	public function setAddress($address){
 		if(empty($address))
-			throw new Exception('Ingrese direccion.');
+			throw new Exception('Ingrese direcci&oacute;n.');
 			
 		$this->_mAddress = $address;
 	}
@@ -324,9 +327,8 @@ abstract class Organization extends Agent{
 	 * @param string $email
 	 */
 	public function setEmail($email){
-		$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
-		if(!(preg_match($pattern, $email)))
-			throw new Exception('Correo electronico invalido.');
+		if(!empty($email) && !$this->validateEmail($email))
+			throw new Exception('Correo electronico inv&aacute;lido.');
 			
 		$this->_mEmail = $email;
 	}
@@ -337,9 +339,6 @@ abstract class Organization extends Agent{
 	 * @param string $contact
 	 */
 	public function setContact($contact){
-		if(empty($contact))
-			throw new Exception('Ingrese contacto.');
-			
 		$this->_mContact = $contact;
 	}
 	
@@ -349,9 +348,7 @@ abstract class Organization extends Agent{
 	 * @param integer $id
 	 * @return Organization
 	 */
-	static abstract public function getInstance($id){
-		
-	}
+	static abstract public function getInstance($id);
 	
 	/**
 	 * Set data provided by the database. Must be call only from the database layer corresponding class.
@@ -365,6 +362,10 @@ abstract class Organization extends Agent{
 	 */
 	public function setData($nit, $name, $telephone, $address, $email, $contact){
 		parent::setData($name);
+		
+		if(!$this->validateNit($nit) || empty($telephone) || empty($address) ||
+				(!empty($email) && !$this->validateEmail($email)))
+			throw new Exception('Internal Error! Organization\'s data must be set correctly.');
 		
 		$this->_mNit = $nit;
 		$this->_mTelephone = $telephone;
@@ -387,6 +388,31 @@ abstract class Organization extends Agent{
 		else
 			return false;
 	}
+	
+	
+	protected function save(){
+		parent::save();
+		
+		if(empty($this->_mTelephone))
+			throw new Exception('Ingrese el telefono.');
+		
+		if(empty($this->_mAddress))
+			throw new Exception('Ingrese la direcci&oacute;n.');
+	}
+	
+	/**
+	 * Validates an organization's email address.
+	 *
+	 * @param string $email
+	 * @return boolean
+	 */
+	private function validateEmail($email){
+		$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
+		if(preg_match($pattern, $email))
+			return true;
+		else
+			return false;
+	}
 }
 
 
@@ -398,14 +424,14 @@ abstract class Organization extends Agent{
  */
 class Supplier extends Organization{
 	/**
-	 * Returns a Supplier instance from database.
+	 * Returns a Supplier instance from database. Returns null if there's no match for the provided id.
 	 *
 	 * @param integer $id
 	 * @return Supplier
 	 */
 	static public function getInstance($id){
 		if(!is_int($id))
-			throw new Exception('Id invalido.');
+			throw new Exception('Id inv&aacute;lido.');
 			
 		return SupplierDAM::getInstance($id);
 	}
