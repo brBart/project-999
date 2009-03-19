@@ -45,7 +45,7 @@ class CustomerDAM{
 	 * @param Customer $customer
 	 * @return void
 	 */
-	static public function insert($customer){
+	static public function insert(Customer $customer){
 		// Code here...
 	}
 	
@@ -55,8 +55,66 @@ class CustomerDAM{
 	 * @param Customer $customer
 	 * @return void
 	 */
-	static public function update($customer){
+	static public function update(Customer $customer){
 		// Code here...
+	}
+}
+
+
+/**
+ * Class that provides access to the database.
+ * @package agentDAM
+ * @author Roberto Oliveros
+ *
+ */
+class SupplierDAM{
+	/**
+	 * Returns a Supplier if founds an id match in the database, otherwise returns null.
+	 *
+	 * @param integer $id
+	 * @return Supplier
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$supplier = new Supplier(123, FROM_DATABASE);
+			$supplier->setData('350682-7', 'Jose Gil', '24129999', '3a calle 7-32 z.1', 'info@josegil.net', 'Roberto');
+			return $supplier;
+		}
+		else
+			return null;
+	}
+	
+	/**
+	 * Insert Supplier in the database.
+	 *
+	 * @param Supplier $supplier
+	 * @return void
+	 */
+	static public function insert(Supplier $supplier){
+		// Code here...
+	}
+	
+	/**
+	 * Update Supplier's data in the database.
+	 *
+	 * @param Supplier $supplier
+	 * @return void
+	 */
+	static public function update(Supplier $supplier){
+		// Code here...
+	}
+	
+	/**
+	 * Removes Supplier from database.
+	 *
+	 * @param Supplier $supplier
+	 * @return boolean
+	 */
+	static public function delete(Supplier $supplier){
+		if($supplier->getId() == 123)
+			return true;
+		else
+			return false;
 	}
 }
 ?>
