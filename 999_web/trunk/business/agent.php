@@ -106,7 +106,7 @@ abstract class Agent{
 	 * 
 	 * @return void
 	 */
-	protected function checkMainProperties(){
+	protected function validateMainProperties(){
 		if(empty($this->_mNit))
 			throw new Exception('Ingrese el nit.');
 			
@@ -162,7 +162,7 @@ class Customer extends Agent{
 	 * @return void
 	 */
 	public function save(){
-		parent::checkMainProperties();
+		parent::validateMainProperties();
 		
 		if($this->_mNit == 'CF')
 			return;
@@ -371,7 +371,7 @@ abstract class Organization extends Agent{
 	 * @param Organization $organ
 	 * @return boolean
 	 */
-	static protected function checkStatusForDelete(Organization $obj){
+	static protected function validateStatusForDelete(Organization $obj){
 		if ($obj->_mStatus == JUST_CREATED)
 			throw new Exception('Cannot delete a just created organization from database.');
 	}
@@ -380,8 +380,8 @@ abstract class Organization extends Agent{
 	 * Proves that telephone and address are set. Otherwise it throws an exception.
 	 * @return void
 	 */
-	protected function checkMainProperties(){
-		parent::checkMainProperties();
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
 		
 		if(empty($this->_mTelephone))
 			throw new Exception('Ingrese el telefono.');
@@ -431,7 +431,7 @@ class Supplier extends Organization{
 	 * @return void
 	 */
 	public function save(){
-		parent::checkMainProperties();
+		parent::validateMainProperties();
 		
 		if($this->_mStatus == JUST_CREATED){
 			SupplierDAM::insert($this);
@@ -448,7 +448,7 @@ class Supplier extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Supplier $obj){
-		parent::checkStatusForDelete($obj);
+		parent::validateStatusForDelete($obj);
 			
 		return SupplierDAM::delete($obj);
 	}
