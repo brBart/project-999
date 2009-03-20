@@ -82,36 +82,47 @@ abstract class Agent{
 	 * @return void
 	 */
 	public function setData($name){
-		if(empty($name))
-			throw new Exception('Internal Error! Name must be provided.');
+		try{
+			$this->validateName($name);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Agent\'s setData method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
 		
 		$this->_mName = $name;
 	}
 	
 	/**
-	 * Validates if a nit is correct. Returns true if it is or false otherwise.
+	 * Validates if a nit is correct. Throws an exception if it is.
 	 *
 	 * @param string $nit
-	 * @return boolean
+	 * @return void
 	 */
 	protected function validateNit($nit){
 		if(preg_match('/^[0-9]+[-][0-9]$/', $nit))
-			return true;
-		else
-			return false;
+			throw new Exception('Nit inv&aacute:lido.');
 	}
 	
 	/**
-	 * Proves if nit and name are set. Otherwise it throws an exception.
+	 * Proves if nit and name are set correctly.
 	 * 
 	 * @return void
 	 */
 	protected function validateMainProperties(){
-		if(empty($this->_mNit))
-			throw new Exception('Ingrese el nit.');
-			
-		if(empty($this->_mName))
-			throw new Exception('Ingrese el nombre.');
+		$this->validateNit($this->_mNit);
+		$this->validateName($this->_mName);
+	}
+	
+	/**
+	 * Validates if the name is correct. Throws an exception if it is not.
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	private function validateName($name){
+		if(empty($name))
+			throw new Exception('Nombre inv&aacute;lido.');
 	}
 }
 
@@ -132,6 +143,14 @@ class Customer extends Agent{
 	public function __construct($nit, $status = JUST_CREATED){
 		parent::__construct($status);
 		
+		try{
+			$this->validateNit($nit);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Customer\'s constructor method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
 		$this->_mNit = $nit;
 	}
 	
@@ -146,15 +165,14 @@ class Customer extends Agent{
 		if(preg_match('@^[cC][\\\/.]?([fF]$|[fF]\.?$)@', $nit)){
 			return new Customer('CF');   
 		}
-		elseif(self::validateNit($nit)){
+		else{
+			self::validateNit($nit);
 			$customer = CustomerDAM::getInstance($nit);
 			if(!$customer)
 				return new Customer($nit);
 			else
 				return $customer;
 		}
-		else
-			throw new Exception('Nit inv&aacute;lido.');
 	}
 	
 	/**
@@ -282,9 +300,7 @@ abstract class Organization extends Agent{
 	 * @param string $nit
 	 */
 	public function setNit($nit){
-		if(!$this->validateNit($nit))
-			throw new Exception('Nit inv&aacute;lido.');
-			
+		$this->validateNit($nit);			
 		$this->_mNit = $nit;
 	}
 	
@@ -294,9 +310,7 @@ abstract class Organization extends Agent{
 	 * @param string $telephone
 	 */
 	public function setTelephone($telephone){
-		if(empty($telephone))
-			throw new Exception('Ingrese telefono.');
-			
+		$this->validateTelephone($telephone);			
 		$this->_mTelephone = $telephone;
 	}
 	
@@ -306,9 +320,7 @@ abstract class Organization extends Agent{
 	 * @param string $address
 	 */
 	public function setAddress($address){
-		if(empty($address))
-			throw new Exception('Ingrese direcci&oacute;n.');
-			
+		$this->validateAddress($address);			
 		$this->_mAddress = $address;
 	}
 	
@@ -318,9 +330,7 @@ abstract class Organization extends Agent{
 	 * @param string $email
 	 */
 	public function setEmail($email){
-		if(!empty($email) && !$this->validateEmail($email))
-			throw new Exception('Correo electronico inv&aacute;lido.');
-			
+		$this->validateEmail($email);
 		$this->_mEmail = $email;
 	}
 	
@@ -354,9 +364,16 @@ abstract class Organization extends Agent{
 	public function setData($nit, $name, $telephone, $address, $email, $contact){
 		parent::setData($name);
 		
-		if(!$this->validateNit($nit) || empty($telephone) || empty($address) ||
-				(!empty($email) && !$this->validateEmail($email)))
-			throw new Exception('Internal Error! Organization\'s data must be set correctly.');
+		try{
+			$this->validateNit($nit);
+			$this->validateTelephone($telephone);
+			$this->validateAddress($address);
+			$this->validateEmail($email);
+		} catch(Exception $e){
+			$et = new Exception('Internal Error, calling Organization\'s setData method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
 		
 		$this->_mNit = $nit;
 		$this->_mTelephone = $telephone;
@@ -377,31 +394,50 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Proves that telephone and address are set. Otherwise it throws an exception.
+	 * Proves that telephone and address are set correctly. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
 		
-		if(empty($this->_mTelephone))
-			throw new Exception('Ingrese el telefono.');
-		
-		if(empty($this->_mAddress))
-			throw new Exception('Ingrese la direcci&oacute;n.');
+		$this->validateTelephone($this->_mTelephone);
+		$this->validateAddress($this->_mAddress);
 	}
 	
 	/**
-	 * Validates an organization's email address.
+	 * Validates an organization's telephone number. Throws an exception if it is not.
+	 *
+	 * @param string $telephone
+	 * @return void
+	 */
+	private function validateTelephone($telephone){
+		if(empty($telephone))
+			throw new Exception('Ingrese telefono.');
+	}
+	
+	/**
+	 * Validates an organization's address. Throws an exception if it is not.
+	 *
+	 * @param string $address
+	 * @return void
+	 */
+	private function validateAddress($address){
+		if(empty($address))
+			throw new Exception('Ingrese direcci&oacute;n.');
+	}
+	
+	/**
+	 * Validates an organization's email address. Throws an exception if it is not.
 	 *
 	 * @param string $email
-	 * @return boolean
+	 * @return void
 	 */
 	private function validateEmail($email){
-		$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
-		if(preg_match($pattern, $email))
-			return true;
-		else
-			return false;
+		if(!empty($email)){
+			$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
+			if(preg_match($pattern, $email))
+				throw new Exception('Email inv&aacute;lido.');
+		}
 	}
 }
 
