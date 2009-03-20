@@ -102,11 +102,11 @@ abstract class Agent{
 	}
 	
 	/**
-	 * Proves if nit and name are set.
+	 * Proves if nit and name are set. Otherwise it throws an exception.
 	 * 
 	 * @return void
 	 */
-	protected function save(){
+	protected function checkMainProperties(){
 		if(empty($this->_mNit))
 			throw new Exception('Ingrese el nit.');
 			
@@ -162,7 +162,7 @@ class Customer extends Agent{
 	 * @return void
 	 */
 	public function save(){
-		parent::save();
+		parent::checkMainProperties();
 		
 		if($this->_mNit == 'CF')
 			return;
@@ -277,15 +277,6 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Returns object's status.
-	 *
-	 * @return integer
-	 */
-	public function getStatus(){
-		return $this->_mStatus;
-	}
-	
-	/**
 	 * Sets organization's nit. Nit is validated, e.g. 350682-7, 1725045-5 are valids, c/f or alikes are not.
 	 *
 	 * @param string $nit
@@ -375,23 +366,22 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Sets the received organization object to null and returns true if the object's status == JUST_CREATED. Otherwise just returns false.
+	 * Proves that the received organization's status != JUST_CREATED. Otherwise it throws an exception.
 	 *
 	 * @param Organization $organ
 	 * @return boolean
 	 */
-	static protected function delete(Organization $obj){
-		if ($obj->getStatus() == JUST_CREATED){
-			$obj = null;
-			return true;
-		}
-		else
-			return false;
+	static protected function checkStatusForDelete(Organization $obj){
+		if ($obj->_mStatus == JUST_CREATED)
+			throw new Exception('Cannot delete a just created organization from database.');
 	}
 	
-	
-	protected function save(){
-		parent::save();
+	/**
+	 * Proves that telephone and address are set. Otherwise it throws an exception.
+	 * @return void
+	 */
+	protected function checkMainProperties(){
+		parent::checkMainProperties();
 		
 		if(empty($this->_mTelephone))
 			throw new Exception('Ingrese el telefono.');
@@ -441,7 +431,7 @@ class Supplier extends Organization{
 	 * @return void
 	 */
 	public function save(){
-		parent::save();
+		parent::checkMainProperties();
 		
 		if($this->_mStatus == JUST_CREATED){
 			SupplierDAM::insert($this);
@@ -458,14 +448,22 @@ class Supplier extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Supplier $obj){
-		if(parent::delete($obj))
-			return true;
+		parent::checkStatusForDelete($obj);
 			
-		if(!SupplierDAM::delete($obj))
-			return false;
-			
-		$obj = null;
-		return true;
+		return SupplierDAM::delete($obj);
+	}
+}
+
+
+/**
+ * Defines functionality for a branch class, mostly used in shipments documents.
+ * @package agent
+ * @author Roberto Oliveros
+ */
+class Branch extends Organization{
+	
+	static public function getInstance($id){
+		
 	}
 }
 ?>
