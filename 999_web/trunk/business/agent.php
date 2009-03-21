@@ -69,9 +69,7 @@ abstract class Agent{
 	 * @return void
 	 */
 	public function setName($name){
-		if(empty($name))
-			throw new Exception('Ingrese el nombre.');
-			
+		$this->validateName($name);
 		$this->_mName = $name;
 	}
 	
@@ -100,7 +98,7 @@ abstract class Agent{
 	 * @return void
 	 */
 	protected function validateNit($nit){
-		if(preg_match('/^[0-9]+[-][0-9]$/', $nit))
+		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
 			throw new Exception('Nit inv&aacute:lido.');
 	}
 	
@@ -134,6 +132,12 @@ abstract class Agent{
  */
 class Customer extends Agent{
 	/**
+	 * Defines Consumidor Final initials.
+	 *
+	 */
+	const CF = 'CF';
+	
+	/**
 	 * Customer constructor method. Do not use, use Customer::getInstance instead. It is public because is called
 	 * from database layer corresponding class also. Lack of experience... sorry.
 	 *
@@ -143,15 +147,36 @@ class Customer extends Agent{
 	public function __construct($nit, $status = JUST_CREATED){
 		parent::__construct($status);
 		
-		try{
-			$this->validateNit($nit);
-		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Customer\'s constructor method with bad data! ' .
-					$e->getMessage());
-			throw $et;
+		if($this->isConsumidorFinal($nit))
+			$this->_mNit = CF;
+		else{
+			try{
+				$this->validateNit($nit);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Customer\'s constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			$this->_mNit = $nit;
 		}
+	}
+	
+	/**
+	 * Saves Customer's data to the database.
+	 * @return void
+	 */
+	public function save(){
+		$this->validateMainProperties();
 		
-		$this->_mNit = $nit;
+		if($this->_mNit == CF)
+			return;
+		
+		if($this->_mStatus == JUST_CREATED){
+			CustomerDAM::insert($this);
+			$this->_mStatus = FROM_DATABASE;
+		}
+		else
+			CustomerDAM::update($this);
 	}
 	
 	/**
@@ -162,8 +187,8 @@ class Customer extends Agent{
 	 * @return Customer
 	 */
 	static public function getInstance($nit){
-		if(preg_match('@^[cC][\\\/.]?([fF]$|[fF]\.?$)@', $nit)){
-			return new Customer('CF');   
+		if(self::isConsumidorFinal($nit)){
+			return new Customer(CF);   
 		}
 		else{
 			self::validateNit($nit);
@@ -176,21 +201,16 @@ class Customer extends Agent{
 	}
 	
 	/**
-	 * Saves Customer's data to the database.
-	 * @return void
+	 * Verifies if the provided nit == Consumidor Final. Returns true if equal, otherwise false.
+	 *
+	 * @param string $nit
+	 * @return boolean
 	 */
-	public function save(){
-		parent::validateMainProperties();
-		
-		if($this->_mNit == 'CF')
-			return;
-		
-		if($this->_mStatus == JUST_CREATED){
-			CustomerDAM::insert($this);
-			$this->_mStatus = FROM_DATABASE;
-		}
+	private function isConsumidorFinal($nit){
+		if(preg_match('@^[cC][\\\/.]?([fF]$|[fF]\.?$)@', $nit))
+			return true;
 		else
-			CustomerDAM::update($this);
+			return false;
 	}
 }
 
@@ -207,7 +227,7 @@ abstract class Organization extends Agent{
 	 *
 	 * @var integer
 	 */
-	private $_mId;
+	protected $_mId;
 	
 	/**
 	 * Organization's telephone number.
@@ -243,7 +263,7 @@ abstract class Organization extends Agent{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = null, $status = JUST_CREATED){
+	public function __construct($id = NULL, $status = JUST_CREATED){
 		parent::__construct($status);
 		
 		$this->_mId = $id;
@@ -344,14 +364,6 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Returns an instance of a organization class.
-	 *
-	 * @param integer $id
-	 * @return Organization
-	 */
-	static abstract public function getInstance($id);
-	
-	/**
 	 * Set data provided by the database. Must be call only from the database layer corresponding class.
 	 *
 	 * @param string $nit
@@ -383,14 +395,29 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Proves that the received organization's status != JUST_CREATED. Otherwise it throws an exception.
-	 *
-	 * @param Organization $organ
-	 * @return boolean
+	 * Saves Organization's data to the database.
+	 * @return void
 	 */
-	static protected function validateStatusForDelete(Organization $obj){
-		if ($obj->_mStatus == JUST_CREATED)
-			throw new Exception('Cannot delete a just created organization from database.');
+	public function save(){
+		$this->validateMainProperties();
+		
+		if($this->_mStatus == JUST_CREATED){
+			$this->_mId = $this->insert();
+			$this->_mStatus = FROM_DATABASE;
+		}
+		else
+			$this->update();
+	}
+	
+	/**
+	 * Returns an instance of a organization class.
+	 *
+	 * @param integer $id
+	 * @return Organization
+	 */
+	static public function getInstance($id){
+		self::validateId($id);
+		return self::getFromSource($id);
 	}
 	
 	/**
@@ -402,6 +429,47 @@ abstract class Organization extends Agent{
 		
 		$this->validateTelephone($this->_mTelephone);
 		$this->validateAddress($this->_mAddress);
+	}
+	
+	/**
+	 * Proves that the received organization's status != JUST_CREATED. Otherwise it throws an exception.
+	 *
+	 * @param Organization $organ
+	 * @return boolean
+	 */
+	static protected function validateStatusForDelete(Organization $obj){
+		if ($obj->_mStatus == JUST_CREATED)
+			throw new Exception('Cannot delete a just created organization from database.');
+	}
+	
+	/**
+	 * Insert Organization's data to the database.
+	 * @return integer
+	 */
+	abstract protected function insert();
+	
+	/**
+	 * Updates Organization's data in the database.
+	 * @return void
+	 */
+	abstract protected function update();
+	
+	/**
+	 * Returns an Organization instance if the provided id has a match in the database. Otherwise returns NULL.
+	 *
+	 * @param integer $id
+	 * @return Organization
+	 */
+	abstract static protected function getFromSource($id);
+	
+	/**
+	 * Validates an organization's id. Throws an exception if it is not.
+	 *
+	 * @param integer $id
+	 */
+	private function validateId($id){
+		if(!is_int($id))
+			throw new Exception('Id inv&aacute;lido.');
 	}
 	
 	/**
@@ -435,7 +503,7 @@ abstract class Organization extends Agent{
 	private function validateEmail($email){
 		if(!empty($email)){
 			$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
-			if(preg_match($pattern, $email))
+			if(!preg_match($pattern, $email))
 				throw new Exception('Email inv&aacute;lido.');
 		}
 	}
@@ -450,43 +518,40 @@ abstract class Organization extends Agent{
  */
 class Supplier extends Organization{
 	/**
-	 * Returns a Supplier instance from database. Returns null if there's no match for the provided id.
-	 *
-	 * @param integer $id
-	 * @return Supplier
-	 */
-	static public function getInstance($id){
-		if(!is_int($id))
-			throw new Exception('Id inv&aacute;lido.');
-			
-		return SupplierDAM::getInstance($id);
-	}
-	
-	/**
-	 * Saves Supplier's data to the database.
-	 * @return void
-	 */
-	public function save(){
-		parent::validateMainProperties();
-		
-		if($this->_mStatus == JUST_CREATED){
-			SupplierDAM::insert($this);
-			$this->_mStatus = FROM_DATABASE;
-		}
-		else
-			SupplierDAM::update($this);
-	}
-	
-	/**
 	 * Deletes Supplier from database.
 	 *
 	 * @param Supplier $obj
 	 * @return boolean
 	 */
 	static public function delete(Supplier $obj){
-		parent::validateStatusForDelete($obj);
-			
+		self::validateStatusForDelete($obj);
 		return SupplierDAM::delete($obj);
+	}
+	
+	/**
+	 * Insert Supplier's data in the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return SupplierDAM::insert($this);
+	}
+	
+	/**
+	 * Updates Supplier's data in the database.
+	 * @return void
+	 */
+	protected function update(){
+		SupplierDAM::update($this);
+	}
+	
+	/**
+	 * Returns a Supplier instance from database. Returns NULL if there's no match for the provided id.
+	 *
+	 * @param integer $id
+	 * @return Supplier
+	 */
+	static protected function getFromSource($id){
+		return SupplierDAM::getInstance($id);
 	}
 }
 
@@ -497,9 +562,41 @@ class Supplier extends Organization{
  * @author Roberto Oliveros
  */
 class Branch extends Organization{
+	/**
+	 * Deletes Branch from the database.
+	 *
+	 * @param Branch $branch
+	 * @return boolean
+	 */
+	static public function delete(Branch $branch){
+		self::validateStatusForDelete($obj);
+		return BranchDAM::delete($obj);
+	}
 	
-	static public function getInstance($id){
-		
+	/**
+	 * Inserts Branch's data in the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return BranchDAM::insert($this);
+	}
+	
+	/**
+	 * Updates Branch's data in the database.
+	 * @return void
+	 */
+	protected function update(){
+		BranchDAM::update($this);
+	}
+	
+	/**
+	 * Returns instance of a Branch if it founds an id match in the database. Otherwise returns NULL.
+	 *
+	 * @param integer $id
+	 * @return Branch
+	 */
+	static protected function getFromSource($id){
+		return BranchDAM::getInstance($id);
 	}
 }
 ?>
