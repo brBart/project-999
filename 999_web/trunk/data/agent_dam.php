@@ -11,7 +11,7 @@
  */
 class CustomerDAM{
 	/**
-	 * Returns Customer instance object if a match for the nit providad was found in database. Null if not.
+	 * Returns Customer instance object if a match for the nit providad was found in database. NULL if not.
 	 *
 	 * @param string $nit
 	 * @return Customer
@@ -23,7 +23,7 @@ class CustomerDAM{
 			return $customer;
 		}
 		else
-			return null;
+			return NULL;
 	}
 	
 	/**
@@ -69,7 +69,7 @@ class CustomerDAM{
  */
 class SupplierDAM{
 	/**
-	 * Returns a Supplier if founds an id match in the database, otherwise returns null.
+	 * Returns a Supplier if founds an id match in the database, otherwise returns NULL.
 	 *
 	 * @param integer $id
 	 * @return Supplier
@@ -82,7 +82,7 @@ class SupplierDAM{
 			return $supplier;
 		}
 		else
-			return null;
+			return NULL;
 	}
 	
 	/**
@@ -106,13 +106,67 @@ class SupplierDAM{
 	}
 	
 	/**
-	 * Removes Supplier from database.
+	 * Deletes Supplier from database.
 	 *
 	 * @param Supplier $supplier
 	 * @return boolean
 	 */
 	static public function delete(Supplier $supplier){
 		if($supplier->getId() == 123)
+			return true;
+		else
+			return false;
+	}
+}
+
+
+
+class BranchDAM{
+	/**
+	 * Returns a Branch if it founds an id match in the database. Otherwise returns NULL.
+	 *
+	 * @param integer $id
+	 * @return Branch
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$branch = new Branch(123, FROM_DATABASE);
+			$branch->setData('350682-7', 'JG Jutiapa', '78123456', 'Mercado central.',
+					'jutiapa@josegil.net', 'Idania');
+			return $branch;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Inserts Branch into the database.
+	 *
+	 * @param Branch $branch
+	 * @return void
+	 */
+	static public function insert(Branch $branch){
+		// Code here...
+	}
+	
+	/**
+	 * Updates Branch's data in the database.
+	 *
+	 * @param Branch $branch
+	 * @return void
+	 */
+	static public function update(Branch $branch){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes Branch from the database.
+	 *
+	 * @param Branch $branch
+	 * @return boolean
+	 */
+	static public function delete(Branch $branch){
+		if($branch->getId() == 123)
 			return true;
 		else
 			return false;
