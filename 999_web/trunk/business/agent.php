@@ -415,9 +415,16 @@ abstract class Organization extends Agent{
 	 * @param integer $id
 	 * @return Organization
 	 */
-	static public function getInstance($id){
-		self::validateId($id);
-		return self::getFromSource($id);
+	abstract static public function getInstance($id);
+	
+	/**
+	 * Validates an organization's id. Throws an exception if it is not.
+	 *
+	 * @param integer $id
+	 */
+	protected function validateId($id){
+		if(!is_int($id))
+			throw new Exception('Id inv&aacute;lido.');
 	}
 	
 	/**
@@ -453,24 +460,6 @@ abstract class Organization extends Agent{
 	 * @return void
 	 */
 	abstract protected function update();
-	
-	/**
-	 * Returns an Organization instance if the provided id has a match in the database. Otherwise returns NULL.
-	 *
-	 * @param integer $id
-	 * @return Organization
-	 */
-	abstract static protected function getFromSource($id);
-	
-	/**
-	 * Validates an organization's id. Throws an exception if it is not.
-	 *
-	 * @param integer $id
-	 */
-	private function validateId($id){
-		if(!is_int($id))
-			throw new Exception('Id inv&aacute;lido.');
-	}
 	
 	/**
 	 * Validates an organization's telephone number. Throws an exception if it is not.
@@ -518,6 +507,17 @@ abstract class Organization extends Agent{
  */
 class Supplier extends Organization{
 	/**
+	 * Returns an instance of a Supplier. Returns NULL if there was no match in the database.
+	 *
+	 * @param integer $id
+	 * @return Supplier
+	 */
+	static public function getInstance($id){
+		parent::validateId($id);
+		return SupplierDAM::getInstance($id);
+	}
+	
+	/**
 	 * Deletes Supplier from database.
 	 *
 	 * @param Supplier $obj
@@ -543,16 +543,6 @@ class Supplier extends Organization{
 	protected function update(){
 		SupplierDAM::update($this);
 	}
-	
-	/**
-	 * Returns a Supplier instance from database. Returns NULL if there's no match for the provided id.
-	 *
-	 * @param integer $id
-	 * @return Supplier
-	 */
-	static protected function getFromSource($id){
-		return SupplierDAM::getInstance($id);
-	}
 }
 
 
@@ -563,12 +553,23 @@ class Supplier extends Organization{
  */
 class Branch extends Organization{
 	/**
+	 * Returns an instance of a Branch. Returns NULL if there was no match in the database.
+	 *
+	 * @param integer $id
+	 * @return Branch
+	 */
+	static public function getInstance($id){
+		parent::validateId($id);
+		return BranchDAM::getInstance($id);
+	}
+		
+	/**
 	 * Deletes Branch from the database.
 	 *
 	 * @param Branch $branch
 	 * @return boolean
 	 */
-	static public function delete(Branch $branch){
+	static public function delete(Branch $obj){
 		self::validateStatusForDelete($obj);
 		return BranchDAM::delete($obj);
 	}
@@ -587,16 +588,6 @@ class Branch extends Organization{
 	 */
 	protected function update(){
 		BranchDAM::update($this);
-	}
-	
-	/**
-	 * Returns instance of a Branch if it founds an id match in the database. Otherwise returns NULL.
-	 *
-	 * @param integer $id
-	 * @return Branch
-	 */
-	static protected function getFromSource($id){
-		return BranchDAM::getInstance($id);
 	}
 }
 ?>
