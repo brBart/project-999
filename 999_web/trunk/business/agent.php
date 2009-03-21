@@ -1,7 +1,7 @@
 <?php
 /**
- * Library with the business rules for the agents.
- * @package agent
+ * Library with the business rules for the Agents.
+ * @package Agent
  */
 
 require_once('include/config.php');
@@ -9,7 +9,7 @@ require_once('data/agent_dam.php');
 
 /**
  * Defines common functionality for agents derived classes.
- * @package agent
+ * @package Agent
  * @author Roberto Oliveros
  */
 abstract class Agent{
@@ -127,7 +127,7 @@ abstract class Agent{
 
 /**
  * Defines functionality for the customer class used for invoices.
- * @package agent
+ * @package Agent
  * @author Roberto Oliveros
  */
 class Customer extends Agent{
@@ -217,7 +217,7 @@ class Customer extends Agent{
 
 /**
  * Defines common functionality for a organizations derived classes.
- * @package agent
+ * @package Agent
  * @author Roberto Oliveros
  *
  */
@@ -502,7 +502,7 @@ abstract class Organization extends Agent{
 /**
  * Defines functionality for a supplier class, mostly used in receipts documents.
  * 
- * @package agent
+ * @package Agent
  * @author Roberto Oliveros
  */
 class Supplier extends Organization{
@@ -548,7 +548,7 @@ class Supplier extends Organization{
 
 /**
  * Defines functionality for a branch class, mostly used in shipments documents.
- * @package agent
+ * @package Agent
  * @author Roberto Oliveros
  */
 class Branch extends Organization{

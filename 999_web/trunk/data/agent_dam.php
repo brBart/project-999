@@ -1,12 +1,13 @@
 <?php
 /**
- * Library for the classes which access the database.
- * @package agentDAM
+ * Library with the utility classes for the Agent derived classes which access the database.
+ * @package AgentDAM
+ * @author Roberto Oliveros
  */
 
 /**
  * Class that provides access to the database.
- * @package agentDAM
+ * @package AgentDAM
  * @author Roberto Oliveros
  */
 class CustomerDAM{
@@ -63,7 +64,7 @@ class CustomerDAM{
 
 /**
  * Class that provides access to the database.
- * @package agentDAM
+ * @package AgentDAM
  * @author Roberto Oliveros
  *
  */
