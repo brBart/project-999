@@ -513,7 +513,7 @@ class Supplier extends Organization{
 	 * @return Supplier
 	 */
 	static public function getInstance($id){
-		parent::validateId($id);
+		self::validateId($id);
 		return SupplierDAM::getInstance($id);
 	}
 	
@@ -559,7 +559,7 @@ class Branch extends Organization{
 	 * @return Branch
 	 */
 	static public function getInstance($id){
-		parent::validateId($id);
+		self::validateId($id);
 		return BranchDAM::getInstance($id);
 	}
 		
