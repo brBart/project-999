@@ -1,6 +1,6 @@
 <?php
 /**
- * Library with the utility classes for the Agent derived classes which access the database.
+ * Library with the utility classes for the Agent derived classes, which access the database.
  * @package AgentDAM
  * @author Roberto Oliveros
  */
