@@ -93,7 +93,7 @@ class SupplierDAM{
 	 * @return void
 	 */
 	static public function insert(Supplier $supplier){
-		// Code here...
+		return 123;
 	}
 	
 	/**
@@ -147,7 +147,7 @@ class BranchDAM{
 	 * @return void
 	 */
 	static public function insert(Branch $branch){
-		// Code here...
+		return 123;
 	}
 	
 	/**
@@ -161,7 +161,8 @@ class BranchDAM{
 	}
 	
 	/**
-	 * Deletes Branch from the database.
+	 * Deletes Branch from the database. Returns true on success, otherwise it has dependencies and returns
+	 * false.
 	 *
 	 * @param Branch $branch
 	 * @return boolean

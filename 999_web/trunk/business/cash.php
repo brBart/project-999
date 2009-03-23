@@ -6,6 +6,7 @@
  */
 
 require_once('include/config.php');
+require_once('data/cash_dam.php');
 
 /**
  * Class representing a bank.
@@ -156,4 +157,60 @@ class Bank{
 	}
 }
 
+
+/**
+ * Defines functionality for a Deposit.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class Deposit{
+	/**
+	 * Internal identifier.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Deposit slip number.
+	 *
+	 * @var string
+	 */
+	private $_mNumber;
+	
+	/**
+	 * Bank where the Deposit is being made.
+	 *
+	 * @var BankAccount
+	 */
+	private $_mBankAccount;
+	
+	/**
+	 * Cash Register from where the Deposit's money went.
+	 *
+	 * @var CashRegister
+	 */
+	private $_mCashRegister;
+	
+	/**
+	 * Deposit object internal status, e.g. JUST_CREATED or FROM_DATABASE.
+	 *
+	 * @var integer
+	 */
+	private $_mStatus;
+	
+	/**
+	 * Array with DepositDetail items.
+	 *
+	 * @var array
+	 */
+	private $_mDetails;
+	
+	/**
+	 * Deposit total.
+	 *
+	 * @var float
+	 */
+	private $_mTotal;
+}
 ?>
