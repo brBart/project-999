@@ -34,7 +34,7 @@ class BankDAM{
 	 * @return void
 	 */
 	static public function insert(Bank $obj){
-		// Code here...
+		return 123;
 	}
 	
 	/**
