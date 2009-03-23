@@ -63,6 +63,15 @@ class Bank{
 	}
 	
 	/**
+	 * Returns the object's status.
+	 *
+	 * @return integer
+	 */
+	public function getStatus(){
+		return $this->_mStatus;
+	}
+	
+	/**
 	 * Sets the Bank's name.
 	 *
 	 * @param string $name
@@ -212,5 +221,158 @@ class Deposit{
 	 * @var float
 	 */
 	private $_mTotal;
+}
+
+
+/**
+ * Class that representd a bank account.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class BankAccount{
+	/**
+	 * The bank account number.
+	 *
+	 * @var string
+	 */
+	private $_mNumber;
+	
+	/**
+	 * The account's holder.
+	 *
+	 * @var string
+	 */
+	private $_mName;
+	
+	/**
+	 * Bank of the account.
+	 *
+	 * @var Bank
+	 */
+	private $_mBank;
+	
+	/**
+	 * Internal status of instance object, e.g. JUST_CREATED or FROM_DATABASE
+	 *
+	 * @var integer
+	 */
+	private $_mStatus;
+	
+	
+	public function __construct($number = NULL, $status = JUST_CREATED){
+		if(!is_null($number))
+			$this->validateNumber($number);
+	}
+	
+	/**
+	 * Returns the BankAccount's number.
+	 *
+	 * @return string
+	 */
+	public function getNumber(){
+		return $this->_mNumber;
+	}
+	
+	/**
+	 * Returns the BankAccount's holder.
+	 *
+	 * @return string
+	 */
+	public function getName(){
+		return $this->_mName;
+	}
+	
+	/**
+	 * Returns the BankAccount's Bank.
+	 *
+	 * @return Bank
+	 */
+	public function getBank(){
+		return $this->_mBank;
+	}
+	
+	/**
+	 * Sets the BankAccount's number.
+	 *
+	 * @param string $number
+	 * @return void
+	 */
+	public function setNumber($number){
+		if($this->_mStatus == FROM_DATABASE)
+			throw new Exception('No se puede editar n&uacute;mero de cuenta.');
+		
+		$this->validateNumber($number);
+		
+		if(BankAccountDAM::exists($number))
+			throw new Exception('Cuenta Bancaria ya existe.');
+		
+		$this->_mNumber = $number;
+	}
+	
+	/**
+	 * Sets then BankAccount's bank;
+	 *
+	 * @param Bank $obj
+	 * @return void
+	 */
+	public function setBank(Bank $obj){
+		$this->validateBank($obj);
+		$this->_mBank = $obj;
+	}
+	
+	/**
+	 * Sets the BankAccount's holder.
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	public function setName($name){
+		$this->validateName($name);
+		$this->_mName = $name;
+	}
+	
+	/**
+	 * Returns an instance of BankAccount if found in the database. Otherwise returns NULL.
+	 *
+	 * @param string $number
+	 * @return BankAccount
+	 */
+	static public function getInstance($number){
+		$this->validateNumber($number);
+		return BankAccountDAM::getInstance($number);
+	}
+	
+	/**
+	 * Validates the BankAccount's number.
+	 *
+	 * @param string $number
+	 * @return void
+	 */
+	private function validateNumber($number){
+		if(empty($number))
+			throw new Exception('N&uacute;mero de cuenta inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates that the Bank is in the database.
+	 *
+	 * @param Bank $obj
+	 * @return void
+	 */
+	private function validateBank(Bank $obj){
+		if($obj->getStatus() != FROM_DATABASE)
+			throw new Exception('JUST_CREATED Bank provided.');
+	}
+	
+	/**
+	 * Validates the Bank's holder.
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	private function validateName($name){
+		if(empty($name))
+			throw new Exception('Nombre inv&aacute;lido.');
+	}
 }
 ?>
