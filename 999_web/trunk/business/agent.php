@@ -266,6 +266,9 @@ abstract class Organization extends Agent{
 	public function __construct($id = NULL, $status = JUST_CREATED){
 		parent::__construct($status);
 		
+		if(!is_null($id))
+			$this->validateId($id);
+		
 		$this->_mId = $id;
 	}
 	
