@@ -255,4 +255,60 @@ class ReceiptSearch extends DocumentSearch{
 		return ReceiptSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
+
+
+/**
+ * Implements specific functionality for Entry Inventory Adjustment Documents search.
+ * @package DocumentSearch
+ * @author Roberto Oliveros
+ */
+class EntryIASearch extends DocumentSearch{
+	/**
+	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * parameters are passed by reference so the respective values can be return.
+	 *
+	 * @param string $startDate
+	 * @param string $endDate
+	 * @param integer $page
+	 * @param integer $totalPages
+	 * @param integer $totalItems
+	 * @return array
+	 */
+	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+		self::validateDate($startDate);
+		self::validateDate($endDate);
+		self::validatePage($page);
+		return EntryIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+	}
+}
+
+
+/**
+ * Implements specific functionality for Withdraw Inventory Adjustment Documents search.
+ * @package DocumentSearch
+ * @author Roberto Oliveros
+ */
+class WithdrawIASearch extends DocumentSearch{
+	/**
+	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * parameters are passed by reference so the respective values can be return.
+	 *
+	 * @param string $startDate
+	 * @param string $endDate
+	 * @param integer $page
+	 * @param integer $totalPages
+	 * @param integer $totalItems
+	 * @return array
+	 */
+	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+		self::validateDate($startDate);
+		self::validateDate($endDate);
+		self::validatePage($page);
+		return WithdrawIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+	}
+}
 ?>
