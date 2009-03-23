@@ -521,7 +521,8 @@ class Supplier extends Organization{
 	}
 	
 	/**
-	 * Deletes Supplier from database.
+	 * Deletes Supplier from database. Returns true confirming the deletion, false otherwise because it
+	 * has dependencies.
 	 *
 	 * @param Supplier $obj
 	 * @return boolean
