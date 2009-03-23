@@ -63,6 +63,15 @@ abstract class Agent{
 	}
 	
 	/**
+	 * Returns the object's status.
+	 *
+	 * @return integer
+	 */
+	public function getStatus(){
+		return $this->_mStatus;
+	}
+	
+	/**
 	 * Sets the name of the agent.
 	 *
 	 * @param string $name
@@ -172,6 +181,9 @@ class Customer extends Agent{
 			return;
 		
 		if($this->_mStatus == JUST_CREATED){
+			if(CustomerDAM::exist($this->_mNit))
+				throw new Exception('Internal error, Nit already in database.');
+				
 			CustomerDAM::insert($this);
 			$this->_mStatus = FROM_DATABASE;
 		}
