@@ -19,7 +19,7 @@ class CustomerDAM{
 	 */
 	static public function getInstance($nit){
 		if($nit == '1725045-5'){
-			$customer = new Customer('1725045-5', FROM_DATABASE);
+			$customer = new Customer('1725045-5', PersistObject::CREATED);
 			$customer->setData('Infodes');
 			return $customer;
 		}
@@ -77,7 +77,7 @@ class SupplierDAM{
 	 */
 	static public function getInstance($id){
 		if($id == 123){
-			$supplier = new Supplier(123, FROM_DATABASE);
+			$supplier = new Supplier(123, PersistObject::CREATED);
 			$supplier->setData('350682-7', 'Jose Gil', '24129999', '3a calle 7-32 z.1',
 					'info@josegil.net', 'Roberto');
 			return $supplier;
@@ -131,7 +131,7 @@ class BranchDAM{
 	 */
 	static public function getInstance($id){
 		if($id == 123){
-			$branch = new Branch(123, FROM_DATABASE);
+			$branch = new Branch(123, PersistObject::CREATED);
 			$branch->setData('350682-7', 'JG Jutiapa', '78123456', 'Mercado central.',
 					'jutiapa@josegil.net', 'Idania');
 			return $branch;

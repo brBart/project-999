@@ -19,7 +19,7 @@ class BankDAM{
 	 */
 	static public function getInstance($id){
 		if($id == 123){
-			$bank = new Bank(123, FROM_DATABASE);
+			$bank = new Bank(123, PersistObject::CREATED);
 			$bank->setData('GyT Continental');
 			return $bank;
 		}
