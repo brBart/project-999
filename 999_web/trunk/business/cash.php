@@ -34,11 +34,20 @@ class Bank{
 	 */
 	private $_mStatus;
 	
-	
-	public function __construct($id = NULL, $status = JUST_CREATED){
-		
+	/**
+	 * Bank constructor method. Parameters must be set only if the method is called from the database layer.
+	 *
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct($id = NULL, $status = JUST_CREATED){	
 		if(!is_null($id))
-			$this->validateId($id);
+			try{
+				$this->validateId($id);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Bank constructor with bad data! ' .
+						$e->getMessage());
+			}
 			
 		$this->_mId = $id;
 		$this->_mStatus = $status;
@@ -90,7 +99,14 @@ class Bank{
 	 * @return void
 	 */
 	public function setData($name){
-		$this->validateName($name);
+		try{
+			$this->validateName($name);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Bank setData method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
 		$this->_mName = $name;
 	}
 	
@@ -130,7 +146,7 @@ class Bank{
 	 */
 	static public function delete(Bank $obj){
 		if ($obj->_mStatus == JUST_CREATED)
-			throw new Exception('Cannot delete a just created organization from database.');
+			throw new Exception('Cannot delete a JUST_CREATED Bank from database.');
 			
 		return BankDAM::delete($obj);
 	}
@@ -258,10 +274,24 @@ class BankAccount{
 	 */
 	private $_mStatus;
 	
-	
+	/**
+	 * BankAccount's constructor method. Parameters must be set only if called from the database layer.
+	 *
+	 * @param string $number
+	 * @param integer $status
+	 */
 	public function __construct($number = NULL, $status = JUST_CREATED){
 		if(!is_null($number))
-			$this->validateNumber($number);
+			try{
+				$this->validateNumber($number);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling BankAccount constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			
+		$this->_mNumber = $number;
+		$this->_mStatus = $status;
 	}
 	
 	/**
@@ -303,8 +333,7 @@ class BankAccount{
 		
 		$this->validateNumber($number);
 		
-		if(BankAccountDAM::exists($number))
-			throw new Exception('Cuenta Bancaria ya existe.');
+		$this->verifyNumber($number);
 		
 		$this->_mNumber = $number;
 	}
@@ -332,6 +361,22 @@ class BankAccount{
 	}
 	
 	/**
+	 * Saves BankAccount's data in the database.
+	 * @return void
+	 */
+	public function save(){
+		$this->validateMainProperties();
+		
+		if($this->_mStatus == JUST_CREATED){
+			$this->verifyNumber($this->_mNumber);
+			BankAccountDAM::insert($this);
+			$this->_mStatus = FROM_DATABASE;
+		}
+		else
+			BankAccountDAM::update($this);
+	}
+	
+	/**
 	 * Returns an instance of BankAccount if found in the database. Otherwise returns NULL.
 	 *
 	 * @param string $number
@@ -340,6 +385,14 @@ class BankAccount{
 	static public function getInstance($number){
 		$this->validateNumber($number);
 		return BankAccountDAM::getInstance($number);
+	}
+	
+	
+	static public function delete(BankAccount $obj){
+		if ($obj->_mStatus == JUST_CREATED)
+			throw new Exception('Cannot delete a JUST_CREATED BankAccount from database.');
+			
+		return BankAcountDAM::delete($obj);
 	}
 	
 	/**
@@ -373,6 +426,22 @@ class BankAccount{
 	private function validateName($name){
 		if(empty($name))
 			throw new Exception('Nombre inv&aacute;lido.');
+	}
+	
+	
+	private function verifyNumber($number){
+		if(BankAccountDAM::exists($number))
+			throw new Exception('Cuenta Bancaria ya existe.');
+	}
+	
+	/**
+	 * Verifies that all the main properties are set.
+	 * @return void
+	 */
+	private function validateMainProperties(){
+		$this->validateNumber($this->_mNumber);
+		$this->validateName($this->_mName);
+		$this->validateBank($this->_mBank);
 	}
 }
 ?>

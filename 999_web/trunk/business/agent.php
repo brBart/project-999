@@ -279,7 +279,13 @@ abstract class Organization extends Agent{
 		parent::__construct($status);
 		
 		if(!is_null($id))
-			$this->validateId($id);
+			try{
+				$this->validateId($id);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Organization constructor with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
 		
 		$this->_mId = $id;
 	}
@@ -459,9 +465,9 @@ abstract class Organization extends Agent{
 	 * @param Organization $organ
 	 * @return boolean
 	 */
-	static protected function validateStatusForDelete(Organization $obj){
+	static protected function validateOrganizationForDelete(Organization $obj){
 		if ($obj->_mStatus == JUST_CREATED)
-			throw new Exception('Cannot delete a just created organization from database.');
+			throw new Exception('Cannot delete a JUST_CREATED Organization from database.');
 	}
 	
 	/**
@@ -540,7 +546,7 @@ class Supplier extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Supplier $obj){
-		self::validateStatusForDelete($obj);
+		self::validateOrganizationForDelete($obj);
 		return SupplierDAM::delete($obj);
 	}
 	
@@ -586,7 +592,7 @@ class Branch extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Branch $obj){
-		self::validateStatusForDelete($obj);
+		self::validateOrganizationForDelete($obj);
 		return BranchDAM::delete($obj);
 	}
 	
