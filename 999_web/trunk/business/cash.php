@@ -5,7 +5,7 @@
  * @author Roberto Oliveros
  */
 
-require_once('include/config.php');
+require_once('business/persist.php');
 require_once('data/cash_dam.php');
 
 /**
@@ -13,13 +13,13 @@ require_once('data/cash_dam.php');
  * @package Cash
  * @author Roberto Oliveros
  */
-class Bank{
+class Bank extends PersistObject{
 	/**
 	 * Internal identifier.
 	 *
 	 * @var integer
 	 */
-	private $_mId;
+	protected $_mId;
 	
 	/**
 	 * Name of the Bank.
@@ -28,29 +28,24 @@ class Bank{
 	private $_mName;
 	
 	/**
-	 * Internal status of the object, e.g. JUST_CREATED or FROM DATABASE.
-	 *
-	 * @var integer
-	 */
-	private $_mStatus;
-	
-	/**
 	 * Bank constructor method. Parameters must be set only if the method is called from the database layer.
 	 *
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $status = JUST_CREATED){	
+	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+		parent::__construct($status);
+		
 		if(!is_null($id))
 			try{
 				$this->validateId($id);
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Bank constructor with bad data! ' .
 						$e->getMessage());
+				throw $et;
 			}
 			
 		$this->_mId = $id;
-		$this->_mStatus = $status;
 	}
 	
 	/**
@@ -69,15 +64,6 @@ class Bank{
 	 */
 	public function getId(){
 		return $this->_mId;
-	}
-	
-	/**
-	 * Returns the object's status.
-	 *
-	 * @return integer
-	 */
-	public function getStatus(){
-		return $this->_mStatus;
 	}
 	
 	/**
@@ -111,21 +97,6 @@ class Bank{
 	}
 	
 	/**
-	 * Saves Bank's data in the database.
-	 * @return void
-	 */
-	public function save(){
-		$this->validateMainProperties();
-		
-		if($this->_mStatus == JUST_CREATED){
-			$this->_mId = BankDAM::insert($this);
-			$this->_mStatus = FROM_DATABASE;
-		}
-		else
-			BankDAM::update($this);
-	}
-	
-	/**
 	 * Returns instance of a Bank if a match was found in the database for the provided id. Otherwise returns
 	 * NULL.
 	 *
@@ -145,10 +116,32 @@ class Bank{
 	 * @return boolean
 	 */
 	static public function delete(Bank $obj){
-		if ($obj->_mStatus == JUST_CREATED)
-			throw new Exception('Cannot delete a JUST_CREATED Bank from database.');
-			
+		self::validateObjectForDelete($obj);		
 		return BankDAM::delete($obj);
+	}
+	
+	/**
+	 * Inserts the Bank's data in the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return BankDAM::insert($this);
+	}
+	
+	/**
+	 * Updates Bank's data in the database.
+	 * @return void
+	 */
+	protected function update(){
+		BankDAM::update($this);
+	}
+	
+	/**
+	 * Validates Bank's main properties.
+	 * @return void
+	 */
+	protected function validateMainProperties(){
+		$this->validateName($this->_mName);
 	}
 	
 	/**
@@ -171,14 +164,6 @@ class Bank{
 	private function validateId($id){
 		if(!is_int($id))
 			throw new Exception('Id inv&aacute;lido.');
-	}
-	
-	/**
-	 * Validates Bank's main properties.
-	 * @return void
-	 */
-	private function validateMainProperties(){
-		$this->validateName($this->_mName);
 	}
 }
 
@@ -218,7 +203,7 @@ class Deposit{
 	private $_mCashRegister;
 	
 	/**
-	 * Deposit object internal status, e.g. JUST_CREATED or FROM_DATABASE.
+	 * Deposit object internal status, e.g. PersistObject::IN_PROGRESS or PersistObject::CREATED.
 	 *
 	 * @var integer
 	 */
@@ -245,7 +230,7 @@ class Deposit{
  * @package Cash
  * @author Roberto Oliveros
  */
-class BankAccount{
+class BankAccount extends PersistObject{
 	/**
 	 * The bank account number.
 	 *
@@ -268,19 +253,14 @@ class BankAccount{
 	private $_mBank;
 	
 	/**
-	 * Internal status of instance object, e.g. JUST_CREATED or FROM_DATABASE
-	 *
-	 * @var integer
-	 */
-	private $_mStatus;
-	
-	/**
 	 * BankAccount's constructor method. Parameters must be set only if called from the database layer.
 	 *
 	 * @param string $number
 	 * @param integer $status
 	 */
-	public function __construct($number = NULL, $status = JUST_CREATED){
+	public function __construct($number = NULL, $status = PersistObject::IN_PROGRESS){
+		parent::__construct($status);
+		
 		if(!is_null($number))
 			try{
 				$this->validateNumber($number);
@@ -291,7 +271,6 @@ class BankAccount{
 			}
 			
 		$this->_mNumber = $number;
-		$this->_mStatus = $status;
 	}
 	
 	/**
@@ -328,7 +307,7 @@ class BankAccount{
 	 * @return void
 	 */
 	public function setNumber($number){
-		if($this->_mStatus == FROM_DATABASE)
+		if($this->_mStatus == self::CREATED)
 			throw new Exception('No se puede editar n&uacute;mero de cuenta.');
 		
 		$this->validateNumber($number);
@@ -367,13 +346,13 @@ class BankAccount{
 	public function save(){
 		$this->validateMainProperties();
 		
-		if($this->_mStatus == JUST_CREATED){
+		if($this->_mStatus == self::IN_PROGRESS){
 			$this->verifyNumber($this->_mNumber);
-			BankAccountDAM::insert($this);
-			$this->_mStatus = FROM_DATABASE;
+			$this->insert();
+			$this->_mStatus = self::CREATED;
 		}
 		else
-			BankAccountDAM::update($this);
+			$this->update();
 	}
 	
 	/**
@@ -387,12 +366,42 @@ class BankAccount{
 		return BankAccountDAM::getInstance($number);
 	}
 	
-	
+	/**
+	 * Deletes BanckAccount from the database.
+	 *
+	 * @param BankAccount $obj
+	 * @return boolean
+	 */
 	static public function delete(BankAccount $obj){
-		if ($obj->_mStatus == JUST_CREATED)
-			throw new Exception('Cannot delete a JUST_CREATED BankAccount from database.');
-			
+		self::validateObjectForDelete($obj);			
 		return BankAcountDAM::delete($obj);
+	}
+	
+	/**
+	 * Inserts BankAccount's data in the database.
+	 *
+	 * @return void
+	 */
+	protected function insert(){
+		BankAccountDAM::insert($this);
+	}
+	
+	/**
+	 * Updates BankAccount's data in the database.
+	 * @return void
+	 */
+	protected function update(){
+		BankAccountDAM::update($this);
+	}
+	
+	/**
+	 * Verifies that all the main properties are set.
+	 * @return void
+	 */
+	protected function validateMainProperties(){
+		$this->validateNumber($this->_mNumber);
+		$this->validateName($this->_mName);
+		$this->validateBank($this->_mBank);
 	}
 	
 	/**
@@ -413,8 +422,8 @@ class BankAccount{
 	 * @return void
 	 */
 	private function validateBank(Bank $obj){
-		if($obj->getStatus() != FROM_DATABASE)
-			throw new Exception('JUST_CREATED Bank provided.');
+		if($obj->getStatus() != self::CREATED)
+			throw new Exception('PersistObject::IN_PROGRESS Bank provided.');
 	}
 	
 	/**
@@ -432,16 +441,6 @@ class BankAccount{
 	private function verifyNumber($number){
 		if(BankAccountDAM::exists($number))
 			throw new Exception('Cuenta Bancaria ya existe.');
-	}
-	
-	/**
-	 * Verifies that all the main properties are set.
-	 * @return void
-	 */
-	private function validateMainProperties(){
-		$this->validateNumber($this->_mNumber);
-		$this->validateName($this->_mName);
-		$this->validateBank($this->_mBank);
 	}
 }
 ?>

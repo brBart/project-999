@@ -4,7 +4,7 @@
  * @package Agent
  */
 
-require_once('include/config.php');
+require_once('business/persist.php');
 require_once('data/agent_dam.php');
 
 /**
@@ -12,7 +12,7 @@ require_once('data/agent_dam.php');
  * @package Agent
  * @author Roberto Oliveros
  */
-abstract class Agent{
+abstract class Agent extends PersistObject{
 	/**
 	 * Nit (Numero de Identificacion Tributaria) of the agent.
 	 * @var string
@@ -20,29 +20,11 @@ abstract class Agent{
 	protected $_mNit;
 	
 	/**
-	 * Status of the object instance, e.g. JUST_CREATED or FROM_DATABASE.
-	 *
-	 * @var integer
-	 */
-	protected $_mStatus;
-	
-	/**
 	 * Name for the agent.
 	 *
 	 * @var string
 	 */
 	private $_mName;
-	
-	/**
-	 * Agent constructor method. Receives the status for the created instance object. If created from database,
-	 * the status must be set to FROM_DATABASE, otherwise set to JUST_CREATED. Due to the lack of 
-	 * experience... sorry.
-	 *
-	 * @param integer $status
-	 */
-	public function __construct($status){
-		$this->_mStatus = $status;
-	}
 	
 	/**
 	 * Returns the nit of the agent.
@@ -60,15 +42,6 @@ abstract class Agent{
 	 */
 	public function getName(){
 		return $this->_mName;
-	}
-	
-	/**
-	 * Returns the object's status.
-	 *
-	 * @return integer
-	 */
-	public function getStatus(){
-		return $this->_mStatus;
 	}
 	
 	/**
@@ -153,7 +126,7 @@ class Customer extends Agent{
 	 * @param string $nit
 	 * @param integer $status
 	 */
-	public function __construct($nit, $status = JUST_CREATED){
+	public function __construct($nit, $status = PersistObject::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if($this->isConsumidorFinal($nit))
@@ -180,15 +153,15 @@ class Customer extends Agent{
 		if($this->_mNit == CF)
 			return;
 		
-		if($this->_mStatus == JUST_CREATED){
+		if($this->_mStatus == self::IN_PROGRESS){
 			if(CustomerDAM::exist($this->_mNit))
 				throw new Exception('Internal error, Nit already in database.');
 				
-			CustomerDAM::insert($this);
-			$this->_mStatus = FROM_DATABASE;
+			$this->insert();
+			$this->_mStatus = self::CREATED;
 		}
 		else
-			CustomerDAM::update($this);
+			$this->update();
 	}
 	
 	/**
@@ -210,6 +183,22 @@ class Customer extends Agent{
 			else
 				return $customer;
 		}
+	}
+	
+	/**
+	 * Insertes Customer's data into the database.
+	 * @return void
+	 */
+	protected function insert(){
+		CustomerDAM::insert($this);
+	}
+	
+	/**
+	 * Updates Customer's data in the database.
+	 * @return void
+	 */
+	protected function update(){
+		CustomerDAM::update($this);
 	}
 	
 	/**
@@ -275,7 +264,7 @@ abstract class Organization extends Agent{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $status = JUST_CREATED){
+	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if(!is_null($id))
@@ -416,21 +405,6 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Saves Organization's data to the database.
-	 * @return void
-	 */
-	public function save(){
-		$this->validateMainProperties();
-		
-		if($this->_mStatus == JUST_CREATED){
-			$this->_mId = $this->insert();
-			$this->_mStatus = FROM_DATABASE;
-		}
-		else
-			$this->update();
-	}
-	
-	/**
 	 * Returns an instance of a organization class.
 	 *
 	 * @param integer $id
@@ -458,29 +432,6 @@ abstract class Organization extends Agent{
 		$this->validateTelephone($this->_mTelephone);
 		$this->validateAddress($this->_mAddress);
 	}
-	
-	/**
-	 * Proves that the received organization's status != JUST_CREATED. Otherwise it throws an exception.
-	 *
-	 * @param Organization $organ
-	 * @return boolean
-	 */
-	static protected function validateOrganizationForDelete(Organization $obj){
-		if ($obj->_mStatus == JUST_CREATED)
-			throw new Exception('Cannot delete a JUST_CREATED Organization from database.');
-	}
-	
-	/**
-	 * Insert Organization's data to the database.
-	 * @return integer
-	 */
-	abstract protected function insert();
-	
-	/**
-	 * Updates Organization's data in the database.
-	 * @return void
-	 */
-	abstract protected function update();
 	
 	/**
 	 * Validates an organization's telephone number. Throws an exception if it is not.
@@ -546,7 +497,7 @@ class Supplier extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Supplier $obj){
-		self::validateOrganizationForDelete($obj);
+		self::validateObjectForDelete($obj);
 		return SupplierDAM::delete($obj);
 	}
 	
@@ -592,7 +543,7 @@ class Branch extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Branch $obj){
-		self::validateOrganizationForDelete($obj);
+		self::validateObjectForDelete($obj);
 		return BranchDAM::delete($obj);
 	}
 	

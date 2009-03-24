@@ -10,7 +10,7 @@
  * @package Persist
  * @author Roberto Oliveros
  */
-class PersistObject{
+abstract class PersistObject{
 	/**
 	 * Status type. Indicates that the object instance has been just created.
 	 *
@@ -29,6 +29,25 @@ class PersistObject{
 	 * @var integer
 	 */
 	protected $_mStatus;
+	
+	/**
+	 * Receives the status of the created object, e.g. PersistObject::IN_PROGRESS if just been created or
+	 * PersistObject::CREATED if it's data is from database.
+	 *
+	 * @param integer $status
+	 */
+	public function __construct($status){
+		$this->_mStatus = $status;
+	}
+	
+	/**
+	 * Returns the object's status.
+	 *
+	 * @return integer
+	 */
+	public function getStatus(){
+		return $this->_mStatus;
+	}
 	
 	/**
 	 * Saves PersistObject's data in the database.
@@ -57,15 +76,22 @@ class PersistObject{
 			throw new Exception('Cannot delete a PersistObject::IN_PROGRESS object from database.');
 	}
 	
-	 /* Insert PersistObject's data to the database.
+	/**
+	 * Defines functionality for inserting data in the database.
 	 * @return integer
 	 */
 	abstract protected function insert();
 	
 	/**
-	 * Updates PersistObject's data in the database.
+	 * Defines functionality for updating the object's data in the database.
 	 * @return void
 	 */
 	abstract protected function update();
+	
+	/**
+	 * Defines functionality for validating the object's main properties.
+	 * @return void
+	 */
+	abstract protected function validateMainProperties();
 }
 ?>
