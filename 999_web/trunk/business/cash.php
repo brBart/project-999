@@ -471,4 +471,194 @@ class BankAccount extends PersistObject{
 			throw new Exception('Cuenta Bancaria ya existe.');
 	}
 }
+
+/**
+ * Represents a CashRegister working shift.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class Shift extends PersistObject{
+	/**
+	 * Internal identifier.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Name of the shift.
+	 *
+	 * @var string
+	 */
+	private $_mName;
+	
+	/**
+	 * Timetable of the Shift.
+	 *
+	 * @var string
+	 */
+	private $_mTimeTable;
+	
+	/**
+	 * Shift's constructor method. Id must be provided if method is called from database layer.
+	 *
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+		parent::__construct($status);
+		
+		if(!is_null($id))
+			try{
+				$this->validateId($id);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Shift\'s construct method with bad data!' .
+						$e->getMessage());
+				throw $et;
+			}
+			
+		$this->_mId = $id;
+	}
+	
+	/**
+	 * Returns the Shift's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns name.
+	 *
+	 * @return string
+	 */
+	public function getName(){
+		return $this->_mName;
+	}
+	
+	/**
+	 * Returns Shift's Timetable.
+	 *
+	 * @return string
+	 */
+	public function getTimeTable(){
+		return $this->_mTimeTable;
+	}
+	
+	/**
+	 * Sets the Shift's name.
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	public function setName($name){
+		$this->validateName($name);
+		$this->_mName = $name;
+	}
+	
+	/**
+	 * Sets the Shift's Timetable.
+	 *
+	 * @param unknown_type $timeTable
+	 */
+	public function setTimeTable($timeTable){
+		$this->validateTimeTable($timeTable);
+		$this->_mTimeTable = $timeTable;
+	}
+	
+	/**
+	 * Sets Shift's properties. Must be called only from the database layer.
+	 *
+	 * @param string $name
+	 * @param string $timeTable
+	 */
+	public function setData($name, $timeTable){
+		try{
+			$this->validateName($name);
+			$this->validateTimeTable($timeTable);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Shift\'s setData method with bad data! '.
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mName = $name;
+		$this->_mTimeTable = $timeTable;
+	}
+	
+	/**
+	 * Returns an instance of Shift class if it founds a match in the database. Otherwise returns NULL.
+	 *
+	 * @param integer $id
+	 * @return Shift
+	 */
+	static public function getInstance($id){
+		self::validateId($id);
+		return ShiftDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes Shift from the database. Returns true on success, otherwise false due dependencies.
+	 *
+	 * @param Shift $obj
+	 * @return boolean
+	 */
+	static public function delete(Shift $obj){
+		self::validateObjectForDelete($obj);
+		return ShiftDAM::delete($obj);
+	}
+	
+	/**
+	 * Inserts Shift's data in the database. Returns the new created id.
+	 *
+	 * @return integer
+	 */
+	protected function insert(){
+		return ShiftDAM::insert($this);
+	}
+	
+	/**
+	 * Updates Shift's data in the database.
+	 *
+	 * @return void
+	 */
+	protected function update(){
+		ShiftDAM::update($this);
+	}
+	
+	/**
+	 * Validates if the provided name is correct.
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	private function validateName($name){
+		if(empty($name))
+			throw new Exception('Nombre inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates if the provided timetable is correct.
+	 *
+	 * @param string $timeTable
+	 * @return void
+	 */
+	private function validateTimeTable($timeTable){
+		if(empty($timeTable))
+			throw new Exception('Horario inv&aacutelido.');
+	}
+	
+	/**
+	 * Validates if the provided id is correct.
+	 *
+	 * @param integer $id
+	 * @return void
+	 */
+	private function validateId($id){
+		if(!is_int($id))
+			throw new Exception('Id inv&aacute;lido.');
+	}
+}
 ?>
