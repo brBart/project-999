@@ -131,4 +131,61 @@ class BankAccountDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Defines functionality for accessing the shift's database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class ShiftDAM{
+	/**
+	 * Returns a Shift if it founds an id match in the database. Otherwise returns NULL.
+	 *
+	 * @param integer $id
+	 * @return Shift
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$shift = new Shift(123, PersistObject::CREATED);
+			$shift->setData('Diurno', '8am - 6pm');
+			return $shift;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Insert a Shift in the database.
+	 *
+	 * @param Shift $obj
+	 * @return void
+	 */
+	static public function insert(Shift $obj){
+		return 123;
+	}
+	
+	/**
+	 * Updates a Shift data in the database.
+	 *
+	 * @param Shift $obj
+	 * @return void
+	 */
+	static public function update(Shift $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes a Shift from the datase. Returns true on success, otherwise it has dependencies and returns false.
+	 *
+	 * @param Bank $obj
+	 * @return boolean
+	 */
+	static public function delete(Shift $obj){
+		if($obj->getId() == 123)
+			return true;
+		else
+			return false;
+	}
+}
 ?>
