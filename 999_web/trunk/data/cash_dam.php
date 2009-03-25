@@ -60,4 +60,75 @@ class BankDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Defines functionality for accessing the database.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class BankAccountDAM{
+	/**
+	 * Verifies if the provided number already exists in the database.
+	 *
+	 * @param string $number
+	 * @return boolean
+	 */
+	static public function exists($number){
+		if($number == '123')
+			return true;
+		else
+			return false;
+	}
+	
+ 	/** Returns a BankAccount if it founds a match in the database. Otherwise returns NULL.
+	 *
+	 * @param string $number
+	 * @return BankAccount
+	 */
+	static public function getInstance($number){
+		if($number == '123'){
+			$bank_account = new BankAccount('123', PersistObject::CREATED);
+			$bank = Bank::getInstance(123);
+			$bank_account->setData('Roberto Oliveros', $bank);
+			return $bank_account;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Insert a BankAccount in the database.
+	 *
+	 * @param BankAccount $obj
+	 * @return void
+	 */
+	static public function insert(BankAccount $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Updates a BankAccount data in the database.
+	 *
+	 * @param BankAccount $obj
+	 * @return void
+	 */
+	static public function update(BankAccount $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes a BankAccount from the datase. Returns true on success, otherwise it has dependencies and 
+	 * returns false.
+	 *
+	 * @param BankAccount $obj
+	 * @return boolean
+	 */
+	static public function delete(BankAccount $obj){
+		if($obj->getNumber() == '123')
+			return true;
+		else
+			return false;
+	}
+}
 ?>
