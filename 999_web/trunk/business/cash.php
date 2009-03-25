@@ -340,6 +340,26 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
+	 * Sets the properties of the BankAccount. Must be called only from the data layer.
+	 *
+	 * @param string $name
+	 * @param Bank $bank
+	 */
+	public function setData($name, Bank $bank){
+		try{
+			$this->validateName($name);
+			$this->validateBank($bank);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling BankAccount\'s setData method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mName = $name;
+		$this->_mBank = $bank;
+	}
+	
+	/**
 	 * Saves BankAccount's data in the database.
 	 * @return void
 	 */
@@ -362,7 +382,7 @@ class BankAccount extends PersistObject{
 	 * @return BankAccount
 	 */
 	static public function getInstance($number){
-		$this->validateNumber($number);
+		self::validateNumber($number);
 		return BankAccountDAM::getInstance($number);
 	}
 	
@@ -374,7 +394,7 @@ class BankAccount extends PersistObject{
 	 */
 	static public function delete(BankAccount $obj){
 		self::validateObjectForDelete($obj);			
-		return BankAcountDAM::delete($obj);
+		return BankAccountDAM::delete($obj);
 	}
 	
 	/**
@@ -401,7 +421,11 @@ class BankAccount extends PersistObject{
 	protected function validateMainProperties(){
 		$this->validateNumber($this->_mNumber);
 		$this->validateName($this->_mName);
-		$this->validateBank($this->_mBank);
+		
+		if(is_null($this->_mBank))
+			throw new Exception('Banco inv&aacute;lido.');
+		else
+			$this->validateBank($this->_mBank);
 	}
 	
 	/**
@@ -437,7 +461,11 @@ class BankAccount extends PersistObject{
 			throw new Exception('Nombre inv&aacute;lido.');
 	}
 	
-	
+	/**
+	 * Verifies if an BankAccount already exists with that number.
+	 *
+	 * @param unknown_type $number
+	 */
 	private function verifyNumber($number){
 		if(BankAccountDAM::exists($number))
 			throw new Exception('Cuenta Bancaria ya existe.');
