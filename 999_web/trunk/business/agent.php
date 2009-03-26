@@ -14,13 +14,13 @@ require_once('data/agent_dam.php');
  */
 abstract class Agent extends PersistObject{
 	/**
-	 * Nit (Numero de Identificacion Tributaria) of the agent.
+	 * Holds the agent's nit (Numero de Identificacion Tributaria).
 	 * @var string
 	 */
 	protected $_mNit;
 	
 	/**
-	 * Name for the agent.
+	 * Holds the agent's name.
 	 *
 	 * @var string
 	 */
@@ -56,8 +56,9 @@ abstract class Agent extends PersistObject{
 	}
 	
 	/**
-	 * Set data provided by the database. Must be call only from the database layer corresponding class.
-	 *
+	 * Set the object's data provided from the database.
+	 * 
+	 * Must be call only from the database layer corresponding class.
 	 * @param string $name
 	 * @return void
 	 */

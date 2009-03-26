@@ -12,28 +12,31 @@
  */
 abstract class PersistObject{
 	/**
-	 * Status type. Indicates that the object instance has been just created.
-	 *
+	 * Status type.
+	 * 
+	 * Indicates that the object's data has just been created and is not in the database.
 	 */
 	const IN_PROGRESS = 0;
 	
 	/**
-	 * Status type. Indicates that the object instance is already in the database.
-	 *
+	 * Status type.
+	 * 
+	 * Indicates that the object's data is already in the database.
 	 */
 	const CREATED = 1;
 	
 	/**
-	 * Holds the PersistObject's status type.
+	 * Holds the actual status of the object.
 	 *
 	 * @var integer
 	 */
 	protected $_mStatus;
 	
 	/**
-	 * Receives the status of the created PersistObject; PersistObject::IN_PROGRESS in case it's 
-	 * just been created, PersistObject::CREATED if it's data is from database.
-	 *
+	 * Construct the object with the provided status.
+	 * 
+	 * The status must be set to PersistObject::IN_PROGRESS in case it's just been created and its data has 
+	 * not been set or PersistObject::CREATED if it's data is from database.
 	 * @param integer $status
 	 */
 	public function __construct($status){
@@ -41,7 +44,7 @@ abstract class PersistObject{
 	}
 	
 	/**
-	 * Returns the PersisObject::_mStatus.
+	 * Returns the object's status.
 	 *
 	 * @return integer
 	 */
@@ -50,7 +53,10 @@ abstract class PersistObject{
 	}
 	
 	/**
-	 * Saves PersistObject's data in the database.
+	 * Saves object's data in the database.
+	 * 
+	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
+	 * is called, if it's set to PersistObject::CREATED the method update() is called.
 	 * @return void
 	 */
 	public function save(){
@@ -65,9 +71,10 @@ abstract class PersistObject{
 	}
 	
 	/**
-	 * Verifies that PersistObject::_mStatus != PersistObject::IN_PROGRESS. Otherwise it throws an
+	 * Validates if the object can be deleted in the database.
+	 * 
+	 * The object's status must be diferent than PersistObject::IN_PROGRESS. Otherwise it throws an
 	 * exception.
-	 *
 	 * @param PersistObject $obj
 	 * @return void
 	 */
@@ -77,19 +84,19 @@ abstract class PersistObject{
 	}
 	
 	/**
-	 * Defines functionality for inserting data in the database.
+	 * Inserts the object's data in the database.
 	 * @return integer
 	 */
 	abstract protected function insert();
 	
 	/**
-	 * Defines functionality for updating the object's data in the database.
+	 * Updates the object's data in the database.
 	 * @return void
 	 */
 	abstract protected function update();
 	
 	/**
-	 * Defines functionality for validating the object's main properties.
+	 * Validates the object's main properties.
 	 * @return void
 	 */
 	abstract protected function validateMainProperties();
