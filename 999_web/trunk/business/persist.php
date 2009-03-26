@@ -31,8 +31,8 @@ abstract class PersistObject{
 	protected $_mStatus;
 	
 	/**
-	 * Receives the status of the created object, e.g. PersistObject::IN_PROGRESS if just been created or
-	 * PersistObject::CREATED if it's data is from database.
+	 * Receives the status of the created PersistObject; PersistObject::IN_PROGRESS in case it's 
+	 * just been created, PersistObject::CREATED if it's data is from database.
 	 *
 	 * @param integer $status
 	 */
@@ -41,7 +41,7 @@ abstract class PersistObject{
 	}
 	
 	/**
-	 * Returns the object's status.
+	 * Returns the PersisObject::_mStatus.
 	 *
 	 * @return integer
 	 */
@@ -65,11 +65,11 @@ abstract class PersistObject{
 	}
 	
 	/**
-	 * Proves that the received PersistObject's status != PersistObject::IN_PROGRESS. Otherwise it throws an
+	 * Verifies that PersistObject::_mStatus != PersistObject::IN_PROGRESS. Otherwise it throws an
 	 * exception.
 	 *
-	 * @param Organization $organ
-	 * @return boolean
+	 * @param PersistObject $obj
+	 * @return void
 	 */
 	static protected function validateObjectForDelete(PersistObject $obj){
 		if ($obj->_mStatus == self::IN_PROGRESS)

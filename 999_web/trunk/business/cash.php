@@ -121,7 +121,7 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Inserts the Bank's data in the database.
+	 * Inserts the Bank's data in the database. Returns the new created id.
 	 * @return integer
 	 */
 	protected function insert(){
@@ -137,7 +137,7 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Validates Bank's main properties.
+	 * Validates Bank::_mName is set correctly. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -415,7 +415,8 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Verifies that all the main properties are set.
+	 * Validates BankAccount::_mNumber, BankAccount::_mName and BankAccount::_mBank are set correctly. Otherwise
+	 * it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -483,7 +484,7 @@ class Shift extends PersistObject{
 	 *
 	 * @var integer
 	 */
-	private $_mId;
+	protected $_mId;
 	
 	/**
 	 * Name of the shift.
@@ -500,7 +501,7 @@ class Shift extends PersistObject{
 	private $_mTimeTable;
 	
 	/**
-	 * Shift's constructor method. Id must be provided if method is called from database layer.
+	 * Shift's constructor method. Parameters must be set only if the method is called from the database layer.
 	 *
 	 * @param integer $id
 	 * @param integer $status
@@ -561,7 +562,7 @@ class Shift extends PersistObject{
 	/**
 	 * Sets the Shift's Timetable.
 	 *
-	 * @param unknown_type $timeTable
+	 * @param string $timeTable
 	 */
 	public function setTimeTable($timeTable){
 		$this->validateTimeTable($timeTable);
@@ -626,6 +627,15 @@ class Shift extends PersistObject{
 	 */
 	protected function update(){
 		ShiftDAM::update($this);
+	}
+	
+	/**
+	 * Validates Shift::_mName and Shift::_mTimeTable are set correctly. Otherwise it throws an exception.
+	 * @return void
+	 */
+	protected function validateMainProperties(){
+		$this->validateName($this->_mName);
+		$this->validateTimeTable($this->_mTimeTable);
 	}
 	
 	/**

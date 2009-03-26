@@ -85,7 +85,7 @@ abstract class Agent extends PersistObject{
 	}
 	
 	/**
-	 * Proves if nit and name are set correctly.
+	 * Validates Agent::_mNit and Agent::_mName are set correctly. Otherwise it throws an exception.
 	 * 
 	 * @return void
 	 */
@@ -259,7 +259,8 @@ abstract class Organization extends Agent{
 	private $_mContact;
 	
 	/**
-	 * Organization constructor method.
+	 * Organization constructor method. Parameters must be set only if the method is called from the 
+	 * database layer.
 	 *
 	 * @param integer $id
 	 * @param integer $status
@@ -423,7 +424,8 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Proves that telephone and address are set correctly. Otherwise it throws an exception.
+	 * Validates Organization::_mTelephone and Organization::_mAddress are set correctly. Otherwise it 
+	 * throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -502,7 +504,7 @@ class Supplier extends Organization{
 	}
 	
 	/**
-	 * Insert Supplier's data in the database.
+	 * Insert Supplier's data in the database. Returns the new created id.
 	 * @return integer
 	 */
 	protected function insert(){
@@ -548,7 +550,7 @@ class Branch extends Organization{
 	}
 	
 	/**
-	 * Inserts Branch's data in the database.
+	 * Inserts Branch's data in the database. Returns the new created id.
 	 * @return integer
 	 */
 	protected function insert(){
