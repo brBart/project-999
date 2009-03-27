@@ -56,9 +56,10 @@ abstract class Agent extends PersistObject{
 	}
 	
 	/**
-	 * Set the object's data provided from the database.
+	 * Set the object's data provided by the database.
 	 * 
-	 * Must be call only from the database layer corresponding class.
+	 * Must be call only from the database layer corresponding class. The object's status must be set to
+	 * PersistObject::CREATED in the constructor method too.
 	 * @param string $name
 	 * @return void
 	 */
@@ -75,8 +76,9 @@ abstract class Agent extends PersistObject{
 	}
 	
 	/**
-	 * Validates if a nit is correct. Throws an exception if it is.
-	 *
+	 * Validates the agent's nit.
+	 * 
+	 * Verifies that the agent's nit is set correctly. Otherwise it throws an exception.
 	 * @param string $nit
 	 * @return void
 	 */
@@ -86,8 +88,9 @@ abstract class Agent extends PersistObject{
 	}
 	
 	/**
-	 * Validates Agent::_mNit and Agent::_mName are set correctly. Otherwise it throws an exception.
+	 * Validates the object's main properties.
 	 * 
+	 * Verifies that the agent's nit and name are set correctly. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -96,8 +99,9 @@ abstract class Agent extends PersistObject{
 	}
 	
 	/**
-	 * Validates if the name is correct. Throws an exception if it is not.
-	 *
+	 * Validates the agent's name.
+	 * 
+	 * Verifies that agent's name is set correctly. Otherwise it throws an exception.
 	 * @param string $name
 	 * @return void
 	 */
@@ -109,21 +113,22 @@ abstract class Agent extends PersistObject{
 
 
 /**
- * Defines functionality for the customer class used for invoices.
+ * Represents the invoice's customer.
  * @package Agent
  * @author Roberto Oliveros
  */
 class Customer extends Agent{
 	/**
-	 * Defines Consumidor Final initials.
+	 * Consumidor Final initials.
 	 *
 	 */
 	const CF = 'CF';
 	
 	/**
-	 * Customer constructor method. Do not use, use Customer::getInstance instead. It is public because is called
-	 * from database layer corresponding class also. Lack of experience... sorry.
-	 *
+	 * Constructs the customer object with the provided nit and status.
+	 * 
+	 * Do not use, use getInstance() instead. It is public because is called from database layer 
+	 * corresponding class. Lack of experience... sorry. Valid nit is required.
 	 * @param string $nit
 	 * @param integer $status
 	 */
@@ -166,9 +171,10 @@ class Customer extends Agent{
 	}
 	
 	/**
-	 * Returns an instance of a Customer with database data. If there is no match for the nit provided, a new
-	 * Customer is created and return. Nit is validated, e.g. c/f, 1725045-5 are valids.
-	 *
+	 * Returns an instance of a customer with database data. 
+	 * 
+	 * If there is no match for the nit provided, a new customer is created and return. Valid nit is required,
+	 * e.g. c/f, 1725045-5.
 	 * @param string $nit
 	 * @return Customer
 	 */
