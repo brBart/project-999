@@ -22,7 +22,7 @@ class Bank extends PersistObject{
 	protected $_mId;
 	
 	/**
-	 * Name the bank's name.
+	 * Holds the bank's name.
 	 * @var string
 	 */
 	private $_mName;
@@ -240,29 +240,30 @@ class Deposit{
  */
 class BankAccount extends PersistObject{
 	/**
-	 * The bank account number.
+	 * Holds the account's number.
 	 *
 	 * @var string
 	 */
 	private $_mNumber;
 	
 	/**
-	 * The account's holder.
+	 * Holds the account's holder.
 	 *
 	 * @var string
 	 */
 	private $_mName;
 	
 	/**
-	 * Bank of the account.
+	 * Holds the account's bank.
 	 *
 	 * @var Bank
 	 */
 	private $_mBank;
 	
 	/**
-	 * BankAccount's constructor method. Parameters must be set only if called from the database layer.
-	 *
+	 * Construct the bank account with the provided number and status.
+	 * 
+	 * Parameters must be set only if called from the database layer.
 	 * @param string $number
 	 * @param integer $status
 	 */
@@ -282,7 +283,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Returns the BankAccount's number.
+	 * Returns the account's number.
 	 *
 	 * @return string
 	 */
@@ -291,7 +292,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Returns the BankAccount's holder.
+	 * Returns the account's holder.
 	 *
 	 * @return string
 	 */
@@ -300,7 +301,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Returns the BankAccount's Bank.
+	 * Returns the account's bank.
 	 *
 	 * @return Bank
 	 */
@@ -309,7 +310,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Sets the BankAccount's number.
+	 * Sets the account's number.
 	 *
 	 * @param string $number
 	 * @return void
@@ -326,7 +327,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Sets then BankAccount's bank;
+	 * Sets the account's bank;
 	 *
 	 * @param Bank $obj
 	 * @return void
@@ -337,7 +338,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Sets the BankAccount's holder.
+	 * Sets the account's holder.
 	 *
 	 * @param string $name
 	 * @return void
@@ -348,8 +349,10 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Sets the properties of the BankAccount. Must be called only from the data layer.
-	 *
+	 * Set the object's data provided by the database.
+	 * 
+	 * Must be call only from the database layer corresponding class. The object's status must be set to
+	 * PersistObject::CREATED in the constructor method too.
 	 * @param string $name
 	 * @param Bank $bank
 	 */
@@ -368,7 +371,10 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Saves BankAccount's data in the database.
+	 * Saves bank account's data to the database.
+	 * 
+	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
+	 * is called, if it's set to PersistObject::CREATED the method update() is called.
 	 * @return void
 	 */
 	public function save(){
@@ -384,8 +390,9 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Returns an instance of BankAccount if found in the database. Otherwise returns NULL.
-	 *
+	 * Returns an instance of bank account.
+	 * 
+	 * Returns NULL if there was no match in the database.
 	 * @param string $number
 	 * @return BankAccount
 	 */
@@ -395,8 +402,9 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Deletes BanckAccount from the database.
+	 * Deletes the banck account from the database.
 	 *
+	 * Returns true confirming the deletion, otherwise false due dependencies.
 	 * @param BankAccount $obj
 	 * @return boolean
 	 */
@@ -406,7 +414,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Inserts BankAccount's data in the database.
+	 * Inserts the bank account's data in the database.
 	 *
 	 * @return void
 	 */
@@ -415,7 +423,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Updates BankAccount's data in the database.
+	 * Updates the bank account's data in the database.
 	 * @return void
 	 */
 	protected function update(){
@@ -423,8 +431,10 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Validates BankAccount::_mNumber, BankAccount::_mName and BankAccount::_mBank are set correctly. Otherwise
-	 * it throws an exception.
+	 * Validates bank account's main properties.
+	 * 
+	 * Verifies that the number and name are not empty. The bank's status must not be PersisObject::IN_PROGRESS.
+	 * Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -438,8 +448,9 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Validates the BankAccount's number.
+	 * Validates the bank account's number.
 	 *
+	 * Must not be number. Otherwise it throws an exception.
 	 * @param string $number
 	 * @return void
 	 */
@@ -449,8 +460,9 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Validates that the Bank is in the database.
+	 * Validates the account's bank.
 	 *
+	 * Bank's status property must be set other than PersistObject::IN_PROGRESS.
 	 * @param Bank $obj
 	 * @return void
 	 */
@@ -460,8 +472,9 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Validates the Bank's holder.
+	 * Validates the bank's holder.
 	 *
+	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $name
 	 * @return void
 	 */
@@ -471,8 +484,7 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Verifies if an BankAccount already exists with that number.
-	 *
+	 * Verifies if an account's number already exists in the database.
 	 * @param unknown_type $number
 	 */
 	private function verifyNumber($number){
@@ -481,36 +493,38 @@ class BankAccount extends PersistObject{
 	}
 }
 
+
 /**
- * Represents a CashRegister working shift.
+ * Represents a working shift in the cash register.
  * @package Cash
  * @author Roberto Oliveros
  */
 class Shift extends PersistObject{
 	/**
-	 * Internal identifier.
+	 * Holds the shift's id.
 	 *
 	 * @var integer
 	 */
 	protected $_mId;
 	
 	/**
-	 * Name of the shift.
+	 * Holds the shift's name.
 	 *
 	 * @var string
 	 */
 	private $_mName;
 	
 	/**
-	 * Timetable of the Shift.
+	 * Holds the timetable of the working shift.
 	 *
 	 * @var string
 	 */
 	private $_mTimeTable;
 	
 	/**
-	 * Shift's constructor method. Parameters must be set only if the method is called from the database layer.
-	 *
+	 * Construct the shift with the provided id and status.
+	 * 
+	 * Parameters must be set only if the method is called from the database layer.
 	 * @param integer $id
 	 * @param integer $status
 	 */
@@ -530,7 +544,7 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Returns the Shift's id.
+	 * Returns the shift's id.
 	 *
 	 * @return integer
 	 */
@@ -539,7 +553,7 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Returns name.
+	 * Returns the shift's name.
 	 *
 	 * @return string
 	 */
@@ -548,7 +562,7 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Returns Shift's Timetable.
+	 * Returns shift's timetable.
 	 *
 	 * @return string
 	 */
@@ -557,7 +571,7 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Sets the Shift's name.
+	 * Sets the shift's name.
 	 *
 	 * @param string $name
 	 * @return void
@@ -568,7 +582,7 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Sets the Shift's Timetable.
+	 * Sets the shift's timetable.
 	 *
 	 * @param string $timeTable
 	 */
@@ -578,8 +592,10 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Sets Shift's properties. Must be called only from the database layer.
-	 *
+	 * Sets the shift's properties with data from the database.
+	 * 
+	 * Must be called only from the database layer. The object's status must be set to
+	 * PersistObject::CREATED in the constructor method too.
 	 * @param string $name
 	 * @param string $timeTable
 	 */
@@ -598,8 +614,9 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Returns an instance of Shift class if it founds a match in the database. Otherwise returns NULL.
-	 *
+	 * Returns an instance of a shift.
+	 * 
+	 * Returns NULL if there was no match in the database.
 	 * @param integer $id
 	 * @return Shift
 	 */
@@ -609,8 +626,9 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Deletes Shift from the database. Returns true on success, otherwise false due dependencies.
-	 *
+	 * Deletes the shift from the database.
+	 * 
+	 * Returns true on success, otherwise false due dependencies.
 	 * @param Shift $obj
 	 * @return boolean
 	 */
@@ -620,8 +638,9 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Inserts Shift's data in the database. Returns the new created id.
-	 *
+	 * Inserts the shift's data in the database.
+	 * 
+	 * Returns the new created id from the database.
 	 * @return integer
 	 */
 	protected function insert(){
@@ -629,7 +648,7 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Updates Shift's data in the database.
+	 * Updates shift's data in the database.
 	 *
 	 * @return void
 	 */
@@ -638,7 +657,9 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Validates Shift::_mName and Shift::_mTimeTable are set correctly. Otherwise it throws an exception.
+	 * Validates the object's main properties.
+	 * 
+	 * Verifies that the name and timetable are not empty. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -648,7 +669,8 @@ class Shift extends PersistObject{
 	
 	/**
 	 * Validates if the provided name is correct.
-	 *
+	 * 
+	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $name
 	 * @return void
 	 */
@@ -660,6 +682,7 @@ class Shift extends PersistObject{
 	/**
 	 * Validates if the provided timetable is correct.
 	 *
+	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $timeTable
 	 * @return void
 	 */
@@ -671,11 +694,12 @@ class Shift extends PersistObject{
 	/**
 	 * Validates if the provided id is correct.
 	 *
+	 * Must be greater than cero. Otherwise it throw an exception.
 	 * @param integer $id
 	 * @return void
 	 */
 	private function validateId($id){
-		if(!is_int($id))
+		if(!is_int($id) || $id <= 0)
 			throw new Exception('Id inv&aacute;lido.');
 	}
 }
