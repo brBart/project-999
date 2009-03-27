@@ -15,6 +15,8 @@ require_once('data/agent_dam.php');
 abstract class Agent extends PersistObject{
 	/**
 	 * Holds the agent's nit (Numero de Identificacion Tributaria).
+	 * 
+	 * Note that must match the "^[0-9]+[-][0-9]$" pattern to be valid, e.g. 1725045-5.
 	 * @var string
 	 */
 	protected $_mNit;
@@ -78,7 +80,7 @@ abstract class Agent extends PersistObject{
 	/**
 	 * Validates the agent's nit.
 	 * 
-	 * Verifies that the agent's nit is set correctly. Otherwise it throws an exception.
+	 * Verifies that the agent's nit is set correctly, e.g. 1725045-5. Otherwise it throws an exception.
 	 * @param string $nit
 	 * @return void
 	 */
@@ -101,7 +103,7 @@ abstract class Agent extends PersistObject{
 	/**
 	 * Validates the agent's name.
 	 * 
-	 * Verifies that agent's name is set correctly. Otherwise it throws an exception.
+	 * Verifies that agent's name is not empty. Otherwise it throws an exception.
 	 * @param string $name
 	 * @return void
 	 */
@@ -128,7 +130,7 @@ class Customer extends Agent{
 	 * Constructs the customer object with the provided nit and status.
 	 * 
 	 * Do not use, use getInstance() instead. It is public because is called from database layer 
-	 * corresponding class. Lack of experience... sorry. Valid nit is required.
+	 * corresponding class. Valid nit or consumidor final initials are required.
 	 * @param string $nit
 	 * @param integer $status
 	 */
@@ -150,7 +152,10 @@ class Customer extends Agent{
 	}
 	
 	/**
-	 * Saves Customer's data to the database.
+	 * Saves customer's data to the database.
+	 * 
+	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
+	 * is called, if it's set to PersistObject::CREATED the method update() is called.
 	 * @return void
 	 */
 	public function save(){
@@ -173,8 +178,7 @@ class Customer extends Agent{
 	/**
 	 * Returns an instance of a customer with database data. 
 	 * 
-	 * If there is no match for the nit provided, a new customer is created and return. Valid nit is required,
-	 * e.g. c/f, 1725045-5.
+	 * If there is no match for the nit provided, a new customer is created and return.
 	 * @param string $nit
 	 * @return Customer
 	 */
@@ -193,7 +197,7 @@ class Customer extends Agent{
 	}
 	
 	/**
-	 * Insertes Customer's data into the database.
+	 * Inserts customer's data in the database.
 	 * @return void
 	 */
 	protected function insert(){
@@ -201,7 +205,7 @@ class Customer extends Agent{
 	}
 	
 	/**
-	 * Updates Customer's data in the database.
+	 * Updates customer's data in the database.
 	 * @return void
 	 */
 	protected function update(){
@@ -209,8 +213,10 @@ class Customer extends Agent{
 	}
 	
 	/**
-	 * Verifies if the provided nit == Consumidor Final. Returns true if equal, otherwise false.
-	 *
+	 * Verifies if the provided nit represents a consumidor final.
+	 * 
+	 * Checks if the provided nit match the "^[cC][\\\/.]?([fF]$|[fF]\.?$)" pattern. Returns true if 
+	 * equal, otherwise false.
 	 * @param string $nit
 	 * @return boolean
 	 */
@@ -231,44 +237,45 @@ class Customer extends Agent{
  */
 abstract class Organization extends Agent{
 	/**
-	 * Internal object id.
+	 * Holds the organization's id.
 	 *
 	 * @var integer
 	 */
 	protected $_mId;
 	
 	/**
-	 * Organization's telephone number.
+	 * Holds the organization's telephone number.
 	 *
 	 * @var string
 	 */
 	private $_mTelephone;
 	
 	/**
-	 * Organization's address.
+	 * Holds the organization's address.
 	 *
 	 * @var string
 	 */
 	private $_mAddress;
 	
 	/**
-	 * Organization's email address.
+	 * Holds the organization's email address.
 	 *
+	 * Note that must be a valid email format, e.g. anybody@whatever.com
 	 * @var string
 	 */
 	private $_mEmail;
 	
 	/**
-	 * Organization's direct contact person.
+	 * Holds the organization's direct contact person.
 	 *
 	 * @var string
 	 */
 	private $_mContact;
 	
 	/**
-	 * Organization constructor method. Parameters must be set only if the method is called from the 
-	 * database layer.
-	 *
+	 * Constructs the organization with the provided id and status.
+	 * 
+	 * Parameters must be set only if the method is called from the database layer.
 	 * @param integer $id
 	 * @param integer $status
 	 */
@@ -288,7 +295,7 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Returns object's id.
+	 * Returns the organization's id.
 	 *
 	 * @return integer
 	 */
@@ -306,7 +313,7 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Returns organization's address.
+	 * Returns the organization's address.
 	 *
 	 * @return string
 	 */
@@ -315,7 +322,7 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Returns organization's email address.
+	 * Returns the organization's email address.
 	 *
 	 * @return string
 	 */
@@ -324,7 +331,7 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Returns organization's direct contact person.
+	 * Returns the organization's direct contact person.
 	 *
 	 * @return string
 	 */
@@ -333,8 +340,9 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Sets organization's nit. Nit is validated, e.g. 350682-7, 1725045-5 are valids, c/f or alikes are not.
-	 *
+	 * Sets organization's nit.
+	 * 
+	 * Valid nit is required, consumidor final initials are not accepted.
 	 * @param string $nit
 	 */
 	public function setNit($nit){
@@ -343,7 +351,7 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Sets organization telephone number.
+	 * Sets organization's telephone number.
 	 *
 	 * @param string $telephone
 	 */
@@ -353,7 +361,7 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Sets organization's address.
+	 * Sets the organization's address.
 	 *
 	 * @param string $address
 	 */
@@ -363,8 +371,8 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Sets organization's email address. Note that must be a valid email format, e.g. anybody@whatever.com
-	 *
+	 * Sets organization's email address.
+	 * 
 	 * @param string $email
 	 */
 	public function setEmail($email){
@@ -373,7 +381,7 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Sets organization's direct contact person.
+	 * Sets the organization's direct contact person.
 	 *
 	 * @param string $contact
 	 */
@@ -382,8 +390,10 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Set data provided by the database. Must be call only from the database layer corresponding class.
-	 *
+	 * Set the organization's data provided by the database.
+	 * 
+	 * Must be call only from the database layer corresponding class. The object's status must be set to
+	 * PersistObject::CREATED in the constructor method too.
 	 * @param string $nit
 	 * @param string $name
 	 * @param string $telephone
@@ -421,18 +431,20 @@ abstract class Organization extends Agent{
 	abstract static public function getInstance($id);
 	
 	/**
-	 * Validates an organization's id. Throws an exception if it is not.
-	 *
+	 * Validates an organization's id.
+	 * 
+	 * Verifies that the id is greater than cero. Otherwise it throws an exception.
 	 * @param integer $id
 	 */
 	protected function validateId($id){
-		if(!is_int($id))
+		if(!is_int($id) || $id <= 0)
 			throw new Exception('Id inv&aacute;lido.');
 	}
 	
 	/**
-	 * Validates Organization::_mTelephone and Organization::_mAddress are set correctly. Otherwise it 
-	 * throws an exception.
+	 * Validates the organization's main properties.
+	 * 
+	 * Verifies the organization's telephone and address are not empty. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -443,8 +455,9 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Validates an organization's telephone number. Throws an exception if it is not.
-	 *
+	 * Validates the organization's telephone number.
+	 * 
+	 * Verifies that the telephone is not empty. Otherwise it throws an exception.
 	 * @param string $telephone
 	 * @return void
 	 */
@@ -454,8 +467,9 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Validates an organization's address. Throws an exception if it is not.
-	 *
+	 * Validates an organization's address.
+	 * 
+	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $address
 	 * @return void
 	 */
@@ -465,8 +479,9 @@ abstract class Organization extends Agent{
 	}
 	
 	/**
-	 * Validates an organization's email address. Throws an exception if it is not.
-	 *
+	 * Validates an organization's email address.
+	 * 
+	 * Must be in the correct format, e.g. example@yeah.com. Otherwise it throws an exception.
 	 * @param string $email
 	 * @return void
 	 */
@@ -488,8 +503,9 @@ abstract class Organization extends Agent{
  */
 class Supplier extends Organization{
 	/**
-	 * Returns an instance of a Supplier. Returns NULL if there was no match in the database.
-	 *
+	 * Returns an instance of a supplier.
+	 * 
+	 * Returns NULL if there was no match in the database.
 	 * @param integer $id
 	 * @return Supplier
 	 */
@@ -499,9 +515,9 @@ class Supplier extends Organization{
 	}
 	
 	/**
-	 * Deletes Supplier from database. Returns true confirming the deletion, false otherwise because it
-	 * has dependencies.
-	 *
+	 * Deletes the supplier from database.
+	 * 
+	 * Returns true confirming the deletion, otherwise false due dependencies.
 	 * @param Supplier $obj
 	 * @return boolean
 	 */
@@ -511,7 +527,9 @@ class Supplier extends Organization{
 	}
 	
 	/**
-	 * Insert Supplier's data in the database. Returns the new created id.
+	 * Insert the supplier's data in the database.
+	 * 
+	 * Returns the new created id from the database.
 	 * @return integer
 	 */
 	protected function insert(){
@@ -519,7 +537,7 @@ class Supplier extends Organization{
 	}
 	
 	/**
-	 * Updates Supplier's data in the database.
+	 * Updates the supplier's data in the database.
 	 * @return void
 	 */
 	protected function update(){
@@ -535,8 +553,9 @@ class Supplier extends Organization{
  */
 class Branch extends Organization{
 	/**
-	 * Returns an instance of a Branch. Returns NULL if there was no match in the database.
-	 *
+	 * Returns an instance of a branch.
+	 * 
+	 * Returns NULL if there was no match in the database.
 	 * @param integer $id
 	 * @return Branch
 	 */
@@ -546,8 +565,9 @@ class Branch extends Organization{
 	}
 		
 	/**
-	 * Deletes Branch from the database.
+	 * Deletes the branch from the database.
 	 *
+	 * Returns true confirming the deletion, otherwise false due dependencies.
 	 * @param Branch $branch
 	 * @return boolean
 	 */
@@ -557,7 +577,9 @@ class Branch extends Organization{
 	}
 	
 	/**
-	 * Inserts Branch's data in the database. Returns the new created id.
+	 * Inserts the branch's data in the database.
+	 * 
+	 * Returns the new created id from the database.
 	 * @return integer
 	 */
 	protected function insert(){
@@ -565,7 +587,7 @@ class Branch extends Organization{
 	}
 	
 	/**
-	 * Updates Branch's data in the database.
+	 * Updates the branch's data in the database.
 	 * @return void
 	 */
 	protected function update(){

@@ -15,21 +15,22 @@ require_once('data/cash_dam.php');
  */
 class Bank extends PersistObject{
 	/**
-	 * Internal identifier.
+	 * Holds the bank's id.
 	 *
 	 * @var integer
 	 */
 	protected $_mId;
 	
 	/**
-	 * Name of the Bank.
+	 * Name the bank's name.
 	 * @var string
 	 */
 	private $_mName;
 	
 	/**
-	 * Bank constructor method. Parameters must be set only if the method is called from the database layer.
-	 *
+	 * Constructs the bank with the provided id and status.
+	 * 
+	 * Parameters must be set only if the method is called from the database layer.
 	 * @param integer $id
 	 * @param integer $status
 	 */
@@ -49,7 +50,7 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Returns the name of the Bank.
+	 * Returns the name of the bank.
 	 *
 	 * @return string
 	 */
@@ -58,7 +59,7 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Returns the Bank's id.
+	 * Returns the bank's id.
 	 *
 	 * @return integer
 	 */
@@ -67,7 +68,7 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Sets the Bank's name.
+	 * Sets the bank's name.
 	 *
 	 * @param string $name
 	 * @return void
@@ -78,9 +79,10 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Sets the Bank's data. Must be called only from the data layer corresponding class. Lack of experience,
-	 * sorry.
-	 *
+	 * Set the bank's data provided by the database.
+	 * 
+	 * Must be call only from the database layer corresponding class. The object's status must be set to
+	 * PersistObject::CREATED in the constructor method too.
 	 * @param string $name
 	 * @return void
 	 */
@@ -97,9 +99,9 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Returns instance of a Bank if a match was found in the database for the provided id. Otherwise returns
-	 * NULL.
-	 *
+	 * Returns instance of a bank.
+	 * 
+	 * Returns NULL if there was no match in the database.
 	 * @param integer $id
 	 * @return Bank
 	 */
@@ -109,9 +111,9 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Deletes Bank from database. Returns true confirming the deletion, false otherwise because it has
-	 * dependencies.
-	 *
+	 * Deletes the bank from database.
+	 * 
+	 * Returns true confirming the deletion, otherwise false due dependencies.
 	 * @param Bank $obj
 	 * @return boolean
 	 */
@@ -121,7 +123,9 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Inserts the Bank's data in the database. Returns the new created id.
+	 * Inserts the bank's data in the database.
+	 * 
+	 * Returns the new created id from the database.
 	 * @return integer
 	 */
 	protected function insert(){
@@ -129,7 +133,7 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Updates Bank's data in the database.
+	 * Updates the bank's data in the database.
 	 * @return void
 	 */
 	protected function update(){
@@ -137,7 +141,9 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Validates Bank::_mName is set correctly. Otherwise it throws an exception.
+	 * Validates the bank's main properties.
+	 * 
+	 * Verifies that the bank's name is not empty. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -145,8 +151,9 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Validates the Bank's name.
+	 * Validates the bank's name.
 	 *
+	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $name
 	 * @return void
 	 */
@@ -156,13 +163,14 @@ class Bank extends PersistObject{
 	}
 	
 	/**
-	 * Validates the Bank's id.
+	 * Validates the bank's id.
 	 *
+	 * Verifies that the id is greater than cero. Otherwise it throws an exception.
 	 * @param integer $id
 	 * @return void
 	 */
 	private function validateId($id){
-		if(!is_int($id))
+		if(!is_int($id) || $id <= 0)
 			throw new Exception('Id inv&aacute;lido.');
 	}
 }
