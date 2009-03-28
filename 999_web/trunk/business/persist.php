@@ -10,8 +10,8 @@
  * @package Persist
  * @author Roberto Oliveros
  */
-abstract class PersistObject{
-	/**
+abstract class Persist{
+/**
 	 * Status type.
 	 * 
 	 * Indicates that the object's data has just been created and is not in the database.
@@ -51,7 +51,15 @@ abstract class PersistObject{
 	public function getStatus(){
 		return $this->_mStatus;
 	}
-	
+}
+
+
+/**
+ * Defines common functionality for persist objects derived classes.
+ * @package Persist
+ * @author Roberto Oliveros
+ */
+abstract class PersistObject extends Persist{
 	/**
 	 * Saves object's data in the database.
 	 * 
@@ -136,5 +144,20 @@ abstract class Identifier extends PersistObject{
 		if(!is_int($id) || $id <= 0)
 			throw new Exception('Id inv&aacute;lido.');
 	}
+}
+
+
+/**
+ * Defines common functionality for persist documents derived classes.
+ * @package Persist
+ * @author Roberto Oliveros
+ */
+abstract class PersistDocument extends Persist{
+	/**
+	 * Statys type.
+	 * 
+	 * Indicates that the document has been cancelled.
+	 */
+	const CANCELLED = 2;
 }
 ?>
