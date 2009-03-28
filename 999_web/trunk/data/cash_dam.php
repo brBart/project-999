@@ -188,4 +188,48 @@ class ShiftDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Defines functionality for accessing the cash register tables.
+ *	@package CashDAM
+ *  @author Roberto Oliveros
+ */
+class CashRegisterDAM{
+	/**
+	 * Returns the status of the cash register.
+	 *
+	 * @param CashRegister $obj
+	 * @return boolean
+	 */
+	static public function isOpen(CashRegister $obj){
+		return false;
+	}
+	
+	/**
+	 * Close the cash register in the database.
+	 *
+	 * @param CashRegister $obj
+	 */
+	static public function close(CashRegister $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Returns an instance of a cash register.
+	 *
+	 * Returns NULL if not match was found in the database.
+	 * @param integer $id
+	 * @return CashRegister
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$shift = Shift::getInstance(123);
+			$cash_register = new CashRegister($shift, 123);
+			return $cash_register;
+		}
+		else
+			return NULL;
+	}
+}
 ?>
