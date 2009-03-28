@@ -101,4 +101,40 @@ abstract class PersistObject{
 	 */
 	abstract protected function validateMainProperties();
 }
+
+
+/**
+ * Defines common functionality for the object's which use an internal identifier.
+ * @package Persist
+ * @author Roberto Oliveros
+ */
+abstract class Identifier extends PersistObject{
+	/**
+	 * Holds the object's id.
+	 *
+	 * @var integer
+	 */
+	protected $_mId;
+	
+	/**
+	 * Returns the object's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Validates if the provided id is correct.
+	 *
+	 * Must be greater than cero. Otherwise it throw an exception.
+	 * @param integer $id
+	 * @return void
+	 */
+	public function validateId($id){
+		if(!is_int($id) || $id <= 0)
+			throw new Exception('Id inv&aacute;lido.');
+	}
+}
 ?>

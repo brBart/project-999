@@ -284,7 +284,7 @@ abstract class Organization extends Agent{
 		
 		if(!is_null($id))
 			try{
-				$this->validateId($id);
+				Identifier::validateId($id);
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Organization constructor with bad data! ' .
 						$e->getMessage());
@@ -431,17 +431,6 @@ abstract class Organization extends Agent{
 	abstract static public function getInstance($id);
 	
 	/**
-	 * Validates an organization's id.
-	 * 
-	 * Verifies that the id is greater than cero. Otherwise it throws an exception.
-	 * @param integer $id
-	 */
-	protected function validateId($id){
-		if(!is_int($id) || $id <= 0)
-			throw new Exception('Id inv&aacute;lido.');
-	}
-	
-	/**
 	 * Validates the organization's main properties.
 	 * 
 	 * Verifies the organization's telephone and address are not empty. Otherwise it throws an exception.
@@ -510,7 +499,7 @@ class Supplier extends Organization{
 	 * @return Supplier
 	 */
 	static public function getInstance($id){
-		self::validateId($id);
+		Identifier::validateId($id);
 		return SupplierDAM::getInstance($id);
 	}
 	
@@ -560,7 +549,7 @@ class Branch extends Organization{
 	 * @return Branch
 	 */
 	static public function getInstance($id){
-		self::validateId($id);
+		Identifier::validateId($id);
 		return BranchDAM::getInstance($id);
 	}
 		

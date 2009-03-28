@@ -13,14 +13,7 @@ require_once('data/cash_dam.php');
  * @package Cash
  * @author Roberto Oliveros
  */
-class Bank extends PersistObject{
-	/**
-	 * Holds the bank's id.
-	 *
-	 * @var integer
-	 */
-	protected $_mId;
-	
+class Bank extends Identifier{
 	/**
 	 * Holds the bank's name.
 	 * @var string
@@ -56,15 +49,6 @@ class Bank extends PersistObject{
 	 */
 	public function getName(){
 		return $this->_mName;
-	}
-	
-	/**
-	 * Returns the bank's id.
-	 *
-	 * @return integer
-	 */
-	public function getId(){
-		return $this->_mId;
 	}
 	
 	/**
@@ -160,18 +144,6 @@ class Bank extends PersistObject{
 	private function validateName($name){
 		if(empty($name))
 			throw new Exception('Nombre inv&aacute;lido.');
-	}
-	
-	/**
-	 * Validates the bank's id.
-	 *
-	 * Verifies that the id is greater than cero. Otherwise it throws an exception.
-	 * @param integer $id
-	 * @return void
-	 */
-	private function validateId($id){
-		if(!is_int($id) || $id <= 0)
-			throw new Exception('Id inv&aacute;lido.');
 	}
 }
 
@@ -499,14 +471,7 @@ class BankAccount extends PersistObject{
  * @package Cash
  * @author Roberto Oliveros
  */
-class Shift extends PersistObject{
-	/**
-	 * Holds the shift's id.
-	 *
-	 * @var integer
-	 */
-	protected $_mId;
-	
+class Shift extends Identifier{
 	/**
 	 * Holds the shift's name.
 	 *
@@ -544,18 +509,10 @@ class Shift extends PersistObject{
 	}
 	
 	/**
-	 * Returns the shift's id.
-	 *
-	 * @return integer
-	 */
-	public function getId(){
-		return $this->_mId;
-	}
-	
-	/**
 	 * Returns the shift's name.
 	 *
-	 * @return string
+
+	 * 	 * @return string
 	 */
 	public function getName(){
 		return $this->_mName;
@@ -690,18 +647,6 @@ class Shift extends PersistObject{
 		if(empty($timeTable))
 			throw new Exception('Horario inv&aacutelido.');
 	}
-	
-	/**
-	 * Validates if the provided id is correct.
-	 *
-	 * Must be greater than cero. Otherwise it throw an exception.
-	 * @param integer $id
-	 * @return void
-	 */
-	private function validateId($id){
-		if(!is_int($id) || $id <= 0)
-			throw new Exception('Id inv&aacute;lido.');
-	}
 }
 
 /**
@@ -711,11 +656,11 @@ class Shift extends PersistObject{
  */
 class CashRegister{
 	/**
-	 * Holds the cash register's id.
+	 * Holds the object's id.
 	 *
 	 * @var integer
 	 */
-	private $_mId;
+	protected $_mId;
 	
 	/**
 	 * Holds the cash register's shift.
@@ -735,7 +680,7 @@ class CashRegister{
 		$this->validateShift($shift);
 		if(!is_null($id))
 			try{
-				$this->validateId($id);
+				Identifier::validateId($id);
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling CashRegister constructor method with bad data! ' .
 						$e->getMessage());
@@ -747,7 +692,7 @@ class CashRegister{
 	}
 	
 	/**
-	 * Returns the cash register's id.
+	 * Returns the object's id.
 	 *
 	 * @return integer
 	 */
@@ -792,20 +737,8 @@ class CashRegister{
 	 * @return CashRegister
 	 */
 	static public function getInstance($id){
-		self::validateId($id);
+		Identifier::validateId($id);
 		return CashRegisterDAM::getInstance($id);
-	}
-	
-	/**
-	 * Validates if the provided id is correct.
-	 *
-	 * Must be greater than cero. Otherwise it throw an exception.
-	 * @param integer $id
-	 * @return void
-	 */
-	private function validateId($id){
-		if(!is_int($id) || $id <= 0)
-			throw new Exception('Id inv&aacute;lido.');
 	}
 	
 	/**
