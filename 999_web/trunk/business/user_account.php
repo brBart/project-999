@@ -6,6 +6,7 @@
  */
 
 require_once('business/persist.php');
+require_once('data/user_account_dam.php');
 
 /**
  * Represents a role a user might play in the system.
@@ -58,9 +59,18 @@ class Role{
 	}
 	
 	/**
+	 * Retuns the role's name.
+	 *
+	 * @return string
+	 */
+	public function getName(){
+		return $this->_mName;
+	}
+	
+	/**
 	 * Returns an instance of a role.
 	 *
-	 * Returns NULL if there is no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @return Role
 	 */
@@ -78,6 +88,84 @@ class Role{
 	private function validateName($name){
 		if(empty($name))
 			throw new Exception('Nombre inv&aacute;lido.');
+	}
+}
+
+
+/**
+ * Represents and defines functionality regarding user accounts.
+ * @package UserAccount
+ * @author Roberto Oliveros
+ */
+class UserAccount extends PersistObject{
+	/**
+	 * Holds the account's name.
+	 *
+	 * @var string
+	 */
+	private $_mName;
+	
+	/**
+	 * Holds the user's names.
+	 *
+	 * @var string
+	 */
+	private $_mUserNames;
+	
+	/**
+	 * Holds the user's last names.
+	 *
+	 * @var string
+	 */
+	private $_mUserLastNames;
+	
+	/**
+	 * Holds the account's password.
+	 *
+	 * @var string
+	 */
+	private $_mPassword;
+	
+	/**
+	 * Holds the account's role.
+	 *
+	 * @var Role
+	 */
+	private $_mRole;
+	
+	/**
+	 * Holds the account's deactivate flag.
+	 *
+	 * Holds true if the account is deactivated, otherwise is false.
+	 * @var boolean
+	 */
+	private $_mDeactivated;
+	
+	/**
+	 * Returns the account's name.
+	 *
+	 * @return string
+	 */
+	public function getName(){
+		return $this->_mName;
+	}
+	
+	/**
+	 * Retuns the account's user names.
+	 *
+	 * @return string
+	 */
+	public function getUserNames(){
+		return $this->_mUserNames;
+	}
+	
+	/**
+	 * Retuns the account's user last names.
+	 *
+	 * @return string
+	 */
+	public function getUserLastNames(){
+		return $this->_mUserLastNames;
 	}
 }
 ?>
