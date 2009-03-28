@@ -10,7 +10,12 @@
  * @package Document
  * @author Roberto Oliveros
  */
-class Document{
-	
+class Document extends PersisDocument{
+	/**
+	 * Holds the document's identifier.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
 }
 ?>
