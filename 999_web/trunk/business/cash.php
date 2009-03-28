@@ -234,7 +234,7 @@ class Deposit{
 
 
 /**
- * Class that representd a bank account.
+ * Class that represent a bank account.
  * @package Cash
  * @author Roberto Oliveros
  */
@@ -468,7 +468,7 @@ class BankAccount extends PersistObject{
 	 */
 	private function validateBank(Bank $obj){
 		if($obj->getStatus() != self::CREATED)
-			throw new Exception('PersistObject::IN_PROGRESS Bank provided.');
+			throw new Exception('PersistObject::IN_PROGRESS bank provided.');
 	}
 	
 	/**
@@ -701,6 +701,122 @@ class Shift extends PersistObject{
 	private function validateId($id){
 		if(!is_int($id) || $id <= 0)
 			throw new Exception('Id inv&aacute;lido.');
+	}
+}
+
+/**
+ * Represent a cash register used to create sales invoices.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class CashRegister{
+	/**
+	 * Holds the cash register's id.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Holds the cash register's shift.
+	 *
+	 * @var Shift
+	 */
+	private $_mShift;
+	
+	/**
+	 * Constructs the cash register with the provided shift and id.
+	 *
+	 * The id parameters must be set only if the method is called from the database layer.
+	 * @param Shift $shift
+	 * @param integer $id
+	 */
+	public function __construct(Shift $shift, $id = NULL){
+		$this->validateShift($shift);
+		if(!is_null($id))
+			try{
+				$this->validateId($id);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling CashRegister constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+		
+		$this->_mShift = $shift;
+		$this->_mId = $id;
+	}
+	
+	/**
+	 * Returns the cash register's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns the status of the cash register.
+	 *
+	 * Returns true if it's open, otherwise false if it's closed.
+	 * @return boolean
+	 */
+	public function isOpen(){
+		return CashRegisterDAM::isOpen($this);
+	}
+	
+	/**
+	 * Returns the cash register's shift.
+	 *
+	 * @return Shift
+	 */
+	public function getShift(){
+		return $this->_mShift;
+	}
+	
+	/**
+	 * Close the cash register.
+	 *
+	 * Once closed no more invoices can be created using this cash register.
+	 * @return void
+	 */
+	public function close(){
+		CashRegisterDAM::close($this);
+	}
+	
+	/**
+	 * Returns an instance of a cash register.
+	 * 
+	 * Returns NULL if there was no match in the database.
+	 * @param integer $id
+	 * @return CashRegister
+	 */
+	static public function getInstance($id){
+		self::validateId($id);
+		return CashRegisterDAM::getInstance($id);
+	}
+	
+	/**
+	 * Validates if the provided id is correct.
+	 *
+	 * Must be greater than cero. Otherwise it throw an exception.
+	 * @param integer $id
+	 * @return void
+	 */
+	private function validateId($id){
+		if(!is_int($id) || $id <= 0)
+			throw new Exception('Id inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates the provided shift.
+	 *
+	 * Shift's status property must be other than PersistObject::IN_PROGRESS. Otherwise it throws an exception.
+	 * @param Shift $obj
+	 */
+	private function validateShift(Shift $obj){
+		if($obj->getStatus() == PersistObject::IN_PROGRESS)
+			throw new Exception('PersistObject::IN_PROGRESS shift provided.');
 	}
 }
 ?>
