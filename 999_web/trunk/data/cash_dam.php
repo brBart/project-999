@@ -196,6 +196,8 @@ class ShiftDAM{
  *  @author Roberto Oliveros
  */
 class CashRegisterDAM{
+	static public $_mIsOpen = true;
+	
 	/**
 	 * Returns the status of the cash register.
 	 *
@@ -203,7 +205,7 @@ class CashRegisterDAM{
 	 * @return boolean
 	 */
 	static public function isOpen(CashRegister $obj){
-		return false;
+		return self::$_mIsOpen;
 	}
 	
 	/**
@@ -212,7 +214,7 @@ class CashRegisterDAM{
 	 * @param CashRegister $obj
 	 */
 	static public function close(CashRegister $obj){
-		// Code here...
+		self::$_mIsOpen = false;
 	}
 	
 	/**
