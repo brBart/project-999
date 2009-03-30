@@ -141,6 +141,19 @@ class UserAccount extends PersistObject{
 	 */
 	private $_mDeactivated;
 	
+	
+	public function __construct($name, $status = PersistObjet::IN_PROGRESS){
+		try{
+			$this->validateName($name);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling UserAccount constructor method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		
+	}
+	
 	/**
 	 * Returns the account's name.
 	 *
@@ -178,6 +191,15 @@ class UserAccount extends PersistObject{
 	}
 	
 	/**
+	 * Returns the account's role.
+	 *
+	 * @return Role
+	 */
+	public function getRole(){
+		return $this->_mRole;
+	}
+	
+	/**
 	 * Retuns value of the account's deactivated flag.
 	 *
 	 * @return boolean
@@ -200,6 +222,143 @@ class UserAccount extends PersistObject{
 		$this->verifyName($name);
 		
 		$this->_mName = $name;
+	}
+	
+	/**
+	 * Sets the account's user names.
+	 *
+	 * @param string $names
+	 */
+	public function setUserNames($names){
+		$this->validateUserNames($names);
+		$this->_mUserNames = $names;
+	}
+	
+	/**
+	 * Sets the account's user last names.
+	 *
+	 * @param string $lastNames
+	 */
+	public function setUserLastNames($lastNames){
+		$this->validateUserLastNames($lastNames);
+		$this->_mUserLastNames = $lastNames;
+	}
+	
+	/**
+	 * Sets the account's password.
+	 *
+	 * It encrypts the password before setting it.
+	 * @param string $password
+	 */
+	public function setPassword($password){
+		$this->validatePassword($password);
+		$this->_mPassword = PasswordHasher::encrypt($password);
+	}
+	
+	/**
+	 * Sets the account's deactivation flag value.
+	 *
+	 * @param boolean $bool
+	 */
+	public function deactivate($bool){
+		$this->_mDeactivated = (boolean)$bool;
+	}
+	
+	/**
+	 * Sets the account's properties.
+	 *
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * PersistObject::CREATED in the constructor method too.
+	 * @param string $userNames
+	 * @param string $userLastNames
+	 * @param Role $role
+	 * @param boolean $deactivated
+	 */
+	public function setData($userNames, $userLastNames, $role, $deactivated){
+		try{
+			$this->validateUserNames($userNames);
+			$this->validateUserLastNames($userLastNames);
+			$this->validateRole($role);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling UserAccount setData method with bad data! '.
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mUserNames = $userNames;
+		$this->_mUserLastNames = $userLastNames;
+		$this->_mRole = $role;
+		$this->_mDeactivated = (boolean)$deactivated;
+	}
+	
+	/**
+	 * Returns instance of a user account.
+	 *
+	 * Returns NULL if there was no match in the database for the providad account name.
+	 * @param string $name
+	 * @return UserAccount
+	 */
+	static public function getInstance($name){
+		self::validateName($name);
+		
+		if(strtoupper($name) == 'ROOT')
+			return new UserAccount('ROOT', PersistObject::CREATED);
+		else
+			return UserAccountDAM::getInstance($name);
+	}
+	
+	/**
+	 * Validates the account's name.
+	 *
+	 * Must not be empty. Otherwise it throws en exception.
+	 * @param string $name
+	 */
+	private function validateName($name){
+		if(empty($name))
+			throw new Exception('Nombre inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates the account's user names.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $names
+	 */
+	private function validateUserNames($names){
+		if(empty($names))
+			throw new Exception('Nombres invalidos.');
+	}
+	
+	/**
+	 * Validates the account's user last names.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $lastNames
+	 */
+	private function validateUserLastNames($lastNames){
+		if(empty($lastNames))
+			throw new Exception('Apellidos invalidos.');
+	}
+	
+	/**
+	 * Validates the account's password.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $password
+	 */
+	private function validatePassword($password){
+		if(empty($password))
+			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
+	}
+	
+	/**
+	 * Verifies if the account's name already exists in the database.
+	 *
+	 * @param string $name
+	 */
+	private function verifyName($name){
+		if(UserAccountDAM::exists($name))
+			throw new Exception('Nombre de cuenta ya existe.');
 	}
 }
 ?>
