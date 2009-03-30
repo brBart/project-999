@@ -120,7 +120,7 @@ class UserAccount extends PersistObject{
 	private $_mUserLastNames;
 	
 	/**
-	 * Holds the account's password.
+	 * Holds the account's encrypted password.
 	 *
 	 * @var string
 	 */
@@ -166,6 +166,40 @@ class UserAccount extends PersistObject{
 	 */
 	public function getUserLastNames(){
 		return $this->_mUserLastNames;
+	}
+	
+	/**
+	 * Retuns the account's encrypted password.
+	 *
+	 * @return string
+	 */
+	public function getPassword(){
+		return $this->_mPassword;
+	}
+	
+	/**
+	 * Retuns value of the account's deactivated flag.
+	 *
+	 * @return boolean
+	 */
+	public function isDeactivated(){
+		return $this->_mDeactivated;
+	}
+	
+	/**
+	 * Sets the account's name.
+	 *
+	 * @param string $name
+	 */
+	public function setName($name){
+		if($this->_mStatus == self::CREATED)
+			throw new Exception('No se puede editar el nombre de la cuenta.');
+		
+		$this->validateName($name);
+		
+		$this->verifyName($name);
+		
+		$this->_mName = $name;
 	}
 }
 ?>
