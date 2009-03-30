@@ -260,7 +260,7 @@ class UserAccount extends PersistObject{
 	 */
 	public function setPassword($password){
 		$this->validatePassword($password);
-		$this->_mPassword = PasswordHasher::encrypt($password);
+		$this->_mPassword = UserAccountUtility::encrypt($password);
 	}
 	
 	/**
@@ -317,6 +317,9 @@ class UserAccount extends PersistObject{
 	 * @return void
 	 */
 	public function save(){
+		if(UserAccountUtility::isRoot($this->_mAccountName))
+			throw new Exception('Cuenta reservada para el superusuario.');
+		
 		$this->validateMainProperties();
 		
 		if($this->_mStatus == self::IN_PROGRESS){
@@ -338,8 +341,8 @@ class UserAccount extends PersistObject{
 	static public function getInstance($accountName){
 		self::validateAccountName($accountName);
 		
-		if(strtoupper($accountName) == 'ROOT')
-			return new UserAccount('ROOT', PersistObject::CREATED);
+		if(UserAccountUtility::isRoot($accountName))
+			return new UserAccount(UserAccountUtility::ROOT, PersistObject::CREATED);
 		else
 			return UserAccountDAM::getInstance($accountName);
 	}
@@ -438,6 +441,92 @@ class UserAccount extends PersistObject{
 	private function verifyAccountName($accountName){
 		if(UserAccountDAM::exists($accountName))
 			throw new Exception('Nombre de cuenta ya existe.');
+	}
+}
+
+
+/**
+ * Defines necessary routines regarding user accounts.
+ * @package UserAccount
+ * @author Roberto Oliveros
+ */
+class UserAccountUtility{
+	/**
+	 * Name of the superuser account.
+	 *
+	 */
+	const ROOT = 'ROOT';
+	
+	/**
+	 * Returns true if it is the name of the supersuser account, otherwise false.
+	 *
+	 * @param string $accountName
+	 * @return boolean
+	 */
+	static public function isRoot($accountName){
+		if(strtoupper($accountName) == 'ROOT')
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Changes the user account's password.
+	 *
+	 * Returns true on success.
+	 * @param UserAccount $account
+	 * @param string $password
+	 * @param string $newPassword
+	 * @return boolean
+	 */
+	static public function changePassword(UserAccount $account, $password, $newPassword){
+		self::validateUserAccount($account);
+		
+		$account_name = $account->getAccountName();
+		if(!self::isValid($account_name, $password))
+			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
+		
+		if(self::isRoot($account_name))
+			return UserAccountUtilityDAM::changeRootPassword($newPassword);
+		else
+			return UserAccountUtilityDAM::changePassword($account, $newPassword);
+	}
+	
+	/**
+	 * Verifies the user account exists in the database.
+	 *
+	 * Returns true if the user account exists and has the provided password. Otherwise returns false.
+	 * @param string $accountName
+	 * @param string $password
+	 * @return boolean
+	 */
+	static public function isValid($accountName, $password){
+		if(self::isRoot($accountName))
+			return UserAccountUtilityDAM::isValidRoot(self::encrypt($password));
+		else
+			return UserAccountUtilityDAM::isValid($accountName, self::encrypt($password));
+	}
+	
+	/**
+	 * Encrypts the provided passwrod.
+	 *
+	 * @param string $password
+	 * @return string
+	 */
+	static public function encrypt($password){
+		
+	}
+	
+	/**
+	 * Verifies if the account is recently created.
+	 * 
+	 * Verifies if the account's status property is set to PersistObject::IN_PROGRESS. It throws an exception
+	 * if it does.
+	 * @param UserAccount $account
+	 */
+	static private function validateUserAccount(UserAccount $account){
+		if($account->getStatus() == PersistObject::IN_PROGRESS)
+			throw new Exception('PersistObject::IN_PROGRESS account provided.');
 	}
 }
 ?>
