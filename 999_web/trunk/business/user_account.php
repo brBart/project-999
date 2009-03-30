@@ -103,7 +103,7 @@ class UserAccount extends PersistObject{
 	 *
 	 * @var string
 	 */
-	private $_mName;
+	private $_mAccountName;
 	
 	/**
 	 * Holds the user's names.
@@ -141,17 +141,25 @@ class UserAccount extends PersistObject{
 	 */
 	private $_mDeactivated;
 	
-	
-	public function __construct($name, $status = PersistObjet::IN_PROGRESS){
+	/**
+	 * Constructs the account with the provided account's name and status.
+	 *
+	 * Parameters must be set only if called from the database layer.
+	 * @param string $accountName
+	 * @param integer $status
+	 */
+	public function __construct($accountName = NULL, $status = PersistObjet::IN_PROGRESS){
+		parent::__construct($status);
+		
 		try{
-			$this->validateName($name);
+			$this->validateAccountName($accountName);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling UserAccount constructor method with bad data! ' .
 					$e->getMessage());
 			throw $et;
 		}
 		
-		
+		$this->_mAccountName = $accountName;
 	}
 	
 	/**
@@ -159,8 +167,8 @@ class UserAccount extends PersistObject{
 	 *
 	 * @return string
 	 */
-	public function getName(){
-		return $this->_mName;
+	public function getAccountName(){
+		return $this->_mAccountName;
 	}
 	
 	/**
@@ -211,37 +219,37 @@ class UserAccount extends PersistObject{
 	/**
 	 * Sets the account's name.
 	 *
-	 * @param string $name
+	 * @param string $accountName
 	 */
-	public function setName($name){
+	public function setAccountName($accountName){
 		if($this->_mStatus == self::CREATED)
 			throw new Exception('No se puede editar el nombre de la cuenta.');
 		
-		$this->validateName($name);
+		$this->validateAccountName($accountName);
 		
-		$this->verifyName($name);
+		$this->verifyAccountName($accountName);
 		
-		$this->_mName = $name;
+		$this->_mAccountName = $accountName;
 	}
 	
 	/**
 	 * Sets the account's user names.
 	 *
-	 * @param string $names
+	 * @param string $userNames
 	 */
-	public function setUserNames($names){
-		$this->validateUserNames($names);
-		$this->_mUserNames = $names;
+	public function setUserNames($userNames){
+		$this->validateUserNames($userNames);
+		$this->_mUserNames = $userNames;
 	}
 	
 	/**
 	 * Sets the account's user last names.
 	 *
-	 * @param string $lastNames
+	 * @param string $userLastNames
 	 */
-	public function setUserLastNames($lastNames){
-		$this->validateUserLastNames($lastNames);
-		$this->_mUserLastNames = $lastNames;
+	public function setUserLastNames($userLastNames){
+		$this->validateUserLastNames($userLastNames);
+		$this->_mUserLastNames = $userLastNames;
 	}
 	
 	/**
@@ -253,6 +261,16 @@ class UserAccount extends PersistObject{
 	public function setPassword($password){
 		$this->validatePassword($password);
 		$this->_mPassword = PasswordHasher::encrypt($password);
+	}
+	
+	/**
+	 * Sets the account's role.
+	 *
+	 * @param Role $obj
+	 */
+	public function setRole(Role $obj){
+		$this->validateRole($obj);
+		$this->_mRole = $obj;
 	}
 	
 	/**
@@ -292,29 +310,78 @@ class UserAccount extends PersistObject{
 	}
 	
 	/**
+	 * Saves account's data to the database.
+	 * 
+	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
+	 * is called, if it's set to PersistObject::CREATED the method update() is called.
+	 * @return void
+	 */
+	public function save(){
+		$this->validateMainProperties();
+		
+		if($this->_mStatus == self::IN_PROGRESS){
+			$this->verifyAccountName($this->_mAccountName);
+			$this->insert();
+			$this->_mStatus = self::CREATED;
+		}
+		else
+			$this->update();
+	}
+	
+	/**
 	 * Returns instance of a user account.
 	 *
 	 * Returns NULL if there was no match in the database for the providad account name.
-	 * @param string $name
+	 * @param string $accountName
 	 * @return UserAccount
 	 */
-	static public function getInstance($name){
-		self::validateName($name);
+	static public function getInstance($accountName){
+		self::validateAccountName($accountName);
 		
-		if(strtoupper($name) == 'ROOT')
+		if(strtoupper($accountName) == 'ROOT')
 			return new UserAccount('ROOT', PersistObject::CREATED);
 		else
-			return UserAccountDAM::getInstance($name);
+			return UserAccountDAM::getInstance($accountName);
+	}
+	
+	/**
+	 * Deletes the account from the database.
+	 *
+	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * @param UserAccount $obj
+	 * @return boolean
+	 */
+	static public function delete(UserAccount $obj){
+		self::validateObjectForDelete($obj);			
+		return UserAccountDAM::delete($obj);
+	}
+	
+	/**
+	 * Validates account's main properties.
+	 * 
+	 * Verifies the account's name, user names, user last names and password are not emty. The role's status
+	 * property must be set to other than PersistObject::IN_PROGRESS. Otherwise it throws an exception.
+	 */
+	protected function validateMainProperties(){
+		$this->validateAccountName($this->_mAccountName);
+		$this->validateUserNames($this->_mUserNames);
+		$this->validateUserLastNames($this->_mUserLastNames);
+		$this->validatePassword($this->_mPassword);
+		
+		if(is_null($this->_mRole))
+			throw new Exception('Rol inv&accute;lido.');
+		else
+			$this->validateRole($this->_mRole);
 	}
 	
 	/**
 	 * Validates the account's name.
 	 *
 	 * Must not be empty. Otherwise it throws en exception.
-	 * @param string $name
+	 * @param string $accountName
 	 */
-	private function validateName($name){
-		if(empty($name))
+	private function validateAccountName($accountName){
+		if(empty($accountName))
 			throw new Exception('Nombre inv&aacute;lido.');
 	}
 	
@@ -352,12 +419,24 @@ class UserAccount extends PersistObject{
 	}
 	
 	/**
+	 * Validates the account's role.
+	 *
+	 * Role status property must be set to other than PersistObject::IN_PROGRESS. Otherwise it throws an
+	 * exception.
+	 * @param Role $obj
+	 */
+	private function validateRole(Role $obj){
+		if($obj->getStatus() != self::CREATED)
+			throw new Exception('PersistObject::IN_PROGRESS role provided.');
+	}
+	
+	/**
 	 * Verifies if the account's name already exists in the database.
 	 *
-	 * @param string $name
+	 * @param string $accountName
 	 */
-	private function verifyName($name){
-		if(UserAccountDAM::exists($name))
+	private function verifyAccountName($accountName){
+		if(UserAccountDAM::exists($accountName))
 			throw new Exception('Nombre de cuenta ya existe.');
 	}
 }
