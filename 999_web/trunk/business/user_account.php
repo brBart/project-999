@@ -139,7 +139,7 @@ class UserAccount extends PersistObject{
 	 * Holds true if the account is deactivated, otherwise is false.
 	 * @var boolean
 	 */
-	private $_mDeactivated;
+	private $_mDeactivated = false;
 	
 	/**
 	 * Constructs the account with the provided account's username and status.
@@ -148,16 +148,17 @@ class UserAccount extends PersistObject{
 	 * @param string $userName
 	 * @param integer $status
 	 */
-	public function __construct($userName = NULL, $status = PersistObjet::IN_PROGRESS){
+	public function __construct($userName = NULL, $status = PersistObject::IN_PROGRESS){
 		parent::__construct($status);
 		
-		try{
-			UserAccountUtility::validateUserName($userName);
-		} catch(Exception $e){
-			$et = new Exception('Internal error, calling UserAccount constructor method with bad data! ' .
-					$e->getMessage());
-			throw $et;
-		}
+		if(!is_null($userName))
+			try{
+				UserAccountUtility::validateUserName($userName);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling UserAccount constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
 		
 		$this->_mUserName = $userName;
 	}
@@ -225,7 +226,7 @@ class UserAccount extends PersistObject{
 		if($this->_mStatus == self::CREATED)
 			throw new Exception('No se puede editar el nombre de la cuenta.');
 		
-		$this->validateUserName($userName);
+		UserAccountUtility::validateUserName($userName);
 		
 		$this->verifyUserName($userName);
 		
@@ -259,7 +260,7 @@ class UserAccount extends PersistObject{
 	 * @param string $password
 	 */
 	public function setPassword($password){
-		$this->validatePassword($password);
+		UserAccountUtility::validatePassword($password);
 		$this->_mPassword = UserAccountUtility::encrypt($password);
 	}
 	
