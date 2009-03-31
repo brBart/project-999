@@ -152,7 +152,7 @@ class UserAccount extends PersistObject{
 		parent::__construct($status);
 		
 		try{
-			$this->validateUserName($userName);
+			UserAccountUtility::validateUserName($userName);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling UserAccount constructor method with bad data! ' .
 					$e->getMessage());
@@ -269,7 +269,6 @@ class UserAccount extends PersistObject{
 	 * @param Role $obj
 	 */
 	public function setRole(Role $obj){
-		$this->validateRole($obj);
 		$this->_mRole = $obj;
 	}
 	
@@ -296,7 +295,6 @@ class UserAccount extends PersistObject{
 		try{
 			$this->validateFirstName($firstName);
 			$this->validateLastName($lastName);
-			$this->validateRole($role);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling UserAccount setData method with bad data! '.
 					$e->getMessage());
@@ -339,7 +337,7 @@ class UserAccount extends PersistObject{
 	 * @return UserAccount
 	 */
 	static public function getInstance($userName){
-		self::validateUserName($userName);
+		UserAccountUtility::validateUserName($userName);
 		
 		if(UserAccountUtility::isRoot($userName))
 			return new UserAccount(UserAccountUtility::ROOT, PersistObject::CREATED);
@@ -394,17 +392,6 @@ class UserAccount extends PersistObject{
 	}
 	
 	/**
-	 * Validates the account's username.
-	 *
-	 * Must not be empty. Otherwise it throws en exception.
-	 * @param string $userName
-	 */
-	private function validateUserName($userName){
-		if(empty($userName))
-			throw new Exception('Nombre inv&aacute;lido.');
-	}
-	
-	/**
 	 * Validates the user's first name.
 	 *
 	 * Must not be empty. Otherwise it throws an exception.
@@ -424,29 +411,6 @@ class UserAccount extends PersistObject{
 	private function validateLastName($lastName){
 		if(empty($lastName))
 			throw new Exception('Apellidos invalidos.');
-	}
-	
-	/**
-	 * Validates the account's password.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $password
-	 */
-	private function validatePassword($password){
-		if(empty($password))
-			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
-	}
-	
-	/**
-	 * Validates the account's role.
-	 *
-	 * Role status property must be set to other than PersistObject::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param Role $obj
-	 */
-	private function validateRole(Role $obj){
-		if($obj->getStatus() != self::CREATED)
-			throw new Exception('PersistObject::IN_PROGRESS role provided.');
 	}
 	
 	/**
@@ -480,6 +444,24 @@ class UserAccountUtility{
 	const HASH_PREFIX = 'bO2';
 	
 	/**
+	 * Verifies the user account exists in the database.
+	 *
+	 * Returns true if the user account exists and has the provided password. Otherwise returns false.
+	 * @param string $userName
+	 * @param string $password
+	 * @return boolean
+	 */
+	static public function isValid($userName, $password){
+		self::validateUserName($userName);
+		self::validatePassword($password);
+		
+		if(self::isRoot($userName))
+			return UserAccountUtilityDAM::isValidRoot(self::encrypt($password));
+		else
+			return UserAccountUtilityDAM::isValid($userName, self::encrypt($password));
+	}
+	
+	/**
 	 * Returns true if it is the name of the supersuser account, otherwise false.
 	 *
 	 * @param string $userName
@@ -503,6 +485,8 @@ class UserAccountUtility{
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
 		self::validateUserAccount($account);
+		self::validatePassword($password);
+		self::validatePassword($newPassword);
 		
 		$account_name = $account->getUserName();
 		if(!self::isValid($account_name, $password))
@@ -515,21 +499,6 @@ class UserAccountUtility{
 	}
 	
 	/**
-	 * Verifies the user account exists in the database.
-	 *
-	 * Returns true if the user account exists and has the provided password. Otherwise returns false.
-	 * @param string $userName
-	 * @param string $password
-	 * @return boolean
-	 */
-	static public function isValid($userName, $password){
-		if(self::isRoot($userName))
-			return UserAccountUtilityDAM::isValidRoot(self::encrypt($password));
-		else
-			return UserAccountUtilityDAM::isValid($userName, self::encrypt($password));
-	}
-	
-	/**
 	 * Encrypts the provided password.
 	 *
 	 * @param string $password
@@ -537,6 +506,28 @@ class UserAccountUtility{
 	 */
 	static public function encrypt($password){
 		return sha1(HASH_PREFIX . $password);
+	}
+	
+	/**
+	 * Validates the account's username.
+	 *
+	 * Must not be empty. Otherwise it throws en exception.
+	 * @param string $userName
+	 */
+	static public function validateUserName($userName){
+		if(empty($userName))
+			throw new Exception('Nombre inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates the account's password.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $password
+	 */
+	static public function validatePassword($password){
+		if(empty($password))
+			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
 	}
 	
 	/**
