@@ -196,7 +196,7 @@ class ShiftDAM{
  *  @author Roberto Oliveros
  */
 class CashRegisterDAM{
-	static public $_mIsOpen = true;
+	static private $_mIsOpen = true;
 	
 	/**
 	 * Returns the status of the cash register.
