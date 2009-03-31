@@ -98,4 +98,58 @@ class UserAccountDAM{
 			return false;
 	}
 }
+
+
+
+class UserAccountUtilityDAM{
+	static private $_mRoboliPassword = '558236dd6a4c52c8d30d07ad714734ff8f6b302';
+	
+	static private $_mRootPassword = 'd8bc384f08624a7ec7426ed5dce21edcab122afe';
+	
+	/**
+	 * Verifies the user account exists in the database.
+	 *
+	 * Returns true if the user account exists and has the provided password. Otherwise returns false.
+	 * @param string $userName
+	 * @param string $password
+	 * @return boolean
+	 */
+	static public function isValid($userName, $password){
+		if($userName == 'roboli' && $password == self::$_mRoboliPassword)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Verifies if it is the root's password.
+	 *
+	 * Returns true it it is the password, otherwise false.
+	 * @param string $password
+	 * @return boolean
+	 */
+	static public function isValidRoot($password){
+		return ($password == self::$_mRootPassword ? true : false);
+	}
+	
+	/**
+	 * Changes the user account's password in the database.
+	 *
+	 * @param UserAccount $account
+	 * @param string $newPassword
+	 */
+	static public function changePassword(UserAccount $account, $newPassword){
+		if($account->getUserName() == 'roboli')
+			self::$_mRoboliPassword = $newPassword;
+	}
+	
+	/**
+	 * Changes the root's account password in the database.
+	 *
+	 * @param string $newPassword
+	 */
+	static public function changeRootPassword($newPassword){
+		self::$_mRootPassword = $newPassword;
+	}
+}
 ?>
