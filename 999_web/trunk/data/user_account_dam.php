@@ -27,4 +27,14 @@ class RoleDAM{
 			return NULL;
 	}
 }
+
+
+/**
+ * Defines functionality for accessing the user account's database tables.
+ * @package UserAccountDAM
+ * @author Roberto Oliveros
+ */
+class UserAccountDAM{
+	
+}
 ?>
