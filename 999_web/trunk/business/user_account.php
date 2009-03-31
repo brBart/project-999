@@ -509,9 +509,9 @@ class UserAccountUtility{
 			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
 		
 		if(self::isRoot($account_name))
-			return UserAccountUtilityDAM::changeRootPassword($newPassword);
+			return UserAccountUtilityDAM::changeRootPassword(self::encrypt($newPassword));
 		else
-			return UserAccountUtilityDAM::changePassword($account, $newPassword);
+			return UserAccountUtilityDAM::changePassword($account, self::encrypt($newPassword));
 	}
 	
 	/**
