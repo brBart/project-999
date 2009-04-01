@@ -93,7 +93,7 @@ class Role{
 
 
 /**
- * Represents and defines functionality regarding user accounts.
+ * Represents a user account for accesing the system.
  * @package UserAccount
  * @author Roberto Oliveros
  */
@@ -142,7 +142,7 @@ class UserAccount extends PersistObject{
 	private $_mDeactivated = false;
 	
 	/**
-	 * Constructs the account with the provided account's username and status.
+	 * Constructs the account with the provided username and status.
 	 *
 	 * Parameters must be set only if called from the database layer.
 	 * @param string $userName
@@ -311,7 +311,7 @@ class UserAccount extends PersistObject{
 	/**
 	 * Saves account's data to the database.
 	 * 
-	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
+	 * If the object's status is set to PersistObject::IN_PROGRESS the method insert()
 	 * is called, if it's set to PersistObject::CREATED the method update() is called.
 	 * @return void
 	 */
@@ -331,9 +331,9 @@ class UserAccount extends PersistObject{
 	}
 	
 	/**
-	 * Returns instance of a user account.
+	 * Returns an instance of a user account.
 	 *
-	 * Returns NULL if there was no match in the database for the providad account name.
+	 * Returns NULL if there was no match in the database for the providad username.
 	 * @param string $userName
 	 * @return UserAccount
 	 */
@@ -361,8 +361,8 @@ class UserAccount extends PersistObject{
 	/**
 	 * Validates account's main properties.
 	 * 
-	 * Verifies the account's username, fisrt name, last name and password are not emty. The role's status
-	 * property must be set to other than PersistObject::IN_PROGRESS. Otherwise it throws an exception.
+	 * Verifies that the account's username, fisrt name, last name and password are not emty. The role
+	 * property must not be NULL. Otherwise it throws an exception.
 	 */
 	protected function validateMainProperties(){
 		UserAccountUtility::validateUserName($this->_mUserName);
@@ -413,7 +413,7 @@ class UserAccount extends PersistObject{
 	}
 	
 	/**
-	 * Verifies if the account's name already exists in the database.
+	 * Verifies if the account's username already exists in the database.
 	 *
 	 * @param string $userName
 	 */
@@ -431,7 +431,7 @@ class UserAccount extends PersistObject{
  */
 class UserAccountUtility{
 	/**
-	 * Name of the superuser account.
+	 * Username of the superuser account.
 	 *
 	 */
 	const ROOT = 'ROOT';
@@ -445,7 +445,7 @@ class UserAccountUtility{
 	/**
 	 * Verifies the user account exists in the database.
 	 *
-	 * Returns true if the user account exists and has the provided password. Otherwise returns false.
+	 * Returns true if the user account exists and uses the provided password. Otherwise returns false.
 	 * @param string $userName
 	 * @param string $password
 	 * @return boolean
@@ -461,7 +461,7 @@ class UserAccountUtility{
 	}
 	
 	/**
-	 * Returns true if it is the name of the supersuser account, otherwise false.
+	 * Returns true if it is the username of the supersuser account, otherwise false.
 	 *
 	 * @param string $userName
 	 * @return boolean
@@ -508,7 +508,7 @@ class UserAccountUtility{
 	}
 	
 	/**
-	 * Validates the account's username.
+	 * Validates the username.
 	 *
 	 * Must not be empty. Otherwise it throws en exception.
 	 * @param string $userName
@@ -519,7 +519,7 @@ class UserAccountUtility{
 	}
 	
 	/**
-	 * Validates the account's password.
+	 * Validates the password.
 	 *
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $password
