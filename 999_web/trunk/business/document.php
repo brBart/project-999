@@ -113,6 +113,12 @@ abstract class Detail{
 	abstract public function cancel();
 	
 	/**
+	 * Returns true if the detail can be cancelled.
+	 * @return boolean
+	 */
+	abstract public function isCancellable();
+	
+	/**
 	 * Validates the detail's quantity.
 	 *
 	 * Must be greater than cero. Otherwise it throws an exception.

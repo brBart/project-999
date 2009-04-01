@@ -28,18 +28,7 @@ class Bank extends Identifier{
 	 * @param integer $status
 	 */
 	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
-		parent::__construct($status);
-		
-		if(!is_null($id))
-			try{
-				$this->validateId($id);
-			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Bank constructor with bad data! ' .
-						$e->getMessage());
-				throw $et;
-			}
-			
-		$this->_mId = $id;
+		parent::__construct($id, $status);
 	}
 	
 	/**
@@ -494,18 +483,7 @@ class Shift extends Identifier{
 	 * @param integer $status
 	 */
 	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
-		parent::__construct($status);
-		
-		if(!is_null($id))
-			try{
-				$this->validateId($id);
-			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Shift\'s construct method with bad data!' .
-						$e->getMessage());
-				throw $et;
-			}
-			
-		$this->_mId = $id;
+		parent::__construct($id, $status);
 	}
 	
 	/**

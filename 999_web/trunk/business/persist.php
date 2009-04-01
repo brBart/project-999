@@ -125,6 +125,28 @@ abstract class Identifier extends PersistObject{
 	protected $_mId;
 	
 	/**
+	 * Constructs the object with the provided id and status.
+	 * 
+	 * Parameters must be set only if the method is called from the database layer.
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct($id, $status){
+		parent::__construct($status);
+		
+		if(!is_null($id))
+			try{
+				$this->validateId($id);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Identifier construct method with bad data!' .
+						$e->getMessage());
+				throw $et;
+			}
+			
+		$this->_mId = $id;
+	}
+	
+	/**
 	 * Returns the object's id.
 	 *
 	 * @return integer
