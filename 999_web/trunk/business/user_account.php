@@ -365,15 +365,13 @@ class UserAccount extends PersistObject{
 	 * property must be set to other than PersistObject::IN_PROGRESS. Otherwise it throws an exception.
 	 */
 	protected function validateMainProperties(){
-		$this->validateUserName($this->_mUserName);
+		UserAccountUtility::validateUserName($this->_mUserName);
 		$this->validateFirstName($this->_mFirstName);
 		$this->validateLastName($this->_mLastName);
-		$this->validatePassword($this->_mPassword);
+		UserAccountUtility::validatePassword($this->_mPassword);
 		
 		if(is_null($this->_mRole))
 			throw new Exception('Rol inv&accute;lido.');
-		else
-			$this->validateRole($this->_mRole);
 	}
 	
 	/**
