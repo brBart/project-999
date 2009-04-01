@@ -141,7 +141,7 @@ abstract class Identifier extends PersistObject{
 	 * @return void
 	 */
 	public function validateId($id){
-		if(!is_int($id) || $id <= 0)
+		if(!is_int($id) || $id < 1)
 			throw new Exception('Id inv&aacute;lido.');
 	}
 }
