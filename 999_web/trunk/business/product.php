@@ -91,7 +91,7 @@ class UnitOfMeasure extends Identifier{
 	 */
 	static public function delete(UnitOfMeasure $obj){
 		self::validateObjectForDelete($obj);
-		UnitOfMeasureDAM::delete($obj);
+		return UnitOfMeasureDAM::delete($obj);
 	}
 	
 	/**
@@ -131,5 +131,15 @@ class UnitOfMeasure extends Identifier{
 		if(empty($name))
 			throw new Exception('Nombre inv&accute;lido.');
 	}
+}
+
+
+/**
+ * Represents the manufacturer of a certain product.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class Manufacturer extends Identifier{
+	
 }
 ?>
