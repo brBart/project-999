@@ -10,7 +10,7 @@
  * @package Document
  * @author Roberto Oliveros
  */
-abstract class Document extends PersisDocument{
+abstract class Document extends PersistDocument{
 	/**
 	 * Holds the document's identifier.
 	 *
