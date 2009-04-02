@@ -6,7 +6,13 @@
  */
 
 require_once('business/persist.php');
+require_once('data/product_dam.php');
 
+/**
+ * Represents a unit of measure for a certain product.
+ * @package Product
+ * @author Roberto Oliveros
+ */
 class UnitOfMeasure extends Identifier{
 	/**
 	 * Holds the unit's name.
@@ -15,9 +21,15 @@ class UnitOfMeasure extends Identifier{
 	 */
 	private $_mName;
 	
-	
+	/**
+	 * Constructs the object with the provided id and status.
+	 *
+	 * Parameters must be set only if the method is called from the database layer.
+	 * @param integer $id
+	 * @param integer $status
+	 */
 	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
-		
+		parent::__construct($id, $status);
 	}
 	
 	/**
@@ -68,6 +80,45 @@ class UnitOfMeasure extends Identifier{
 	static public function getInstance($id){
 		self::validateId($id);
 		return UnitOfMeasureDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the unit of measure from database.
+	 * 
+	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * @param UnitOfMeasure $obj
+	 * @return boolean
+	 */
+	static public function delete(UnitOfMeasure $obj){
+		self::validateObjectForDelete($obj);
+		UnitOfMeasureDAM::delete($obj);
+	}
+	
+	/**
+	 * Inserts the object's data to the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return UnitOfMeasureDAM::insert($this);
+	}
+	
+	/**
+	 * Updates the object's data in the database.
+	 *
+	 */
+	protected function update(){
+		UnitOfMeasureDAM::update($this);
+	}
+	
+	/**
+	 * Validates object's main properties.
+	 *
+	 * Verifies if the object's name is not empty. Otherwise it throws an exception.
+	 */
+	protected function validateMainProperties(){
+		$this->validateName($this->_mName);
 	}
 	
 	/**
