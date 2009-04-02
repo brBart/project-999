@@ -35,8 +35,8 @@ abstract class Persist{
 	/**
 	 * Construct the object with the provided status.
 	 * 
-	 * The status must be set to PersistObject::IN_PROGRESS in case it's just been created and its data has 
-	 * not been set or PersistObject::CREATED if it's data is from database.
+	 * The status must be set to Persist::IN_PROGRESS in case it's just been created and its data has 
+	 * not been set or Persist::CREATED if it's data is from database.
 	 * @param integer $status
 	 */
 	public function __construct($status){
@@ -63,8 +63,8 @@ abstract class PersistObject extends Persist{
 	/**
 	 * Saves object's data in the database.
 	 * 
-	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
-	 * is called, if it's set to PersistObject::CREATED the method update() is called.
+	 * If the object's status set to Persist::IN_PROGRESS the method insert()
+	 * is called, if it's set to Persist::CREATED the method update() is called.
 	 * @return void
 	 */
 	public function save(){
@@ -81,14 +81,14 @@ abstract class PersistObject extends Persist{
 	/**
 	 * Validates if the object can be deleted in the database.
 	 * 
-	 * The object's status must be diferent than PersistObject::IN_PROGRESS. Otherwise it throws an
+	 * The object's status must be diferent than Persist::IN_PROGRESS. Otherwise it throws an
 	 * exception.
 	 * @param PersistObject $obj
 	 * @return void
 	 */
 	static protected function validateObjectForDelete(PersistObject $obj){
 		if ($obj->_mStatus == self::IN_PROGRESS)
-			throw new Exception('Cannot delete a PersistObject::IN_PROGRESS object from database.');
+			throw new Exception('Cannot delete a Persist::IN_PROGRESS object from database.');
 	}
 	
 	/**
@@ -186,7 +186,7 @@ abstract class Identifier extends PersistObject{
 	 * Set the object's data provided by the database.
 	 * 
 	 * Must be call only from the database layer corresponding class. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
+	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @return void
 	 */

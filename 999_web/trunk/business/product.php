@@ -27,7 +27,7 @@ class UnitOfMeasure extends Identifier{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($id, $status);
 	}
 	
@@ -88,7 +88,7 @@ class Manufacturer extends Identifier{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($id, $status);
 	}
 	

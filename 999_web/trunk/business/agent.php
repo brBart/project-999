@@ -67,7 +67,7 @@ abstract class Agent extends PersistObject{
 	 * Set the object's data provided by the database.
 	 * 
 	 * Must be call only from the database layer corresponding class. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
+	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @return void
 	 */
@@ -140,7 +140,7 @@ class Customer extends Agent{
 	 * @param string $nit
 	 * @param integer $status
 	 */
-	public function __construct($nit, $status = PersistObject::IN_PROGRESS){
+	public function __construct($nit, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if($this->isConsumidorFinal($nit))
@@ -160,8 +160,8 @@ class Customer extends Agent{
 	/**
 	 * Saves customer's data to the database.
 	 * 
-	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
-	 * is called, if it's set to PersistObject::CREATED the method update() is called.
+	 * If the object's status set to Persist::IN_PROGRESS the method insert()
+	 * is called, if it's set to Persist::CREATED the method update() is called.
 	 * @return void
 	 */
 	public function save(){
@@ -285,7 +285,7 @@ abstract class Organization extends Agent{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if(!is_null($id))
@@ -399,7 +399,7 @@ abstract class Organization extends Agent{
 	 * Set the organization's data provided by the database.
 	 * 
 	 * Must be call only from the database layer corresponding class. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
+	 * Persist::CREATED in the constructor method too.
 	 * @param string $nit
 	 * @param string $name
 	 * @param string $telephone

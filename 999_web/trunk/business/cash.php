@@ -27,7 +27,7 @@ class Bank extends Identifier{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($id, $status);
 	}
 	
@@ -110,7 +110,7 @@ class Deposit{
 	private $_mCashRegister;
 	
 	/**
-	 * Deposit object internal status, e.g. PersistObject::IN_PROGRESS or PersistObject::CREATED.
+	 * Deposit object internal status, e.g. Persist::IN_PROGRESS or Persist::CREATED.
 	 *
 	 * @var integer
 	 */
@@ -166,7 +166,7 @@ class BankAccount extends PersistObject{
 	 * @param string $number
 	 * @param integer $status
 	 */
-	public function __construct($number = NULL, $status = PersistObject::IN_PROGRESS){
+	public function __construct($number = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if(!is_null($number))
@@ -251,7 +251,7 @@ class BankAccount extends PersistObject{
 	 * Set the object's data provided by the database.
 	 * 
 	 * Must be call only from the database layer corresponding class. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
+	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @param Bank $bank
 	 */
@@ -272,8 +272,8 @@ class BankAccount extends PersistObject{
 	/**
 	 * Saves bank account's data to the database.
 	 * 
-	 * If the object's status set to PersistObject::IN_PROGRESS the method insert()
-	 * is called, if it's set to PersistObject::CREATED the method update() is called.
+	 * If the object's status set to Persist::IN_PROGRESS the method insert()
+	 * is called, if it's set to Persist::CREATED the method update() is called.
 	 * @return void
 	 */
 	public function save(){
@@ -361,13 +361,13 @@ class BankAccount extends PersistObject{
 	/**
 	 * Validates the account's bank.
 	 *
-	 * Bank's status property must be set other than PersistObject::IN_PROGRESS.
+	 * Bank's status property must be set other than Persist::IN_PROGRESS.
 	 * @param Bank $obj
 	 * @return void
 	 */
 	private function validateBank(Bank $obj){
 		if($obj->getStatus() != self::CREATED)
-			throw new Exception('PersistObject::IN_PROGRESS bank provided.');
+			throw new Exception('Persist::IN_PROGRESS bank provided.');
 	}
 	
 	/**
@@ -413,7 +413,7 @@ class Shift extends Identifier{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($id, $status);
 	}
 	
@@ -440,7 +440,7 @@ class Shift extends Identifier{
 	 * Sets the shift's properties with data from the database.
 	 * 
 	 * Must be called only from the database layer. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
+	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @param string $timeTable
 	 */
@@ -620,12 +620,12 @@ class CashRegister{
 	/**
 	 * Validates the provided shift.
 	 *
-	 * Shift's status property must be other than PersistObject::IN_PROGRESS. Otherwise it throws an exception.
+	 * Shift's status property must be other than Persist::IN_PROGRESS. Otherwise it throws an exception.
 	 * @param Shift $obj
 	 */
 	private function validateShift(Shift $obj){
-		if($obj->getStatus() == PersistObject::IN_PROGRESS)
-			throw new Exception('PersistObject::IN_PROGRESS shift provided.');
+		if($obj->getStatus() == Persist::IN_PROGRESS)
+			throw new Exception('Persist::IN_PROGRESS shift provided.');
 	}
 }
 ?>

@@ -154,7 +154,7 @@ class UserAccount extends PersistObject{
 	 * @param string $userName
 	 * @param integer $status
 	 */
-	public function __construct($userName = NULL, $status = PersistObject::IN_PROGRESS){
+	public function __construct($userName = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if(!is_null($userName))
@@ -292,7 +292,7 @@ class UserAccount extends PersistObject{
 	 * Sets the account's properties.
 	 *
 	 * Must be called only from the database layer corresponding class. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
+	 * Persist::CREATED in the constructor method too.
 	 * @param string $firstName
 	 * @param string $lastName
 	 * @param Role $role
@@ -317,8 +317,8 @@ class UserAccount extends PersistObject{
 	/**
 	 * Saves account's data to the database.
 	 * 
-	 * If the object's status is set to PersistObject::IN_PROGRESS the method insert()
-	 * is called, if it's set to PersistObject::CREATED the method update() is called.
+	 * If the object's status is set to Persist::IN_PROGRESS the method insert()
+	 * is called, if it's set to Persist::CREATED the method update() is called.
 	 * @return void
 	 */
 	public function save(){
@@ -347,7 +347,7 @@ class UserAccount extends PersistObject{
 		UserAccountUtility::validateUserName($userName);
 		
 		if(UserAccountUtility::isRoot($userName))
-			return new UserAccount(UserAccountUtility::ROOT, PersistObject::CREATED);
+			return new UserAccount(UserAccountUtility::ROOT, Persist::CREATED);
 		else
 			return UserAccountDAM::getInstance($userName);
 	}
@@ -538,13 +538,13 @@ class UserAccountUtility{
 	/**
 	 * Verifies if the account is recently created.
 	 * 
-	 * Verifies if the account's status property is set to PersistObject::IN_PROGRESS. It throws an exception
+	 * Verifies if the account's status property is set to Persist::IN_PROGRESS. It throws an exception
 	 * if it does.
 	 * @param UserAccount $account
 	 */
 	static private function validateUserAccount(UserAccount $account){
-		if($account->getStatus() == PersistObject::IN_PROGRESS)
-			throw new Exception('PersistObject::IN_PROGRESS account provided.');
+		if($account->getStatus() == Persist::IN_PROGRESS)
+			throw new Exception('Persist::IN_PROGRESS account provided.');
 	}
 }
 ?>
