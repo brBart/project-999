@@ -4,7 +4,13 @@
  * @package Agent
  */
 
+/**
+ * Includes the Persist package.
+ */
 require_once('business/persist.php');
+/**
+ * Includes the AgentDAM package.
+ */
 require_once('data/agent_dam.php');
 
 /**

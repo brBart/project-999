@@ -100,7 +100,11 @@ class UserAccountDAM{
 }
 
 
-
+/**
+ * Utility class for accessing the user acount's tables in the database.
+ * @package UserAccountDAM
+ * @author Roberto Oliveros
+ */
 class UserAccountUtilityDAM{
 	static private $_mRoboliPassword = 'c83aca09889f9820c6916fb16b5f97d6ab164d4f';
 	

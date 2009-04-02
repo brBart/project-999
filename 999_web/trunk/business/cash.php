@@ -5,7 +5,13 @@
  * @author Roberto Oliveros
  */
 
+/**
+ * Includes the Persist package.
+ */
 require_once('business/persist.php');
+/**
+ * Includes the CashDAM package.
+ */
 require_once('data/cash_dam.php');
 
 /**

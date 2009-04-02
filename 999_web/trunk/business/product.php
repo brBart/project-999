@@ -5,7 +5,13 @@
  * @author Roberto Oliveros
  */
 
+/**
+ * Includes the Persist package.
+ */
 require_once('business/persist.php');
+/**
+ * Includes the ProductDAM package for accessing the database.
+ */
 require_once('data/product_dam.php');
 
 /**

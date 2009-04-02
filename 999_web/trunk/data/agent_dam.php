@@ -121,7 +121,11 @@ class SupplierDAM{
 }
 
 
-
+/**
+ * Class that provides access to the branch's database tables.
+ * @package AgentDAM
+ * @author Roberto Oliveros
+ */
 class BranchDAM{
 	/**
 	 * Returns a Branch if it founds an id match in the database. Otherwise returns NULL.

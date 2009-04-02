@@ -5,6 +5,9 @@
  * @author Roberto Oliveros
  */
 
+/**
+ * Includes the DocumentSearchDAM package for accessing the database.
+ */
 require_once('data/document_search_dam.php');
 
 /**

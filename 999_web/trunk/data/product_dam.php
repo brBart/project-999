@@ -5,7 +5,11 @@
  * @author Roberto Oliveros
  */
 
-
+/**
+ * Class for accessing unit of measure tables in the database.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
 class UnitOfMeasureDAM{
 	/**
 	 * Returns an instance of a unit of measure.
