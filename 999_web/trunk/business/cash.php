@@ -21,12 +21,6 @@ require_once('data/cash_dam.php');
  */
 class Bank extends Identifier{
 	/**
-	 * Holds the bank's name.
-	 * @var string
-	 */
-	private $_mName;
-	
-	/**
 	 * Constructs the bank with the provided id and status.
 	 * 
 	 * Parameters must be set only if the method is called from the database layer.
@@ -35,46 +29,6 @@ class Bank extends Identifier{
 	 */
 	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
 		parent::__construct($id, $status);
-	}
-	
-	/**
-	 * Returns the name of the bank.
-	 *
-	 * @return string
-	 */
-	public function getName(){
-		return $this->_mName;
-	}
-	
-	/**
-	 * Sets the bank's name.
-	 *
-	 * @param string $name
-	 * @return void
-	 */
-	public function setName($name){
-		$this->validateName($name);
-		$this->_mName = $name;
-	}
-	
-	/**
-	 * Set the bank's data provided by the database.
-	 * 
-	 * Must be call only from the database layer corresponding class. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
-	 * @param string $name
-	 * @return void
-	 */
-	public function setData($name){
-		try{
-			$this->validateName($name);
-		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Bank setData method with bad data! ' .
-					$e->getMessage());
-			throw $et;
-		}
-		
-		$this->_mName = $name;
 	}
 	
 	/**
@@ -117,28 +71,6 @@ class Bank extends Identifier{
 	 */
 	protected function update(){
 		BankDAM::update($this);
-	}
-	
-	/**
-	 * Validates the bank's main properties.
-	 * 
-	 * Verifies that the bank's name is not empty. Otherwise it throws an exception.
-	 * @return void
-	 */
-	protected function validateMainProperties(){
-		$this->validateName($this->_mName);
-	}
-	
-	/**
-	 * Validates the bank's name.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $name
-	 * @return void
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
 	}
 }
 
@@ -468,13 +400,6 @@ class BankAccount extends PersistObject{
  */
 class Shift extends Identifier{
 	/**
-	 * Holds the shift's name.
-	 *
-	 * @var string
-	 */
-	private $_mName;
-	
-	/**
 	 * Holds the timetable of the working shift.
 	 *
 	 * @var string
@@ -493,33 +418,12 @@ class Shift extends Identifier{
 	}
 	
 	/**
-	 * Returns the shift's name.
-	 *
-
-	 * 	 * @return string
-	 */
-	public function getName(){
-		return $this->_mName;
-	}
-	
-	/**
 	 * Returns shift's timetable.
 	 *
 	 * @return string
 	 */
 	public function getTimeTable(){
 		return $this->_mTimeTable;
-	}
-	
-	/**
-	 * Sets the shift's name.
-	 *
-	 * @param string $name
-	 * @return void
-	 */
-	public function setName($name){
-		$this->validateName($name);
-		$this->_mName = $name;
 	}
 	
 	/**
@@ -541,8 +445,9 @@ class Shift extends Identifier{
 	 * @param string $timeTable
 	 */
 	public function setData($name, $timeTable){
+		parent::setData($name);
+		
 		try{
-			$this->validateName($name);
 			$this->validateTimeTable($timeTable);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling Shift\'s setData method with bad data! '.
@@ -550,7 +455,6 @@ class Shift extends Identifier{
 			throw $et;
 		}
 		
-		$this->_mName = $name;
 		$this->_mTimeTable = $timeTable;
 	}
 	
@@ -604,20 +508,8 @@ class Shift extends Identifier{
 	 * @return void
 	 */
 	protected function validateMainProperties(){
-		$this->validateName($this->_mName);
+		parent::validateMainProperties();
 		$this->validateTimeTable($this->_mTimeTable);
-	}
-	
-	/**
-	 * Validates if the provided name is correct.
-	 * 
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $name
-	 * @return void
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
 	}
 	
 	/**

@@ -21,13 +21,6 @@ require_once('data/product_dam.php');
  */
 class UnitOfMeasure extends Identifier{
 	/**
-	 * Holds the unit's name.
-	 *
-	 * @var string
-	 */
-	private $_mName;
-	
-	/**
 	 * Constructs the object with the provided id and status.
 	 *
 	 * Parameters must be set only if the method is called from the database layer.
@@ -36,44 +29,6 @@ class UnitOfMeasure extends Identifier{
 	 */
 	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
 		parent::__construct($id, $status);
-	}
-	
-	/**
-	 * Returns the unit's name.
-	 *
-	 * @return string
-	 */
-	public function getName(){
-		return $this->_mName;
-	}
-	
-	/**
-	 * Sets the unit's name.
-	 *
-	 * @param string $name
-	 */
-	public function setName($name){
-		$this->validateName($name);
-		$this->_mName = $name;
-	}
-	
-	/**
-	 * Sets the object's properties.
-	 *
-	 * Must be called only from the database layer corresponding class. The object's status must be set to
-	 * PersistObject::CREATED in the constructor method too.
-	 * @param string $name
-	 */
-	public function setData($name){
-		try{
-			$this->validateName($name);
-		} catch(Exception $e){
-			$et = new Exception('Internal error, calling UnitOfMeasure constructor method with bad data! ' .
-					$e->getMessage());
-			throw $et;
-		}
-		
-		$this->_mName = $name;
 	}
 	
 	/**
@@ -117,26 +72,6 @@ class UnitOfMeasure extends Identifier{
 	protected function update(){
 		UnitOfMeasureDAM::update($this);
 	}
-	
-	/**
-	 * Validates object's main properties.
-	 *
-	 * Verifies if the object's name is not empty. Otherwise it throws an exception.
-	 */
-	protected function validateMainProperties(){
-		$this->validateName($this->_mName);
-	}
-	
-	/**
-	 * Validates the unit's name.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $name
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&accute;lido.');
-	}
 }
 
 
@@ -146,6 +81,57 @@ class UnitOfMeasure extends Identifier{
  * @author Roberto Oliveros
  */
 class Manufacturer extends Identifier{
+/**
+	 * Constructs the object with the provided id and status.
+	 *
+	 * Parameters must be set only if the method is called from the database layer.
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct($id = NULL, $status = PersistObject::IN_PROGRESS){
+		parent::__construct($id, $status);
+	}
 	
+	/**
+	 * Returns an instance of a manufacturer.
+	 * 
+	 * Returns NULL if there was no match in the database.
+	 * @param integer $id
+	 * @return Manufacturer
+	 */
+	static public function getInstance($id){
+		self::validateId($id);
+		return ManufacturerDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the manufacturer from the database.
+	 * 
+	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * @param Manufacturer $obj
+	 * @return boolean
+	 */
+	static public function delete(Manufacturer $obj){
+		self::validateObjectForDelete($obj);
+		return ManufacturerDAM::delete($obj);
+	}
+	
+	/**
+	 * Inserts the object's data to the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return ManufacturerDAM::insert($this);
+	}
+	
+	/**
+	 * Updates the object's data in the database.
+	 *
+	 */
+	protected function update(){
+		ManufacturerDAM::update($this);
+	}
 }
 ?>

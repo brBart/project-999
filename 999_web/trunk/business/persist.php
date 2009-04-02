@@ -125,6 +125,13 @@ abstract class Identifier extends PersistObject{
 	protected $_mId;
 	
 	/**
+	 * Holds the object's name.
+	 *
+	 * @var string
+	 */
+	protected $_mName;
+	
+	/**
 	 * Constructs the object with the provided id and status.
 	 * 
 	 * Parameters must be set only if the method is called from the database layer.
@@ -156,6 +163,46 @@ abstract class Identifier extends PersistObject{
 	}
 	
 	/**
+	 * Returns the object's name.
+	 *
+	 * @return string
+	 */
+	public function getName(){
+		return $this->_mName;
+	}
+	
+	/**
+	 * Sets the object's name.
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	public function setName($name){
+		$this->validateName($name);
+		$this->_mName = $name;
+	}
+	
+	/**
+	 * Set the object's data provided by the database.
+	 * 
+	 * Must be call only from the database layer corresponding class. The object's status must be set to
+	 * PersistObject::CREATED in the constructor method too.
+	 * @param string $name
+	 * @return void
+	 */
+	public function setData($name){
+		try{
+			$this->validateName($name);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Identifier setData method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mName = $name;
+	}
+	
+	/**
 	 * Validates if the provided id is correct.
 	 *
 	 * Must be greater than cero. Otherwise it throw an exception.
@@ -165,6 +212,28 @@ abstract class Identifier extends PersistObject{
 	public function validateId($id){
 		if(!is_int($id) || $id < 1)
 			throw new Exception('Id inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates the object's main properties.
+	 * 
+	 * Verifies that the object's name is not empty. Otherwise it throws an exception.
+	 * @return void
+	 */
+	protected function validateMainProperties(){
+		$this->validateName($this->_mName);
+	}
+	
+	/**
+	 * Validates the object's name.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $name
+	 * @return void
+	 */
+	private function validateName($name){
+		if(empty($name))
+			throw new Exception('Nombre inv&aacute;lido.');
 	}
 }
 
