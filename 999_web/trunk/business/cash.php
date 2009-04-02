@@ -243,7 +243,7 @@ class BankAccount extends PersistObject{
 	 * @return void
 	 */
 	public function setName($name){
-		$this->validateName($name);
+		Identifier::validateName($name);
 		$this->_mName = $name;
 	}
 	
@@ -257,7 +257,7 @@ class BankAccount extends PersistObject{
 	 */
 	public function setData($name, Bank $bank){
 		try{
-			$this->validateName($name);
+			Identifier::validateName($name);
 			$this->validateBank($bank);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling BankAccount\'s setData method with bad data! ' .
@@ -338,7 +338,7 @@ class BankAccount extends PersistObject{
 	 */
 	protected function validateMainProperties(){
 		$this->validateNumber($this->_mNumber);
-		$this->validateName($this->_mName);
+		Identifier::validateName($this->_mName);
 		
 		if(is_null($this->_mBank))
 			throw new Exception('Banco inv&aacute;lido.');
@@ -371,20 +371,10 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Validates the bank's holder.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $name
-	 * @return void
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
-	}
-	
-	/**
 	 * Verifies if an account's number already exists in the database.
-	 * @param unknown_type $number
+	 * 
+	 * Throws an exception if it does.
+	 * @param string $number
 	 */
 	private function verifyNumber($number){
 		if(BankAccountDAM::exists($number))

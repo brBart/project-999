@@ -75,7 +75,7 @@ class Customer extends PersistObject{
 	}
 	
 	/**
-	 * Returns the name of the agent.
+	 * Returns the customer's name.
 	 *
 	 * @return string
 	 */
@@ -84,13 +84,13 @@ class Customer extends PersistObject{
 	}
 	
 	/**
-	 * Sets the name of the agent.
+	 * Sets the customer's name.
 	 *
 	 * @param string $name
 	 * @return void
 	 */
 	public function setName($name){
-		$this->validateName($name);
+		Identifier::validateName($name);
 		$this->_mName = $name;
 	}
 	
@@ -104,7 +104,7 @@ class Customer extends PersistObject{
 	 */
 	public function setData($name){
 		try{
-			$this->validateName($name);
+			Identifier::validateName($name);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling Agent\'s setData method with bad data! ' .
 					$e->getMessage());
@@ -115,9 +115,9 @@ class Customer extends PersistObject{
 	}
 	
 	/**
-	 * Validates the agent's nit.
+	 * Validates the customer's nit.
 	 * 
-	 * Verifies that the agent's nit is set correctly, e.g. 1725045-5. Otherwise it throws an exception.
+	 * Verifies that the nit is set correctly, e.g. 1725045-5. Otherwise it throws an exception.
 	 * @param string $nit
 	 * @return void
 	 */
@@ -190,24 +190,12 @@ class Customer extends PersistObject{
 	/**
 	 * Validates the object's main properties.
 	 * 
-	 * Verifies that the agent's nit and name are set correctly. Otherwise it throws an exception.
+	 * Verifies that the customer's nit and name are set correctly. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
 		$this->validateNit($this->_mNit);
-		$this->validateName($this->_mName);
-	}
-	
-	/**
-	 * Validates the agent's name.
-	 * 
-	 * Verifies that agent's name is not empty. Otherwise it throws an exception.
-	 * @param string $name
-	 * @return void
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
+		Identifier::validateName($this->_mName);
 	}
 	
 	/**
@@ -283,7 +271,7 @@ abstract class Organization extends Identifier{
 	}
 	
 	/**
-	 * Returns the nit of the agent.
+	 * Returns the organization's nit.
 	 *
 	 * @return string
 	 */
@@ -421,7 +409,8 @@ abstract class Organization extends Identifier{
 	/**
 	 * Validates the organization's main properties.
 	 * 
-	 * Verifies the organization's telephone and address are not empty. Otherwise it throws an exception.
+	 * Verifies the organization's name, telephone and address are not empty. The nit must be valid. Otherwise
+	 * it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
@@ -546,7 +535,7 @@ class Branch extends Organization{
 	 * Deletes the branch from the database.
 	 *
 	 * Returns true confirming the deletion, otherwise false due dependencies.
-	 * @param Branch $branch
+	 * @param Branch $obj
 	 * @return boolean
 	 */
 	static public function delete(Branch $obj){

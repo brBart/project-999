@@ -420,7 +420,8 @@ class UserAccount extends PersistObject{
 	
 	/**
 	 * Verifies if the account's username already exists in the database.
-	 *
+	 * 
+	 * Throws an exception if it does.
 	 * @param string $userName
 	 */
 	private function verifyUserName($userName){

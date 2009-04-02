@@ -60,7 +60,10 @@ abstract class Persist{
  * @author Roberto Oliveros
  */
 abstract class PersistObject extends Persist{
-	
+	/**
+	 * Saves the object's data in the database.
+	 *
+	 */
 	abstract public function save();
 
 	/**
@@ -119,7 +122,6 @@ abstract class Identifier extends PersistObject{
 	/**
 	 * Constructs the object with the provided id and status.
 	 * 
-	 * Parameters must be set only if the method is called from the database layer.
 	 * @param integer $id
 	 * @param integer $status
 	 */
@@ -218,6 +220,18 @@ abstract class Identifier extends PersistObject{
 	}
 	
 	/**
+	 * Validates the object's name.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $name
+	 * @return void
+	 */
+	public function validateName($name){
+		if(empty($name))
+			throw new Exception('Nombre inv&aacute;lido.');
+	}
+	
+	/**
 	 * Validates the object's main properties.
 	 * 
 	 * Verifies that the object's name is not empty. Otherwise it throws an exception.
@@ -225,18 +239,6 @@ abstract class Identifier extends PersistObject{
 	 */
 	protected function validateMainProperties(){
 		$this->validateName($this->_mName);
-	}
-	
-	/**
-	 * Validates the object's name.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $name
-	 * @return void
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
 	}
 }
 
