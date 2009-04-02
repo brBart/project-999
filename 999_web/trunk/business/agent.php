@@ -14,18 +14,24 @@ require_once('business/persist.php');
 require_once('data/agent_dam.php');
 
 /**
- * Defines common functionality for agents derived classes.
+ * Represents an invoice's customer.
  * @package Agent
  * @author Roberto Oliveros
  */
-abstract class Agent extends PersistObject{
+class Customer extends PersistObject{
+	/**
+	 * Consumidor Final initials.
+	 *
+	 */
+	const CF = 'CF';
+	
 	/**
 	 * Holds the agent's nit (Numero de Identificacion Tributaria).
 	 * 
 	 * Note that must match the "^[0-9]+[-][0-9]$" pattern to be valid, e.g. 1725045-5.
 	 * @var string
 	 */
-	protected $_mNit;
+	private $_mNit;
 	
 	/**
 	 * Holds the agent's name.
@@ -33,6 +39,31 @@ abstract class Agent extends PersistObject{
 	 * @var string
 	 */
 	private $_mName;
+	
+	/**
+	 * Constructs the customer object with the provided nit and status.
+	 * 
+	 * Do not use, use getInstance() instead. It is public because is called from database layer 
+	 * corresponding class. Valid nit or consumidor final initials are required.
+	 * @param string $nit
+	 * @param integer $status
+	 */
+	public function __construct($nit, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		if($this->isConsumidorFinal($nit))
+			$this->_mNit = CF;
+		else{
+			try{
+				$this->validateNit($nit);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Customer\'s constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			$this->_mNit = $nit;
+		}
+	}
 	
 	/**
 	 * Returns the nit of the agent.
@@ -90,71 +121,9 @@ abstract class Agent extends PersistObject{
 	 * @param string $nit
 	 * @return void
 	 */
-	protected function validateNit($nit){
+	public function validateNit($nit){
 		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
 			throw new Exception('Nit inv&aacute:lido.');
-	}
-	
-	/**
-	 * Validates the object's main properties.
-	 * 
-	 * Verifies that the agent's nit and name are set correctly. Otherwise it throws an exception.
-	 * @return void
-	 */
-	protected function validateMainProperties(){
-		$this->validateNit($this->_mNit);
-		$this->validateName($this->_mName);
-	}
-	
-	/**
-	 * Validates the agent's name.
-	 * 
-	 * Verifies that agent's name is not empty. Otherwise it throws an exception.
-	 * @param string $name
-	 * @return void
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
-	}
-}
-
-
-/**
- * Represents the invoice's customer.
- * @package Agent
- * @author Roberto Oliveros
- */
-class Customer extends Agent{
-	/**
-	 * Consumidor Final initials.
-	 *
-	 */
-	const CF = 'CF';
-	
-	/**
-	 * Constructs the customer object with the provided nit and status.
-	 * 
-	 * Do not use, use getInstance() instead. It is public because is called from database layer 
-	 * corresponding class. Valid nit or consumidor final initials are required.
-	 * @param string $nit
-	 * @param integer $status
-	 */
-	public function __construct($nit, $status = Persist::IN_PROGRESS){
-		parent::__construct($status);
-		
-		if($this->isConsumidorFinal($nit))
-			$this->_mNit = CF;
-		else{
-			try{
-				$this->validateNit($nit);
-			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Customer\'s constructor method with bad data! ' .
-						$e->getMessage());
-				throw $et;
-			}
-			$this->_mNit = $nit;
-		}
 	}
 	
 	/**
@@ -165,10 +134,10 @@ class Customer extends Agent{
 	 * @return void
 	 */
 	public function save(){
-		$this->validateMainProperties();
-		
 		if($this->_mNit == CF)
 			return;
+		
+		$this->validateMainProperties();
 		
 		if($this->_mStatus == self::IN_PROGRESS){
 			if(CustomerDAM::exist($this->_mNit))
@@ -219,6 +188,29 @@ class Customer extends Agent{
 	}
 	
 	/**
+	 * Validates the object's main properties.
+	 * 
+	 * Verifies that the agent's nit and name are set correctly. Otherwise it throws an exception.
+	 * @return void
+	 */
+	protected function validateMainProperties(){
+		$this->validateNit($this->_mNit);
+		$this->validateName($this->_mName);
+	}
+	
+	/**
+	 * Validates the agent's name.
+	 * 
+	 * Verifies that agent's name is not empty. Otherwise it throws an exception.
+	 * @param string $name
+	 * @return void
+	 */
+	private function validateName($name){
+		if(empty($name))
+			throw new Exception('Nombre inv&aacute;lido.');
+	}
+	
+	/**
 	 * Verifies if the provided nit represents a consumidor final.
 	 * 
 	 * Checks if the provided nit match the "^[cC][\\\/.]?([fF]$|[fF]\.?$)" pattern. Returns true if 
@@ -241,13 +233,14 @@ class Customer extends Agent{
  * @author Roberto Oliveros
  *
  */
-abstract class Organization extends Agent{
+abstract class Organization extends Identifier{
 	/**
-	 * Holds the organization's id.
-	 *
-	 * @var integer
+	 * Holds the organization's nit (Numero de Identificacion Tributaria).
+	 * 
+	 * Note that must match the "^[0-9]+[-][0-9]$" pattern to be valid, e.g. 1725045-5.
+	 * @var string
 	 */
-	protected $_mId;
+	private $_mNit;
 	
 	/**
 	 * Holds the organization's telephone number.
@@ -286,27 +279,16 @@ abstract class Organization extends Agent{
 	 * @param integer $status
 	 */
 	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
-		parent::__construct($status);
-		
-		if(!is_null($id))
-			try{
-				Identifier::validateId($id);
-			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Organization constructor with bad data! ' .
-						$e->getMessage());
-				throw $et;
-			}
-		
-		$this->_mId = $id;
+		parent::__construct($id, $status);
 	}
 	
 	/**
-	 * Returns the organization's id.
+	 * Returns the nit of the agent.
 	 *
-	 * @return integer
+	 * @return string
 	 */
-	public function getId(){
-		return $this->_mId;
+	public function getNit(){
+		return $this->_mNit;
 	}
 	
 	/**
@@ -352,7 +334,7 @@ abstract class Organization extends Agent{
 	 * @param string $nit
 	 */
 	public function setNit($nit){
-		$this->validateNit($nit);			
+		Customer::validateNit($nit);			
 		$this->_mNit = $nit;
 	}
 	
@@ -411,7 +393,7 @@ abstract class Organization extends Agent{
 		parent::setData($name);
 		
 		try{
-			$this->validateNit($nit);
+			Customer::validateNit($nit);
 			$this->validateTelephone($telephone);
 			$this->validateAddress($address);
 			$this->validateEmail($email);
@@ -445,6 +427,7 @@ abstract class Organization extends Agent{
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
 		
+		Customer::validateNit($this->_mNit);
 		$this->validateTelephone($this->_mTelephone);
 		$this->validateAddress($this->_mAddress);
 	}

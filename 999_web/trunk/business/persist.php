@@ -60,24 +60,9 @@ abstract class Persist{
  * @author Roberto Oliveros
  */
 abstract class PersistObject extends Persist{
-	/**
-	 * Saves object's data in the database.
-	 * 
-	 * If the object's status set to Persist::IN_PROGRESS the method insert()
-	 * is called, if it's set to Persist::CREATED the method update() is called.
-	 * @return void
-	 */
-	public function save(){
-		$this->validateMainProperties();
-		
-		if($this->_mStatus == self::IN_PROGRESS){
-			$this->_mId = $this->insert();
-			$this->_mStatus = self::CREATED;
-		}
-		else
-			$this->update();
-	}
 	
+	abstract public function save();
+
 	/**
 	 * Validates if the object can be deleted in the database.
 	 * 
@@ -200,6 +185,24 @@ abstract class Identifier extends PersistObject{
 		}
 		
 		$this->_mName = $name;
+	}
+	
+	/**
+	 * Saves object's data in the database.
+	 * 
+	 * If the object's status set to Persist::IN_PROGRESS the method insert()
+	 * is called, if it's set to Persist::CREATED the method update() is called.
+	 * @return void
+	 */
+	public function save(){
+		$this->validateMainProperties();
+		
+		if($this->_mStatus == self::IN_PROGRESS){
+			$this->_mId = $this->insert();
+			$this->_mStatus = self::CREATED;
+		}
+		else
+			$this->update();
 	}
 	
 	/**
