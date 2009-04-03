@@ -143,40 +143,42 @@ class Manufacturer extends Identifier{
  */
 class Inventory{
 	/**
-	 * Holds the product of which this inventory is made of.
-	 *
-	 * @var Product
-	 */
-	private $_mProduct;
-	
-	/**
 	 * Returns the available quantity of the inventory's product.
 	 *
+	 * @param Product $product
 	 * @return integer
 	 */
-	public function getAvailable(){
-		return InventoryDAM::getAvailable($this->_mProduct);
+	static public function getAvailable(Product $product){
+		self::validateProduct($product);
+		return InventoryDAM::getAvailable($product);
 	}
 	
 	/**
 	 * Returns the quantity on hand of the inventory's product.
 	 *
+	 * @param Product $product
 	 * @return integer
 	 */
-	public function getQuantity(){
-		return InventoryDAM::getQuantity($this->_mProduct);
+	static public function getQuantity(Product $product){
+		self::validateProduct($product);
+		return InventoryDAM::getQuantity($product);
 	}
 	
 	/**
 	 * Returns the necessary lots to fulfill the requested quantity of units.
 	 *
-	 * Returns an array containing the necessary lots with available quantity to fulfill the requested quantity.
+	 * Returns an array containing the necessary lots with available quantity. If the requested quantity
+	 * cannot be fulfilled new lots are created and included.
+	 * @param Product $product
 	 * @param integer $reqUnitsQuantity
 	 * @return array<Lot>
 	 */
-	public function getLots($reqUnitsQuantity){
+	static public function getLots(Product $product, $reqUnitsQuantity){
+		self::validateProduct($product);
+		self::validateQuantity($reqUnitsQuantity);
+		
 		// Get the lots from the database with available stock.
-		$in_stock_lots = InventoryDAM::getLots($this->_mProduct);
+		$in_stock_lots = InventoryDAM::getLots($product);
 		// The returned qrray with the lots which fulfill the requested quantity of units.
 		$lots = array();
 
@@ -210,19 +212,152 @@ class Inventory{
 		return $lots;
 	}
 	
-	
-	public function getNegativeLots($reqUnitsQuantity){
+	/**
+	 * Returns the necessary existing lots with negative quantity.
+	 *
+	 * Returns an array including lots with negative quantities. If the requested quantity cannot be fulfilled
+	 * new lots are created and included.
+	 * @param Product $product
+	 * @param integer $reqUnitsQuantity
+	 * @return array<Lot>
+	 */
+	static public function getNegativeLots(Product $product, $reqUnitsQuantity){
+		self::validateProduct($product);
+		self::validateQuantity($reqUnitsQuantity);
+		
 		// Get the negative lots from the database.
-		$negative_lots = InventoryDAM::getNegativeLots($this->_mProduct);
+		$negative_lots = InventoryDAM::getNegativeLots($product);
 		// The returned array with the negative lots.
 		$lots = array();
 		
 		$lot = current($negative_lots);
 		do{
-			if(!$lot){
-				
+			// Verify the negative quantity of the lot.
+			if(!$lot)
+				$negative = 0;
+			else
+				$negative = -1 * $lot->getAvailable();
+
+			// If it has a negative quantity but doesn't fulfill the requested quantity.
+			if($negative > 0 && $negative < $reqUnitsQuantity){
+				$lots[] = $lot;
+				$reqUnitsQuantity = $reqUnitsQuantity - $negative;
+			// If it does fulfill the requested quantity.
+			}elseif($negative > 0 && $negative >= $reqUnitsQuantity){
+				$lots[] = $lot;
+				$reqUnitsQuantity = 0;
+			// Otherwise create a new lot.
+			}else {
+				$lots[] = new Lot($this->_mProduct, 0, 0);
+				$reqUnitsQuantity = 0;
 			}
+			
+			$lot = next($negative_lots);
 		} while($reqUnitsQuantity > 0);
+		
+		return $lots;
 	}
+	
+	/**
+	 * Reserves the specified quantity from the provided product in the database.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function reserve(Product $product, $quantity){
+		self::validateProduct($product);
+		self::validateQuantity($quantity);
+		InventoryDAM::reserve($product, $quantity);
+	}
+	
+	/**
+	 * Decreases the product's reserve by the quantity provided.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function decreaseReserve(Product $product, $quantity){
+		self::validateProduct($product);
+		self::validateQuantity($quantity);
+		InventoryDAM::decreaseReserve($product, $quantity);
+	}
+	
+	/**
+	 * Decreases the product's quantity.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function decrease(Product $product, $quantity){
+		self::validateProduct($product);
+		self::validateQuantity($quantity);
+		InventoryDAM::decrease($product, $quantity);
+	}
+	
+	/**
+	 * Increases the product's quantity.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function increase(Product $product, $quantity){
+		self::validateProduct($product);
+		self::validateQuantity($quantity);
+		InventoryDAM::increase($product, $quantity);
+	}
+	
+	/**
+	 * Validates if the product's status property other than Persist::IN_PROGRESS.
+	 *
+	 * Throws an exception if it is not.
+	 * @param Product $product
+	 */
+	static private function validateProduct(Product $product){
+		if($product->getStatus() == PersistObject::IN_PROGRESS)
+			throw new Exception('Persist::IN_PROGRESS product provided.');
+	}
+	
+	/**
+	 * Validates the quantity.
+	 *
+	 * Must be greater than cero. Otherwise it throws an exception.
+	 * @param integer $quantity
+	 */
+	static private function validateQuantity($quantity){
+		if(!is_int($quantity) || $quantity < 1)
+			throw new Exception('Cantidad inv&aacute;lida.');
+	}
+}
+
+
+
+class productDetail{
+	/**
+	 * Holds the product's supplier.
+	 *
+	 * @var Supplier
+	 */
+	private $_mSupplier;
+	
+	/**
+	 * Holds the supplier's product's id.
+	 *
+	 * @var string
+	 */
+	private $_mProductId;
+	
+	/**
+	 * Holds the detail actual status.
+	 *
+	 * @var integer
+	 */
+	private $_mStatus;
+	
+	/**
+	 * Holds the next action that must be taken on the detail, e.g. delete, save.
+	 *
+	 * @var string
+	 */
+	private $_mAction;
 }
 ?>
