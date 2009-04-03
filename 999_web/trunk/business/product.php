@@ -134,4 +134,40 @@ class Manufacturer extends Identifier{
 		ManufacturerDAM::update($this);
 	}
 }
+
+
+/**
+ * Class with necessary functionality for controlling a product's inventory.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class Inventory{
+	/**
+	 * Holds the product of which this inventory is made of.
+	 *
+	 * @var Product
+	 */
+	private $_mProduct;
+	
+	/**
+	 * Returns the available quantity of the inventory's product.
+	 *
+	 * @return integer
+	 */
+	public function getAvailable(){
+		return InventoryDAM::getAvailable($this->_mProduct);
+	}
+	
+	/**
+	 * Returns the quantity on hand of the inventory's product.
+	 *
+	 * @return integer
+	 */
+	public function getQuantity(){
+		return InventoryDAM::getQuantity($this->_mProduct);
+	}
+	
+	
+	
+}
 ?>
