@@ -11,6 +11,8 @@
  * @author Roberto Oliveros
  */
 class BankDAM{
+	static private $_mName = 'GyT Continental';
+	
 	/**
 	 * Returns a Bank if it founds an id match in the database. Otherwise returns NULL.
 	 *
@@ -20,7 +22,7 @@ class BankDAM{
 	static public function getInstance($id){
 		if($id == 123){
 			$bank = new Bank(123, PersistObject::CREATED);
-			$bank->setData('GyT Continental');
+			$bank->setData(self::$_mName);
 			return $bank;
 		}
 		else
@@ -44,7 +46,7 @@ class BankDAM{
 	 * @return void
 	 */
 	static public function update(Bank $obj){
-		// Code here...
+		self::$_mName = $obj->getName();
 	}
 	
 	/**
@@ -139,6 +141,8 @@ class BankAccountDAM{
  * @author Roberto Oliveros
  */
 class ShiftDAM{
+	static private $_mName = 'Diurno';
+	
 	/**
 	 * Returns a Shift if it founds an id match in the database. Otherwise returns NULL.
 	 *
@@ -148,7 +152,7 @@ class ShiftDAM{
 	static public function getInstance($id){
 		if($id == 123){
 			$shift = new Shift(123, PersistObject::CREATED);
-			$shift->setData('Diurno', '8am - 6pm');
+			$shift->setData(self::$_mName, '8am - 6pm');
 			return $shift;
 		}
 		else
@@ -172,7 +176,7 @@ class ShiftDAM{
 	 * @return void
 	 */
 	static public function update(Shift $obj){
-		// Code here...
+		self::$_mName = $obj->getName();
 	}
 	
 	/**

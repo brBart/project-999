@@ -69,6 +69,8 @@ class CustomerDAM{
  *
  */
 class SupplierDAM{
+	static private $_mName = 'Jose Gil';
+	
 	/**
 	 * Returns a Supplier if founds an id match in the database, otherwise returns NULL.
 	 *
@@ -78,7 +80,7 @@ class SupplierDAM{
 	static public function getInstance($id){
 		if($id == 123){
 			$supplier = new Supplier(123, PersistObject::CREATED);
-			$supplier->setData('350682-7', 'Jose Gil', '24129999', '3a calle 7-32 z.1',
+			$supplier->setData('350682-7', self::$_mName, '24129999', '3a calle 7-32 z.1',
 					'info@josegil.net', 'Roberto');
 			return $supplier;
 		}
@@ -103,7 +105,7 @@ class SupplierDAM{
 	 * @return void
 	 */
 	static public function update(Supplier $supplier){
-		// Code here...
+		self::$_mName = $supplier->getName();
 	}
 	
 	/**
@@ -127,6 +129,8 @@ class SupplierDAM{
  * @author Roberto Oliveros
  */
 class BranchDAM{
+	static private $_mName = 'JG Jutiapa';
+	
 	/**
 	 * Returns a Branch if it founds an id match in the database. Otherwise returns NULL.
 	 *
@@ -136,7 +140,7 @@ class BranchDAM{
 	static public function getInstance($id){
 		if($id == 123){
 			$branch = new Branch(123, PersistObject::CREATED);
-			$branch->setData('350682-7', 'JG Jutiapa', '78123456', 'Mercado central.',
+			$branch->setData('350682-7', self::$_mName, '78123456', 'Mercado central.',
 					'jutiapa@josegil.net', 'Idania');
 			return $branch;
 		}
@@ -161,7 +165,7 @@ class BranchDAM{
 	 * @return void
 	 */
 	static public function update(Branch $branch){
-		// Code here...
+		self::$_mName = $branch->getName();
 	}
 	
 	/**
