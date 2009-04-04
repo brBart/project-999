@@ -331,7 +331,7 @@ class Inventory{
 
 
 
-class productDetail{
+class ProductDetail extends Persist{
 	/**
 	 * Holds the product's supplier.
 	 *
@@ -347,17 +347,112 @@ class productDetail{
 	private $_mProductId;
 	
 	/**
-	 * Holds the detail actual status.
+	 * Flag that indicates if the detail has to be deteled.
 	 *
-	 * @var integer
+	 * @var boolean
 	 */
-	private $_mStatus;
+	private $_mDeleted;
 	
 	/**
-	 * Holds the next action that must be taken on the detail, e.g. delete, save.
+	 * Constructs the detail with the provided supplier, product id and status.
 	 *
-	 * @var string
+	 * @param Supplier $supplier
+	 * @param string $productId
+	 * @param integer $status
 	 */
-	private $_mAction;
+	public function __construct(Supplier $supplier, $productId, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		$this->validateSupplier($supplier);
+		$this->validateProductId($productId);
+		
+		$this->_mSupplier = $supplier;
+		$this->_mProductId = $productId;
+	}
+	
+	/**
+	 * Returns the detail's id.
+	 *
+	 * @return string
+	 */
+	public function getId(){
+		return $this->_mSupplier->getId() . $this->_mProductId;
+	}
+	
+	/**
+	 * Returns the supplier's product's id.
+	 *
+	 * @return string
+	 */
+	public function getProductId(){
+		return $this->_mProductId;
+	}
+	
+	/**
+	 * Returns the detail's supplier.
+	 *
+	 * @return Supplier
+	 */
+	public function getSupplier(){
+		return $this->_mSupplier;
+	}
+	
+	/**
+	 * Returns the detail's deleted flag.
+	 *
+	 * @return boolean
+	 */
+	public function isDeleted(){
+		return $this->_mDeleted;
+	}
+	
+	/**
+	 * Retuns an array for displaying the detail's data.
+	 *
+	 * An array with the fields supplier and product_id is returned.
+	 * @return array
+	 */
+	public function show(){
+		return array('supplier' => $this->_mSupplier->getName(), 'product_id' => $this->_mProductId);
+	}
+	
+	/**
+	 * Sets the detail's deleted flag to true.
+	 *
+	 */
+	public function delete(){
+		$this->_mDeleted = true;
+	}
+	
+	
+	public function commit(Product $product){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			ProductDetailDAM::insert($product, $this);
+		elseif($this->_mStatus == Persist::CREATED && $this->_mDeleted)
+			ProductDetailDAM::delete($product, $this);
+	}
+	
+	/**
+	 * Validates the provided supplier.
+	 * 
+	 * The supplier status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
+	 * exception.
+	 * @param Supplier $obj
+	 */
+	private function validateSupplier(Supplier $obj){
+		if($obj->getStatus() == Persist::IN_PROGRESS)
+			throw new Exception('Persist::IN_PROGRESS supplier provided.');
+	}
+	
+	/**
+	 * Validates the provided product id.
+	 * 
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param integer $productId
+	 */
+	private function validateProductId($productId){
+		if(empty($productId))
+			throw new Exception('Invalid product id!');
+	}
 }
 ?>

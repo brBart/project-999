@@ -65,7 +65,7 @@ abstract class PersistObject extends Persist{
 	 *
 	 */
 	abstract public function save();
-
+	
 	/**
 	 * Validates if the object can be deleted in the database.
 	 * 
