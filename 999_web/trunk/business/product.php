@@ -259,6 +259,30 @@ class Inventory{
 	}
 	
 	/**
+	 * Returns an array with the details of the lots.
+	 * 
+	 * The passed parameters are returned with the sum quantity and the sum quantity available of all the
+	 * product's lots.
+	 * @param Product $product
+	 * @param integer $quantity
+	 * @param integer $available
+	 * @return array
+	 */
+	static public function showLots(Product $product, &$quantity, &$available){
+		self::validateProduct($product);
+		
+		$lots = InventoryDAM::getLots($product);
+		
+		foreach($lots as $lot){
+			$lot_details[] = $lot->show();
+			$quantity += $lot->getQuantity();
+			$available += $lot->getAvailable();
+		}
+		
+		return $lot_details;
+	}
+	
+	/**
 	 * Reserves the specified quantity from the provided product in the database.
 	 *
 	 * @param Product $product
@@ -340,11 +364,11 @@ class ProductDetail extends Persist{
 	private $_mSupplier;
 	
 	/**
-	 * Holds the supplier's product's id.
+	 * Holds the supplier's product's SKU.
 	 *
 	 * @var string
 	 */
-	private $_mProductId;
+	private $_mProductSKU;
 	
 	/**
 	 * Flag that indicates if the detail has to be deteled.
@@ -354,20 +378,20 @@ class ProductDetail extends Persist{
 	private $_mDeleted;
 	
 	/**
-	 * Constructs the detail with the provided supplier, product id and status.
+	 * Constructs the detail with the provided supplier, product sku and status.
 	 *
 	 * @param Supplier $supplier
-	 * @param string $productId
+	 * @param string $productSKU
 	 * @param integer $status
 	 */
-	public function __construct(Supplier $supplier, $productId, $status = Persist::IN_PROGRESS){
+	public function __construct(Supplier $supplier, $productSKU, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		$this->validateSupplier($supplier);
-		$this->validateProductId($productId);
+		$this->validateProductSKU($productSKU);
 		
 		$this->_mSupplier = $supplier;
-		$this->_mProductId = $productId;
+		$this->_mProductSKU = $productSKU;
 	}
 	
 	/**
@@ -376,16 +400,16 @@ class ProductDetail extends Persist{
 	 * @return string
 	 */
 	public function getId(){
-		return $this->_mSupplier->getId() . $this->_mProductId;
+		return $this->_mSupplier->getId() . $this->_mProductSKU;
 	}
 	
 	/**
-	 * Returns the supplier's product's id.
+	 * Returns the supplier's product's SKU.
 	 *
 	 * @return string
 	 */
-	public function getProductId(){
-		return $this->_mProductId;
+	public function getProductSKU(){
+		return $this->_mProductSKU;
 	}
 	
 	/**
@@ -409,11 +433,11 @@ class ProductDetail extends Persist{
 	/**
 	 * Retuns an array for displaying the detail's data.
 	 *
-	 * An array with the fields supplier and product_id is returned.
+	 * An array with the fields supplier and product_sku is returned.
 	 * @return array
 	 */
 	public function show(){
-		return array('supplier' => $this->_mSupplier->getName(), 'product_id' => $this->_mProductId);
+		return array('supplier' => $this->_mSupplier->getName(), 'product_sku' => $this->_mProductSKU);
 	}
 	
 	/**
@@ -448,11 +472,200 @@ class ProductDetail extends Persist{
 	 * Validates the provided product id.
 	 * 
 	 * Must not be empty. Otherwise it throws an exception.
-	 * @param integer $productId
+	 * @param integer $ProductSKU
 	 */
-	private function validateProductId($productId){
-		if(empty($productId))
-			throw new Exception('Invalid product id!');
+	private function validateProductSKU($productSKU){
+		if(empty($productSKU))
+			throw new Exception('Invalid product SKU!');
+	}
+}
+
+
+/**
+ * Represents a product in the inventory.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class Product extends PersistObject{
+	/**
+	 * Holds the product's bar code.
+	 *
+	 * @var string
+	 */
+	private $_mBarCode;
+	
+	/**
+	 * Holds the product's packaging.
+	 *
+	 * @var string
+	 */
+	private $_mPackaging;
+	
+	/**
+	 * Holds the product's description.
+	 *
+	 * @var string
+	 */
+	private $_mDescription;
+	
+	/**
+	 * Holds the product's unit of measure.
+	 *
+	 * @var UnitOfMeasure
+	 */
+	private $_mUM;
+	
+	/**
+	 * Holds the product's manufacturer.
+	 *
+	 * @var Manufacturer
+	 */
+	private $_mManufacturer;
+	
+	/**
+	 * Holds the product's price.
+	 *
+	 * @var float
+	 */
+	private $_mPrice;
+	
+	/**
+	 * Holds the product's last price.
+	 *
+	 * @var float
+	 */
+	private $_mLastPrice;
+	
+	/**
+	 * Holds flag that indicates whether the product is deactivated or not.
+	 *
+	 * @var boolean
+	 */
+	private $_mDeactivated;
+	
+	/**
+	 * Holds the suppliers of this product.
+	 *
+	 * @var array<ProductDetail>
+	 */
+	private $_mDetails;
+	
+	/**
+	 * Returns the product's bar code.
+	 *
+	 * @return string
+	 */
+	public function getBarCode(){
+		return $this->_mBarCode;
+	}
+	
+	/**
+	 * Returns the product's packaging.
+	 *
+	 * @return string
+	 */
+	public function getPackaging(){
+		return $this->_mPackaging;
+	}
+	
+	/**
+	 * Returns the product's description.
+	 *
+	 * @return string
+	 */
+	public function getDescription(){
+		return $this->_mDescription;
+	}
+	
+	/**
+	 * Returns the product's price.
+	 *
+	 * @return float
+	 */
+	public function getPrice(){
+		return $this->_mPrice;
+	}
+	
+	/**
+	 * Returns the flag's value.
+	 *
+	 * @return boolean
+	 */
+	public function isDeactivated(){
+		return $this->_mDeactivated;
+	}
+	
+	/**
+	 * Returns an array with the product's details' data.
+	 *
+	 * @return array
+	 */
+	public function showDetails(){
+		foreach($this->_mDetails as $detail)
+			$details[] = $detail->show();
+			
+		return $details;
+	}
+	
+	/**
+	 * Returns the product's manufacturer.
+	 *
+	 * @return Manufacturer
+	 */
+	public function getManufacturer(){
+		return $this->_mManufacturer;
+	}
+	
+	/**
+	 * Returns the product's unit of measure.
+	 *
+	 * @return UnitOfMeasure
+	 */
+	public function getUnitOfMeasure(){
+		return $this->_mUM;
+	}
+	
+	/**
+	 * Sets the product's bar code.
+	 *
+	 * @param string $barCode
+	 */
+	public function setBarCode($barCode){
+		$this->validateBarCode($barCode);
+		$this->_mBarCode = $barCode;
+	}
+	
+	/**
+	 * Returns true if the product has any suppliers. False if not.
+	 *
+	 * @return boolean
+	 */
+	private function hasDetails(){
+		if(empty($this->_mDetails))
+			return false;
+			
+		$count = count($this->_mDetails);
+		$deleted = 0;
+		
+		foreach($this->_mDetails as $detail)
+			if($detail->isDeleted())
+				$deleted++;
+				
+		if($deleted == $count)
+			return false;
+		else
+			return true;
+	}
+	
+	/**
+	 * Validates the product's bar code.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $barCode
+	 */
+	private function validateBarCode($barCode){
+		if(empty($barCode))
+			throw new Exception('Codigo de barra inv&aacute;lido;');
 	}
 }
 ?>
