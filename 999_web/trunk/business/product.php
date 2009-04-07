@@ -463,7 +463,7 @@ class ProductDetail extends Persist{
 	 * exception.
 	 * @param Supplier $obj
 	 */
-	private function validateSupplier(Supplier $obj){
+	public function validateSupplier(Supplier $obj){
 		if($obj->getStatus() == Persist::IN_PROGRESS)
 			throw new Exception('Persist::IN_PROGRESS supplier provided.');
 	}
@@ -474,7 +474,7 @@ class ProductDetail extends Persist{
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param integer $ProductSKU
 	 */
-	private function validateProductSKU($productSKU){
+	public function validateProductSKU($productSKU){
 		if(empty($productSKU))
 			throw new Exception('Invalid product SKU!');
 	}
@@ -788,9 +788,30 @@ class Product extends PersistObject{
 		$this->_mDetails = $temp_details;
 	}
 	
-	
+	/**
+	 * Returns an instance of a product.
+	 *
+	 * Returns a product which has a supplier with the provided product's sku. If not found returns NULL.
+	 * @param Supplier $supplier
+	 * @param string $sku
+	 * @return Product
+	 */
 	static public function getInstanceBySupplier(Supplier $supplier, $sku){
-		
+		ProductDetail::validateSupplier($supplier);
+		ProductDetail::validateProductSKU($sku);
+		return ProductDAM::getInstanceBySupplier($supplier, $sku);
+	}
+	
+	/**
+	 * Returns an instance of a product.
+	 *
+	 * Returns a product whick bar code matches the one provided. If not found returns NULL.
+	 * @param string $barCode
+	 * @return Product
+	 */
+	static public function getInstanceByBarCode($barCode){
+		self::validateBarCode($barCode);
+		return ProductDAM::getInstanceByBarCode($barCode);
 	}
 	
 	/**
