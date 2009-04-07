@@ -768,10 +768,28 @@ class Product extends PersistObject{
 		$this->_mDetails[] = $newDetail;
 	}
 	
-	
+	/**
+	 * Removes a supplier from this product.
+	 *
+	 * @param ProductDetail $purgeDetail
+	 */
 	public function deleteDetail(ProductDetail $purgeDetail){
-		$temp_detail = array();
+		$temp_details = array();
 		
+		foreach($this->_mDetails as &$detail)
+			if($detail !== $purgeDetail)
+				$temp_details[] = $detail;
+			else
+				if($detail->getStatus() == Persist::CREATED){
+					$temp_details[] = $detail;
+					$detail->delete();
+				}
+		
+		$this->_mDetails = $temp_details;
+	}
+	
+	
+	static public function getInstanceBySupplier(Supplier $supplier, $sku){
 		
 	}
 	
