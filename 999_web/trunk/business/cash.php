@@ -110,6 +110,13 @@ class Deposit{
 	private $_mCashRegister;
 	
 	/**
+	 * Holds who made the deposit.
+	 *
+	 * @var UserAccount
+	 */
+	private $_mUser;
+	
+	/**
 	 * Deposit object internal status, e.g. Persist::IN_PROGRESS or Persist::CREATED.
 	 *
 	 * @var integer
