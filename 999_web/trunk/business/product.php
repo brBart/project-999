@@ -608,15 +608,6 @@ class Product extends PersistObject{
 	}
 	
 	/**
-	 * Returns the product's manufacturer.
-	 *
-	 * @return Manufacturer
-	 */
-	public function getManufacturer(){
-		return $this->_mManufacturer;
-	}
-	
-	/**
 	 * Returns the product's unit of measure.
 	 *
 	 * @return UnitOfMeasure
@@ -626,13 +617,162 @@ class Product extends PersistObject{
 	}
 	
 	/**
+	 * Returns the product's manufacturer.
+	 *
+	 * @return Manufacturer
+	 */
+	public function getManufacturer(){
+		return $this->_mManufacturer;
+	}
+	
+	/**
+	 * Returns a product's detail.
+	 *
+	 * Returns the detail which id matches the provided id.
+	 * @param string $id
+	 * @return ProductDetail
+	 */
+	public function getDetail($id){
+		$this->validateDetailId($id);
+		foreach($this->_mDetails as &$detail)
+			if($detail->getId() == $id)
+				return $detail;
+	}
+	
+	/**
 	 * Sets the product's bar code.
 	 *
 	 * @param string $barCode
 	 */
 	public function setBarCode($barCode){
 		$this->validateBarCode($barCode);
+		$this->verifyBarCode($barCode);
 		$this->_mBarCode = $barCode;
+	}
+	
+	/**
+	 * Sets the product's packaging
+	 *
+	 * @param string $packaging
+	 */
+	public function setPackaging($packaging){
+		$this->validatePackaging($packaging);
+		$this->_mPackaging = $packaging;
+	}
+	
+	/**
+	 * Sets the product's description.
+	 *
+	 * @param string $description
+	 */
+	public function setDescription($description){
+		$this->validateDescription($description);
+		$this->_mDescription = $description;
+	}
+	
+	/**
+	 * Sets the product's unit of measure.
+	 *
+	 * @param UnitOfMeasure $um
+	 */
+	public function setUnitOfMeasure(UnitOfMeasure $um){
+		$this->validateUnitOfMeasure($um);
+		$this->_mUM = $um;
+	}
+	
+	/**
+	 * Sets the product's manufacturer.
+	 *
+	 * @param Manufacturer $obj
+	 */
+	public function setManufacturer(Manufacturer $obj){
+		$this->validateManufacturer($obj);
+		$this->_mManufacturer = $obj;
+	}
+	
+	/**
+	 * Sets the product new price.
+	 *
+	 * @param float $price
+	 */
+	public function setPrice($price){
+		$this->validatePrice($price);
+		$price = number_format($price, 2);
+		if($this->_mPrice != $price){
+			$this->_mLastPrice = $this->_mPrice;
+			$this->_mPrice = $price;
+		}
+	}
+	
+	/**
+	 * Sets the product's deactivated flag value.
+	 *
+	 * @param boolean $bool
+	 */
+	public function deactivate($bool){
+		$this->_mDeactivated = (boolean)$bool;
+	}
+	
+	/**
+	 * Sets the product's properties.
+	 *
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * Persist::CREATED in the constructor method too.
+	 * @param string $barCode
+	 * @param string $packaging
+	 * @param string $description
+	 * @param UnitOfMeasure $um
+	 * @param Manufacturer $manufacturer
+	 * @param float $price
+	 * @param boolean $deactivated
+	 * @param array<ProductDetail> $details
+	 */
+	public function setData($barCode, $packaging, $description, UnitOfMeasure $um, Manufacturer $manufacturer, 
+			$price, $deactivated, $details){
+		try{
+			$this->validateBarCode($barCode);
+			$this->validatePackaging($packaging);
+			$this->validateDescription($description);
+			$this->validateUnitOfMeasure($um);
+			$this->validateManufacturer($manufacturer);
+			$this->validatePrice($price);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Product constructor method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mBarCode = $barCode;
+		$this->_mPackaging = $packaging;
+		$this->_mDescription = $description;
+		$this->_mUM = $um;
+		$this->_mManufacturer = $manufacturer;
+		$this->_mPrice = $price;
+		$this->_mDeactivated = (boolean)$deactivated;
+		$this->_mDetails = $details;
+	}
+	
+	/**
+	 * Adds a supplier to the list of suppliers of this product.
+	 *
+	 * @param ProductDetail $newDetail
+	 */
+	public function addDetail(ProductDetail $newDetail){
+		foreach($this->_mDetails as $detail)
+			if($detail === $newDetail && !$detail->isDeleted())
+				throw new Exception('Codigo del proveedor ya esta ingresado.');
+				
+		if(ProductDAM::existsDetail($newDetail))
+			throw new Exception('Proveedor del proveedor ya existe.');
+			
+		$this->_mDetails[] = $newDetail;
+	}
+	
+	
+	public function deleteDetail(ProductDetail $purgeDetail){
+		$temp_detail = array();
+		
+		
 	}
 	
 	/**
@@ -666,6 +806,84 @@ class Product extends PersistObject{
 	private function validateBarCode($barCode){
 		if(empty($barCode))
 			throw new Exception('Codigo de barra inv&aacute;lido;');
+	}
+	
+	/**
+	 * Validates the product's packaging.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $packaging
+	 */
+	private function validatePackaging($packaging){
+		if(empty($packaging))
+			throw new Exception('Presentacion inv&aacute;lida.');
+	}
+	
+	/**
+	 * Validates the product's description.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $description
+	 */
+	private function validateDescription($description){
+		if(empty($description))
+			throw new Exception('Descripcion inv&aacute;lida.');
+	}
+	
+	/**
+	 * Validates the product's unit of measure.
+	 *
+	 * The object's status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
+	 * exception.
+	 * @param UnitOfMeasure $um
+	 */
+	private function validateUnitOfMeasure(UnitOfMeasure $um){
+		if($um->getStatus() == Persist::IN_PROGRESS)
+			throw new Exception('Persist::IN_PROGRESS UnitOfMeasure provided.');
+	}
+	
+	/**
+	 * Validates the product's manufacturer.
+	 *
+	 * The object's status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
+	 * exception.
+	 * @param Manufacturer $obj
+	 */
+	private function validateManufacturer(Manufacturer $obj){
+		if($obj->getStatus() == Persist::IN_PROGRESS)
+			throw new Exception('Persist::IN_PROGRESS Manufacturer provided.');
+	}
+	
+	/**
+	 * Validates the product's price.
+	 *
+	 * Must be greater or equal to cero. Otherwise it throws an exception.
+	 * @param float $price
+	 */
+	private function validatePrice($price){
+		if(!is_float($price) || $price < 0)
+			throw new Exception('Precio inv&accute;lido.');
+	}
+	
+	/**
+	 * Validates a detail's id.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $id
+	 */
+	private function validateDetailId($id){
+		if(empty($id))
+			throw new Exception('Id inv&aacute;lido.');
+	}
+	
+	/**
+	 * Verifies if another product is already using the bar code.
+	 *
+	 * @param string $barCode
+	 */
+	private function verifyBarCode($barCode){
+		if(ProductDAM::existsBarCode($this, $barCode))
+			throw new Exception('Codigo de barra ya esta siendo utilizado.');
 	}
 }
 ?>
