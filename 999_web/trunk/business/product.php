@@ -486,7 +486,7 @@ class ProductDetail extends Persist{
  * @package Product
  * @author Roberto Oliveros
  */
-class Product extends PersistObject{
+class Product extends Identifier{
 	/**
 	 * Holds the product's bar code.
 	 *
@@ -549,6 +549,17 @@ class Product extends PersistObject{
 	 * @var array<ProductDetail>
 	 */
 	private $_mDetails;
+	
+	/**
+	 * Construscts the product with the provided id and status.
+	 *
+	 * Paramaters must be set only if the method is called from the database layer.
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
+		parent::__construct($id, $status);
+	}
 	
 	/**
 	 * Returns the product's bar code.
@@ -762,8 +773,7 @@ class Product extends PersistObject{
 			if($detail === $newDetail && !$detail->isDeleted())
 				throw new Exception('Codigo del proveedor ya esta ingresado.');
 				
-		if(ProductDAM::existsDetail($newDetail))
-			throw new Exception('Proveedor del proveedor ya existe.');
+		$this->verifyProductDetail($newDetail);
 			
 		$this->_mDetails[] = $newDetail;
 	}
@@ -786,6 +796,38 @@ class Product extends PersistObject{
 				}
 		
 		$this->_mDetails = $temp_details;
+	}
+	
+	/**
+	 * Saves the product's data in the database.
+	 *
+	 */
+	public function save(){
+		$this->validateMainProperties();
+		
+		foreach($this->_mDetails as $detail)
+			if($detail->getStatus() == Persist::IN_PROGRESS)
+				$this->verifyProductDetail($detail);
+				
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->_mId = $this->insert();
+			
+			if(!$this->_mBarCode){
+				ProductDAM::setBarCode($this);
+				$this->_mBarCode = $this->_mId;
+			}
+			
+			$this->_mStatus = Persist::CREATED;
+		}
+		else {
+			$this->update();
+			
+			if($this->_mLastPrice)
+				PricesLog::write($this, $this->_mLastPrice, $this->_mPrice);
+		}
+		
+		foreach($this->_mDetails as $detail)
+			$detail->commit($this);
 	}
 	
 	/**
@@ -812,6 +854,48 @@ class Product extends PersistObject{
 	static public function getInstanceByBarCode($barCode){
 		self::validateBarCode($barCode);
 		return ProductDAM::getInstanceByBarCode($barCode);
+	}
+	
+	/**
+	 * Returns an instance of a product.
+	 *
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @return Product
+	 */
+	static public function getInstance($id){
+		self::validateId($id);
+		return ProductDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the product from the database.
+	 * 
+	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * @param Product $obj
+	 * @return boolean
+	 */
+	static public function delete(Product $obj){
+		self::validateObjectForDelete($obj);
+		return ProductDAM::delete($obj);
+	}
+	
+	/**
+	 * Inserts the product's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return ProductDAM::insert($this);
+	}
+	
+	/**
+	 * Updates the product's data in the database.
+	 *
+	 */
+	protected function update(){
+		ProductDAM::update($this);
 	}
 	
 	/**
@@ -923,6 +1007,17 @@ class Product extends PersistObject{
 	private function verifyBarCode($barCode){
 		if(ProductDAM::existsBarCode($this, $barCode))
 			throw new Exception('Codigo de barra ya esta siendo utilizado.');
+	}
+	
+	/**
+	 * Verifies if the product detail already exists in the database.
+	 *
+	 * It throws an exception if it does.
+	 * @param ProductDetail $detail
+	 */
+	private function verifyProductDetail(ProductDetail $detail){
+		if(ProductDAM::existsDetail($detail))
+			throw new Exception('Codigo del proveedor ya existe en la base de datos.');
 	}
 }
 ?>
