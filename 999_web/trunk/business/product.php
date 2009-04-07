@@ -375,7 +375,7 @@ class ProductDetail extends Persist{
 	 *
 	 * @var boolean
 	 */
-	private $_mDeleted;
+	private $_mDeleted = false;
 	
 	/**
 	 * Constructs the detail with the provided supplier, product sku and status.
