@@ -354,7 +354,12 @@ class Inventory{
 }
 
 
-
+/**
+ * Contains the supplier which distributes a certain product. Also contains the internal code(SKU) that
+ * the supplier uses in its system.
+ * @package Product
+ * @author Roberto Oliveros
+ */
 class ProductDetail extends Persist{
 	/**
 	 * Holds the product's supplier.
