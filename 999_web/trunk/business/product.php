@@ -712,7 +712,6 @@ class Product extends Identifier{
 	 */
 	public function setPrice($price){
 		$this->validatePrice($price);
-		$price = number_format($price, 2);
 		if($this->_mPrice != $price){
 			$this->_mLastPrice = $this->_mPrice;
 			$this->_mPrice = $price;
@@ -766,7 +765,7 @@ class Product extends Identifier{
 		$this->_mDescription = $description;
 		$this->_mUM = $um;
 		$this->_mManufacturer = $manufacturer;
-		$this->_mPrice = number_format($price, 2);
+		$this->_mPrice = $price;
 		$this->_mDeactivated = (boolean)$deactivated;
 		$this->_mDetails = $details;
 	}
