@@ -448,8 +448,15 @@ class ProductDetail extends Persist{
 		$this->_mDeleted = true;
 	}
 	
-	
+	/**
+	 * Insert or deletes the detail in the database.
+	 *
+	 * Depending of the status type property or its deleted flag, the appropiate action is taken.
+	 * @param Product $product
+	 */
 	public function commit(Product $product){
+		$this->validateProduct($product);
+		
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			ProductDetailDAM::insert($product, $this);
 		elseif($this->_mStatus == Persist::CREATED && $this->_mDeleted)
@@ -477,6 +484,18 @@ class ProductDetail extends Persist{
 	public function validateProductSKU($productSKU){
 		if(empty($productSKU))
 			throw new Exception('Invalid product SKU!');
+	}
+	
+	/**
+	 * Validates the provided product.
+	 *
+	 * The object's status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
+	 * exception.
+	 * @param Product $product
+	 */
+	private function validateProduct(Product $product){
+		if($product->getStatus() == Persist::IN_PROGRESS)
+			throw new Exception('Persist::IN_PROGRESS Product provided.');
 	}
 }
 
@@ -738,8 +757,10 @@ class Product extends Identifier{
 	 * @param boolean $deactivated
 	 * @param array<ProductDetail> $details
 	 */
-	public function setData($barCode, $packaging, $description, UnitOfMeasure $um, Manufacturer $manufacturer, 
-			$price, $deactivated, $details){
+	public function setData($name, $barCode, $packaging, $description, UnitOfMeasure $um,
+			Manufacturer $manufacturer, $price, $deactivated, $details){
+		parent::setData($name);
+		
 		try{
 			$this->validateBarCode($barCode);
 			$this->validatePackaging($packaging);
@@ -747,6 +768,8 @@ class Product extends Identifier{
 			$this->validateUnitOfMeasure($um);
 			$this->validateManufacturer($manufacturer);
 			$this->validatePrice($price);
+			if(empty($details))
+				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling Product constructor method with bad data! ' .
 					$e->getMessage());
@@ -758,7 +781,7 @@ class Product extends Identifier{
 		$this->_mDescription = $description;
 		$this->_mUM = $um;
 		$this->_mManufacturer = $manufacturer;
-		$this->_mPrice = $price;
+		$this->_mPrice = number_format($price, 2);
 		$this->_mDeactivated = (boolean)$deactivated;
 		$this->_mDetails = $details;
 	}
@@ -898,12 +921,25 @@ class Product extends Identifier{
 		ProductDAM::update($this);
 	}
 	
+	
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
+		$this->validateBarCode($this->_mBarCode);
+		$this->validatePackaging($this->_mPackaging);
+		$this->validateDescription($this->_mDescription);
+		$this->validateUnitOfMeasure($this->_mUM);
+		$this->validateManufacturer($this->_mManufacturer);
+		$this->validatePrice($this->_mPrice);
+		if(!$this->hasDetails())
+			throw new Exception('No hay ningun proveedor ingresado.');
+	}
+	
 	/**
 	 * Returns true if the product has any suppliers. False if not.
 	 *
 	 * @return boolean
 	 */
-	private function hasDetails(){
+	private function hasDetails($details){
 		if(empty($this->_mDetails))
 			return false;
 			
