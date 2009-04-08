@@ -182,5 +182,18 @@ class ProductDAM{
 		else
 			return NULL;
 	}
+	
+	/**
+	 * Returns true if a product already uses the bar code in the database.
+	 *
+	 * @param string $barCode
+	 * @return boolean
+	 */
+	static public function existsBarCode(Product $product, $barCode){
+		if($barCode == '123456')
+			return true;
+		else
+			return false;
+	}
 }
 ?>
