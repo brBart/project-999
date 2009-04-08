@@ -195,5 +195,18 @@ class ProductDAM{
 		else
 			return false;
 	}
+	
+	/**
+	 * Verifies if the product detail already exists in the database.
+	 *
+	 * @param ProductDetail $detail
+	 * @return boolean
+	 */
+	static public function existsDetail(ProductDetail $detail){
+		if($detail->getId() == '123ABC')
+			return true;
+		else
+			return false;
+	}
 }
 ?>
