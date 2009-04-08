@@ -635,7 +635,7 @@ class Product extends Identifier{
 	public function getDetail($id){
 		$this->validateDetailId($id);
 		foreach($this->_mDetails as &$detail)
-			if($detail->getId() == $id)
+			if($detail->getId() == $id && !$detail->isDeleted())
 				return $detail;
 	}
 	
@@ -777,7 +777,7 @@ class Product extends Identifier{
 	 */
 	public function addDetail(ProductDetail $newDetail){
 		foreach($this->_mDetails as $detail)
-			if($detail === $newDetail && !$detail->isDeleted())
+			if($detail == $newDetail && !$detail->isDeleted())
 				throw new Exception('Codigo del proveedor ya esta ingresado.');
 				
 		$this->verifyProductDetail($newDetail);
@@ -794,7 +794,7 @@ class Product extends Identifier{
 		$temp_details = array();
 		
 		foreach($this->_mDetails as &$detail)
-			if($detail !== $purgeDetail)
+			if($detail != $purgeDetail)
 				$temp_details[] = $detail;
 			else
 				if($detail->getStatus() == Persist::CREATED){
