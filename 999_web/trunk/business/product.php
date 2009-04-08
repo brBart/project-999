@@ -51,7 +51,7 @@ class UnitOfMeasure extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(UnitOfMeasure $obj){
-		self::validateObjectForDelete($obj);
+		self::validateObjectFromDatabase($obj);
 		return UnitOfMeasureDAM::delete($obj);
 	}
 	
@@ -112,7 +112,7 @@ class Manufacturer extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Manufacturer $obj){
-		self::validateObjectForDelete($obj);
+		self::validateObjectFromDatabase($obj);
 		return ManufacturerDAM::delete($obj);
 	}
 	
@@ -149,7 +149,7 @@ class Inventory{
 	 * @return integer
 	 */
 	static public function getAvailable(Product $product){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		return InventoryDAM::getAvailable($product);
 	}
 	
@@ -160,7 +160,7 @@ class Inventory{
 	 * @return integer
 	 */
 	static public function getQuantity(Product $product){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		return InventoryDAM::getQuantity($product);
 	}
 	
@@ -174,7 +174,7 @@ class Inventory{
 	 * @return array<Lot>
 	 */
 	static public function getLots(Product $product, $reqUnitsQuantity){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($reqUnitsQuantity);
 		
 		// Get the lots from the database with available stock.
@@ -222,7 +222,7 @@ class Inventory{
 	 * @return array<Lot>
 	 */
 	static public function getNegativeLots(Product $product, $reqUnitsQuantity){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($reqUnitsQuantity);
 		
 		// Get the negative lots from the database.
@@ -269,7 +269,7 @@ class Inventory{
 	 * @return array
 	 */
 	static public function showLots(Product $product, &$quantity, &$available){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		
 		$lots = InventoryDAM::getLots($product);
 		
@@ -289,7 +289,7 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function reserve(Product $product, $quantity){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($quantity);
 		InventoryDAM::reserve($product, $quantity);
 	}
@@ -301,7 +301,7 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function decreaseReserve(Product $product, $quantity){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($quantity);
 		InventoryDAM::decreaseReserve($product, $quantity);
 	}
@@ -313,7 +313,7 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function decrease(Product $product, $quantity){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($quantity);
 		InventoryDAM::decrease($product, $quantity);
 	}
@@ -325,20 +325,9 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function increase(Product $product, $quantity){
-		self::validateProduct($product);
+		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($quantity);
 		InventoryDAM::increase($product, $quantity);
-	}
-	
-	/**
-	 * Validates if the product's status property other than Persist::IN_PROGRESS.
-	 *
-	 * Throws an exception if it is not.
-	 * @param Product $product
-	 */
-	static private function validateProduct(Product $product){
-		if($product->getStatus() == PersistObject::IN_PROGRESS)
-			throw new Exception('Persist::IN_PROGRESS product provided.');
 	}
 	
 	/**
@@ -460,7 +449,7 @@ class ProductDetail extends Persist{
 	 * @param Product $product
 	 */
 	public function commit(Product $product){
-		$this->validateProduct($product);
+		self::validateObjectFromDatabase($product);
 		
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			ProductDetailDAM::insert($product, $this);
@@ -489,18 +478,6 @@ class ProductDetail extends Persist{
 	public function validateProductSKU($productSKU){
 		if(empty($productSKU))
 			throw new Exception('Invalid product SKU!');
-	}
-	
-	/**
-	 * Validates the provided product.
-	 *
-	 * The object's status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param Product $product
-	 */
-	private function validateProduct(Product $product){
-		if($product->getStatus() == Persist::IN_PROGRESS)
-			throw new Exception('Persist::IN_PROGRESS Product provided.');
 	}
 }
 
@@ -565,14 +542,14 @@ class Product extends Identifier{
 	 *
 	 * @var boolean
 	 */
-	private $_mDeactivated;
+	private $_mDeactivated = false;
 	
 	/**
 	 * Holds the suppliers of this product.
 	 *
 	 * @var array<ProductDetail>
 	 */
-	private $_mDetails;
+	private $_mDetails = array();
 	
 	/**
 	 * Construscts the product with the provided id and status.
@@ -631,18 +608,6 @@ class Product extends Identifier{
 	}
 	
 	/**
-	 * Returns an array with the product's details' data.
-	 *
-	 * @return array
-	 */
-	public function showDetails(){
-		foreach($this->_mDetails as $detail)
-			$details[] = $detail->show();
-			
-		return $details;
-	}
-	
-	/**
 	 * Returns the product's unit of measure.
 	 *
 	 * @return UnitOfMeasure
@@ -672,6 +637,21 @@ class Product extends Identifier{
 		foreach($this->_mDetails as &$detail)
 			if($detail->getId() == $id)
 				return $detail;
+	}
+	
+	/**
+	 * Returns an array with the product's details' data.
+	 *
+	 * @return array
+	 */
+	public function showDetails(){
+		$details = array();
+		
+		foreach($this->_mDetails as $detail)
+			if(!$detail->isDeleted())
+				$details[] = $detail->show();
+			
+		return $details;
 	}
 	
 	/**
@@ -711,7 +691,7 @@ class Product extends Identifier{
 	 * @param UnitOfMeasure $um
 	 */
 	public function setUnitOfMeasure(UnitOfMeasure $um){
-		$this->validateUnitOfMeasure($um);
+		self::validateObjectFromDatabase($um);
 		$this->_mUM = $um;
 	}
 	
@@ -721,7 +701,7 @@ class Product extends Identifier{
 	 * @param Manufacturer $obj
 	 */
 	public function setManufacturer(Manufacturer $obj){
-		$this->validateManufacturer($obj);
+		self::validateObjectFromDatabase($obj);
 		$this->_mManufacturer = $obj;
 	}
 	
@@ -770,8 +750,8 @@ class Product extends Identifier{
 			$this->validateBarCode($barCode);
 			$this->validatePackaging($packaging);
 			$this->validateDescription($description);
-			$this->validateUnitOfMeasure($um);
-			$this->validateManufacturer($manufacturer);
+			self::validateObjectFromDatabase($um);
+			self::validateObjectFromDatabase($manufacturer);
 			$this->validatePrice($price);
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
@@ -932,8 +912,8 @@ class Product extends Identifier{
 		$this->validateBarCode($this->_mBarCode);
 		$this->validatePackaging($this->_mPackaging);
 		$this->validateDescription($this->_mDescription);
-		$this->validateUnitOfMeasure($this->_mUM);
-		$this->validateManufacturer($this->_mManufacturer);
+		self::validateObjectFromDatabase($this->_mUM);
+		self::validateObjectFromDatabase($this->_mManufacturer);
 		$this->validatePrice($this->_mPrice);
 		if(!$this->hasDetails())
 			throw new Exception('No hay ningun proveedor ingresado.');
@@ -992,30 +972,6 @@ class Product extends Identifier{
 	private function validateDescription($description){
 		if(empty($description))
 			throw new Exception('Descripcion inv&aacute;lida.');
-	}
-	
-	/**
-	 * Validates the product's unit of measure.
-	 *
-	 * The object's status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param UnitOfMeasure $um
-	 */
-	private function validateUnitOfMeasure(UnitOfMeasure $um){
-		if($um->getStatus() == Persist::IN_PROGRESS)
-			throw new Exception('Persist::IN_PROGRESS UnitOfMeasure provided.');
-	}
-	
-	/**
-	 * Validates the product's manufacturer.
-	 *
-	 * The object's status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param Manufacturer $obj
-	 */
-	private function validateManufacturer(Manufacturer $obj){
-		if($obj->getStatus() == Persist::IN_PROGRESS)
-			throw new Exception('Persist::IN_PROGRESS Manufacturer provided.');
 	}
 	
 	/**

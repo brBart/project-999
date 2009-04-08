@@ -51,7 +51,7 @@ class Bank extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Bank $obj){
-		self::validateObjectForDelete($obj);		
+		self::validateObjectFromDatabase($obj);		
 		return BankDAM::delete($obj);
 	}
 	
@@ -239,7 +239,7 @@ class BankAccount extends PersistObject{
 	 * @return void
 	 */
 	public function setBank(Bank $obj){
-		$this->validateBank($obj);
+		self::validateObjectFromDatabase($obj);
 		$this->_mBank = $obj;
 	}
 	
@@ -265,7 +265,7 @@ class BankAccount extends PersistObject{
 	public function setData($name, Bank $bank){
 		try{
 			Identifier::validateName($name);
-			$this->validateBank($bank);
+			self::validateObjectFromDatabase($bank);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling BankAccount\'s setData method with bad data! ' .
 					$e->getMessage());
@@ -315,7 +315,7 @@ class BankAccount extends PersistObject{
 	 * @return boolean
 	 */
 	static public function delete(BankAccount $obj){
-		self::validateObjectForDelete($obj);			
+		self::validateObjectFromDatabase($obj);			
 		return BankAccountDAM::delete($obj);
 	}
 	
@@ -350,7 +350,7 @@ class BankAccount extends PersistObject{
 		if(is_null($this->_mBank))
 			throw new Exception('Banco inv&aacute;lido.');
 		else
-			$this->validateBank($this->_mBank);
+			self::validateObjectFromDatabase($this->_mBank);
 	}
 	
 	/**
@@ -363,18 +363,6 @@ class BankAccount extends PersistObject{
 	private function validateNumber($number){
 		if(empty($number))
 			throw new Exception('N&uacute;mero de cuenta inv&aacute;lido.');
-	}
-	
-	/**
-	 * Validates the account's bank.
-	 *
-	 * Bank's status property must be set other than Persist::IN_PROGRESS.
-	 * @param Bank $obj
-	 * @return void
-	 */
-	private function validateBank(Bank $obj){
-		if($obj->getStatus() != self::CREATED)
-			throw new Exception('Persist::IN_PROGRESS bank provided.');
 	}
 	
 	/**
@@ -475,7 +463,7 @@ class Shift extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Shift $obj){
-		self::validateObjectForDelete($obj);
+		self::validateObjectFromDatabase($obj);
 		return ShiftDAM::delete($obj);
 	}
 	
@@ -550,7 +538,7 @@ class CashRegister{
 	 * @param integer $id
 	 */
 	public function __construct(Shift $shift, $id = NULL){
-		$this->validateShift($shift);
+		PersistObject::validateObjectFromDatabase($shift);
 		if(!is_null($id))
 			try{
 				Identifier::validateId($id);
@@ -612,17 +600,6 @@ class CashRegister{
 	static public function getInstance($id){
 		Identifier::validateId($id);
 		return CashRegisterDAM::getInstance($id);
-	}
-	
-	/**
-	 * Validates the provided shift.
-	 *
-	 * Shift's status property must be other than Persist::IN_PROGRESS. Otherwise it throws an exception.
-	 * @param Shift $obj
-	 */
-	private function validateShift(Shift $obj){
-		if($obj->getStatus() == Persist::IN_PROGRESS)
-			throw new Exception('Persist::IN_PROGRESS shift provided.');
 	}
 }
 ?>

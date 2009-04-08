@@ -51,6 +51,19 @@ abstract class Persist{
 	public function getStatus(){
 		return $this->_mStatus;
 	}
+	
+	/**
+	 * Validates if the object's data is already stored in the database..
+	 * 
+	 * The object's status must be diferent than Persist::IN_PROGRESS. Otherwise it throws an
+	 * exception.
+	 * @param PersistObject $obj
+	 * @return void
+	 */
+	static public function validateObjectFromDatabase(PersistObject $obj){
+		if ($obj->_mStatus == self::IN_PROGRESS)
+			throw new Exception('Cannot proceed! A Persist::IN_PROGRESS object provided.');
+	}
 }
 
 
@@ -65,19 +78,6 @@ abstract class PersistObject extends Persist{
 	 *
 	 */
 	abstract public function save();
-	
-	/**
-	 * Validates if the object can be deleted in the database.
-	 * 
-	 * The object's status must be diferent than Persist::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param PersistObject $obj
-	 * @return void
-	 */
-	static protected function validateObjectForDelete(PersistObject $obj){
-		if ($obj->_mStatus == self::IN_PROGRESS)
-			throw new Exception('Cannot delete a Persist::IN_PROGRESS object from database.');
-	}
 	
 	/**
 	 * Inserts the object's data in the database.

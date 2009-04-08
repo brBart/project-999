@@ -360,7 +360,7 @@ class UserAccount extends PersistObject{
 	 * @return boolean
 	 */
 	static public function delete(UserAccount $obj){
-		self::validateObjectForDelete($obj);			
+		self::validateObjectFromDatabase($obj);			
 		return UserAccountDAM::delete($obj);
 	}
 	
@@ -490,7 +490,7 @@ class UserAccountUtility{
 	 * @return boolean
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
-		self::validateUserAccount($account);
+		Persist::validateObjectFromDatabase($account);
 		self::validatePassword($password);
 		self::validatePassword($newPassword);
 		
@@ -534,18 +534,6 @@ class UserAccountUtility{
 	static public function validatePassword($password){
 		if(empty($password))
 			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
-	}
-	
-	/**
-	 * Verifies if the account is recently created.
-	 * 
-	 * Verifies if the account's status property is set to Persist::IN_PROGRESS. It throws an exception
-	 * if it does.
-	 * @param UserAccount $account
-	 */
-	static private function validateUserAccount(UserAccount $account){
-		if($account->getStatus() == Persist::IN_PROGRESS)
-			throw new Exception('Persist::IN_PROGRESS account provided.');
 	}
 }
 ?>
