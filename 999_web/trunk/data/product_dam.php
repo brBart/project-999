@@ -128,18 +128,18 @@ class ManufacturerDAM{
 
 
 /**
- * Class in charge of accessing the database tables regarding the product's details.
+ * Class in charge of accessing the database tables regarding the product's suppliers.
  * @package ProductDAM
  * @author Roberto Oliveros
  */
-class ProductDetailDAM{
+class ProductSupplierDAM{
 	/**
 	 * Inserts the product detail's data into the database.
 	 *
 	 * @param Product $product
-	 * @param ProductDetail $detail
+	 * @param ProductSupplier $detail
 	 */
-	static public function insert(Product $product, ProductDetail $detail){
+	static public function insert(Product $product, ProductSupplier $detail){
 		// Code here...
 	}
 	
@@ -147,9 +147,9 @@ class ProductDetailDAM{
 	 * Deletes the product detail from the database.
 	 *
 	 * @param Product $product
-	 * @param ProductDetail $detail
+	 * @param ProductSupplier $detail
 	 */
-	static public function delete(Product $product, ProductDetail $detail){
+	static public function delete(Product $product, ProductSupplier $detail){
 		// Code here...
 	}
 }
@@ -174,7 +174,7 @@ class ProductDAM{
 			$um = UnitOfMeasure::getInstance(123);
 			$manufacturer = Manufacturer::getInstance(123);
 			$details = array();
-			$details[] = new ProductDetail(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
+			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
 			$product->setData('Pepto Bismol', '12345', '120 ml', 'Para dolores de estomagol.', $um,
 					$manufacturer, 12.65, false, $details);
 			return $product;
@@ -199,10 +199,10 @@ class ProductDAM{
 	/**
 	 * Verifies if the product detail already exists in the database.
 	 *
-	 * @param ProductDetail $detail
+	 * @param ProductSupplier $detail
 	 * @return boolean
 	 */
-	static public function existsDetail(ProductDetail $detail){
+	static public function existsProductSupplier(ProductSupplier $detail){
 		if($detail->getId() == '123ABC')
 			return true;
 		else
