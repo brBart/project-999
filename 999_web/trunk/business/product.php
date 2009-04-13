@@ -185,7 +185,7 @@ class Inventory{
 		$lot = current($in_stock_lots);
 		do{
 			// Verify the available quantity of the lot.
-			if(!$lot)
+			if(is_null($lot))
 				$available = 0;
 			else
 				$available = $lot->getAvailable();
@@ -233,7 +233,7 @@ class Inventory{
 		$lot = current($negative_lots);
 		do{
 			// Verify the negative quantity of the lot.
-			if(!$lot)
+			if(is_null($lot))
 				$negative = 0;
 			else
 				$negative = -1 * $lot->getAvailable();
@@ -344,8 +344,8 @@ class Inventory{
 
 
 /**
- * Contains the supplier which distributes a certain product. Also contains the internal code(SKU) that
- * the supplier uses in its system.
+ * Supplier which distributes a certain product. Contains the product's code(SKU) that the supplier
+ * uses in its system.
  * @package Product
  * @author Roberto Oliveros
  */
@@ -358,21 +358,21 @@ class ProductSupplier extends Persist{
 	private $_mSupplier;
 	
 	/**
-	 * Holds the supplier's product's SKU.
+	 * Holds the product's SKU.
 	 *
 	 * @var string
 	 */
 	private $_mProductSKU;
 	
 	/**
-	 * Flag that indicates if the detail has to be deteled.
+	 * Flag that indicates if the productsupplier has to be deteled.
 	 *
 	 * @var boolean
 	 */
 	private $_mDeleted = false;
 	
 	/**
-	 * Constructs the detail with the provided supplier, product sku and status.
+	 * Constructs the productsupplier with the provided supplier, product's sku and status.
 	 *
 	 * @param Supplier $supplier
 	 * @param string $productSKU
@@ -381,7 +381,7 @@ class ProductSupplier extends Persist{
 	public function __construct(Supplier $supplier, $productSKU, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		$this->validateSupplier($supplier);
+		self::validateObjectFromDatabase($supplier);
 		$this->validateProductSKU($productSKU);
 		
 		$this->_mSupplier = $supplier;
@@ -389,7 +389,7 @@ class ProductSupplier extends Persist{
 	}
 	
 	/**
-	 * Returns the detail's id.
+	 * Returns the productsupplier's id.
 	 *
 	 * @return string
 	 */
@@ -416,7 +416,7 @@ class ProductSupplier extends Persist{
 	}
 	
 	/**
-	 * Returns the detail's deleted flag.
+	 * Returns the value of the productsupplier's deleted flag.
 	 *
 	 * @return boolean
 	 */
@@ -435,17 +435,19 @@ class ProductSupplier extends Persist{
 	}
 	
 	/**
-	 * Sets the detail's deleted flag to true.
+	 * Sets the productsupplier's deleted flag to true.
 	 *
+	 * Must not be called. If you need to delete the object call Product::delete method instead and pass
+	 * this object as the parameter.
 	 */
 	public function delete(){
 		$this->_mDeleted = true;
 	}
 	
 	/**
-	 * Insert or deletes the detail in the database.
+	 * Insert or deletes the productsupplier in the database.
 	 *
-	 * Depending of the status type property or its deleted flag, the appropiate action is taken.
+	 * Depending of the status property or its deleted flag, the appropiate action is taken.
 	 * @param Product $product
 	 */
 	public function commit(Product $product){
@@ -458,19 +460,7 @@ class ProductSupplier extends Persist{
 	}
 	
 	/**
-	 * Validates the provided supplier.
-	 * 
-	 * The supplier status property must be set to other than Persist::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param Supplier $obj
-	 */
-	public function validateSupplier(Supplier $obj){
-		if($obj->getStatus() == Persist::IN_PROGRESS)
-			throw new Exception('Persist::IN_PROGRESS supplier provided.');
-	}
-	
-	/**
-	 * Validates the provided product id.
+	 * Validates the provided product's sku.
 	 * 
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param integer $ProductSKU
@@ -552,7 +542,7 @@ class Product extends Identifier{
 	private $_mProductSuppliers = array();
 	
 	/**
-	 * Construscts the product with the provided id and status.
+	 * Constructs the product with the provided id and status.
 	 *
 	 * Paramaters must be set only if the method is called from the database layer.
 	 * @param integer $id
@@ -640,7 +630,7 @@ class Product extends Identifier{
 	}
 	
 	/**
-	 * Returns an array with the product's details' data.
+	 * Returns an array of data with all the suppliers of this product.
 	 *
 	 * @return array
 	 */
@@ -814,12 +804,12 @@ class Product extends Identifier{
 		
 		foreach($this->_mProductSuppliers as $detail)
 			if($detail->getStatus() == Persist::IN_PROGRESS)
-				$this->verifyProductDetail($detail);
+				$this->verifyProductSupplier($detail);
 				
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->_mId = $this->insert();
 			
-			if(!$this->_mBarCode){
+			if(is_null($this->_mBarCode)){
 				ProductDAM::setBarCode($this);
 				$this->_mBarCode = $this->_mId;
 			}
@@ -846,15 +836,15 @@ class Product extends Identifier{
 	 * @return Product
 	 */
 	static public function getInstanceBySupplier(Supplier $supplier, $sku){
-		ProductDetail::validateSupplier($supplier);
-		ProductDetail::validateProductSKU($sku);
+		self::validateObjectFromDatabase($supplier);
+		ProductSupplier::validateProductSKU($sku);
 		return ProductDAM::getInstanceBySupplier($supplier, $sku);
 	}
 	
 	/**
 	 * Returns an instance of a product.
 	 *
-	 * Returns a product whick bar code matches the one provided. If not found returns NULL.
+	 * Returns a product which bar code matches the one provided. If not found returns NULL.
 	 * @param string $barCode
 	 * @return Product
 	 */
@@ -883,7 +873,7 @@ class Product extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Product $obj){
-		self::validateObjectForDelete($obj);
+		self::validateObjectFromDatabase($obj);
 		return ProductDAM::delete($obj);
 	}
 	
@@ -905,14 +895,25 @@ class Product extends Identifier{
 		ProductDAM::update($this);
 	}
 	
-	
+	/**
+	 * Validates the object's main properties.
+	 *
+	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
-		$this->validateBarCode($this->_mBarCode);
 		$this->validatePackaging($this->_mPackaging);
 		$this->validateDescription($this->_mDescription);
-		self::validateObjectFromDatabase($this->_mUM);
-		self::validateObjectFromDatabase($this->_mManufacturer);
+		
+		if(is_null($this->_mUM))
+			throw new Exception('Unidad de medida inv&aacute;lida.');
+		else
+			self::validateObjectFromDatabase($this->_mUM);
+			
+		if(is_null($this->_mManufacturer))
+			throw new Exception('Fabricante inv&aacute;lido.');
+		else
+			self::validateObjectFromDatabase($this->_mManufacturer);
+		
 		$this->validatePrice($this->_mPrice);
 		if(!$this->hasProductSuppliers())
 			throw new Exception('No hay ningun proveedor ingresado.');
