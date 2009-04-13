@@ -349,7 +349,7 @@ class Inventory{
  * @package Product
  * @author Roberto Oliveros
  */
-class ProductDetail extends Persist{
+class ProductSupplier extends Persist{
 	/**
 	 * Holds the product's supplier.
 	 *
@@ -452,9 +452,9 @@ class ProductDetail extends Persist{
 		self::validateObjectFromDatabase($product);
 		
 		if($this->_mStatus == Persist::IN_PROGRESS)
-			ProductDetailDAM::insert($product, $this);
+			ProductSupplierDAM::insert($product, $this);
 		elseif($this->_mStatus == Persist::CREATED && $this->_mDeleted)
-			ProductDetailDAM::delete($product, $this);
+			ProductSupplierDAM::delete($product, $this);
 	}
 	
 	/**
@@ -547,9 +547,9 @@ class Product extends Identifier{
 	/**
 	 * Holds the suppliers of this product.
 	 *
-	 * @var array<ProductDetail>
+	 * @var array<ProductSupplier>
 	 */
-	private $_mDetails = array();
+	private $_mProductSuppliers = array();
 	
 	/**
 	 * Construscts the product with the provided id and status.
@@ -626,15 +626,15 @@ class Product extends Identifier{
 	}
 	
 	/**
-	 * Returns a product's detail.
+	 * Returns a product's supplier.
 	 *
 	 * Returns the detail which id matches the provided id.
 	 * @param string $id
 	 * @return ProductDetail
 	 */
-	public function getDetail($id){
-		$this->validateDetailId($id);
-		foreach($this->_mDetails as &$detail)
+	public function getProductSupplier($id){
+		$this->validateProductSupplierId($id);
+		foreach($this->_mProductSuppliers as &$detail)
 			if($detail->getId() == $id && !$detail->isDeleted())
 				return $detail;
 	}
@@ -644,10 +644,10 @@ class Product extends Identifier{
 	 *
 	 * @return array
 	 */
-	public function showDetails(){
+	public function showProductSuppliers(){
 		$details = array();
 		
-		foreach($this->_mDetails as $detail)
+		foreach($this->_mProductSuppliers as $detail)
 			if(!$detail->isDeleted())
 				$details[] = $detail->show();
 			
@@ -739,7 +739,7 @@ class Product extends Identifier{
 	 * @param Manufacturer $manufacturer
 	 * @param float $price
 	 * @param boolean $deactivated
-	 * @param array<ProductDetail> $details
+	 * @param array<ProductSupplier> $details
 	 */
 	public function setData($name, $barCode, $packaging, $description, UnitOfMeasure $um,
 			Manufacturer $manufacturer, $price, $deactivated, $details){
@@ -767,33 +767,33 @@ class Product extends Identifier{
 		$this->_mManufacturer = $manufacturer;
 		$this->_mPrice = $price;
 		$this->_mDeactivated = (boolean)$deactivated;
-		$this->_mDetails = $details;
+		$this->_mProductSuppliers = $details;
 	}
 	
 	/**
 	 * Adds a supplier to the list of suppliers of this product.
 	 *
-	 * @param ProductDetail $newDetail
+	 * @param ProductSupplier $newDetail
 	 */
-	public function addDetail(ProductDetail $newDetail){
-		foreach($this->_mDetails as $detail)
+	public function addProductSupplier(ProductSupplier $newDetail){
+		foreach($this->_mProductSuppliers as $detail)
 			if($detail == $newDetail && !$detail->isDeleted())
 				throw new Exception('Codigo del proveedor ya esta ingresado.');
 				
-		$this->verifyProductDetail($newDetail);
+		$this->verifyProductSupplier($newDetail);
 			
-		$this->_mDetails[] = $newDetail;
+		$this->_mProductSuppliers[] = $newDetail;
 	}
 	
 	/**
 	 * Removes a supplier from this product.
 	 *
-	 * @param ProductDetail $purgeDetail
+	 * @param ProductSupplier $purgeDetail
 	 */
-	public function deleteDetail(ProductDetail $purgeDetail){
+	public function deleteProductSupplier(ProductSupplier $purgeDetail){
 		$temp_details = array();
 		
-		foreach($this->_mDetails as &$detail)
+		foreach($this->_mProductSuppliers as &$detail)
 			if($detail != $purgeDetail)
 				$temp_details[] = $detail;
 			else
@@ -802,7 +802,7 @@ class Product extends Identifier{
 					$detail->delete();
 				}
 		
-		$this->_mDetails = $temp_details;
+		$this->_mProductSuppliers = $temp_details;
 	}
 	
 	/**
@@ -812,7 +812,7 @@ class Product extends Identifier{
 	public function save(){
 		$this->validateMainProperties();
 		
-		foreach($this->_mDetails as $detail)
+		foreach($this->_mProductSuppliers as $detail)
 			if($detail->getStatus() == Persist::IN_PROGRESS)
 				$this->verifyProductDetail($detail);
 				
@@ -833,7 +833,7 @@ class Product extends Identifier{
 				PricesLog::write($this, $this->_mLastPrice, $this->_mPrice);
 		}
 		
-		foreach($this->_mDetails as $detail)
+		foreach($this->_mProductSuppliers as $detail)
 			$detail->commit($this);
 	}
 	
@@ -914,7 +914,7 @@ class Product extends Identifier{
 		self::validateObjectFromDatabase($this->_mUM);
 		self::validateObjectFromDatabase($this->_mManufacturer);
 		$this->validatePrice($this->_mPrice);
-		if(!$this->hasDetails())
+		if(!$this->hasProductSuppliers())
 			throw new Exception('No hay ningun proveedor ingresado.');
 	}
 	
@@ -923,14 +923,14 @@ class Product extends Identifier{
 	 *
 	 * @return boolean
 	 */
-	private function hasDetails($details){
-		if(empty($this->_mDetails))
+	private function hasProductSuppliers(){
+		if(empty($this->_mProductSuppliers))
 			return false;
 			
-		$count = count($this->_mDetails);
+		$count = count($this->_mProductSuppliers);
 		$deleted = 0;
 		
-		foreach($this->_mDetails as $detail)
+		foreach($this->_mProductSuppliers as $detail)
 			if($detail->isDeleted())
 				$deleted++;
 				
@@ -990,7 +990,7 @@ class Product extends Identifier{
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $id
 	 */
-	private function validateDetailId($id){
+	private function validateProductSupplierId($id){
 		if(empty($id))
 			throw new Exception('Id inv&aacute;lido.');
 	}
@@ -1009,10 +1009,10 @@ class Product extends Identifier{
 	 * Verifies if the product detail already exists in the database.
 	 *
 	 * It throws an exception if it does.
-	 * @param ProductDetail $detail
+	 * @param ProductSupplier $detail
 	 */
-	private function verifyProductDetail(ProductDetail $detail){
-		if(ProductDAM::existsDetail($detail))
+	private function verifyProductSupplier(ProductSupplier $detail){
+		if(ProductDAM::existsProductSupplier($detail))
 			throw new Exception('Codigo del proveedor ya existe en la base de datos.');
 	}
 }
