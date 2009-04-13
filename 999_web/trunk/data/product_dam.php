@@ -161,6 +161,8 @@ class ProductSupplierDAM{
  * @author Roberto Oliveros
  */
 class ProductDAM{
+	static private $_mPackaging = '120 ml';
+	
 	/**
 	 * Returns an instance of a product.
 	 *
@@ -175,7 +177,52 @@ class ProductDAM{
 			$manufacturer = Manufacturer::getInstance(123);
 			$details = array();
 			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-			$product->setData('Pepto Bismol', '12345', '120 ml', 'Para dolores de estomagol.', $um,
+			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
+					$manufacturer, 12.65, false, $details);
+			return $product;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Returns an instance of a product.
+	 *
+	 * Returns a product which has a supplier with the provided product's sku. If not found returns NULL.
+	 * @param Supplier $supplier
+	 * @param string $sku
+	 * @return Product
+	 */
+	static public function getInstanceBySupplier(Supplier $supplier, $sku){
+		if($supplier->getId() == 123 && $sku == 'Abb213'){
+			$product = new Product(123, Persist::CREATED);
+			$um = UnitOfMeasure::getInstance(123);
+			$manufacturer = Manufacturer::getInstance(123);
+			$details = array();
+			$details[] = new ProductSupplier($supplier, 'Abb213', Persist::CREATED);
+			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
+					$manufacturer, 12.65, false, $details);
+			return $product;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Returns an instance of a product.
+	 *
+	 * Returns a product whick bar code matches the one provided. If not found returns NULL.
+	 * @param string $barCode
+	 * @return Product
+	 */
+	static public function getInstanceByBarCode($barCode){
+		if($barCode == '12345'){
+			$product = new Product(123, Persist::CREATED);
+			$um = UnitOfMeasure::getInstance(123);
+			$manufacturer = Manufacturer::getInstance(123);
+			$details = array();
+			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
+			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
 					$manufacturer, 12.65, false, $details);
 			return $product;
 		}
@@ -204,6 +251,49 @@ class ProductDAM{
 	 */
 	static public function existsProductSupplier(ProductSupplier $detail){
 		if($detail->getId() == '123ABC')
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Inserts the product's data into the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Product $obj
+	 * @return integer
+	 */
+	static public function insert(Product $obj){
+		return 123;
+	}
+	
+	/**
+	 * Updates the product's data in the database.
+	 *
+	 * @param Product $obj
+	 */
+	static public function update(Product $obj){
+		self::$_mPackaging = $obj->getPackaging();
+	}
+	
+	/**
+	 * Sets the bar code of an existing product.
+	 *
+	 * @param string $barCode
+	 */
+	static public function setBarCode($barCode){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes the object from the database.
+	 *
+	 * Returns true on success, otherwise false due dependencies.
+	 * @param Product $obj
+	 * @return boolean
+	 */
+	static public function delete(Product $obj){
+		if($obj->getId() == 123)
 			return true;
 		else
 			return false;
