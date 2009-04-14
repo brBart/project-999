@@ -6,6 +6,10 @@
  */
 
 /**
+ * Includes date class for validating.
+ */
+require_once('business/date.php');
+/**
  * Includes the DocumentSearchDAM package for accessing the database.
  */
 require_once('data/document_search_dam.php');
@@ -29,24 +33,6 @@ abstract class DocumentSearch{
 	 */
 	abstract static public function search($startDate, $endDate, $page = 1,
 			&$totalPages = 0, &$totalItems = 0);
-	
-	/**
-	 * Validates the provided date.
-	 *
-	 * Verifies if it is a valid date. Otherwise it throws an exception.
-	 * @param string $date
-	 * @return void
-	 */
-	protected function validateDate($date){
-		$date_array = explode('/', $date);
-		
-		$day = (int)$date_array[0];
-		$month = (int)$date_array[1];
-		$year = (int)$date_array[2];
-		
-		if(!checkdate($month, $day, $year))
-			throw new Exception('Fecha inv&aacute;lida.');
-	}
 	
 	/**
 	 * Validates the provided page.
@@ -84,8 +70,8 @@ class DepositSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return DepositSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -113,8 +99,8 @@ class ComparisonSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return ComparisonSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -142,8 +128,8 @@ class CountSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return CountSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -171,8 +157,8 @@ class PurchaseReturnSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return PurchaseReturnSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -200,8 +186,8 @@ class ShipmentSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return ShipmentSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -229,8 +215,8 @@ class InvoiceSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return InvoiceSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -258,8 +244,8 @@ class ReceiptSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return ReceiptSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -287,8 +273,8 @@ class EntryIASearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return EntryIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
@@ -316,8 +302,8 @@ class WithdrawIASearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		self::validateDate($startDate);
-		self::validateDate($endDate);
+		Date::validateDate($startDate);
+		Date::validateDate($endDate);
 		self::validatePage($page);
 		return WithdrawIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
