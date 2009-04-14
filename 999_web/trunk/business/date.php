@@ -49,5 +49,19 @@ class Date{
 		else
 			return false;
 	}
+	
+	/**
+	 * Change the dates format 'dd/mm/yyyy' to an english format 'mm/dd/yyyy'.
+	 *
+	 * @param string $date
+	 * @return string
+	 */
+	static private function englishFormat($date){
+		$date_array = explode('/', $date);
+		
+		$eng_date_array = array($date_array[1], $date_array[0], $date_array[2]);
+		
+		return implode('/', $eng_date_array);
+	}
 }
 ?>

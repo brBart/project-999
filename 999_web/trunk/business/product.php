@@ -834,15 +834,13 @@ class Product extends Identifier{
 	/**
 	 * Returns an instance of a product.
 	 *
-	 * Returns a product which has a supplier with the provided product's sku. If not found returns NULL.
-	 * @param Supplier $supplier
-	 * @param string $sku
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
 	 * @return Product
 	 */
-	static public function getInstanceBySupplier(Supplier $supplier, $sku){
-		self::validateObjectFromDatabase($supplier);
-		ProductSupplier::validateProductSKU($sku);
-		return ProductDAM::getInstanceBySupplier($supplier, $sku);
+	static public function getInstance($id){
+		self::validateId($id);
+		return ProductDAM::getInstance($id);
 	}
 	
 	/**
@@ -860,13 +858,15 @@ class Product extends Identifier{
 	/**
 	 * Returns an instance of a product.
 	 *
-	 * Returns NULL if there was no match for the provided id in the database.
-	 * @param integer $id
+	 * Returns a product which has a supplier with the provided product's sku. If not found returns NULL.
+	 * @param Supplier $supplier
+	 * @param string $sku
 	 * @return Product
 	 */
-	static public function getInstance($id){
-		self::validateId($id);
-		return ProductDAM::getInstance($id);
+	static public function getInstanceBySupplier(Supplier $supplier, $sku){
+		self::validateObjectFromDatabase($supplier);
+		ProductSupplier::validateProductSKU($sku);
+		return ProductDAM::getInstanceBySupplier($supplier, $sku);
 	}
 	
 	/**
@@ -1113,6 +1113,15 @@ class Bonus extends Persist{
 	}
 	
 	/**
+	 * Returns the bonus' id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
 	 * Returns the quantity a product must reach to accomplish the bonus.
 	 *
 	 * @return integer
@@ -1174,6 +1183,18 @@ class Bonus extends Persist{
 	/**
 	 * Returns an instance of a bonus.
 	 *
+	 * Returns NULL if there was no match for the id provided in the database.
+	 * @param integer $id
+	 * @return Bonus
+	 */
+	static public function getInstance($id){
+		Identifier::validateId($id);
+		return BonusDAM::getInstance($id);
+	}
+	
+	/**
+	 * Returns an instance of a bonus.
+	 *
 	 * Returns the bonus which belongs to the provided product and contains the same quantity.
 	 * @param Product $product
 	 * @param integer $quantity
@@ -1183,18 +1204,6 @@ class Bonus extends Persist{
 		self::validateObjectFromDatabase($product);
 		self::validateQuantity($quantity);
 		return BonusDAM::getInstanceByProduct($product, $quantity);
-	}
-	
-	/**
-	 * Returns an instance of a bonus.
-	 *
-	 * Returns NULL if there was no match for the id provided in the database.
-	 * @param integer $id
-	 * @return Bonus
-	 */
-	static public function getInstance($id){
-		self::validateId($id);
-		return BonusDAM::getInstance($id);
 	}
 	
 	/**
@@ -1227,7 +1236,7 @@ class Bonus extends Persist{
 	 * @param float $percentage
 	 */
 	private function validatePercentage($percentage){
-		if(!is_float($price) || $price < 0)
+		if(!is_float($percentage) || $percentage < 0)
 			throw new Exception('Porcentaje inv&accute;lido.');
 	}
 }

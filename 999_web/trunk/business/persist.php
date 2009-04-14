@@ -60,7 +60,7 @@ abstract class Persist{
 	 * @param PersistObject $obj
 	 * @return void
 	 */
-	static public function validateObjectFromDatabase(PersistObject $obj){
+	static public function validateObjectFromDatabase(Persist $obj){
 		if ($obj->_mStatus == self::IN_PROGRESS)
 			throw new Exception('Cannot proceed! A Persist::IN_PROGRESS object provided.');
 	}
