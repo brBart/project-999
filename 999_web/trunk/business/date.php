@@ -28,5 +28,26 @@ class Date{
 		if(!checkdate($month, $day, $year))
 			throw new Exception('Fecha inv&aacute;lida.');
 	}
+	
+	/**
+	 * Compares if the last date is greater than the first date.
+	 *
+	 * Returns true if it is the case.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @return boolean
+	 */
+	static public function compareDates($firstDate, $lastDate){
+		$first_date = Date::englishFormat($firstDate);
+		$last_date = Date::englishFormat($lastDate);
+		
+		$nix_first_date = strtotime($first_date);
+		$nix_last_date = strtotime($last_date);
+		
+		if($nix_first_date < $nix_last_date)
+			return true;
+		else
+			return false;
+	}
 }
 ?>

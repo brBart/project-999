@@ -10,6 +10,10 @@
  */
 require_once('business/persist.php');
 /**
+ * For date validation.
+ */
+require_once('business/date.php');
+/**
  * Includes the ProductDAM package for accessing the database.
  */
 require_once('data/product_dam.php');
@@ -1024,7 +1028,14 @@ class Product extends Identifier{
  * @package Product
  * @author Roberto Oliveros
  */
-class Bonus extends Identifier{
+class Bonus extends Persist{
+	/**
+	 * Holds the bonus identifier.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
 	/**
 	 * Holds the product owner of this bonus.
 	 *
@@ -1049,6 +1060,7 @@ class Bonus extends Identifier{
 	/**
 	 * Holds the date in which the bonus expires.
 	 *
+	 * Date format: 'dd/mm/yyyy'.
 	 * @var string
 	 */
 	private $_mExpirationDate;
@@ -1056,23 +1068,48 @@ class Bonus extends Identifier{
 	/**
 	 * Holds the date in which the bonus was created.
 	 *
+	 * Date format: 'dd/mm/yyyy'.
 	 * @var string
 	 */
 	private $_mCreatedDate;
 	
-	
+	/**
+	 * Constructs the bonus with the provided data.
+	 *
+	 * Note that expiration date must be greater than the created date.
+	 * @param Product $product
+	 * @param integer $quantity
+	 * @param float $percentage
+	 * @param string $expirationDate
+	 * @param string $createdDate
+	 * @param integer $id
+	 * @param integer $status
+	 */
 	public function __construct(Product $product, $quantity, $percentage, $expirationDate,
 			$createdDate = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
-		parent::__construct($id, $status);		
+		parent::__construct($status);		
 		
+		if(!is_null($id))
+			Identifier::validateId($id);
 		self::validateObjectFromDatabase($product);
 		$this->validateQuantity($quantity);
 		$this->validatePercentage($percentage);
-		$this->validateExpirationDate($expirationDate);
-		if(!is_null($createdDate))
-			$this->validateCreatedDate($createdDate);
+		Date::validateDate($expirationDate);
+		
+		if(!is_null($createdDate)){
+			Date::validateDate($createdDate);
+			if(!Date::compareDates($createdDate, $expirationDate))
+				throw new Exception('Dia creado es mayor que el de expiracion.');
+			$this->_mCreatedDate = $createdDate;
+		}
 		else
 			$this->_mCreatedDate = date('d/m/Y');
+		
+		$this->_mId = $id;
+		$this->_mProduct = $product;
+		$this->_mQuantity = $quantity;
+		$this->_mPercentage = $percentage;
+		$this->_mExpirationDate = $expirationDate;
 	}
 	
 	/**
@@ -1103,6 +1140,15 @@ class Bonus extends Identifier{
 	}
 	
 	/**
+	 * Returns date in which the bonus was created.
+	 *
+	 * @return string
+	 */
+	public function getCreatedDate(){
+		return $this->_mCreatedDate;
+	}
+	
+	/**
 	 * Returns the product which this bonus belongs to.
 	 *
 	 * @return Product
@@ -1112,15 +1158,77 @@ class Bonus extends Identifier{
 	}
 	
 	/**
+	 * Inserts the bonus in the database.
+	 *
+	 */
+	public function save(){
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			if(BonusDAM::exists($this->_mProduct, $this->_mQuantity))
+				throw new Exception('Oferta ya existe.');
+				
+			$this->_mId = BonusDAM::insert($this);
+			$this->_mStatus = Persist::CREATED;
+		}
+	}
+	
+	/**
+	 * Returns an instance of a bonus.
+	 *
+	 * Returns the bonus which belongs to the provided product and contains the same quantity.
+	 * @param Product $product
+	 * @param integer $quantity
+	 * @return Bonus
+	 */
+	static public function getInstanceByProduct(Product $product, $quantity){
+		self::validateObjectFromDatabase($product);
+		self::validateQuantity($quantity);
+		return BonusDAM::getInstanceByProduct($product, $quantity);
+	}
+	
+	/**
 	 * Returns an instance of a bonus.
 	 *
 	 * Returns NULL if there was no match for the id provided in the database.
 	 * @param integer $id
 	 * @return Bonus
 	 */
-	public function getInstance($id){
+	static public function getInstance($id){
 		self::validateId($id);
 		return BonusDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the bonus from the database.
+	 *
+	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * @param Bonus $obj
+	 * @return boolean
+	 */
+	static public function delete(Bonus $obj){
+		self::validateObjectFromDatabase($obj);
+		return BonusDAM::delete($obj);
+	}
+	
+	/**
+	 * Validates the provided quantity.
+	 *
+	 * Must be greater than cero. Otherwise it throws an exception.
+	 * @param integer $quantity
+	 */
+	private function validateQuantity($quantity){
+		if(!is_int($quantity) || $quantity < 1)
+			throw new Exception('Cantidad inv&aacute;lida.');
+	}
+	
+	/**
+	 * Validates the provided percentage.
+	 *
+	 * Must be greater than cero. Otherwise it throws an exception.
+	 * @param float $percentage
+	 */
+	private function validatePercentage($percentage){
+		if(!is_float($price) || $price < 0)
+			throw new Exception('Porcentaje inv&accute;lido.');
 	}
 }
 ?>
