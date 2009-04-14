@@ -1017,4 +1017,110 @@ class Product extends Identifier{
 			throw new Exception('Codigo del proveedor ya existe en la base de datos.');
 	}
 }
+
+
+/**
+ * Represents a bonus or discount a certain product may have.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class Bonus extends Identifier{
+	/**
+	 * Holds the product owner of this bonus.
+	 *
+	 * @var Product
+	 */
+	private $_mProduct;
+	
+	/**
+	 * Represents the quantity of certain product so the bonus can be accomplished.
+	 *
+	 * @var integer
+	 */
+	private $_mQuantity;
+	
+	/**
+	 * Holds the percentage for discounts.
+	 *
+	 * @var float
+	 */
+	private $_mPercentage;
+	
+	/**
+	 * Holds the date in which the bonus expires.
+	 *
+	 * @var string
+	 */
+	private $_mExpirationDate;
+	
+	/**
+	 * Holds the date in which the bonus was created.
+	 *
+	 * @var string
+	 */
+	private $_mCreatedDate;
+	
+	
+	public function __construct(Product $product, $quantity, $percentage, $expirationDate,
+			$createdDate = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
+		parent::__construct($id, $status);		
+		
+		self::validateObjectFromDatabase($product);
+		$this->validateQuantity($quantity);
+		$this->validatePercentage($percentage);
+		$this->validateExpirationDate($expirationDate);
+		if(!is_null($createdDate))
+			$this->validateCreatedDate($createdDate);
+		else
+			$this->_mCreatedDate = date('d/m/Y');
+	}
+	
+	/**
+	 * Returns the quantity a product must reach to accomplish the bonus.
+	 *
+	 * @return integer
+	 */
+	public function getQuantity(){
+		return $this->_mQuantity;
+	}
+	
+	/**
+	 * Returns the bonus' percentage to use in discounts.
+	 *
+	 * @return float
+	 */
+	public function getPercentage(){
+		return $this->_mPercentage;
+	}
+	
+	/**
+	 * Returns date in which the bonus expires.
+	 *
+	 * @return string
+	 */
+	public function getExpirationDate(){
+		return $this->_mExpirationDate;
+	}
+	
+	/**
+	 * Returns the product which this bonus belongs to.
+	 *
+	 * @return Product
+	 */
+	public function getProduct(){
+		return $this->_mProduct;
+	}
+	
+	/**
+	 * Returns an instance of a bonus.
+	 *
+	 * Returns NULL if there was no match for the id provided in the database.
+	 * @param integer $id
+	 * @return Bonus
+	 */
+	public function getInstance($id){
+		self::validateId($id);
+		return BonusDAM::getInstance($id);
+	}
+}
 ?>
