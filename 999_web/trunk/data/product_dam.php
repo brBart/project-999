@@ -164,6 +164,41 @@ class ProductDAM{
 	static private $_mPackaging = '120 ml';
 	
 	/**
+	 * Returns true if a product already uses the bar code in the database.
+	 *
+	 * @param string $barCode
+	 * @return boolean
+	 */
+	static public function existsBarCode(Product $product, $barCode){
+		if($barCode == '123456')
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Verifies if the product detail already exists in the database.
+	 *
+	 * @param ProductSupplier $detail
+	 * @return boolean
+	 */
+	static public function existsProductSupplier(ProductSupplier $detail){
+		if($detail->getId() == '123ABC')
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Sets the bar code of an existing product.
+	 *
+	 * @param string $barCode
+	 */
+	static public function setBarCode($barCode){
+		// Code here...
+	}
+	
+	/**
 	 * Returns an instance of a product.
 	 *
 	 * Returns NULL in case there was no match for the provided id in the database.
@@ -173,6 +208,28 @@ class ProductDAM{
 	static public function getInstance($id){
 		if($id == 123){
 			$product = new Product($id, Persist::CREATED);
+			$um = UnitOfMeasure::getInstance(123);
+			$manufacturer = Manufacturer::getInstance(123);
+			$details = array();
+			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
+			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
+					$manufacturer, 12.65, false, $details);
+			return $product;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Returns an instance of a product.
+	 *
+	 * Returns a product whick bar code matches the one provided. If not found returns NULL.
+	 * @param string $barCode
+	 * @return Product
+	 */
+	static public function getInstanceByBarCode($barCode){
+		if($barCode == '12345'){
+			$product = new Product(123, Persist::CREATED);
 			$um = UnitOfMeasure::getInstance(123);
 			$manufacturer = Manufacturer::getInstance(123);
 			$details = array();
@@ -207,55 +264,7 @@ class ProductDAM{
 		else
 			return NULL;
 	}
-	
-	/**
-	 * Returns an instance of a product.
-	 *
-	 * Returns a product whick bar code matches the one provided. If not found returns NULL.
-	 * @param string $barCode
-	 * @return Product
-	 */
-	static public function getInstanceByBarCode($barCode){
-		if($barCode == '12345'){
-			$product = new Product(123, Persist::CREATED);
-			$um = UnitOfMeasure::getInstance(123);
-			$manufacturer = Manufacturer::getInstance(123);
-			$details = array();
-			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-					$manufacturer, 12.65, false, $details);
-			return $product;
-		}
-		else
-			return NULL;
-	}
-	
-	/**
-	 * Returns true if a product already uses the bar code in the database.
-	 *
-	 * @param string $barCode
-	 * @return boolean
-	 */
-	static public function existsBarCode(Product $product, $barCode){
-		if($barCode == '123456')
-			return true;
-		else
-			return false;
-	}
-	
-	/**
-	 * Verifies if the product detail already exists in the database.
-	 *
-	 * @param ProductSupplier $detail
-	 * @return boolean
-	 */
-	static public function existsProductSupplier(ProductSupplier $detail){
-		if($detail->getId() == '123ABC')
-			return true;
-		else
-			return false;
-	}
-	
+
 	/**
 	 * Inserts the product's data into the database.
 	 *
@@ -277,15 +286,6 @@ class ProductDAM{
 	}
 	
 	/**
-	 * Sets the bar code of an existing product.
-	 *
-	 * @param string $barCode
-	 */
-	static public function setBarCode($barCode){
-		// Code here...
-	}
-	
-	/**
 	 * Deletes the object from the database.
 	 *
 	 * Returns true on success, otherwise false due dependencies.
@@ -293,6 +293,86 @@ class ProductDAM{
 	 * @return boolean
 	 */
 	static public function delete(Product $obj){
+		if($obj->getId() == 123)
+			return true;
+		else
+			return false;
+	}
+}
+
+
+/**
+ * Class in charge of accessing database tables regarding the bonus.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class BonusDAM{
+	/**
+	 * Verifies if the bonus already exists in the database.
+	 *
+	 * Returns true if it does.
+	 * @param Product $product
+	 * @param integer $quantity
+	 * @return boolean
+	 */
+	static public function exists(Product $product, $quantity){
+		if($product->getId() == 123 && $quantity == 4)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Returns an instance of a bonus.
+	 *
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @return Bonus
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$product = Product::getInstance(123);
+			$bonus = new Bonus($product, 4, 0.25, '15/05/2009', '01/04/2009', $id, Persist::CREATED);
+			return $bonus;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Returns an instance of a bonus.
+	 *
+	 * Returns the bonus which belongs to the provided product and contains the same quantity.
+	 * @param Product $product
+	 * @param integer $quantity
+	 * @return Bonus
+	 */
+	static public function getInstanceByProduct(Product $product, $quantity){
+		if($product->getId() == 123 && $quantity == 4)
+			return new Bonus($product, 4, 0.25, '15/05/2009', '01/04/2009', 123, Persist::CREATED);
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Inserts the bonus' data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Bonus $obj
+	 * @return integer
+	 */
+	static public function insert(Bonus $obj){
+		return 123;
+	}
+	
+	/**
+	 * Deletes the object from the database.
+	 *
+	 * Returns true on success, otherwise false due dependencies.
+	 * @param Bonus $obj
+	 * @return boolean
+	 */
+	static public function delete(Bonus $obj){
 		if($obj->getId() == 123)
 			return true;
 		else
