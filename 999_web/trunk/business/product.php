@@ -204,7 +204,7 @@ class Inventory{
 				$reqUnitsQuantity = 0;
 			// Otherwise create a new empty lot.
 			}else {
-				$new_lot = new Lot($this->_mProduct, 0, 0);
+				$new_lot = new Lot($product);
 				$this->addLot($new_lot);
 				$lots[] = $new_lot;
 				$reqUnitsQuantity = 0;
@@ -252,7 +252,7 @@ class Inventory{
 				$reqUnitsQuantity = 0;
 			// Otherwise create a new lot.
 			}else {
-				$lots[] = new Lot($this->_mProduct, 0, 0);
+				$lots[] = new Lot($product);
 				$reqUnitsQuantity = 0;
 			}
 			
@@ -1270,14 +1270,20 @@ class Lot extends Persist{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct(Product $product, $quantity, $price, $expirationDate, $entryDate = NULL,
-			$id = 0, $status = Persist::IN_PROGRESS){
+	public function __construct(Product $product, $quantity = 0, $price = 0.0, $expirationDate = NULL,
+			$entryDate = NULL, $id = 0, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		self::validateObjectFromDatabase($product);
-		Number::validateQuantity($quantity);
-		Number::validatePrice($price);
-		Date::validateDate($expirationDate);
+		
+		if($quantity !== 0)
+			Number::validateQuantity($quantity);
+			
+		if($price !== 0)
+			Number::validatePrice($price);
+		
+		if(!is_null($expirationDate))
+			Date::validateDate($expirationDate);
 		
 		if(!is_null($entryDate)){
 			Date::validateDate($entryDate);
@@ -1285,14 +1291,14 @@ class Lot extends Persist{
 		}
 		else
 			$this->_mEntryDate = date('d/m/Y');
-			
-		$this->validateId($id);
+
+		if($id !== 0)
+			$this->validateId($id);
 		
 		$this->_mProduct = $product;
 		$this->_mQuantity = $quantity;
 		$this->_mPrice = $price;
 		$this->_mExpirationDate = $expirationDate;
-		$this->_mEntryDate = $entryDate;
 		$this->_mId = $id;
 	}
 	
@@ -1357,7 +1363,7 @@ class Lot extends Persist{
 	 */
 	public function getAvailable(){
 		if($this->_mStatus == Persist::CREATED)
-			return LotDAM::getAvailable();
+			return LotDAM::getAvailable($this);
 		else
 			return 0;
 	}
@@ -1377,6 +1383,7 @@ class Lot extends Persist{
 	/**
 	 * Sets the lot's price.
 	 *
+	 * Necessary method because the inventory class provides methods for obtaining new lots.
 	 * @param float $price
 	 */
 	public function setPrice($price){
@@ -1387,6 +1394,7 @@ class Lot extends Persist{
 	/**
 	 * Sets the lot's expiration date.
 	 *
+	 * Necessary method because the inventory class provides methods for obtaining new lots.
 	 * @param string $date
 	 */
 	public function setExpirationDate($date){
@@ -1411,7 +1419,7 @@ class Lot extends Persist{
 	public function increase($quantity){
 		if($this->_mStatus == Persist::CREATED){
 			Number::validateQuantity($quantity);
-			LotDAM::increase($quantity);
+			LotDAM::increase($this, $quantity);
 		}
 	}
 	
@@ -1423,7 +1431,7 @@ class Lot extends Persist{
 	public function decrease($quantity){
 		if($this->_mStatus == Persist::CREATED){
 			Number::validateQuantity($quantity);
-			LotDAM::decrease($quantity);
+			LotDAM::decrease($this, $quantity);
 		}
 	}
 	
@@ -1447,7 +1455,7 @@ class Lot extends Persist{
 	public function decreaseReserve($quantity){
 		if($this->_mStatus == Persist::CREATED){
 			Number::validateQuantity($quantity);
-			LotDAM::decreaseReserve($quantity);
+			LotDAM::decreaseReserve($this, $quantity);
 		}
 	}
 	
