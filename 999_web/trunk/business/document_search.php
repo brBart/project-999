@@ -24,6 +24,7 @@ abstract class DocumentSearch{
 	/**
 	 * Realizes a document search in the database.
 	 *
+	 * Date format: 'dd/mm/yyyy'.
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
