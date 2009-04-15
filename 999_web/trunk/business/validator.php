@@ -1,13 +1,13 @@
 <?php
 /**
- * Library with utility class with validation or other routines regarding dates.
- * @package Date
+ * Library with utility class with validation or other routines.
+ * @package Validator
  * @author Roberto Oliveros
  */
 
 /**
  * Class with needed routines regarding dates.
- * @package Date
+ * @package Validator
  * @author Roberto Oliveros
  */
 class Date{
@@ -62,6 +62,36 @@ class Date{
 		$eng_date_array = array($date_array[1], $date_array[0], $date_array[2]);
 		
 		return implode('/', $eng_date_array);
+	}
+}
+
+
+/**
+ * Class for validating values.
+ * @package Validator
+ * @author Roberto Oliveros
+ */
+class Number{
+	/**
+	 * Validates the provided price.
+	 *
+	 * Must be greater or equal to cero. Otherwise it throws an exception.
+	 * @param float $price
+	 */
+	static public function validatePrice($price){
+		if(!is_float($price) || $price < 0)
+			throw new Exception('Precio inv&accute;lido.');
+	}
+	
+	/**
+	 * Validates the provided quantity.
+	 *
+	 * Must be greater than cero. Otherwise it throws an exception.
+	 * @param integer $quantity
+	 */
+	static public function validateQuantity($quantity){
+		if(!is_int($quantity) || $quantity < 1)
+			throw new Exception('Cantidad inv&aacute;lida.');
 	}
 }
 ?>
