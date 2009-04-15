@@ -1291,5 +1291,87 @@ class Lot extends Persist{
 	 * @var string
 	 */
 	private $_mEntryDate;
+	
+	/**
+	 * Returns lot's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns the lot's quantity.
+	 *
+	 * @return integer
+	 */
+	public function getQuantity(){
+		return $this->_mQuantity;
+	}
+	
+	/**
+	 * Returns lot's price.
+	 *
+	 * @return float
+	 */
+	public function getPrice(){
+		return $this->_mPrice;
+	}
+	
+	/**
+	 * Returns lot's expiration date.
+	 *
+	 * @return string
+	 */
+	public function getExpirationDate(){
+		return $this->_mExpirationDate;
+	}
+	
+	/**
+	 * Returns lot's entry date.
+	 *
+	 * @return string
+	 */
+	public function getEntryDate(){
+		return $this->_mEntryDate;
+	}
+	
+	/**
+	 * Returns the quantity available of the lot.
+	 *
+	 * @return integer
+	 */
+	public function getAvailable(){
+		if($this->_mStatus == Persist::CREATED)
+			return LotDAM::getAvailable();
+		else
+			return 0;
+	}
+	
+	/**
+	 * Returns an array with the lot's data for displaying.
+	 *
+	 * The fields are id, entry_date, expiration_date, price and available.
+	 * @return array
+	 */
+	public function show(){
+		return array('id' => $this->_mId, 'entry_date' => $this->_mEntryDate,
+				'expiration_date' => $this->_mExpirationDate, 'price' => $this->_mPrice,
+				'available' => $this->getAvailable());
+	}
+	
+	/**
+	 * Sets the lot's expiration date.
+	 *
+	 * @param string $date
+	 */
+	public function setExpirationDate($date){
+		Date::validateDate($date);
+		$this->_mExpirationDate = $date;
+	}
+	
+	
+	
 }
 ?>
