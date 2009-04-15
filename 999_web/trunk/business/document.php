@@ -10,6 +10,10 @@
  */
 require_once('business/persist.php');
 /**
+ * For validating purposes.
+ */
+require_once('business/validator.php');
+/**
  * For accessing the database.
  */
 require_once('data/document_dam.php');
@@ -56,8 +60,8 @@ abstract class DocumentDetail{
 	 * @param float $price
 	 */
 	public function __construct($quantity, $price){
-		$this->validateQuantity($quantity);
-		$this->validatePrice($price);
+		Number::validateQuantity($quantity);
+		Number::validatePrice($price);
 		
 		$this->_mQuantity = $quantity;
 		$this->_mPrice = $price;
@@ -138,28 +142,6 @@ abstract class DocumentDetail{
 	 * @param integer $number
 	 */
 	abstract protected function insert(Document $doc, $number);
-	
-	/**
-	 * Validates the detail's quantity.
-	 *
-	 * Must be greater than cero. Otherwise it throws an exception.
-	 * @param integer $quantity
-	 */
-	private function validateQuantity($quantity){
-		if(!is_int($quantity) || $quantity < 1)
-			throw new Exception('Cantidad inv&aacute;lida.');
-	}
-	
-	/**
-	 * Validates the detail's price.
-	 *
-	 * Must be greater or equal to cero. Otherwise it throws an exception.
-	 * @param float $price
-	 */
-	private function validatePrice($price){
-		if(!is_float($price) || $price < 0)
-			throw new Exception('Precio inv&accute;lido.');
-	}
 	
 	/**
 	 * Validates the provided number.

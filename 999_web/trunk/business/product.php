@@ -12,7 +12,7 @@ require_once('business/persist.php');
 /**
  * For date validation.
  */
-require_once('business/date.php');
+require_once('business/validator.php');
 /**
  * Includes the ProductDAM package for accessing the database.
  */
@@ -332,17 +332,6 @@ class Inventory{
 		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($quantity);
 		InventoryDAM::increase($product, $quantity);
-	}
-	
-	/**
-	 * Validates the quantity.
-	 *
-	 * Must be greater than cero. Otherwise it throws an exception.
-	 * @param integer $quantity
-	 */
-	static private function validateQuantity($quantity){
-		if(!is_int($quantity) || $quantity < 1)
-			throw new Exception('Cantidad inv&aacute;lida.');
 	}
 }
 
@@ -705,7 +694,7 @@ class Product extends Identifier{
 	 * @param float $price
 	 */
 	public function setPrice($price){
-		$this->validatePrice($price);
+		Number::validatePrice($price);
 		if($this->_mPrice != $price){
 			$this->_mLastPrice = $this->_mPrice;
 			$this->_mPrice = $price;
@@ -745,7 +734,7 @@ class Product extends Identifier{
 			$this->validateDescription($description);
 			self::validateObjectFromDatabase($um);
 			self::validateObjectFromDatabase($manufacturer);
-			$this->validatePrice($price);
+			Number::validatePrice($price);
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
@@ -918,7 +907,7 @@ class Product extends Identifier{
 		else
 			self::validateObjectFromDatabase($this->_mManufacturer);
 		
-		$this->validatePrice($this->_mPrice);
+		Number::validatePrice($this->_mPrice);
 		if(!$this->hasProductSuppliers())
 			throw new Exception('No hay ningun proveedor ingresado.');
 	}
@@ -976,17 +965,6 @@ class Product extends Identifier{
 	private function validateDescription($description){
 		if(empty($description))
 			throw new Exception('Descripcion inv&aacute;lida.');
-	}
-	
-	/**
-	 * Validates the product's price.
-	 *
-	 * Must be greater or equal to cero. Otherwise it throws an exception.
-	 * @param float $price
-	 */
-	private function validatePrice($price){
-		if(!is_float($price) || $price < 0)
-			throw new Exception('Precio inv&accute;lido.');
 	}
 	
 	/**
@@ -1092,7 +1070,7 @@ class Bonus extends Persist{
 		if(!is_null($id))
 			Identifier::validateId($id);
 		self::validateObjectFromDatabase($product);
-		$this->validateQuantity($quantity);
+		Number::validateQuantity($quantity);
 		$this->validatePercentage($percentage);
 		Date::validateDate($expirationDate);
 		
@@ -1202,7 +1180,7 @@ class Bonus extends Persist{
 	 */
 	static public function getInstanceByProduct(Product $product, $quantity){
 		self::validateObjectFromDatabase($product);
-		self::validateQuantity($quantity);
+		Number::validateQuantity($quantity);
 		return BonusDAM::getInstanceByProduct($product, $quantity);
 	}
 	
@@ -1216,17 +1194,6 @@ class Bonus extends Persist{
 	static public function delete(Bonus $obj){
 		self::validateObjectFromDatabase($obj);
 		return BonusDAM::delete($obj);
-	}
-	
-	/**
-	 * Validates the provided quantity.
-	 *
-	 * Must be greater than cero. Otherwise it throws an exception.
-	 * @param integer $quantity
-	 */
-	private function validateQuantity($quantity){
-		if(!is_int($quantity) || $quantity < 1)
-			throw new Exception('Cantidad inv&aacute;lida.');
 	}
 	
 	/**

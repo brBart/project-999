@@ -8,7 +8,7 @@
 /**
  * Includes date class for validating.
  */
-require_once('business/date.php');
+require_once('business/validator.php');
 /**
  * Includes the DocumentSearchDAM package for accessing the database.
  */
