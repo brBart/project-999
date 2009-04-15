@@ -1260,12 +1260,58 @@ class Lot extends Persist{
 	private $_mEntryDate;
 	
 	/**
+	 * Constructs the lot with the provided data.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 * @param float $price
+	 * @param string $expirationDate
+	 * @param string $entryDate
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct(Product $product, $quantity, $price, $expirationDate, $entryDate = NULL,
+			$id = 0, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		self::validateObjectFromDatabase($product);
+		Number::validateQuantity($quantity);
+		Number::validatePrice($price);
+		Date::validateDate($expirationDate);
+		
+		if(!is_null($entryDate)){
+			Date::validateDate($entryDate);
+			$this->_mEntryDate = $entryDate;
+		}
+		else
+			$this->_mEntryDate = date('d/m/Y');
+			
+		$this->validateId($id);
+		
+		$this->_mProduct = $product;
+		$this->_mQuantity = $quantity;
+		$this->_mPrice = $price;
+		$this->_mExpirationDate = $expirationDate;
+		$this->_mEntryDate = $entryDate;
+		$this->_mId = $id;
+	}
+	
+	/**
 	 * Returns lot's id.
 	 *
 	 * @return integer
 	 */
 	public function getId(){
 		return $this->_mId;
+	}
+	
+	/**
+	 * Returns the lot's product.
+	 *
+	 * @return Product
+	 */
+	public function getProduct(){
+		return $this->_mProduct;
 	}
 	
 	/**
@@ -1329,6 +1375,16 @@ class Lot extends Persist{
 	}
 	
 	/**
+	 * Sets the lot's price.
+	 *
+	 * @param float $price
+	 */
+	public function setPrice($price){
+		Number::validatePrice($price);
+		$this->_mPrice = $price;
+	}
+	
+	/**
 	 * Sets the lot's expiration date.
 	 *
 	 * @param string $date
@@ -1338,7 +1394,95 @@ class Lot extends Persist{
 		$this->_mExpirationDate = $date;
 	}
 	
+	/**
+	 * Deactivates the lot.
+	 *
+	 */
+	public function deactivate(){
+		if($this->_mStatus == Persist::CREATED)
+			LotDAM::deactivate($this);
+	}
 	
+	/**
+	 * Increases the lot's quantity in the database.
+	 *
+	 * @param integer $quantity
+	 */
+	public function increase($quantity){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validateQuantity($quantity);
+			LotDAM::increase($quantity);
+		}
+	}
 	
+	/**
+	 * Decrease the lot's quantity in the database.
+	 *
+	 * @param integer $quantity
+	 */
+	public function decrease($quantity){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validateQuantity($quantity);
+			LotDAM::decrease($quantity);
+		}
+	}
+	
+	/**
+	 * Reserves the provided quantity in the database.
+	 *
+	 * @param integer $quantity
+	 */
+	public function reserve($quantity){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validateQuantity($quantity);
+			LotDAM::reserve($this, $quantity);
+		}
+	}
+	
+	/**
+	 * Decreases the reserve quantity of the lot in the database.
+	 *
+	 * @param integer $quantity
+	 */
+	public function decreaseReserve($quantity){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validateQuantity($quantity);
+			LotDAM::decreaseReserve($quantity);
+		}
+	}
+	
+	/**
+	 * Saves the lot's data in the database.
+	 *
+	 */
+	public function save(){
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->_mId = LotDAM::insert($this);
+			$this->_mStatus = Persist::CREATED;
+		}
+	}
+	
+	/**
+	 * Returns an instance of a lot.
+	 *
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @return Lot
+	 */
+	static public function getInstance($id){
+		Identifier::validateId($id);
+		return LotDAM::getInstance($id);
+	}
+	
+	/**
+	 * Validates the provided id.
+	 *
+	 * Must be greater or equal to cero. Otherwise it throws an exception.
+	 * @param integer $id
+	 */
+	private function validateId($id){
+		if(!is_int($id) || $id < 0)
+			throw new Exception('Internal error, invalid lot id.');
+	}
 }
 ?>
