@@ -379,4 +379,102 @@ class BonusDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Class for accessing database tables regarding lots.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class LotDAM{
+	/**
+	 * Returns the quantity available of the lot.
+	 *
+	 * @param Lot $obj
+	 * @return integer
+	 */
+	static public function getAvailable(Lot $obj){
+		if($obj->getId() == 123)
+			return 15;
+		else
+			return 0;
+	}
+	
+	/**
+	 * Deactivates the lot in the database.
+	 *
+	 * @param Lot $obj
+	 */
+	static public function deactivate(Lot $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Increases the lot's quantity in the database.
+	 *
+	 * @param Lot $obj
+	 * @param integer $quantity
+	 */
+	static public function increase(Lot $obj, $quantity){
+		// Code here...
+	}
+	
+	/**
+	 * Decrease the lot's quantity in the database.
+	 *
+	 * @param Lot $obj
+	 * @param integer $quantity
+	 */
+	static public function decrease(Lot $obj, $quantity){
+		// Code here...
+	}
+	
+	/**
+	 * Reserves the provided quantity in the database.
+	 *
+	 * @param Lot $obj
+	 * @param integer $quantity
+	 */
+	static public function reserve(Lot $obj, $quantity){
+		// Code here...
+	}
+	
+	/**
+	 * Decreases the reserve quantity of the lot in the database.
+	 *
+	 * @param Lot $obj
+	 * @param integer $quantity
+	 */
+	static public function decreaseReserve(Lot $obj, $quantity){
+		// Code here...
+	}
+	
+	/**
+	 * Returns an instance of a lot.
+	 *
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @return Lot
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$product = Product::getInstance(123);
+			$lot = new Lot($product, 20, 12.65, '31/12/2009', '15/04/2009', $id, Persist::CREATED);
+			return $lot;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Inserts the lot's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Lot $obj
+	 * @return integer
+	 */
+	static public function insert(Lot $obj){
+		return 123;
+	}
+}
 ?>
