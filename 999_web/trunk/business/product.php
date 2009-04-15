@@ -1240,4 +1240,56 @@ class Bonus extends Persist{
 			throw new Exception('Porcentaje inv&accute;lido.');
 	}
 }
+
+
+/**
+ * Represents a lot of certain product in the inventory.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class Lot extends Persist{
+	/**
+	 * Holds the lot's id.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Holds the product of what the lot is made of.
+	 *
+	 * @var Product
+	 */
+	private $_mProduct;
+	
+	/**
+	 * Indicates the how many items the lot has.
+	 *
+	 * @var integer
+	 */
+	private $_mQuantity;
+	
+	/**
+	 * Holds the price for each item in the lot.
+	 *
+	 * @var float
+	 */
+	private $_mPrice;
+	
+	/**
+	 * Holds the date in which the products of the lot expire.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mExpirationDate;
+	
+	/**
+	 * Date in which the lot entered in the inventory.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mEntryDate;
+}
 ?>
