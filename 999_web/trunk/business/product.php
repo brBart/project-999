@@ -147,7 +147,7 @@ class Manufacturer extends Identifier{
  */
 class Inventory{
 	/**
-	 * Returns the available quantity of the inventory's product.
+	 * Returns the available quantity of the product's inventory.
 	 *
 	 * @param Product $product
 	 * @return integer
@@ -158,7 +158,7 @@ class Inventory{
 	}
 	
 	/**
-	 * Returns the quantity on hand of the inventory's product.
+	 * Returns the quantity on hand of the product's inventory.
 	 *
 	 * @param Product $product
 	 * @return integer
@@ -179,7 +179,7 @@ class Inventory{
 	 */
 	static public function getLots(Product $product, $reqUnitsQuantity){
 		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($reqUnitsQuantity);
+		Number::validateQuantity($reqUnitsQuantity);
 		
 		// Get the lots from the database with available stock.
 		$in_stock_lots = InventoryDAM::getLots($product);
@@ -1277,7 +1277,7 @@ class Lot extends Persist{
 		self::validateObjectFromDatabase($product);
 		
 		if($quantity !== 0)
-			Number::validateQuantity($quantity);
+			$this->validateQuantity($quantity);
 			
 		if($price !== 0)
 			Number::validatePrice($price);
@@ -1491,6 +1491,17 @@ class Lot extends Persist{
 	private function validateId($id){
 		if(!is_int($id) || $id < 0)
 			throw new Exception('Internal error, invalid lot id.');
+	}
+	
+	/**
+	 * Validates the provided quantity.
+	 *
+	 * Must be an integer. Otherwise it throws an exception.
+	 * @param integer $quantity
+	 */
+	private function validateQuantity($quantity){
+		if(!is_int($quantity))
+			throw new Exception('Internal error, invalid quantity.');
 	}
 }
 ?>
