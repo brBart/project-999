@@ -477,4 +477,59 @@ class LotDAM{
 		return 123;
 	}
 }
+
+
+/**
+ * Class for accessing the database tables regarding products and lots.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class InventoryDAM{
+	/**
+	 * Returns the available quantity of the product's inventory.
+	 *
+	 * @param Product $obj
+	 * @return integer
+	 */
+	static public function getAvailable(Product $obj){
+		if($obj->getId() == 123)
+			return 32;
+	}
+	
+	/**
+	 * Returns the quantity on hand of the product's inventory.
+	 *
+	 * @param Product $obj
+	 * @return integer
+	 */
+	static public function getQuantity(Product $obj){
+		if($obj->getId() == 123)
+			return 40;
+	}
+	
+	/**
+	 * Returns the lots with available quantities of the provided product.
+	 *
+	 * Returns an array with all the lots that contains available quantities.
+	 * @param Product $obj
+	 * @return array<Lot>
+	 */
+	static public function getLots(Product $obj){
+		if($obj->getId() == 123){
+			$lots = array();
+			$lots[] = new Lot($obj, 4, 14.68, '15/08/2009', '10/01/2009', 4321, Persist::CREATED);
+			$lots[] = new Lot($obj, 15, 15.25, '15/11/2009', '15/02/2009', 4322, Persist::CREATED);
+			return $lots;
+		}
+	}
+	
+	
+	static public function getNegativeLots(Product $obj){
+		if($obj->getId() == 123){
+			$lots = array();
+			$lots[] = new Lot($obj, -3, 14.75, NULL, NULL, 4320, Persist::CREATED);
+			return $lots;
+		}
+	}
+}
 ?>
