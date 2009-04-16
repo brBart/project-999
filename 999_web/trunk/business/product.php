@@ -183,13 +183,14 @@ class Inventory{
 		
 		// Get the lots from the database with available stock.
 		$in_stock_lots = InventoryDAM::getLots($product);
+		
 		// The returned qrray with the lots which fulfill the requested quantity of units.
 		$lots = array();
 
 		$lot = current($in_stock_lots);
 		do{
 			// Verify the available quantity of the lot.
-			if(is_null($lot))
+			if(!$lot)
 				$available = 0;
 			else
 				$available = $lot->getAvailable();
@@ -205,7 +206,7 @@ class Inventory{
 			// Otherwise create a new empty lot.
 			}else {
 				$new_lot = new Lot($product);
-				$this->addLot($new_lot);
+				$new_lot->save();
 				$lots[] = $new_lot;
 				$reqUnitsQuantity = 0;
 			}
@@ -227,7 +228,7 @@ class Inventory{
 	 */
 	static public function getNegativeLots(Product $product, $reqUnitsQuantity){
 		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($reqUnitsQuantity);
+		Number::validateQuantity($reqUnitsQuantity);
 		
 		// Get the negative lots from the database.
 		$negative_lots = InventoryDAM::getNegativeLots($product);
@@ -237,7 +238,7 @@ class Inventory{
 		$lot = current($negative_lots);
 		do{
 			// Verify the negative quantity of the lot.
-			if(is_null($lot))
+			if(!$lot)
 				$negative = 0;
 			else
 				$negative = -1 * $lot->getAvailable();
@@ -287,7 +288,31 @@ class Inventory{
 	}
 	
 	/**
-	 * Reserves the specified quantity from the provided product in the database.
+	 * Increases the product's quantity.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function increase(Product $product, $quantity){
+		Persist::validateObjectFromDatabase($product);
+		self::validateQuantity($quantity);
+		InventoryDAM::increase($product, $quantity);
+	}
+	
+	/**
+	 * Decreases the product's quantity.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function decrease(Product $product, $quantity){
+		Persist::validateObjectFromDatabase($product);
+		self::validateQuantity($quantity);
+		InventoryDAM::decrease($product, $quantity);
+	}
+	
+	/**
+	 * Reserves the specified quantity for the provided product in the database.
 	 *
 	 * @param Product $product
 	 * @param integer $quantity
@@ -308,30 +333,6 @@ class Inventory{
 		Persist::validateObjectFromDatabase($product);
 		self::validateQuantity($quantity);
 		InventoryDAM::decreaseReserve($product, $quantity);
-	}
-	
-	/**
-	 * Decreases the product's quantity.
-	 *
-	 * @param Product $product
-	 * @param integer $quantity
-	 */
-	static public function decrease(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($quantity);
-		InventoryDAM::decrease($product, $quantity);
-	}
-	
-	/**
-	 * Increases the product's quantity.
-	 *
-	 * @param Product $product
-	 * @param integer $quantity
-	 */
-	static public function increase(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($quantity);
-		InventoryDAM::increase($product, $quantity);
 	}
 }
 
