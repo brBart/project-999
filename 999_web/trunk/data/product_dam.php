@@ -387,6 +387,30 @@ class BonusDAM{
  * @author Roberto Oliveros
  */
 class LotDAM{
+	
+	static public function getQuantity(Lot $obj){
+		switch($obj->getId()){
+			case 123:
+				return 18;
+				break;
+				
+			case 4320:
+				return -3;
+				break;
+			
+			case 4321:
+				return 8;
+				break;
+				
+			case 4322;
+				return 12;
+				break;
+
+			default:
+				return 0;
+		}
+	}
+	
 	/**
 	 * Returns the quantity available of the lot.
 	 *
@@ -536,8 +560,8 @@ class InventoryDAM{
 	static public function getLots(Product $obj){
 		if($obj->getId() == 123){
 			$lots = array();
-			$lots[] = new Lot($obj, 4, 14.68, '15/08/2009', '10/01/2009', 4321, Persist::CREATED);
-			$lots[] = new Lot($obj, 8, 15.25, '15/11/2009', '15/02/2009', 4322, Persist::CREATED);
+			$lots[] = new Lot($obj, 8, 14.68, '15/08/2009', '10/01/2009', 4321, Persist::CREATED);
+			$lots[] = new Lot($obj, 12, 15.25, '15/11/2009', '15/02/2009', 4322, Persist::CREATED);
 			return $lots;
 		}
 	}
