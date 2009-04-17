@@ -295,7 +295,7 @@ class Inventory{
 	 */
 	static public function increase(Product $product, $quantity){
 		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($quantity);
+		Number::validateQuantity($quantity);
 		InventoryDAM::increase($product, $quantity);
 	}
 	
@@ -307,7 +307,7 @@ class Inventory{
 	 */
 	static public function decrease(Product $product, $quantity){
 		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($quantity);
+		Number::validateQuantity($quantity);
 		InventoryDAM::decrease($product, $quantity);
 	}
 	
@@ -319,7 +319,7 @@ class Inventory{
 	 */
 	static public function reserve(Product $product, $quantity){
 		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($quantity);
+		Number::validateQuantity($quantity);
 		InventoryDAM::reserve($product, $quantity);
 	}
 	
@@ -331,7 +331,7 @@ class Inventory{
 	 */
 	static public function decreaseReserve(Product $product, $quantity){
 		Persist::validateObjectFromDatabase($product);
-		self::validateQuantity($quantity);
+		Number::validateQuantity($quantity);
 		InventoryDAM::decreaseReserve($product, $quantity);
 	}
 }
@@ -1212,6 +1212,11 @@ class Bonus extends Persist{
 
 /**
  * Represents a lot of certain product in the inventory.
+ * 
+ * Because the lack of experience the class lot represents two kinds of lots. One is for the recent created
+ * lot for an entry document, the other is when the data is obtain from the database. For that, the quantity
+ * property only is needed when the lot is recently created or Persist::IN_PROGRESS, otherwise the property
+ * is queried directly to the database. Sorry.
  * @package Product
  * @author Roberto Oliveros
  */
@@ -1327,7 +1332,10 @@ class Lot extends Persist{
 	 * @return integer
 	 */
 	public function getQuantity(){
-		return $this->_mQuantity;
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			return $this->_mQuantity;
+		else
+			return LotDAM::getQuantity($this);
 	}
 	
 	/**
