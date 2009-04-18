@@ -24,7 +24,7 @@ class SessionHelper{
 	 *
 	 */
 	private function __construct(){
-		session_start();
+		//session_start();
 	}
 	
 	/**
@@ -44,7 +44,7 @@ class SessionHelper{
 	 */
 	public function getObject($key){
 		$this->validateKey($key);
-		return $_SESSION['key'];
+		return $_SESSION[$key];
 	}
 	
 	/**
@@ -96,6 +96,18 @@ class SessionHelper{
 			self::$_mInstance = new SessionHelper();
 			
 		return self::$_mInstance;
+	}
+	
+	/**
+	 * Validates if the value of the provided key is correct.
+	 *
+	 * Must be greater than cero.
+	 * @param integer $key
+	 * @throws Exception
+	 */
+	private function validateKey($key){
+		if(!is_int($key) || $key < 1)
+			throw new Exception('Internal error, invalid key value!');
 	}
 }
 ?>
