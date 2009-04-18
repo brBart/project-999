@@ -245,4 +245,144 @@ class DocBonusDetail extends DocumentDetail{
 		DocBonusDetailDAM::insert($this, $doc, $number);
 	}
 }
+
+
+
+class Reserve{
+	/**
+	 * Holds the internal id.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Holds the reserve's lot.
+	 *
+	 * @var Lot
+	 */
+	private $_mLot;
+	
+	/**
+	 * Holds the reserved quantity.
+	 *
+	 * @var integer
+	 */
+	private $_mQuantity;
+	
+	/**
+	 * Holds the user who created the reserve.
+	 *
+	 * @var UserAccount
+	 */
+	private $_mUser;
+	
+	/**
+	 * Holds the date in which the reserve was created.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mDate;
+	
+	/**
+	 * Constructs the reserve with the provided data.
+	 *
+	 * Must be called only from the database layer corresponding class. Use createReserve method instead if
+	 * a new reserve is needed. Lack of experience, sorry.
+	 * @param integer $id
+	 * @param Lot $lot
+	 * @param integer $quantity
+	 * @param UserAccount $user
+	 * @param string $date
+	 */
+	public function __construct($id, Lot $lot, $quantity, UserAccount $user, $date){
+		try{
+			Identifier::validateId($id);
+			Persist::validateObjectFromDatabase($lot);
+			Number::validateQuantity($quantity);
+			Persist::validateObjectFromDatabase($user);
+			Date::validateDate($date);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Reserve construct method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mId = $id;
+		$this->_mLot = $lot;
+		$this->_mQuantity = $quantity;
+		$this->_mUser = $user;
+		$this->_mDate = $date;
+	}
+	
+	/**
+	 * Returns the reserve's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns the reserve's lot.
+	 *
+	 * @return Lot
+	 */
+	public function getLot(){
+		return $this->_mLot;
+	}
+	
+	/**
+	 * Returns the reserve's quantity.
+	 *
+	 * @return integer
+	 */
+	public function getQuantity(){
+		return $this->_mQuantity;
+	}
+	
+	/**
+	 * Creates a reserve in the database.
+	 *
+	 * Creates a reserve in the database and returns the instance of it.
+	 * @param Lot $lot
+	 * @param integer $quantity
+	 * @return Reserve
+	 */
+	public function createReserve(Lot $lot, $quantity){
+		Persist::validateObjectFromDatabase($lot);
+		Number::validateQuantity($quantity);
+		
+		$helper = SessionHelper::getInstance();
+		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y'));
+	}
+	
+	/**
+	 * Returns an instance of a reserve with database data.
+	 *
+	 * Returns NULL if there was no match of the provided id in the database.
+	 * @param integer $id
+	 * @return Reserve
+	 */
+	static public function getInstance($id){
+		Identifier::validateId($id);
+		return ReserveDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the reserve from the database.
+	 *
+	 * Returns true on success. Otherwise false due dependencies.
+	 * @param Reserve $obj
+	 * @return boolean
+	 */
+	static public function delete(Reserve $obj){
+		if(!ReserveDAM::exists($obj))
+			throw new Exception('Internal error, trying to delete an nonexistent object.');
+			
+		return ReserveDAM::delete($obj);
+	}
+}
 ?>
