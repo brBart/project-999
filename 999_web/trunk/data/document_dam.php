@@ -22,4 +22,58 @@ class DocBonusDetailDAM{
 		// Code here...
 	}
 }
+
+
+/**
+ * Class in charge of accessing the database tables regarding the reserves.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class ReserveDAM{
+	/**
+	 * Returns an instance of a reserve with database data.
+	 *
+	 * Returns NULL if there was no match of the provided id in the database.
+	 * @param integer $id
+	 * @return Reserve
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$lot = Lot::getInstance(123);
+			$user = UserAccount::getInstance('roboli');
+			$reserve = new Reserve($id, $lot, 5, $user, '15/04/2009');
+			return $reserve;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Inserts the provided data into the database.
+	 *
+	 * It returns an instance of the new created reserve.
+	 * @param Lot $lot
+	 * @param integer $quantity
+	 * @param UserAccount $user
+	 * @param string $date
+	 * @return Reserve
+	 */
+	static public function insert(Lot $lot, $quantity, UserAccount $user, $date){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes the reserve from the database.
+	 *
+	 * Returns true on success. Otherwise false due dependencies.
+	 * @param Lot $obj
+	 * @return boolean
+	 */
+	static public function delete(Lot $obj){
+		if($obj->getId() == 123)
+			return true;
+		else
+			return false;
+	}
+}
 ?>
