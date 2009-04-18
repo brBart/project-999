@@ -1513,4 +1513,38 @@ class Lot extends Persist{
 			throw new Exception('Internal error, invalid quantity.');
 	}
 }
+
+
+/**
+ * Represents a lot with a negative quantity.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class NegativeLot extends Lot{
+	/**
+	 * Returns the lot's negative quantity.
+	 *
+	 * @return integer
+	 */
+	public function getNegativeQuantity(){
+		if($this->_mStatus == Persist::CREATED)
+			return LotDAM::getNegativeQuantity($this);
+		else
+			return 0;
+	}
+	
+	/**
+	 * Sets the negative quantity.
+	 *
+	 * @param integer $quantity
+	 */
+	public function setNegativeQuantity($quantity){
+		if($this->_mStatus == Persist::CREATED){
+			if(!is_int($quantity))
+				throw new Exception('Internal error, invalid negative quantity!');
+			
+			LotDAM::UpdateNegativeQuantity($this, $quantity);
+		}
+	}
+}
 ?>
