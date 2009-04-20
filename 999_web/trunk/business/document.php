@@ -189,7 +189,7 @@ class DocBonusDetail extends DocumentDetail{
 	 * @return string
 	 */
 	public function getId(){
-		return 'bon-' . $this->_mBonus->getProduct()->getId();
+		return 'bon' . $this->_mBonus->getProduct()->getId();
 	}
 	
 	/**
@@ -244,6 +244,144 @@ class DocBonusDetail extends DocumentDetail{
 	 */
 	protected function insert(Document $doc, $number){
 		DocBonusDetailDAM::insert($this, $doc, $number);
+	}
+}
+
+
+/**
+ * Represents a detail containing a product in document.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class DocProductDetail extends DocumentDetail{
+	/**
+	 * Holds the detail's lot.
+	 *
+	 * @var Lot
+	 */
+	private $_mLot;
+	
+	/**
+	 * Holds the detail's transaction.
+	 *
+	 * @var Transaction
+	 */
+	private $_mTransaction;
+	
+	/**
+	 * The reserve of the detail's product.
+	 *
+	 * @var Reserve
+	 */
+	private $_mReserve;
+	
+	/**
+	 * Constructs the detail with the provided data.
+	 *
+	 * @param Lot $lot
+	 * @param Transaction $transaction
+	 * @param Reserve $reserve
+	 * @param integer $quantity
+	 * @param float $price
+	 */
+	public function __construct(Lot $lot, Transaction $transaction, Reserve $reserve, $quantity, $price){
+		parent::__construct($quantity, $price);
+		
+		$this->_mLot = $lot;
+		$this->_mTransaction = $transaction;
+		$this->_mReserve = $reserve;
+	}
+	
+	/**
+	 * Returns the detail's id.
+	 *
+	 * @return string
+	 */
+	public function getId(){
+		return $this->_mLot->getProduct()->getId() . $this->_mLot->getId();
+	}
+	
+	/**
+	 * Returns the detail's lot.
+	 *
+	 * @return Lot
+	 */
+	public function getLot(){
+		return $this->_mLot;
+	}
+	
+	/**
+	 * Returns the detail product's reserve.
+	 *
+	 * @return Reserve
+	 */
+	public function getReserve(){
+		return $this->_mReserve;
+	}
+	
+	/**
+	 * Returns an array with the detail's data.
+	 *
+	 * The array contains the fields id, bar_code, manufacturer, product, packaging, unit of measure,
+	 * quantity, price, total, expiration_date.
+	 * @return array
+	 */
+	public function show(){
+		$product = $this->_mLot->getProduct();
+		$manufacturer = $product->getManufacturer();
+		$um = $product->getUnitOfMeasure();
+		$expiration_date =
+				(is_null($this->_mLot->getExpirationDate())) ? 'N/A' : $this->_mLot->getExpirationDate();
+
+		return array('id' => $this->getId(), 'bar_code' => $product->getBarCode(),
+				'manufacturer' => $manufacturer->getName(), 'product' => $product->getName(),
+				'packaging' => $product->getPackaging(), 'um' => $um->getName(),
+				'quantity' => $this->_mQuantity, 'price' => $this->_mPrice, 'total' => $this->getTotal(),
+				'expiration_date' => $expiration_date);
+	}
+	
+	/**
+	 * Increases the detail's quantity property.
+	 *
+	 * @param integer $quantity
+	 */
+	public function increase($quantity){
+		Number::validateQuantity($quantity);
+		$this->_mQuantity += $quantity;
+		if($this->_mTransaction instanceof Entry)
+			$this->_mLot->increase($quantity);
+	}
+	
+	/**
+	 * Cancels the details action.
+	 *
+	 * Cancels the detail's transaction previous taken action.
+	 */
+	public function cancel(){
+		$this->_mTransaction->cancel($this);
+	}
+	
+	/**
+	 * Returns true if the details previous action can be cancel.
+	 *
+	 * @return boolean
+	 */
+	public function isCancellable(){
+		return $this->_mTransaction->isCancellable();
+	}
+	
+	/**
+	 * Inserts the detail's data into the database.
+	 *
+	 * The document is where this detail belongs to. The number parameter is necessary to keep the order in
+	 * which all the details where created.
+	 * @param Document $doc
+	 * @param integer $number
+	 */
+	protected function insert(Document $doc, $number){
+		// Perform the inventory transaction.
+		$this->_mTransaction->apply($this);
+		DocProductDetailDAM::insert($this, $doc, $number);
 	}
 }
 
