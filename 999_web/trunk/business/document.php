@@ -148,6 +148,7 @@ abstract class DocumentDetail{
 	 *
 	 * Must be greater than cero. Otherwise it throws an exception.
 	 * @param integer $number
+	 * @throws Exception
 	 */
 	private function validateNumber($number){
 		if(!is_int($number) || $number < 1)
@@ -247,7 +248,11 @@ class DocBonusDetail extends DocumentDetail{
 }
 
 
-
+/**
+ * Represents a product reserve in the inventory.
+ * @package Document
+ * @author Roberto Oliveros
+ */
 class Reserve{
 	/**
 	 * Holds the internal id.
@@ -295,6 +300,7 @@ class Reserve{
 	 * @param integer $quantity
 	 * @param UserAccount $user
 	 * @param string $date
+	 * @throws Exception
 	 */
 	public function __construct($id, Lot $lot, $quantity, UserAccount $user, $date){
 		try{
@@ -377,6 +383,7 @@ class Reserve{
 	 * Returns true on success. Otherwise false due dependencies.
 	 * @param Reserve $obj
 	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Reserve $obj){
 		if(!ReserveDAM::exists($obj))

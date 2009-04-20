@@ -47,6 +47,7 @@ class Customer extends PersistObject{
 	 * corresponding class. Valid nit or consumidor final initials are required.
 	 * @param string $nit
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct($nit, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
@@ -101,6 +102,7 @@ class Customer extends PersistObject{
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @return void
+	 * @throws Exception
 	 */
 	public function setData($name){
 		try{
@@ -120,6 +122,7 @@ class Customer extends PersistObject{
 	 * Verifies that the nit is set correctly, e.g. 1725045-5. Otherwise it throws an exception.
 	 * @param string $nit
 	 * @return void
+	 * @throws Exception
 	 */
 	public function validateNit($nit){
 		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
@@ -132,6 +135,7 @@ class Customer extends PersistObject{
 	 * If the object's status set to Persist::IN_PROGRESS the method insert()
 	 * is called, if it's set to Persist::CREATED the method update() is called.
 	 * @return void
+	 * @throws Exception
 	 */
 	public function save(){
 		if($this->_mNit == CF)
@@ -376,6 +380,7 @@ abstract class Organization extends Identifier{
 	 * @param string $address
 	 * @param string $email
 	 * @param string $contact
+	 * @throws Exception
 	 */
 	public function setData($nit, $name, $telephone, $address, $email, $contact){
 		parent::setData($name);
@@ -427,6 +432,7 @@ abstract class Organization extends Identifier{
 	 * Verifies that the telephone is not empty. Otherwise it throws an exception.
 	 * @param string $telephone
 	 * @return void
+	 * @throws Exception
 	 */
 	private function validateTelephone($telephone){
 		if(empty($telephone))
@@ -439,6 +445,7 @@ abstract class Organization extends Identifier{
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $address
 	 * @return void
+	 * @throws Exception
 	 */
 	private function validateAddress($address){
 		if(empty($address))
@@ -451,6 +458,7 @@ abstract class Organization extends Identifier{
 	 * Must be in the correct format, e.g. example@yeah.com. Otherwise it throws an exception.
 	 * @param string $email
 	 * @return void
+	 * @throws Exception
 	 */
 	private function validateEmail($email){
 		if(!empty($email)){

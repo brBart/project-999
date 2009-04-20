@@ -41,6 +41,7 @@ abstract class DocumentSearch{
 	 * Verifies if the provided page is greater than cero. Otherwise throws an exception.
 	 * @param integer $page
 	 * @return void
+	 * @throws Exception
 	 */
 	protected function validatePage($page){
 		if(!is_int($page) || $page < 1)

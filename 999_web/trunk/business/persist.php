@@ -59,6 +59,7 @@ abstract class Persist{
 	 * exception.
 	 * @param PersistObject $obj
 	 * @return void
+	 * @throws Exception
 	 */
 	static public function validateObjectFromDatabase(Persist $obj){
 		if ($obj->_mStatus == self::IN_PROGRESS)
@@ -124,6 +125,7 @@ abstract class Identifier extends PersistObject{
 	 * 
 	 * @param integer $id
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct($id, $status){
 		parent::__construct($status);
@@ -176,6 +178,7 @@ abstract class Identifier extends PersistObject{
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @return void
+	 * @throws Exception
 	 */
 	public function setData($name){
 		try{
@@ -213,6 +216,7 @@ abstract class Identifier extends PersistObject{
 	 * Must be greater than cero. Otherwise it throw an exception.
 	 * @param integer $id
 	 * @return void
+	 * @throws Exception
 	 */
 	public function validateId($id){
 		if(!is_int($id) || $id < 1)
@@ -225,6 +229,7 @@ abstract class Identifier extends PersistObject{
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $name
 	 * @return void
+	 * @throws Exception
 	 */
 	public function validateName($name){
 		if(empty($name))

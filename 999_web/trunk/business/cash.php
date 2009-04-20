@@ -172,6 +172,7 @@ class BankAccount extends PersistObject{
 	 * Parameters must be set only if called from the database layer.
 	 * @param string $number
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct($number = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
@@ -220,6 +221,7 @@ class BankAccount extends PersistObject{
 	 *
 	 * @param string $number
 	 * @return void
+	 * @throws Exception
 	 */
 	public function setNumber($number){
 		if($this->_mStatus == self::CREATED)
@@ -261,6 +263,7 @@ class BankAccount extends PersistObject{
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @param Bank $bank
+	 * @throws Exception
 	 */
 	public function setData($name, Bank $bank){
 		try{
@@ -342,6 +345,7 @@ class BankAccount extends PersistObject{
 	 * Verifies that the number and name are not empty. The bank's status must not be PersisObject::IN_PROGRESS.
 	 * Otherwise it throws an exception.
 	 * @return void
+	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
 		$this->validateNumber($this->_mNumber);
@@ -359,6 +363,7 @@ class BankAccount extends PersistObject{
 	 * Must not be number. Otherwise it throws an exception.
 	 * @param string $number
 	 * @return void
+	 * @throws Exception
 	 */
 	private function validateNumber($number){
 		if(empty($number))
@@ -370,6 +375,7 @@ class BankAccount extends PersistObject{
 	 * 
 	 * Throws an exception if it does.
 	 * @param string $number
+	 * @throws Exception
 	 */
 	private function verifyNumber($number){
 		if(BankAccountDAM::exists($number))
@@ -428,6 +434,7 @@ class Shift extends Identifier{
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
 	 * @param string $timeTable
+	 * @throws Exception
 	 */
 	public function setData($name, $timeTable){
 		parent::setData($name);
@@ -503,6 +510,7 @@ class Shift extends Identifier{
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $timeTable
 	 * @return void
+	 * @throws Exception
 	 */
 	private function validateTimeTable($timeTable){
 		if(empty($timeTable))
@@ -536,6 +544,7 @@ class CashRegister{
 	 * The id parameters must be set only if the method is called from the database layer.
 	 * @param Shift $shift
 	 * @param integer $id
+	 * @throws Exception
 	 */
 	public function __construct(Shift $shift, $id = NULL){
 		PersistObject::validateObjectFromDatabase($shift);

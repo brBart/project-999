@@ -87,7 +87,7 @@ class SessionHelper{
 	}
 	
 	/**
-	 * Returns an instance of the session helper.
+	 * Returns the instance of the session helper.
 	 *
 	 * @return SessionHelper
 	 */

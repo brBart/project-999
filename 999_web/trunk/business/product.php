@@ -458,6 +458,7 @@ class ProductSupplier extends Persist{
 	 * 
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param integer $ProductSKU
+	 * @throws Exception
 	 */
 	public function validateProductSKU($productSKU){
 		if(empty($productSKU))
@@ -724,6 +725,7 @@ class Product extends Identifier{
 	 * @param float $price
 	 * @param boolean $deactivated
 	 * @param array<ProductSupplier> $details
+	 * @throws Exception
 	 */
 	public function setData($name, $barCode, $packaging, $description, UnitOfMeasure $um,
 			Manufacturer $manufacturer, $price, $deactivated, $details){
@@ -758,6 +760,7 @@ class Product extends Identifier{
 	 * Adds a supplier to the list of suppliers of this product.
 	 *
 	 * @param ProductSupplier $newDetail
+	 * @throws Exception
 	 */
 	public function addProductSupplier(ProductSupplier $newDetail){
 		foreach($this->_mProductSuppliers as $detail)
@@ -891,7 +894,7 @@ class Product extends Identifier{
 	
 	/**
 	 * Validates the object's main properties.
-	 *
+	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
@@ -940,6 +943,7 @@ class Product extends Identifier{
 	 *
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $barCode
+	 * @throws Exception
 	 */
 	private function validateBarCode($barCode){
 		if(empty($barCode))
@@ -951,6 +955,7 @@ class Product extends Identifier{
 	 *
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $packaging
+	 * @throws Exception
 	 */
 	private function validatePackaging($packaging){
 		if(empty($packaging))
@@ -962,6 +967,7 @@ class Product extends Identifier{
 	 *
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $description
+	 * @throws Exception
 	 */
 	private function validateDescription($description){
 		if(empty($description))
@@ -973,6 +979,7 @@ class Product extends Identifier{
 	 *
 	 * Must not be empty. Otherwise it throws an exception.
 	 * @param string $id
+	 * @throws Exception
 	 */
 	private function validateProductSupplierId($id){
 		if(empty($id))
@@ -983,6 +990,7 @@ class Product extends Identifier{
 	 * Verifies if another product is already using the bar code.
 	 *
 	 * @param string $barCode
+	 * @throws Exception
 	 */
 	private function verifyBarCode($barCode){
 		if(ProductDAM::existsBarCode($this, $barCode))
@@ -994,6 +1002,7 @@ class Product extends Identifier{
 	 *
 	 * It throws an exception if it does.
 	 * @param ProductSupplier $detail
+	 * @throws Exception
 	 */
 	private function verifyProductSupplier(ProductSupplier $detail){
 		if(ProductDAM::existsProductSupplier($detail))
@@ -1063,6 +1072,7 @@ class Bonus extends Persist{
 	 * @param string $createdDate
 	 * @param integer $id
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct(Product $product, $quantity, $percentage, $expirationDate,
 			$createdDate = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
@@ -1147,7 +1157,7 @@ class Bonus extends Persist{
 	
 	/**
 	 * Inserts the bonus in the database.
-	 *
+	 * @throws Exception
 	 */
 	public function save(){
 		if($this->_mStatus == Persist::IN_PROGRESS){
@@ -1202,6 +1212,7 @@ class Bonus extends Persist{
 	 *
 	 * Must be greater than cero. Otherwise it throws an exception.
 	 * @param float $percentage
+	 * @throws Exception
 	 */
 	private function validatePercentage($percentage){
 		if(!is_float($percentage) || $percentage < 0)
@@ -1496,6 +1507,7 @@ class Lot extends Persist{
 	 *
 	 * Must be greater or equal to cero. Otherwise it throws an exception.
 	 * @param integer $id
+	 * @throws Exception
 	 */
 	private function validateId($id){
 		if(!is_int($id) || $id < 0)
@@ -1507,6 +1519,7 @@ class Lot extends Persist{
 	 *
 	 * Must be an integer. Otherwise it throws an exception.
 	 * @param integer $quantity
+	 * @throws Exception
 	 */
 	private function validateQuantity($quantity){
 		if(!is_int($quantity))
@@ -1537,6 +1550,7 @@ class NegativeLot extends Lot{
 	 * Sets the negative quantity.
 	 *
 	 * @param integer $quantity
+	 * @throws Exception
 	 */
 	public function setNegativeQuantity($quantity){
 		if($this->_mStatus == Persist::CREATED){
