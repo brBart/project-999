@@ -11,7 +11,7 @@
  * @package Transaction
  * @author Roberto Oliveros
  */
-class Transaction{
+abstract class Transaction{
 	/**
 	 * Applies the transaction on the inventory.
 	 *
