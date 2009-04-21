@@ -106,7 +106,6 @@ class Entry extends Transaction{
 		$available = Inventory::getAvailable($product);
 		$lot->save();
 		Inventory::increase($product, $detail->getQuantity());
-		
 		$new_price = $detail->getPrice();
 		if($available < 0 || $new_price > $product->getPrice()){
 			$product->setPrice($new_price);
@@ -136,9 +135,10 @@ class Entry extends Transaction{
 	}
 	
 	/**
-	 * Indicates if this transaction can be cancel.
+	 * Returns true if this transaction can be cancel.
 	 *
-	 * Returns true if it does.
+	 * The transaction can be cancel when the detail's lot is an instance of a NegativeLot or its quantity is
+	 * equal to the detail's quantity.
 	 * @param DocProductDetail $detail
 	 * @return boolean
 	 */
@@ -147,6 +147,8 @@ class Entry extends Transaction{
 		
 		if($lot instanceof NegativeLot || $detail->getQuantity != $lot->getQuantity)
 			return false;
+		else
+			return true;
 	}
 }
 ?>

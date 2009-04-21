@@ -367,7 +367,7 @@ class DocProductDetail extends DocumentDetail{
 	 * @return boolean
 	 */
 	public function isCancellable(){
-		return $this->_mTransaction->isCancellable();
+		return $this->_mTransaction->isCancellable($this);
 	}
 	
 	/**

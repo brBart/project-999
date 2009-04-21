@@ -817,7 +817,7 @@ class Product extends Identifier{
 			$this->update();
 			
 			if($this->_mLastPrice)
-				PricesLog::write($this, $this->_mLastPrice, $this->_mPrice);
+				ChangePricesLog::write($this, $this->_mLastPrice, $this->_mPrice);
 		}
 		
 		foreach($this->_mProductSuppliers as $detail)
@@ -1554,7 +1554,7 @@ class NegativeLot extends Lot{
 	 */
 	public function setNegativeQuantity($quantity){
 		if($this->_mStatus == Persist::CREATED){
-			if(!is_int($quantity))
+			if(!is_int($quantity) || $quantity >= 0)
 				throw new Exception('Internal error, invalid negative quantity!');
 			
 			LotDAM::UpdateNegativeQuantity($this, $quantity);
