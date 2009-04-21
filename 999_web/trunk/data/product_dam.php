@@ -387,6 +387,7 @@ class BonusDAM{
  * @author Roberto Oliveros
  */
 class LotDAM{
+	static private $_mNegative = -5;
 	
 	static public function getQuantity(Lot $obj){
 		switch($obj->getId()){
@@ -441,6 +442,19 @@ class LotDAM{
 	}
 	
 	/**
+	 * Returns the negative quantity of a negative lot.
+	 *
+	 * @param NegativeLot $obj
+	 * @return integer
+	 */
+	static public function getNegativeQuantity(NegativeLot $obj){
+		if($obj->getId() == 124)
+			return self::$_mNegative;
+		else
+			return 0;
+	}
+	
+	/**
 	 * Deactivates the lot in the database.
 	 *
 	 * @param Lot $obj
@@ -487,6 +501,17 @@ class LotDAM{
 	 */
 	static public function decreaseReserve(Lot $obj, $quantity){
 		// Code here...
+	}
+	
+	/**
+	 * Updates the negative quantity of a negative lot.
+	 *
+	 * @param NegativeLot $log
+	 * @param integer $quantity
+	 */
+	static public function updateNegativeQuantity(NegativeLot $lot, $quantity){
+		if($lot->getId() == 124)
+			self::$_mNegative = $quantity;
 	}
 	
 	/**

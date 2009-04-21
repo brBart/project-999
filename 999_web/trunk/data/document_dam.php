@@ -24,6 +24,21 @@ class DocBonusDetailDAM{
 }
 
 
+
+class DocProductDetailDAM{
+	/**
+	 * Inserts the detail's data into the database.
+	 *
+	 * @param DocProductDetail $detail
+	 * @param Document $doc
+	 * @param integer $number
+	 */
+	static public function insert(DocProductDetail $detail, Document $doc, $number){
+		// Code here...
+	}
+}
+
+
 /**
  * Class in charge of accessing the database tables regarding the reserves.
  * @package DocumentDAM
