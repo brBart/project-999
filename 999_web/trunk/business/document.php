@@ -284,8 +284,14 @@ class DocProductDetail extends DocumentDetail{
 	 * @param integer $quantity
 	 * @param float $price
 	 */
-	public function __construct(Lot $lot, Transaction $transaction, Reserve $reserve, $quantity, $price){
+	public function __construct(Lot $lot, Transaction $transaction, $quantity, $price, Reserve $reserve = NULL){
 		parent::__construct($quantity, $price);
+		
+		if($transaction instanceof Withdraw)
+			if(is_null($reserve))
+				throw new Exception('Internal error, Withdraw transacation needs a Reserve to work!');
+			else
+				Persist::validateObjectFromDatabase($reserve);
 		
 		$this->_mLot = $lot;
 		$this->_mTransaction = $transaction;
@@ -391,7 +397,7 @@ class DocProductDetail extends DocumentDetail{
  * @package Document
  * @author Roberto Oliveros
  */
-class Reserve{
+class Reserve extends Persist{
 	/**
 	 * Holds the internal id.
 	 *
@@ -440,7 +446,10 @@ class Reserve{
 	 * @param string $date
 	 * @throws Exception
 	 */
-	public function __construct($id, Lot $lot, $quantity, UserAccount $user, $date){
+	public function __construct($id, Lot $lot, $quantity, UserAccount $user, $date,
+			$status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+				
 		try{
 			Identifier::validateId($id);
 			Persist::validateObjectFromDatabase($lot);
@@ -521,11 +530,9 @@ class Reserve{
 	 * Returns true on success. Otherwise false due dependencies.
 	 * @param Reserve $obj
 	 * @return boolean
-	 * @throws Exception
 	 */
 	static public function delete(Reserve $obj){
-		if(!ReserveDAM::exists($obj))
-			throw new Exception('Internal error, trying to delete an nonexistent object.');
+		self::validateObjectFromDatabase($obj);
 			
 		return ReserveDAM::delete($obj);
 	}

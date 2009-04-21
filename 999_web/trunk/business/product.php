@@ -817,7 +817,7 @@ class Product extends Identifier{
 			$this->update();
 			
 			if($this->_mLastPrice)
-				ChangePricesLog::write($this, $this->_mLastPrice, $this->_mPrice);
+				ChangePriceLog::write($this, $this->_mLastPrice, $this->_mPrice);
 		}
 		
 		foreach($this->_mProductSuppliers as $detail)
@@ -1227,7 +1227,7 @@ class Bonus extends Persist{
  * Because the lack of experience the class lot represents two kinds of lots. One is for the recent created
  * lot for an entry document, the other is when the data is obtain from the database. For that, the quantity
  * property only is needed when the lot is recently created or Persist::IN_PROGRESS, otherwise the property
- * is queried directly to the database. Sorry.
+ * is queried directly to the database. And get available method only works when Persist::CREATED. Sorry.
  * @package Product
  * @author Roberto Oliveros
  */
@@ -1397,7 +1397,7 @@ class Lot extends Persist{
 	public function show(){
 		return array('id' => $this->_mId, 'entry_date' => $this->_mEntryDate,
 				'expiration_date' => $this->_mExpirationDate, 'price' => $this->_mPrice,
-				'available' => $this->getAvailable());
+				'quantity' => $this->getQuantity(), 'available' => $this->getAvailable());
 	}
 	
 	/**
@@ -1559,6 +1559,31 @@ class NegativeLot extends Lot{
 			
 			LotDAM::UpdateNegativeQuantity($this, $quantity);
 		}
+	}
+}
+
+
+/**
+ * Utility class to register any price change of any product.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class ChangePriceLog{
+	/**
+	 * Register the event in the database.
+	 *
+	 * @param Product $product
+	 * @param float $lastPrice
+	 * @param float $newPrice
+	 */
+	static public function write(Product $product, $lastPrice, $newPrice){
+		Persist::validateObjectFromDatabase($product);
+		Number::validatePrice($lastPrice);
+		Number::validatePrice($newPrice);
+		
+		$date = date('d/m/Y');
+		$helper = SessionHelper::getInstance();
+		ChangePriceLogDAM::write($date, $helper->getUser(), $product, $lastPrice, $newPrice);
 	}
 }
 ?>

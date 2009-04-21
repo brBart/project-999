@@ -43,7 +43,7 @@ abstract class Transaction{
  */
 class Withdraw extends Transaction{
 	/**
-	 * Makes an withdraw of product on the inventory.
+	 * Makes an withdraw of product in the inventory.
 	 *
 	 * @param DocProductDetail $detail
 	 */
