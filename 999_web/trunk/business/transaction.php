@@ -37,7 +37,7 @@ abstract class Transaction{
 
 
 /**
- * Class in charge of making withdraw on the inventory.
+ * Class in charge of making withdraws in the inventory.
  * @package Transaction
  * @author Roberto Oliveros
  */
@@ -122,6 +122,9 @@ class Entry extends Transaction{
 		$lot = $detail->getLot();
 		$product = $lot->getProduct();
 		
+		/**
+		 * @todo Check why can still cancel negative lots.
+		 */
 		if($lot instanceof NegativeLot){
 			$negative = $lot->getNegativeQuantity();
 			Inventory::decrease($product, (-1 * $negative));
@@ -145,7 +148,7 @@ class Entry extends Transaction{
 	public function isCancellable(DocProductDetail $detail){
 		$lot = $detail->getLot();
 		
-		if($lot instanceof NegativeLot || $detail->getQuantity != $lot->getQuantity)
+		if($lot instanceof NegativeLot || $detail->getQuantity() != $lot->getQuantity())
 			return false;
 		else
 			return true;
