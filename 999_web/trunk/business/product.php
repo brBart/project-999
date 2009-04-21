@@ -1554,7 +1554,7 @@ class NegativeLot extends Lot{
 	 */
 	public function setNegativeQuantity($quantity){
 		if($this->_mStatus == Persist::CREATED){
-			if(!is_int($quantity) || $quantity >= 0)
+			if(!is_int($quantity) || $quantity > 0)
 				throw new Exception('Internal error, invalid negative quantity!');
 			
 			LotDAM::UpdateNegativeQuantity($this, $quantity);

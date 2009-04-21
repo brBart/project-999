@@ -107,7 +107,7 @@ class Entry extends Transaction{
 		$lot->save();
 		Inventory::increase($product, $detail->getQuantity());
 		$new_price = $detail->getPrice();
-		if($available < 0 || $new_price > $product->getPrice()){
+		if($available <= 0 || $new_price > $product->getPrice()){
 			$product->setPrice($new_price);
 			$product->save();
 		}
@@ -125,7 +125,7 @@ class Entry extends Transaction{
 		if($lot instanceof NegativeLot){
 			$negative = $lot->getNegativeQuantity();
 			Inventory::decrease($product, (-1 * $negative));
-			$lot->increase($negative);
+			$lot->decrease(-1 * $negative);
 			$lot->setNegativeQuantity(0);
 		}
 		else{
