@@ -576,7 +576,30 @@ class LotDAM{
 	 * @param Lot $obj
 	 */
 	static public function deactivate(Lot $obj){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mQuantity123 = 0;
+				self::$_mReserve123 = 0;
+				break;
+				
+			case 4320:
+				self::$_mQuantity4320 = 0;
+				self::$_mReserve4320 = 0;
+				break;
+			
+			case 4321:
+				self::$_mQuantity4321 = 0;
+				self::$_mReserve4321 = 0;
+				break;
+				
+			case 4322;
+				self::$_mQuantity4322 = 0;
+				self::$_mReserve4322 = 0;
+				break;
+
+			default:
+				// Do nothing
+		}
 	}
 	
 	/**
@@ -586,7 +609,26 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function increase(Lot $obj, $quantity){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mQuantity123 += $quantity;
+				break;
+				
+			case 4320:
+				self::$_mQuantity4320 += $quantity;
+				break;
+			
+			case 4321:
+				self::$_mQuantity4321 += $quantity;
+				break;
+				
+			case 4322;
+				self::$_mQuantity4322 += $quantity;
+				break;
+
+			default:
+				// Do nothing
+		}
 	}
 	
 	/**
@@ -596,7 +638,26 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function decrease(Lot $obj, $quantity){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mQuantity123 -= $quantity;
+				break;
+				
+			case 4320:
+				self::$_mQuantity4320 -= $quantity;
+				break;
+			
+			case 4321:
+				self::$_mQuantity4321 -= $quantity;
+				break;
+				
+			case 4322;
+				self::$_mQuantity4322 -= $quantity;
+				break;
+
+			default:
+				// Do nothing
+		}
 	}
 	
 	/**
@@ -606,7 +667,26 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function reserve(Lot $obj, $quantity){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mReserve123 += $quantity;
+				break;
+				
+			case 4320:
+				self::$_mReserve4320 += $quantity;
+				break;
+			
+			case 4321:
+				self::$_mReserve4321 += $quantity;
+				break;
+				
+			case 4322;
+				self::$_mReserve4322 += $quantity;
+				break;
+
+			default:
+				// Do nothing
+		}
 	}
 	
 	/**
@@ -616,7 +696,26 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function decreaseReserve(Lot $obj, $quantity){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mReserve123 -= $quantity;
+				break;
+				
+			case 4320:
+				self::$_mReserve4320 -= $quantity;
+				break;
+			
+			case 4321:
+				self::$_mReserve4321 -= $quantity;
+				break;
+				
+			case 4322;
+				self::$_mReserve4322 -= $quantity;
+				break;
+
+			default:
+				// Do nothing
+		}
 	}
 	
 	/**
