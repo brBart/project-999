@@ -24,7 +24,11 @@ class DocBonusDetailDAM{
 }
 
 
-
+/**
+ * Class for accessing document product detail tables.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
 class DocProductDetailDAM{
 	/**
 	 * Inserts the detail's data into the database.
@@ -46,20 +50,6 @@ class DocProductDetailDAM{
  */
 class ReserveDAM{
 	/**
-	 * Verifies if the reserve exists in the database.
-	 *
-	 * Returns true if it does.
-	 * @param Reserve $obj
-	 * @return boolean
-	 */
-	static public function exists(Reserve $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
-	}
-	
-	/**
 	 * Returns an instance of a reserve with database data.
 	 *
 	 * Returns NULL if there was no match of the provided id in the database.
@@ -70,7 +60,7 @@ class ReserveDAM{
 		if($id == 123){
 			$lot = Lot::getInstance(123);
 			$user = UserAccount::getInstance('roboli');
-			$reserve = new Reserve($id, $lot, 5, $user, '15/04/2009');
+			$reserve = new Reserve($id, $lot, 5, $user, '15/04/2009', Persist::CREATED);
 			return $reserve;
 		}
 		else
@@ -88,7 +78,7 @@ class ReserveDAM{
 	 * @return Reserve
 	 */
 	static public function insert(Lot $lot, $quantity, UserAccount $user, $date){
-		return new Reserve(123, $lot, $quantity, $user, $date);
+		return new Reserve(123, $lot, $quantity, $user, $date, Persist::CREATED);
 	}
 	
 	/**

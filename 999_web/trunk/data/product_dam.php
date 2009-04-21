@@ -128,6 +128,114 @@ class ManufacturerDAM{
 
 
 /**
+ * Class for accessing the database tables regarding products and lots.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class InventoryDAM{
+	static private $_mQuantity = 20;
+	static private $_mReserve = 8;
+	
+	/**
+	 * Returns the available quantity of the product's inventory.
+	 *
+	 * @param Product $obj
+	 * @return integer
+	 */
+	static public function getAvailable(Product $obj){
+		if($obj->getId() == 123)
+			return self::$_mQuantity - self::$_mReserve;
+	}
+	
+	/**
+	 * Returns the quantity on hand of the product's inventory.
+	 *
+	 * @param Product $obj
+	 * @return integer
+	 */
+	static public function getQuantity(Product $obj){
+		if($obj->getId() == 123)
+			return self::$_mQuantity;
+	}
+	
+	/**
+	 * Returns the lots with available quantities of the provided product.
+	 *
+	 * Returns an array with all the lots that contains available quantities.
+	 * @param Product $obj
+	 * @return array<Lot>
+	 */
+	static public function getLots(Product $obj){
+		if($obj->getId() == 123){
+			$lots = array();
+			$lots[] = Lot::getInstance(4321);
+			$lots[] = Lot::getInstance(4322);
+			return $lots;
+		}
+	}
+	
+	/**
+	 * Returns the lots of the provided product with negative quantities.
+	 *
+	 * Returns an array with all the lots that contains negative quantities.
+	 * @param Product $obj
+	 * @return array<Lot>
+	 */
+	static public function getNegativeLots(Product $obj){
+		if($obj->getId() == 123){
+			$lots = array();
+			$lots[] = Lot::getInstance(4320);
+			return $lots;
+		}
+	}
+	
+	/**
+	 * Increases the product's quantity in the database.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function increase(Product $product, $quantity){
+		if($product->getId() == 123)
+			self::$_mQuantity += $quantity;
+	}
+	
+	/**
+	 * Decreases the product's quantity in the database.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function decrease(Product $product, $quantity){
+		if($product->getId() == 123)
+			self::$_mQuantity -= $quantity;
+	}
+	
+	/**
+	 * Reserves the specified quantity for the provided product in the database.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function reserve(Product $product, $quantity){
+		if($product->getId() == 123)
+			self::$_mReserve += $quantity;
+	}
+	
+	/**
+	 * Decreases the product's reserve by the quantity provided in the database.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	static public function decreaseReserve(Product $product, $quantity){
+		if($product->getId() == 123)
+			self::$_mReserve -= $quantity;
+	}
+}
+
+
+/**
  * Class in charge of accessing the database tables regarding the product's suppliers.
  * @package ProductDAM
  * @author Roberto Oliveros
@@ -388,23 +496,31 @@ class BonusDAM{
  */
 class LotDAM{
 	static private $_mNegative = -5;
+	static private $_mQuantity123 = 18;
+	static private $_mQuantity4320 = -3;
+	static private $_mQuantity4321 = 8;
+	static private $_mQuantity4322 = 12;
+	static private $_mReserve123 = 3;
+	static private $_mReserve4320 = 0;
+	static private $_mReserve4321 = 4;
+	static private $_mReserve4322 = 4;
 	
 	static public function getQuantity(Lot $obj){
 		switch($obj->getId()){
 			case 123:
-				return 18;
+				return self::$_mQuantity123;
 				break;
 				
 			case 4320:
-				return -3;
+				return self::$_mQuantity4320;
 				break;
 			
 			case 4321:
-				return 8;
+				return self::$_mQuantity4321;
 				break;
 				
 			case 4322;
-				return 12;
+				return self::$_mQuantity4322;
 				break;
 
 			default:
@@ -421,19 +537,19 @@ class LotDAM{
 	static public function getAvailable(Lot $obj){
 		switch($obj->getId()){
 			case 123:
-				return 15;
+				return self::$_mQuantity123 - self::$_mReserve123;
 				break;
 				
 			case 4320:
-				return -3;
+				return self::$_mQuantity4320 - self::$_mReserve4320;
 				break;
 			
 			case 4321:
-				return 4;
+				return self::$_mQuantity4321 - self::$_mReserve4321;
 				break;
 				
 			case 4322;
-				return 8;
+				return self::$_mQuantity4322 - self::$_mReserve4322;
 				break;
 				
 			default:
@@ -448,7 +564,7 @@ class LotDAM{
 	 * @return integer
 	 */
 	static public function getNegativeQuantity(NegativeLot $obj){
-		if($obj->getId() == 124)
+		if($obj->getId() == 4320)
 			return self::$_mNegative;
 		else
 			return 0;
@@ -510,7 +626,7 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function updateNegativeQuantity(NegativeLot $lot, $quantity){
-		if($lot->getId() == 124)
+		if($lot->getId() == 4320)
 			self::$_mNegative = $quantity;
 	}
 	
@@ -522,13 +638,31 @@ class LotDAM{
 	 * @return Lot
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$product = Product::getInstance(123);
-			$lot = new Lot($product, 20, 12.65, '31/12/2009', '15/04/2009', $id, Persist::CREATED);
-			return $lot;
+		$product = Product::getInstance(123);
+		switch($id){
+			case 123:
+				$lot = new Lot($product, 0, 12.65, '31/12/2009', '15/04/2009', $id, Persist::CREATED);
+				return $lot;
+				break;
+				
+			case 4320:
+				$lot = new NegativeLot($product, 0, 14.75, NULL, NULL, 4320, Persist::CREATED);
+				return $lot;
+				break; 
+
+			case 4321:
+				$lot = new Lot($product, 0, 14.68, '15/08/2009', '10/01/2009', $id, Persist::CREATED);
+				return $lot;
+				break;
+				
+			case 4322:
+				$lot = new Lot($product, 0, 15.25, '15/11/2009', '15/02/2009', $id, Persist::CREATED);
+				return $lot;
+				break;
+				
+			default:
+				return NULL;
 		}
-		else
-			return NULL;
 	}
 	
 	/**
@@ -545,109 +679,23 @@ class LotDAM{
 
 
 /**
- * Class for accessing the database tables regarding products and lots.
+ * Utility class for logging in the database any change price event.
  * @package ProductDAM
  * @author Roberto Oliveros
  */
-class InventoryDAM{
-	static private $_mQuantity = 20;
-	static private $_mReserve = 8;
-	
+class ChangePriceLogDAM{
 	/**
-	 * Returns the available quantity of the product's inventory.
+	 * Logs the event in the database.
 	 *
-	 * @param Product $obj
-	 * @return integer
-	 */
-	static public function getAvailable(Product $obj){
-		if($obj->getId() == 123)
-			return self::$_mQuantity - self::$_mReserve;
-	}
-	
-	/**
-	 * Returns the quantity on hand of the product's inventory.
-	 *
-	 * @param Product $obj
-	 * @return integer
-	 */
-	static public function getQuantity(Product $obj){
-		if($obj->getId() == 123)
-			return self::$_mQuantity;
-	}
-	
-	/**
-	 * Returns the lots with available quantities of the provided product.
-	 *
-	 * Returns an array with all the lots that contains available quantities.
-	 * @param Product $obj
-	 * @return array<Lot>
-	 */
-	static public function getLots(Product $obj){
-		if($obj->getId() == 123){
-			$lots = array();
-			$lots[] = new Lot($obj, 8, 14.68, '15/08/2009', '10/01/2009', 4321, Persist::CREATED);
-			$lots[] = new Lot($obj, 12, 15.25, '15/11/2009', '15/02/2009', 4322, Persist::CREATED);
-			return $lots;
-		}
-	}
-	
-	/**
-	 * Returns the lots of the provided product with negative quantities.
-	 *
-	 * Returns an array with all the lots that contains negative quantities.
-	 * @param Product $obj
-	 * @return array<Lot>
-	 */
-	static public function getNegativeLots(Product $obj){
-		if($obj->getId() == 123){
-			$lots = array();
-			$lots[] = new Lot($obj, -3, 14.75, NULL, NULL, 4320, Persist::CREATED);
-			return $lots;
-		}
-	}
-	
-	/**
-	 * Increases the product's quantity in the database.
-	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @param string $date
+	 * @param UserAccount $user
 	 * @param Product $product
-	 * @param integer $quantity
+	 * @param float $lastPrice
+	 * @param float $newPrice
 	 */
-	static public function increase(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mQuantity += $quantity;
-	}
-	
-	/**
-	 * Decreases the product's quantity in the database.
-	 *
-	 * @param Product $product
-	 * @param integer $quantity
-	 */
-	static public function decrease(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mQuantity -= $quantity;
-	}
-	
-	/**
-	 * Reserves the specified quantity for the provided product in the database.
-	 *
-	 * @param Product $product
-	 * @param integer $quantity
-	 */
-	static public function reserve(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mReserve += $quantity;
-	}
-	
-	/**
-	 * Decreases the product's reserve by the quantity provided in the database.
-	 *
-	 * @param Product $product
-	 * @param integer $quantity
-	 */
-	static public function decreaseReserve(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mReserve -= $quantity;
+	static public function write($date, UserAccount $user, Product $product, $lastPrice, $newPrice){
+		// Code here...
 	}
 }
 ?>
