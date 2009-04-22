@@ -84,6 +84,17 @@ class Number{
 	}
 	
 	/**
+	 * Validates the provided total.
+	 *
+	 * Must be greater or equal to cero. Otherwise it throws an exception.
+	 * @param float $total
+	 */
+	static public function validateTotal($total){
+		if(!is_float($total) || $total < 0)
+			throw new Exception('Total inv&accute;lido.');
+	}
+	
+	/**
 	 * Validates the provided quantity.
 	 *
 	 * Must be greater than cero. Otherwise it throws an exception.

@@ -260,5 +260,55 @@ abstract class PersistDocument extends Persist{
 	 * Indicates that the document has been cancelled.
 	 */
 	const CANCELLED = 2;
+	
+	/**
+	 * Holds the document's identifier.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Constructs the object with the provided id and status.
+	 * 
+	 * @param integer $id
+	 * @param integer $status
+	 * @throws Exception
+	 */
+	public function __construct($id, $status){
+		parent::__construct($status);
+		
+		if(!is_null($id))
+			try{
+				$this->validateId($id);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Document construct method with bad data!' .
+						$e->getMessage());
+				throw $et;
+			}
+			
+		$this->_mId = $id;
+	}
+	
+	/**
+	 * Returns the document's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Inserts the document's data into the database.
+	 *
+	 */
+	abstract protected function insert();
+	
+	/**
+	 * Does not save the document's data and reverts the effects.
+	 *
+	 */
+	abstract protected function discard();
 }
 ?>

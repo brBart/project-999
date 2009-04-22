@@ -1157,6 +1157,8 @@ class Bonus extends Persist{
 	
 	/**
 	 * Inserts the bonus in the database.
+	 * 
+	 * Only applies if the bonus's status property has the Persist::IN_PROGRESS value.
 	 * @throws Exception
 	 */
 	public function save(){
@@ -1482,6 +1484,7 @@ class Lot extends Persist{
 	/**
 	 * Saves the lot's data in the database.
 	 *
+	 * Only applies if the lot's status property has the Persist::IN_PROGRESS value.
 	 */
 	public function save(){
 		if($this->_mStatus == Persist::IN_PROGRESS){

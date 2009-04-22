@@ -25,11 +25,238 @@ require_once('data/document_dam.php');
  */
 abstract class Document extends PersistDocument{
 	/**
-	 * Holds the document's identifier.
+	 * Holds the date in which the document was created.
 	 *
-	 * @var integer
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
 	 */
-	private $_mId;
+	private $_mDate;
+	
+	/**
+	 * Holds the documents grand total.
+	 *
+	 * @var float
+	 */
+	private $_mTotal;
+	
+	/**
+	 * Holds the user which created the document.
+	 *
+	 * @var UserAccount
+	 */
+	private $_mUser;
+	
+	/**
+	 * Array containing all the document details.
+	 *
+	 * @var array<DocumentDetail>
+	 */
+	private $_mDetails;
+	
+	/**
+	 * Constructs the document with the provided data.
+	 *
+	 * @param UserAccount $user
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct(UserAccount $user = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
+		parent::__construct($id, $status);
+		
+		if(!is_null($user))
+			$this->_mUser = $user;
+		else
+			$this->_mUser = SessionHelper::getUser();
+	}
+	
+	/**
+	 * Returns the document's creation date.
+	 *
+	 * @return string
+	 */
+	public function getDate(){
+		return $this->_mDate;
+	}
+	
+	/**
+	 * Returns the document's grand total.
+	 *
+	 * @return float
+	 */
+	public function getTotal(){
+		return $this->_mTotal;
+	}
+	
+	/**
+	 * Returns the document's user.
+	 *
+	 * @return UserAccount
+	 */
+	public function getUser(){
+		return $this->_mUser;
+	}
+	
+	/**
+	 * Returns a document's detail which id match with the provided id.
+	 *
+	 * If there is no match NULL is returned.
+	 * @param string $id
+	 * @return DocumentDetail
+	 */
+	public function getDetail($id){
+		$this->validateDetailId($id);
+		
+		foreach($this->_mDetails as &$detail)
+			if($detail->getId() == $id)
+				return $detail;
+				
+		return NULL;
+	}
+	
+	/**
+	 * Returns all the document's details.
+	 *
+	 * @return array<DocumentDetail>
+	 */
+	public function getDetails(){
+		return $this->_mDetails;
+	}
+	
+	/**
+	 * Sets the document's properties.
+	 *
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * Persist::CREATED in the constructor method too.
+	 * @param string $date
+	 * @param float $total
+	 * @param array<DocumentDetail> $details
+	 * @throws Exception
+	 */
+	public function setData($date, $total, $details){
+		try{
+			Date::validateDate($date);
+			Number::validateTotal($total);
+			if(empty($details))
+				throw new Exception('No hay ningun detalle.');
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Document setData method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mDate = $date;
+		$this->_mTotal = $total;
+		$this->_mDetails = $details;
+	}
+	
+	/**
+	 * Adds a detail to the document.
+	 *
+	 * If a similar detail is already in the document, its quantity property will be increase.
+	 * @param DocumentDetail $newDetail
+	 */
+	public function addDetail(DocumentDetail $newDetail){
+		$this->_mTotal += $newDetail->getTotal();
+		
+		foreach($this->_mDetails as &$detail){
+			if($detail == $newDetail){
+				$detail->increase($newDetail->getQuantity());
+				return;
+			}
+		}
+		
+		$this->_mDetails[] = $newDetail;
+	}
+	
+	/**
+	 * Removes the detail from the document.
+	 *
+	 * @param DocumentDetail $purgeDetail
+	 */
+	public function deleteDetail(DocumentDetail $purgeDetail){
+		$temp_details = array();
+		
+		foreach($this->_mDetails as &$detail)
+			if($detail != $purgeDetail)
+				$temp_details[] = $detail;
+			else
+				if($purgeDetail instanceof DocProductDetail){
+					$lot = $purgeDetail->getLot();
+					if($lot instanceof NegativeLot){
+						$negative = $lot->getNegativeQuantity();
+						$lot->decrease(-1 * $negative);
+						$lot->setNegativeQuantity(0);
+					}
+				}
+				
+		$this->_mDetails = $temp_details;
+	}
+	
+	/**
+	 * Saves the document's data in the database.
+	 *
+	 * Only applies if the document's status property has the Persist::IN_PROGRESS value.
+	 */
+	public function save(){
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->validateMainProperties();
+			$this->insert();
+			$this->_mStatus == Persist::CREATED;
+		}
+	}
+	
+	/**
+	 * Cancels the document and reverts its effects.
+	 *
+	 * If the document's status property value equals to Persist::IN_PROGRESS the discard() method is called.
+	 * If it equals to Persist::CREATED, all the details are cancelled and subsequent actions are taken.
+	 */
+	public function cancel(){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			$this->discard();
+		elseif($this->_mStatus == Persist::CREATED){
+			foreach($this->_mDetails as $detail)
+				if(!$detail->isCancellable())
+					throw new Exception('Lotes en este documento ya fueron alterados, no se puede anular.');
+					
+			foreach($this->_mDetails as &$detail)
+				$detail->cancel();
+				
+			$this->_mStatus == PersistDocument::CANCELLED;
+		}
+	}
+	
+	/**
+	 * Returns a document with the details belonging to the requested page.
+	 *
+	 * The total_pages and total_items parameters are necessary to return their respective values.
+	 * @param integer $id
+	 * @param integer $page
+	 * @param integer $total_pages
+	 * @param integer $total_items
+	 */
+	abstract static public function getInstance($id, $page, &$total_pages, &$total_items);
+	
+	/**
+	 * Validates the document's main properties.
+	 *
+	 */
+	protected function validateMainProperties(){
+		if(empty($this->_mDetails))
+			throw new Exception('No hay ningun detalle.');
+	}
+	
+	/**
+	 * Validates a detail's id.
+	 *
+	 * Must not be empty. Otherwise it throws an exception.
+	 * @param string $id
+	 * @throws Exception
+	 */
+	private function validateDetailId($id){
+		if(empty($id))
+			throw new Exception('Id inv&aacute;lido.');
+	}
 }
 
 
@@ -124,6 +351,13 @@ abstract class DocumentDetail{
 	abstract public function show();
 	
 	/**
+	 * Increase the detail's quantity.
+	 *
+	 * @param integer $quantity
+	 */
+	abstract public function increase($quantity);
+	
+	/**
 	 * Undoes every action previously taken.
 	 *
 	 */
@@ -215,6 +449,15 @@ class DocBonusDetail extends DocumentDetail{
 				'product' => $product->getName(), 'packaging' => $product->getPackaging(),
 				'um' => '', 'quantity' => $this->_mQuantity, 'price' => $this->_mPrice,
 				'total' => $this->getTotal(), 'expiration_date' => '');
+	}
+	
+	/**
+	 * Does nothing, just to fulfill the abstraction.
+	 *
+	 * @param integer $quantity
+	 */
+	public function increase($quantity){
+		// Do nothing.
 	}
 	
 	/**
