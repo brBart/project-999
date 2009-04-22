@@ -63,8 +63,16 @@ abstract class Document extends PersistDocument{
 	public function __construct(UserAccount $user = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($id, $status);
 		
-		if(!is_null($user))
+		if(!is_null($user)){
+			try{
+				Persist::validateObjectFromDatabase($user);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
+						$et->getMessage());
+				throw $et;
+			}
 			$this->_mUser = $user;
+		}
 		else
 			$this->_mUser = SessionHelper::getUser();
 	}
