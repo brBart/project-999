@@ -201,7 +201,8 @@ abstract class Document extends PersistDocument{
 		foreach($this->_mDetails as &$detail)
 			if($detail != $purgeDetail)
 				$temp_details[] = $detail;
-			else
+			else{
+				$this->_mTotal -= $purgeDetail->getTotal();
 				if($purgeDetail instanceof DocProductDetail){
 					$lot = $purgeDetail->getLot();
 					if($lot instanceof NegativeLot){
@@ -210,6 +211,7 @@ abstract class Document extends PersistDocument{
 						$lot->setNegativeQuantity(0);
 					}
 				}
+			}
 				
 		$this->_mDetails = $temp_details;
 	}
