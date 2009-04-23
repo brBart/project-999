@@ -440,7 +440,7 @@ class BonusDAM{
 	static public function getInstance($id){
 		if($id == 123){
 			$product = Product::getInstance(123);
-			$bonus = new Bonus($product, 4, 0.25, '15/05/2009', '01/04/2009', $id, Persist::CREATED);
+			$bonus = new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', $id, Persist::CREATED);
 			return $bonus;
 		}
 		else
@@ -457,7 +457,7 @@ class BonusDAM{
 	 */
 	static public function getInstanceByProduct(Product $product, $quantity){
 		if($product->getId() == 123 && $quantity == 4)
-			return new Bonus($product, 4, 0.25, '15/05/2009', '01/04/2009', 123, Persist::CREATED);
+			return new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', 123, Persist::CREATED);
 		else
 			return NULL;
 	}
