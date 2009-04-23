@@ -37,7 +37,7 @@ abstract class Document extends PersistDocument{
 	 *
 	 * @var float
 	 */
-	private $_mTotal;
+	private $_mTotal = 0.00;
 	
 	/**
 	 * Holds the user which created the document.
@@ -51,7 +51,7 @@ abstract class Document extends PersistDocument{
 	 *
 	 * @var array<DocumentDetail>
 	 */
-	private $_mDetails;
+	private $_mDetails = array();
 	
 	/**
 	 * Constructs the document with the provided data.
@@ -60,8 +60,22 @@ abstract class Document extends PersistDocument{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct(UserAccount $user = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
+	public function __construct($date = NULL, UserAccount $user = NULL, $id = NULL,
+			$status = PersistDocument::IN_PROGRESS){
 		parent::__construct($id, $status);
+		
+		if(!is_null($date)){
+			try{
+				Date::validateDate($date);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
+						$et->getMessage());
+				throw $et;
+			}
+			$this->_mDate = $date;
+		}
+		else
+			$this->_mDate = date('d/m/Y');
 		
 		if(!is_null($user)){
 			try{
@@ -134,15 +148,14 @@ abstract class Document extends PersistDocument{
 	 * Sets the document's properties.
 	 *
 	 * Must be called only from the database layer corresponding class. The object's status must be set to
-	 * Persist::CREATED in the constructor method too.
+	 * PersistDocument::CREATED in the constructor method too.
 	 * @param string $date
 	 * @param float $total
 	 * @param array<DocumentDetail> $details
 	 * @throws Exception
 	 */
-	public function setData($date, $total, $details){
+	public function setData($total, $details){
 		try{
-			Date::validateDate($date);
 			Number::validateTotal($total);
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
@@ -152,7 +165,6 @@ abstract class Document extends PersistDocument{
 			throw $et;
 		}
 		
-		$this->_mDate = $date;
 		$this->_mTotal = $total;
 		$this->_mDetails = $details;
 	}
@@ -160,14 +172,16 @@ abstract class Document extends PersistDocument{
 	/**
 	 * Adds a detail to the document.
 	 *
-	 * If a similar detail is already in the document, its quantity property will be increase.
+	 * If a similar detail is already in the document, its quantity property will be increase. NOTE: If a
+	 * DocBonusDetail is duplicated (or more) the document's total will be affected while the detail's total
+	 * will not, be careful! Use the Sale class for adding bonus to a document. Sorry.
 	 * @param DocumentDetail $newDetail
 	 */
 	public function addDetail(DocumentDetail $newDetail){
 		$this->_mTotal += $newDetail->getTotal();
 		
 		foreach($this->_mDetails as &$detail){
-			if($detail == $newDetail){
+			if($detail->getId() == $newDetail->getId()){
 				$detail->increase($newDetail->getQuantity());
 				return;
 			}
@@ -203,26 +217,27 @@ abstract class Document extends PersistDocument{
 	/**
 	 * Saves the document's data in the database.
 	 *
-	 * Only applies if the document's status property has the Persist::IN_PROGRESS value.
+	 * Only applies if the document's status property has the PersistDocument::IN_PROGRESS value.
 	 */
 	public function save(){
-		if($this->_mStatus == Persist::IN_PROGRESS){
+		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
 			$this->insert();
-			$this->_mStatus == Persist::CREATED;
+			$this->_mStatus == PersistDocument::CREATED;
 		}
 	}
 	
 	/**
 	 * Cancels the document and reverts its effects.
 	 *
-	 * If the document's status property value equals to Persist::IN_PROGRESS the discard() method is called.
-	 * If it equals to Persist::CREATED, all the details are cancelled and subsequent actions are taken.
+	 * If the document's status property value equals to PersistDocument::IN_PROGRESS the discard() method
+	 * is called. If it equals to PersistDocument::CREATED, all the details are cancelled and subsequent
+	 * actions are taken.
 	 */
 	public function cancel(){
-		if($this->_mStatus == Persist::IN_PROGRESS)
+		if($this->_mStatus == PersistDocument::IN_PROGRESS)
 			$this->discard();
-		elseif($this->_mStatus == Persist::CREATED){
+		elseif($this->_mStatus == PersistDocument::CREATED){
 			foreach($this->_mDetails as $detail)
 				if(!$detail->isCancellable())
 					throw new Exception('Lotes en este documento ya fueron alterados, no se puede anular.');
@@ -230,7 +245,7 @@ abstract class Document extends PersistDocument{
 			foreach($this->_mDetails as &$detail)
 				$detail->cancel();
 				
-			$this->_mStatus == PersistDocument::CANCELLED;
+			$this->_mStatus == PersistDocumentDocument::CANCELLED;
 		}
 	}
 	
@@ -296,7 +311,7 @@ abstract class DocumentDetail{
 	 */
 	public function __construct($quantity, $price){
 		Number::validateQuantity($quantity);
-		Number::validatePrice($price);
+		$this->validatePrice($price);
 		
 		$this->_mQuantity = $quantity;
 		$this->_mPrice = $price;
@@ -395,6 +410,17 @@ abstract class DocumentDetail{
 	private function validateNumber($number){
 		if(!is_int($number) || $number < 1)
 			throw new Exception('Internal error, number invalid!');
+	}
+	
+	/**
+	 * Validates the provided price.
+	 *
+	 * @param float $price
+	 * @throws Exception
+	 */
+	private function validatePrice($price){
+		if(!is_float($price))
+			throw new Exception('Precio inv&accute;lido.');
 	}
 }
 

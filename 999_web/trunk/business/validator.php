@@ -17,6 +17,7 @@ class Date{
 	 * Verifies if it is a valid date. Otherwise it throws an exception.
 	 * @param string $date
 	 * @return void
+	 * @throws Exception
 	 */
 	static public function validateDate($date){
 		$date_array = explode('/', $date);
@@ -77,6 +78,7 @@ class Number{
 	 *
 	 * Must be greater or equal to cero. Otherwise it throws an exception.
 	 * @param float $price
+	 * @throws Exception
 	 */
 	static public function validatePrice($price){
 		if(!is_float($price) || $price < 0)
@@ -88,6 +90,7 @@ class Number{
 	 *
 	 * Must be greater or equal to cero. Otherwise it throws an exception.
 	 * @param float $total
+	 * @throws Exception
 	 */
 	static public function validateTotal($total){
 		if(!is_float($total) || $total < 0)
@@ -99,6 +102,7 @@ class Number{
 	 *
 	 * Must be greater than cero. Otherwise it throws an exception.
 	 * @param integer $quantity
+	 * @throws Exception
 	 */
 	static public function validateQuantity($quantity){
 		if(!is_int($quantity) || $quantity < 1)

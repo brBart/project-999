@@ -1217,7 +1217,7 @@ class Bonus extends Persist{
 	 * @throws Exception
 	 */
 	private function validatePercentage($percentage){
-		if(!is_float($percentage) || $percentage < 0)
+		if(!is_float($percentage) || ($percentage < 1 || $percentage > 100))
 			throw new Exception('Porcentaje inv&accute;lido.');
 	}
 }

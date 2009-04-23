@@ -280,7 +280,7 @@ abstract class PersistDocument extends Persist{
 		
 		if(!is_null($id))
 			try{
-				$this->validateId($id);
+				Identifier::validateId($id);
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Document construct method with bad data!' .
 						$e->getMessage());
