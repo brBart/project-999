@@ -28,8 +28,8 @@ abstract class DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	abstract static public function search($startDate, $endDate, $page = 1,
@@ -67,8 +67,8 @@ class DepositSearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -96,8 +96,8 @@ class ComparisonSearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -125,8 +125,8 @@ class CountSearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -154,8 +154,8 @@ class PurchaseReturnSearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -183,8 +183,8 @@ class ShipmentSearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -212,8 +212,8 @@ class InvoiceSearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -241,8 +241,8 @@ class ReceiptSearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -270,8 +270,8 @@ class EntryIASearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
@@ -299,8 +299,8 @@ class WithdrawIASearch extends DocumentSearch{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totalItems
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){

@@ -56,6 +56,8 @@ abstract class Document extends PersistDocument{
 	/**
 	 * Constructs the document with the provided data.
 	 *
+	 * Arguments must be passed only when called from the database layer correponding class.
+	 * @param string $date
 	 * @param UserAccount $user
 	 * @param integer $id
 	 * @param integer $status
@@ -257,14 +259,16 @@ abstract class Document extends PersistDocument{
 	 * The total_pages and total_items parameters are necessary to return their respective values.
 	 * @param integer $id
 	 * @param integer $page
-	 * @param integer $total_pages
-	 * @param integer $total_items
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
 	 */
 	abstract static public function getInstance($id, $page, &$total_pages, &$total_items);
 	
 	/**
 	 * Validates the document's main properties.
 	 *
+	 * The details property must not be empty.
+	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
 		if(empty($this->_mDetails))
@@ -823,5 +827,15 @@ class Reserve extends Persist{
 			
 		return ReserveDAM::delete($obj);
 	}
+}
+
+
+/**
+ * Represents the correlative numbers invoices use to operate.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class Correlative extends Persist{
+	
 }
 ?>
