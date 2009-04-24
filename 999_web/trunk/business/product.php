@@ -1434,27 +1434,33 @@ class Lot extends Persist{
 	}
 	
 	/**
-	 * Increases the lot's quantity in the database.
+	 * Increases the lot's quantity.
 	 *
+	 * Note that if the status property value equals Persist::IN_PROGRESS the object's quantity is modified
+	 * otherwise the quantity in the database is.
 	 * @param integer $quantity
 	 */
 	public function increase($quantity){
-		if($this->_mStatus == Persist::CREATED){
-			Number::validateQuantity($quantity);
+		Number::validateQuantity($quantity);
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			$this->_mQuantity += $quantity;
+		else
 			LotDAM::increase($this, $quantity);
-		}
 	}
 	
 	/**
-	 * Decrease the lot's quantity in the database.
+	 * Decrease the lot's quantity.
 	 *
+	 * Note that if the status property value equals Persist::IN_PROGRESS the object's quantity is modified
+	 * otherwise the quantity in the database is.
 	 * @param integer $quantity
 	 */
 	public function decrease($quantity){
-		if($this->_mStatus == Persist::CREATED){
-			Number::validateQuantity($quantity);
+		Number::validateQuantity($quantity);
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			$this->_mQuantity -= $quantity;
+		else
 			LotDAM::decrease($this, $quantity);
-		}
 	}
 	
 	/**

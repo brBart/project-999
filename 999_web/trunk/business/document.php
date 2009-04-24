@@ -225,7 +225,7 @@ abstract class Document extends PersistDocument{
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
 			$this->insert();
-			$this->_mStatus == PersistDocument::CREATED;
+			$this->_mStatus = PersistDocument::CREATED;
 		}
 	}
 	
@@ -247,7 +247,7 @@ abstract class Document extends PersistDocument{
 			foreach($this->_mDetails as &$detail)
 				$detail->cancel();
 				
-			$this->_mStatus == PersistDocumentDocument::CANCELLED;
+			$this->_mStatus = PersistDocument::CANCELLED;
 		}
 	}
 	
@@ -557,6 +557,9 @@ class DocProductDetail extends DocumentDetail{
 	/**
 	 * Constructs the detail with the provided data.
 	 *
+	 * Note that if the transaction is an instance of Entry class the detail can only receive a
+	 * Persist::IN_PROGRESS Lot or NegativeLot. If it is an instance of Withdraw class, it needs a Reserve
+	 * to work. Sorry.
 	 * @param Lot $lot
 	 * @param Transaction $transaction
 	 * @param Reserve $reserve
@@ -566,9 +569,14 @@ class DocProductDetail extends DocumentDetail{
 	public function __construct(Lot $lot, Transaction $transaction, $quantity, $price, Reserve $reserve = NULL){
 		parent::__construct($quantity, $price);
 		
+		if($transaction instanceof Entry)
+			if($lot->getStatus() != Persist::IN_PROGRESS || $lot instanceof NegativeLot)
+				throw new Exception('Internal error, Entry transaction, can only receive a '.
+						'Persist::IN_PROGRESS Lot or NegativeLot!');
+		
 		if($transaction instanceof Withdraw)
 			if(is_null($reserve))
-				throw new Exception('Internal error, Withdraw transacation needs a Reserve to work!');
+				throw new Exception('Internal error, Withdraw transaction needs a Reserve to work!');
 			else
 				Persist::validateObjectFromDatabase($reserve);
 		
