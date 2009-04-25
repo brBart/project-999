@@ -827,14 +827,14 @@ class Correlative extends Persist{
 	 *
 	 * @var integer
 	 */
-	private $_mInitialNumber;
+	private $_mInitialNumber = 0;
 	
 	/**
 	 * Holds the last of the correlative's range of numbers.
 	 *
 	 * @var integer
 	 */
-	private $_mFinalNumber;
+	private $_mFinalNumber = 0;
 	
 	/**
 	 * Holds the current of the correlative's range of numbers.
@@ -859,7 +859,7 @@ class Correlative extends Persist{
 		
 		if(!is_null($serialNumber))
 			try{
-				$this->validateSerialNumber($serialNumber);
+				String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Correlative con datos ' .
 						'erroneos! ' . $e->getMessage());
@@ -868,7 +868,7 @@ class Correlative extends Persist{
 			
 		if($currentNumber !== 0)
 			try{
-				$this->validateNumber($currentNumber);
+				Number::validatePositiveInteger($currentNumber, 'N&uacute;mero actual inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Correlative con datos ' .
 						'erroneos! ' . $e->getMessage());
@@ -965,7 +965,7 @@ class Correlative extends Persist{
 	 */
 	public function setSerialNumber($serialNumber){
 		if($this->_mStatus == Persist::IN_PROGRESS){
-			$this->validateSerialNumber($serialNumber);
+			String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
 			$this->verifySerialNumber($serialNumber);
 			$this->_mSerialNumber = $serialNumber;
 		}
@@ -977,7 +977,7 @@ class Correlative extends Persist{
 	 * @param string $number
 	 */
 	public function setResolutionNumber($number){
-		$this->validateResolutionNumber($number);
+		String::validateString($number, 'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
 		$this->_mResolutionNumber = $number;
 	}
 	
@@ -987,7 +987,7 @@ class Correlative extends Persist{
 	 * @param string $date
 	 */
 	public function setResolutionDate($date){
-		Date::validateDate($date);
+		Date::validateDate($date, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
 		$this->_mResolutionDate = $date;
 	}
 	
@@ -997,7 +997,7 @@ class Correlative extends Persist{
 	 * @param integer $number
 	 */
 	public function setInitialNumber($number){
-		$this->validateNumber($number);
+		Number::validatePositiveInteger($number, 'N&uacute;mero inv&aacute;lido.');
 		$this->_mInitialNumber = $number;
 	}
 	
@@ -1007,7 +1007,7 @@ class Correlative extends Persist{
 	 * @param integer $number
 	 */
 	public function setFinalNumber($number){
-		$this->validateNumber($number);
+		Number::validatePositiveInteger($number, 'N&uacute;mero inv&aacute;lido.');
 		$this->_mFinalNumber = $number;
 	}
 	
@@ -1024,10 +1024,10 @@ class Correlative extends Persist{
 	 */
 	public function setData($resolutionNumber, $resolutionDate, $initialNumber, $finalNumber){
 		try{
-			$this->validateResolutionNumber($resolutionNumber);
-			Date::validateDate($resolutionDate);
-			$this->validateNumber($initialNumber);
-			$this->validateNumber($finalNumber);
+			String::validateString($resolutionNumber, 'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
+			Date::validateDate($resolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
+			Number::validatePositiveInteger($initialNumber, 'N&uacute;mero inicial inv&aacute;lido.');
+			Number::validatePositiveInteger($finalNumber, 'N&uacute;mero final inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Correlative con datos erroneos! ' .
 					$e->getMessage());
@@ -1060,7 +1060,7 @@ class Correlative extends Persist{
 	 * @param Correlative $obj
 	 */
 	static public function makeDefault(Correlative $obj){
-		Persist::validateObjectFromDatabase($obj);
+		Persist::validateObjectFromDatabase($obj, 'Correlative');
 		CorrelativeDAM::makeDefault($obj);
 	}
 	
@@ -1069,8 +1069,8 @@ class Correlative extends Persist{
 	 *
 	 * @return Correlative
 	 */
-	static public function getDefault(){
-		return CorrelativeDAM::getDefault();
+	static public function getDefaultInstance(){
+		return CorrelativeDAM::getDefaultInstance();
 	}
 	
 	/**
@@ -1081,7 +1081,7 @@ class Correlative extends Persist{
 	 * @return Correlative
 	 */
 	static public function getInstance($serialNumber){
-		self::validateSerialNumber($serialNumber);
+		String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
 		return CorrelativeDAM::getInstance($serialNumber);
 	}
 	
@@ -1093,7 +1093,7 @@ class Correlative extends Persist{
 	 * @return boolean
 	 */
 	static public function delete(Correlative $obj){
-		self::validateObjectFromDatabase($obj);
+		self::validateObjectFromDatabase($obj, 'Correlative');
 		return CorrelativeDAM::delete($obj);
 	}
 	
@@ -1104,11 +1104,12 @@ class Correlative extends Persist{
 	 * and final numbers must be greater than cero.
 	 */
 	private function validateMainProperties(){
-		$this->validateSerialNumber($this->_mSerialNumber);
-		$this->validateResolutionNumber($this->_mResolutionNumber);
-		Date::validateDate($this->_mResolutionDate);
-		$this->validateNumber($this->_mInitialNumber);
-		$this->validateNumber($this->_mFinalNumber);
+		$this->validateSerialNumber($this->_mSerialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
+		$this->validateResolutionNumber($this->_mResolutionNumber,
+				'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
+		Date::validateDate($this->_mResolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
+		$this->validateNumber($this->_mInitialNumber, 'N&uacute;mero inicial inv&aacute;lido.');
+		$this->validateNumber($this->_mFinalNumber, 'N&uacute;mero final inv&aacute;lido.');
 	}
 	
 	/**
