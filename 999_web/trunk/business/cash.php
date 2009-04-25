@@ -51,7 +51,7 @@ class Bank extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Bank $obj){
-		self::validateObjectFromDatabase($obj);		
+		self::validateObjectFromDatabase($obj, 'Bank');		
 		return BankDAM::delete($obj);
 	}
 	
@@ -179,9 +179,9 @@ class BankAccount extends PersistObject{
 		
 		if(!is_null($number))
 			try{
-				$this->validateNumber($number);
+				String::validateString($number, 'N&uacute;mero de cuenta inv&aacute;lido.');
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling BankAccount constructor method with bad data! ' .
+				$et = new Exception('Interno: Llamando al metodo construct en BankAccount con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
@@ -228,10 +228,8 @@ class BankAccount extends PersistObject{
 		if($this->_mStatus == self::CREATED)
 			throw new Exception('No se puede editar n&uacute;mero de cuenta.');
 		
-		$this->validateNumber($number);
-		
+		String::validateString($number, 'N&uacute;mero de cuenta inv&aacute;lido.');
 		$this->verifyNumber($number);
-		
 		$this->_mNumber = $number;
 	}
 	
@@ -242,7 +240,7 @@ class BankAccount extends PersistObject{
 	 * @return void
 	 */
 	public function setBank(Bank $obj){
-		self::validateObjectFromDatabase($obj);
+		self::validateObjectFromDatabase($obj, 'Bank');
 		$this->_mBank = $obj;
 	}
 	
@@ -253,7 +251,7 @@ class BankAccount extends PersistObject{
 	 * @return void
 	 */
 	public function setName($name){
-		Identifier::validateName($name);
+		String::validateString($name, 'Nombre inv&aacute;lido.');
 		$this->_mName = $name;
 	}
 	
@@ -268,10 +266,10 @@ class BankAccount extends PersistObject{
 	 */
 	public function setData($name, Bank $bank){
 		try{
-			Identifier::validateName($name);
-			self::validateObjectFromDatabase($bank);
+			String::validateString($name, 'Nombre inv&aacute;lido.');
+			self::validateObjectFromDatabase($bank, 'Bank');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling BankAccount\'s setData method with bad data! ' .
+			$et = new Exception('Interno: Llamando al metodo setData en BankAccount con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -307,7 +305,7 @@ class BankAccount extends PersistObject{
 	 * @return BankAccount
 	 */
 	static public function getInstance($number){
-		self::validateNumber($number);
+		String::validateString($number, 'N&uacute;mero de cuenta inv&aacute;lido.');
 		return BankAccountDAM::getInstance($number);
 	}
 	
@@ -319,7 +317,7 @@ class BankAccount extends PersistObject{
 	 * @return boolean
 	 */
 	static public function delete(BankAccount $obj){
-		self::validateObjectFromDatabase($obj);			
+		self::validateObjectFromDatabase($obj, 'Cuenta bancaria inv&aacute;lida.');			
 		return BankAccountDAM::delete($obj);
 	}
 	
@@ -349,26 +347,13 @@ class BankAccount extends PersistObject{
 	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
-		$this->validateNumber($this->_mNumber);
-		Identifier::validateName($this->_mName);
+		String::validateString($this->_mNumber, 'N&uacute;mero de cuenta inv&aacute;lido.');
+		String::validateString($this->_mName, 'Nombre inv&aacute;lido.');
 		
 		if(is_null($this->_mBank))
 			throw new Exception('Banco inv&aacute;lido.');
 		else
-			self::validateObjectFromDatabase($this->_mBank);
-	}
-	
-	/**
-	 * Validates the bank account's number.
-	 *
-	 * Must not be number. Otherwise it throws an exception.
-	 * @param string $number
-	 * @return void
-	 * @throws Exception
-	 */
-	private function validateNumber($number){
-		if(empty($number))
-			throw new Exception('N&uacute;mero de cuenta inv&aacute;lido.');
+			self::validateObjectFromDatabase($this->_mBank, 'Banco inv&aacute;lido.');
 	}
 	
 	/**
@@ -424,7 +409,7 @@ class Shift extends Identifier{
 	 * @param string $timeTable
 	 */
 	public function setTimeTable($timeTable){
-		$this->validateTimeTable($timeTable);
+		String::validateString($timeTable, 'Horario inv&aacute;lido.');
 		$this->_mTimeTable = $timeTable;
 	}
 	
@@ -441,9 +426,9 @@ class Shift extends Identifier{
 		parent::setData($name);
 		
 		try{
-			$this->validateTimeTable($timeTable);
+			String::validateString($timeTable, 'Horario inv&aacute;lido.');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Shift\'s setData method with bad data! '.
+			$et = new Exception('Interno: Llamando al metodo setData en Shift con datos erroneos! '.
 					$e->getMessage());
 			throw $et;
 		}
@@ -471,7 +456,7 @@ class Shift extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Shift $obj){
-		self::validateObjectFromDatabase($obj);
+		self::validateObjectFromDatabase($obj, 'Shift');
 		return ShiftDAM::delete($obj);
 	}
 	
@@ -502,20 +487,7 @@ class Shift extends Identifier{
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
-		$this->validateTimeTable($this->_mTimeTable);
-	}
-	
-	/**
-	 * Validates if the provided timetable is correct.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $timeTable
-	 * @return void
-	 * @throws Exception
-	 */
-	private function validateTimeTable($timeTable){
-		if(empty($timeTable))
-			throw new Exception('Horario inv&aacutelido.');
+		String::validateString($this->_mTimeTable, 'Horario inv&aacute;lido.');
 	}
 }
 
@@ -548,13 +520,13 @@ class CashRegister{
 	 * @throws Exception
 	 */
 	public function __construct(Shift $shift, $id = NULL){
-		PersistObject::validateObjectFromDatabase($shift);
+		PersistObject::validateObjectFromDatabase($shift, 'Shift');
 		if(!is_null($id))
 			try{
 				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling CashRegister constructor method with bad data! ' .
-						$e->getMessage());
+				$et = new Exception('Interno: Llamando al metodo construct en CashRegister con datos ' . 
+						'erroneos! ' . $e->getMessage());
 				throw $et;
 			}
 		

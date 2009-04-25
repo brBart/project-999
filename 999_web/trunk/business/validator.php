@@ -16,6 +16,7 @@ class Date{
 	 *
 	 * Verifies if it is a valid date. Otherwise it throws an exception.
 	 * @param string $date
+	 * @param string $msg
 	 * @return void
 	 * @throws Exception
 	 */
@@ -76,8 +77,21 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
+	 * Must be an integer. Otherwise it throws an exception.
+	 * @param integer $quantity
+	 * @throws Exception
+	 */
+	static public function validateInteger($number){
+		if(!is_int($number))
+			throw new Exception(' Valor debe ser numerico.');
+	}
+	
+	/**
+	 * Validates the provided number.
+	 *
 	 * Must be greater than cero. Otherwise it throws an exception.
 	 * @param integer $number
+	 * @param string $msg
 	 * @throws Exception
 	 */
 	static public function validatePositiveInteger($number, $msg){
@@ -90,6 +104,7 @@ class Number{
 	 *
 	 * Must be a float number.
 	 * @param float $number
+	 * @param string $msg
 	 * @throws Exception
 	 */
 	static public function validateFloat($number, $msg){
@@ -102,11 +117,33 @@ class Number{
 	 *
 	 * Must be greater or equal to cero. Otherwise it throws an exception.
 	 * @param float $number
+	 * @param string $msg
 	 * @throws Exception
 	 */
 	static public function validateUnsignedFloat($number, $msg){
 		if(!is_float($number) || $number < 0)
 			throw new Exception($msg . ' Valor no debe ser menor que cero.');
+	}
+}
+
+
+/**
+ * Class for validating string values.
+ * @package Validator
+ * @author Roberto Oliveros
+ */
+class String{
+	/**
+	 * Validates a normal string.
+	 *
+	 * Must not be empty.
+	 * @param string $string
+	 * @param string $msg
+	 * @throws Exception
+	 */
+	static public function validateString($string, $msg){
+		if(empty($string))
+			throw new Exception($msg . ' Valor no puede ser vacio.');
 	}
 }
 ?>

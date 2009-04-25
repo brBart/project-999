@@ -44,9 +44,9 @@ class Role{
 	public function __construct($id, $name){
 		try{
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-			$this->validateName($name);
+			String::validateString($name, 'Nombre inv&aacute;lido.');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Role constructor method with bad data! ' .
+			$et = new Exception('Interno: Llamando al metodo construct en Role con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -83,17 +83,6 @@ class Role{
 	static public function getInstance($id){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return RoleDAM::getInstance($id);
-	}
-	
-	/**
-	 * Validates the role's name.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $name
-	 */
-	private function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
 	}
 }
 
@@ -159,9 +148,9 @@ class UserAccount extends PersistObject{
 		
 		if(!is_null($userName))
 			try{
-				UserAccountUtility::validateUserName($userName);
+				String::validateString($userName, 'Usuario inv&aacute;lido.');
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling UserAccount constructor method with bad data! ' .
+				$et = new Exception('Interno: Llamando al metodo construct en UserAccount con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
@@ -232,10 +221,8 @@ class UserAccount extends PersistObject{
 		if($this->_mStatus == self::CREATED)
 			throw new Exception('No se puede editar el nombre de la cuenta.');
 		
-		UserAccountUtility::validateUserName($userName);
-		
+		String::validateString($userName, 'Usuario inv&aacute;lido.');
 		$this->verifyUserName($userName);
-		
 		$this->_mUserName = $userName;
 	}
 	
@@ -245,7 +232,7 @@ class UserAccount extends PersistObject{
 	 * @param string $firstName
 	 */
 	public function setFirstName($firstName){
-		$this->validateFirstName($firstName);
+		String::validateString($firstName, 'Nombre inv&aacute;lido.');
 		$this->_mFirstName = $firstName;
 	}
 	
@@ -255,7 +242,7 @@ class UserAccount extends PersistObject{
 	 * @param string $lastName
 	 */
 	public function setLastName($lastName){
-		$this->validateLastName($lastName);
+		String::validateString($lastName, 'Nombre inv&aacute;lido.');
 		$this->_mLastName = $lastName;
 	}
 	
@@ -266,7 +253,7 @@ class UserAccount extends PersistObject{
 	 * @param string $password
 	 */
 	public function setPassword($password){
-		UserAccountUtility::validatePassword($password);
+		String::validateString($password, 'Contrase&ntilde;a inv&aacute;lida.');
 		$this->_mPassword = UserAccountUtility::encrypt($password);
 	}
 	
@@ -300,10 +287,10 @@ class UserAccount extends PersistObject{
 	 */
 	public function setData($firstName, $lastName, $role, $deactivated){
 		try{
-			$this->validateFirstName($firstName);
-			$this->validateLastName($lastName);
+			String::validateString($firstName, 'Nombre inv&aacute;lido.');
+			String::validateString($lastName, 'Apellido inv&aacute;lido.');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling UserAccount setData method with bad data! '.
+			$et = new Exception('Interno: Llamando al metodo setData en UserAccount con datos erroneos! '.
 					$e->getMessage());
 			throw $et;
 		}
@@ -344,7 +331,7 @@ class UserAccount extends PersistObject{
 	 * @return UserAccount
 	 */
 	static public function getInstance($userName){
-		UserAccountUtility::validateUserName($userName);
+		String::validateString($userName, 'Usuario inv&aacute;lido.');
 		
 		if(UserAccountUtility::isRoot($userName))
 			return new UserAccount(UserAccountUtility::ROOT, Persist::CREATED);
@@ -360,7 +347,7 @@ class UserAccount extends PersistObject{
 	 * @return boolean
 	 */
 	static public function delete(UserAccount $obj){
-		self::validateObjectFromDatabase($obj);			
+		self::validateObjectFromDatabase($obj, 'UserAccount');			
 		return UserAccountDAM::delete($obj);
 	}
 	
@@ -371,10 +358,10 @@ class UserAccount extends PersistObject{
 	 * property must not be NULL. Otherwise it throws an exception.
 	 */
 	protected function validateMainProperties(){
-		UserAccountUtility::validateUserName($this->_mUserName);
-		$this->validateFirstName($this->_mFirstName);
-		$this->validateLastName($this->_mLastName);
-		UserAccountUtility::validatePassword($this->_mPassword);
+		String::validateString($this->_mUserName, 'Usuario inv&aacute;lido.');
+		String::validateString($this->_mFirstName, 'Nombre inv&aacute;lido.');
+		String::validateString($this->_mLastName, 'Apellido inv&aacute;lido.');
+		String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.');
 		
 		if(is_null($this->_mRole))
 			throw new Exception('Rol inv&accute;lido.');
@@ -394,28 +381,6 @@ class UserAccount extends PersistObject{
 	 */
 	protected function update(){
 		UserAccountDAM::update($this);
-	}
-	
-	/**
-	 * Validates the user's first name.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $firstName
-	 */
-	private function validateFirstName($firstName){
-		if(empty($firstName))
-			throw new Exception('Nombres invalidos.');
-	}
-	
-	/**
-	 * Validates the user's last name.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $lastName
-	 */
-	private function validateLastName($lastName){
-		if(empty($lastName))
-			throw new Exception('Apellidos invalidos.');
 	}
 	
 	/**
@@ -458,8 +423,8 @@ class UserAccountUtility{
 	 * @return boolean
 	 */
 	static public function isValid($userName, $password){
-		self::validateUserName($userName);
-		self::validatePassword($password);
+		String::validateString($userName, 'Usuario inv&aacute;lido.');
+		String::validateString($password, 'Contrase&ntilde;a inv&aacute;lida.');
 		
 		if(self::isRoot($userName))
 			return UserAccountUtilityDAM::isValidRoot(self::encrypt($password));
@@ -490,9 +455,9 @@ class UserAccountUtility{
 	 * @return boolean
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
-		Persist::validateObjectFromDatabase($account);
-		self::validatePassword($password);
-		self::validatePassword($newPassword);
+		Persist::validateObjectFromDatabase($account, 'UserAccount');
+		String::validateString($password, 'Contrase&ntilde;a actual inv&aacute;lida.');
+		String::validateString($newPassword, 'Nueva contrase&ntilde;a inv&aacute;lida.');
 		
 		$account_name = $account->getUserName();
 		if(!self::isValid($account_name, $password))
@@ -512,28 +477,6 @@ class UserAccountUtility{
 	 */
 	static public function encrypt($password){
 		return sha1(HASH_PREFIX . $password);
-	}
-	
-	/**
-	 * Validates the username.
-	 *
-	 * Must not be empty. Otherwise it throws en exception.
-	 * @param string $userName
-	 */
-	static public function validateUserName($userName){
-		if(empty($userName))
-			throw new Exception('Nombre inv&aacute;lido.');
-	}
-	
-	/**
-	 * Validates the password.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $password
-	 */
-	static public function validatePassword($password){
-		if(empty($password))
-			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
 	}
 }
 ?>

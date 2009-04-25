@@ -63,12 +63,14 @@ abstract class Persist{
 	 * The object's status must be diferent than Persist::IN_PROGRESS. Otherwise it throws an
 	 * exception.
 	 * @param PersistObject $obj
+	 * @param string $objectName
 	 * @return void
 	 * @throws Exception
 	 */
-	static public function validateObjectFromDatabase(Persist $obj){
+	static public function validateObjectFromDatabase(Persist $obj, $objectName){
 		if ($obj->_mStatus == self::IN_PROGRESS)
-			throw new Exception('Cannot proceed! A Persist::IN_PROGRESS object provided.');
+			throw new Exception('Objeto inv&aacute;lido ' . $objectName . ' La propiedad status debe ser ' .
+					'igual a Persist::CREATED.');
 	}
 }
 
@@ -139,7 +141,7 @@ abstract class Identifier extends PersistObject{
 			try{
 				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Identifier construct method with bad data!' .
+				$et = new Exception('Interno: Llamando al metodo construct en Identifier con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
@@ -172,7 +174,7 @@ abstract class Identifier extends PersistObject{
 	 * @return void
 	 */
 	public function setName($name){
-		$this->validateName($name);
+		String::validateString($name, 'Nombre inv&aacute;lido.');
 		$this->_mName = $name;
 	}
 	
@@ -187,9 +189,9 @@ abstract class Identifier extends PersistObject{
 	 */
 	public function setData($name){
 		try{
-			$this->validateName($name);
+			String::validateString($name, 'Nombre inv&aacute;lido.');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Identifier setData method with bad data! ' .
+			$et = new Exception('Interno: Llamando al metodo setData en Identifier con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -216,26 +218,13 @@ abstract class Identifier extends PersistObject{
 	}
 	
 	/**
-	 * Validates the object's name.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $name
-	 * @return void
-	 * @throws Exception
-	 */
-	public function validateName($name){
-		if(empty($name))
-			throw new Exception('Nombre inv&aacute;lido.');
-	}
-	
-	/**
 	 * Validates the object's main properties.
 	 * 
 	 * Verifies that the object's name is not empty. Otherwise it throws an exception.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
-		$this->validateName($this->_mName);
+		String::validateString($this->_mName, 'Nombre inv&aacute;lido.');
 	}
 }
 
@@ -274,7 +263,7 @@ abstract class PersistDocument extends Persist{
 			try{
 				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Document construct method with bad data!' .
+				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}

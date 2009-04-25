@@ -70,7 +70,7 @@ abstract class Document extends PersistDocument{
 			try{
 				Date::validateDate($date, 'Fecha inv&aacute;lida.');
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
+				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
@@ -81,10 +81,10 @@ abstract class Document extends PersistDocument{
 		
 		if(!is_null($user)){
 			try{
-				Persist::validateObjectFromDatabase($user);
+				Persist::validateObjectFromDatabase($user, 'UserAccount');
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
-						$et->getMessage());
+						$e->getMessage());
 				throw $et;
 			}
 			$this->_mUser = $user;
@@ -128,7 +128,7 @@ abstract class Document extends PersistDocument{
 	 * @return DocumentDetail
 	 */
 	public function getDetail($id){
-		$this->validateDetailId($id);
+		String::validateString($id, 'Id del detalle inv&aacute;lido.');
 		
 		foreach($this->_mDetails as &$detail)
 			if($detail->getId() == $id)
@@ -162,7 +162,7 @@ abstract class Document extends PersistDocument{
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Document setData method with bad data! ' .
+			$et = new Exception('Interno: Llamando al metodo setData en Document con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -274,18 +274,6 @@ abstract class Document extends PersistDocument{
 		if(empty($this->_mDetails))
 			throw new Exception('No hay ningun detalle.');
 	}
-	
-	/**
-	 * Validates a detail's id.
-	 *
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $id
-	 * @throws Exception
-	 */
-	private function validateDetailId($id){
-		if(empty($id))
-			throw new Exception('Id inv&aacute;lido.');
-	}
 }
 
 
@@ -360,7 +348,7 @@ abstract class DocumentDetail{
 	 * @param integer $number
 	 */
 	public function save(Document $doc, $number){
-		Persist::validateObjectFromDatabase($doc);
+		Persist::validateObjectFromDatabase($doc, 'Document');
 		Number::validatePositiveInteger($number, 'N&uacute;mero de pagina inv&aacute;lido.');
 		$this->insert($doc, $number);
 	}
@@ -430,7 +418,7 @@ class DocBonusDetail extends DocumentDetail{
 	public function __construct(Bonus $bonus, $price){
 		parent::__construct(1, $price);
 		
-		Persist::validateObjectFromDatabase($bonus);
+		Persist::validateObjectFromDatabase($bonus, 'Bonus');
 		$this->_mBonus = $bonus;
 	}
 	
@@ -552,7 +540,7 @@ class DocProductDetail extends DocumentDetail{
 		parent::__construct($quantity, $price);
 		
 		if(!is_null($reserve))
-			Persist::validateObjectFromDatabase($reserve);
+			Persist::validateObjectFromDatabase($reserve, 'Reserve');
 			
 		$this->_mLot = $lot;
 		$this->_mTransaction = $transaction;
@@ -713,12 +701,12 @@ class Reserve extends Persist{
 				
 		try{
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-			Persist::validateObjectFromDatabase($lot);
+			Persist::validateObjectFromDatabase($lot, 'Lot');
 			Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-			Persist::validateObjectFromDatabase($user);
+			Persist::validateObjectFromDatabase($user, 'UserAccount');
 			Date::validateDate($date, 'Fecha inv&aacute;lida.');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Reserve construct method with bad data! ' .
+			$et = new Exception('Interno: Llamando al metodo construct en Reserve con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -766,7 +754,7 @@ class Reserve extends Persist{
 	 * @return Reserve
 	 */
 	public function createReserve(Lot $lot, $quantity){
-		Persist::validateObjectFromDatabase($lot);
+		Persist::validateObjectFromDatabase($lot, 'Lot');
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		
 		$helper = SessionHelper::getInstance();
@@ -793,8 +781,7 @@ class Reserve extends Persist{
 	 * @return boolean
 	 */
 	static public function delete(Reserve $obj){
-		self::validateObjectFromDatabase($obj);
-			
+		self::validateObjectFromDatabase($obj, 'Reserve');
 		return ReserveDAM::delete($obj);
 	}
 }
@@ -874,8 +861,8 @@ class Correlative extends Persist{
 			try{
 				$this->validateSerialNumber($serialNumber);
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Correlative constructor method with bad data! ' .
-						$e->getMessage());
+				$et = new Exception('Interno: Llamando al metodo construct en Correlative con datos ' .
+						'erroneos! ' . $e->getMessage());
 				throw $et;
 			}
 			
@@ -883,8 +870,8 @@ class Correlative extends Persist{
 			try{
 				$this->validateNumber($currentNumber);
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Correlative constructor method with bad data! ' .
-						$e->getMessage());
+				$et = new Exception('Interno: Llamando al metodo construct en Correlative con datos ' .
+						'erroneos! ' . $e->getMessage());
 				throw $et;
 			}
 			
@@ -1042,7 +1029,7 @@ class Correlative extends Persist{
 			$this->validateNumber($initialNumber);
 			$this->validateNumber($finalNumber);
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Correlative setData method with bad data! ' .
+			$et = new Exception('Interno: Llamando al metodo setData en Correlative con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -1108,42 +1095,6 @@ class Correlative extends Persist{
 	static public function delete(Correlative $obj){
 		self::validateObjectFromDatabase($obj);
 		return CorrelativeDAM::delete($obj);
-	}
-	
-	/**
-	 * Validates the provided serial number.
-	 *
-	 * Must not be empty.
-	 * @param string $serialNumber
-	 * @throws Exception
-	 */
-	private function validateSerialNumber($serialNumber){
-		if(empty($serialNumber))
-			throw new Exception('N&uacute;mero de serie inv&aacute;lido.');
-	}
-	
-	/**
-	 * Validates the provided resolution number.
-	 *
-	 * Must not be empty.
-	 * @param string $number
-	 * @throws Exception
-	 */
-	private function validateResolutionNumber($number){
-		if(empty($number))
-			throw new Exception('N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
-	}
-	
-	/**
-	 * Validates the provided number.
-	 *
-	 * Must be greater than cero.
-	 * @param integer $number
-	 * @throws Exception
-	 */
-	private function validateNumber($number){
-		if(!is_int($number) || $number < 1)
-			throw new Exception('N&uacute;mero inv&aacute;lido.');
 	}
 	
 	/**

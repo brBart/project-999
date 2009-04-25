@@ -58,7 +58,7 @@ class Customer extends PersistObject{
 			try{
 				$this->validateNit($nit);
 			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Customer\'s constructor method with bad data! ' .
+				$et = new Exception('Interno: Llamando al metodo construct en Customer con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
@@ -91,7 +91,7 @@ class Customer extends PersistObject{
 	 * @return void
 	 */
 	public function setName($name){
-		Identifier::validateName($name);
+		String::validateString($name, 'Nombre inv&aacute;lido.');
 		$this->_mName = $name;
 	}
 	
@@ -106,9 +106,9 @@ class Customer extends PersistObject{
 	 */
 	public function setData($name){
 		try{
-			Identifier::validateName($name);
+			String::validateString($name, 'Nombre inv&aacute;lido.');
 		} catch(Exception $e){
-			$et = new Exception('Internal error, calling Agent\'s setData method with bad data! ' .
+			$et = new Exception('Interno: Llamando al metodo setData en Agent con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -126,7 +126,7 @@ class Customer extends PersistObject{
 	 */
 	public function validateNit($nit){
 		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
-			throw new Exception('Nit inv&aacute:lido.');
+			throw new Exception('Nit inv&aacute:lido. Formato debe ser ######-#');
 	}
 	
 	/**
@@ -145,7 +145,7 @@ class Customer extends PersistObject{
 		
 		if($this->_mStatus == self::IN_PROGRESS){
 			if(CustomerDAM::exist($this->_mNit))
-				throw new Exception('Internal error, Nit already in database.');
+				throw new Exception('Nit ya existe en la base de datos.');
 				
 			$this->insert();
 			$this->_mStatus = self::CREATED;
@@ -199,7 +199,7 @@ class Customer extends PersistObject{
 	 */
 	protected function validateMainProperties(){
 		$this->validateNit($this->_mNit);
-		Identifier::validateName($this->_mName);
+		String::validateString($this->_mName, 'Nombre inv&aacute;lido.');
 	}
 	
 	/**
@@ -336,7 +336,7 @@ abstract class Organization extends Identifier{
 	 * @param string $telephone
 	 */
 	public function setTelephone($telephone){
-		$this->validateTelephone($telephone);			
+		String::validateString($telephone, 'Telefono inv&aacute;lido.');			
 		$this->_mTelephone = $telephone;
 	}
 	
@@ -346,7 +346,7 @@ abstract class Organization extends Identifier{
 	 * @param string $address
 	 */
 	public function setAddress($address){
-		$this->validateAddress($address);			
+		String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');			
 		$this->_mAddress = $address;
 	}
 	
@@ -387,11 +387,11 @@ abstract class Organization extends Identifier{
 		
 		try{
 			Customer::validateNit($nit);
-			$this->validateTelephone($telephone);
-			$this->validateAddress($address);
+			String::validateString($telephone, 'Telefono inv&aacute;lido.');
+			String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
 			$this->validateEmail($email);
 		} catch(Exception $e){
-			$et = new Exception('Internal Error, calling Organization\'s setData method with bad data! ' .
+			$et = new Exception('Interno: LLamando al metodo setData en Organization con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -422,34 +422,8 @@ abstract class Organization extends Identifier{
 		parent::validateMainProperties();
 		
 		Customer::validateNit($this->_mNit);
-		$this->validateTelephone($this->_mTelephone);
-		$this->validateAddress($this->_mAddress);
-	}
-	
-	/**
-	 * Validates the organization's telephone number.
-	 * 
-	 * Verifies that the telephone is not empty. Otherwise it throws an exception.
-	 * @param string $telephone
-	 * @return void
-	 * @throws Exception
-	 */
-	private function validateTelephone($telephone){
-		if(empty($telephone))
-			throw new Exception('Ingrese telefono.');
-	}
-	
-	/**
-	 * Validates an organization's address.
-	 * 
-	 * Must not be empty. Otherwise it throws an exception.
-	 * @param string $address
-	 * @return void
-	 * @throws Exception
-	 */
-	private function validateAddress($address){
-		if(empty($address))
-			throw new Exception('Ingrese direcci&oacute;n.');
+		String::validateString($this->_mTelephone, 'Telefono inv&aacute;lido.');
+		String::validateString($this->_mAddress, 'Direcci&oacute;n inv&aacute;lida.');
 	}
 	
 	/**
@@ -464,7 +438,7 @@ abstract class Organization extends Identifier{
 		if(!empty($email)){
 			$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
 			if(!preg_match($pattern, $email))
-				throw new Exception('Email inv&aacute;lido.');
+				throw new Exception('Email inv&aacute;lido. Ejemplo: fulano@dominio.com');
 		}
 	}
 }
@@ -497,7 +471,7 @@ class Supplier extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Supplier $obj){
-		self::validateObjectFromDatabase($obj);
+		self::validateObjectFromDatabase($obj, 'Supplier');
 		return SupplierDAM::delete($obj);
 	}
 	
@@ -547,7 +521,7 @@ class Branch extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Branch $obj){
-		self::validateObjectFromDatabase($obj);
+		self::validateObjectFromDatabase($obj, 'Branch');
 		return BranchDAM::delete($obj);
 	}
 	
