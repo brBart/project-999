@@ -53,7 +53,7 @@ class SessionHelper{
 	 * @param UserAccount $user
 	 */
 	public function setUser(UserAccount $user){
-		Persist::validateObjectFromDatabase($user);
+		Persist::validateObjectFromDatabase($user, 'UserAccount');
 		$_SESSION['user'] = $user;
 	}
 	
