@@ -95,4 +95,25 @@ class ReserveDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Utility class for accessing database tables regarding the correlative.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class CorrelativeDAM{
+	/**
+	 * Returns true if a a correlative with the provided serial number exists in the database.
+	 *
+	 * @param string $serialNumber
+	 * @return boolean
+	 */
+	static public function exists($serialNumber){
+		if($serialNumber == 'A021')
+			return true;
+		else
+			return false;
+	}
+}
 ?>
