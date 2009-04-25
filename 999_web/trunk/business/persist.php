@@ -6,6 +6,11 @@
  */
 
 /**
+ * For validating values purposes.
+ */
+require_once('business/validator.php');
+
+/**
  * Defines common functionality for derived classes with persistence characteristics.
  * @package Persist
  * @author Roberto Oliveros
@@ -132,7 +137,7 @@ abstract class Identifier extends PersistObject{
 		
 		if(!is_null($id))
 			try{
-				$this->validateId($id);
+				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Identifier construct method with bad data!' .
 						$e->getMessage());
@@ -211,19 +216,6 @@ abstract class Identifier extends PersistObject{
 	}
 	
 	/**
-	 * Validates if the provided id is correct.
-	 *
-	 * Must be greater than cero. Otherwise it throw an exception.
-	 * @param integer $id
-	 * @return void
-	 * @throws Exception
-	 */
-	public function validateId($id){
-		if(!is_int($id) || $id < 1)
-			throw new Exception('Id inv&aacute;lido.');
-	}
-	
-	/**
 	 * Validates the object's name.
 	 *
 	 * Must not be empty. Otherwise it throws an exception.
@@ -280,7 +272,7 @@ abstract class PersistDocument extends Persist{
 		
 		if(!is_null($id))
 			try{
-				Identifier::validateId($id);
+				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Document construct method with bad data!' .
 						$e->getMessage());

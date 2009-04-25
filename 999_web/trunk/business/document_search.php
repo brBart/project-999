@@ -34,19 +34,6 @@ abstract class DocumentSearch{
 	 */
 	abstract static public function search($startDate, $endDate, $page = 1,
 			&$totalPages = 0, &$totalItems = 0);
-	
-	/**
-	 * Validates the provided page.
-	 * 
-	 * Verifies if the provided page is greater than cero. Otherwise throws an exception.
-	 * @param integer $page
-	 * @return void
-	 * @throws Exception
-	 */
-	protected function validatePage($page){
-		if(!is_int($page) || $page < 1)
-			throw new Exception('Pagina inv&aacute;lida.');
-	}
 }
 
 
@@ -72,9 +59,9 @@ class DepositSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return DepositSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -101,9 +88,9 @@ class ComparisonSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return ComparisonSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -130,9 +117,9 @@ class CountSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return CountSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -159,9 +146,9 @@ class PurchaseReturnSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return PurchaseReturnSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -188,9 +175,9 @@ class ShipmentSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return ShipmentSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -217,9 +204,9 @@ class InvoiceSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return InvoiceSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -246,9 +233,9 @@ class ReceiptSearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return ReceiptSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -275,9 +262,9 @@ class EntryIASearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return EntryIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }
@@ -304,9 +291,9 @@ class WithdrawIASearch extends DocumentSearch{
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
-		Date::validateDate($startDate);
-		Date::validateDate($endDate);
-		self::validatePage($page);
+		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return WithdrawIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
 	}
 }

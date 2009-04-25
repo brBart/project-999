@@ -19,7 +19,7 @@ class Date{
 	 * @return void
 	 * @throws Exception
 	 */
-	static public function validateDate($date){
+	static public function validateDate($date, $msg){
 		$date_array = explode('/', $date);
 		
 		$day = (int)$date_array[0];
@@ -27,7 +27,7 @@ class Date{
 		$year = (int)$date_array[2];
 		
 		if(!checkdate($month, $day, $year))
-			throw new Exception('Fecha inv&aacute;lida.');
+			throw new Exception($msg . ' No existe o debe ser en formato \'dd\\mm\\yyyy\'.');
 	}
 	
 	/**
@@ -74,39 +74,39 @@ class Date{
  */
 class Number{
 	/**
-	 * Validates the provided price.
-	 *
-	 * Must be greater or equal to cero. Otherwise it throws an exception.
-	 * @param float $price
-	 * @throws Exception
-	 */
-	static public function validatePrice($price){
-		if(!is_float($price) || $price < 0)
-			throw new Exception('Precio inv&accute;lido.');
-	}
-	
-	/**
-	 * Validates the provided total.
-	 *
-	 * Must be greater or equal to cero. Otherwise it throws an exception.
-	 * @param float $total
-	 * @throws Exception
-	 */
-	static public function validateTotal($total){
-		if(!is_float($total) || $total < 0)
-			throw new Exception('Total inv&accute;lido.');
-	}
-	
-	/**
-	 * Validates the provided quantity.
+	 * Validates the provided number.
 	 *
 	 * Must be greater than cero. Otherwise it throws an exception.
-	 * @param integer $quantity
+	 * @param integer $number
 	 * @throws Exception
 	 */
-	static public function validateQuantity($quantity){
-		if(!is_int($quantity) || $quantity < 1)
-			throw new Exception('Cantidad inv&aacute;lida.');
+	static public function validatePositiveInteger($number, $msg){
+		if(!is_int($number) || $number < 1)
+			throw new Exception($msg . ' Valor debe ser mayor que cero.');
+	}
+	
+	/**
+	 * Validates the provided number.
+	 *
+	 * Must be a float number.
+	 * @param float $number
+	 * @throws Exception
+	 */
+	static public function validateFloat($number, $msg){
+		if(!is_float($number))
+			throw new Exception($msg . ' Valor debe ser numerico.');
+	}
+	
+	/**
+	 * Validates the provided number.
+	 *
+	 * Must be greater or equal to cero. Otherwise it throws an exception.
+	 * @param float $number
+	 * @throws Exception
+	 */
+	static public function validateUnsignedFloat($number, $msg){
+		if(!is_float($number) || $number < 0)
+			throw new Exception($msg . ' Valor no debe ser menor que cero.');
 	}
 }
 ?>

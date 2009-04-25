@@ -39,7 +39,7 @@ class Bank extends Identifier{
 	 * @return Bank
 	 */
 	static public function getInstance($id){
-		self::validateId($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return BankDAM::getInstance($id);
 	}
 	
@@ -219,6 +219,7 @@ class BankAccount extends PersistObject{
 	/**
 	 * Sets the account's number.
 	 *
+	 * Method can only be called if the object's status property is set to Persist::IN_PROGRESS.
 	 * @param string $number
 	 * @return void
 	 * @throws Exception
@@ -458,7 +459,7 @@ class Shift extends Identifier{
 	 * @return Shift
 	 */
 	static public function getInstance($id){
-		self::validateId($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return ShiftDAM::getInstance($id);
 	}
 	
@@ -550,7 +551,7 @@ class CashRegister{
 		PersistObject::validateObjectFromDatabase($shift);
 		if(!is_null($id))
 			try{
-				Identifier::validateId($id);
+				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling CashRegister constructor method with bad data! ' .
 						$e->getMessage());
@@ -607,7 +608,7 @@ class CashRegister{
 	 * @return CashRegister
 	 */
 	static public function getInstance($id){
-		Identifier::validateId($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return CashRegisterDAM::getInstance($id);
 	}
 }

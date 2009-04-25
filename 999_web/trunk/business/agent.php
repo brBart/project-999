@@ -485,7 +485,7 @@ class Supplier extends Organization{
 	 * @return Supplier
 	 */
 	static public function getInstance($id){
-		Identifier::validateId($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return SupplierDAM::getInstance($id);
 	}
 	
@@ -535,7 +535,7 @@ class Branch extends Organization{
 	 * @return Branch
 	 */
 	static public function getInstance($id){
-		Identifier::validateId($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return BranchDAM::getInstance($id);
 	}
 		

@@ -68,10 +68,10 @@ abstract class Document extends PersistDocument{
 		
 		if(!is_null($date)){
 			try{
-				Date::validateDate($date);
+				Date::validateDate($date, 'Fecha inv&aacute;lida.');
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
-						$et->getMessage());
+						$e->getMessage());
 				throw $et;
 			}
 			$this->_mDate = $date;
@@ -158,7 +158,7 @@ abstract class Document extends PersistDocument{
 	 */
 	public function setData($total, $details){
 		try{
-			Number::validateTotal($total);
+			Number::validateUnsignedFloat($total, 'Total inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
@@ -316,8 +316,8 @@ abstract class DocumentDetail{
 	 * @param float $price
 	 */
 	public function __construct($quantity, $price){
-		Number::validateQuantity($quantity);
-		$this->validatePrice($price);
+		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		Number::validateFloat($price, 'Precio inv&aacute;lido.');
 		
 		$this->_mQuantity = $quantity;
 		$this->_mPrice = $price;
@@ -361,7 +361,7 @@ abstract class DocumentDetail{
 	 */
 	public function save(Document $doc, $number){
 		Persist::validateObjectFromDatabase($doc);
-		$this->validateNumber($number);
+		Number::validatePositiveInteger($number, 'N&uacute;mero de pagina inv&aacute;lido.');
 		$this->insert($doc, $number);
 	}
 	
@@ -405,29 +405,6 @@ abstract class DocumentDetail{
 	 * @param integer $number
 	 */
 	abstract protected function insert(Document $doc, $number);
-	
-	/**
-	 * Validates the provided number.
-	 *
-	 * Must be greater than cero. Otherwise it throws an exception.
-	 * @param integer $number
-	 * @throws Exception
-	 */
-	private function validateNumber($number){
-		if(!is_int($number) || $number < 1)
-			throw new Exception('Internal error, number invalid!');
-	}
-	
-	/**
-	 * Validates the provided price.
-	 *
-	 * @param float $price
-	 * @throws Exception
-	 */
-	private function validatePrice($price){
-		if(!is_float($price))
-			throw new Exception('Precio inv&accute;lido.');
-	}
 }
 
 
@@ -561,7 +538,8 @@ class DocProductDetail extends DocumentDetail{
 	/**
 	 * Constructs the detail with the provided data.
 	 *
-	 * Note that if the transaction is an instance of Entry class the detail can only receive a
+	 * Warning! if the method is not called from the database layer take note of the following instructions
+	 * please: Note that if the transaction is an instance of Entry class the detail must only receive a
 	 * Persist::IN_PROGRESS Lot or NegativeLot. If it is an instance of Withdraw class, it needs a Reserve
 	 * to work. Sorry.
 	 * @param Lot $lot
@@ -573,17 +551,9 @@ class DocProductDetail extends DocumentDetail{
 	public function __construct(Lot $lot, Transaction $transaction, $quantity, $price, Reserve $reserve = NULL){
 		parent::__construct($quantity, $price);
 		
-		if($transaction instanceof Entry)
-			if($lot->getStatus() != Persist::IN_PROGRESS || $lot instanceof NegativeLot)
-				throw new Exception('Internal error, Entry transaction, can only receive a '.
-						'Persist::IN_PROGRESS Lot or NegativeLot!');
-		
-		if($transaction instanceof Withdraw)
-			if(is_null($reserve))
-				throw new Exception('Internal error, Withdraw transaction needs a Reserve to work!');
-			else
-				Persist::validateObjectFromDatabase($reserve);
-		
+		if(!is_null($reserve))
+			Persist::validateObjectFromDatabase($reserve);
+			
 		$this->_mLot = $lot;
 		$this->_mTransaction = $transaction;
 		$this->_mReserve = $reserve;
@@ -643,7 +613,7 @@ class DocProductDetail extends DocumentDetail{
 	 * @param integer $quantity
 	 */
 	public function increase($quantity){
-		Number::validateQuantity($quantity);
+		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		$this->_mQuantity += $quantity;
 		if($this->_mTransaction instanceof Entry)
 			$this->_mLot->increase($quantity);
@@ -742,11 +712,11 @@ class Reserve extends Persist{
 		parent::__construct($status);
 				
 		try{
-			Identifier::validateId($id);
+			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			Persist::validateObjectFromDatabase($lot);
-			Number::validateQuantity($quantity);
+			Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 			Persist::validateObjectFromDatabase($user);
-			Date::validateDate($date);
+			Date::validateDate($date, 'Fecha inv&aacute;lida.');
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling Reserve construct method with bad data! ' .
 					$e->getMessage());
@@ -797,7 +767,7 @@ class Reserve extends Persist{
 	 */
 	public function createReserve(Lot $lot, $quantity){
 		Persist::validateObjectFromDatabase($lot);
-		Number::validateQuantity($quantity);
+		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		
 		$helper = SessionHelper::getInstance();
 		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y'));
@@ -811,7 +781,7 @@ class Reserve extends Persist{
 	 * @return Reserve
 	 */
 	static public function getInstance($id){
-		Identifier::validateId($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return ReserveDAM::getInstance($id);
 	}
 	
@@ -836,6 +806,382 @@ class Reserve extends Persist{
  * @author Roberto Oliveros
  */
 class Correlative extends Persist{
+	/**
+	 * Holds the serial number of the correlative.
+	 *
+	 * @var string
+	 */
+	private $_mSerialNumber;
 	
+	/**
+	 * Flag that indicates if the correlative is the current one.
+	 *
+	 * @var boolean
+	 */
+	private $_mDefault;
+	
+	/**
+	 * Holds the correlative's resolution number.
+	 *
+	 * @var string
+	 */
+	private $_mResolutionNumber;
+	
+	/**
+	 * Holds the date of the correlative's resolution.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mResolutionDate;
+	
+	/**
+	 * Holds the first of the correlative's range of numbers.
+	 *
+	 * @var integer
+	 */
+	private $_mInitialNumber;
+	
+	/**
+	 * Holds the last of the correlative's range of numbers.
+	 *
+	 * @var integer
+	 */
+	private $_mFinalNumber;
+	
+	/**
+	 * Holds the current of the correlative's range of numbers.
+	 *
+	 * @var integer
+	 */
+	private $_mCurrentNumber;
+	
+	/**
+	 * Construct the correlative with the provided data.
+	 * 
+	 * Parameters must be set only if called from the database layer.
+	 * @param string $serialNumber
+	 * @param boolean $default
+	 * @param integer $currentNumber
+	 * @param integer $status
+	 * @throws Exception
+	 */
+	public function __construct($serialNumber = NULL, $default = false, $currentNumber = 0,
+			$status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		if(!is_null($serialNumber))
+			try{
+				$this->validateSerialNumber($serialNumber);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Correlative constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			
+		if($currentNumber !== 0)
+			try{
+				$this->validateNumber($currentNumber);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Correlative constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			
+		$this->_mSerialNumber = $serialNumber;
+		$this->_mDefault = (boolean)$default;
+		$this->_mCurrentNumber = $currentNumber;
+	}
+	
+	/**
+	 * Returns the correlative's serial number.
+	 *
+	 * @return string
+	 */
+	public function getSerialNumber(){
+		return $this->_mSerialNumber;
+	}
+	
+	/**
+	 * Returns the default flag value.
+	 *
+	 * Returns true if this is the default correlative.
+	 * @return boolean
+	 */
+	public function isDefault(){
+		return $this->_mDefault;
+	}
+	
+	/**
+	 * Returns the correlative's resolution number.
+	 *
+	 * @return string
+	 */
+	public function getResolutionNumber(){
+		return $this->_mResolutionNumber;
+	}
+	
+	/**
+	 * Returns the correlative's resolution date.
+	 *
+	 * @return string
+	 */
+	public function getResolutionDate(){
+		return $this->_mResolutionDate;
+	}
+	
+	/**
+	 * Returns the first of the correlative's range of numbers.
+	 *
+	 * @return integer
+	 */
+	public function getInitialNumber(){
+		return $this->_mInitialNumber;
+	}
+	
+	/**
+	 * Returns the last of the correlative's range of numbers.
+	 *
+	 * @return integer
+	 */
+	public function getFinalNumber(){
+		return $this->_mFinalNumber;
+	}
+	
+	/**
+	 * Returns the current of the correlative's range of numbers.
+	 *
+	 * @return integer
+	 */
+	public function getCurrentNumber(){
+		return $this->_mCurrentNumber;
+	}
+	
+	/**
+	 * Returns the next to be used in the correlative's range of numbers.
+	 *
+	 * Only applies when the object's status property is set to Persist::CREATED.
+	 * @return integer
+	 */
+	public function getNextNumber(){
+		if($this->_mStatus == Persist::CREATED)
+			return CorrelativeDAM::getNextNumber($this);
+		else
+			return 0;
+	}
+	
+	/**
+	 * Sets the correlative's serial number.
+	 *
+	 * Only applies if the object's status property is set to Persist::IN_PROGRESS.
+	 * @param string $serialNumber
+	 */
+	public function setSerialNumber($serialNumber){
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->validateSerialNumber($serialNumber);
+			$this->verifySerialNumber($serialNumber);
+			$this->_mSerialNumber = $serialNumber;
+		}
+	}
+	
+	/**
+	 * Sets the correlative's resolution number
+	 *
+	 * @param string $number
+	 */
+	public function setResolutionNumber($number){
+		$this->validateResolutionNumber($number);
+		$this->_mResolutionNumber = $number;
+	}
+	
+	/**
+	 * Sets the correlative's resolution date.
+	 *
+	 * @param string $date
+	 */
+	public function setResolutionDate($date){
+		Date::validateDate($date);
+		$this->_mResolutionDate = $date;
+	}
+	
+	/**
+	 * Sets the first of the correlative's range of numbers.
+	 *
+	 * @param integer $number
+	 */
+	public function setInitialNumber($number){
+		$this->validateNumber($number);
+		$this->_mInitialNumber = $number;
+	}
+	
+	/**
+	 * Sets the last of the correlative's range of numbers.
+	 *
+	 * @param integer $number
+	 */
+	public function setFinalNumber($number){
+		$this->validateNumber($number);
+		$this->_mFinalNumber = $number;
+	}
+	
+	/**
+	 * Set the object's properties.
+	 * 
+	 * Must be call only from the database layer corresponding class. The object's status must be set to
+	 * Persist::CREATED in the constructor method too.
+	 * @param string $resolutionNumber
+	 * @param string $resoluctionDate
+	 * @param integer $initialNumber
+	 * @param integer $finalNumber
+	 * @throws Exception
+	 */
+	public function setData($resolutionNumber, $resolutionDate, $initialNumber, $finalNumber){
+		try{
+			$this->validateResolutionNumber($resolutionNumber);
+			Date::validateDate($resolutionDate);
+			$this->validateNumber($initialNumber);
+			$this->validateNumber($finalNumber);
+		} catch(Exception $e){
+			$et = new Exception('Internal error, calling Correlative setData method with bad data! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mResolutionNumber = $resolutionNumber;
+		$this->_mResolutionDate = $resolutionDate;
+		$this->_mInitialNumber = $initialNumber;
+		$this->_mFinalNumber = $finalNumber;
+	}
+	
+	/**
+	 * Saves the correlative's data in the database.
+	 *
+	 * Only applies if the object's status property is set to Persist::IN_PROGRESS.
+	 */
+	public function save(){
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->validateMainProperties();
+			$this->validateRangeNumbers($this->_mInitialNumber, $this->_mFinalNumber);
+			$this->verifySerialNumber($this->_mSerialNumber);
+			CorrelativeDAM::insert($this);
+		}
+	}
+	
+	/**
+	 * Makes default the provided correlative.
+	 *
+	 * @param Correlative $obj
+	 */
+	static public function makeDefault(Correlative $obj){
+		Persist::validateObjectFromDatabase($obj);
+		CorrelativeDAM::makeDefault($obj);
+	}
+	
+	/**
+	 * Returns the default correlative.
+	 *
+	 * @return Correlative
+	 */
+	static public function getDefault(){
+		return CorrelativeDAM::getDefault();
+	}
+	
+	/**
+	 * Returns an instance of a correlative with database data.
+	 *
+	 * Returns NULL if there was no match for the provided serial number in the database.
+	 * @param string $serialNumber
+	 * @return Correlative
+	 */
+	static public function getInstance($serialNumber){
+		self::validateSerialNumber($serialNumber);
+		return CorrelativeDAM::getInstance($serialNumber);
+	}
+	
+	/**
+	 * Deletes the correlative from the database.
+	 *
+	 * Returns true on success. Otherwise false due dependencies.
+	 * @param Correlative $obj
+	 * @return boolean
+	 */
+	static public function delete(Correlative $obj){
+		self::validateObjectFromDatabase($obj);
+		return CorrelativeDAM::delete($obj);
+	}
+	
+	/**
+	 * Validates the provided serial number.
+	 *
+	 * Must not be empty.
+	 * @param string $serialNumber
+	 * @throws Exception
+	 */
+	private function validateSerialNumber($serialNumber){
+		if(empty($serialNumber))
+			throw new Exception('N&uacute;mero de serie inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates the provided resolution number.
+	 *
+	 * Must not be empty.
+	 * @param string $number
+	 * @throws Exception
+	 */
+	private function validateResolutionNumber($number){
+		if(empty($number))
+			throw new Exception('N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates the provided number.
+	 *
+	 * Must be greater than cero.
+	 * @param integer $number
+	 * @throws Exception
+	 */
+	private function validateNumber($number){
+		if(!is_int($number) || $number < 1)
+			throw new Exception('N&uacute;mero inv&aacute;lido.');
+	}
+	
+	/**
+	 * Validates the correlative main properties.
+	 *
+	 * Serial and resolution numbers must not be empty. Resolution date must be a valid date. And initial
+	 * and final numbers must be greater than cero.
+	 */
+	private function validateMainProperties(){
+		$this->validateSerialNumber($this->_mSerialNumber);
+		$this->validateResolutionNumber($this->_mResolutionNumber);
+		Date::validateDate($this->_mResolutionDate);
+		$this->validateNumber($this->_mInitialNumber);
+		$this->validateNumber($this->_mFinalNumber);
+	}
+	
+	/**
+	 * Validates if the final number is greater than the initial.
+	 *
+	 * @param integer $initial
+	 * @param integer $final
+	 * @throws Exception
+	 */
+	private function validateRangeNumbers($initial, $final){
+		if($initial >= $final)
+			throw new Exception('N&uacute;mero inicial debe ser menor al n&uacute;mero final.');
+	}
+	
+	/**
+	 * Verifies if a correlative with the serial number already exists in the database.
+	 *
+	 * Throws an exception if it does.
+	 * @param string $serialNumber
+	 * @throws Exception
+	 */
+	private function verifySerialNumber($serialNumber){
+		if(CorrelativeDAM::exists($serialNumber))
+			throw new Exception('N&uacute;mero de serie ya existe.');
+	}
 }
 ?>

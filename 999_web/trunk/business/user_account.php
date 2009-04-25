@@ -43,7 +43,7 @@ class Role{
 	 */
 	public function __construct($id, $name){
 		try{
-			Identifier::validateId($id);
+			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			$this->validateName($name);
 		} catch(Exception $e){
 			$et = new Exception('Internal error, calling Role constructor method with bad data! ' .
@@ -81,7 +81,7 @@ class Role{
 	 * @return Role
 	 */
 	static public function getInstance($id){
-		Identifier::validateId($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return RoleDAM::getInstance($id);
 	}
 	
