@@ -103,6 +103,8 @@ class ReserveDAM{
  * @author Roberto Oliveros
  */
 class CorrelativeDAM{
+	static private $_mDefault = false;
+	
 	/**
 	 * Returns true if a a correlative with the provided serial number exists in the database.
 	 *
@@ -111,6 +113,76 @@ class CorrelativeDAM{
 	 */
 	static public function exists($serialNumber){
 		if($serialNumber == 'A021')
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Returns true if there are no correlatives in the database.
+	 *
+	 * @return boolean
+	 */
+	static public function isEmpty(){
+		return false;
+	}
+	
+	/**
+	 * Makes default the provided correlative.
+	 *
+	 * @param Correlative $obj
+	 */
+	static public function makeDefault(Correlative $obj){
+		if($obj->getSerialNumber() == 'A021')
+			self::$_mDefault = true;
+	}
+	
+	/**
+	 * Returns an instance of a correlative with database data.
+	 *
+	 * Returns NULL if there was no match for the provided serial number in the database.
+	 * @param string $serialNumber
+	 * @return Correlative
+	 */
+	static public function getInstance($serialNumber){
+		if($serialNumber == 'A021'){
+			$correlative = new Correlative($serialNumber, self::$_mDefault, 457, Persist::CREATED);
+			$correlative->setData('2008-10', '15/01/2008', 100, 5000);
+			return $correlative;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Returns the default correlative.
+	 *
+	 * @return Correlative
+	 */
+	static public function getDefaultInstance(){
+		$correlative = new Correlative('A022', true, 457, Persist::CREATED);
+		$correlative->setData('2008-05', '15/01/2008', 100, 5000);
+		return $correlative;
+	}
+	
+	/**
+	 * Inserts the correlative's data in the database.
+	 *
+	 * @param Correlative $obj
+	 */
+	static public function insert(Correlative $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes the correlative from the database.
+	 *
+	 * Returns true on success. Otherwise false due dependencies.
+	 * @param Correlative $obj
+	 * @return boolean
+	 */
+	static public function delete(Correlative $obj){
+		if($obj->getSerialNumber() == 'A021')
 			return true;
 		else
 			return false;
