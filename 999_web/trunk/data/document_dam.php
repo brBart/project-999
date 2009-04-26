@@ -188,4 +188,30 @@ class CorrelativeDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Utility class for accessing the vat table in the database.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class VatDAM{
+	/**
+	 * Returns an instance of system's V.A.T.
+	 *
+	 * @return Vat
+	 */
+	static public function getInstance(){
+		return new Vat(12.00);
+	}
+	
+	/**
+	 * Updates the vat's values in the database.
+	 *
+	 * @param Vat $obj
+	 */
+	static public function update(Vat $obj){
+		// Code here...
+	}
+}
 ?>
