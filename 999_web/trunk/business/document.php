@@ -801,7 +801,7 @@ class Correlative extends Persist{
 	private $_mSerialNumber;
 	
 	/**
-	 * Flag that indicates if the correlative is the current one.
+	 * Flag that indicates if the correlative is the default one.
 	 *
 	 * @var boolean
 	 */
@@ -1017,7 +1017,7 @@ class Correlative extends Persist{
 	 * Must be call only from the database layer corresponding class. The object's status must be set to
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $resolutionNumber
-	 * @param string $resoluctionDate
+	 * @param string $resolutionDate
 	 * @param integer $initialNumber
 	 * @param integer $finalNumber
 	 * @throws Exception
@@ -1149,6 +1149,71 @@ class Correlative extends Persist{
 	private function verifySerialNumber($serialNumber){
 		if(CorrelativeDAM::exists($serialNumber))
 			throw new Exception('N&uacute;mero de serie ya existe.');
+	}
+}
+
+
+/**
+ * V.A.T. Value Added Tax. (I.V.A.)
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class Vat{
+	/**
+	 * Holds the percentage value of the tax.
+	 *
+	 * @var float
+	 */
+	private $_mPercentage;
+	
+	/**
+	 * Construct the vat with the provided percentage.
+	 *
+	 * Use getInstance method if an instance is required. Called this method only from the database layer
+	 * corresponding class.
+	 * @param float $percentage
+	 */
+	public function __construct($percentage){
+		Number::validatePositiveFloat($percentage,
+				'Interno: Llamando al metodo construct en Vat con datos erroneos! Porcentaje inv&aacute;lido.');
+		
+		$this->_mPercentage = $percentage;
+	}
+	
+	/**
+	 * Returns the percentage value of the tax.
+	 *
+	 * @return float
+	 */
+	public function getPercentage(){
+		return $this->_mPercentage;
+	}
+	
+	/**
+	 * Sets the percentage value of the tax.
+	 *
+	 * @param float $value
+	 */
+	public function setPercentage($value){
+		Number::validatePositiveFloat($value, 'Porcentaje inv&aacute;lido.');
+		$this->_mPercentage = $value;
+	}
+	
+	/**
+	 * Updates the vat values in the database.
+	 *
+	 */
+	public function save(){
+		VatDAM::update($this);
+	}
+	
+	/**
+	 * Returns an instance of the V.A.T.
+	 *
+	 * @return Vat
+	 */
+	static public function getInstance(){
+		return VatDAM::getInstance();
 	}
 }
 ?>

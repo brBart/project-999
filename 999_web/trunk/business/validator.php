@@ -77,7 +77,8 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be an integer. Otherwise it throws an exception.
+	 * Must be an integer. Otherwise it throws an exception. The msg parameter is for displaying the desire
+	 * message.
 	 * @param integer $quantity
 	 * @throws Exception
 	 */
@@ -89,7 +90,8 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be greater than cero. Otherwise it throws an exception.
+	 * Must be greater than cero. Otherwise it throws an exception. The msg parameter is for displaying
+	 * the desire message.
 	 * @param integer $number
 	 * @param string $msg
 	 * @throws Exception
@@ -102,7 +104,8 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be a float number.
+	 * Must be a float number. The msg parameter is for displaying the desire
+	 * message.
 	 * @param float $number
 	 * @param string $msg
 	 * @throws Exception
@@ -115,7 +118,22 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be greater or equal to cero. Otherwise it throws an exception.
+	 * Must be greater than cero. Otherwise it throws an exception. The msg parameter is for displaying
+	 * the desire message.
+	 * @param float $number
+	 * @param string $msg
+	 * @throws Exception
+	 */
+	static public function validatePositiveFloat($number, $msg){
+		if(!is_float($number) || $number < 1)
+			throw new Exception($msg . ' Valor no debe ser menor que cero.');
+	}
+	
+	/**
+	 * Validates the provided number.
+	 *
+	 * Must be greater or equal to cero. Otherwise it throws an exception. The msg parameter is for
+	 * displaying the desire message.
 	 * @param float $number
 	 * @param string $msg
 	 * @throws Exception
@@ -136,7 +154,8 @@ class String{
 	/**
 	 * Validates a normal string.
 	 *
-	 * Must not be empty.
+	 * Must not be empty. The msg parameter is for displaying the desire
+	 * message.
 	 * @param string $string
 	 * @param string $msg
 	 * @throws Exception
