@@ -471,7 +471,7 @@ class Supplier extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Supplier $obj){
-		self::validateObjectFromDatabase($obj, 'Supplier');
+		self::validateObjectFromDatabase($obj);
 		return SupplierDAM::delete($obj);
 	}
 	
@@ -521,7 +521,7 @@ class Branch extends Organization{
 	 * @return boolean
 	 */
 	static public function delete(Branch $obj){
-		self::validateObjectFromDatabase($obj, 'Branch');
+		self::validateObjectFromDatabase($obj);
 		return BranchDAM::delete($obj);
 	}
 	

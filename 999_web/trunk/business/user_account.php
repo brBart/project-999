@@ -347,7 +347,7 @@ class UserAccount extends PersistObject{
 	 * @return boolean
 	 */
 	static public function delete(UserAccount $obj){
-		self::validateObjectFromDatabase($obj, 'UserAccount');			
+		self::validateObjectFromDatabase($obj);			
 		return UserAccountDAM::delete($obj);
 	}
 	
@@ -455,7 +455,7 @@ class UserAccountUtility{
 	 * @return boolean
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
-		Persist::validateObjectFromDatabase($account, 'UserAccount');
+		Persist::validateObjectFromDatabase($account);
 		String::validateString($password, 'Contrase&ntilde;a actual inv&aacute;lida.');
 		String::validateString($newPassword, 'Nueva contrase&ntilde;a inv&aacute;lida.');
 		

@@ -81,7 +81,7 @@ abstract class Document extends PersistDocument{
 		
 		if(!is_null($user)){
 			try{
-				Persist::validateObjectFromDatabase($user, 'UserAccount');
+				Persist::validateObjectFromDatabase($user);
 			} catch(Exception $e){
 				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
 						$e->getMessage());
@@ -348,7 +348,7 @@ abstract class DocumentDetail{
 	 * @param integer $number
 	 */
 	public function save(Document $doc, $number){
-		Persist::validateObjectFromDatabase($doc, 'Document');
+		Persist::validateObjectFromDatabase($doc);
 		Number::validatePositiveInteger($number, 'N&uacute;mero de pagina inv&aacute;lido.');
 		$this->insert($doc, $number);
 	}
@@ -418,7 +418,7 @@ class DocBonusDetail extends DocumentDetail{
 	public function __construct(Bonus $bonus, $price){
 		parent::__construct(1, $price);
 		
-		Persist::validateObjectFromDatabase($bonus, 'Bonus');
+		Persist::validateObjectFromDatabase($bonus);
 		$this->_mBonus = $bonus;
 	}
 	
@@ -540,7 +540,7 @@ class DocProductDetail extends DocumentDetail{
 		parent::__construct($quantity, $price);
 		
 		if(!is_null($reserve))
-			Persist::validateObjectFromDatabase($reserve, 'Reserve');
+			Persist::validateObjectFromDatabase($reserve);
 			
 		$this->_mLot = $lot;
 		$this->_mTransaction = $transaction;
@@ -701,9 +701,9 @@ class Reserve extends Persist{
 				
 		try{
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-			Persist::validateObjectFromDatabase($lot, 'Lot');
+			Persist::validateObjectFromDatabase($lot);
 			Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-			Persist::validateObjectFromDatabase($user, 'UserAccount');
+			Persist::validateObjectFromDatabase($user);
 			Date::validateDate($date, 'Fecha inv&aacute;lida.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en Reserve con datos erroneos! ' .
@@ -754,7 +754,7 @@ class Reserve extends Persist{
 	 * @return Reserve
 	 */
 	public function createReserve(Lot $lot, $quantity){
-		Persist::validateObjectFromDatabase($lot, 'Lot');
+		Persist::validateObjectFromDatabase($lot);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		
 		$helper = SessionHelper::getInstance();
@@ -781,7 +781,7 @@ class Reserve extends Persist{
 	 * @return boolean
 	 */
 	static public function delete(Reserve $obj){
-		self::validateObjectFromDatabase($obj, 'Reserve');
+		self::validateObjectFromDatabase($obj);
 		return ReserveDAM::delete($obj);
 	}
 }
@@ -1049,28 +1049,19 @@ class Correlative extends Persist{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->validateMainProperties();
 			$this->validateRangeNumbers($this->_mInitialNumber, $this->_mFinalNumber);
-			$this->verifySerialNumber($this->_mSerialNumber);
+			
+			// Verify if there are records in the database.
+			$no_records = CorrelativeDAM::isEmpty();
+			if(!$no_records)
+				$this->verifySerialNumber($this->_mSerialNumber);
+				
 			CorrelativeDAM::insert($this);
+			$this->_mStatus = Persist::CREATED;
+			
+			// If there were no records, make this one the default.
+			if($no_records)
+				self::makeDefault($this);
 		}
-	}
-	
-	/**
-	 * Makes default the provided correlative.
-	 *
-	 * @param Correlative $obj
-	 */
-	static public function makeDefault(Correlative $obj){
-		Persist::validateObjectFromDatabase($obj, 'Correlative');
-		CorrelativeDAM::makeDefault($obj);
-	}
-	
-	/**
-	 * Returns the default correlative.
-	 *
-	 * @return Correlative
-	 */
-	static public function getDefaultInstance(){
-		return CorrelativeDAM::getDefaultInstance();
 	}
 	
 	/**
@@ -1086,14 +1077,38 @@ class Correlative extends Persist{
 	}
 	
 	/**
+	 * Returns the default correlative.
+	 *
+	 * @return Correlative
+	 */
+	static public function getDefaultInstance(){
+		return CorrelativeDAM::getDefaultInstance();
+	}
+	
+	/**
+	 * Makes default the provided correlative.
+	 *
+	 * @param Correlative $obj
+	 */
+	static public function makeDefault(Correlative $obj){
+		Persist::validateObjectFromDatabase($obj);
+		CorrelativeDAM::makeDefault($obj);
+	}
+	
+	/**
 	 * Deletes the correlative from the database.
 	 *
-	 * Returns true on success. Otherwise false due dependencies.
+	 * Returns true on success. Otherwise false due dependencies. Can't be deleted if it is the default
+	 * correlative.
 	 * @param Correlative $obj
 	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Correlative $obj){
-		self::validateObjectFromDatabase($obj, 'Correlative');
+		self::validateObjectFromDatabase($obj);
+		if($obj->isDefault())
+			throw new Exception('Correlativo predeterminado, no se puede eliminar.');
+		
 		return CorrelativeDAM::delete($obj);
 	}
 	
@@ -1104,12 +1119,12 @@ class Correlative extends Persist{
 	 * and final numbers must be greater than cero.
 	 */
 	private function validateMainProperties(){
-		$this->validateSerialNumber($this->_mSerialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
-		$this->validateResolutionNumber($this->_mResolutionNumber,
+		String::validateString($this->_mSerialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
+		String::validateString($this->_mResolutionNumber,
 				'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
 		Date::validateDate($this->_mResolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
-		$this->validateNumber($this->_mInitialNumber, 'N&uacute;mero inicial inv&aacute;lido.');
-		$this->validateNumber($this->_mFinalNumber, 'N&uacute;mero final inv&aacute;lido.');
+		Number::validatePositiveInteger($this->_mInitialNumber, 'N&uacute;mero inicial inv&aacute;lido.');
+		Number::validatePositiveInteger($this->_mFinalNumber, 'N&uacute;mero final inv&aacute;lido.');
 	}
 	
 	/**

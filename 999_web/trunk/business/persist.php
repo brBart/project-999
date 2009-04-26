@@ -67,10 +67,10 @@ abstract class Persist{
 	 * @return void
 	 * @throws Exception
 	 */
-	static public function validateObjectFromDatabase(Persist $obj, $objectName){
+	static public function validateObjectFromDatabase(Persist $obj){
 		if ($obj->_mStatus == self::IN_PROGRESS)
-			throw new Exception('Objeto inv&aacute;lido ' . $objectName . ' La propiedad status debe ser ' .
-					'igual a Persist::CREATED.');
+			throw new Exception('Objeto inv&aacute;lido: ' . get_class($obj) . ' La propiedad status ' .
+					'debe ser igual a Persist::CREATED.');
 	}
 }
 

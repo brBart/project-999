@@ -51,7 +51,7 @@ class Bank extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Bank $obj){
-		self::validateObjectFromDatabase($obj, 'Bank');		
+		self::validateObjectFromDatabase($obj);		
 		return BankDAM::delete($obj);
 	}
 	
@@ -240,7 +240,7 @@ class BankAccount extends PersistObject{
 	 * @return void
 	 */
 	public function setBank(Bank $obj){
-		self::validateObjectFromDatabase($obj, 'Bank');
+		self::validateObjectFromDatabase($obj);
 		$this->_mBank = $obj;
 	}
 	
@@ -267,7 +267,7 @@ class BankAccount extends PersistObject{
 	public function setData($name, Bank $bank){
 		try{
 			String::validateString($name, 'Nombre inv&aacute;lido.');
-			self::validateObjectFromDatabase($bank, 'Bank');
+			self::validateObjectFromDatabase($bank);
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en BankAccount con datos erroneos! ' .
 					$e->getMessage());
@@ -317,7 +317,7 @@ class BankAccount extends PersistObject{
 	 * @return boolean
 	 */
 	static public function delete(BankAccount $obj){
-		self::validateObjectFromDatabase($obj, 'Cuenta bancaria inv&aacute;lida.');			
+		self::validateObjectFromDatabase($obj);			
 		return BankAccountDAM::delete($obj);
 	}
 	
@@ -353,7 +353,7 @@ class BankAccount extends PersistObject{
 		if(is_null($this->_mBank))
 			throw new Exception('Banco inv&aacute;lido.');
 		else
-			self::validateObjectFromDatabase($this->_mBank, 'Banco inv&aacute;lido.');
+			self::validateObjectFromDatabase($this->_mBank);
 	}
 	
 	/**
@@ -456,7 +456,7 @@ class Shift extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Shift $obj){
-		self::validateObjectFromDatabase($obj, 'Shift');
+		self::validateObjectFromDatabase($obj);
 		return ShiftDAM::delete($obj);
 	}
 	
@@ -520,7 +520,7 @@ class CashRegister{
 	 * @throws Exception
 	 */
 	public function __construct(Shift $shift, $id = NULL){
-		PersistObject::validateObjectFromDatabase($shift, 'Shift');
+		PersistObject::validateObjectFromDatabase($shift);
 		if(!is_null($id))
 			try{
 				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');

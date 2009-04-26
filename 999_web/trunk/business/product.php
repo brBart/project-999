@@ -55,7 +55,7 @@ class UnitOfMeasure extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(UnitOfMeasure $obj){
-		self::validateObjectFromDatabase($obj, 'UnitOfMeasure');
+		self::validateObjectFromDatabase($obj);
 		return UnitOfMeasureDAM::delete($obj);
 	}
 	
@@ -116,7 +116,7 @@ class Manufacturer extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Manufacturer $obj){
-		self::validateObjectFromDatabase($obj, 'Manufacturer');
+		self::validateObjectFromDatabase($obj);
 		return ManufacturerDAM::delete($obj);
 	}
 	
@@ -153,7 +153,7 @@ class Inventory{
 	 * @return integer
 	 */
 	static public function getAvailable(Product $product){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		return InventoryDAM::getAvailable($product);
 	}
 	
@@ -164,7 +164,7 @@ class Inventory{
 	 * @return integer
 	 */
 	static public function getQuantity(Product $product){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		return InventoryDAM::getQuantity($product);
 	}
 	
@@ -178,7 +178,7 @@ class Inventory{
 	 * @return array<Lot>
 	 */
 	static public function getLots(Product $product, $reqUnitsQuantity){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($reqUnitsQuantity, 'Cantidad inv&aacute;lida.');
 		
 		// Get the lots from the database with available stock.
@@ -227,7 +227,7 @@ class Inventory{
 	 * @return array<Lot>
 	 */
 	static public function getNegativeLots(Product $product, $reqUnitsQuantity){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($reqUnitsQuantity, 'Cantidad inv&aacute;lida.');
 		
 		// Get the negative lots from the database.
@@ -274,7 +274,7 @@ class Inventory{
 	 * @return array
 	 */
 	static public function showLots(Product $product, &$quantity, &$available){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		
 		$lots = InventoryDAM::getLots($product);
 		
@@ -294,7 +294,7 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function increase(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		InventoryDAM::increase($product, $quantity);
 	}
@@ -306,7 +306,7 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function decrease(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		InventoryDAM::decrease($product, $quantity);
 	}
@@ -318,7 +318,7 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function reserve(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		InventoryDAM::reserve($product, $quantity);
 	}
@@ -330,7 +330,7 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function decreaseReserve(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		InventoryDAM::decreaseReserve($product, $quantity);
 	}
@@ -375,7 +375,7 @@ class ProductSupplier extends Persist{
 	public function __construct(Supplier $supplier, $productSKU, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		self::validateObjectFromDatabase($supplier, 'Supplier');
+		self::validateObjectFromDatabase($supplier);
 		String::validateString($productSKU, 'Codigo inv&aacute;lido.');
 		
 		$this->_mSupplier = $supplier;
@@ -445,7 +445,7 @@ class ProductSupplier extends Persist{
 	 * @param Product $product
 	 */
 	public function commit(Product $product){
-		self::validateObjectFromDatabase($product, 'Product');
+		self::validateObjectFromDatabase($product);
 		
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			ProductSupplierDAM::insert($product, $this);
@@ -664,7 +664,7 @@ class Product extends Identifier{
 	 * @param UnitOfMeasure $um
 	 */
 	public function setUnitOfMeasure(UnitOfMeasure $um){
-		self::validateObjectFromDatabase($um, 'UnitOfMeasure');
+		self::validateObjectFromDatabase($um);
 		$this->_mUM = $um;
 	}
 	
@@ -674,7 +674,7 @@ class Product extends Identifier{
 	 * @param Manufacturer $obj
 	 */
 	public function setManufacturer(Manufacturer $obj){
-		self::validateObjectFromDatabase($obj, 'Manufacturer');
+		self::validateObjectFromDatabase($obj);
 		$this->_mManufacturer = $obj;
 	}
 	
@@ -723,8 +723,8 @@ class Product extends Identifier{
 			String::validateString($barCode, 'Codigo de barra inv&aacute;lido.');
 			String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
 			String::validateString($description, 'Descripci&oacute;n inv&aacute;lida.');
-			self::validateObjectFromDatabase($um, 'UnitOfMeasure');
-			self::validateObjectFromDatabase($manufacturer, 'Manufacturer');
+			self::validateObjectFromDatabase($um);
+			self::validateObjectFromDatabase($manufacturer);
 			Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
@@ -844,7 +844,7 @@ class Product extends Identifier{
 	 * @return Product
 	 */
 	static public function getInstanceBySupplier(Supplier $supplier, $sku){
-		self::validateObjectFromDatabase($supplier, 'Supplier');
+		self::validateObjectFromDatabase($supplier);
 		String::validateString($sku, 'Codigo inv&aacute;lido.');
 		return ProductDAM::getInstanceBySupplier($supplier, $sku);
 	}
@@ -857,7 +857,7 @@ class Product extends Identifier{
 	 * @return boolean
 	 */
 	static public function delete(Product $obj){
-		self::validateObjectFromDatabase($obj, 'Product');
+		self::validateObjectFromDatabase($obj);
 		return ProductDAM::delete($obj);
 	}
 	
@@ -891,12 +891,12 @@ class Product extends Identifier{
 		if(is_null($this->_mUM))
 			throw new Exception('Unidad de medida inv&aacute;lida.');
 		else
-			self::validateObjectFromDatabase($this->_mUM, 'UnitOfMeasure');
+			self::validateObjectFromDatabase($this->_mUM);
 			
 		if(is_null($this->_mManufacturer))
 			throw new Exception('Fabricante inv&aacute;lido.');
 		else
-			self::validateObjectFromDatabase($this->_mManufacturer, 'Manufacturer');
+			self::validateObjectFromDatabase($this->_mManufacturer);
 		
 		Number::validateUnsignedFloat($this->_mPrice, 'Precio inv&aacute;lido.');
 		if(!$this->hasProductSuppliers())
@@ -1019,7 +1019,7 @@ class Bonus extends Persist{
 		
 		if(!is_null($id))
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-		self::validateObjectFromDatabase($product, 'Product');
+		self::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		$this->validatePercentage($percentage);
 		Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.');
@@ -1131,7 +1131,7 @@ class Bonus extends Persist{
 	 * @return Bonus
 	 */
 	static public function getInstanceByProduct(Product $product, $quantity){
-		self::validateObjectFromDatabase($product, 'Product');
+		self::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		return BonusDAM::getInstanceByProduct($product, $quantity);
 	}
@@ -1144,7 +1144,7 @@ class Bonus extends Persist{
 	 * @return boolean
 	 */
 	static public function delete(Bonus $obj){
-		self::validateObjectFromDatabase($obj, 'Bonus');
+		self::validateObjectFromDatabase($obj);
 		return BonusDAM::delete($obj);
 	}
 	
@@ -1232,7 +1232,7 @@ class Lot extends Persist{
 			$entryDate = NULL, $id = 0, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		self::validateObjectFromDatabase($product, 'Product');
+		self::validateObjectFromDatabase($product);
 		
 		if($quantity !== 0)
 			Number::validateInteger($quantity, 'Cantidad inv&aacute;lida.');
@@ -1501,7 +1501,7 @@ class ChangePriceLog{
 	 * @param float $newPrice
 	 */
 	static public function write(Product $product, $lastPrice, $newPrice){
-		Persist::validateObjectFromDatabase($product, 'Product');
+		Persist::validateObjectFromDatabase($product);
 		Number::validateUnsignedFloat($lastPrice, 'Precio antiguo inv&aacute;lido.');
 		Number::validateUnsignedFloat($newPrice, 'Nuevo precio inv&aacute;lido.');
 		
