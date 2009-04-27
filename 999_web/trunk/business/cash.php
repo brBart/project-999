@@ -493,6 +493,9 @@ class Shift extends Identifier{
 
 /**
  * Represent a cash register used to create sales invoices.
+ * 
+ * Please note that you must only obtain an instance of this object through 2 methods. One is getInstance
+ * and the other is through getCashRegister method in the WorkingDay class. Sorry.
  * @package Cash
  * @author Roberto Oliveros
  */

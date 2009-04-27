@@ -51,7 +51,7 @@ abstract class Document extends PersistDocument{
 	 *
 	 * @var array<DocumentDetail>
 	 */
-	private $_mDetails = array();
+	protected $_mDetails = array();
 	
 	/**
 	 * Constructs the document with the provided data.
@@ -1257,7 +1257,7 @@ class Invoice extends Document{
 	 *
 	 * @var float
 	 */
-	private $_mVatValue;
+	private $_mVatPercentage;
 	
 	/**
 	 * Holds from which cash register this invoice was emitted.
@@ -1279,6 +1279,146 @@ class Invoice extends Document{
 	 * @var Discount
 	 */
 	private $_mDiscount;
+	
+	/**
+	 * Returns the invoice's number.
+	 *
+	 * @return integer
+	 */
+	public function getNumber(){
+		return $this->_mNumber;
+	}
+	
+	/**
+	 * Returns the invoice customer's nit.
+	 *
+	 * @return string
+	 */
+	public function getNit(){
+		return $this->_mNit;
+	}
+	
+	/**
+	 * Returns the invoice customer's name.
+	 *
+	 * @return string
+	 */
+	public function getName(){
+		return $this->_mName;
+	}
+	
+	/**
+	 * Returns the quantity of certain product the invoice has.
+	 *
+	 * @param Product $product
+	 * @return integer
+	 */
+	public function getProductQuantity(Product $product){
+		$quantity = 0;
+		
+		foreach($this->_mDetails as $detail)
+			if($detail instanceof DocProductDetail)
+				if($detail->getLot()->getProduct() == $product)
+					$quantity += $detail->getQuantity();
+					
+		return $quantity;
+	}
+	
+	/**
+	 * Returns the total price of certain product the invoice has.
+	 *
+	 * @param Product $product
+	 * @return float
+	 */
+	public function getProductTotalPrice(Product $product){
+		$total_price = 0;
+		
+		foreach($this->_mDetails as $detail)
+			if($detail instanceof DocProductDetail)
+				if($detail->getLot()->getProduct() == $product)
+					$total_price += $detail->getTotal();
+					
+		return $total_price;
+	}
+	
+	/**
+	 * Returns the invoice vat's percentage applied.
+	 *
+	 * @return float
+	 */
+	public function getVatPercentage(){
+		return $this->_mVatPercentage;
+	}
+	
+	/**
+	 * Returns the invoice's subtotal.
+	 *
+	 * @return float
+	 */
+	public function getSubTotal(){
+		return parent::getTotal();
+	}
+	
+	/**
+	 * Returns the discount value applied to the invoice subtotal.
+	 *
+	 * @return float
+	 */
+	public function getTotalDiscount(){
+		return $this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100);
+	}
+	
+	/**
+	 * Sets the invoice's cash register.
+	 *
+	 * @param CashRegister $obj
+	 */
+	public function setCashRegister(CashRegister $obj){
+		$this->_mCashRegister = $obj;
+	}
+	
+	/**
+	 * Sets the invoice customer's nit and name.
+	 *
+	 * @param Customer $obj
+	 */
+	public function setCustomer(Customer $obj){
+		self::validateObjectFromDatabase($obj);
+		$this->_mNit = $obj->getNit();
+		$this->_mName = $obj->getName();
+	}
+	
+	/**
+	 * Sets the invoice's discount.
+	 *
+	 * @param Discount $obj
+	 */
+	public function setDiscount(Discount $obj){
+		if($obj->getStatus() != Persist::IN_PROGRESS)
+			throw new Exception('Descuento in&aacute;lido. La propiedad status es igual a ' .
+					'Persist::IN_PROGRESS.');
+		
+		$this->_mDiscount = $obj;
+		$obj->setInvoice($this);
+	}
+	
+	/**
+	 * Sets the invoice's cash receipt.
+	 *
+	 * @param CashReceipt $obj
+	 */
+	public function setCashReceipt(CashReceipt $obj){
+		if($obj->getStatus() != Persist::IN_PROGRESS)
+			throw new Exception('Recibo in&aacute;lido. La propiedad status es igual a ' .
+					'Persist::IN_PROGRESS.');
+			
+		$this->_mCashReceipt = $obj;
+	}
+	
+	
+	public function setData(){
+		
+	}
 	
 	
 	static public function getInstance($id, $page, &$total_pages, &$total_items){
