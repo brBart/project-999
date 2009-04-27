@@ -1224,12 +1224,80 @@ class Vat{
  * @author Roberto Oliveros
  */
 class Invoice extends Document{
+	/**
+	 * Holds the invoice's number.
+	 *
+	 * @var integer
+	 */
+	private $_Number;
 	
+	/**
+	 * Holds the invoice's correlative.
+	 *
+	 * @var Correlative
+	 */
+	private $_mCorrelative;
+	
+	/**
+	 * Holds the invoice customer's nit.
+	 *
+	 * @var string
+	 */
+	private $_mNit;
+	
+	/**
+	 * Holds the invoice customer's name.
+	 *
+	 * @var string
+	 */
+	private $_mName;
+	
+	/**
+	 * Holds the Vat's percentage value.
+	 *
+	 * @var float
+	 */
+	private $_mVatValue;
+	
+	/**
+	 * Holds from which cash register this invoice was emitted.
+	 *
+	 * @var CashRegister
+	 */
+	private $_mCashRegister;
+	
+	/**
+	 * Holds the invoice's cash receipt.
+	 *
+	 * @var CashReceipt
+	 */
+	private $_mCashReceipt;
+	
+	/**
+	 * Holds the invoice's additional discount.
+	 *
+	 * @var Discount
+	 */
+	private $_mDiscount;
+	
+	
+	static public function getInstance($id, $page, &$total_pages, &$total_items){
+		// Code here...
+	}
+	
+	
+	protected function insert(){
+		// Code here...
+	}
+	
+	protected function discard(){
+		// Code here...
+	}
 }
 
 
 /**
- * Represents an additional discount in a invoice.
+ * Represents an additional discount in an invoice.
  * @package Document
  * @author Roberto Oliveros
  */
@@ -1249,7 +1317,7 @@ class Discount extends Persist{
 	private $_mPercentage;
 	
 	/**
-	 * Holds the user who made the discount.
+	 * Holds the user who created the discount.
 	 *
 	 * @var UserAccount
 	 */
@@ -1301,6 +1369,9 @@ class Discount extends Persist{
 	 * @param Invoice $obj
 	 */
 	public function setInvoice(Invoice $obj){
+		if($obj->getStatus() != Persist::IN_PROGRESS)
+			throw new Exception('Factura in&aacute;lida. La propiedad status es igual a Persist::IN_PROGRESS.');
+		
 		$this->_mInvoice = $obj;
 	}
 	
@@ -1325,7 +1396,7 @@ class Discount extends Persist{
 	public function setData(Invoice $invoice, $percentage){
 		try{
 			self::validateObjectFromDatabase($invoice);
-			Number::validatePositiveFloat($value, 'Porcentage inv&aacute;lido.');
+			Number::validatePositiveFloat($percentage, 'Porcentage inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Discount con datos erroneos! ' .
 					$e->getMessage());
@@ -1337,15 +1408,28 @@ class Discount extends Persist{
 	}
 	
 	/**
+	 * Saves the discount's data in the database.
+	 *
+	 * Only applies if the object's status property is set to Persist::IN_PROGRESS.
+	 */
+	public function save(){
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->validateMainProperties();
+			DiscountDAM::insert($this);
+			$this->_mStatus = Persist::CREATED;
+		}
+	}
+	
+	/**
 	 * Returns an instance of a discount from the database.
 	 *
-	 * Returns NULL if there was no match for the provided id in the database.
-	 * @param integer $id
+	 * Returns NULL if there was no match for the provided invoice in the database.
+	 * @param Invoice $obj
 	 * @return Discount
 	 */
-	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-		return DiscountDAM::getInstance($id);
+	static public function getInstance(Invoice $obj){
+		self::validateObjectFromDatabase($obj);
+		return DiscountDAM::getInstance($obj);
 	}
 	
 	/**

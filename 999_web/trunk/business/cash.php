@@ -584,4 +584,22 @@ class CashRegister{
 		return CashRegisterDAM::getInstance($id);
 	}
 }
+
+
+/**
+ * Represents an invoice's cash receipt.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class CashReceipt extends PersistDocument{
+	
+	protected function insert(){
+		// Code here...
+	}
+	
+	
+	protected function discard(){
+		// Code here...
+	}
+}
 ?>
