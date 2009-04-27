@@ -1216,4 +1216,149 @@ class Vat{
 		return VatDAM::getInstance();
 	}
 }
+
+
+/**
+ * Represents a sales invoice.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class Invoice extends Document{
+	
+}
+
+
+/**
+ * Represents an additional discount in a invoice.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class Discount extends Persist{
+	/**
+	 * Invoice in which the discount was created.
+	 *
+	 * @var Invoice
+	 */
+	private $_mInvoice;
+	
+	/**
+	 * Holds the percentage value of the discount.
+	 *
+	 * @var float
+	 */
+	private $_mPercentage;
+	
+	/**
+	 * Holds the user who made the discount.
+	 *
+	 * @var UserAccount
+	 */
+	private $_mUser;
+	
+	/**
+	 * Constructs the discount with the provided data.
+	 *
+	 * @param UserAccount $user
+	 * @param integer $status
+	 */
+	public function __construct(UserAccount $user, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		self::validateObjectFromDatabase($user);
+		$this->_mUser = $user;
+	}
+	
+	/**
+	 * Returns the discount's invoice.
+	 *
+	 * @return invoice
+	 */
+	public function getInvoice(){
+		return $this->_mInvoice;
+	}
+	
+	/**
+	 * Returns the discount's percentage value.
+	 *
+	 * @return float
+	 */
+	public function getPercentage(){
+		return $this->_mPercentage;
+	}
+	
+	/**
+	 * Returns the discount's creator.
+	 *
+	 * @return UserAccount
+	 */
+	public function getUser(){
+		return $this->_mUser;
+	}
+	
+	/**
+	 * Sets the discount's invoice.
+	 *
+	 * @param Invoice $obj
+	 */
+	public function setInvoice(Invoice $obj){
+		$this->_mInvoice = $obj;
+	}
+	
+	/**
+	 * Sets the discount's percentage value.
+	 *
+	 * @param float $value
+	 */
+	public function setPercentage($value){
+		Number::validatePositiveFloat($value, 'Porcentage inv&aacute;lido.');
+		$this->_mPercentage = $value;
+	}
+	
+	/**
+	 * Set the object's properties.
+	 * 
+	 * Must be call only from the database layer corresponding class. The object's status must be set to
+	 * Persist::CREATED in the constructor method too.
+	 * @param Invoice $invoice
+	 * @param float $percentage
+	 */
+	public function setData(Invoice $invoice, $percentage){
+		try{
+			self::validateObjectFromDatabase($invoice);
+			Number::validatePositiveFloat($value, 'Porcentage inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en Discount con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mInvoice = $invoice;
+		$this->_mPercentage = $percentage;
+	}
+	
+	/**
+	 * Returns an instance of a discount from the database.
+	 *
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @return Discount
+	 */
+	static public function getInstance($id){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		return DiscountDAM::getInstance($id);
+	}
+	
+	/**
+	 * Validates the discount's main properties.
+	 *
+	 * Invoice must not be NULL and percentage must be greater than cero.
+	 * @throws Exception
+	 */
+	private function validateMainProperties(){
+		if(is_null($this->_mInvoice))
+			throw new Exception('Factura inv&aacute;lida.');
+			
+		Number::validatePositiveFloat($this->_mPercentage, 'Porcentage inv&aacute;lido.');
+	}
+}
 ?>
