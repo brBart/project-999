@@ -214,4 +214,39 @@ class VatDAM{
 		// Code here...
 	}
 }
+
+
+/**
+ * Class for accessing the discount table in the database.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class DiscountDAM{
+	/**
+	 * Returns an instance of a discount.
+	 *
+	 * Returns NULL if there was no match for the provided invoice in the database.
+	 * @param Invoice $obj
+	 * @return Discount
+	 */
+	static public function getInstance(Invoice $obj){
+		if($obj->getId() == 123){
+			$user = UserAccount::getInstance('roboli');
+			$discount = new Discount($user, Persist::CREATED);
+			$discount->setData($obj, 25.00);
+			return $discount;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Inserts the discount's data in the database.
+	 *
+	 * @param Discount $obj
+	 */
+	static public function insert(Discount $obj){
+		// Code here...
+	}
+}
 ?>
