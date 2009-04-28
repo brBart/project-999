@@ -546,7 +546,9 @@ class DocProductDetail extends DocumentDetail{
 	 * @return string
 	 */
 	public function getId(){
-		return $this->_mLot->getProduct()->getId() . $this->_mLot->getId();
+		$lot = $this->_mLot;
+		$lot_id = (!$lot->getId()) ? str_replace('/', '', $lot->getExpirationDate()) : $lot->getId();
+		return $lot->getProduct()->getId() . $lot_id; 
 	}
 	
 	/**
@@ -1236,14 +1238,14 @@ class Invoice extends Document{
 	 *
 	 * @var string
 	 */
-	private $_mNit;
+	private $_mCustomerNit;
 	
 	/**
 	 * Holds the invoice customer's name.
 	 *
 	 * @var string
 	 */
-	private $_mName;
+	private $_mCustomerName;
 	
 	/**
 	 * Holds the Vat's percentage value.
@@ -1318,8 +1320,8 @@ class Invoice extends Document{
 	 *
 	 * @return string
 	 */
-	public function getNit(){
-		return $this->_mNit;
+	public function getCustomerNit(){
+		return $this->_mCustomerNit;
 	}
 	
 	/**
@@ -1327,8 +1329,8 @@ class Invoice extends Document{
 	 *
 	 * @return string
 	 */
-	public function getName(){
-		return $this->_mName;
+	public function getCustomerName(){
+		return $this->_mCustomerName;
 	}
 	
 	/**
@@ -1369,7 +1371,7 @@ class Invoice extends Document{
 		
 		foreach($this->_mDetails as $detail)
 			if($detail instanceof DocProductDetail)
-				if($detail->getLot()->getProduct() == $product)
+				if($detail->getLot()->getProduct()->getId() == $product->getId())
 					$quantity += $detail->getQuantity();
 					
 		return $quantity;
@@ -1386,7 +1388,7 @@ class Invoice extends Document{
 		
 		foreach($this->_mDetails as $detail)
 			if($detail instanceof DocProductDetail)
-				if($detail->getLot()->getProduct() == $product)
+				if($detail->getLot()->getProduct()->getId() == $product->getId())
 					$total_price += $detail->getTotal();
 					
 		return $total_price;
@@ -1407,7 +1409,18 @@ class Invoice extends Document{
 	 * @return float
 	 */
 	public function getTotalDiscount(){
-		return $this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100);
+		$discount = (is_null($this->_mDiscount)) ? 0.00 :
+				$this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100);
+		return $discount;
+	}
+	
+	/**
+	 * Returns the document's grand total.
+	 *
+	 * @return float
+	 */
+	public function getTotal(){
+		return parent::getTotal() - $this->getTotalDiscount();
 	}
 	
 	/**
@@ -1420,18 +1433,22 @@ class Invoice extends Document{
 		foreach($this->_mDetails as $detail)
 			if($detail instanceof DocBonusDetail){
 				$bonus = $detail->getBonus();
-				if($bonus->getProduct() == $product)
+				if($bonus->getProduct()->getId() == $product->getId())
 					return $detail;
 			}
 	}
 	
 	/**
-	 * Sets the invoice's cash register.
+	 * Sets the invoice's cash receipt.
 	 *
-	 * @param CashRegister $obj
+	 * @param CashReceipt $obj
 	 */
-	public function setCashRegister(CashRegister $obj){
-		$this->_mCashRegister = $obj;
+	public function setCashReceipt(CashReceipt $obj){
+		if($obj->getStatus() != Persist::IN_PROGRESS)
+			throw new Exception('Recibo inv&aacute;lido. La propiedad status es diferente a ' .
+					'Persist::IN_PROGRESS.');
+			
+		$this->_mCashReceipt = $obj;
 	}
 	
 	/**
@@ -1441,8 +1458,8 @@ class Invoice extends Document{
 	 */
 	public function setCustomer(Customer $obj){
 		self::validateObjectFromDatabase($obj);
-		$this->_mNit = $obj->getNit();
-		$this->_mName = $obj->getName();
+		$this->_mCustomerNit = $obj->getNit();
+		$this->_mCustomerName = $obj->getName();
 	}
 	
 	/**
@@ -1452,7 +1469,7 @@ class Invoice extends Document{
 	 */
 	public function setDiscount(Discount $obj){
 		if($obj->getStatus() != Persist::IN_PROGRESS)
-			throw new Exception('Descuento in&aacute;lido. La propiedad status es igual a ' .
+			throw new Exception('Descuento inv&aacute;lido. La propiedad status es diferente a ' .
 					'Persist::IN_PROGRESS.');
 		
 		$this->_mDiscount = $obj;
