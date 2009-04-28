@@ -69,7 +69,7 @@ abstract class Persist{
 	 */
 	static public function validateObjectFromDatabase(Persist $obj){
 		if ($obj->_mStatus == self::IN_PROGRESS)
-			throw new Exception('Objeto inv&aacute;lido: ' . get_class($obj) . ' La propiedad status ' .
+			throw new Exception('Objeto inv&aacute;lido: ' . get_class($obj) . '. La propiedad status ' .
 					'debe ser igual a Persist::CREATED.');
 	}
 }
@@ -247,7 +247,7 @@ abstract class PersistDocument extends Persist{
 	 *
 	 * @var integer
 	 */
-	private $_mId;
+	protected $_mId;
 	
 	/**
 	 * Constructs the object with the provided id and status.
@@ -281,15 +281,23 @@ abstract class PersistDocument extends Persist{
 	}
 	
 	/**
+	 * Does not save the document's data and reverts the effects.
+	 *
+	 */
+	abstract public function discard();
+	
+	/**
+	 * Cancels the document and reverts its effects.
+	 *
+	 * The user argument tells who authorized the action.
+	 * @param UserAccount $user
+	 */
+	abstract public function cancel(UserAccount $user);
+	
+	/**
 	 * Inserts the document's data into the database.
 	 *
 	 */
 	abstract protected function insert();
-	
-	/**
-	 * Does not save the document's data and reverts the effects.
-	 *
-	 */
-	abstract protected function discard();
 }
 ?>

@@ -595,13 +595,15 @@ class CashRegister{
  * @author Roberto Oliveros
  */
 class CashReceipt extends PersistDocument{
-	
-	protected function insert(){
+	public function discard(){
 		// Code here...
 	}
 	
+	public function cancel(UserAccount $user){
+		// Code here...
+	}
 	
-	protected function discard(){
+	protected function insert(){
 		// Code here...
 	}
 }

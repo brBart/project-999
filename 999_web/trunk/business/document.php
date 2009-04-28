@@ -221,35 +221,15 @@ abstract class Document extends PersistDocument{
 	/**
 	 * Saves the document's data in the database.
 	 *
-	 * Only applies if the document's status property has the PersistDocument::IN_PROGRESS value.
+	 * Only applies if the document's status property has the PersistDocument::IN_PROGRESS value. Returns
+	 * the new created id from the database on success.
+	 * @return integer
 	 */
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
-			$this->insert();
 			$this->_mStatus = PersistDocument::CREATED;
-		}
-	}
-	
-	/**
-	 * Cancels the document and reverts its effects.
-	 *
-	 * If the document's status property value equals to PersistDocument::IN_PROGRESS the discard() method
-	 * is called. If it equals to PersistDocument::CREATED, all the details are cancelled and subsequent
-	 * actions are taken.
-	 */
-	public function cancel(){
-		if($this->_mStatus == PersistDocument::IN_PROGRESS)
-			$this->discard();
-		elseif($this->_mStatus == PersistDocument::CREATED){
-			foreach($this->_mDetails as $detail)
-				if(!$detail->isCancellable())
-					throw new Exception('Lotes en este documento ya fueron alterados, no se puede anular.');
-					
-			foreach($this->_mDetails as &$detail)
-				$detail->cancel();
-				
-			$this->_mStatus = PersistDocument::CANCELLED;
+			return $this->insert();
 		}
 	}
 	
@@ -258,11 +238,11 @@ abstract class Document extends PersistDocument{
 	 *
 	 * The total_pages and total_items parameters are necessary to return their respective values.
 	 * @param integer $id
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 */
-	abstract static public function getInstance($id, $page, &$total_pages, &$total_items);
+	abstract static public function getInstance($id, &$total_pages, &$total_items, $page= 0);
 	
 	/**
 	 * Validates the document's main properties.
@@ -273,6 +253,19 @@ abstract class Document extends PersistDocument{
 	protected function validateMainProperties(){
 		if(empty($this->_mDetails))
 			throw new Exception('No hay ningun detalle.');
+	}
+	
+	/**
+	 * Cancels the document's details and reverts its effects.
+	 *
+	 */
+	protected function cancelDetails(){
+		foreach($this->_mDetails as $detail)
+			if(!$detail->isCancellable())
+				throw new Exception('Lotes en este documento ya fueron alterados, no se puede anular.');
+				
+		foreach($this->_mDetails as &$detail)
+			$detail->cancel();
 	}
 }
 
@@ -1281,12 +1274,43 @@ class Invoice extends Document{
 	private $_mDiscount;
 	
 	/**
+	 * Constructs the invoice with the provided data.
+	 *
+	 * Arguments must be passed only when called from the database layer correponding class and set the
+	 * cash register in the setData method instead.
+	 * @param CashRegister $cashRegister
+	 * @param string $date
+	 * @param UserAccount $user
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct(CashRegister $cashRegister = NULL, $date = NULL, UserAccount $user = NULL,
+			$id = NULL, $status = PersistDocument::IN_PROGRESS){
+		parent::__construct($date, $user, $id, $status);
+		
+		if(!is_null($cashRegister))
+			if(!$cashRegister->isOpen())
+				throw new Exception('Caja ya esta cerrada.');
+				
+		$this->_mCashRegister = $cashRegister;
+	}
+	
+	/**
 	 * Returns the invoice's number.
 	 *
 	 * @return integer
 	 */
 	public function getNumber(){
 		return $this->_mNumber;
+	}
+	
+	/**
+	 * Returns the invoice's correlative.
+	 *
+	 * @return Correlative
+	 */
+	public function getCorrelative(){
+		return $this->_mCorrelative;
 	}
 	
 	/**
@@ -1305,6 +1329,33 @@ class Invoice extends Document{
 	 */
 	public function getName(){
 		return $this->_mName;
+	}
+	
+	/**
+	 * Returns the invoice vat's percentage applied.
+	 *
+	 * @return float
+	 */
+	public function getVatPercentage(){
+		return $this->_mVatPercentage;
+	}
+	
+	/**
+	 * Returns the invoice's cash register.
+	 *
+	 * @return CashRegister
+	 */
+	public function getCashRegister(){
+		return $this->_mCashRegister;
+	}
+	
+	/**
+	 * Returns the invoice's cash receipt.
+	 *
+	 * @return CashReceipt
+	 */
+	public function getCashReceipt(){
+		return $this->_mCashReceipt;
 	}
 	
 	/**
@@ -1342,15 +1393,6 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns the invoice vat's percentage applied.
-	 *
-	 * @return float
-	 */
-	public function getVatPercentage(){
-		return $this->_mVatPercentage;
-	}
-	
-	/**
 	 * Returns the invoice's subtotal.
 	 *
 	 * @return float
@@ -1366,6 +1408,21 @@ class Invoice extends Document{
 	 */
 	public function getTotalDiscount(){
 		return $this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100);
+	}
+	
+	/**
+	 * Returns a document bonus detail of certain product.
+	 *
+	 * @param Product $product
+	 * @return DocBonusDetail
+	 */
+	public function getBonusDetail(Product $product){
+		foreach($this->_mDetails as $detail)
+			if($detail instanceof DocBonusDetail){
+				$bonus = $detail->getBonus();
+				if($bonus->getProduct() == $product)
+					return $detail;
+			}
 	}
 	
 	/**
@@ -1403,35 +1460,154 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Sets the invoice's cash receipt.
+	 * Sets the invoice's properties.
 	 *
-	 * @param CashReceipt $obj
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * PersistDocument::CREATED in the constructor method too.
+	 * @param integer $number
+	 * @param Correlative $correlative
+	 * @param string $nit
+	 * @param string $name
+	 * @param float $vatPercentage
+	 * @param CashRegister $cashRegister
+	 * @param CashReceipt $cashReceipt
+	 * @param Discount $discount
+	 * @param float $total
+	 * @param array<DocumentDetail> $details
+	 * @throws Exception
 	 */
-	public function setCashReceipt(CashReceipt $obj){
-		if($obj->getStatus() != Persist::IN_PROGRESS)
-			throw new Exception('Recibo in&aacute;lido. La propiedad status es igual a ' .
-					'Persist::IN_PROGRESS.');
-			
-		$this->_mCashReceipt = $obj;
-	}
-	
-	
-	public function setData(){
+	public function setData($number, Correlative $correlative, $nit, $name, $vatPercentage,
+			CashRegister $cashRegister, CashReceipt $cashReceipt, Discount $discount, $total, $details){
+		parent::setData($total, $details);
 		
+		try{
+			Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
+			self::validateObjectFromDatabase($correlative);
+			Number::validatePositiveFloat($vatPercentage);
+			self::validateObjectFromDatabase($cashReceipt);
+			self::validateObjectFromDatabase($discount);
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en Invoice con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mNumber = $number;
+		$this->_mCorrelative = $correlative;
+		$this->_mNit = $nit;
+		$this->_mName = $name;
+		$this->_mVatPercentage = $vatPercentage;
+		$this->_mCashRegister = $cashRegister;
+		$this->_mCashReceipt = $cashReceipt;
+		$this->_mDiscount = $discount;
 	}
 	
-	
-	static public function getInstance($id, $page, &$total_pages, &$total_items){
-		// Code here...
+	/**
+	 * Does not save the invoice in the database and reverts its effects.
+	 *
+	 * Only applies if the object's status property is set to Persist::IN_PROGRESS.
+	 */
+	public function discard(){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			foreach($this->_mDetails as &$detail)
+				Retail::cancel($this, $detail);
 	}
 	
+	/**
+	 * ancels the document and reverts its effects.
+	 *
+	 * The user argument tells who authorized the action.
+	 * @param UserAccount $user
+	 */
+	public function cancel(UserAccount $user){
+		if($this->_mStatus == Persist::CREATED){
+			if(!$this->_mCashRegister->isOpen())
+				throw new Exception('Caja ya esta cerrada, no se puede anular.');
+			
+			$this->cancelDetails();
+			$this->_mCashReceipt->cancel($user);
+			InvoiceDAM::cancel($this, $user, date('d/m/Y'));
+			$this->_mStatus = PersistDocument::CANCELLED;
+		}
+	}
 	
+	/**
+	 * Returns an invoice with the details belonging to the requested page.
+	 *
+	 * The total_pages and total_items parameters are necessary to return their respective values.
+	 * @param integer $id
+	 * @param integer $total_pages
+	 * @param integer $total_items
+	 * @param integer $page
+	 * @return Invoice
+	 */
+	static public function getInstance($id, &$total_pages, &$total_items, $page = 0){
+		Number::validatePositiveInteger($id);
+		if($page !== 0)
+			Number::validatePositiveInteger($page);
+			
+		return InvoiceDAM::getInstance($id, &$total_pages, &$total_items, $page);
+	}
+	
+	/**
+	 * Returns the invoice identifier.
+	 *
+	 * Returns 0 if there was no match for the provided serial number and number in the database.
+	 * @param string $serialNumber
+	 * @param integer $number
+	 * @return integer
+	 */
+	static public function getInvoiceId($serialNumber, $number){
+		String::validateString($serial);
+		Number::validatePositiveInteger($number);
+		return InvoiceDAM::getId($serial, $number);
+	}
+	
+	/**
+	 * Inserts the invoice data in the database.
+	 *
+	 * It returns the new created id from the database on success.
+	 * @return integer
+	 */
 	protected function insert(){
-		// Code here...
+		$this->validateMainProperties();
+		
+		$this->_mVatPercentage = $this->getTotal() * (Vat::getInstance()->getPercentage() / 100);
+		
+		$this->_mCorrelative = Correlative::getDefaultInstance();
+		if(is_null($this->_mCorrelative))
+			throw new Exception('No hay ningun correlativo.');
+			
+		$current_number = $this->_mCorrelative->getCurrentNumber();
+		$serial_number = $this->_mCorrelative->getSerialNumber();
+		if($this->_mCorrelative->getFinalNumber() == $current_number)
+			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
+			
+		$this->_mNumber = $this->_mCorrelative->getNextNumber();
+		$this->_mId = InvoiceDAM::insert($this);
+		
+		$i = 1;
+		foreach($this->_mDetails as &$detail)
+			$detail->save($this, $i++);
+			
+		if(!is_null($this->_mDiscount))
+			$this->_mDiscount->save();
+			
+		return $this->_mId;
 	}
 	
-	protected function discard(){
-		// Code here...
+	/**
+	 * Validates the invoice main properties.
+	 *
+	 * This method call its parent validateMainProperties method. And nit must not be empty and cash receipt
+	 * must not be NULL.
+	 */
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
+		
+		String::validateString($this->_mNit, 'Nit inv&aacute;lido.');
+		if(is_null($this->_mCashReceipt))
+			throw new Exception('Favor cancelar la factura.');
 	}
 }
 
