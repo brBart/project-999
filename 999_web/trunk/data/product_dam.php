@@ -314,18 +314,32 @@ class ProductDAM{
 	 * @return Product
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$product = new Product($id, Persist::CREATED);
-			$um = UnitOfMeasure::getInstance(123);
-			$manufacturer = Manufacturer::getInstance(123);
-			$details = array();
-			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-					$manufacturer, 12.65, false, $details);
-			return $product;
-		}
-		else
-			return NULL;
+		switch($id){
+			case 123:
+				$product = new Product($id, Persist::CREATED);
+				$um = UnitOfMeasure::getInstance(123);
+				$manufacturer = Manufacturer::getInstance(123);
+				$details = array();
+				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
+				$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
+						$manufacturer, 12.65, false, $details);
+				return $product;
+				break;
+				
+			case 124:
+				$product = new Product($id, Persist::CREATED);
+				$um = UnitOfMeasure::getInstance(123);
+				$manufacturer = Manufacturer::getInstance(123);
+				$details = array();
+				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Bom214', Persist::CREATED);
+				$product->setData('Aspirina', '65432', self::$_mPackaging, 'Para dolores de cabeza.', $um,
+						$manufacturer, 7.90, false, $details);
+				return $product;
+				break;
+				
+			default:
+				return NULL;
+		}	
 	}
 	
 	/**
@@ -500,10 +514,14 @@ class LotDAM{
 	static private $_mQuantity4320 = -3;
 	static private $_mQuantity4321 = 8;
 	static private $_mQuantity4322 = 12;
+	static private $_mQuantity5432 = 15;
+	static private $_mQuantity5433 = 30;
 	static private $_mReserve123 = 3;
 	static private $_mReserve4320 = 0;
 	static private $_mReserve4321 = 4;
 	static private $_mReserve4322 = 4;
+	static private $_mReserve5432 = 10;
+	static private $_mReserve5433 = 5;
 	
 	static public function getQuantity(Lot $obj){
 		switch($obj->getId()){
@@ -521,6 +539,14 @@ class LotDAM{
 				
 			case 4322;
 				return self::$_mQuantity4322;
+				break;
+				
+			case 5432:
+				return self::$_mQuantity5432;
+				break;
+				
+			case 5433;
+				return self::$_mQuantity5433;
 				break;
 
 			default:
@@ -550,6 +576,14 @@ class LotDAM{
 				
 			case 4322;
 				return self::$_mQuantity4322 - self::$_mReserve4322;
+				break;
+				
+			case 5432:
+				return self::$_mQuantity5432 - self::$_mReserve5432;
+				break;
+				
+			case 5433;
+				return self::$_mQuantity5433 - self::$_mReserve5433;
 				break;
 				
 			default:
@@ -596,6 +630,16 @@ class LotDAM{
 				self::$_mQuantity4322 = 0;
 				self::$_mReserve4322 = 0;
 				break;
+				
+			case 5432:
+				self::$_mQuantity5432 = 0;
+				self::$_mReserve5432 = 0;
+				break;
+				
+			case 5433;
+				self::$_mQuantity5433 = 0;
+				self::$_mReserve5433 = 0;
+				break;
 
 			default:
 				// Do nothing
@@ -624,6 +668,14 @@ class LotDAM{
 				
 			case 4322;
 				self::$_mQuantity4322 += $quantity;
+				break;
+				
+			case 5432:
+				self::$_mQuantity5432 += $quantity;
+				break;
+				
+			case 5433;
+				self::$_mQuantity5433 += $quantity;
 				break;
 
 			default:
@@ -654,6 +706,14 @@ class LotDAM{
 			case 4322;
 				self::$_mQuantity4322 -= $quantity;
 				break;
+				
+			case 5432:
+				self::$_mQuantity5432 -= $quantity;
+				break;
+				
+			case 5433;
+				self::$_mQuantity5433 -= $quantity;
+				break;
 
 			default:
 				// Do nothing
@@ -682,6 +742,14 @@ class LotDAM{
 				
 			case 4322;
 				self::$_mReserve4322 += $quantity;
+				break;
+				
+			case 5432:
+				self::$_mReserve5432 += $quantity;
+				break;
+				
+			case 5433;
+				self::$_mReserve5433 += $quantity;
 				break;
 
 			default:
@@ -712,6 +780,14 @@ class LotDAM{
 			case 4322;
 				self::$_mReserve4322 -= $quantity;
 				break;
+				
+			case 5432:
+				self::$_mReserve5432 -= $quantity;
+				break;
+				
+			case 5433;
+				self::$_mReserve5433 -= $quantity;
+				break;
 
 			default:
 				// Do nothing
@@ -738,6 +814,7 @@ class LotDAM{
 	 */
 	static public function getInstance($id){
 		$product = Product::getInstance(123);
+		$product2 = Product::getInstance(124);
 		switch($id){
 			case 123:
 				$lot = new Lot($product, 0, 12.65, '31/12/2009', '15/04/2009', $id, Persist::CREATED);
@@ -756,6 +833,16 @@ class LotDAM{
 				
 			case 4322:
 				$lot = new Lot($product, 0, 15.25, '15/11/2009', '15/02/2009', $id, Persist::CREATED);
+				return $lot;
+				break;
+				
+			case 5432:
+				$lot = new Lot($product2, 0, 7.10, '15/12/2009', '10/01/2009', $id, Persist::CREATED);
+				return $lot;
+				break;
+				
+			case 5433:
+				$lot = new Lot($product2, 0, 7.55, '20/12/2009', '15/02/2009', $id, Persist::CREATED);
 				return $lot;
 				break;
 				
