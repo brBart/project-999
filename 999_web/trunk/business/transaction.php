@@ -148,6 +148,9 @@ class Entry extends Transaction{
 	public function isCancellable(DocProductDetail $detail){
 		$lot = $detail->getLot();
 		
+		/**
+		 * @todo Verify if the condition with NegativeLot is correct.
+		 */
 		if($lot instanceof NegativeLot || $detail->getQuantity() != $lot->getQuantity())
 			return false;
 		else

@@ -1444,10 +1444,7 @@ class Invoice extends Document{
 	 * @param CashReceipt $obj
 	 */
 	public function setCashReceipt(CashReceipt $obj){
-		if($obj->getStatus() != Persist::IN_PROGRESS)
-			throw new Exception('Recibo inv&aacute;lido. La propiedad status es diferente a ' .
-					'Persist::IN_PROGRESS.');
-			
+		self::validateNewObject($obj);	
 		$this->_mCashReceipt = $obj;
 	}
 	
@@ -1468,10 +1465,7 @@ class Invoice extends Document{
 	 * @param Discount $obj
 	 */
 	public function setDiscount(Discount $obj){
-		if($obj->getStatus() != Persist::IN_PROGRESS)
-			throw new Exception('Descuento inv&aacute;lido. La propiedad status es diferente a ' .
-					'Persist::IN_PROGRESS.');
-		
+		self::validateNewObject($obj);		
 		$this->_mDiscount = $obj;
 		$obj->setInvoice($this);
 	}
@@ -1500,7 +1494,7 @@ class Invoice extends Document{
 		try{
 			Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
 			self::validateObjectFromDatabase($correlative);
-			Number::validatePositiveFloat($vatPercentage);
+			Number::validatePositiveFloat($vatPercentage, 'Porcentage Iva inv&aacute;lido.');
 			self::validateObjectFromDatabase($cashReceipt);
 			self::validateObjectFromDatabase($discount);
 		} catch(Exception $e){
@@ -1511,8 +1505,8 @@ class Invoice extends Document{
 		
 		$this->_mNumber = $number;
 		$this->_mCorrelative = $correlative;
-		$this->_mNit = $nit;
-		$this->_mName = $name;
+		$this->_mCustomerNit = $nit;
+		$this->_mCustomerName = $name;
 		$this->_mVatPercentage = $vatPercentage;
 		$this->_mCashRegister = $cashRegister;
 		$this->_mCashReceipt = $cashReceipt;
@@ -1702,9 +1696,7 @@ class Discount extends Persist{
 	 * @param Invoice $obj
 	 */
 	public function setInvoice(Invoice $obj){
-		if($obj->getStatus() != Persist::IN_PROGRESS)
-			throw new Exception('Factura in&aacute;lida. La propiedad status es igual a Persist::IN_PROGRESS.');
-		
+		self::validateNewObject($obj);
 		$this->_mInvoice = $obj;
 	}
 	
