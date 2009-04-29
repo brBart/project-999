@@ -509,20 +509,31 @@ class BonusDAM{
  * @author Roberto Oliveros
  */
 class LotDAM{
-	static private $_mNegative = -5;
 	static private $_mQuantity123 = 18;
-	static private $_mQuantity4320 = -3;
-	static private $_mQuantity4321 = 8;
-	static private $_mQuantity4322 = 12;
-	static private $_mQuantity5432 = 15;
-	static private $_mQuantity5433 = 30;
 	static private $_mReserve123 = 3;
+	
+	static private $_mQuantity4320 = -3;
 	static private $_mReserve4320 = 0;
+	static private $_mNegative4320 = 0;
+	
+	static private $_mQuantity4321 = 8;
 	static private $_mReserve4321 = 4;
+	
+	static private $_mQuantity4322 = 12;
 	static private $_mReserve4322 = 4;
+	
+	static private $_mQuantity5432 = 15;
 	static private $_mReserve5432 = 10;
+	
+	static private $_mQuantity5433 = 30;
 	static private $_mReserve5433 = 5;
 	
+	/**
+	 * Returns the lot's quantity.
+	 *
+	 * @param Lot $obj
+	 * @return integer
+	 */
 	static public function getQuantity(Lot $obj){
 		switch($obj->getId()){
 			case 123:
@@ -599,7 +610,7 @@ class LotDAM{
 	 */
 	static public function getNegativeQuantity(NegativeLot $obj){
 		if($obj->getId() == 4320)
-			return self::$_mNegative;
+			return self::$_mNegative4320;
 		else
 			return 0;
 	}
@@ -644,6 +655,26 @@ class LotDAM{
 			default:
 				// Do nothing
 		}
+	}
+	
+	/**
+	 * Sets the lot's price in the database.
+	 *
+	 * @param Lot $obj
+	 * @param float $price
+	 */
+	static public function setPrice(Lot $obj, $price){
+		// Code here...
+	}
+	
+	/**
+	 * Sets the lot's expiration date in the database.
+	 *
+	 * @param Lot $obj
+	 * @param string $date
+	 */
+	static public function setExpirationDate(Lot $obj, $date){
+		// Code here...
 	}
 	
 	/**
@@ -802,7 +833,7 @@ class LotDAM{
 	 */
 	static public function updateNegativeQuantity(NegativeLot $lot, $quantity){
 		if($lot->getId() == 4320)
-			self::$_mNegative = $quantity;
+			self::$_mNegative4320 = $quantity;
 	}
 	
 	/**
@@ -822,7 +853,7 @@ class LotDAM{
 				break;
 				
 			case 4320:
-				$lot = new NegativeLot($product, 0, 14.75, NULL, NULL, 4320, Persist::CREATED);
+				$lot = new NegativeLot($product, 0, 0.00, NULL, NULL, 4320, Persist::CREATED);
 				return $lot;
 				break; 
 
