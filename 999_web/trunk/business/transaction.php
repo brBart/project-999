@@ -53,11 +53,9 @@ class Withdraw extends Transaction{
 		$lot = $detail->getLot();
 		$reserve = $detail->getReserve();
 		$lot->decrease($quantity);
-		$lot->decreaseReserve($quantity);
 		
 		$product = $lot->getProduct();
 		Inventory::decrease($product, $quantity);
-		Inventory::decreaseReserve($product, $quantity);
 		
 		Reserve::delete($reserve);
 	}

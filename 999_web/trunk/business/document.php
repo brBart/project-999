@@ -195,6 +195,8 @@ abstract class Document extends PersistDocument{
 	/**
 	 * Removes the detail from the document.
 	 *
+	 * If the detail has a negative lot, this will be modified to its original state meaning that its quantity
+	 * will be returned to its negative value before it was modified by the EntryAdjustmentEvent class. Sorry.
 	 * @param DocumentDetail $purgeDetail
 	 */
 	public function deleteDetail(DocumentDetail $purgeDetail){
@@ -743,7 +745,7 @@ class Reserve extends Persist{
 	}
 	
 	/**
-	 * Creates a reserve in the database.
+	 * Creates and reserve the provided quantity from the product in the database.
 	 *
 	 * Creates a reserve in the database and returns the instance of it.
 	 * @param Lot $lot
@@ -753,6 +755,10 @@ class Reserve extends Persist{
 	public function createReserve(Lot $lot, $quantity){
 		Persist::validateObjectFromDatabase($lot);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		
+		$lot->reserve($quantity);
+		$product = $lot->getProduct();
+		Inventory::reserve($product, $quantity);
 		
 		$helper = SessionHelper::getInstance();
 		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y'));
@@ -779,6 +785,13 @@ class Reserve extends Persist{
 	 */
 	static public function delete(Reserve $obj){
 		self::validateObjectFromDatabase($obj);
+		
+		$quantity = $obj->getQuantity();
+		$lot = $obj->getLot();
+		$lot->decreaseReserve($quantity);
+		$product = $lot->getProduct();
+		Inventory::decreaseReserve($product, $quantity);
+		
 		return ReserveDAM::delete($obj);
 	}
 }
