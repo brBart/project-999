@@ -122,14 +122,13 @@ class Entry extends Transaction{
 		$lot = $detail->getLot();
 		$product = $lot->getProduct();
 		
-		/**
-		 * @todo Check why can still cancel negative lots.
-		 */
 		if($lot instanceof NegativeLot){
 			$negative = $lot->getNegativeQuantity();
-			Inventory::decrease($product, (-1 * $negative));
-			$lot->decrease(-1 * $negative);
+			Inventory::decrease($product, abs($negative));
+			$lot->decrease(abs($negative));
 			$lot->setNegativeQuantity(0);
+			$lot->setPrice(0.00);
+			$lot->setExpirationDate(NULL);
 		}
 		else{
 			Inventory::decrease($product, $lot->getQuantity());
@@ -148,13 +147,10 @@ class Entry extends Transaction{
 	public function isCancellable(DocProductDetail $detail){
 		$lot = $detail->getLot();
 		
-		/**
-		 * @todo Verify if the condition with NegativeLot is correct.
-		 */
-		if($lot instanceof NegativeLot || $detail->getQuantity() != $lot->getQuantity())
-			return false;
-		else
+		if($lot instanceof NegativeLot || $detail->getQuantity() == $lot->getQuantity())
 			return true;
+		else
+			return false;
 	}
 }
 ?>

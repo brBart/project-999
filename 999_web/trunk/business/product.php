@@ -241,7 +241,7 @@ class Inventory{
 			if(!$lot)
 				$negative = 0;
 			else
-				$negative = -1 * $lot->getAvailable();
+				$negative = abs($lot->getQuantity());
 
 			// If it has a negative quantity but doesn't fulfill the requested quantity.
 			if($negative > 0 && $negative < $reqUnitsQuantity){
@@ -1284,10 +1284,10 @@ class Lot extends Persist{
 	 * @return integer
 	 */
 	public function getQuantity(){
-		if($this->_mStatus == Persist::IN_PROGRESS)
-			return $this->_mQuantity;
-		else
+		if($this->_mStatus == Persist::CREATED)
 			return LotDAM::getQuantity($this);
+		else
+			return $this->_mQuantity;
 	}
 	
 	/**
@@ -1349,18 +1349,32 @@ class Lot extends Persist{
 	 */
 	public function setPrice($price){
 		Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
-		$this->_mPrice = $price;
+		
+		if($this->_mStatus == Persist::CREATED){
+			LotDAM::setPrice($this, $price);
+			$this->_mPrice = $price;
+		}
+		else
+			$this->_mPrice = $price;
 	}
 	
 	/**
 	 * Sets the lot's expiration date.
 	 *
-	 * Necessary method because the inventory class provides methods for obtaining new lots.
+	 * Necessary method because the inventory class provides methods for obtaining new lots. Date format: 
+	 * 'dd/mm/yyyy'.
 	 * @param string $date
 	 */
 	public function setExpirationDate($date){
-		Date::validateDate($date, 'Fecha de vencimiento inv&aacute;lida.');
-		$this->_mExpirationDate = $date;
+		if(!is_null($date))
+			Date::validateDate($date, 'Fecha de vencimiento inv&aacute;lida.');
+			
+		if($this->_mStatus == Persist::CREATED){
+			LotDAM::setExpirationDate($this, $date);
+			$this->_mExpirationDate = $date;
+		}
+		else
+			$this->_mExpirationDate = $date;
 	}
 	
 	/**

@@ -40,7 +40,7 @@ abstract class Document extends PersistDocument{
 	private $_mTotal = 0.00;
 	
 	/**
-	 * Holds the user which created the document.
+	 * Holds the user who created the document.
 	 *
 	 * @var UserAccount
 	 */
@@ -209,8 +209,10 @@ abstract class Document extends PersistDocument{
 					$lot = $purgeDetail->getLot();
 					if($lot instanceof NegativeLot){
 						$negative = $lot->getNegativeQuantity();
-						$lot->decrease(-1 * $negative);
+						$lot->decrease(abs($negative));
 						$lot->setNegativeQuantity(0);
+						$lot->setPrice(0.00);
+						$lot->setExpirationDate(NULL);
 					}
 				}
 			}
@@ -234,7 +236,7 @@ abstract class Document extends PersistDocument{
 	}
 	
 	/**
-	 * Returns a document with the details belonging to the requested page.
+	 * Returns a document with the details corresponding to the requested page.
 	 *
 	 * The total_pages and total_items parameters are necessary to return their respective values.
 	 * @param integer $id
@@ -1334,7 +1336,7 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns the invoice vat's percentage applied.
+	 * Returns the invoice vat's percentage.
 	 *
 	 * @return float
 	 */
@@ -1361,7 +1363,7 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns the quantity of certain product the invoice has.
+	 * Returns the quantity of certain product in the invoice.
 	 *
 	 * @param Product $product
 	 * @return integer
@@ -1378,7 +1380,7 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns the total price of certain product the invoice has.
+	 * Returns the total price of certain product in the invoice.
 	 *
 	 * @param Product $product
 	 * @return float
@@ -1525,7 +1527,7 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * ancels the document and reverts its effects.
+	 * Cancels the document and reverts its effects.
 	 *
 	 * The user argument tells who authorized the action.
 	 * @param UserAccount $user
@@ -1543,7 +1545,7 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns an invoice with the details belonging to the requested page.
+	 * Returns an invoice with the details corresponding to the requested page.
 	 *
 	 * The total_pages and total_items parameters are necessary to return their respective values.
 	 * @param integer $id
