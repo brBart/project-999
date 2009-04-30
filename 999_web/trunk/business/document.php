@@ -779,9 +779,7 @@ class Reserve extends Persist{
 	/**
 	 * Deletes the reserve from the database.
 	 *
-	 * Returns true on success. Otherwise false due dependencies.
 	 * @param Reserve $obj
-	 * @return boolean
 	 */
 	static public function delete(Reserve $obj){
 		self::validateObjectFromDatabase($obj);
@@ -792,7 +790,7 @@ class Reserve extends Persist{
 		$product = $lot->getProduct();
 		Inventory::decreaseReserve($product, $quantity);
 		
-		return ReserveDAM::delete($obj);
+		ReserveDAM::delete($obj);
 	}
 }
 
@@ -1108,8 +1106,7 @@ class Correlative extends Persist{
 	/**
 	 * Deletes the correlative from the database.
 	 *
-	 * Returns true on success. Otherwise false due dependencies. Can't be deleted if it is the default
-	 * correlative.
+	 * Throws an exception due dependencies. Can't be deleted if it is the default correlative.
 	 * @param Correlative $obj
 	 * @return boolean
 	 * @throws Exception
@@ -1119,7 +1116,8 @@ class Correlative extends Persist{
 		if($obj->isDefault())
 			throw new Exception('Correlativo predeterminado, no se puede eliminar.');
 		
-		return CorrelativeDAM::delete($obj);
+		if(!CorrelativeDAM::delete($obj))
+			throw new Exception('Correlativo tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**

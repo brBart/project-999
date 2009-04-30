@@ -466,13 +466,14 @@ class Supplier extends Organization{
 	/**
 	 * Deletes the supplier from database.
 	 * 
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param Supplier $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Supplier $obj){
 		self::validateObjectFromDatabase($obj);
-		return SupplierDAM::delete($obj);
+		if(!SupplierDAM::delete($obj))
+			throw new Exception('Proveedor tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**
@@ -516,13 +517,14 @@ class Branch extends Organization{
 	/**
 	 * Deletes the branch from the database.
 	 *
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param Branch $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Branch $obj){
 		self::validateObjectFromDatabase($obj);
-		return BranchDAM::delete($obj);
+		if(!BranchDAM::delete($obj))
+			throw new Exception('Sucursal tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**

@@ -342,13 +342,14 @@ class UserAccount extends PersistObject{
 	/**
 	 * Deletes the account from the database.
 	 *
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param UserAccount $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(UserAccount $obj){
 		self::validateObjectFromDatabase($obj);			
-		return UserAccountDAM::delete($obj);
+		if(!UserAccountDAM::delete($obj))
+			throw new Exception('Cuenta de Usuario tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**

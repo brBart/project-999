@@ -46,13 +46,14 @@ class Bank extends Identifier{
 	/**
 	 * Deletes the bank from database.
 	 * 
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param Bank $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Bank $obj){
 		self::validateObjectFromDatabase($obj);		
-		return BankDAM::delete($obj);
+		if(!BankDAM::delete($obj))
+			throw new Exception('Banco tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**
@@ -312,13 +313,14 @@ class BankAccount extends PersistObject{
 	/**
 	 * Deletes the banck account from the database.
 	 *
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param BankAccount $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(BankAccount $obj){
 		self::validateObjectFromDatabase($obj);			
-		return BankAccountDAM::delete($obj);
+		if(!BankAccountDAM::delete($obj))
+			throw new Exception('Cuenta Bancaria tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**
@@ -451,13 +453,14 @@ class Shift extends Identifier{
 	/**
 	 * Deletes the shift from the database.
 	 * 
-	 * Returns true on success, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param Shift $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Shift $obj){
 		self::validateObjectFromDatabase($obj);
-		return ShiftDAM::delete($obj);
+		if(!ShiftDAM::delete($obj))
+			throw new Exception('Turno tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**

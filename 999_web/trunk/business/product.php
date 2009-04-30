@@ -50,13 +50,14 @@ class UnitOfMeasure extends Identifier{
 	/**
 	 * Deletes the unit of measure from database.
 	 * 
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param UnitOfMeasure $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(UnitOfMeasure $obj){
 		self::validateObjectFromDatabase($obj);
-		return UnitOfMeasureDAM::delete($obj);
+		if(!UnitOfMeasureDAM::delete($obj))
+			throw new Exception('Unidad de Medida tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**
@@ -111,13 +112,14 @@ class Manufacturer extends Identifier{
 	/**
 	 * Deletes the manufacturer from the database.
 	 * 
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param Manufacturer $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Manufacturer $obj){
 		self::validateObjectFromDatabase($obj);
-		return ManufacturerDAM::delete($obj);
+		if(!ManufacturerDAM::delete($obj))
+			throw new Exception('Casa tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**
@@ -852,13 +854,14 @@ class Product extends Identifier{
 	/**
 	 * Deletes the product from the database.
 	 * 
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param Product $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Product $obj){
 		self::validateObjectFromDatabase($obj);
-		return ProductDAM::delete($obj);
+		if(!ProductDAM::delete($obj))
+			throw new Exception('Producto tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**
@@ -1139,13 +1142,14 @@ class Bonus extends Persist{
 	/**
 	 * Deletes the bonus from the database.
 	 *
-	 * Returns true confirming the deletion, otherwise false due dependencies.
+	 * Throws an exception due dependencies.
 	 * @param Bonus $obj
-	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function delete(Bonus $obj){
 		self::validateObjectFromDatabase($obj);
-		return BonusDAM::delete($obj);
+		if(!BonusDAM::delete($obj))
+			throw new Exception('Oferta tiene dependencias y no se puede eliminar.');
 	}
 	
 	/**
