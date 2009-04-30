@@ -6,7 +6,7 @@
  */
 
 /**
- * Event class for creating an entry type document.
+ * Event class for creating an entry type documents.
  * @package Event
  * @author Roberto Oliveros
  */
@@ -14,6 +14,7 @@ class EntryEvent{
 	/**
 	 * Adds a detail to the provided document with the provided data.
 	 *
+	 * Also creates a new lot of the provided product.
 	 * Date format: 'dd/mm/yyyy'.
 	 * @param Product $product
 	 * @param Document $document
@@ -83,6 +84,57 @@ class EntryAdjustmentEvent extends EntryEvent{
 			$lot->setExpirationDate($expirationDate);
 			$document->addDetail(new DocProductDetail($lot, new Entry(), $lot_quantity, $price));
 		}
+	}
+}
+
+
+/**
+ * Event class for creating withdraw type documents.
+ * @package Event
+ * @author Roberto Oliveros
+ */
+class WithdrawEvent{
+	/**
+	 * Adds detail(s) to the provided document with the provided quantity.
+	 *
+	 * It creates a reserve on each necessary lot until it fulfills the requested quantity.
+	 * @param Product $product
+	 * @param Document $document
+	 * @param integer $quantity
+	 */
+	static public function apply(Product $product, Document $document, $quantity){
+		$lots = Inventory::getLots($product, $quantity);
+		$price = $product->getPrice();
+		
+		foreach($lots as &$lot){
+			$available = $lot->getAvailable();
+			if($available >= $quantity || $available == 0){
+				$reserve = Reserve::createReserve($lot, $quantity);
+				$detail_quantity = $quantity;
+				$quantity = 0;
+			}
+			else{
+				$reserve = Reserve::createReserve($lot, $available);
+				$detail_quantity = $available;
+				$quantity -= $available;
+			}
+			
+			$document->addDetail(new DocProductDetail($lot, new Withdraw(), $detail_quantity, $price,
+					$reserve));
+		}
+	}
+	
+	/**
+	 * Deletes the detail from the provided document.
+	 *
+	 * It also deletes the reserve previously created.
+	 * @param Document $document
+	 * @param DocProductDetail $detail
+	 */
+	static public function cancel(Document $document, DocProductDetail $detail){
+		$reserve = $detail->getReserve();
+		Reserve::delete($reserve);
+		$document->deleteDetail($detail);
 	}
 }
 ?>
