@@ -201,6 +201,8 @@ class ShiftDAM{
  */
 class CashRegisterDAM{
 	static private $_mIsOpen = true;
+	static private $_mIsOpen123 = true;
+	static private $_mIsOpen124 = true;
 	
 	/**
 	 * Returns the status of the cash register.
@@ -209,7 +211,18 @@ class CashRegisterDAM{
 	 * @return boolean
 	 */
 	static public function isOpen(CashRegister $obj){
-		return self::$_mIsOpen;
+		switch($obj->getId()){
+			case 123:
+				return self::$_mIsOpen123;
+				break;
+				
+			case 124:
+				return self::$_mIsOpen124;
+				break;
+				
+			default:
+				return self::$_mIsOpen;
+		}
 	}
 	
 	/**
@@ -218,7 +231,18 @@ class CashRegisterDAM{
 	 * @param CashRegister $obj
 	 */
 	static public function close(CashRegister $obj){
-		self::$_mIsOpen = false;
+		switch($obj->getId()){
+			case 123:
+				self::$_mIsOpen123 = false;
+				break;
+				
+			case 124:
+				self::$_mIsOpen124 = false;
+				break;
+				
+			default:
+				self::$_mIsOpen = false;
+		}
 	}
 	
 	/**
@@ -229,13 +253,22 @@ class CashRegisterDAM{
 	 * @return CashRegister
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$shift = Shift::getInstance(123);
-			$cash_register = new CashRegister($shift, 123);
-			return $cash_register;
+		switch($id){
+			case 123:
+				$shift = Shift::getInstance(123);
+				$cash_register = new CashRegister($shift, 123);
+				return $cash_register;
+				break;
+				
+			case 124:
+				$shift = Shift::getInstance(123);
+				$cash_register = new CashRegister($shift, 124);
+				return $cash_register;
+				break;
+				
+			default:
+				return NULL;
 		}
-		else
-			return NULL;
 	}
 }
 ?>
