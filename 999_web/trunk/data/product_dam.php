@@ -133,8 +133,11 @@ class ManufacturerDAM{
  * @author Roberto Oliveros
  */
 class InventoryDAM{
-	static private $_mQuantity = 20;
-	static private $_mReserve = 8;
+	static private $_mQuantity123 = 20;
+	static private $_mReserve123 = 8;
+	
+	static private $_mQuantity124 = 45;
+	static private $_mReserve124 = 15;
 	
 	/**
 	 * Returns the available quantity of the product's inventory.
@@ -143,8 +146,17 @@ class InventoryDAM{
 	 * @return integer
 	 */
 	static public function getAvailable(Product $obj){
-		if($obj->getId() == 123)
-			return self::$_mQuantity - self::$_mReserve;
+		switch($obj->getId()){
+			case 123:
+				return self::$_mQuantity123 - self::$_mReserve123;
+				break;
+				
+			case 124:
+				return self::$_mQuantity124 - self::$_mReserve124;
+				break;
+				
+			default:
+		}	
 	}
 	
 	/**
@@ -154,8 +166,17 @@ class InventoryDAM{
 	 * @return integer
 	 */
 	static public function getQuantity(Product $obj){
-		if($obj->getId() == 123)
-			return self::$_mQuantity;
+		switch($obj->getId()){
+			case 123:
+				return self::$_mQuantity123;
+				break;
+				 
+			case 124:
+				return self::$_mQuantity124;
+				break;
+				
+			default:
+		}	
 	}
 	
 	/**
@@ -166,11 +187,36 @@ class InventoryDAM{
 	 * @return array<Lot>
 	 */
 	static public function getLots(Product $obj){
-		if($obj->getId() == 123){
-			$lots = array();
-			$lots[] = Lot::getInstance(4321);
-			$lots[] = Lot::getInstance(4322);
-			return $lots;
+		switch($obj->getId()){
+			case 123:
+				$lots = array();
+				
+				$lot = Lot::getInstance(4321);
+				if($lot->getAvailable() > 0)
+					$lots[] = $lot;
+					
+				$lot = Lot::getInstance(4322);
+				if($lot->getAvailable() > 0)
+					$lots[] = $lot;
+				
+				return $lots;
+				break;
+				
+			case 124:
+				$lots = array();
+				
+				$lot = Lot::getInstance(5432);
+				if($lot->getAvailable() > 0)
+					$lots[] = $lot;
+					
+				$lot = Lot::getInstance(5433);
+				if($lot->getAvailable() > 0)
+					$lots[] = $lot;
+					
+				return $lots;
+				break;
+				
+			default:
 		}
 	}
 	
@@ -196,8 +242,17 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function increase(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mQuantity += $quantity;
+		switch($product->getId()){
+			case 123:
+				self::$_mQuantity123 += $quantity;
+				break;
+				
+			case 124:
+				self::$_mQuantity124 += $quantity;
+				break;
+				
+			default:
+		}
 	}
 	
 	/**
@@ -207,8 +262,17 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function decrease(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mQuantity -= $quantity;
+		switch($product->getId()){
+			case 123:
+				self::$_mQuantity123 -= $quantity;
+				break;
+				
+			case 124:
+				self::$_mQuantity124 -= $quantity;
+				break;
+				
+			default:
+		}
 	}
 	
 	/**
@@ -218,8 +282,17 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function reserve(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mReserve += $quantity;
+		switch($product->getId()){
+			case 123:
+				self::$_mReserve123 += $quantity;
+				break;
+				
+			case 124:
+				self::$_mReserve124 += $quantity;
+				break;
+				
+			default:
+		}
 	}
 	
 	/**
@@ -229,8 +302,17 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function decreaseReserve(Product $product, $quantity){
-		if($product->getId() == 123)
-			self::$_mReserve -= $quantity;
+		switch($product->getId()){
+			case 123:
+				self::$_mReserve123 -= $quantity;
+				break;
+				
+			case 124:
+				self::$_mReserve124 -= $quantity;
+				break;
+				
+			default:
+		}
 	}
 }
 
@@ -470,8 +552,12 @@ class BonusDAM{
 	 * @return Bonus
 	 */
 	static public function getInstanceByProduct(Product $product, $quantity){
-		if($product->getId() == 123 && $quantity == 4)
+		if($product->getId() == 123 && $quantity >= 4)
 			return new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', 123, Persist::CREATED);
+		elseif($product->getId() == 124 && $quantity >= 11)
+			return new Bonus($product, 11, 15.00, '15/06/2009', '01/04/2009', 125, Persist::CREATED);
+		elseif($product->getId() == 124 && $quantity >= 4)
+			return new Bonus($product, 4, 5.00, '15/06/2009', '01/04/2009', 124, Persist::CREATED);
 		else
 			return NULL;
 	}
