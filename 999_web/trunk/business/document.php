@@ -189,6 +189,17 @@ abstract class Document extends PersistDocument{
 				$temp_details[] = $detail;
 			else{
 				$detail->increase($newDetail->getQuantity());
+				
+				// Must increase the reserve, if there is one...
+				if($detail instanceof DocProductDetail){
+					$reserve = $detail->getReserve();
+					if(!is_null($reserve)){
+						$new_reserve = $newDetail->getReserve();
+						if(!is_null($new_reserve))
+							$reserve->mergeReserve($new_reserve);
+					}
+				}
+					
 				$newDetail = $detail;
 			}
 		}
@@ -237,8 +248,9 @@ abstract class Document extends PersistDocument{
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
+			$this->insert();
 			$this->_mStatus = PersistDocument::CREATED;
-			return $this->insert();
+			return $this->_mId;
 		}
 	}
 	
@@ -779,6 +791,19 @@ class Reserve extends Persist{
 	}
 	
 	/**
+	 * Merge the provided reserve's quantity to this object quantity.
+	 *
+	 * Took the provided reserve's quantity and adds it to this reserve's quantity property. Then it deletes
+	 * the the provided reserve from database.
+	 * @param Reserve $obj
+	 */
+	public function mergeReserve(Reserve $obj){
+		self::validateObjectFromDatabase($obj);
+		$this->_mQuantity += $obj->getQuantity();
+		ReserveDAM::delete($obj);
+	}
+	
+	/**
 	 * Returns an instance of a reserve with database data.
 	 *
 	 * Returns NULL if there was no match of the provided id in the database.
@@ -1313,13 +1338,12 @@ class Invoice extends Document{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct(CashRegister $cashRegister = NULL, $date = NULL, UserAccount $user = NULL,
+	public function __construct(CashRegister $cashRegister, $date = NULL, UserAccount $user = NULL,
 			$id = NULL, $status = PersistDocument::IN_PROGRESS){
 		parent::__construct($date, $user, $id, $status);
 		
-		if(!is_null($cashRegister))
-			if(!$cashRegister->isOpen())
-				throw new Exception('Caja ya esta cerrada.');
+		if($this->_mStatus == Persist::IN_PROGRESS && !$cashRegister->isOpen())
+			throw new Exception('Caja ya esta cerrada.');
 				
 		$this->_mCashRegister = $cashRegister;
 	}
@@ -1501,7 +1525,7 @@ class Invoice extends Document{
 	 * @throws Exception
 	 */
 	public function setData($number, Correlative $correlative, $nit, $name, $vatPercentage,
-			CashRegister $cashRegister, CashReceipt $cashReceipt, Discount $discount, $total, $details){
+			CashReceipt $cashReceipt, Discount $discount, $total, $details){
 		parent::setData($total, $details);
 		
 		try{
@@ -1521,9 +1545,25 @@ class Invoice extends Document{
 		$this->_mCustomerNit = $nit;
 		$this->_mCustomerName = $name;
 		$this->_mVatPercentage = $vatPercentage;
-		$this->_mCashRegister = $cashRegister;
 		$this->_mCashReceipt = $cashReceipt;
 		$this->_mDiscount = $discount;
+	}
+	
+	/**
+	 * Saves the document's data in the database.
+	 *
+	 * Only applies if the document's status property has the PersistDocument::IN_PROGRESS value. Returns
+	 * the new created id from the database on success.
+	 * @return integer
+	 */
+	public function save(){
+		if($this->_mStatus == PersistDocument::IN_PROGRESS){
+			$this->_mCorrelative = Correlative::getDefaultInstance();
+			$this->validateMainProperties();
+			$this->insert();
+			$this->_mStatus = PersistDocument::CREATED;
+			return $this->_mId;
+		}
 	}
 	
 	/**
@@ -1594,16 +1634,9 @@ class Invoice extends Document{
 	 * @return integer
 	 */
 	protected function insert(){
-		$this->validateMainProperties();
-		
 		$this->_mVatPercentage = $this->getTotal() * (Vat::getInstance()->getPercentage() / 100);
-		
-		$this->_mCorrelative = Correlative::getDefaultInstance();
-		if(is_null($this->_mCorrelative))
-			throw new Exception('No hay ningun correlativo.');
 			
 		$current_number = $this->_mCorrelative->getCurrentNumber();
-		$serial_number = $this->_mCorrelative->getSerialNumber();
 		if($this->_mCorrelative->getFinalNumber() == $current_number)
 			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
 			
@@ -1616,8 +1649,6 @@ class Invoice extends Document{
 			
 		if(!is_null($this->_mDiscount))
 			$this->_mDiscount->save();
-			
-		return $this->_mId;
 	}
 	
 	/**
@@ -1630,8 +1661,10 @@ class Invoice extends Document{
 		parent::validateMainProperties();
 		
 		String::validateString($this->_mNit, 'Nit inv&aacute;lido.');
+		if(is_null($this->_mCorrelative))
+			throw new Exception('No hay ningun correlativo.');
 		if(is_null($this->_mCashReceipt))
-			throw new Exception('Favor cancelar la factura.');
+			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
 	}
 }
 

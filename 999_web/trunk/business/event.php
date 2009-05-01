@@ -167,12 +167,16 @@ class StrictWithdrawEvent extends WithdrawEvent{
 }
 
 
-
+/**
+ * Event class for creating sale invoice documents.
+ * @package Event
+ * @author Roberto Oliveros
+ */
 class Retail{
 	/**
 	 * Adds detail(s) to the provided invoice with the provided quantity.
 	 *
-	 * It also look for current sales for the product provided.
+	 * It also check if the provided product has any sales.
 	 * @param Product $product
 	 * @param Invoice $invoice
 	 * @param integer $quantity
@@ -185,7 +189,7 @@ class Retail{
 	/**
 	 * Deletes the detail from the invoice document.
 	 *
-	 * It also look for current sales again.
+	 * It also removes the sales of the detail's product.
 	 * @param Invoice $invoice
 	 * @param DocumentDetail $detail
 	 */
