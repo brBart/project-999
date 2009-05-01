@@ -182,14 +182,19 @@ abstract class Document extends PersistDocument{
 	public function addDetail(DocumentDetail $newDetail){
 		$this->_mTotal += $newDetail->getTotal();
 		
+		// For moving the modified detail to the last place.
+		$temp_details = array();
 		foreach($this->_mDetails as &$detail){
-			if($detail->getId() == $newDetail->getId()){
+			if($detail->getId() != $newDetail->getId())
+				$temp_details[] = $detail;
+			else{
 				$detail->increase($newDetail->getQuantity());
-				return;
+				$newDetail = $detail;
 			}
 		}
 		
-		$this->_mDetails[] = $newDetail;
+		$temp_details[] = $newDetail;
+		$this->_mDetails = $temp_details;
 	}
 	
 	/**
@@ -203,7 +208,7 @@ abstract class Document extends PersistDocument{
 		$temp_details = array();
 		
 		foreach($this->_mDetails as &$detail)
-			if($detail != $purgeDetail)
+			if($detail->getId() != $purgeDetail->getId())
 				$temp_details[] = $detail;
 			else{
 				$this->_mTotal -= $purgeDetail->getTotal();
@@ -551,7 +556,16 @@ class DocProductDetail extends DocumentDetail{
 	 */
 	public function getId(){
 		$lot = $this->_mLot;
+		// For new lots that has there id equal to cero must be distinguish.
 		$lot_id = (!$lot->getId()) ? str_replace('/', '', $lot->getExpirationDate()) : $lot->getId();
+		
+		/**
+		 * @todo Check if this is OK.
+		 * For distinguish new lots with same product same expiration date but with different price.
+		 */
+		if($this->_mTransaction instanceof Entry)
+			$lot_id = $lot_id . number_format($this->_mPrice, 2);
+		
 		return $lot->getProduct()->getId() . $lot_id; 
 	}
 	

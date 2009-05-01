@@ -59,7 +59,8 @@ class EntryAdjustmentEvent extends EntryEvent{
 	 * @param string $expirationDate
 	 * @param string &$msg
 	 */
-	static public function apply(Product $product, Document $document, $quantity, $price, $expirationDate, &$msg){
+	static public function apply(Product $product, Document $document, $quantity, $price,
+			$expirationDate, &$msg){
 		$lots = Inventory::getNegativeLots($product, $quantity);
 		
 		foreach($lots as &$lot){
@@ -211,13 +212,16 @@ class Retail{
 			self::cancel($invoice, $bonus_detail);
 			
 		$quantity = $invoice->getProductQuantity($product);
-		$bonus = Bonus::getInstanceByProduct($product, $quantity);
-		if(!is_null($bonus))
-			/**
-			 * @todo Verify if the result needs rounding.
-			 */
-			$invoice->addDetail(new DocBonusDetail($bonus,
-					-1 * (($product->getPrice() * $bonus->getQuantity()) * ($bonus->getPercentage() / 100))));
+		if($quantity > 0){
+			$bonus = Bonus::getInstanceByProduct($product, $quantity);
+			if(!is_null($bonus))
+				/**
+			 	* @todo Verify if the result needs rounding.
+			 	*/
+				$invoice->addDetail(new DocBonusDetail($bonus,
+						-1 * (($product->getPrice() * $bonus->getQuantity()) *
+						($bonus->getPercentage() / 100))));
+		}
 	}
 }
 ?>
