@@ -137,4 +137,87 @@ class WithdrawEvent{
 		$document->deleteDetail($detail);
 	}
 }
+
+
+/**
+ * Event class for creating withdraw type documents, it verifies the inventory stock.
+ * @package Event
+ * @author Roberto Oliveros
+ */
+class StrictWithdrawEvent extends WithdrawEvent{
+	/**
+	 * Adds detail(s) to the provided document with the provided quantity.
+	 *
+	 * It creates a reserve on each necessary lot until it fulfills the requested quantity. It also verifies
+	 * the inventory stock before taking action, if there is sufficient stock it proceeds.
+	 * @param Product $product
+	 * @param Document $document
+	 * @param integer $quantity
+	 */
+	static public function apply(Product $product, Document $document, $quantity){
+		Persist::validateObjectFromDatabase($product);
+		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		
+		if(Inventory::getAvailable($product) < $quantity)
+			throw new Exception('No hay suficiente cantidad.');
+			
+		parent::apply($product, $document, $quantity);
+	}
+}
+
+
+
+class Retail{
+	/**
+	 * Adds detail(s) to the provided invoice with the provided quantity.
+	 *
+	 * It also look for current sales for the product provided.
+	 * @param Product $product
+	 * @param Invoice $invoice
+	 * @param integer $quantity
+	 */
+	static public function apply(Product $product, Invoice $invoice, $quantity){
+		WithdrawEvent::apply($product, $invoice, $quantity);
+		self::applySales($invoice, $product);
+	}
+	
+	/**
+	 * Deletes the detail from the invoice document.
+	 *
+	 * It also look for current sales again.
+	 * @param Invoice $invoice
+	 * @param DocumentDetail $detail
+	 */
+	static public function cancel(Invoice $invoice, DocumentDetail $detail){
+		if($detail instanceof DocProductDetail){
+			WithdrawEvent::cancel($invoice, $detail);
+			$lot = $detail->getLot();
+			$product = $lot->getProduct();
+			self::applySales($invoice, $product);
+		}
+		else
+			$invoice->deleteDetail($detail);
+	}
+	
+	/**
+	 * Applies sales bonifications to an invoice.
+	 *
+	 * @param Invoice $invoice
+	 * @param Product $product
+	 */
+	static private function applySales(Invoice $invoice, Product $product){
+		$bonus_detail = $invoice->getBonusDetail($product);
+		if(!is_null($bonus_detail))
+			self::cancel($invoice, $bonus_detail);
+			
+		$quantity = $invoice->getProductQuantity($product);
+		$bonus = Bonus::getInstanceByProduct($product, $quantity);
+		if(!is_null($bonus))
+			/**
+			 * @todo Verify if the result needs rounding.
+			 */
+			$invoice->addDetail(new DocBonusDetail($bonus,
+					-1 * (($product->getPrice() * $bonus->getQuantity()) * ($bonus->getPercentage() / 100))));
+	}
+}
 ?>

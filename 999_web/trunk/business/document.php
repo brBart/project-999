@@ -1391,23 +1391,6 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns the total price of certain product in the invoice.
-	 *
-	 * @param Product $product
-	 * @return float
-	 */
-	public function getProductTotalPrice(Product $product){
-		$total_price = 0;
-		
-		foreach($this->_mDetails as $detail)
-			if($detail instanceof DocProductDetail)
-				if($detail->getLot()->getProduct()->getId() == $product->getId())
-					$total_price += $detail->getTotal();
-					
-		return $total_price;
-	}
-	
-	/**
 	 * Returns the invoice's subtotal.
 	 *
 	 * @return float
@@ -1422,6 +1405,9 @@ class Invoice extends Document{
 	 * @return float
 	 */
 	public function getTotalDiscount(){
+		/**
+		 * @todo Verify it it the result needs rounding.
+		 */
 		$discount = (is_null($this->_mDiscount)) ? 0.00 :
 				$this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100);
 		return $discount;
