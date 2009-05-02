@@ -172,7 +172,7 @@ class StrictWithdrawEvent extends WithdrawEvent{
  * @package Event
  * @author Roberto Oliveros
  */
-class Retail{
+class RetailEvent{
 	/**
 	 * Adds detail(s) to the provided invoice with the provided quantity.
 	 *

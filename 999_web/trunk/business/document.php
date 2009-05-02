@@ -1561,7 +1561,6 @@ class Invoice extends Document{
 			$this->_mCorrelative = Correlative::getDefaultInstance();
 			$this->validateMainProperties();
 			$this->insert();
-			$this->_mStatus = PersistDocument::CREATED;
 			return $this->_mId;
 		}
 	}
@@ -1574,7 +1573,11 @@ class Invoice extends Document{
 	public function discard(){
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			foreach($this->_mDetails as &$detail)
-				Retail::cancel($this, $detail);
+				if($detail instanceof DocProductDetail)
+					// RetailEvent isn't called because sales aren't needed anymore.
+					WithdrawEvent::cancel($this, $detail);
+				else
+					$this->deleteDetail($detail);
 	}
 	
 	/**
@@ -1634,15 +1637,18 @@ class Invoice extends Document{
 	 * @return integer
 	 */
 	protected function insert(){
-		$this->_mVatPercentage = $this->getTotal() * (Vat::getInstance()->getPercentage() / 100);
+		$this->_mVatPercentage = Vat::getInstance()->getPercentage();
 			
 		$current_number = $this->_mCorrelative->getCurrentNumber();
+
 		if($this->_mCorrelative->getFinalNumber() == $current_number)
 			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
-			
+		
 		$this->_mNumber = $this->_mCorrelative->getNextNumber();
 		$this->_mId = InvoiceDAM::insert($this);
+		$this->_mStatus = PersistDocument::CREATED;
 		
+		// Watch out, if any error occurs the database has already been altereted!
 		$i = 1;
 		foreach($this->_mDetails as &$detail)
 			$detail->save($this, $i++);
@@ -1660,9 +1666,9 @@ class Invoice extends Document{
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
 		
-		String::validateString($this->_mNit, 'Nit inv&aacute;lido.');
+		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.');
 		if(is_null($this->_mCorrelative))
-			throw new Exception('No hay ningun correlativo.');
+			throw new Exception('No hay ningun correlativo predeterminado.');
 		if(is_null($this->_mCashReceipt))
 			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
 	}
