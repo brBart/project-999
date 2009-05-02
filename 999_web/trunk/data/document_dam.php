@@ -103,7 +103,11 @@ class ReserveDAM{
  * @author Roberto Oliveros
  */
 class CorrelativeDAM{
-	static private $_mDefault = false;
+	static private $_mDefaultA021 = false;
+	static private $_mCurrentA021 = 457;
+	
+	static private $_mDefaultA022 = true;
+	static private $_mCurrentA022 = 0;
 	
 	/**
 	 * Returns true if a a correlative with the provided serial number exists in the database.
@@ -112,10 +116,18 @@ class CorrelativeDAM{
 	 * @return boolean
 	 */
 	static public function exists($serialNumber){
-		if($serialNumber == 'A021')
-			return true;
-		else
-			return false;
+		switch($serialNumber){
+			case 'A021':
+				return true;
+				break;
+				
+			case 'A022':
+				return true;
+				break;
+				
+			default:
+				return false;
+		}
 	}
 	
 	/**
@@ -127,14 +139,40 @@ class CorrelativeDAM{
 		return false;
 	}
 	
+	
+	static public function getNextNumber(Correlative $obj){
+		switch($obj->getSerialNumber()){
+			case 'A021':
+				return ++self::$_mCurrentA021;
+				break;
+			
+			case 'A022':
+				return ++self::$_mCurrentA022;
+				break;
+				
+			default:
+		}
+	}
+	
 	/**
 	 * Makes default the provided correlative.
 	 *
 	 * @param Correlative $obj
 	 */
 	static public function makeDefault(Correlative $obj){
-		if($obj->getSerialNumber() == 'A021')
-			self::$_mDefault = true;
+		switch($obj->getSerialNumber()){
+			case 'A021':
+				self::$_mDefaultA021 = true;
+				self::$_mDefaultA022 = false;
+				break;
+			
+			case 'A022':
+				self::$_mDefaultA021 = false;
+				self::$_mDefaultA022 = true;
+				break;
+				
+			default:
+		}
 	}
 	
 	/**
@@ -145,13 +183,24 @@ class CorrelativeDAM{
 	 * @return Correlative
 	 */
 	static public function getInstance($serialNumber){
-		if($serialNumber == 'A021'){
-			$correlative = new Correlative($serialNumber, self::$_mDefault, 457, Persist::CREATED);
-			$correlative->setData('2008-10', '15/01/2008', 100, 5000);
-			return $correlative;
+		switch($serialNumber){
+			case 'A021':
+				$correlative = new Correlative($serialNumber, self::$_mDefaultA021,
+						self::$_mCurrentA021, Persist::CREATED);
+				$correlative->setData('2008-10', '15/01/2008', 100, 5000);
+				return $correlative;
+				break;
+				
+			case 'A022':
+				$correlative = new Correlative($serialNumber, self::$_mDefaultA022,
+						self::$_mCurrentA022, Persist::CREATED);
+				$correlative->setData('2008-05', '15/01/2008', 5000, 10000);
+				return $correlative;
+				break;
+			
+			default:
+				return NULL;
 		}
-		else
-			return NULL;
 	}
 	
 	/**
@@ -160,9 +209,18 @@ class CorrelativeDAM{
 	 * @return Correlative
 	 */
 	static public function getDefaultInstance(){
-		$correlative = new Correlative('A022', true, 457, Persist::CREATED);
-		$correlative->setData('2008-05', '15/01/2008', 100, 5000);
-		return $correlative;
+		if(self::$_mDefaultA021){
+			$correlative = new Correlative('A021', true, self::$_mCurrentA021, Persist::CREATED);
+			$correlative->setData('2008-10', '15/01/2008', 5000, 10000);
+			return $correlative;
+		}
+		elseif(self::$_mDefaultA022){
+			$correlative = new Correlative('A022', true, self::$_mCurrentA022, Persist::CREATED);
+			$correlative->setData('2008-05', '15/01/2008', 100, 5000);
+			return $correlative;
+		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -247,6 +305,25 @@ class DiscountDAM{
 	 */
 	static public function insert(Discount $obj){
 		// Code here...
+	}
+}
+
+
+/**
+ * Class for accessing invoice tables in the database.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class InvoiceDAM{
+	/**
+	 * Inserts the invoice's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Invoice $obj
+	 * @return integer
+	 */
+	static public function insert(Invoice $obj){
+		return 123;
 	}
 }
 ?>
