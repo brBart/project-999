@@ -50,7 +50,8 @@ class BankDAM{
 	}
 	
 	/**
-	 * Deletes a Bank from the datase. Returns true on success, otherwise it has dependencies and returns false.
+	 * Deletes a Bank from the database. Returns true on success, otherwise it has dependencies and
+	 * returns false.
 	 *
 	 * @param Bank $obj
 	 * @return boolean
@@ -282,7 +283,7 @@ class PaymentCardTypeDAM{
 	static private $_mName = 'Credito';
 	
 	/**
-	 * Returns a type of card if it founds an id match in the database. Otherwise returns NULL.
+	 * Returns a type of payment card if it founds an id match in the database. Otherwise returns NULL.
 	 *
 	 * @param integer $id
 	 * @return PaymentCardType
@@ -298,7 +299,7 @@ class PaymentCardTypeDAM{
 	}
 	
 	/**
-	 * Insert a type of card in the database.
+	 * Insert a type of payment card in the database.
 	 *
 	 * @param PaymentCardType $obj
 	 */
@@ -307,7 +308,7 @@ class PaymentCardTypeDAM{
 	}
 	
 	/**
-	 * Updates a type of card data in the database.
+	 * Updates a type of payment card data in the database.
 	 *
 	 * @param PaymentCardType $obj
 	 */
@@ -316,13 +317,71 @@ class PaymentCardTypeDAM{
 	}
 	
 	/**
-	 * Deletes a type of card from the datase. Returns true on success, otherwise it has dependencies
+	 * Deletes a type of payment card from the database. Returns true on success, otherwise it has dependencies
 	 * and returns false.
 	 *
 	 * @param PaymentCardType $obj
 	 * @return boolean
 	 */
 	static public function delete(PaymentCardType $obj){
+		if($obj->getId() == 123)
+			return true;
+		else
+			return false;
+	}
+}
+
+
+/**
+ * Defines functionality for accessing the payment card brand database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class PaymentCardBrandDAM{
+	static private $_mName = 'Visa';
+	
+	/**
+	 * Returns a payment card brand if it founds an id match in the database. Otherwise returns NULL.
+	 *
+	 * @param integer $id
+	 * @return PaymentCardBrand
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$brand = new PaymentCardBrand(123, PersistObject::CREATED);
+			$brand->setData(self::$_mName);
+			return $brand;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Insert a payment card brand in the database.
+	 *
+	 * @param PaymentCardBrand $obj
+	 */
+	static public function insert(PaymentCardBrand $obj){
+		return 123;
+	}
+	
+	/**
+	 * Updates a payment card brand data in the database.
+	 *
+	 * @param PaymentCardBrand $obj
+	 */
+	static public function update(PaymentCardBrand $obj){
+		self::$_mName = $obj->getName();
+	}
+	
+	/**
+	 * Deletes a payment card brand from the database. Returns true on success, otherwise it has dependencies
+	 * and returns false.
+	 *
+	 * @param PaymentCardBrand $obj
+	 * @return boolean
+	 */
+	static public function delete(PaymentCardBrand $obj){
 		if($obj->getId() == 123)
 			return true;
 		else
