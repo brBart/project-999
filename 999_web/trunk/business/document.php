@@ -196,7 +196,7 @@ abstract class Document extends PersistDocument{
 					if(!is_null($reserve)){
 						$new_reserve = $newDetail->getReserve();
 						if(!is_null($new_reserve))
-							$reserve->mergeReserve($new_reserve);
+							$reserve->merge($new_reserve);
 					}
 				}
 					
@@ -711,7 +711,7 @@ class Reserve extends Persist{
 	/**
 	 * Constructs the reserve with the provided data.
 	 *
-	 * Must be called only from the database layer corresponding class. Use createReserve method instead if
+	 * Must be called only from the database layer corresponding class. Use create method instead if
 	 * a new reserve is needed. Lack of experience, sorry.
 	 * @param integer $id
 	 * @param Lot $lot
@@ -778,7 +778,7 @@ class Reserve extends Persist{
 	 * @param integer $quantity
 	 * @return Reserve
 	 */
-	public function createReserve(Lot $lot, $quantity){
+	public function create(Lot $lot, $quantity){
 		Persist::validateObjectFromDatabase($lot);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		
@@ -797,7 +797,7 @@ class Reserve extends Persist{
 	 * the the provided reserve from database.
 	 * @param Reserve $obj
 	 */
-	public function mergeReserve(Reserve $obj){
+	public function merge(Reserve $obj){
 		self::validateObjectFromDatabase($obj);
 		$this->_mQuantity += $obj->getQuantity();
 		ReserveDAM::delete($obj);

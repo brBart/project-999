@@ -154,11 +154,11 @@ class BankAccount extends PersistObject{
 	private $_mNumber;
 	
 	/**
-	 * Holds the account's holder.
+	 * Holds the account holder's name.
 	 *
 	 * @var string
 	 */
-	private $_mName;
+	private $_mHolderName;
 	
 	/**
 	 * Holds the account's bank.
@@ -200,12 +200,12 @@ class BankAccount extends PersistObject{
 	}
 	
 	/**
-	 * Returns the account's holder.
+	 * Returns the account holder's name.
 	 *
 	 * @return string
 	 */
-	public function getName(){
-		return $this->_mName;
+	public function getHolderName(){
+		return $this->_mHolderName;
 	}
 	
 	/**
@@ -248,12 +248,12 @@ class BankAccount extends PersistObject{
 	/**
 	 * Sets the account's holder.
 	 *
-	 * @param string $name
+	 * @param string $holderName
 	 * @return void
 	 */
-	public function setName($name){
-		String::validateString($name, 'Nombre inv&aacute;lido.');
-		$this->_mName = $name;
+	public function setHolderName($holderName){
+		String::validateString($holderName, 'Nombre inv&aacute;lido.');
+		$this->_mHolderName = $holderName;
 	}
 	
 	/**
@@ -261,13 +261,13 @@ class BankAccount extends PersistObject{
 	 * 
 	 * Must be call only from the database layer corresponding class. The object's status must be set to
 	 * Persist::CREATED in the constructor method too.
-	 * @param string $name
+	 * @param string $holderName
 	 * @param Bank $bank
 	 * @throws Exception
 	 */
-	public function setData($name, Bank $bank){
+	public function setData($holderName, Bank $bank){
 		try{
-			String::validateString($name, 'Nombre inv&aacute;lido.');
+			String::validateString($holderName, 'Nombre inv&aacute;lido.');
 			self::validateObjectFromDatabase($bank);
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en BankAccount con datos erroneos! ' .
@@ -275,7 +275,7 @@ class BankAccount extends PersistObject{
 			throw $et;
 		}
 		
-		$this->_mName = $name;
+		$this->_mHolderName = $holderName;
 		$this->_mBank = $bank;
 	}
 	
@@ -343,14 +343,14 @@ class BankAccount extends PersistObject{
 	/**
 	 * Validates bank account's main properties.
 	 * 
-	 * Verifies that the number and name are not empty. The bank's status must not be PersisObject::IN_PROGRESS.
-	 * Otherwise it throws an exception.
+	 * Verifies that the number and holder name are not empty. The bank's status must not be
+	 * PersisObject::IN_PROGRESS. Otherwise it throws an exception.
 	 * @return void
 	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
 		String::validateString($this->_mNumber, 'N&uacute;mero de cuenta inv&aacute;lido.');
-		String::validateString($this->_mName, 'Nombre inv&aacute;lido.');
+		String::validateString($this->_mHolderName, 'Nombre inv&aacute;lido.');
 		
 		if(is_null($this->_mBank))
 			throw new Exception('Banco inv&aacute;lido.');
@@ -734,6 +734,138 @@ class PaymentCardBrand extends Identifier{
 	 */
 	protected function update(){
 		PaymentCardBrandDAM::update($this);
+	}
+}
+
+
+/**
+ * Represents the customer's payment plastic card.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class PaymentCard{
+	/**
+	 * Holds the payment card's last four digit numbers.
+	 *
+	 * @var integer
+	 */
+	private $_mNumber;
+	
+	/**
+	 * Holds the payment card's type.
+	 *
+	 * @var PaymentCardType
+	 */
+	private $_mType;
+	
+	/**
+	 * Holds the payment card's brand.
+	 *
+	 * @var PaymentCardBrand
+	 */
+	private $_mBrand;
+	
+	/**
+	 * Holds the payment card holder's name.
+	 *
+	 * @var string
+	 */
+	private $_mHolderName;
+	
+	/**
+	 * Holds the payment card's expiration date.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mExpirationDate;
+	
+	/**
+	 * Constructs the payment card with the provided data.
+	 *
+	 * Use these method only from the database layer please. Use the create method instead. Lack of experience
+	 * sorry.
+	 * @param integer $number
+	 * @param PaymentCardType $type
+	 * @param PaymentCardBrand $brand
+	 * @param string $holderName
+	 * @param string $date
+	 */
+	public function __construct($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
+		Number::validatePositiveInteger($number, 'N&uacute;mero de tarjeta inv&aacute;lido.');
+		Persist::validateObjectFromDatabase($type);
+		Persist::validateObjectFromDatabase($brand);
+		String::validateString($holderName, 'Nombre del titular inv&aacute;lido.');
+		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
+		
+		$this->_mNumber = $number;
+		$this->_mType = $type;
+		$this->_mBrand = $brand;
+		$this->_mHolderName = $holderName;
+		$this->_mExpirationDate = $date;
+	}
+	
+	/**
+	 * Returns the payment card's last four digit numbers.
+	 *
+	 * @return integer
+	 */
+	public function getNumber(){
+		return $this->_mNumber;
+	}
+	
+	/**
+	 * Returns the payment card's type.
+	 *
+	 * @return PaymentCardType
+	 */
+	public function getType(){
+		return $this->_mType;
+	}
+	
+	/**
+	 * Returns the payment card's brand.
+	 *
+	 * @return PaymentCardBrand
+	 */
+	public function getBrand(){
+		return $this->_mBrand;
+	}
+	
+	/**
+	 * Returns the payment card holder's name.
+	 *
+	 * @return string
+	 */
+	public function getHolderName(){
+		return $this->_mHolderName;
+	}
+	
+	/**
+	 * Returns the payment card's expiration date.
+	 *
+	 * @return string
+	 */
+	public function getExpirationDate(){
+		return $this->_mExpirationDate;
+	}
+	
+	/**
+	 * Creates a new payment card validating if the provided date has not expired.
+	 *
+	 * @param integer $number
+	 * @param PaymentCardType $type
+	 * @param PaymentCardBrand $brand
+	 * @param string $holderName
+	 * @param string $date
+	 * @return PaymentCard
+	 */
+	static public function create($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
+		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
+		if(!Date::compareDates(date('d/m/Y'), $date))
+			throw new Exception('Fecha de la tarjeta ya caduco.');
+		else
+			return new PaymentCard($number, $type, $brand, $holderName, $date);
 	}
 }
 ?>

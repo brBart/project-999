@@ -110,12 +110,12 @@ class WithdrawEvent{
 		foreach($lots as &$lot){
 			$available = $lot->getAvailable();
 			if($available >= $quantity || $available == 0){
-				$reserve = Reserve::createReserve($lot, $quantity);
+				$reserve = Reserve::create($lot, $quantity);
 				$detail_quantity = $quantity;
 				$quantity = 0;
 			}
 			else{
-				$reserve = Reserve::createReserve($lot, $available);
+				$reserve = Reserve::create($lot, $available);
 				$detail_quantity = $available;
 				$quantity -= $available;
 			}
