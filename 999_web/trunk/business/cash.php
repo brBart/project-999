@@ -610,4 +610,67 @@ class CashReceipt extends PersistDocument{
 		// Code here...
 	}
 }
+
+
+/**
+ * Represents a type of electronic payment card.
+ * 
+ * Examples: credit or debit.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class PaymentCardType extends Identifier{
+	/**
+	 * Constructs the type of card with the provided id and status.
+	 * 
+	 * Parameters must be set only if the method is called from the database layer.
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
+		parent::__construct($id, $status);
+	}
+	
+	/**
+	 * Returns instance of a type of card.
+	 * 
+	 * Returns NULL if there was no match in the database.
+	 * @param integer $id
+	 * @return PaymentCardType
+	 */
+	static public function getInstance($id){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		return PaymentCardTypeDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the type of card from database.
+	 * 
+	 * Throws an exception due dependencies.
+	 * @param PaymentCardType $obj
+	 * @throws Exception
+	 */
+	static public function delete(PaymentCardType $obj){
+		self::validateObjectFromDatabase($obj);		
+		if(!PaymentCardTypeDAM::delete($obj))
+			throw new Exception('Tipo de Tarjeta tiene dependencias y no se puede eliminar.');
+	}
+	
+	/**
+	 * Inserts the type of card data in the database.
+	 * 
+	 * Returns the new created id from the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return PaymentCardTypeDAM::insert($this);
+	}
+	
+	/**
+	 * Updates the type of card data in the database.
+	 */
+	protected function update(){
+		PaymentCardTypeDAM::update($this);
+	}
+}
 ?>
