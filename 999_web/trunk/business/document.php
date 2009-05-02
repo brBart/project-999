@@ -1330,8 +1330,9 @@ class Invoice extends Document{
 	/**
 	 * Constructs the invoice with the provided data.
 	 *
-	 * Arguments must be passed only when called from the database layer correponding class and set the
-	 * cash register in the setData method instead.
+	 * Arguments must be passed only when called from the database layer correponding class. If a new Invoice
+	 * its been created (PersistDocument::IN_PROGRESS) the cash register must be open, otherwise it doesn't
+	 * matter because it is an already created (PersistDocument::CREATED) invoice.
 	 * @param CashRegister $cashRegister
 	 * @param string $date
 	 * @param UserAccount $user
@@ -1517,7 +1518,6 @@ class Invoice extends Document{
 	 * @param string $nit
 	 * @param string $name
 	 * @param float $vatPercentage
-	 * @param CashRegister $cashRegister
 	 * @param CashReceipt $cashReceipt
 	 * @param Discount $discount
 	 * @param float $total
@@ -1525,7 +1525,7 @@ class Invoice extends Document{
 	 * @throws Exception
 	 */
 	public function setData($number, Correlative $correlative, $nit, $name, $vatPercentage,
-			CashReceipt $cashReceipt, Discount $discount, $total, $details){
+			CashReceipt $cashReceipt, $total, $details, Discount $discount = NULL){
 		parent::setData($total, $details);
 		
 		try{
@@ -1533,7 +1533,8 @@ class Invoice extends Document{
 			self::validateObjectFromDatabase($correlative);
 			Number::validatePositiveFloat($vatPercentage, 'Porcentage Iva inv&aacute;lido.');
 			self::validateObjectFromDatabase($cashReceipt);
-			self::validateObjectFromDatabase($discount);
+			if(!is_null($discount))
+				self::validateObjectFromDatabase($discount);
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Invoice con datos erroneos! ' .
 					$e->getMessage());
@@ -1568,7 +1569,7 @@ class Invoice extends Document{
 	/**
 	 * Does not save the invoice in the database and reverts its effects.
 	 *
-	 * Only applies if the object's status property is set to Persist::IN_PROGRESS.
+	 * Only applies if the object's status property is set to PersistDocument::IN_PROGRESS.
 	 */
 	public function discard(){
 		if($this->_mStatus == Persist::IN_PROGRESS)
@@ -1588,6 +1589,8 @@ class Invoice extends Document{
 	 */
 	public function cancel(UserAccount $user){
 		if($this->_mStatus == Persist::CREATED){
+			self::validateObjectFromDatabase($user);
+			
 			if(!$this->_mCashRegister->isOpen())
 				throw new Exception('Caja ya esta cerrada, no se puede anular.');
 			
@@ -1601,19 +1604,20 @@ class Invoice extends Document{
 	/**
 	 * Returns an invoice with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values.
+	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database. 
 	 * @param integer $id
-	 * @param integer $total_pages
-	 * @param integer $total_items
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
 	 * @param integer $page
 	 * @return Invoice
 	 */
 	static public function getInstance($id, &$total_pages, &$total_items, $page = 0){
-		Number::validatePositiveInteger($id);
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		if($page !== 0)
-			Number::validatePositiveInteger($page);
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
 			
-		return InvoiceDAM::getInstance($id, &$total_pages, &$total_items, $page);
+		return InvoiceDAM::getInstance($id, $total_pages, $total_items, $page);
 	}
 	
 	/**
@@ -1625,9 +1629,9 @@ class Invoice extends Document{
 	 * @return integer
 	 */
 	static public function getInvoiceId($serialNumber, $number){
-		String::validateString($serial);
-		Number::validatePositiveInteger($number);
-		return InvoiceDAM::getId($serial, $number);
+		String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
+		Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
+		return InvoiceDAM::getId($serialNumber, $number);
 	}
 	
 	/**
@@ -1660,8 +1664,8 @@ class Invoice extends Document{
 	/**
 	 * Validates the invoice main properties.
 	 *
-	 * This method call its parent validateMainProperties method. And nit must not be empty and cash receipt
-	 * must not be NULL.
+	 * This method call its parent validateMainProperties method. And nit must not be empty, cash receipt and
+	 * correlative must not be NULL.
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
