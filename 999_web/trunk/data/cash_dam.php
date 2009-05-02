@@ -271,4 +271,62 @@ class CashRegisterDAM{
 		}
 	}
 }
+
+
+/**
+ * Defines functionality for accessing the type of payment card database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class PaymentCardTypeDAM{
+	static private $_mName = 'Credito';
+	
+	/**
+	 * Returns a type of card if it founds an id match in the database. Otherwise returns NULL.
+	 *
+	 * @param integer $id
+	 * @return PaymentCardType
+	 */
+	static public function getInstance($id){
+		if($id == 123){
+			$type = new PaymentCardType(123, PersistObject::CREATED);
+			$type->setData(self::$_mName);
+			return $type;
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Insert a type of card in the database.
+	 *
+	 * @param PaymentCardType $obj
+	 */
+	static public function insert(PaymentCardType $obj){
+		return 123;
+	}
+	
+	/**
+	 * Updates a type of card data in the database.
+	 *
+	 * @param PaymentCardType $obj
+	 */
+	static public function update(PaymentCardType $obj){
+		self::$_mName = $obj->getName();
+	}
+	
+	/**
+	 * Deletes a type of card from the datase. Returns true on success, otherwise it has dependencies
+	 * and returns false.
+	 *
+	 * @param PaymentCardType $obj
+	 * @return boolean
+	 */
+	static public function delete(PaymentCardType $obj){
+		if($obj->getId() == 123)
+			return true;
+		else
+			return false;
+	}
+}
 ?>
