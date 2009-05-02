@@ -621,7 +621,7 @@ class CashReceipt extends PersistDocument{
  */
 class PaymentCardType extends Identifier{
 	/**
-	 * Constructs the type of card with the provided id and status.
+	 * Constructs the type of payment card with the provided id and status.
 	 * 
 	 * Parameters must be set only if the method is called from the database layer.
 	 * @param integer $id
@@ -632,7 +632,7 @@ class PaymentCardType extends Identifier{
 	}
 	
 	/**
-	 * Returns instance of a type of card.
+	 * Returns instance of a type of payment card.
 	 * 
 	 * Returns NULL if there was no match in the database.
 	 * @param integer $id
@@ -644,7 +644,7 @@ class PaymentCardType extends Identifier{
 	}
 	
 	/**
-	 * Deletes the type of card from database.
+	 * Deletes the type of payment card from database.
 	 * 
 	 * Throws an exception due dependencies.
 	 * @param PaymentCardType $obj
@@ -657,7 +657,7 @@ class PaymentCardType extends Identifier{
 	}
 	
 	/**
-	 * Inserts the type of card data in the database.
+	 * Inserts the type of payment card data in the database.
 	 * 
 	 * Returns the new created id from the database.
 	 * @return integer
@@ -667,10 +667,73 @@ class PaymentCardType extends Identifier{
 	}
 	
 	/**
-	 * Updates the type of card data in the database.
+	 * Updates the type of payment card data in the database.
 	 */
 	protected function update(){
 		PaymentCardTypeDAM::update($this);
+	}
+}
+
+
+/**
+ * Represents a electronic payment card brand.
+ * 
+ * Examples: visa or mastercard.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class PaymentCardBrand extends Identifier{
+	/**
+	 * Constructs the payment card brand with the provided id and status.
+	 * 
+	 * Parameters must be set only if the method is called from the database layer.
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct($id = NULL, $status = Persist::IN_PROGRESS){
+		parent::__construct($id, $status);
+	}
+	
+	/**
+	 * Returns instance of a payment card brand.
+	 * 
+	 * Returns NULL if there was no match in the database.
+	 * @param integer $id
+	 * @return PaymentCardBrand
+	 */
+	static public function getInstance($id){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		return PaymentCardBrandDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the payment card brand from the database.
+	 * 
+	 * Throws an exception due dependencies.
+	 * @param PaymentCardBrand $obj
+	 * @throws Exception
+	 */
+	static public function delete(PaymentCardBrand $obj){
+		self::validateObjectFromDatabase($obj);		
+		if(!PaymentCardBrandDAM::delete($obj))
+			throw new Exception('Marca de Tarjeta tiene dependencias y no se puede eliminar.');
+	}
+	
+	/**
+	 * Inserts the payment card brand data in the database.
+	 * 
+	 * Returns the new created id from the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return PaymentCardBrandDAM::insert($this);
+	}
+	
+	/**
+	 * Updates the payment card brand data in the database.
+	 */
+	protected function update(){
+		PaymentCardBrandDAM::update($this);
 	}
 }
 ?>
