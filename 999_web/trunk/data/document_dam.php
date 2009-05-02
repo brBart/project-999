@@ -316,6 +316,62 @@ class DiscountDAM{
  */
 class InvoiceDAM{
 	/**
+	 * Updates the invoice status to cancelled in the database.
+	 *
+	 * The user and date parameters are to register who and when does the cancel action took place.
+	 * @param Invoice $invoice
+	 * @param UserAccount $user
+	 * @param string $date
+	 */
+	static public function cancel(Invoice $invoice, UserAccount $user, $date){
+		// Code here...
+	}
+	
+	/**
+	 * Returns the invoice identifier.
+	 *
+	 * Returns 0 if there was no match for the provided serial number and number in the database.
+	 * @param string $serialNumber
+	 * @param integer $number
+	 * @return integer
+	 */
+	static public function getId($serialNumber, $number){
+		if($serialNumber == 'A022' && $number == 457)
+			return 123;
+		else
+			return 0;
+	}
+	
+	/**
+	 * Returns an invoice with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return Invoice
+	 */
+	static public function getInstance($id, &$total_pages, &$total_items, $page){
+		switch($id){
+			case 123:
+				$invoice = new Invoice(CashRegister::getInstance(123), '25/04/2009',
+						UserAccount::getInstance('roboli'), $id, PersistDocument::CREATED);
+				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
+				$invoice->setData(457, Correlative::getInstance('A022'), 'C/F', '', 12.00,
+						new CashReceipt(123, PersistDocument::CREATED), 39.50, $details);
+				$total_pages = 1;
+				$total_items = 1;
+				return $invoice;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+	
+	/**
 	 * Inserts the invoice's data in the database.
 	 *
 	 * Returns the new created id from the database.
