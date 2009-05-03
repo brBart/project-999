@@ -868,4 +868,101 @@ class PaymentCard{
 			return new PaymentCard($number, $type, $brand, $holderName, $date);
 	}
 }
+
+
+/**
+ * Represents a payment card voucher on a invoice's receipt.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class Voucher{
+	/**
+	 * Holds the voucher transaction's number emitted by the POS machine.
+	 *
+	 * @var string
+	 */
+	private $_mTransactionNumber;
+	
+	/**
+	 * Holds the voucher's payment card used by the customer.
+	 *
+	 * @var PaymentCard
+	 */
+	private $_mPaymentCard;
+	
+	/**
+	 * Holds the voucher's monetary amount.
+	 *
+	 * @var float
+	 */
+	private $_mAmount;
+	
+	/**
+	 * Constructs the voucher with the provided data.
+	 *
+	 * @param string $transactionNumber
+	 * @param PaymentCard $card
+	 * @param float $amount
+	 */
+	public function __construct($transactionNumber, PaymentCard $card, $amount){
+		String::validateString($transactionNumber, 'N&uacute;mero de transacci&oacute;n inv&aacute;lido.');
+		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		
+		$this->_mTransactionNumber = $transactionNumber;
+		$this->_mPaymentCard = $card;
+		$this->_mAmount = $amount;
+	}
+	
+	/**
+	 * Returns the voucher's transaction number.
+	 *
+	 * @return string
+	 */
+	public function getTransactionNumber(){
+		return $this->_mTransactionNumber;
+	}
+	
+	/**
+	 * Returns the voucher's payment card.
+	 *
+	 * @return PaymentCard
+	 */
+	public function getPaymentCard(){
+		return $this->_mPaymentCard;
+	}
+	
+	/**
+	 * Returns the voucher's amount.
+	 *
+	 * @return float
+	 */
+	public function getAmount(){
+		return $this->_mAmount;
+	}
+	
+	/**
+	 * Returns an array with the voucher's data.
+	 *
+	 * The array contains the fields type, brand, number, name, amount and expiration_date.
+	 * @return array
+	 */
+	public function show(){
+		$type = $this->_mPaymentCard->getType();
+		$brand = $this->_mPaymentCard->getBrand();
+		
+		return array('type' => $type->getName(), 'brand' => $brand->getName(),
+				'number' => $this->_mPaymentCard->getNumber(), 'name' => $this->_mPaymentCard->getHolderName(),
+				'amount' => $this->_mAmount, 'expiration_date' => $this->_mPaymentCard->getExpirationDate());
+	}
+	
+	/**
+	 * Increases the voucher's amount value.
+	 *
+	 * @param float $amount
+	 */
+	public function increase($amount){
+		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		$this->_mAmount += $amount;
+	}
+}
 ?>
