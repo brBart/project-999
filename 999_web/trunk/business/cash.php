@@ -599,18 +599,18 @@ class CashRegister{
  */
 class Receipt extends PersistDocument{
 	/**
-	 * Holds how much cash change was given to the customer.
-	 *
-	 * @var float
-	 */
-	private $_mChange;
-	
-	/**
 	 * Holds the cash received from the customer.
 	 *
 	 * @var Cash
 	 */
 	private $_mCash;
+	
+	/**
+	 * Holds how much cash change was given to the customer.
+	 *
+	 * @var float
+	 */
+	private $_mChange = 0.00;
 	
 	/**
 	 * Holds the sum of all the payment cards on the receipt.
@@ -634,6 +634,45 @@ class Receipt extends PersistDocument{
 	private $_mVouchers;
 	
 	/**
+	 * Constructs the receipt with the provided data.
+	 *
+	 * Note that if you pass the status paramenter as PersistDocument::IN_PROGRESS, the invoice parameter must
+	 * have any details and its status property must be set to PersistDocument::IN_PROGRESS too. Otherwise
+	 * trye to call this method only from the database layer.
+	 * @param Invoice $invoice
+	 * @param integer $id
+	 * @param integer $status
+	 */
+	public function __construct(Invoice $invoice, $id = NULL, $status = PersistDocument::IN_PROGRESS){
+		parent::__construct($id, $status);
+		
+		if($this->_mStatus == PersistDocument::IN_PROGRESS){
+			self::validateNewObject($invoice);
+			if($invoice->getTotal() <= 0)
+				throw new Exception('Factura no contiene detalles.');
+		}
+		else
+			try{
+				self::validateObjectFromDatabase($invoice);
+			} catch(Exception $e){
+				$et = new Exception('Interno; Llamando al metodo construct en Receipt con datos erroneos! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			
+		$this->_mInvoice = $invoice;
+	}
+	
+	/**
+	 * Returns the receipt's cash.
+	 *
+	 * @return Cash
+	 */
+	public function getCash(){
+		return $this->_mCash;
+	}
+	
+	/**
 	 * Returns the amount of change that was given to the customer.
 	 *
 	 * @return float
@@ -652,12 +691,42 @@ class Receipt extends PersistDocument{
 	}
 	
 	/**
+	 * Returns the receipt's invoice.
+	 *
+	 * @return Invoice
+	 */
+	public function getInvoice(){
+		return $this->_mInvoice;
+	}
+	
+	/**
 	 * Returns the receipt's total amount.
 	 *
 	 * @return float
 	 */
 	public function getTotal(){
 		return $this->_mCash->getAmount() + $this->_mTotalPaymentCardsAmount;
+	}
+	
+	/**
+	 * Returns the voucher whic transaction number matchs the one provided.
+	 *
+	 * @param string $transactionNumber
+	 * @return Voucher
+	 */
+	public function getVoucher($transactionNumber){
+		foreach($this->_mVouchers as &$voucher)
+			if($voucher->getTransactionNumber() == $transactionNumber)
+				return $voucher;
+	}
+	
+	/**
+	 * Returns an array with all the receipt's vouchers.
+	 *
+	 * @return array<Voucher>
+	 */
+	public function getVouchers(){
+		return $this->_mVouchers;
 	}
 	
 	/**
@@ -679,9 +748,73 @@ class Receipt extends PersistDocument{
 		$this->_mCash = $obj;
 	}
 	
-	
-	public function setData($change, Cash $cash, $totalPaymentCardsAmount, $vouchers){
+	/**
+	 * Sets the receipt's properties with data provided.
+	 * 
+	 * Must be called only from the database layer. The object's status must be set to
+	 * Persist::CREATED in the constructor method too.
+	 * @param float $change
+	 * @param Cash $cash
+	 * @param float $totalPaymentCardsAmount
+	 * @param array<Voucher> $vouchers
+	 */
+	public function setData(Cash $cash, $totalPaymentCardsAmount, $change = 0.0, $vouchers = NULL){
+		try{
+			Number::validatePositiveFloat($totalPaymentCardsAmount, 'Total inv&aacute;lido.');
+			if($change !== 0)
+				Number::validatePositiveFloat($change, 'Cantidad de cambio inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
 		
+		$this->_mCash = $cash;
+		$this->_TotalPaymentCardsAmount = $totalPaymentCardsAmount;
+		$this->_mChange = $change;
+		$this->_mVouchers = $vouchers;
+	}
+	
+	/**
+	 * Adds a voucher to the receipt.
+	 *
+	 * @param Voucher $newVoucher
+	 */
+	public function addVoucher(Voucher $newVoucher){
+		$this->_TotalPaymentCardsAmount += $newVoucher->getAmount();
+		
+		foreach($this->_mVouchers as &$voucher)
+			if($voucher->getTransactionNumber() == $newVoucher->getTransactionNumber()){
+				$voucher->increase($newVoucher->getAmount());
+				return;
+			}
+			
+		$this->_mVouchers[] = $newVoucher;
+	}
+	
+	/**
+	 * Deletes the provided voucher from the receipt.
+	 *
+	 * @param Voucher $purgeVoucher
+	 */
+	public function deleteVoucher(Voucher $purgeVoucher){
+		$temp_vouchers = array();
+		
+		foreach($this->_mVouchers as &$voucher)
+			if($voucher->getTransactionNumber != $purgeVoucher->getTransactionNumber())
+				$temp_vouchers[] = $voucher;
+			else
+				$this->_TotalPaymentCardsAmount -= $voucher->getAmount();
+				
+		$this->_mVouchers = $temp_vouchers;
+	}
+	
+	
+	public function save(){
+		if($this->_mStatus == PersistDocument::IN_PROGRESS){
+			$this->validateMainProperties();
+			$this->insert();
+		}
 	}
 	
 	
@@ -693,8 +826,33 @@ class Receipt extends PersistDocument{
 		// Code here...
 	}
 	
+	/**
+	 * Returns an instance of a receipt.
+	 *
+	 * Returns NULL in case there was no match for the provided invoice in the database.
+	 * @param Invoice $obj
+	 * @return Receipt
+	 */
+	static public function getInstance(Invoice $obj){
+		self::validateObjectFromDatabase($obj);
+		return ReceiptDAM::getInstance($obj);
+	}
+	
 	protected function insert(){
-		// Code here...
+		$this->_mInvoice->save();
+		ReceiptDAM::insert($this);
+		$this->_mId = $this->_mInvoice->getId();
+		$this->_mStatus = PersistDocument::CREATED;
+	}
+	
+	/**
+	 * Validates the receipt's main properties.
+	 *
+	 * At least the cash not be NULL or the vouchers property must not be empty.
+	 */
+	private function validateMainProperties(){
+		if(is_null($this->_mCash) && empty($this->_mVouchers))
+			throw new Exception('Favor ingresar efectivo o algun voucher.');
 	}
 }
 

@@ -1343,7 +1343,7 @@ class Invoice extends Document{
 			$id = NULL, $status = PersistDocument::IN_PROGRESS){
 		parent::__construct($date, $user, $id, $status);
 		
-		if($this->_mStatus == Persist::IN_PROGRESS && !$cashRegister->isOpen())
+		if($this->_mStatus == PersistDocument::IN_PROGRESS && !$cashRegister->isOpen())
 			throw new Exception('Caja ya esta cerrada.');
 				
 		$this->_mCashRegister = $cashRegister;
