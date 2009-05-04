@@ -1316,9 +1316,9 @@ class Invoice extends Document{
 	/**
 	 * Holds the invoice's cash receipt.
 	 *
-	 * @var CashReceipt
+	 * @var Receipt
 	 */
-	private $_mCashReceipt;
+	private $_mReceipt;
 	
 	/**
 	 * Holds the invoice's additional discount.
@@ -1406,10 +1406,10 @@ class Invoice extends Document{
 	/**
 	 * Returns the invoice's cash receipt.
 	 *
-	 * @return CashReceipt
+	 * @return Receipt
 	 */
-	public function getCashReceipt(){
-		return $this->_mCashReceipt;
+	public function getReceipt(){
+		return $this->_mReceipt;
 	}
 	
 	/**
@@ -1479,11 +1479,11 @@ class Invoice extends Document{
 	/**
 	 * Sets the invoice's cash receipt.
 	 *
-	 * @param CashReceipt $obj
+	 * @param Receipt $obj
 	 */
-	public function setCashReceipt(CashReceipt $obj){
+	public function setReceipt(Receipt $obj){
 		self::validateNewObject($obj);	
-		$this->_mCashReceipt = $obj;
+		$this->_mReceipt = $obj;
 	}
 	
 	/**
@@ -1518,21 +1518,21 @@ class Invoice extends Document{
 	 * @param string $nit
 	 * @param string $name
 	 * @param float $vatPercentage
-	 * @param CashReceipt $cashReceipt
+	 * @param Receipt $receipt
 	 * @param Discount $discount
 	 * @param float $total
 	 * @param array<DocumentDetail> $details
 	 * @throws Exception
 	 */
 	public function setData($number, Correlative $correlative, $nit, $name, $vatPercentage,
-			CashReceipt $cashReceipt, $total, $details, Discount $discount = NULL){
+			Receipt $receipt, $total, $details, Discount $discount = NULL){
 		parent::setData($total, $details);
 		
 		try{
 			Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
 			self::validateObjectFromDatabase($correlative);
 			Number::validatePositiveFloat($vatPercentage, 'Porcentage Iva inv&aacute;lido.');
-			self::validateObjectFromDatabase($cashReceipt);
+			self::validateObjectFromDatabase($receipt);
 			if(!is_null($discount))
 				self::validateObjectFromDatabase($discount);
 		} catch(Exception $e){
@@ -1546,7 +1546,7 @@ class Invoice extends Document{
 		$this->_mCustomerNit = $nit;
 		$this->_mCustomerName = $name;
 		$this->_mVatPercentage = $vatPercentage;
-		$this->_mCashReceipt = $cashReceipt;
+		$this->_mReceipt = $receipt;
 		$this->_mDiscount = $discount;
 	}
 	
@@ -1595,7 +1595,7 @@ class Invoice extends Document{
 				throw new Exception('Caja ya esta cerrada, no se puede anular.');
 			
 			$this->cancelDetails();
-			$this->_mCashReceipt->cancel($user);
+			$this->_mReceipt->cancel($user);
 			InvoiceDAM::cancel($this, $user, date('d/m/Y'));
 			$this->_mStatus = PersistDocument::CANCELLED;
 		}
@@ -1673,7 +1673,7 @@ class Invoice extends Document{
 		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.');
 		if(is_null($this->_mCorrelative))
 			throw new Exception('No hay ningun correlativo predeterminado.');
-		if(is_null($this->_mCashReceipt))
+		if(is_null($this->_mReceipt))
 			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
 	}
 }

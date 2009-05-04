@@ -597,7 +597,94 @@ class CashRegister{
  * @package Cash
  * @author Roberto Oliveros
  */
-class CashReceipt extends PersistDocument{
+class Receipt extends PersistDocument{
+	/**
+	 * Holds how much cash change was given to the customer.
+	 *
+	 * @var float
+	 */
+	private $_mChange;
+	
+	/**
+	 * Holds the cash received from the customer.
+	 *
+	 * @var Cash
+	 */
+	private $_mCash;
+	
+	/**
+	 * Holds the sum of all the payment cards on the receipt.
+	 *
+	 * @var float
+	 */
+	private $_TotalPaymentCardsAmount;
+	
+	/**
+	 * Holds the receipt's invoice.
+	 *
+	 * @var Invoice
+	 */
+	private $_mInvoice;
+	
+	/**
+	 * Holds an array with the receipt's vouchers.
+	 *
+	 * @var array<Voucher>
+	 */
+	private $_mVouchers;
+	
+	/**
+	 * Returns the amount of change that was given to the customer.
+	 *
+	 * @return float
+	 */
+	public function getChange(){
+		return $this->_mChange;
+	}
+	
+	/**
+	 * Returns the sum of all the payment cards of the receipt.
+	 *
+	 * @return float
+	 */
+	public function getTotalPaymentCardsAmount(){
+		return $this->_TotalPaymentCardsAmount;
+	}
+	
+	/**
+	 * Returns the receipt's total amount.
+	 *
+	 * @return float
+	 */
+	public function getTotal(){
+		return $this->_mCash->getAmount() + $this->_mTotalPaymentCardsAmount;
+	}
+	
+	/**
+	 * Sets the receipt given change.
+	 *
+	 * @param float $amount
+	 */
+	public function setChange($amount){
+		Number::validatePositiveFloat($amount, 'Cantidad de cambio inv&aacute;lido.');
+		$this->_mChange = $amount;
+	}
+	
+	/**
+	 * Sets the receipt's cash.
+	 *
+	 * @param Cash $obj
+	 */
+	public function setCash(Cash $obj){
+		$this->_mCash = $obj;
+	}
+	
+	
+	public function setData($change, Cash $cash, $totalPaymentCardsAmount, $vouchers){
+		
+	}
+	
+	
 	public function discard(){
 		// Code here...
 	}
@@ -871,7 +958,7 @@ class PaymentCard{
 
 
 /**
- * Represents a payment card voucher on a invoice's receipt.
+ * Represents a payment card voucher on an invoice's receipt.
  * @package Cash
  * @author Roberto Oliveros
  */
@@ -964,5 +1051,15 @@ class Voucher{
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		$this->_mAmount += $amount;
 	}
+}
+
+
+/**
+ * Represents the cash received from the customer on a receipt.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class Cash{
+	
 }
 ?>
