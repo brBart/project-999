@@ -371,7 +371,7 @@ class InvoiceDAM{
 						UserAccount::getInstance('roboli'), $id, PersistDocument::CREATED);
 				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
 				$invoice->setData(457, Correlative::getInstance('A022'), 'C/F', '', 12.00,
-						new Receipt(123, PersistDocument::CREATED), 39.50, $details);
+						39.50, $details);
 				$total_pages = 1;
 				$total_items = 1;
 				return $invoice;

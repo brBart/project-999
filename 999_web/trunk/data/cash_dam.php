@@ -396,6 +396,39 @@ class PaymentCardBrandDAM{
  * @author Roberto Oliveros
  */
 class CashDAM{
+	static private $_mAmount123 = 95.55;
+	static private $_mReserved123 = 10.00;
+	static private $_mDeposited123 = 0.0;
+	
+	/**
+	 * Returns the cash amount of the provided object from the database.
+	 *
+	 * @param Cash $obj
+	 * @return float
+	 */
+	static public function getAmount(Cash $obj){
+		switch($obj->getId()){
+			case 123:
+				return self::$_mAmount123;
+				break;
+			
+			default:
+				return 0;
+		}
+	}
+	
+	
+	static public function getAvailable(Cash $obj){
+		switch($obj->getId()){
+			case 123:
+				return self::$_mAmount123 - (self::$_mReserved123 + self::$_mDeposited123);
+				break;
+			
+			default:
+				return 0;
+		}
+	}
+	
 	/**
 	 * Reserves the provided cash amount in the database.
 	 *
@@ -403,7 +436,13 @@ class CashDAM{
 	 * @param float $amount
 	 */
 	static public function reserve(Cash $obj, $amount){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mReserved123 += $amount;
+				return;
+				
+			default:
+		}
 	}
 	
 	/**
@@ -413,7 +452,13 @@ class CashDAM{
 	 * @param float $amount
 	 */
 	static public function decreaseReserve(Cash $obj, $amount){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mReserved123 -= $amount;
+				return;
+				
+			default:
+		}
 	}
 	
 	/**
@@ -423,7 +468,13 @@ class CashDAM{
 	 * @param float $amount
 	 */
 	static public function deposit(Cash $obj, $amount){
-		// Code here...
+		switch($obj->getId()){
+			case 123:
+				self::$_mDeposited123 += $amount;
+				return;
+				
+			default:
+		}
 	}
 	
 	/**
@@ -432,7 +483,51 @@ class CashDAM{
 	 * @param Cash $obj
 	 * @param float $amount
 	 */
-	static public function decreaseDeposited(Cash $obj, $amount){
+	static public function decreaseDeposit(Cash $obj, $amount){
+		switch($obj->getId()){
+			case 123:
+				self::$_mDeposited123 -= $amount;
+				return;
+				
+			default:
+		}
+	}
+}
+
+
+/**
+ * Utility class for accessing database tables regarding receipts.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class ReceiptDAM{
+	/**
+	 * Returns an instance of a receipt.
+	 *
+	 * Returns NULL if there was no match for the provided invoice in the database.
+	 * @param Invoice $obj
+	 * @return Receipt
+	 */
+	static public function getInstance(Invoice $obj){
+		switch($obj->getId()){
+			case 123:
+				$receipt = new Receipt($obj, 123, PersistDocument::CREATED);
+				$cash = new Cash(43.50, 123, Persist::CREATED);
+				$receipt->setData($cash);
+				return $receipt;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+	
+	/**
+	 * Cancels the document in the database.
+	 *
+	 * @param Receipt $obj
+	 */
+	static public function cancel(Receipt $obj){
 		// Code here...
 	}
 }
