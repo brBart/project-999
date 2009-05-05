@@ -636,9 +636,9 @@ class Receipt extends PersistDocument{
 	/**
 	 * Constructs the receipt with the provided data.
 	 *
-	 * Note that if you pass the status paramenter as PersistDocument::IN_PROGRESS, the invoice parameter must
+	 * Note that if you pass the status argument as PersistDocument::IN_PROGRESS, the invoice argument must
 	 * have any details and its status property must be set to PersistDocument::IN_PROGRESS too. Otherwise
-	 * trye to call this method only from the database layer.
+	 * try to call this method only from the database layer.
 	 * @param Invoice $invoice
 	 * @param integer $id
 	 * @param integer $status
@@ -762,7 +762,7 @@ class Receipt extends PersistDocument{
 		try{
 			Number::validatePositiveFloat($totalPaymentCardsAmount, 'Total inv&aacute;lido.');
 			if($change !== 0)
-				Number::validatePositiveFloat($change, 'Cantidad de cambio inv&aacute;lido.');
+				Number::validatePositiveFloat($change, 'Monto de cambio inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .
 					$e->getMessage());
@@ -809,7 +809,11 @@ class Receipt extends PersistDocument{
 		$this->_mVouchers = $temp_vouchers;
 	}
 	
-	
+	/**
+	 * Saves the receipt's data in the database.
+	 *
+	 * Only applies if the receipt's status property is set to PersistDocument::IN_PROGRESS.
+	 */
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
@@ -817,13 +821,32 @@ class Receipt extends PersistDocument{
 		}
 	}
 	
-	
+	/**
+	 * Does nothing, just to fulfill the abstraction.
+	 *
+	 */
 	public function discard(){
-		// Code here...
+		// Do nothing
 	}
 	
+	/**
+	 * Cancels the document and reverts its effects.
+	 *
+	 * The user argument registers who authorized the action.
+	 * @param UserAccount $user
+	 */
 	public function cancel(UserAccount $user){
-		// Code here...
+		if($this->_mStatus == PersistDocument::CREATED){
+			$deposit_ids = DepositDetailsList::getList($this->_mCash);
+			if(!empty($deposit_details))
+				foreach($deposit_ids as $id){
+					$deposit = Deposit::getInstance($id);
+					$deposit->cancel($user);
+				}
+				
+			ReceiptDAM::cancel($this);
+			$this->_mStatus = PersistDocument::CANCELLED;
+		}
 	}
 	
 	/**
@@ -838,6 +861,10 @@ class Receipt extends PersistDocument{
 		return ReceiptDAM::getInstance($obj);
 	}
 	
+	/**
+	 * Inserts the receipt's data in the database.
+	 *
+	 */
 	protected function insert(){
 		$this->_mInvoice->save();
 		ReceiptDAM::insert($this);
@@ -1217,7 +1244,146 @@ class Voucher{
  * @package Cash
  * @author Roberto Oliveros
  */
-class Cash{
+class Cash extends Persist{
+	/**
+	 * Holds the cash id, practically the receipt's id.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
 	
+	/**
+	 * Holds the amount value on cash.
+	 *
+	 * @var float
+	 */
+	private $_mAmount;
+	
+	/**
+	 * Holds the amount of cash reserved.
+	 *
+	 * @var float
+	 */
+	private $_mReserved;
+	
+	/**
+	 * Holds the amount of cash deposited on the bank.
+	 *
+	 * @var float
+	 */
+	private $_mDeposited;
+	
+	/**
+	 * Constructs the cash with the provided amount.
+	 *
+	 * @param float $amount
+	 */
+	public function __construct($amount, $reserved = 0.0, $deposited = 0.0, $id = NULL,
+			$status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		Number::validatePositiveFloat($amount, 'Monto de efectivo inv&aacute;lido.');
+		if($reserved !== 0)
+			Number::validateUnsignedFloat($reserved, 'Monto de reserva inv&aacute;lido.');
+		if($deposited !== 0)
+			Number::validateUnsignedFloat($deposited, 'Monto depositado inv&aacute;lido.');
+		if(!is_null($id))
+			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		
+		$this->_mAmount = $amount;
+		$this->_mReserved = $reserved;
+		$this->_mDeposited = $deposited;
+		$this->_mId = $id;
+	}
+	
+	/**
+	 * Returns the cash id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns how much of cash is available.
+	 *
+	 * Only applies if the status property is set to Persist::CREATED.
+	 * @return float
+	 */
+	public function getAvailable(){
+		if($this->_mStatus == Persist::CREATED)
+			return $this->_mAmount - ($this->_mReserved + $this->_mDeposited);
+		else
+			return 0;
+	}
+	
+	/**
+	 * Returns the cash amount.
+	 *
+	 * @return float
+	 */
+	public function getAmount(){
+		if($this->_mStatus == Persist::CREATED)
+			return CashDAM::getAmount($this);
+		else
+			return $this->_mAmount;
+	}
+	
+	/**
+	 * Reserve the cash amount in the database.
+	 *
+	 * Only applies if the status property is set to Persist::CREATED.
+	 * @param float $amount
+	 */
+	public function reserve($amount){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+			$this->_mReserved += $amount;
+			CashDAM::reserve($this, $amount);
+		}
+	}
+	
+	/**
+	 * Decreases the reserved cash amount in the database.
+	 *
+	 * Only applies if the status property is set to Persist::CREATED.
+	 * @param float $amount
+	 */
+	public function decreaseReserve($amount){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+			$this->_mReserved -= $amount;
+			CashDAM::decreaseReserve($this, $amount);
+		}
+	}
+	
+	/**
+	 * Increases the deposited cash amount in the database.
+	 *
+	 * Only applies if the status property is set to Persist::CREATED.
+	 * @param float $amount
+	 */
+	public function deposit($amount){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+			$this->_mDeposited += $amount;
+			CashDAM::deposit($this, $amount);
+		}
+	}
+	
+	/**
+	 * Decreases the deposited cash amount in the database.
+	 *
+	 * Only applies if the status property is set to Persist::CREATED.
+	 * @param float $amount
+	 */
+	public function decreaseDeposited($amount){
+		if($this->_mStatus == Persist::CREATED){
+			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+			$this->_mDeposited -= $amount;
+			CashDAM::decreaseDeposited($this, $amount);
+		}
+	}
 }
 ?>

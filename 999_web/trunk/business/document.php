@@ -800,6 +800,7 @@ class Reserve extends Persist{
 	public function merge(Reserve $obj){
 		self::validateObjectFromDatabase($obj);
 		$this->_mQuantity += $obj->getQuantity();
+		ReserveDAM::increase($this, $obj->getQuantity());
 		ReserveDAM::delete($obj);
 	}
 	
@@ -1584,7 +1585,7 @@ class Invoice extends Document{
 	/**
 	 * Cancels the document and reverts its effects.
 	 *
-	 * The user argument tells who authorized the action.
+	 * The user argument registers  who authorized the action.
 	 * @param UserAccount $user
 	 */
 	public function cancel(UserAccount $user){
