@@ -388,4 +388,52 @@ class PaymentCardBrandDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Utility class for modifiying cash amount values on the receipt table in the database.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class CashDAM{
+	/**
+	 * Reserves the provided cash amount in the database.
+	 *
+	 * @param Cash $obj
+	 * @param float $amount
+	 */
+	static public function reserve(Cash $obj, $amount){
+		// Code here...
+	}
+	
+	/**
+	 * Decreases the reserved cash amount in the database.
+	 *
+	 * @param Cash $obj
+	 * @param float $amount
+	 */
+	static public function decreaseReserve(Cash $obj, $amount){
+		// Code here...
+	}
+	
+	/**
+	 * Increases the deposited cash amount in the database.
+	 *
+	 * @param Cash $obj
+	 * @param float $amount
+	 */
+	static public function deposit(Cash $obj, $amount){
+		// Code here...
+	}
+	
+	/**
+	 * Decreases the deposited cash amount in the database.
+	 *
+	 * @param Cash $obj
+	 * @param float $amount
+	 */
+	static public function decreaseDeposited(Cash $obj, $amount){
+		// Code here...
+	}
+}
 ?>

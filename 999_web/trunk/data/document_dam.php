@@ -50,6 +50,17 @@ class DocProductDetailDAM{
  */
 class ReserveDAM{
 	/**
+	 * Increases the reserve's quantity in the database.
+	 *
+	 * Used in case there has been a merge of reserves.
+	 * @param Reserve $obj
+	 * @param integer $quantity
+	 */
+	static public function increase(Reserve $obj, $quantity){
+		// Code here...
+	}
+	
+	/**
 	 * Returns an instance of a reserve with database data.
 	 *
 	 * Returns NULL if there was no match of the provided id in the database.
