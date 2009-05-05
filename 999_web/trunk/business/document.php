@@ -1315,11 +1315,11 @@ class Invoice extends Document{
 	private $_mCashRegister;
 	
 	/**
-	 * Holds the invoice's cash receipt.
+	 * Holds the flag that indicates if the invoice has a corresponding receipt.
 	 *
 	 * @var Receipt
 	 */
-	private $_mReceipt;
+	private $_mHasReceipt = false;
 	
 	/**
 	 * Holds the invoice's additional discount.
@@ -1405,15 +1405,6 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns the invoice's cash receipt.
-	 *
-	 * @return Receipt
-	 */
-	public function getReceipt(){
-		return $this->_mReceipt;
-	}
-	
-	/**
 	 * Returns the quantity of certain product in the invoice.
 	 *
 	 * @param Product $product
@@ -1478,13 +1469,13 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Sets the invoice's cash receipt.
+	 * Sets the hasReceipt flag value.
 	 *
+	 * This method is called when assigning the corresponding receipt.
 	 * @param Receipt $obj
 	 */
-	public function setReceipt(Receipt $obj){
-		self::validateNewObject($obj);	
-		$this->_mReceipt = $obj;
+	public function hasReceipt($bool){	
+		$this->_mHasReceipt = (boolean)$bool;
 	}
 	
 	/**
@@ -1526,14 +1517,13 @@ class Invoice extends Document{
 	 * @throws Exception
 	 */
 	public function setData($number, Correlative $correlative, $nit, $name, $vatPercentage,
-			Receipt $receipt, $total, $details, Discount $discount = NULL){
+			$total, $details, Discount $discount = NULL){
 		parent::setData($total, $details);
 		
 		try{
 			Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
 			self::validateObjectFromDatabase($correlative);
 			Number::validatePositiveFloat($vatPercentage, 'Porcentage Iva inv&aacute;lido.');
-			self::validateObjectFromDatabase($receipt);
 			if(!is_null($discount))
 				self::validateObjectFromDatabase($discount);
 		} catch(Exception $e){
@@ -1547,7 +1537,6 @@ class Invoice extends Document{
 		$this->_mCustomerNit = $nit;
 		$this->_mCustomerName = $name;
 		$this->_mVatPercentage = $vatPercentage;
-		$this->_mReceipt = $receipt;
 		$this->_mDiscount = $discount;
 	}
 	
@@ -1555,7 +1544,7 @@ class Invoice extends Document{
 	 * Saves the document's data in the database.
 	 *
 	 * Only applies if the document's status property has the PersistDocument::IN_PROGRESS value. Returns
-	 * the new created id from the database on success.
+	 * the new created id from the database on success. NOTE: Call only from the corresponding receipt!
 	 * @return integer
 	 */
 	public function save(){
@@ -1596,7 +1585,8 @@ class Invoice extends Document{
 				throw new Exception('Caja ya esta cerrada, no se puede anular.');
 			
 			$this->cancelDetails();
-			$this->_mReceipt->cancel($user);
+			$receipt = Receipt::getInstance($this);
+			$receipt->cancel($user);
 			InvoiceDAM::cancel($this, $user, date('d/m/Y'));
 			$this->_mStatus = PersistDocument::CANCELLED;
 		}
@@ -1674,7 +1664,7 @@ class Invoice extends Document{
 		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.');
 		if(is_null($this->_mCorrelative))
 			throw new Exception('No hay ningun correlativo predeterminado.');
-		if(is_null($this->_mReceipt))
+		if(!$this->_mHasReceipt)
 			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
 	}
 }

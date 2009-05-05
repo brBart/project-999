@@ -617,7 +617,7 @@ class Receipt extends PersistDocument{
 	 *
 	 * @var float
 	 */
-	private $_TotalPaymentCardsAmount;
+	private $_TotalPaymentCardsAmount = 0.00;
 	
 	/**
 	 * Holds the receipt's invoice.
@@ -631,7 +631,7 @@ class Receipt extends PersistDocument{
 	 *
 	 * @var array<Voucher>
 	 */
-	private $_mVouchers;
+	private $_mVouchers = array();
 	
 	/**
 	 * Constructs the receipt with the provided data.
@@ -660,6 +660,7 @@ class Receipt extends PersistDocument{
 				throw $et;
 			}
 			
+		$invoice->hasReceipt(true);
 		$this->_mInvoice = $invoice;
 	}
 	
@@ -705,7 +706,8 @@ class Receipt extends PersistDocument{
 	 * @return float
 	 */
 	public function getTotal(){
-		return $this->_mCash->getAmount() + $this->_mTotalPaymentCardsAmount;
+		$cash_amount = (!is_null($this->_mCash)) ? $this->_mCash->getAmount() : 0.0;
+		return $cash_amount + $this->_mTotalPaymentCardsAmount;
 	}
 	
 	/**
@@ -730,6 +732,16 @@ class Receipt extends PersistDocument{
 	}
 	
 	/**
+	 * Sets the receipt's cash.
+	 *
+	 * @param Cash $obj
+	 */
+	public function setCash(Cash $obj){
+		self::validateNewObject($obj);
+		$this->_mCash = $obj;
+	}
+	
+	/**
 	 * Sets the receipt given change.
 	 *
 	 * @param float $amount
@@ -737,15 +749,6 @@ class Receipt extends PersistDocument{
 	public function setChange($amount){
 		Number::validatePositiveFloat($amount, 'Cantidad de cambio inv&aacute;lido.');
 		$this->_mChange = $amount;
-	}
-	
-	/**
-	 * Sets the receipt's cash.
-	 *
-	 * @param Cash $obj
-	 */
-	public function setCash(Cash $obj){
-		$this->_mCash = $obj;
 	}
 	
 	/**
@@ -758,10 +761,16 @@ class Receipt extends PersistDocument{
 	 * @param float $totalPaymentCardsAmount
 	 * @param array<Voucher> $vouchers
 	 */
-	public function setData(Cash $cash, $totalPaymentCardsAmount, $change = 0.0, $vouchers = NULL){
+	public function setData(Cash $cash = NULL, $totalPaymentCardsAmount = 0.0, $change = 0.0, $vouchers = NULL){
 		try{
-			Number::validatePositiveFloat($totalPaymentCardsAmount, 'Total inv&aacute;lido.');
-			if($change !== 0)
+			if(!is_null($cash))
+				self::validateObjectFromDatabase($cash);
+			if($totalPaymentCardsAmount !== 0.0){
+				Number::validatePositiveFloat($totalPaymentCardsAmount, 'Total inv&aacute;lido.');
+				if(empty($vouchers))
+					throw new Exception('No hay ningun voucher.');
+			}
+			if($change !== 0.0)
 				Number::validatePositiveFloat($change, 'Monto de cambio inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .
@@ -1241,6 +1250,11 @@ class Voucher{
 
 /**
  * Represents the cash received from the customer on a receipt.
+ * 
+ * Be careful, as the Lot class, this class represents two type of classes or stages of the matter. One is when
+ * the status property is set to Persist::IN_PROGRESS and hasn't been saved to the database. At this stage
+ * the values are obtained from the object itself. The other is when the status property is set to
+ * Persist::CREATED, the values of the object are obtained from the database directly. Sorry.
  * @package Cash
  * @author Roberto Oliveros
  */
@@ -1260,39 +1274,18 @@ class Cash extends Persist{
 	private $_mAmount;
 	
 	/**
-	 * Holds the amount of cash reserved.
-	 *
-	 * @var float
-	 */
-	private $_mReserved;
-	
-	/**
-	 * Holds the amount of cash deposited on the bank.
-	 *
-	 * @var float
-	 */
-	private $_mDeposited;
-	
-	/**
-	 * Constructs the cash with the provided amount.
+	 * Constructs the cash with the provided data.
 	 *
 	 * @param float $amount
 	 */
-	public function __construct($amount, $reserved = 0.0, $deposited = 0.0, $id = NULL,
-			$status = Persist::IN_PROGRESS){
+	public function __construct($amount, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		Number::validatePositiveFloat($amount, 'Monto de efectivo inv&aacute;lido.');
-		if($reserved !== 0)
-			Number::validateUnsignedFloat($reserved, 'Monto de reserva inv&aacute;lido.');
-		if($deposited !== 0)
-			Number::validateUnsignedFloat($deposited, 'Monto depositado inv&aacute;lido.');
 		if(!is_null($id))
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		
 		$this->_mAmount = $amount;
-		$this->_mReserved = $reserved;
-		$this->_mDeposited = $deposited;
 		$this->_mId = $id;
 	}
 	
@@ -1306,21 +1299,9 @@ class Cash extends Persist{
 	}
 	
 	/**
-	 * Returns how much of cash is available.
-	 *
-	 * Only applies if the status property is set to Persist::CREATED.
-	 * @return float
-	 */
-	public function getAvailable(){
-		if($this->_mStatus == Persist::CREATED)
-			return $this->_mAmount - ($this->_mReserved + $this->_mDeposited);
-		else
-			return 0;
-	}
-	
-	/**
 	 * Returns the cash amount.
 	 *
+	 * If the status property is set to Persist::CREATED the database value is returned.
 	 * @return float
 	 */
 	public function getAmount(){
@@ -1328,6 +1309,19 @@ class Cash extends Persist{
 			return CashDAM::getAmount($this);
 		else
 			return $this->_mAmount;
+	}
+	
+	/**
+	 * Returns how much of cash is available.
+	 *
+	 * Only applies if the status property is set to Persist::CREATED.
+	 * @return float
+	 */
+	public function getAvailable(){
+		if($this->_mStatus == Persist::CREATED)
+			return CashDAM::getAvailable($this);
+		else
+			return 0;
 	}
 	
 	/**
@@ -1339,7 +1333,6 @@ class Cash extends Persist{
 	public function reserve($amount){
 		if($this->_mStatus == Persist::CREATED){
 			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
-			$this->_mReserved += $amount;
 			CashDAM::reserve($this, $amount);
 		}
 	}
@@ -1353,7 +1346,6 @@ class Cash extends Persist{
 	public function decreaseReserve($amount){
 		if($this->_mStatus == Persist::CREATED){
 			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
-			$this->_mReserved -= $amount;
 			CashDAM::decreaseReserve($this, $amount);
 		}
 	}
@@ -1367,7 +1359,6 @@ class Cash extends Persist{
 	public function deposit($amount){
 		if($this->_mStatus == Persist::CREATED){
 			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
-			$this->_mDeposited += $amount;
 			CashDAM::deposit($this, $amount);
 		}
 	}
@@ -1378,12 +1369,29 @@ class Cash extends Persist{
 	 * Only applies if the status property is set to Persist::CREATED.
 	 * @param float $amount
 	 */
-	public function decreaseDeposited($amount){
+	public function decreaseDeposit($amount){
 		if($this->_mStatus == Persist::CREATED){
 			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
-			$this->_mDeposited -= $amount;
-			CashDAM::decreaseDeposited($this, $amount);
+			CashDAM::decreaseDeposit($this, $amount);
 		}
+	}
+}
+
+
+/**
+ * Class used for obtaining certain receipts' deposits.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class DepositDetailsList{
+	/**
+	 * Returns an array with all the deposits' id which contain the provided cash.
+	 *
+	 * @param Cash $obj
+	 * @return array
+	 */
+	static public function getList(Cash $obj){
+		// Code here...
 	}
 }
 ?>

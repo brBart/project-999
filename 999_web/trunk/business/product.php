@@ -1241,8 +1241,8 @@ class Lot extends Persist{
 		if($quantity !== 0)
 			Number::validateInteger($quantity, 'Cantidad inv&aacute;lida.');
 			
-		if($price !== 0)
-			Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
+		if($price !== 0.0)
+			Number::validatePositiveFloat($price, 'Precio inv&aacute;lido.');
 		
 		if(!is_null($expirationDate))
 			Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.');
@@ -1399,10 +1399,10 @@ class Lot extends Persist{
 	 */
 	public function increase($quantity){
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-		if($this->_mStatus == Persist::IN_PROGRESS)
-			$this->_mQuantity += $quantity;
-		else
+		if($this->_mStatus == Persist::CREATED)
 			LotDAM::increase($this, $quantity);
+		else
+			$this->_mQuantity += $quantity;
 	}
 	
 	/**
@@ -1414,10 +1414,10 @@ class Lot extends Persist{
 	 */
 	public function decrease($quantity){
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-		if($this->_mStatus == Persist::IN_PROGRESS)
-			$this->_mQuantity -= $quantity;
-		else
+		if($this->_mStatus == Persist::CREATED)
 			LotDAM::decrease($this, $quantity);
+		else
+			$this->_mQuantity -= $quantity;
 	}
 	
 	/**
