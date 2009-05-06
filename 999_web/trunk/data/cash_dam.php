@@ -523,6 +523,15 @@ class ReceiptDAM{
 	}
 	
 	/**
+	 * Inserts the receipt's data in the database.
+	 *
+	 * @param Receipt $obj
+	 */
+	static public function insert(Receipt $obj){
+		// Code here...
+	}
+	
+	/**
 	 * Cancels the document in the database.
 	 *
 	 * @param Receipt $obj
