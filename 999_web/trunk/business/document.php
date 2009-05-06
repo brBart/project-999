@@ -1574,7 +1574,7 @@ class Invoice extends Document{
 	/**
 	 * Cancels the document and reverts its effects.
 	 *
-	 * The user argument registers  who authorized the action.
+	 * The user argument registers who authorized the action.
 	 * @param UserAccount $user
 	 */
 	public function cancel(UserAccount $user){
@@ -1595,7 +1595,7 @@ class Invoice extends Document{
 	/**
 	 * Returns an invoice with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @param integer &$total_pages
@@ -1628,8 +1628,6 @@ class Invoice extends Document{
 	/**
 	 * Inserts the invoice data in the database.
 	 *
-	 * It returns the new created id from the database on success.
-	 * @return integer
 	 */
 	protected function insert(){
 		$this->_mVatPercentage = Vat::getInstance()->getPercentage();

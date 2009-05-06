@@ -1232,7 +1232,7 @@ class Lot extends Persist{
 	 * @param integer $id
 	 * @param integer $status
 	 */
-	public function __construct(Product $product, $quantity = 0, $price = 0.0, $expirationDate = NULL,
+	public function __construct(Product $product, $quantity = 0, $price = 0.00, $expirationDate = NULL,
 			$entryDate = NULL, $id = 0, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
@@ -1241,7 +1241,7 @@ class Lot extends Persist{
 		if($quantity !== 0)
 			Number::validateInteger($quantity, 'Cantidad inv&aacute;lida.');
 			
-		if($price !== 0.0)
+		if($price !== 0.00)
 			Number::validatePositiveFloat($price, 'Precio inv&aacute;lido.');
 		
 		if(!is_null($expirationDate))

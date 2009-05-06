@@ -81,13 +81,13 @@ class Bank extends Identifier{
  * @package Cash
  * @author Roberto Oliveros
  */
-class Deposit{
+class Deposit extends PersistDocument{
 	/**
-	 * Internal identifier.
-	 *
-	 * @var integer
+	 * Statys type.
+	 * 
+	 * Indicates that the document has been confirmed.
 	 */
-	private $_mId;
+	const CONFIRMED = 3;
 	
 	/**
 	 * Deposit slip number.
@@ -95,6 +95,14 @@ class Deposit{
 	 * @var string
 	 */
 	private $_mNumber;
+	
+	/**
+	 * Holds the date in which the deposit was creates.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mDate;
 	
 	/**
 	 * Bank where the Deposit is being made.
@@ -111,6 +119,13 @@ class Deposit{
 	private $_mCashRegister;
 	
 	/**
+	 * Deposit total.
+	 *
+	 * @var float
+	 */
+	private $_mTotal = 0.00;
+	
+	/**
 	 * Holds who made the deposit.
 	 *
 	 * @var UserAccount
@@ -118,25 +133,315 @@ class Deposit{
 	private $_mUser;
 	
 	/**
-	 * Deposit object internal status, e.g. Persist::IN_PROGRESS or Persist::CREATED.
-	 *
-	 * @var integer
-	 */
-	private $_mStatus;
-	
-	/**
 	 * Array with DepositDetail items.
 	 *
-	 * @var array
+	 * @var array<DepositDetail>
 	 */
-	private $_mDetails;
+	private $_mDetails = array();
 	
 	/**
-	 * Deposit total.
+	 * Constructs the deposit with the provided data.
 	 *
-	 * @var float
+	 * Arguments must be passed only when called from the database layer correponding class. If a new deposit
+	 * its been created (Deposit::IN_PROGRESS) the cash register must be open, otherwise it doesn't
+	 * matter because it is an already created (Deposit::CREATED) deposit.
+	 * @param CashRegister $cashRegister
+	 * @param string $date
+	 * @param UserAccount $user
+	 * @param integer $id
+	 * @param integer $status
 	 */
-	private $_mTotal;
+	public function __construct(CashRegister $cashRegister, $date = NULL, UserAccount $user = NULL,
+			$id = NULL, $status = Deposit::IN_PROGRESS){
+		parent::__construct($id, $status);
+		
+		if($this->_mStatus == Deposit::IN_PROGRESS && !$cashRegister->isOpen())
+			throw new Exception('Caja ya esta cerrada.');
+			
+		if(!is_null($date)){
+			try{
+				Date::validateDate($date, 'Fecha inv&aacute;lida.');
+			} catch(Exception $e){
+				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			$this->_mDate = $date;
+		}
+		else
+			$this->_mDate = date('d/m/Y');
+		
+		if(!is_null($user)){
+			try{
+				Persist::validateObjectFromDatabase($user);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			$this->_mUser = $user;
+		}
+		else
+			$this->_mUser = SessionHelper::getUser();
+				
+		$this->_mCashRegister = $cashRegister;
+	}
+	
+	/**
+	 * Returns the deposit slip number.
+	 *
+	 * @return string
+	 */
+	public function getNumber(){
+		return $this->_mNumber;
+	}
+	
+	/**
+	 * Returns the deposit's creation date.
+	 *
+	 * @return string
+	 */
+	public function getDate(){
+		return $this->_mDate;
+	}
+	
+	/**
+	 * Returns the deposit's bank account.
+	 *
+	 * @return BankAccount
+	 */
+	public function getBankAccount(){
+		return $this->_mBankAccount;
+	}
+	
+	/**
+	 * Returns the deposit's cash register.
+	 *
+	 * @return CashRegister
+	 */
+	public function getCashRegister(){
+		return $this->_mCashRegister;
+	}
+	
+	/**
+	 * Returns the deposit's total amount.
+	 *
+	 * @return float
+	 */
+	public function getTotal(){
+		return $this->_mTotal;
+	}
+	
+	/**
+	 * Returns the user who created the deposit.
+	 *
+	 * @return UserAccount
+	 */
+	public function getUser(){
+		return $this->_mUser;
+	}
+	
+	/**
+	 * Returns the detail which id match the provided id.
+	 *
+	 * Returns NULL in case there was no match.
+	 * @param integer $id
+	 * @return DepositDetail
+	 */
+	public function getDetail($id){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido');
+		
+		foreach($this->_mDetails as &$detail)
+			if($detail->getCash()->getId() == $id)
+				return $detail;
+				
+		return NULL;
+	}
+	
+	/**
+	 * Returns an array with all the deposit's details.
+	 *
+	 * @return array<DepositDetail>
+	 */
+	public function getDetails(){
+		return $this->_mDetails;
+	}
+	
+	/**
+	 * Sets the deposit slip number.
+	 *
+	 * @param string $number
+	 */
+	public function setNumber($number){
+		String::validateString($number, 'N&uacute;mero de deposito inv&aacute;lido.');
+		$this->_mNumber = $number;
+	}
+	
+	/**
+	 * Sets the deposit's bank account.
+	 *
+	 * @param BankAccount $obj
+	 */
+	public function setBankAccount(BankAccount $obj){
+		self::validateObjectFromDatabase($obj);
+		$this->_mBankAccount = $obj;
+	}
+	
+	/**
+	 * Sets the deposit properties.
+	 *
+	 * Must be called only from the database layer. The object's status must be set to
+	 * Persist::CREATED in the constructor method too.
+	 * @param string $number
+	 * @param BankAccount $bankAccount
+	 * @param float $total
+	 * @param array<DepositDetail> $details
+	 */
+	public function setData($number, BankAccount $bankAccount, $total, $details){
+		try{
+			String::validateString($number, 'N&uacute;mero de deposito inv&aacute;lido.');
+			self::validateObjectFromDatabase($bankAccount);
+			Number::validatePositiveFloat($total, 'Total inv&aacute;lido.');
+			if(empty($details))
+				throw new Exception('No hay ning detalle.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en Deposit con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mNumber = $number;
+		$this->_mBankAccount = $bankAccount;
+		$this->_mTotal = $total;
+		$this->_mDetails = $details;
+	}
+	
+	/**
+	 * Adds a deposit detail to the document.
+	 *
+	 * @param DepositDetail $newDetail
+	 */
+	public function addDetail(DepositDetail $newDetail){
+		$this->_mTotal += $newDetail->getAmount();
+		
+		// For moving the modified the detail to the last place.
+		$temp_details = array();
+		foreach($this->_mDetails as &$detail)
+			if($detail->getCash()->getId() != $newDetail->getCash()->getId())
+				$temp_details[] = $detail;
+			else{
+				$detail->increase($newDetail->getAmount());
+				$newDetail = $detail;
+			}
+			
+		$temp_details[] = $newDetail;
+		$this->_mDetails = $temp_details;
+	}
+	
+	/**
+	 * Deletes the detail from the deposit.
+	 *
+	 * @param DepositDetail $purgeDetail
+	 */
+	public function deleteDetail(DepositDetail $purgeDetail){
+		$temp_details = array();
+		
+		foreach($this->_mDetails as &$detail)
+			if($detail->getCash()->getId() != $purgeDetail->getCash()->getId())
+				$temp_details[] = $detail;
+			else
+				$this->_mTotal -= $detail->getAmount();
+				
+		$this->_mDetails = $temp_details;
+	}
+	
+	/**
+	 * Saves the deposit's data in the database.
+	 *
+	 * Only applies if the document's status property has the Deposit::IN_PROGRESS value. Returns
+	 * the new created id from the database on success.
+	 * @return integer
+	 */
+	public function save(){
+		if($this->_mStatus == self::IN_PROGRESS){
+			$this->validateMainProperties();
+			$this->insert();
+			return $this->_mId;
+		}
+	}
+	
+	/**
+	 * Change the deposit status propety to Deposit::CONFIRMED.
+	 *
+	 */
+	public function confirm(){
+		if($this->_mStatus == self::CREATED){
+			DepositDAM::confirm($this);
+			$this->_mStatus = self::CONFIRMED;
+		}
+	}
+	
+	/**
+	 * Cancels the document and reverts its effects.
+	 *
+	 * The user argument registers who authorized the action.
+	 * @param UserAccount $user
+	 */
+	public function cancel(UserAccount $user){
+		if($this->_mStatus == self::CREATED){
+			self::validateObjectFromDatabase($user);
+			
+			if(!$this->_mCashRegister->isOpen())
+				throw new Exception('Caja ya esta cerrada, no se puede anular.');
+				
+			foreach($this->_mDetails as &$detail)
+				$detail->cancel();
+			DepositDAM::cancel($this, $user, date('d/m/Y'));
+			$this->_mStatus = self::CANCELLED;
+		}
+	}
+	
+	/**
+	 * Returns a deposit with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database. 
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return Invoice
+	 */
+	static public function getInstance($id, &$total_pages, &$total_items, $page = 0){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			
+		return DepositDAM::getInstance($id, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Inserts the deposit's data in the database.
+	 *
+	 */
+	protected function insert(){
+		foreach($this->_mDetails as &$detail)
+				$detail->apply();
+		$this->_mId = DepositDAM::insert($this);
+		$this->_mStatus = self::CREATED;
+	}
+	
+	/**
+	 * Validates the deposit's main properties.
+	 *
+	 * Numer property must not be empty and bank account must not be NULL.
+	 */
+	private function validateMainProperties(){
+		String::validateString($this->_mNumber, 'N&uacute;mero de deposito inv&aacute;lido.');
+		
+		if(is_null($this->_mBankAccount))
+			throw new Exception('Cuenta Bancaria inv&aacute;lida.');
+	}
 }
 
 
@@ -799,13 +1104,18 @@ class Receipt extends PersistDocument{
 	public function addVoucher(Voucher $newVoucher){
 		$this->_mTotalVouchersAmount += $newVoucher->getAmount();
 		
+		// For moving the modified voucher to the last place.
+		$temp_vouchers = array();
 		foreach($this->_mVouchers as &$voucher)
-			if($voucher->getTransactionNumber() == $newVoucher->getTransactionNumber()){
+			if($voucher->getTransactionNumber() != $newVoucher->getTransactionNumber())
+				$temp_vouchers[] = $voucher;
+			else {
 				$voucher->increase($newVoucher->getAmount());
-				return;
+				$newVoucher = $voucher;
 			}
 			
-		$this->_mVouchers[] = $newVoucher;
+		$temp_vouchers[] = $newVoucher;
+		$this->_mVouchers = $temp_vouchers;
 	}
 	
 	/**
@@ -1411,7 +1721,11 @@ class DepositDetailsList{
 }
 
 
-
+/**
+ * A detail on a deposit document which contains the cash of a receipt document.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
 class DepositDetail{
 	/**
 	 * Holds a receipt's cash used in the deposit.
