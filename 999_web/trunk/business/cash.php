@@ -1428,6 +1428,20 @@ class DepositDetail{
 	private $_mAmount;
 	
 	/**
+	 * Constructs the detail with the provided data.
+	 *
+	 * @param Cash $cash
+	 * @param integer $amount
+	 */
+	public function __construct(Cash $cash, $amount){
+		Persist::validateObjectFromDatabase($cash);
+		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		
+		$this->_mCash = $cash;
+		$this->_mAmount = $amount;
+	}
+	
+	/**
 	 * Returns the detail's cash.
 	 *
 	 * @return Cash
@@ -1464,6 +1478,15 @@ class DepositDetail{
 	public function increase($amount){
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		$this->_mAmount += $amount;
+	}
+	
+	/**
+	 * Apply the deposit effects on the detail's cash.
+	 *
+	 */
+	public function apply(){
+		$this->_mCash->decreaseReserve($this->_mAmount);
+		$this->_mCash->deposit($this->_mAmount);
 	}
 	
 	/**
