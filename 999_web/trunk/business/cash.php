@@ -613,11 +613,11 @@ class Receipt extends PersistDocument{
 	private $_mChange = 0.00;
 	
 	/**
-	 * Holds the sum of all the payment cards on the receipt.
+	 * Holds the sum of all the vouchers on the receipt.
 	 *
 	 * @var float
 	 */
-	private $_TotalPaymentCardsAmount = 0.00;
+	private $_mTotalVouchersAmount = 0.00;
 	
 	/**
 	 * Holds the receipt's invoice.
@@ -638,7 +638,7 @@ class Receipt extends PersistDocument{
 	 *
 	 * Note that if you pass the status argument as PersistDocument::IN_PROGRESS, the invoice argument must
 	 * have any details and its status property must be set to PersistDocument::IN_PROGRESS too. Otherwise
-	 * try to call this method only from the database layer.
+	 * call this method only from the database layer.
 	 * @param Invoice $invoice
 	 * @param integer $id
 	 * @param integer $status
@@ -683,12 +683,12 @@ class Receipt extends PersistDocument{
 	}
 	
 	/**
-	 * Returns the sum of all the payment cards of the receipt.
+	 * Returns the sum of all the vouchers of the receipt.
 	 *
 	 * @return float
 	 */
-	public function getTotalPaymentCardsAmount(){
-		return $this->_TotalPaymentCardsAmount;
+	public function getTotalVouchersAmount(){
+		return $this->_mTotalVouchersAmount;
 	}
 	
 	/**
@@ -707,19 +707,23 @@ class Receipt extends PersistDocument{
 	 */
 	public function getTotal(){
 		$cash_amount = (!is_null($this->_mCash)) ? $this->_mCash->getAmount() : 0.0;
-		return $cash_amount + $this->_mTotalPaymentCardsAmount;
+		return $cash_amount + $this->_mTotalVouchersAmount;
 	}
 	
 	/**
-	 * Returns the voucher whic transaction number matchs the one provided.
+	 * Returns the voucher which transaction number matchs the one provided.
 	 *
 	 * @param string $transactionNumber
 	 * @return Voucher
 	 */
 	public function getVoucher($transactionNumber){
+		String::validateString($transactionNumber, 'N&uacute;mero de transacci&oacute;n inv&aacute;lido.');
+		
 		foreach($this->_mVouchers as &$voucher)
 			if($voucher->getTransactionNumber() == $transactionNumber)
 				return $voucher;
+				
+		return NULL;
 	}
 	
 	/**
@@ -758,18 +762,20 @@ class Receipt extends PersistDocument{
 	 * Persist::CREATED in the constructor method too.
 	 * @param float $change
 	 * @param Cash $cash
-	 * @param float $totalPaymentCardsAmount
+	 * @param float $totalVouchersAmount
 	 * @param array<Voucher> $vouchers
 	 */
-	public function setData(Cash $cash = NULL, $totalPaymentCardsAmount = 0.0, $change = 0.0, $vouchers = NULL){
+	public function setData(Cash $cash = NULL, $totalVouchersAmount = 0.0, $change = 0.0, $vouchers = NULL){
 		try{
 			if(!is_null($cash))
 				self::validateObjectFromDatabase($cash);
-			if($totalPaymentCardsAmount !== 0.0){
-				Number::validatePositiveFloat($totalPaymentCardsAmount, 'Total inv&aacute;lido.');
+				
+			if($totalVouchersAmount !== 0.0){
+				Number::validatePositiveFloat($totalVouchersAmount, 'Total inv&aacute;lido.');
 				if(empty($vouchers))
 					throw new Exception('No hay ningun voucher.');
 			}
+			
 			if($change !== 0.0)
 				Number::validatePositiveFloat($change, 'Monto de cambio inv&aacute;lido.');
 		} catch(Exception $e){
@@ -779,9 +785,10 @@ class Receipt extends PersistDocument{
 		}
 		
 		$this->_mCash = $cash;
-		$this->_TotalPaymentCardsAmount = $totalPaymentCardsAmount;
+		$this->_mTotalVouchersAmount = $totalVouchersAmount;
 		$this->_mChange = $change;
-		$this->_mVouchers = $vouchers;
+		if(!is_null($vouchers))
+			$this->_mVouchers = $vouchers;
 	}
 	
 	/**
@@ -790,7 +797,7 @@ class Receipt extends PersistDocument{
 	 * @param Voucher $newVoucher
 	 */
 	public function addVoucher(Voucher $newVoucher){
-		$this->_TotalPaymentCardsAmount += $newVoucher->getAmount();
+		$this->_mTotalVouchersAmount += $newVoucher->getAmount();
 		
 		foreach($this->_mVouchers as &$voucher)
 			if($voucher->getTransactionNumber() == $newVoucher->getTransactionNumber()){
@@ -810,10 +817,10 @@ class Receipt extends PersistDocument{
 		$temp_vouchers = array();
 		
 		foreach($this->_mVouchers as &$voucher)
-			if($voucher->getTransactionNumber != $purgeVoucher->getTransactionNumber())
+			if($voucher->getTransactionNumber() != $purgeVoucher->getTransactionNumber())
 				$temp_vouchers[] = $voucher;
 			else
-				$this->_TotalPaymentCardsAmount -= $voucher->getAmount();
+				$this->_mTotalVouchersAmount -= $voucher->getAmount();
 				
 		$this->_mVouchers = $temp_vouchers;
 	}
@@ -841,20 +848,23 @@ class Receipt extends PersistDocument{
 	/**
 	 * Cancels the document and reverts its effects.
 	 *
-	 * The user argument registers who authorized the action.
+	 * The user argument registers who authorized the action. Note that you must cancel the receipt's invoice
+	 * first in order to cancel the receipt. Call the invoice cancel method instead.
 	 * @param UserAccount $user
 	 */
 	public function cancel(UserAccount $user){
 		if($this->_mStatus == PersistDocument::CREATED){
-			$deposit_ids = DepositDetailsList::getList($this->_mCash);
-			if(!empty($deposit_details))
-				foreach($deposit_ids as $id){
-					$deposit = Deposit::getInstance($id);
-					$deposit->cancel($user);
-				}
-				
-			ReceiptDAM::cancel($this);
-			$this->_mStatus = PersistDocument::CANCELLED;
+			if($this->_mInvoice->getStatus() == PersistDocument::CANCELLED){
+				$deposit_ids = DepositDetailsList::getList($this->_mCash);
+				if(!empty($deposit_details))
+					foreach($deposit_ids as $id){
+						$deposit = Deposit::getInstance($id);
+						$deposit->cancel($user);
+					}
+					
+				ReceiptDAM::cancel($this);
+				$this->_mStatus = PersistDocument::CANCELLED;
+			}
 		}
 	}
 	
@@ -873,6 +883,7 @@ class Receipt extends PersistDocument{
 	/**
 	 * Inserts the receipt's data in the database.
 	 *
+	 * It also calls the save method of the receipt's invoice.
 	 */
 	protected function insert(){
 		$this->_mInvoice->save();
@@ -884,7 +895,7 @@ class Receipt extends PersistDocument{
 	/**
 	 * Validates the receipt's main properties.
 	 *
-	 * At least the cash not be NULL or the vouchers property must not be empty.
+	 * At least the cash property must not be NULL or the vouchers property must not be empty.
 	 */
 	private function validateMainProperties(){
 		if(is_null($this->_mCash) && empty($this->_mVouchers))
@@ -1281,7 +1292,11 @@ class Cash extends Persist{
 	public function __construct($amount, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		Number::validatePositiveFloat($amount, 'Monto de efectivo inv&aacute;lido.');
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			Number::validatePositiveFloat($amount, 'Monto de efectivo inv&aacute;lido.');
+		else
+			Number::validateUnsignedFloat($amount, 'Monto de efectivo inv&aacute;lido.');
+		
 		if(!is_null($id))
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		
@@ -1392,6 +1407,71 @@ class DepositDetailsList{
 	 */
 	static public function getList(Cash $obj){
 		// Code here...
+	}
+}
+
+
+
+class DepositDetail{
+	/**
+	 * Holds a receipt's cash used in the deposit.
+	 *
+	 * @var Cash
+	 */
+	private $_mCash;
+	
+	/**
+	 * Holds the deposit detail's cash amount.
+	 *
+	 * @var float
+	 */
+	private $_mAmount;
+	
+	/**
+	 * Returns the detail's cash.
+	 *
+	 * @return Cash
+	 */
+	public function getCash(){
+		return $this->_mCash;
+	}
+	
+	/**
+	 * Returns the detail's cash amount.
+	 *
+	 * @return float
+	 */
+	public function getAmount(){
+		return $this->_mAmount;
+	}
+	
+	/**
+	 * Returns an array with the detail's data.
+	 *
+	 * The fields in the array are receipt_id, received and deposited.
+	 * @return array
+	 */
+	public function show(){
+		return array('receipt_id' => $this->_mCash->getId(), 'received' => $this->_mCash->getAmount(),
+				'deposited' => $this->_mAmount);
+	}
+	
+	/**
+	 * Increases the detail's amount.
+	 *
+	 * @param float $amount
+	 */
+	public function increase($amount){
+		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		$this->_mAmount += $amount;
+	}
+	
+	/**
+	 * Reverts the deposit effects.
+	 *
+	 */
+	public function cancel(){
+		$this->_mCash->decreaseDeposit($this->_mAmount);
 	}
 }
 ?>
