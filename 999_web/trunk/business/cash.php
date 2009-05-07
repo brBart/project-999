@@ -1825,4 +1825,42 @@ class DepositDetail{
 		$this->_mCash->decreaseDeposit($this->_mAmount);
 	}
 }
+
+
+/**
+ * Utility class in charge for creating the deposit transactions on a deposit document.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class DepositEvent{
+	/**
+	 * Adds cash to a deposit document.
+	 *
+	 * It reserves the amount provided from the receipt's cash.
+	 * @param Cash $cash
+	 * @param Deposit $deposit
+	 * @param float $amount
+	 */
+	static public function apply(Cash $cash, Deposit $deposit, $amount){
+		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		
+		if($cash->getAvailable() < $amount)
+			throw new Exception('No hay suficiente efectivo disponible.');
+			
+		$deposit->addDetail(new DepositDetail($cash, $amount));
+		$cash->reserve($amount);
+	}
+	
+	/**
+	 * Reverts the effects of the apply method.
+	 *
+	 * @param Deposit $deposit
+	 * @param DepositDetail $detail
+	 */
+	static public function cancel(Deposit $deposit, DepositDetail $detail){
+		$cash = $detail->getCash();
+		$cash->decreaseReserve($detail->getAmount());
+		$deposit->deleteDetail($detail);
+	}
+}
 ?>
