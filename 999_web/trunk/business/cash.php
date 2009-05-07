@@ -1179,7 +1179,7 @@ class Receipt extends PersistDocument{
 	public function cancel(UserAccount $user){
 		if($this->_mStatus == PersistDocument::CREATED){
 			if($this->_mInvoice->getStatus() == PersistDocument::CANCELLED){
-				$deposit_ids = DepositDetailsList::getList($this->_mCash);
+				$deposit_ids = DepositDetailList::getList($this->_mCash);
 				if(!empty($deposit_details))
 					foreach($deposit_ids as $id){
 						$deposit = Deposit::getInstance($id);
@@ -1718,11 +1718,11 @@ class Cash extends Persist{
 
 
 /**
- * Class used for obtaining certain receipts' deposits.
+ * Class used for obtaining certain receipts' cash deposits.
  * @package Cash
  * @author Roberto Oliveros
  */
-class DepositDetailsList{
+class DepositDetailList{
 	/**
 	 * Returns an array with all the deposits' id which contain the provided cash.
 	 *
@@ -1730,7 +1730,8 @@ class DepositDetailsList{
 	 * @return array
 	 */
 	static public function getList(Cash $obj){
-		// Code here...
+		Persist::validateObjectFromDatabase($obj);
+		return DepositDetailListDAM::getList($obj);
 	}
 }
 
@@ -1865,7 +1866,11 @@ class DepositEvent{
 }
 
 
-
+/**
+ * Represents a cash register's daily sales report.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
 class SalesReport{
 	/**
 	 * Holds the total monetary amount of the report.
@@ -1889,17 +1894,99 @@ class SalesReport{
 	private $_mTotalCash;
 	
 	/**
-	 * Holds Vat percentage applied to the total amount.
-	 *
-	 * @var float
-	 */
-	private $_mTotalVat;
-	
-	/**
-	 * Holds an array with invoices' id and total amounts.
+	 * Holds an array with the invoices' id and total amounts.
 	 *
 	 * @var array
 	 */
 	private $_mInvoices;
+	
+	/**
+	 * Constructs the sales report with the provided data.
+	 *
+	 * Call only from the database layer. Use getInstance() method instead.
+	 * @param float $total
+	 * @param float $totalVouchers
+	 * @param float $totalCash
+	 * @param array $invoices
+	 */
+	public function __construct($total, $totalVouchers, $totalCash, $invoices){
+		try{
+			Number::validateFloat($total, 'Total inv&aacute;lido.');
+			Number::validateFloat($totalVouchers, 'Total de vouchers inv&aacute;lido.');
+			Number::validateFloat($totalCash, 'Total de efectivo inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo construct en SalesReport con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mTotal = $total;
+		$this->_mTotalVouchers = $totalVouchers;
+		$this->_mTotalCash = $totalCash;
+		$this->_mInvoices = $invoices;
+	}
+	
+	/**
+	 * Returns the report's total.
+	 *
+	 * @return float
+	 */
+	public function getTotal(){
+		return $this->_mTotal;
+	}
+	
+	/**
+	 * Returns the total sum of all the vouchers.
+	 *
+	 * @return float
+	 */
+	public function getTotalVouchers(){
+		return $this->_mTotalVouchers;
+	}
+	
+	/**
+	 * Returns the total amount of cash of the report.
+	 *
+	 * @return float
+	 */
+	public function getTotalCash(){
+		return $this->_mTotalCash;
+	}
+	
+	/**
+	 * Returns the Vat percentage applied to the report's total amount.
+	 *
+	 * @return float
+	 */
+	public function getTotalVat(){
+		return $this->_mTotal * (Vat::getInstance()->getPercentage() / 100);
+	}
+	
+	/**
+	 * Returns an array with the details of all the invoices of the report.
+	 *
+	 * @return array
+	 */
+	public function getInvoices(){
+		return $this->_mInvoices;
+	}
+	
+	/**
+	 * Returns an instance of a cash register's sales report.
+	 *
+	 * In order to the preliminary argument to be true the cash register must be open too. Otherwise the cash
+	 * register must be closed.
+	 * @param CashRegister $cashRegister
+	 * @param boolean $preliminary
+	 * @return SalesReport
+	 */
+	static public function getInstance(CashRegister $cashRegister, $preliminary = false){
+		if($preliminary && !$cashRegister->isOpen())
+			throw new Exception('Caja ya fue cerrada.');
+		elseif(!$preliminary && $cashRegister->isOpen())
+			throw new Exception('Caja esta abierta.');
+			
+		return SalesReportDAM::getInstance($cashRegister);
+	}
 }
 ?>
