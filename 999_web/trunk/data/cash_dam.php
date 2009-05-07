@@ -664,4 +664,59 @@ class DepositDAM{
 		}
 	}
 }
+
+
+/**
+ * Utility class for creating a sales report with database data.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class SalesReportDAM{
+	/**
+	 * Returns an instance of a cash register's sales report.
+	 *
+	 * @param CashRegister $obj
+	 * @return SalesReport
+	 */
+	static public function getInstance(CashRegister $obj){
+		switch($obj->getId()){
+			case 123:
+				$invoices = array(array('serial_number' => 'A021', 'number' => 123,
+									'name' => 'Roberto', 'total' => 23.45),
+								array('serial_number' => 'A021', 'number' => 124,
+									'name' => 'Carlos', 'total' => 33.81),
+								array('serial_number' => 'A021', 'number' => 125,
+									'name' => 'Jose', 'total' => 135.15));
+				$report = new SalesReport(231.49, 0.0, 231.49, $invoices);
+				return $report;
+				break;
+				
+			default:
+		}
+	}
+}
+
+
+/**
+ * Class used for obtaining certain receipts' cash deposits.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class DepositDetailListDAM{
+	/**
+	 * Returns an array with all the deposits' id which contain the provided cash.
+	 *
+	 * @param Cash $obj
+	 * @return array
+	 */
+	static public function getList(Cash $obj){
+		switch($obj->getId()){
+			case 123:
+				return array(array('id' => 123), array('id' => 124), array('id' => 125));
+				break;
+				
+			default:
+		}
+	}
+}
 ?>
