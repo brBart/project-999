@@ -1863,4 +1863,43 @@ class DepositEvent{
 		$deposit->deleteDetail($detail);
 	}
 }
+
+
+
+class SalesReport{
+	/**
+	 * Holds the total monetary amount of the report.
+	 *
+	 * @var float
+	 */
+	private $_mTotal;
+	
+	/**
+	 * Holds the total monetary amount of all the vouchers in the report.
+	 *
+	 * @var float
+	 */
+	private $_mTotalVouchers;
+	
+	/**
+	 * Holds the total monetary amount in cash.
+	 *
+	 * @var float
+	 */
+	private $_mTotalCash;
+	
+	/**
+	 * Holds Vat percentage applied to the total amount.
+	 *
+	 * @var float
+	 */
+	private $_mTotalVat;
+	
+	/**
+	 * Holds an array with invoices' id and total amounts.
+	 *
+	 * @var array
+	 */
+	private $_mInvoices;
+}
 ?>
