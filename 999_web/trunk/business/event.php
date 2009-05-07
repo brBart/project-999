@@ -160,7 +160,7 @@ class StrictWithdrawEvent extends WithdrawEvent{
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		
 		if(Inventory::getAvailable($product) < $quantity)
-			throw new Exception('No hay suficiente cantidad.');
+			throw new Exception('No hay suficiente cantidad disponible.');
 			
 		parent::apply($product, $document, $quantity);
 	}
