@@ -382,6 +382,17 @@ class Deposit extends PersistDocument{
 	}
 	
 	/**
+	 * Does not save the deposit's data and reverts its effects.
+	 *
+	 * Only applies if the status property is set to Deposit::IN_PROGRESS.
+	 */
+	public function discard(){
+		if($this->_mStatus == Deposit::IN_PROGRESS)
+			foreach($this->_mDetails as &$detail)
+				DepositEvent::cancel($this, $detail);
+	}
+	
+	/**
 	 * Cancels the document and reverts its effects.
 	 *
 	 * The user argument registers who authorized the action.
@@ -441,6 +452,9 @@ class Deposit extends PersistDocument{
 		
 		if(is_null($this->_mBankAccount))
 			throw new Exception('Cuenta Bancaria inv&aacute;lida.');
+			
+		if(empty($this->_mDetails))
+			throw new Exception('No hay ningun detalle.');
 	}
 }
 
