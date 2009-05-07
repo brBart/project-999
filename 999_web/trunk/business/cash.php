@@ -77,7 +77,7 @@ class Bank extends Identifier{
 
 
 /**
- * Defines functionality for a Deposit.
+ * Represents a cash deposit slip ready to be sent to the bank.
  * @package Cash
  * @author Roberto Oliveros
  */
@@ -97,7 +97,7 @@ class Deposit extends PersistDocument{
 	private $_mNumber;
 	
 	/**
-	 * Holds the date in which the deposit was creates.
+	 * Holds the date in which the deposit was created.
 	 *
 	 * Date format: 'dd/mm/yyyy'.
 	 * @var string
@@ -105,14 +105,14 @@ class Deposit extends PersistDocument{
 	private $_mDate;
 	
 	/**
-	 * Bank where the Deposit is being made.
+	 * Bank where the deposit is being made.
 	 *
 	 * @var BankAccount
 	 */
 	private $_mBankAccount;
 	
 	/**
-	 * Cash Register from where the Deposit's money went.
+	 * Cash register from where the deposit's money went.
 	 *
 	 * @var CashRegister
 	 */
@@ -291,7 +291,7 @@ class Deposit extends PersistDocument{
 	 * Sets the deposit properties.
 	 *
 	 * Must be called only from the database layer. The object's status must be set to
-	 * Persist::CREATED in the constructor method too.
+	 * Deposit::CREATED or Deposit::CONFIRMED in the constructor method too.
 	 * @param string $number
 	 * @param BankAccount $bankAccount
 	 * @param float $total

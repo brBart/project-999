@@ -404,6 +404,10 @@ class CashDAM{
 	static private $_mReserved124 = 22.75;
 	static private $_mDeposited124 = 24.00;
 	
+	static private $_mAmount125 = 128.61;
+	static private $_mReserved125 = 12.75;
+	static private $_mDeposited125 = 30.00;
+	
 	/**
 	 * Returns the cash amount of the provided object from the database.
 	 *
@@ -418,6 +422,10 @@ class CashDAM{
 				
 			case 124:
 				return self::$_mAmount124;
+				break;
+				
+			case 125:
+				return self::$_mAmount125;
 				break;
 			
 			default:
@@ -434,6 +442,10 @@ class CashDAM{
 				
 			case 124:
 				return self::$_mAmount124 - (self::$_mReserved124 + self::$_mDeposited124);
+				break;
+				
+			case 125:
+				return self::$_mAmount125 - (self::$_mReserved125 + self::$_mDeposited125);
 				break;
 			
 			default:
@@ -457,6 +469,10 @@ class CashDAM{
 				self::$_mReserved124 += $amount;
 				return;
 				
+			case 125:
+				self::$_mReserved125 += $amount;
+				return;
+				
 			default:
 		}
 	}
@@ -475,6 +491,10 @@ class CashDAM{
 				
 			case 124:
 				self::$_mReserved124 -= $amount;
+				return;
+				
+			case 125:
+				self::$_mReserved125 -= $amount;
 				return;
 				
 			default:
@@ -497,6 +517,10 @@ class CashDAM{
 				self::$_mDeposited124 += $amount;
 				return;
 				
+			case 125:
+				self::$_mDeposited125 += $amount;
+				return;
+				
 			default:
 		}
 	}
@@ -515,6 +539,10 @@ class CashDAM{
 				
 			case 124:
 				self::$_mDeposited124 -= $amount;
+				return;
+				
+			case 125:
+				self::$_mDeposited125 -= $amount;
 				return;
 				
 			default:
@@ -594,6 +622,46 @@ class DepositDAM{
 	 */
 	static public function insert(Deposit $obj){
 		return 123;
+	}
+	
+	/**
+	 * Updates the deposit status to cancelled in the database.
+	 *
+	 * The user and date arguments are to register who and when does the cancel action took place.
+	 * @param Deposit $deposit
+	 * @param UserAccount $user
+	 * @param string $date
+	 */
+	static public function cancel(Deposit $deposit, UserAccount $user, $date){
+		// Code here...
+	}
+	
+	/**
+	 * Returns a deposit with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @param integer $total_pages
+	 * @param integer $total_items
+	 * @param integer $page
+	 * @return Deposit
+	 */
+	static public function getInstance($id, &$total_pages, &$total_items, $page){
+		switch($id){
+			case 123:
+				$deposit = new Deposit(CashRegister::getInstance(123), '12/03/2009',
+						UserAccount::getInstance('roboli'), $id, Deposit::CREATED);
+				$details[] = new DepositDetail(new Cash(1.0, 123, Persist::CREATED), 5.00);
+				$deposit->setData('4215', BankAccount::getInstance('123'), 5.00, $details);
+				$total_pages = 1;
+				$total_items = 1;
+				return $deposit;
+				break;
+				
+			default:
+				return NULL;
+		}
 	}
 }
 ?>

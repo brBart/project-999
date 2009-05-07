@@ -329,7 +329,7 @@ class InvoiceDAM{
 	/**
 	 * Updates the invoice status to cancelled in the database.
 	 *
-	 * The user and date parameters are to register who and when does the cancel action took place.
+	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param Invoice $invoice
 	 * @param UserAccount $user
 	 * @param string $date
