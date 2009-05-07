@@ -893,13 +893,9 @@ class Product extends Identifier{
 		
 		if(is_null($this->_mUM))
 			throw new Exception('Unidad de medida inv&aacute;lida.');
-		else
-			self::validateObjectFromDatabase($this->_mUM);
 			
 		if(is_null($this->_mManufacturer))
 			throw new Exception('Fabricante inv&aacute;lido.');
-		else
-			self::validateObjectFromDatabase($this->_mManufacturer);
 		
 		Number::validateUnsignedFloat($this->_mPrice, 'Precio inv&aacute;lido.');
 		if(!$this->hasProductSuppliers())

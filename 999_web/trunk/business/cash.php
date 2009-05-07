@@ -673,8 +673,6 @@ class BankAccount extends PersistObject{
 		
 		if(is_null($this->_mBank))
 			throw new Exception('Banco inv&aacute;lido.');
-		else
-			self::validateObjectFromDatabase($this->_mBank);
 	}
 	
 	/**
