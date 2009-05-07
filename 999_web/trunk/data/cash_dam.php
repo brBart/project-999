@@ -400,6 +400,10 @@ class CashDAM{
 	static private $_mReserved123 = 10.00;
 	static private $_mDeposited123 = 0.0;
 	
+	static private $_mAmount124 = 68.91;
+	static private $_mReserved124 = 22.75;
+	static private $_mDeposited124 = 24.00;
+	
 	/**
 	 * Returns the cash amount of the provided object from the database.
 	 *
@@ -410,6 +414,10 @@ class CashDAM{
 		switch($obj->getId()){
 			case 123:
 				return self::$_mAmount123;
+				break;
+				
+			case 124:
+				return self::$_mAmount124;
 				break;
 			
 			default:
@@ -422,6 +430,10 @@ class CashDAM{
 		switch($obj->getId()){
 			case 123:
 				return self::$_mAmount123 - (self::$_mReserved123 + self::$_mDeposited123);
+				break;
+				
+			case 124:
+				return self::$_mAmount124 - (self::$_mReserved124 + self::$_mDeposited124);
 				break;
 			
 			default:
@@ -441,6 +453,10 @@ class CashDAM{
 				self::$_mReserved123 += $amount;
 				return;
 				
+			case 124:
+				self::$_mReserved124 += $amount;
+				return;
+				
 			default:
 		}
 	}
@@ -455,6 +471,10 @@ class CashDAM{
 		switch($obj->getId()){
 			case 123:
 				self::$_mReserved123 -= $amount;
+				return;
+				
+			case 124:
+				self::$_mReserved124 -= $amount;
 				return;
 				
 			default:
@@ -473,6 +493,10 @@ class CashDAM{
 				self::$_mDeposited123 += $amount;
 				return;
 				
+			case 124:
+				self::$_mDeposited124 += $amount;
+				return;
+				
 			default:
 		}
 	}
@@ -487,6 +511,10 @@ class CashDAM{
 		switch($obj->getId()){
 			case 123:
 				self::$_mDeposited123 -= $amount;
+				return;
+				
+			case 124:
+				self::$_mDeposited124 -= $amount;
 				return;
 				
 			default:
@@ -538,6 +566,34 @@ class ReceiptDAM{
 	 */
 	static public function cancel(Receipt $obj){
 		// Code here...
+	}
+}
+
+
+/**
+ * Utility class for accessing deposit database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class DepositDAM{
+	/**
+	 * Change the deposit's status to confirmed in the database.
+	 *
+	 * @param Deposit $obj
+	 */
+	static public function confirm(Deposit $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Inserts the deposit's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Deposit $obj
+	 * @return integer
+	 */
+	static public function insert(Deposit $obj){
+		return 123;
 	}
 }
 ?>
