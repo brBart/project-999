@@ -204,6 +204,7 @@ class CashRegisterDAM{
 	static private $_mIsOpen = true;
 	static private $_mIsOpen123 = true;
 	static private $_mIsOpen124 = true;
+	static private $_mIsOpen125 = true;
 	
 	/**
 	 * Returns the status of the cash register.
@@ -219,6 +220,10 @@ class CashRegisterDAM{
 				
 			case 124:
 				return self::$_mIsOpen124;
+				break;
+				
+			case 125:
+				return self::$_mIsOpen125;
 				break;
 				
 			default:
@@ -239,6 +244,10 @@ class CashRegisterDAM{
 				
 			case 124:
 				self::$_mIsOpen124 = false;
+				break;
+				
+			case 125:
+				self::$_mIsOpen125 = false;
 				break;
 				
 			default:
@@ -264,6 +273,12 @@ class CashRegisterDAM{
 			case 124:
 				$shift = Shift::getInstance(123);
 				$cash_register = new CashRegister($shift, 124);
+				return $cash_register;
+				break;
+				
+			case 125:
+				$shift = Shift::getInstance(123);
+				$cash_register = new CashRegister($shift, 125);
 				return $cash_register;
 				break;
 				
