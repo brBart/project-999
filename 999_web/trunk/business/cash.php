@@ -150,6 +150,7 @@ class Deposit extends PersistDocument{
 	 * @param UserAccount $user
 	 * @param integer $id
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct(CashRegister $cashRegister, $date = NULL, UserAccount $user = NULL,
 			$id = NULL, $status = Deposit::IN_PROGRESS){
@@ -296,6 +297,7 @@ class Deposit extends PersistDocument{
 	 * @param BankAccount $bankAccount
 	 * @param float $total
 	 * @param array<DepositDetail> $details
+	 * @throws Exception
 	 */
 	public function setData($number, BankAccount $bankAccount, $total, $details){
 		try{
@@ -303,7 +305,7 @@ class Deposit extends PersistDocument{
 			self::validateObjectFromDatabase($bankAccount);
 			Number::validatePositiveFloat($total, 'Total inv&aacute;lido.');
 			if(empty($details))
-				throw new Exception('No hay ning detalle.');
+				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Deposit con datos erroneos! ' .
 					$e->getMessage());
@@ -397,6 +399,7 @@ class Deposit extends PersistDocument{
 	 *
 	 * The user argument registers who authorized the action.
 	 * @param UserAccount $user
+	 * @throws Exception
 	 */
 	public function cancel(UserAccount $user){
 		if($this->_mStatus == self::CREATED){
@@ -446,6 +449,7 @@ class Deposit extends PersistDocument{
 	 * Validates the deposit's main properties.
 	 *
 	 * Numer property must not be empty and bank account must not be NULL.
+	 * @throws Exception
 	 */
 	private function validateMainProperties(){
 		String::validateString($this->_mNumber, 'N&uacute;mero de deposito inv&aacute;lido.');
@@ -959,6 +963,7 @@ class Receipt extends PersistDocument{
 	 * @param Invoice $invoice
 	 * @param integer $id
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct(Invoice $invoice, $id = NULL, $status = PersistDocument::IN_PROGRESS){
 		parent::__construct($id, $status);
@@ -1068,7 +1073,7 @@ class Receipt extends PersistDocument{
 	 * @param float $amount
 	 */
 	public function setChange($amount){
-		Number::validatePositiveFloat($amount, 'Cantidad de cambio inv&aacute;lido.');
+		Number::validateUnsignedFloat($amount, 'Cantidad de cambio inv&aacute;lido.');
 		$this->_mChange = $amount;
 	}
 	
@@ -1094,7 +1099,7 @@ class Receipt extends PersistDocument{
 			}
 			
 			if($change !== 0.0)
-				Number::validatePositiveFloat($change, 'Monto de cambio inv&aacute;lido.');
+				Number::validateUnsignedFloat($change, 'Monto de cambio inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .
 					$e->getMessage());
@@ -1218,10 +1223,18 @@ class Receipt extends PersistDocument{
 	 * Validates the receipt's main properties.
 	 *
 	 * At least the cash property must not be NULL or the vouchers property must not be empty.
+	 * @throws Exception
 	 */
 	private function validateMainProperties(){
 		if(is_null($this->_mCash) && empty($this->_mVouchers))
 			throw new Exception('Favor ingresar efectivo o algun voucher.');
+
+		/**
+		 * @todo Verify if it is ok comparing just like this because of the bonus detail.
+		 */
+		if($this->getTotal() != $this->_mInvoice->getTotal())
+			throw new Exception('Recibo no se puede guardar, el monto ingresado no es el requerido: ' .
+					$this->_mInvoice->getTotal());
 	}
 }
 
@@ -1473,6 +1486,7 @@ class PaymentCard{
 	 * @param string $holderName
 	 * @param string $date
 	 * @return PaymentCard
+	 * @throws Exception
 	 */
 	static public function create($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
 		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
@@ -1614,10 +1628,7 @@ class Cash extends Persist{
 	public function __construct($amount, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		if($this->_mStatus == Persist::IN_PROGRESS)
-			Number::validatePositiveFloat($amount, 'Monto de efectivo inv&aacute;lido.');
-		else
-			Number::validateUnsignedFloat($amount, 'Monto de efectivo inv&aacute;lido.');
+		Number::validateUnsignedFloat($amount, 'Monto de efectivo inv&aacute;lido.');
 		
 		if(!is_null($id))
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
@@ -1839,6 +1850,7 @@ class DepositEvent{
 	 * @param Cash $cash
 	 * @param Deposit $deposit
 	 * @param float $amount
+	 * @throws Exception
 	 */
 	static public function apply(Cash $cash, Deposit $deposit, $amount){
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
@@ -1906,6 +1918,7 @@ class SalesReport{
 	 * @param float $totalVouchers
 	 * @param float $totalCash
 	 * @param array $invoices
+	 * @throws Exception
 	 */
 	public function __construct($total, $totalVouchers, $totalCash, $invoices){
 		try{
@@ -1977,6 +1990,7 @@ class SalesReport{
 	 * @param CashRegister $cashRegister
 	 * @param boolean $preliminary
 	 * @return SalesReport
+	 * @throws Exception
 	 */
 	static public function getInstance(CashRegister $cashRegister, $preliminary = false){
 		if($preliminary && !$cashRegister->isOpen())
@@ -1989,9 +2003,18 @@ class SalesReport{
 }
 
 
-
+/**
+ * Utility class for adding cash to receipts.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
 class CashEntryEvent{
-	
+	/**
+	 * Adds cash to receipt.
+	 *
+	 * @param Receipt $receipt
+	 * @param float $amount
+	 */
 	static public function apply(Receipt $receipt, $amount){
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		
@@ -2003,10 +2026,49 @@ class CashEntryEvent{
 			$receipt->setChange(($amount + $total_vouchers) - $total_invoice);
 			$cash = new Cash($total_invoice - $total_vouchers);
 		}
-		else
+		else{
+			$receipt->setChange(0.00);
 			$cash = new Cash($amount);
+		}
 			
+		$receipt->setCash($cash);
+	}
+}
+
+
+/**
+ * Utility class for adding payment cards vouchers to a receipt.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class VoucherEntryEvent{
+	/**
+	 * Adds a voucher to a receipt.
+	 *
+	 * @param string $transaction
+	 * @param PaymentCard $card
+	 * @param Invoice $invoice
+	 * @param Receipt $receipt
+	 * @param float $amount
+	 * @throws Exception
+	 */
+	static public function apply($transaction, PaymentCard $card, Invoice $invoice, Receipt $receipt, $amount){
+		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		
+		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
+			throw new Exception('Voucher excede el total de la factura.');
+			
+		$receipt->addVoucher(new Voucher($transaction, $card, $amount));
+	}
+	
+	/**
+	 * Deletes the voucher from the receipt.
+	 *
+	 * @param Receipt $receipt
+	 * @param Voucher $voucher
+	 */
+	static public function cancel(Receipt $receipt, Voucher $voucher){
+		$receipt->deleteVoucher($voucher);
 	}
 }
 ?>

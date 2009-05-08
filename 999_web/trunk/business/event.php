@@ -154,6 +154,7 @@ class StrictWithdrawEvent extends WithdrawEvent{
 	 * @param Product $product
 	 * @param Document $document
 	 * @param integer $quantity
+	 * @throws Exception
 	 */
 	static public function apply(Product $product, Document $document, $quantity){
 		Persist::validateObjectFromDatabase($product);
@@ -223,8 +224,8 @@ class RetailEvent{
 			 	* @todo Verify if the result needs rounding.
 			 	*/
 				$invoice->addDetail(new DocBonusDetail($bonus,
-						-1 * (($product->getPrice() * $bonus->getQuantity()) *
-						($bonus->getPercentage() / 100))));
+						(float)number_format(-1 * (($product->getPrice() * $bonus->getQuantity()) *
+						($bonus->getPercentage() / 100)), 2)));
 		}
 	}
 }

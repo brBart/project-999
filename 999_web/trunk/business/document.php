@@ -61,6 +61,7 @@ abstract class Document extends PersistDocument{
 	 * @param UserAccount $user
 	 * @param integer $id
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct($date = NULL, UserAccount $user = NULL, $id = NULL,
 			$status = PersistDocument::IN_PROGRESS){
@@ -279,6 +280,7 @@ abstract class Document extends PersistDocument{
 	/**
 	 * Cancels the document's details and reverts its effects.
 	 *
+	 * @throws Exception
 	 */
 	protected function cancelDetails(){
 		foreach($this->_mDetails as $detail)
@@ -1339,6 +1341,7 @@ class Invoice extends Document{
 	 * @param UserAccount $user
 	 * @param integer $id
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct(CashRegister $cashRegister, $date = NULL, UserAccount $user = NULL,
 			$id = NULL, $status = PersistDocument::IN_PROGRESS){
@@ -1576,6 +1579,7 @@ class Invoice extends Document{
 	 *
 	 * The user argument registers who authorized the action.
 	 * @param UserAccount $user
+	 * @throws Exception
 	 */
 	public function cancel(UserAccount $user){
 		if($this->_mStatus == Persist::CREATED){
@@ -1628,6 +1632,7 @@ class Invoice extends Document{
 	/**
 	 * Inserts the invoice data in the database.
 	 *
+	 * @throws Exception
 	 */
 	protected function insert(){
 		$this->_mVatPercentage = Vat::getInstance()->getPercentage();
@@ -1655,6 +1660,7 @@ class Invoice extends Document{
 	 *
 	 * This method call its parent validateMainProperties method. And nit must not be empty, cash receipt and
 	 * correlative must not be NULL.
+	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
@@ -1762,6 +1768,7 @@ class Discount extends Persist{
 	 * Persist::CREATED in the constructor method too.
 	 * @param Invoice $invoice
 	 * @param float $percentage
+	 * @throws Exception
 	 */
 	public function setData(Invoice $invoice, $percentage){
 		try{

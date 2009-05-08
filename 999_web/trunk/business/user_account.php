@@ -40,6 +40,7 @@ class Role{
 	 * Must be called only from the database layer. Used getInstance() instead with a valid id.
 	 * @param integer $id
 	 * @param string $name
+	 * @throws Exception
 	 */
 	public function __construct($id, $name){
 		try{
@@ -142,6 +143,7 @@ class UserAccount extends PersistObject{
 	 * Parameters must be set only if called from the database layer.
 	 * @param string $userName
 	 * @param integer $status
+	 * @throws Exception
 	 */
 	public function __construct($userName = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
@@ -216,6 +218,7 @@ class UserAccount extends PersistObject{
 	 * Sets the account's username.
 	 *
 	 * @param string $userName
+	 * @throws Exception
 	 */
 	public function setUserName($userName){
 		if($this->_mStatus == self::CREATED)
@@ -284,6 +287,7 @@ class UserAccount extends PersistObject{
 	 * @param string $lastName
 	 * @param Role $role
 	 * @param boolean $deactivated
+	 * @throws Exception
 	 */
 	public function setData($firstName, $lastName, $role, $deactivated){
 		try{
@@ -307,6 +311,7 @@ class UserAccount extends PersistObject{
 	 * If the object's status is set to Persist::IN_PROGRESS the method insert()
 	 * is called, if it's set to Persist::CREATED the method update() is called.
 	 * @return void
+	 * @throws Exception
 	 */
 	public function save(){
 		if(UserAccountUtility::isRoot($this->_mUserName))
@@ -357,6 +362,7 @@ class UserAccount extends PersistObject{
 	 * 
 	 * Verifies that the account's username, fisrt name, last name and password are not emty. The role
 	 * property must not be NULL. Otherwise it throws an exception.
+	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
 		String::validateString($this->_mUserName, 'Usuario inv&aacute;lido.');
@@ -389,6 +395,7 @@ class UserAccount extends PersistObject{
 	 * 
 	 * Throws an exception if it does.
 	 * @param string $userName
+	 * @throws Exception
 	 */
 	private function verifyUserName($userName){
 		if(UserAccountDAM::exists($userName))
@@ -454,6 +461,7 @@ class UserAccountUtility{
 	 * @param string $password
 	 * @param string $newPassword
 	 * @return boolean
+	 * @throws Exception
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
 		Persist::validateObjectFromDatabase($account);
