@@ -934,7 +934,7 @@ class Receipt extends PersistDocument{
 	 *
 	 * @var float
 	 */
-	private $_mTotalVouchersAmount = 0.00;
+	private $_mTotalVouchers = 0.00;
 	
 	/**
 	 * Holds the receipt's invoice.
@@ -1004,8 +1004,8 @@ class Receipt extends PersistDocument{
 	 *
 	 * @return float
 	 */
-	public function getTotalVouchersAmount(){
-		return $this->_mTotalVouchersAmount;
+	public function getTotalVouchers(){
+		return $this->_mTotalVouchers;
 	}
 	
 	/**
@@ -1024,7 +1024,7 @@ class Receipt extends PersistDocument{
 	 */
 	public function getTotal(){
 		$cash_amount = (!is_null($this->_mCash)) ? $this->_mCash->getAmount() : 0.0;
-		return $cash_amount + $this->_mTotalVouchersAmount;
+		return $cash_amount + $this->_mTotalVouchers;
 	}
 	
 	/**
@@ -1079,16 +1079,16 @@ class Receipt extends PersistDocument{
 	 * Persist::CREATED in the constructor method too.
 	 * @param float $change
 	 * @param Cash $cash
-	 * @param float $totalVouchersAmount
+	 * @param float $totalVouchers
 	 * @param array<Voucher> $vouchers
 	 */
-	public function setData(Cash $cash = NULL, $totalVouchersAmount = 0.0, $change = 0.0, $vouchers = NULL){
+	public function setData(Cash $cash = NULL, $totalVouchers = 0.0, $change = 0.0, $vouchers = NULL){
 		try{
 			if(!is_null($cash))
 				self::validateObjectFromDatabase($cash);
 				
-			if($totalVouchersAmount !== 0.0){
-				Number::validatePositiveFloat($totalVouchersAmount, 'Total inv&aacute;lido.');
+			if($totalVouchers !== 0.0){
+				Number::validatePositiveFloat($totalVouchers, 'Total inv&aacute;lido.');
 				if(empty($vouchers))
 					throw new Exception('No hay ningun voucher.');
 			}
@@ -1102,7 +1102,7 @@ class Receipt extends PersistDocument{
 		}
 		
 		$this->_mCash = $cash;
-		$this->_mTotalVouchersAmount = $totalVouchersAmount;
+		$this->_mTotalVouchers = $totalVouchers;
 		$this->_mChange = $change;
 		if(!is_null($vouchers))
 			$this->_mVouchers = $vouchers;
@@ -1114,7 +1114,7 @@ class Receipt extends PersistDocument{
 	 * @param Voucher $newVoucher
 	 */
 	public function addVoucher(Voucher $newVoucher){
-		$this->_mTotalVouchersAmount += $newVoucher->getAmount();
+		$this->_mTotalVouchers += $newVoucher->getAmount();
 		
 		// For moving the modified voucher to the last place.
 		$temp_vouchers = array();
@@ -1142,7 +1142,7 @@ class Receipt extends PersistDocument{
 			if($voucher->getTransactionNumber() != $purgeVoucher->getTransactionNumber())
 				$temp_vouchers[] = $voucher;
 			else
-				$this->_mTotalVouchersAmount -= $voucher->getAmount();
+				$this->_mTotalVouchers -= $voucher->getAmount();
 				
 		$this->_mVouchers = $temp_vouchers;
 	}
@@ -1985,6 +1985,28 @@ class SalesReport{
 			throw new Exception('Caja esta abierta.');
 			
 		return SalesReportDAM::getInstance($cashRegister);
+	}
+}
+
+
+
+class CashEntryEvent{
+	
+	static public function apply(Receipt $receipt, $amount){
+		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		
+		$invoice = $receipt->getInvoice();
+		$total_invoice = $invoice->getTotal();
+		$total_vouchers = $receipt->getTotalVouchers();
+		
+		if($total_invoice < ($amount + $total_vouchers)){
+			$receipt->setChange(($amount + $total_vouchers) - $total_invoice);
+			$cash = new Cash($total_invoice - $total_vouchers);
+		}
+		else
+			$cash = new Cash($amount);
+			
+		
 	}
 }
 ?>
