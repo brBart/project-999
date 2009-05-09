@@ -151,13 +151,22 @@ class ShiftDAM{
 	 * @return Shift
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$shift = new Shift(123, PersistObject::CREATED);
-			$shift->setData(self::$_mName, '8am - 6pm');
-			return $shift;
+		switch($id){
+			case 123:
+				$shift = new Shift($id, PersistObject::CREATED);
+				$shift->setData(self::$_mName, '8am - 6pm');
+				return $shift;
+				break;
+				
+			case 124:
+				$shift = new Shift($id, PersistObject::CREATED);
+				$shift->setData('Nocturno', '6pm - 11pm');
+				return $shift;
+				break;
+				
+			default:
+				return NULL;
 		}
-		else
-			return NULL;
 	}
 	
 	/**
@@ -755,7 +764,8 @@ class DepositDetailListDAM{
  * @author Roberto Oliveros
  */
 class WorkingDayDAM{
-	static private $_mIdOpen07052009 = true;
+	static private $_mIsOpenCurrent = true;
+	static private $_mIsOpenPast = true;
 	
 	/**
 	 * Returns true if the working day stills open.
@@ -765,13 +775,63 @@ class WorkingDayDAM{
 	 */
 	static public function isOpen(WorkingDay $obj){
 		switch($obj->getDate()){
-			case '07/05/2009':
-				return self::$_mIdOpen07052009;
+			case date('d/m/Y'):
+				return self::$_mIsOpenCurrent;
 				break;
 				
 			default:
-				return false;
+				return self::$_mIsOpenPast;
 		}
+	}
+	
+	/**
+	 * Close all the cash registers that belongs to the provided working day.
+	 *
+	 * @param WorkingDay $obj
+	 */
+	static public function closeCashRegisters(WorkingDay $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Close the provided working day in the database.
+	 *
+	 * @param WorkingDay $obj
+	 */
+	static public function close(WorkingDay $obj){
+		switch($obj->getDate()){
+			case date('d/m/Y'):
+				self::$_mIsOpenCurrent = false;
+				break;
+				
+			default:
+				self::$_mIsOpenPast = false;
+		}
+	}
+	
+	/**
+	 * Returns an instance of a cash register.
+	 *
+	 * Returns NULL if there was no match for the provided data in the database.
+	 * @param WorkingDay $workingDay
+	 * @param Shift $shift
+	 * @return CashRegister
+	 */
+	static public function getCashRegister(WorkingDay $workingDay, Shift $shift){
+		if($workingDay->getDate() == date('d/m/Y') && $shift->getId() == 123)
+			return CashRegister::getInstance(123);
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Inserts the provided data in the database and returns an instance of a cash register.
+	 *
+	 * @param Shift $shift
+	 * @return CashRegister
+	 */
+	static public function insertCashRegister(Shift $shift){
+		return new CashRegister($shift, 127, Persist::CREATED);
 	}
 	
 	/**
@@ -783,19 +843,41 @@ class WorkingDayDAM{
 	 */
 	static public function getInstance($date){
 		switch($date){
-			case '07/05/2009':
-				$working_day = new WorkingDay($date, Persist::CREATED);
+			case date('d/m/Y'):
+				$working_day = new WorkingDay(date('d/m/Y'), Persist::CREATED);
 				return $working_day;
 				break;
 				
 			default:
-				return NULL;
+				$working_day = new WorkingDay($date, Persist::CREATED);
+				return $working_day;
 		}
 	}
 	
-	
+	/**
+	 * Inserts the provided data into the database.
+	 *
+	 * It returns an instance of the new created working day.
+	 * @param string $date
+	 * @return WorkingDay
+	 */
 	static public function insert($date){
 		return new WorkingDay($date, Persist::CREATED);
+	}
+}
+
+
+/**
+ * Utility class for accessing database tables with information regarding the daily sales report.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class GeneralSalesReportDAM{
+	
+	static public function getInstance(WorkingDay $obj){
+		$registers = array(array('register_id' => 123, 'shift' => 'Diurno', 'total' => 235.38),
+							array('register_id' => 124, 'shift' => 'Nocturno', 'total' => 212.43));
+		return new GeneralSalesReport(525.32, $registers);
 	}
 }
 ?>
