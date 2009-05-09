@@ -823,7 +823,7 @@ class Shift extends Identifier{
  * @package Cash
  * @author Roberto Oliveros
  */
-class CashRegister{
+class CashRegister extends Persist{
 	/**
 	 * Holds the object's id.
 	 *
@@ -846,7 +846,9 @@ class CashRegister{
 	 * @param integer $id
 	 * @throws Exception
 	 */
-	public function __construct(Shift $shift, $id = NULL){
+	public function __construct(Shift $shift, $id = NULL, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
 		PersistObject::validateObjectFromDatabase($shift);
 		if(!is_null($id))
 			try{
@@ -873,11 +875,15 @@ class CashRegister{
 	/**
 	 * Returns the status of the cash register.
 	 *
-	 * Returns true if it's open, otherwise false if it's closed.
+	 * Returns true if it's open, otherwise false if it's closed. Only applies if the status property is
+	 * set to Persist::CREATED.
 	 * @return boolean
 	 */
 	public function isOpen(){
-		return CashRegisterDAM::isOpen($this);
+		if($this->_mStatus == Persist::CREATED)
+			return CashRegisterDAM::isOpen($this);
+		else
+			return false;
 	}
 	
 	/**
@@ -892,11 +898,13 @@ class CashRegister{
 	/**
 	 * Close the cash register.
 	 *
-	 * Once closed no more invoices can be created using this cash register.
+	 * Once closed no more invoices can be created using this cash register. Only applies if the status
+	 * property is set to Persist::CREATED.
 	 * @return void
 	 */
 	public function close(){
-		CashRegisterDAM::close($this);
+		if($this->_mStatus == Persist::CREATED)
+			CashRegisterDAM::close($this);
 	}
 	
 	/**
@@ -2069,6 +2077,125 @@ class VoucherEntryEvent{
 	 */
 	static public function cancel(Receipt $receipt, Voucher $voucher){
 		$receipt->deleteVoucher($voucher);
+	}
+}
+
+
+
+class WorkingDay extends Persist{
+	/**
+	 * Holds the date of the working day.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mDate;
+	
+	/**
+	 * Constructs the working day with the provided date.
+	 *
+	 * For internal use only, use getInstance method instead please. Sorry.
+	 * @param string $date
+	 */
+	public function __construct($date, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		try{
+			Date::validateDate($date, 'Fecha inv&accute;lida.');
+		}catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo construct en WorkingDay con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mDate = $date;
+	}
+	
+	/**
+	 * Returns the working day date.
+	 *
+	 * @return string
+	 */
+	public function getDate(){
+		return $this->_mDate;
+	}
+	
+	/**
+	 * Returns true if the working day stills open.
+	 *
+	 * Only applies if the status property is set to Persist::CREATED.
+	 * @return boolean
+	 */
+	public function isOpen(){
+		if($this->_mStatus == Persist::CREATED)
+			return WorkingDayDAM::isOpen($this);
+		else
+			return false;
+	}
+	
+	/**
+	 * Returns a cash register.
+	 *
+	 * It returns an already created cash register if there is one. If not, one is created and returned only
+	 * if the working day stills open, otherwise an exception is thrown. Only applies if the status property
+	 * is set to Persist::CREATED.
+	 * @param Shift $shift
+	 * @return CashRegister
+	 * @throws Exception
+	 */
+	public function getCashRegister(Shift $shift){
+		if($this->_mStatus == Persist::CREATED){
+			$register = WorkingDayDAM::getCashRegister($this, $shift);
+			
+			if(!is_null($register))
+				return $register;
+				
+			if(!$this->isOpen())
+				throw new Exception('Jornada ya esta cerrada y no se pueden abrir mas cajas.');
+			
+			return WorkingDayDAM::insertCashRegister($shift);
+		}
+		else
+			return NULL;
+	}
+	
+	/**
+	 * Close the working day and all the cash registers that belongs to it.
+	 *
+	 * Once closed no more cash registers can be created. Only applies if the status property is set to
+	 * Persist::CREATED.
+	 */
+	public function close(){
+		if($this->_mStatus == Persist::CREATED){
+			WorkingDayDAM::closeCashRegisters($this);
+			WorkingDayDAM::close($this);
+		}
+	}
+	
+	/**
+	 * Returns an instance of a working day.
+	 *
+	 * Returns an already created working day if there is one. If not, one is created and return. A date
+	 * beyond the current date is unacceptable. And if the working day's date has expired and stills open, the
+	 * working day is closed. Date format: 'dd/mm/yyyy'.
+	 * @param string $date
+	 * @return WorkingDay
+	 * @throws Exception
+	 */
+	static public function getInstance($date){
+		Date::validateDate($date, 'Fecha inv&aacute;lida.');
+		if(Date::compareDates(date('d/m/Y'), $date))
+			throw new Exception('La fecha es posterior a la fecha de hoy.');
+			
+		$workingDay = WorkingDayDAM::getInstance($date);
+		
+		if(!is_null($workingDay)){
+			if(Date::compareDates($date, date('d/m/Y')) && $workingDay->isOpen())
+				$workingDay->close();
+			return $workingDay;
+		}
+		
+		return WorkingDayDAM::insert($date);
 	}
 }
 ?>
