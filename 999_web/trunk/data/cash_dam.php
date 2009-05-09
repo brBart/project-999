@@ -880,4 +880,63 @@ class GeneralSalesReportDAM{
 		return new GeneralSalesReport(525.32, $registers);
 	}
 }
+
+
+/**
+ * Utility class for accessing deposit database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class DepositListDAM{
+	/**
+	 * Returns an array with all the deposits belonging to the provided cash register.
+	 *
+	 * @param CashRegister $obj
+	 * @return array
+	 */
+	static public function getList(CashRegister $obj){
+		if($obj->getId() == 123)
+			return array(123, 124, 125);
+	}
+}
+
+
+/**
+ * Utility class for accessing invoice database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class InvoiceListDAM{
+	/**
+	 * Returns an array with all the invoices belonging to the provided cash register.
+	 *
+	 * @param CashRegister $obj
+	 * @return array
+	 */
+	static public function getList(CashRegister $obj){
+		if($obj->getId() == 123)
+			return array(123, 124, 125);
+	}
+}
+
+
+/**
+ * Utility class for accessing receipt database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class AvailableReceiptListDAM{
+	/**
+	 * Returns an array with all the receipts with cash available that belongs to the provided cash register.
+	 *
+	 * The array contains the fields receipt_id, received_cash and available_cash.
+	 * @param CashRegister $obj
+	 * @return array
+	 */
+	static public function getList(CashRegister $obj){
+		if($obj->getId() == 123)
+			return array(array('receipt_id' => 123, 'received_cash' => 42.39, 'available_cash' => 20.00),
+						array('receipt_id' => 124, 'received_cash' => 480.32, 'available_cash' => 100.00));
+	}
+}
 ?>
