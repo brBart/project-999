@@ -1895,28 +1895,28 @@ class SalesReport{
 	 *
 	 * @var float
 	 */
-	private $_mTotal;
+	private $_mTotal = 0.00;
 	
 	/**
 	 * Holds the total monetary amount of all the vouchers in the report.
 	 *
 	 * @var float
 	 */
-	private $_mTotalVouchers;
+	private $_mTotalVouchers = 0.00;
 	
 	/**
 	 * Holds the total monetary amount in cash.
 	 *
 	 * @var float
 	 */
-	private $_mTotalCash;
+	private $_mTotalCash = 0.00;
 	
 	/**
-	 * Holds an array with the invoices' id and total amounts.
+	 * Holds an array with the invoices' id and total amounts belonging to the report's cash register.
 	 *
 	 * @var array
 	 */
-	private $_mInvoices;
+	private $_mInvoices = array();
 	
 	/**
 	 * Constructs the sales report with the provided data.
@@ -1984,6 +1984,7 @@ class SalesReport{
 	/**
 	 * Returns an array with the details of all the invoices of the report.
 	 *
+	 * The array contains the fields serial_number, number, name and total.
 	 * @return array
 	 */
 	public function getInvoices(){
@@ -2081,7 +2082,11 @@ class VoucherEntryEvent{
 }
 
 
-
+/**
+ * Represents a working day of the business.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
 class WorkingDay extends Persist{
 	/**
 	 * Holds the date of the working day.
@@ -2134,7 +2139,7 @@ class WorkingDay extends Persist{
 	}
 	
 	/**
-	 * Returns a cash register.
+	 * Returns an instance of a cash register.
 	 *
 	 * It returns an already created cash register if there is one. If not, one is created and returned only
 	 * if the working day stills open, otherwise an exception is thrown. Only applies if the status property
@@ -2145,6 +2150,7 @@ class WorkingDay extends Persist{
 	 */
 	public function getCashRegister(Shift $shift){
 		if($this->_mStatus == Persist::CREATED){
+			self::validateObjectFromDatabase($shift);
 			$register = WorkingDayDAM::getCashRegister($this, $shift);
 			
 			if(!is_null($register))
@@ -2155,8 +2161,6 @@ class WorkingDay extends Persist{
 			
 			return WorkingDayDAM::insertCashRegister($shift);
 		}
-		else
-			return NULL;
 	}
 	
 	/**
@@ -2196,6 +2200,85 @@ class WorkingDay extends Persist{
 		}
 		
 		return WorkingDayDAM::insert($date);
+	}
+}
+
+
+/**
+ * Class representing a daily sales report.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class GeneralSalesReport{
+	/**
+	 * Holds the total of the report.
+	 *
+	 * @var float
+	 */
+	private $_mTotal = 0.00;
+	
+	/**
+	 * Holds an array with the details of all the cash registers belonging to the report's working day.
+	 *
+	 * @var array
+	 */
+	private $_mCashRegisters = array();
+	
+	/**
+	 * Constructs the report with the provided data.
+	 *
+	 * Call only from the database layer. Use getInstance() method instead.
+	 * @param float $total
+	 * @param array $cashRegisters
+	 */
+	public function __construct($total, $cashRegisters){
+		try{
+			Number::validatePositiveFloat($total, 'Monto inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo construct en GeneralSalesReport con datos ' .
+					'erroneos! ' . $e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mTotal = $total;
+		$this->_mCashRegisters = $cashRegisters;
+	}
+	
+	/**
+	 * Returns the report's total value.
+	 *
+	 * @return float
+	 */
+	public function getTotal(){
+		return $this->_mTotal;
+	}
+	
+	/**
+	 * Returns the array with all the report's cash registers.
+	 *
+	 * The array contains the fields register_id, shift and total.
+	 * @return array
+	 */
+	public function getCashRegisters(){
+		return $this->_mCashRegisters;
+	}
+	
+	/**
+	 * Returns an instance of a daily sales report.
+	 *
+	 * In order to the preliminary argument to be true the working day must be open too. Otherwise the working
+	 * day must be closed.
+	 * @param WorkingDay $workingDay
+	 * @param boolean $preliminary
+	 * @return GeneralSalesReport
+	 */
+	static public function getInstance(WorkingDay $workingDay, $preliminary = false){
+		if($preliminary && !$workingDay->isOpen())
+			throw new Exception('Jornada ya fue cerrada.');
+		elseif(!$preliminary && $workingDay->isOpen())
+			throw new Exception('Jornada esta abierta.');
+			
+		return GeneralSalesReportDAM::getInstance($workingDay);
 	}
 }
 ?>
