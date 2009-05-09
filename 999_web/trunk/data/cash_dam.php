@@ -201,10 +201,10 @@ class ShiftDAM{
  *  @author Roberto Oliveros
  */
 class CashRegisterDAM{
-	static private $_mIsOpen = true;
 	static private $_mIsOpen123 = true;
 	static private $_mIsOpen124 = true;
 	static private $_mIsOpen125 = true;
+	static private $_mIsOpen126 = true;
 	
 	/**
 	 * Returns the status of the cash register.
@@ -226,8 +226,12 @@ class CashRegisterDAM{
 				return self::$_mIsOpen125;
 				break;
 				
+			case 126:
+				return self::$_mIsOpen126;
+				break;
+				
 			default:
-				return self::$_mIsOpen;
+				return false;
 		}
 	}
 	
@@ -250,8 +254,11 @@ class CashRegisterDAM{
 				self::$_mIsOpen125 = false;
 				break;
 				
+			case 126:
+				self::$_mIsOpen126 = false;
+				break;
+				
 			default:
-				self::$_mIsOpen = false;
 		}
 	}
 	
@@ -266,19 +273,25 @@ class CashRegisterDAM{
 		switch($id){
 			case 123:
 				$shift = Shift::getInstance(123);
-				$cash_register = new CashRegister($shift, 123);
+				$cash_register = new CashRegister($shift, 123, Persist::CREATED);
 				return $cash_register;
 				break;
 				
 			case 124:
 				$shift = Shift::getInstance(123);
-				$cash_register = new CashRegister($shift, 124);
+				$cash_register = new CashRegister($shift, 124, Persist::CREATED);
 				return $cash_register;
 				break;
 				
 			case 125:
 				$shift = Shift::getInstance(123);
-				$cash_register = new CashRegister($shift, 125);
+				$cash_register = new CashRegister($shift, 125, Persist::CREATED);
+				return $cash_register;
+				break;
+				
+			case 126:
+				$shift = Shift::getInstance(123);
+				$cash_register = new CashRegister($shift, 126, Persist::CREATED);
 				return $cash_register;
 				break;
 				
@@ -732,6 +745,57 @@ class DepositDetailListDAM{
 				
 			default:
 		}
+	}
+}
+
+
+/**
+ * Class for accessing working day database tables.
+ * @package CashDAM
+ * @author Roberto Oliveros
+ */
+class WorkingDayDAM{
+	static private $_mIdOpen07052009 = true;
+	
+	/**
+	 * Returns true if the working day stills open.
+	 *
+	 * @param WorkingDay $obj
+	 * @return boolean
+	 */
+	static public function isOpen(WorkingDay $obj){
+		switch($obj->getDate()){
+			case '07/05/2009':
+				return self::$_mIdOpen07052009;
+				break;
+				
+			default:
+				return false;
+		}
+	}
+	
+	/**
+	 * Returns an instance of a working day.
+	 *
+	 * Returns NULL if there is no match for the provided date in the database.
+	 * @param string $date
+	 * @return WorkingDay
+	 */
+	static public function getInstance($date){
+		switch($date){
+			case '07/05/2009':
+				$working_day = new WorkingDay($date, Persist::CREATED);
+				return $working_day;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+	
+	
+	static public function insert($date){
+		return new WorkingDay($date, Persist::CREATED);
 	}
 }
 ?>
