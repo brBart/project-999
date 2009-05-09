@@ -2281,4 +2281,62 @@ class GeneralSalesReport{
 		return GeneralSalesReportDAM::getInstance($workingDay);
 	}
 }
+
+
+/**
+ * Class for obtaining a list with specific deposits.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class DepositList{
+	/**
+	 * Returns an array with all the deposits' ids belonging to the provided cash register.
+	 *
+	 * @param CashRegister $obj
+	 * @return array
+	 */
+	static public function getList(CashRegister $obj){
+		Persist::validateObjectFromDatabase($obj);
+		return DepositListDAM::getList($obj);
+	}
+}
+
+
+/**
+ * Class for obtaining a list with specific invoices.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class InvoiceList{
+	/**
+	 * Returns an array with all the invoices's ids belonging to the provided cash register.
+	 *
+	 * @param CashRegister $obj
+	 * @return array
+	 */
+	static public function getList(CashRegister $obj){
+		Persist::validateObjectFromDatabase($obj);
+		return InvoiceListDAM::getList($obj);
+	}
+}
+
+
+/**
+ * Class for obtaining a list with specific receipts.
+ * @package Cash
+ * @author Roberto Oliveros
+ */
+class AvailableReceiptList{
+	/**
+	 * Returns an array with all the receipts with cash available that belongs to the provided cash register.
+	 *
+	 * The array contains the fields receipt_id, received_cash and available_cash. 
+	 * @param CashRegister $obj
+	 * @return array
+	 */
+	static public function getList(CashRegister $obj){
+		Persist::validateObjectFromDatabase($obj);
+		return AvailableReceiptListDAM::getList($obj);
+	}
+}
 ?>
