@@ -1954,7 +1954,6 @@ class PurchaseReturn extends Document{
 	 * The user argument registers who authorized the action. Only applies if the document status property is
 	 * set to PersistDocument::CREATED.
 	 * @param UserAccount $user
-	 * @throws Exception
 	 */
 	public function cancel(UserAccount $user){
 		if($this->_mStatus == PersistDocument::CREATED){
@@ -1986,7 +1985,7 @@ class PurchaseReturn extends Document{
 	}
 	
 	/**
-	 * Validates the purchase return main properties.
+	 * Validates the purchase return's main properties.
 	 *
 	 * Supplier must not be null and reason must not be empty.
 	 * @throws Exception
@@ -1995,7 +1994,7 @@ class PurchaseReturn extends Document{
 		parent::validateMainProperties();
 		
 		if(is_null($this->_mSupplier))
-			throw new Exception('Proveedor Motivo inv&aacute;lido.');
+			throw new Exception('Proveedor inv&aacute;lido.');
 		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
 	}
 	
@@ -2005,6 +2004,164 @@ class PurchaseReturn extends Document{
 	 */
 	protected function insert(){
 		$this->_mId = PurchaseReturnDAM::insert($this);
+		$this->_mStatus = PersistDocument::CREATED;
+		foreach($this->_mDetails as &$detail)
+			// Because is unnecessary to register the order of details, 1 is provided for all.
+			$detail->save($this, 1);
+	}
+}
+
+
+/**
+ * Represents a shipment document.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class Shipment extends Document{
+	/**
+	 * Holds the branch for whom the shipment is being made.
+	 *
+	 * @var Branch
+	 */
+	private $_mBranch;
+	
+	/**
+	 * Holds the branch direct contact person name.
+	 *
+	 * @var string
+	 */
+	private $_mContact;
+	
+	/**
+	 * Returns the shipment's branch.
+	 *
+	 * @return Branch
+	 */
+	public function getBranch(){
+		return $this->_mBranch;
+	}
+	
+	/**
+	 * Returns the supplier direct contact person name.
+	 *
+	 * @return string
+	 */
+	public function getContact(){
+		return $this->_mContact;
+	}
+	
+	/**
+	 * Sets the shipment's branch and contact name.
+	 *
+	 * @param Branch $obj
+	 */
+	public function setBranch(Branch $obj){
+		self::validateObjectFromDatabase($obj);
+		$this->_mBranch = $obj;
+		$this->_mContact = $obj->getContact();
+	}
+	
+	/**
+	 * Sets the shipment's contact name.
+	 *
+	 * @param string $contact
+	 */
+	public function setContact($contact){
+		$this->_mContact = $contact;
+	}
+	
+	/**
+	 * Sets the shipment's properties.
+	 *
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * PersistDocument::CREATED in the constructor method too.
+	 * @param Branch $branch
+	 * @param float $total
+	 * @param array<DocProductDetail> $details
+	 * @param string $contact
+	 * @throws Exception
+	 */
+	public function setData(Branch $branch, $total, $details, $contact = NULL){
+		parent::setData($total, $details);
+		
+		try{
+			self::validateObjectFromDatabase($branch);
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en Shipment con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mBranch = $branch;
+		$this->_mContact = $contact;
+	}
+	
+	/**
+	 * Does not save the shipment in the database and reverts its effects.
+	 *
+	 * Only applies if the object's status property is set to PersistDocument::IN_PROGRESS.
+	 */
+	public function discard(){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			foreach($this->_mDetails as &$detail)
+				WithdrawEvent::cancel($this, $detail);
+	}
+	
+	/**
+	 * Cancels the document and reverts its effects.
+	 *
+	 * The user argument registers who authorized the action. Only applies if the document status property is
+	 * set to PersistDocument::CREATED.
+	 * @param UserAccount $user
+	 */
+	public function cancel(UserAccount $user){
+		if($this->_mStatus == PersistDocument::CREATED){
+			self::validateObjectFromDatabase($user);
+			
+			$this->cancelDetails();
+			ShipmentDAM::cancel($this, $user, date('d/m/Y'));
+			$this->_mStatus = PersistDocument::CANCELLED;
+		}
+	}
+	
+	/**
+	 * Returns a shipment with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database. 
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return Shipment
+	 */
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			
+		return ShipmentDAM::getInstance($id, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Validates the shipment's main properties.
+	 *
+	 * Branch must not be null.
+	 * @throws Exception
+	 */
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
+		
+		if(is_null($this->_mBranch))
+			throw new Exception('Sucursal inv&aacute;lida.');
+	}
+	
+	/**
+	 * Inserts the shipment's data in the database.
+	 *
+	 */
+	protected function insert(){
+		$this->_mId = ShipmentDAM::insert($this);
 		$this->_mStatus = PersistDocument::CREATED;
 		foreach($this->_mDetails as &$detail)
 			// Because is unnecessary to register the order of details, 1 is provided for all.
