@@ -159,7 +159,7 @@ abstract class Document extends PersistDocument{
 	 */
 	public function setData($total, $details){
 		try{
-			Number::validateUnsignedFloat($total, 'Total inv&aacute;lido.');
+			Number::validatePositiveFloat($total, 'Total inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
@@ -250,7 +250,6 @@ abstract class Document extends PersistDocument{
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
 			$this->insert();
-			$this->_mStatus = PersistDocument::CREATED;
 			return $this->_mId;
 		}
 	}
@@ -264,7 +263,7 @@ abstract class Document extends PersistDocument{
 	 * @param integer &$total_items
 	 * @param integer $page
 	 */
-	abstract static public function getInstance($id, &$total_pages, &$total_items, $page= 0);
+	abstract static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page= 0);
 	
 	/**
 	 * Validates the document's main properties.
@@ -1577,12 +1576,13 @@ class Invoice extends Document{
 	/**
 	 * Cancels the document and reverts its effects.
 	 *
-	 * The user argument registers who authorized the action.
+	 * The user argument registers who authorized the action. Only applies if the document status property is
+	 * set to PersistDocument::CREATED.
 	 * @param UserAccount $user
 	 * @throws Exception
 	 */
 	public function cancel(UserAccount $user){
-		if($this->_mStatus == Persist::CREATED){
+		if($this->_mStatus == PersistDocument::CREATED){
 			self::validateObjectFromDatabase($user);
 			
 			if(!$this->_mCashRegister->isOpen())
@@ -1607,7 +1607,7 @@ class Invoice extends Document{
 	 * @param integer $page
 	 * @return Invoice
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page = 0){
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
@@ -1627,6 +1627,23 @@ class Invoice extends Document{
 		String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
 		Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
 		return InvoiceDAM::getId($serialNumber, $number);
+	}
+	
+	/**
+	 * Validates the invoice main properties.
+	 *
+	 * This method call its parent validateMainProperties method. And nit must not be empty, cash receipt and
+	 * correlative must not be NULL.
+	 * @throws Exception
+	 */
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
+		
+		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.');
+		if(is_null($this->_mCorrelative))
+			throw new Exception('No hay ningun correlativo predeterminado.');
+		if(!$this->_mHasReceipt)
+			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
 	}
 	
 	/**
@@ -1653,23 +1670,6 @@ class Invoice extends Document{
 			
 		if(!is_null($this->_mDiscount))
 			$this->_mDiscount->save();
-	}
-	
-	/**
-	 * Validates the invoice main properties.
-	 *
-	 * This method call its parent validateMainProperties method. And nit must not be empty, cash receipt and
-	 * correlative must not be NULL.
-	 * @throws Exception
-	 */
-	protected function validateMainProperties(){
-		parent::validateMainProperties();
-		
-		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.');
-		if(is_null($this->_mCorrelative))
-			throw new Exception('No hay ningun correlativo predeterminado.');
-		if(!$this->_mHasReceipt)
-			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
 	}
 }
 
@@ -1820,6 +1820,195 @@ class Discount extends Persist{
 			throw new Exception('Factura inv&aacute;lida.');
 			
 		Number::validatePositiveFloat($this->_mPercentage, 'Porcentage inv&aacute;lido.');
+	}
+}
+
+
+/**
+ * Represents a purchase return document.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class PurchaseReturn extends Document{
+	/**
+	 * Holds the supplier for whom the return is being made.
+	 *
+	 * @var Supplier
+	 */
+	private $_mSupplier;
+	
+	/**
+	 * Holds the supplier direct contact person name.
+	 *
+	 * @var string
+	 */
+	private $_mContact;
+	
+	/**
+	 * Holds an explanation of why the creation of the document.
+	 *
+	 * @var string
+	 */
+	private $_mReason;
+	
+	/**
+	 * Returns the purchase return's supplier.
+	 *
+	 * @return Supplier
+	 */
+	public function getSupplier(){
+		return $this->_mSupplier;
+	}
+	
+	/**
+	 * Returns the supplier direct contact person name.
+	 *
+	 * @return string
+	 */
+	public function getContact(){
+		return $this->_mContact;
+	}
+	
+	/**
+	 * Returns the reason of the document.
+	 *
+	 * @return string
+	 */
+	public function getReason(){
+		return $this->_mReason;
+	}
+	
+	/**
+	 * Sets the purchase return supplier and the contact's name.
+	 *
+	 * @param Supplier $obj
+	 */
+	public function setSupplier(Supplier $obj){
+		self::validateObjectFromDatabase($obj);
+		$this->_mSupplier = $obj;
+		$this->_mContact = $obj->getContact();
+	}
+	
+	/**
+	 * Sets the contact's name.
+	 *
+	 * @param string $contact
+	 */
+	public function setContact($contact){
+		$this->_mContact = $contact;
+	}
+	
+	/**
+	 * Sets the purchase return reason.
+	 *
+	 * @param string $reason
+	 */
+	public function setReason($reason){
+		String::validateString($reason, 'Motivo inv&aacute;lido.');
+		$this->_mReason = $reason;
+	}
+	
+	/**
+	 * Sets the purchase return's properties.
+	 *
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * PersistDocument::CREATED in the constructor method too.
+	 * @param Supplier $supplier
+	 * @param string $contact
+	 * @param string $reason
+	 * @param float $total
+	 * @param array<DocProductDetail> $details
+	 * @throws Exception
+	 */
+	public function setData(Supplier $supplier, $reason, $total, $details, $contact = NULL){
+		parent::setData($total, $details);
+		
+		try{
+			self::validateObjectFromDatabase($supplier);
+			String::validateString($reason, 'Motivo inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en PurchaseReturn con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mSupplier = $supplier;
+		$this->_mContact = $contact;
+		$this->_mReason = $reason;
+	}
+	
+	/**
+	 * Does not save the purchase return in the database and reverts its effects.
+	 *
+	 * Only applies if the object's status property is set to PersistDocument::IN_PROGRESS.
+	 */
+	public function discard(){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			foreach($this->_mDetails as &$detail)
+				StrictWithdrawEvent::cancel($this, $detail);
+	}
+	
+	/**
+	 * Cancels the document and reverts its effects.
+	 *
+	 * The user argument registers who authorized the action. Only applies if the document status property is
+	 * set to PersistDocument::CREATED.
+	 * @param UserAccount $user
+	 * @throws Exception
+	 */
+	public function cancel(UserAccount $user){
+		if($this->_mStatus == PersistDocument::CREATED){
+			self::validateObjectFromDatabase($user);
+			
+			$this->cancelDetails();
+			PurchaseReturnDAM::cancel($this, $user, date('d/m/Y'));
+			$this->_mStatus = PersistDocument::CANCELLED;
+		}
+	}
+	
+	/**
+	 * Returns a purchase return with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database. 
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return PurchaseReturn
+	 */
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			
+		return PurchaseReturnDAM::getInstance($id, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Validates the purchase return main properties.
+	 *
+	 * Supplier must not be null and reason must not be empty.
+	 * @throws Exception
+	 */
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
+		
+		if(is_null($this->_mSupplier))
+			throw new Exception('Proveedor Motivo inv&aacute;lido.');
+		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
+	}
+	
+	/**
+	 * Inserts the purchase return's data in the database.
+	 *
+	 */
+	protected function insert(){
+		$this->_mId = PurchaseReturnDAM::insert($this);
+		$this->_mStatus = PersistDocument::CREATED;
+		foreach($this->_mDetails as &$detail)
+			// Because is unnecessary to register the order of details, 1 is provided for all.
+			$detail->save($this, 1);
 	}
 }
 ?>
