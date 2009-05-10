@@ -806,7 +806,7 @@ class Shift extends Identifier{
 	/**
 	 * Validates the object's main properties.
 	 * 
-	 * Verifies that the name and timetable are not empty. Otherwise it throws an exception.
+	 * Verifies that the name and timetable are not empty.
 	 * @return void
 	 */
 	protected function validateMainProperties(){
