@@ -405,7 +405,7 @@ class PurchaseReturnDAM{
 	 * Updates the purchase return status to cancelled in the database.
 	 *
 	 * The user and date arguments are to register who and when does the cancel action took place.
-	 * @param PurchaseReturn $invoice
+	 * @param PurchaseReturn $purchaseReturn
 	 * @param UserAccount $user
 	 * @param string $date
 	 */
@@ -449,6 +449,65 @@ class PurchaseReturnDAM{
 	 * @return integer
 	 */
 	static public function insert(PurchaseReturn $obj){
+		return 123;
+	}
+}
+
+
+/**
+ * Class for accessing shipment tables in the database.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class ShipmentDAM{
+	/**
+	 * Updates the shipment status to cancelled in the database.
+	 *
+	 * The user and date arguments are to register who and when does the cancel action took place.
+	 * @param Shipment $shipment
+	 * @param UserAccount $user
+	 * @param string $date
+	 */
+	static public function cancel(Shipment $shipment, UserAccount $user, $date){
+		// Code here...
+	}
+	
+	/**
+	 * Returns a shipment with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return Shipment
+	 */
+	static public function getInstance($id, &$total_pages, &$total_items, $page){
+		switch($id){
+			case 123:
+				$shipment = new Shipment('25/04/2009', UserAccount::getInstance('roboli'), $id,
+						PersistDocument::CREATED);
+				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
+				$shipment->setData(Branch::getInstance(123), 39.50, $details);
+				$total_pages = 1;
+				$total_items = 1;
+				return $shipment;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+	
+	/**
+	 * Inserts the shipment's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Shipment $obj
+	 * @return integer
+	 */
+	static public function insert(Shipment $obj){
 		return 123;
 	}
 }
