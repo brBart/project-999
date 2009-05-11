@@ -593,18 +593,18 @@ class CashDAM{
  * @package CashDAM
  * @author Roberto Oliveros
  */
-class ReceiptDAM{
+class CashReceiptDAM{
 	/**
 	 * Returns an instance of a receipt.
 	 *
 	 * Returns NULL if there was no match for the provided invoice in the database.
 	 * @param Invoice $obj
-	 * @return Receipt
+	 * @return CashReceipt
 	 */
 	static public function getInstance(Invoice $obj){
 		switch($obj->getId()){
 			case 123:
-				$receipt = new Receipt($obj, 123, PersistDocument::CREATED);
+				$receipt = new CashReceipt($obj, 123, PersistDocument::CREATED);
 				$cash = new Cash(43.50, 123, Persist::CREATED);
 				$receipt->setData($cash);
 				return $receipt;
@@ -618,18 +618,18 @@ class ReceiptDAM{
 	/**
 	 * Inserts the receipt's data in the database.
 	 *
-	 * @param Receipt $obj
+	 * @param CashReceipt $obj
 	 */
-	static public function insert(Receipt $obj){
+	static public function insert(CashReceipt $obj){
 		// Code here...
 	}
 	
 	/**
 	 * Cancels the document in the database.
 	 *
-	 * @param Receipt $obj
+	 * @param CashReceipt $obj
 	 */
-	static public function cancel(Receipt $obj){
+	static public function cancel(CashReceipt $obj){
 		// Code here...
 	}
 }
@@ -925,7 +925,7 @@ class InvoiceListDAM{
  * @package CashDAM
  * @author Roberto Oliveros
  */
-class AvailableReceiptListDAM{
+class AvailableCashReceiptListDAM{
 	/**
 	 * Returns an array with all the receipts with cash available that belongs to the provided cash register.
 	 *
