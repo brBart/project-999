@@ -22,7 +22,8 @@ class EntryEvent{
 	 * @param float $price
 	 * @param string $expirationDate
 	 */
-	static public function apply(Product $product, Document $document, $quantity, $price, $expirationDate){
+	static public function apply(Product $product, Document $document, $quantity, $price,
+			$expirationDate = NULL){
 		Persist::validateNewObject($document);
 		
 		$lot = new Lot($product, $quantity, $price, $expirationDate);

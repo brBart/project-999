@@ -250,9 +250,31 @@ abstract class Document extends PersistDocument{
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
 			$this->insert();
+			$this->_mStatus = PersistDocument::CREATED;
+			foreach($this->_mDetails as &$detail)
+				// Because is unnecessary to register the order of details, 1 is provided for all.
+				$detail->save($this, 1);
 			return $this->_mId;
 		}
 	}
+	
+	/**
+	 * Cancels the document and reverts its effects.
+	 *
+	 * The user argument registers who authorized the action. Only applies if the document status property is
+	 * set to PersistDocument::CREATED.
+	 * @param UserAccount $user
+	 */
+	public function cancel(UserAccount $user){
+		if($this->_mStatus == PersistDocument::CREATED){
+			self::validateObjectFromDatabase($user);
+			
+			$this->cancelDetails();
+			$this->updateToCancelled($user);
+			$this->_mStatus = PersistDocument::CANCELLED;
+		}
+	}
+	
 	
 	/**
 	 * Returns a document with the details corresponding to the requested page.
@@ -289,6 +311,8 @@ abstract class Document extends PersistDocument{
 		foreach($this->_mDetails as &$detail)
 			$detail->cancel();
 	}
+	
+	abstract protected function updateToCancelled(UserAccount $user);
 }
 
 
@@ -1552,7 +1576,20 @@ class Invoice extends Document{
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->_mCorrelative = Correlative::getDefaultInstance();
 			$this->validateMainProperties();
-			$this->insert();
+			
+			$this->_mVatPercentage = Vat::getInstance()->getPercentage();
+			$current_number = $this->_mCorrelative->getCurrentNumber();
+			if($this->_mCorrelative->getFinalNumber() == $current_number)
+				throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');			
+			$this->_mNumber = $this->_mCorrelative->getNextNumber();
+			$this->insert();	
+			$this->_mStatus = PersistDocument::CREATED;
+			// Watch out, if any error occurs the database has already been altereted!
+			$i = 1;
+			foreach($this->_mDetails as &$detail)
+				$detail->save($this, $i++);
+			if(!is_null($this->_mDiscount))
+				$this->_mDiscount->save();
 			return $this->_mId;
 		}
 	}
@@ -1590,7 +1627,7 @@ class Invoice extends Document{
 			$this->cancelDetails();
 			$receipt = CashReceipt::getInstance($this);
 			$receipt->cancel($user);
-			InvoiceDAM::cancel($this, $user, date('d/m/Y'));
+			$this->updateToCancelled($user);
 			$this->_mStatus = PersistDocument::CANCELLED;
 		}
 	}
@@ -1651,24 +1688,16 @@ class Invoice extends Document{
 	 * @throws Exception
 	 */
 	protected function insert(){
-		$this->_mVatPercentage = Vat::getInstance()->getPercentage();
-			
-		$current_number = $this->_mCorrelative->getCurrentNumber();
-
-		if($this->_mCorrelative->getFinalNumber() == $current_number)
-			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
-		
-		$this->_mNumber = $this->_mCorrelative->getNextNumber();
 		$this->_mId = InvoiceDAM::insert($this);
-		$this->_mStatus = PersistDocument::CREATED;
-		
-		// Watch out, if any error occurs the database has already been altereted!
-		$i = 1;
-		foreach($this->_mDetails as &$detail)
-			$detail->save($this, $i++);
-			
-		if(!is_null($this->_mDiscount))
-			$this->_mDiscount->save();
+	}
+	
+	/**
+	 * Updates the document to cancelled in the database.
+	 *
+	 * @param UserAccount $user
+	 */
+	protected function updateToCancelled(UserAccount $user){
+		InvoiceDAM::cancel($this, $user, date('d/m/Y'));
 	}
 }
 
@@ -1948,23 +1977,6 @@ class PurchaseReturn extends Document{
 	}
 	
 	/**
-	 * Cancels the document and reverts its effects.
-	 *
-	 * The user argument registers who authorized the action. Only applies if the document status property is
-	 * set to PersistDocument::CREATED.
-	 * @param UserAccount $user
-	 */
-	public function cancel(UserAccount $user){
-		if($this->_mStatus == PersistDocument::CREATED){
-			self::validateObjectFromDatabase($user);
-			
-			$this->cancelDetails();
-			PurchaseReturnDAM::cancel($this, $user, date('d/m/Y'));
-			$this->_mStatus = PersistDocument::CANCELLED;
-		}
-	}
-	
-	/**
 	 * Returns a purchase return with the details corresponding to the requested page.
 	 *
 	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
@@ -2003,10 +2015,15 @@ class PurchaseReturn extends Document{
 	 */
 	protected function insert(){
 		$this->_mId = PurchaseReturnDAM::insert($this);
-		$this->_mStatus = PersistDocument::CREATED;
-		foreach($this->_mDetails as &$detail)
-			// Because is unnecessary to register the order of details, 1 is provided for all.
-			$detail->save($this, 1);
+	}
+	
+	/**
+	 * Updates the document to cancelled in the database.
+	 * 
+	 * @param UserAccount $user
+	 */
+	protected function updateToCancelled(UserAccount $user){
+		PurchaseReturnDAM::cancel($this, $user, date('d/m/Y'));
 	}
 }
 
@@ -2107,23 +2124,6 @@ class Shipment extends Document{
 	}
 	
 	/**
-	 * Cancels the document and reverts its effects.
-	 *
-	 * The user argument registers who authorized the action. Only applies if the document status property is
-	 * set to PersistDocument::CREATED.
-	 * @param UserAccount $user
-	 */
-	public function cancel(UserAccount $user){
-		if($this->_mStatus == PersistDocument::CREATED){
-			self::validateObjectFromDatabase($user);
-			
-			$this->cancelDetails();
-			ShipmentDAM::cancel($this, $user, date('d/m/Y'));
-			$this->_mStatus = PersistDocument::CANCELLED;
-		}
-	}
-	
-	/**
 	 * Returns a shipment with the details corresponding to the requested page.
 	 *
 	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
@@ -2161,10 +2161,15 @@ class Shipment extends Document{
 	 */
 	protected function insert(){
 		$this->_mId = ShipmentDAM::insert($this);
-		$this->_mStatus = PersistDocument::CREATED;
-		foreach($this->_mDetails as &$detail)
-			// Because is unnecessary to register the order of details, 1 is provided for all.
-			$detail->save($this, 1);
+	}
+	
+	/**
+	 * Updates the document to cancelled in the database.
+	 * 
+	 * @param UserAccount $user
+	 */
+	protected function updateToCancelled(UserAccount $user){
+		ShipmentDAM::cancel($this, $user, date('d/m/Y'));
 	}
 }
 
@@ -2195,6 +2200,15 @@ class Receipt extends Document{
 	 * @var float
 	 */
 	private $_mShipmentTotal;
+	
+	/**
+	 * Returns the receipt's supplier.
+	 *
+	 * @return Supplier
+	 */
+	public function getSupplier(){
+		return $this->_mSupplier;
+	}
 	
 	/**
 	 * Returns the supplier's shipment document number.
@@ -2256,13 +2270,12 @@ class Receipt extends Document{
 	 * @param array<DocProductDetail> $details
 	 * @throws Exception
 	 */
-	public function setData(Supplier $supplier, $shipmentNumber, $shipmentTotal, $total, $details){
+	public function setData(Supplier $supplier, $shipmentNumber, $total, $details){
 		parent::setData($total, $details);
 		
 		try{
 			self::validateObjectFromDatabase($supplier);
 			String::validateString($shipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.');
-			Number::validatePositiveFloat($shipmentTotal, 'Total de envio inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .
 					$e->getMessage());
@@ -2271,7 +2284,72 @@ class Receipt extends Document{
 		
 		$this->_mSupplier = $supplier;
 		$this->_mShipmentNumber = $shipmentNumber;
-		$this->_mShipmentTotal = $shipmentTotal;
+		$this->_mShipmentTotal = $total;
+	}
+	
+	/**
+	 * Does not save the receipt in the database and reverts its effects.
+	 *
+	 * Only applies if the object's status property is set to PersistDocument::IN_PROGRESS.
+	 */
+	public function discard(){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			foreach($this->_mDetails as &$detail)
+				EntryEvent::cancel($this, $detail);
+	}
+	
+	/**
+	 * Returns a receipt with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database. 
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return Receipt
+	 */
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			
+		return ReceiptDAM::getInstance($id, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Validates the receipt's main properties.
+	 *
+	 * Supplier must not be NULL, the shipment number must not be empty and the shimpment total amount must
+	 * match with the receipt total amount.
+	 */
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
+		
+		if(is_null($this->_mSupplier))
+			throw new Exception('Proveedor inv&aacute;lido.');
+			
+		String::validateString($this->_mShipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.');
+		
+		if(bccomp($this->_mShipmentTotal, $this->getTotal(), 2) != 0)
+			throw new Exception('El total del envio no coincide con el del recibo.');
+	}
+	
+	/**
+	 * Inserts the receipt's data in the database.
+	 *
+	 */
+	protected function insert(){
+		$this->_mId = ReceiptDAM::insert($this);
+	}
+	
+	/**
+	 * Updates the document to cancelled in the database.
+	 * 
+	 * @param UserAccount $user
+	 */
+	protected function updateToCancelled(UserAccount $user){
+		ReceiptDAM::cancel($this, $user, date('d/m/Y'));
 	}
 }
 ?>

@@ -1237,10 +1237,7 @@ class CashReceipt extends PersistDocument{
 		if(is_null($this->_mCash) && empty($this->_mVouchers))
 			throw new Exception('Favor ingresar efectivo o algun voucher.');
 
-		/**
-		 * @todo Verify if it is ok comparing just like this because of the bonus detail.
-		 */
-		if($this->getTotal() != $this->_mInvoice->getTotal())
+		if(bccomp($this->getTotal(), $this->_mInvoice->getTotal(), 2))
 			throw new Exception('Recibo no se puede guardar, el monto ingresado no es el requerido: ' .
 					$this->_mInvoice->getTotal());
 	}
