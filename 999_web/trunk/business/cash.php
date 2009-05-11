@@ -926,7 +926,7 @@ class CashRegister extends Persist{
  * @package Cash
  * @author Roberto Oliveros
  */
-class Receipt extends PersistDocument{
+class CashReceipt extends PersistDocument{
 	/**
 	 * Holds the cash received from the customer.
 	 *
@@ -985,12 +985,12 @@ class Receipt extends PersistDocument{
 			try{
 				self::validateObjectFromDatabase($invoice);
 			} catch(Exception $e){
-				$et = new Exception('Interno; Llamando al metodo construct en Receipt con datos erroneos! ' .
-						$e->getMessage());
+				$et = new Exception('Interno; Llamando al metodo construct en CashReceipt con datos ' .
+						'erroneos! ' . $e->getMessage());
 				throw $et;
 			}
 			
-		$invoice->hasReceipt(true);
+		$invoice->hasCashReceipt(true);
 		$this->_mInvoice = $invoice;
 	}
 	
@@ -1109,7 +1109,7 @@ class Receipt extends PersistDocument{
 			if($change !== 0.0)
 				Number::validateUnsignedFloat($change, 'Monto de cambio inv&aacute;lido.');
 		} catch(Exception $e){
-			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .
+			$et = new Exception('Interno: Llamando al metodo setData en CashReceipt con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
@@ -1197,7 +1197,7 @@ class Receipt extends PersistDocument{
 						$deposit->cancel($user);
 					}
 					
-				ReceiptDAM::cancel($this);
+				CashReceiptDAM::cancel($this);
 				$this->_mStatus = PersistDocument::CANCELLED;
 			}
 		}
@@ -1208,11 +1208,11 @@ class Receipt extends PersistDocument{
 	 *
 	 * Returns NULL in case there was no match for the provided invoice in the database.
 	 * @param Invoice $obj
-	 * @return Receipt
+	 * @return CashReceipt
 	 */
 	static public function getInstance(Invoice $obj){
 		self::validateObjectFromDatabase($obj);
-		return ReceiptDAM::getInstance($obj);
+		return CashReceiptDAM::getInstance($obj);
 	}
 	
 	/**
@@ -1222,7 +1222,7 @@ class Receipt extends PersistDocument{
 	 */
 	protected function insert(){
 		$this->_mInvoice->save();
-		ReceiptDAM::insert($this);
+		CashReceiptDAM::insert($this);
 		$this->_mId = $this->_mInvoice->getId();
 		$this->_mStatus = PersistDocument::CREATED;
 	}
@@ -2021,10 +2021,10 @@ class CashEntryEvent{
 	/**
 	 * Adds cash to receipt.
 	 *
-	 * @param Receipt $receipt
+	 * @param CashReceipt $receipt
 	 * @param float $amount
 	 */
-	static public function apply(Receipt $receipt, $amount){
+	static public function apply(CashReceipt $receipt, $amount){
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		
 		$invoice = $receipt->getInvoice();
@@ -2057,11 +2057,12 @@ class VoucherEntryEvent{
 	 * @param string $transaction
 	 * @param PaymentCard $card
 	 * @param Invoice $invoice
-	 * @param Receipt $receipt
+	 * @param CashReceipt $receipt
 	 * @param float $amount
 	 * @throws Exception
 	 */
-	static public function apply($transaction, PaymentCard $card, Invoice $invoice, Receipt $receipt, $amount){
+	static public function apply($transaction, PaymentCard $card, Invoice $invoice, CashReceipt $receipt,
+			$amount){
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		
 		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
@@ -2073,10 +2074,10 @@ class VoucherEntryEvent{
 	/**
 	 * Deletes the voucher from the receipt.
 	 *
-	 * @param Receipt $receipt
+	 * @param CashReceipt $receipt
 	 * @param Voucher $voucher
 	 */
-	static public function cancel(Receipt $receipt, Voucher $voucher){
+	static public function cancel(CashReceipt $receipt, Voucher $voucher){
 		$receipt->deleteVoucher($voucher);
 	}
 }
@@ -2326,7 +2327,7 @@ class InvoiceList{
  * @package Cash
  * @author Roberto Oliveros
  */
-class AvailableReceiptList{
+class AvailableCashReceiptList{
 	/**
 	 * Returns an array with all the receipts with cash available that belongs to the provided cash register.
 	 *
@@ -2336,7 +2337,7 @@ class AvailableReceiptList{
 	 */
 	static public function getList(CashRegister $obj){
 		Persist::validateObjectFromDatabase($obj);
-		return AvailableReceiptListDAM::getList($obj);
+		return AvailableCashReceiptListDAM::getList($obj);
 	}
 }
 ?>

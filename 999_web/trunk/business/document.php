@@ -1318,9 +1318,9 @@ class Invoice extends Document{
 	/**
 	 * Holds the flag that indicates if the invoice has a corresponding receipt.
 	 *
-	 * @var Receipt
+	 * @var boolean
 	 */
-	private $_mHasReceipt = false;
+	private $_mHasCashReceipt = false;
 	
 	/**
 	 * Holds the invoice's additional discount.
@@ -1471,13 +1471,13 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Sets the hasReceipt flag value.
+	 * Sets the hasCashReceipt flag value.
 	 *
 	 * This method is called when assigning the corresponding receipt.
-	 * @param Receipt $obj
+	 * @param boolean $bool
 	 */
-	public function hasReceipt($bool){	
-		$this->_mHasReceipt = (boolean)$bool;
+	public function hasCashReceipt($bool){	
+		$this->_mHasCashReceipt = (boolean)$bool;
 	}
 	
 	/**
@@ -1512,7 +1512,6 @@ class Invoice extends Document{
 	 * @param string $nit
 	 * @param string $name
 	 * @param float $vatPercentage
-	 * @param Receipt $receipt
 	 * @param Discount $discount
 	 * @param float $total
 	 * @param array<DocumentDetail> $details
@@ -1589,7 +1588,7 @@ class Invoice extends Document{
 				throw new Exception('Caja ya esta cerrada, no se puede anular.');
 			
 			$this->cancelDetails();
-			$receipt = Receipt::getInstance($this);
+			$receipt = CashReceipt::getInstance($this);
 			$receipt->cancel($user);
 			InvoiceDAM::cancel($this, $user, date('d/m/Y'));
 			$this->_mStatus = PersistDocument::CANCELLED;
@@ -1642,7 +1641,7 @@ class Invoice extends Document{
 		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.');
 		if(is_null($this->_mCorrelative))
 			throw new Exception('No hay ningun correlativo predeterminado.');
-		if(!$this->_mHasReceipt)
+		if(!$this->_mHasCashReceipt)
 			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
 	}
 	
@@ -2166,6 +2165,113 @@ class Shipment extends Document{
 		foreach($this->_mDetails as &$detail)
 			// Because is unnecessary to register the order of details, 1 is provided for all.
 			$detail->save($this, 1);
+	}
+}
+
+
+/**
+ * Represents a purchase receipt document.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class Receipt extends Document{
+	/**
+	 * Holds the supplier from whom the merchandise its being received.
+	 *
+	 * @var Supplier
+	 */
+	private $_mSupplier;
+	
+	/**
+	 * Holds the supplier's shipment document number.
+	 *
+	 * @var string
+	 */
+	private $_mShipmentNumber;
+	
+	/**
+	 * Holds the supplie's shipment document total amount.
+	 *
+	 * @var float
+	 */
+	private $_mShipmentTotal;
+	
+	/**
+	 * Returns the supplier's shipment document number.
+	 *
+	 * @return string
+	 */
+	public function getShipmentNumber(){
+		return $this->_mShipmentNumber;
+	}
+	
+	/**
+	 * Returns the supplier's shipment document total amount.
+	 *
+	 * @return float
+	 */
+	public function getShipmentTotal(){
+		return $this->_mShipmentTotal;
+	}
+	
+	/**
+	 * Sets the receipt's supplier.
+	 *
+	 * @param Supplier $obj
+	 */
+	public function setSupplier(Supplier $obj){
+		self::validateObjectFromDatabase($obj);
+		$this->_mSupplier = $obj;
+	}
+	
+	/**
+	 * Sets the receipt's shipment number.
+	 *
+	 * @param string $number
+	 */
+	public function setShipmentNumber($number){
+		String::validateString($number, 'N&uacute;mero de envio inv&aacute;lido.');
+		$this->_mShipmentNumber = $number;
+	}
+	
+	/**
+	 * Sets the receipt's shipment total amount.
+	 *
+	 * @param float $amount
+	 */
+	public function setShipmentTotal($amount){
+		Number::validatePositiveFloat($amount, 'Total del envio inv&aacute;lido.');
+		$this->_mShipmentTotal = $amount;
+	}
+	
+	/**
+	 * Sets the receipt's properties.
+	 *
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * PersistDocument::CREATED in the constructor method too.
+	 * @param Supplier $supplier
+	 * @param string $shipmentNumber
+	 * @param float $shipmentTotal
+	 * @param float $total
+	 * @param array<DocProductDetail> $details
+	 * @throws Exception
+	 */
+	public function setData(Supplier $supplier, $shipmentNumber, $shipmentTotal, $total, $details){
+		parent::setData($total, $details);
+		
+		try{
+			self::validateObjectFromDatabase($supplier);
+			String::validateString($shipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.');
+			Number::validatePositiveFloat($shipmentTotal, 'Total de envio inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mSupplier = $supplier;
+		$this->_mShipmentNumber = $shipmentNumber;
+		$this->_mShipmentTotal = $shipmentTotal;
 	}
 }
 ?>
