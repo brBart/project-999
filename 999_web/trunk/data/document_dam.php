@@ -511,4 +511,64 @@ class ShipmentDAM{
 		return 123;
 	}
 }
+
+
+/**
+ * Class for accessing receipt tables in the database.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class ReceiptDAM{
+	/**
+	 * Updates the receipt status to cancelled in the database.
+	 *
+	 * The user and date arguments are to register who and when does the cancel action took place.
+	 * @param Receipt $receipt
+	 * @param UserAccount $user
+	 * @param string $date
+	 */
+	static public function cancel(Receipt $receipt, UserAccount $user, $date){
+		// Code here...
+	}
+	
+	/**
+	 * Returns a receipt with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return Receipt
+	 */
+	static public function getInstance($id, &$total_pages, &$total_items, $page){
+		switch($id){
+			case 123:
+				$receipt = new Receipt('25/04/2009', UserAccount::getInstance('roboli'), $id,
+						PersistDocument::CREATED);
+				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
+				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
+				$receipt->setData(Supplier::getInstance(123), '8289', 39.50, $details);
+				$total_pages = 1;
+				$total_items = 1;
+				return $receipt;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+	
+	/**
+	 * Inserts the receipt's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Receipt $obj
+	 * @return integer
+	 */
+	static public function insert(Receipt $obj){
+		return 123;
+	}
+}
 ?>
