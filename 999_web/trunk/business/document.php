@@ -2181,7 +2181,7 @@ class Shipment extends Document{
  */
 class Receipt extends Document{
 	/**
-	 * Holds the supplier from whom the merchandise its being received.
+	 * Holds the supplier from whom the merchandise is being received.
 	 *
 	 * @var Supplier
 	 */
@@ -2350,6 +2350,126 @@ class Receipt extends Document{
 	 */
 	protected function updateToCancelled(UserAccount $user){
 		ReceiptDAM::cancel($this, $user, date('d/m/Y'));
+	}
+}
+
+
+
+abstract class AdjustmentDocument extends Document{
+/**
+	 * Holds the reason of why the creation of the document.
+	 *
+	 * @var string
+	 */
+	private $_mReason;
+	
+	/**
+	 * Returns the document's reason.
+	 *
+	 * @return string
+	 */
+	public function getReason(){
+		return $this->_mReason;
+	}
+	
+	/**
+	 * Sets the document's reason.
+	 *
+	 * @param string $reason
+	 */
+	public function setReason($reason){
+		String::validateString($reason, 'Motivo inv&aacute;lido.');
+		$this->_mReason = $reason;
+	}
+	
+	/**
+	 * Sets the document's properties.
+	 *
+	 * Must be called only from the database layer corresponding class. The object's status must be set to
+	 * PersistDocument::CREATED in the constructor method too.
+	 * @param string $reason
+	 * @param float $total
+	 * @param array<DocProductDetail> $details
+	 * @throws Exception
+	 */
+	public function setData($reason, $total, $details){
+		parent::setData($total, $details);
+		
+		try{
+			String::validateString($reason, 'Motivo inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en EntryIA con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mReason = $reason;
+	}
+	
+	/**
+	 * Validates the document's main properties.
+	 *
+	 * Reason must not be empty.
+	 */
+	protected function validateMainProperties(){
+		parent::validateMainProperties();
+			
+		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
+	}
+}
+
+
+/**
+ * Represents an entry inventory adjustment document.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class EntryIA extends AdjustmentDocument{
+	/**
+	 * Does not save the document in the database and reverts its effects.
+	 *
+	 * Only applies if the object's status property is set to PersistDocument::IN_PROGRESS.
+	 */
+	public function discard(){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			foreach($this->_mDetails as &$detail)
+				EntryAdjustmentEvent::cancel($this, $detail);
+	}
+	
+	/**
+	 * Returns an entry inventory adjustment document with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database. 
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return EntryIA
+	 */
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			
+		return EntryIADAM::getInstance($id, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Inserts the document's data in the database.
+	 *
+	 */
+	protected function insert(){
+		$this->_mId = EntryIADAM::insert($this);
+	}
+	
+	/**
+	 * Updates the document to cancelled in the database.
+	 * 
+	 * @param UserAccount $user
+	 */
+	protected function updateToCancelled(UserAccount $user){
+		EntryIADAM::cancel($this, $user, date('d/m/Y'));
 	}
 }
 ?>

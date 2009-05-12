@@ -25,7 +25,7 @@ class EntryEvent{
 	static public function apply(Product $product, Document $document, $quantity, $price,
 			$expirationDate = NULL){
 		Persist::validateNewObject($document);
-		
+				
 		$lot = new Lot($product, $quantity, $price, $expirationDate);
 		$document->addDetail(new DocProductDetail($lot, new Entry(), $quantity, $price));
 	}
@@ -37,6 +37,7 @@ class EntryEvent{
 	 * @param DocProductDetail $detail
 	 */
 	static public function cancel(Document $document, DocProductDetail $detail){
+		// Validation is not necessary because the document has already validated.
 		$document->deleteDetail($detail);
 	}
 }
@@ -61,7 +62,9 @@ class EntryAdjustmentEvent extends EntryEvent{
 	 * @param string &$msg
 	 */
 	static public function apply(Product $product, Document $document, $quantity, $price,
-			$expirationDate, &$msg){
+			$expirationDate = NULL, &$msg = NULL){
+		Persist::validateNewObject($document);
+				
 		$lots = Inventory::getNegativeLots($product, $quantity);
 		
 		foreach($lots as &$lot){
@@ -105,6 +108,8 @@ class WithdrawEvent{
 	 * @param integer $quantity
 	 */
 	static public function apply(Product $product, Document $document, $quantity){
+		Persist::validateNewObject($document);
+		
 		$lots = Inventory::getLots($product, $quantity);
 		$price = $product->getPrice();
 		
@@ -134,6 +139,7 @@ class WithdrawEvent{
 	 * @param DocProductDetail $detail
 	 */
 	static public function cancel(Document $document, DocProductDetail $detail){
+		// Validation is not necessary because the document has already validated.
 		$reserve = $detail->getReserve();
 		Reserve::delete($reserve);
 		$document->deleteDetail($detail);
@@ -158,6 +164,7 @@ class StrictWithdrawEvent extends WithdrawEvent{
 	 * @throws Exception
 	 */
 	static public function apply(Product $product, Document $document, $quantity){
+		// Validation of the document will be taken by the parent.
 		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		
@@ -184,6 +191,7 @@ class RetailEvent{
 	 * @param integer $quantity
 	 */
 	static public function apply(Product $product, Invoice $invoice, $quantity){
+		// Validation of the document will be taken by the parent.
 		WithdrawEvent::apply($product, $invoice, $quantity);
 		self::applySales($invoice, $product);
 	}

@@ -1859,6 +1859,7 @@ class DepositEvent{
 	 */
 	static public function apply(Cash $cash, Deposit $deposit, $amount){
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		Persist::validateNewObject($deposit);
 		
 		if($cash->getAvailable() < $amount)
 			throw new Exception('No hay suficiente efectivo disponible.');
@@ -1874,6 +1875,7 @@ class DepositEvent{
 	 * @param DepositDetail $detail
 	 */
 	static public function cancel(Deposit $deposit, DepositDetail $detail){
+		// Validation is not necessary because the document has already validated.
 		$cash = $detail->getCash();
 		$cash->decreaseReserve($detail->getAmount());
 		$deposit->deleteDetail($detail);
@@ -2022,6 +2024,7 @@ class CashEntryEvent{
 	 * @param float $amount
 	 */
 	static public function apply(CashReceipt $receipt, $amount){
+		Persist::validateNewObject($receipt);
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		
 		$invoice = $receipt->getInvoice();
@@ -2061,6 +2064,7 @@ class VoucherEntryEvent{
 	static public function apply($transaction, PaymentCard $card, Invoice $invoice, CashReceipt $receipt,
 			$amount){
 		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		Persist::validateNewObject($receipt);
 		
 		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
 			throw new Exception('Voucher excede el total de la factura.');
