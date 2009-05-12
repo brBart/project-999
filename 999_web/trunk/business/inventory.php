@@ -5,7 +5,11 @@
  * @author Roberto Oliveros
  */
 
-
+/**
+ * Represents a detail in a comparison report.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
 class ComparisonDetail{
 	/**
 	 * Holds the detail's product.
@@ -53,7 +57,7 @@ class ComparisonDetail{
 	}
 	
 	/**
-	 * Returns an array with the details data.
+	 * Returns an array with the detail's data.
 	 *
 	 * The fields in the array are bar_code, manufacturer, name, packaging, um, physical, system and diference.
 	 * @return array
@@ -68,4 +72,8 @@ class ComparisonDetail{
 				'diference' => sprintf('%+d', ($this->_mPhysical - $this->_mSystem)));
 	}
 }
+
+
+
+
 ?>
