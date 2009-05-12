@@ -43,8 +43,8 @@ class ComparisonDetail{
 	public function __construct(Product $product, $physical, $system){
 		try{
 			Persist::validateObjectFromDatabase($product);
-			Number::validateInteger($physical);
-			Number::validateInteger($system);
+			Number::validateUnsignedInteger($physical, 'Valor fisico inv&aacute;lido.');
+			Number::validateUnsignedInteger($system, 'Valor del sistema inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en ComparisonDetail con datos ' .
 					'erroneos! ' . $e->getMessage());
@@ -75,5 +75,62 @@ class ComparisonDetail{
 
 
 
-
+class Comparison{
+	/**
+	 * Holds the report's internal id.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Holds the report's creation date.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mDate;
+	
+	/**
+	 * Holds the user who created the report.
+	 *
+	 * @var UserAccount
+	 */
+	private $_mUser;
+	
+	/**
+	 * Holds the reason of why the creation of the report.
+	 *
+	 * @var string
+	 */
+	private $_mReason;
+	
+	/**
+	 * Holds the flag that indicates if the comparison was made against the whole inventory.
+	 *
+	 * @var boolean
+	 */
+	private $_mGeneral;
+	
+	/**
+	 * Holds the report details.
+	 *
+	 * @var array<ComparisonDetail>
+	 */
+	private $_mDetails;
+	
+	/**
+	 * Holds the sum of all the physical quantities.
+	 *
+	 * @var integer
+	 */
+	private $_mPhysicalTotal;
+	
+	/**
+	 * Holds the sum of all the system quantities.
+	 *
+	 * @var integer
+	 */
+	private $_mSystemTotal;
+}
 ?>
