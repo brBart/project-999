@@ -70,12 +70,21 @@ class EntryAdjustmentEvent extends EntryEvent{
 		foreach($lots as &$lot){
 			$negative = $lot->getQuantity();
 			if($negative < 0){
-				$lot_quantity = abs($negative);
-				$quantity -= $lot_quantity;
-				// Adjust the lot's quantity
-				$lot->increase($lot_quantity);
-				// Set the negative quantity in case the action will be cancel.
-				$lot->setNegativeQuantity($negative);
+				
+				if(abs($negative) <= $quantity){
+					$lot_quantity = abs($negative);
+					$quantity -= $lot_quantity;
+					// Adjust the lot's quantity
+					$lot->increase($lot_quantity);
+					// Set the negative quantity in case the action will be cancel.
+					$lot->setNegativeQuantity($negative);
+				}
+				else{
+					$lot_quantity = $quantity;
+					$lot->increase($lot_quantity);
+					$lot->setNegativeQuantity(-1 * $lot_quantity);
+				}
+				
 				$msg = 'Lote ' . $lot->getId() . ' del producto agregado contiene un saldo negativo. No se ha ' .
 						'creado un nuevo lote para poder este ser ajustado.';
 			}
