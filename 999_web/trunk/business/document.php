@@ -2354,7 +2354,11 @@ class Receipt extends Document{
 }
 
 
-
+/**
+ * Defines common functionality for the inventory adjustment documents.
+ * @package Document
+ * @author Roberto Oliveros
+ */
 abstract class AdjustmentDocument extends Document{
 /**
 	 * Holds the reason of why the creation of the document.
@@ -2470,6 +2474,61 @@ class EntryIA extends AdjustmentDocument{
 	 */
 	protected function updateToCancelled(UserAccount $user){
 		EntryIADAM::cancel($this, $user, date('d/m/Y'));
+	}
+}
+
+
+/**
+ * Represents a withdraw inventory adjustment document.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class WithdrawIA extends AdjustmentDocument{
+	/**
+	 * Does not save the document in the database and reverts its effects.
+	 *
+	 * Only applies if the object's status property is set to PersistDocument::IN_PROGRESS.
+	 */
+	public function discard(){
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			foreach($this->_mDetails as &$detail)
+				StrictWithdrawEvent::cancel($this, $detail);
+	}
+	
+	/**
+	 * Returns a withdraw inventory adjustment document with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database. 
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return WithdrawIA
+	 */
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			
+		return WithdrawIADAM::getInstance($id, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Inserts the document's data in the database.
+	 *
+	 */
+	protected function insert(){
+		$this->_mId = WithdrawIADAM::insert($this);
+	}
+	
+	/**
+	 * Updates the document to cancelled in the database.
+	 * 
+	 * @param UserAccount $user
+	 */
+	protected function updateToCancelled(UserAccount $user){
+		WithdrawIADAM::cancel($this, $user, date('d/m/Y'));
 	}
 }
 ?>
