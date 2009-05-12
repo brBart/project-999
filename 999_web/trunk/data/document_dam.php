@@ -571,4 +571,64 @@ class ReceiptDAM{
 		return 123;
 	}
 }
+
+
+/**
+ * Class for accessing the entry inventory adjustment tables in the database.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class EntryIADAM{
+	/**
+	 * Updates the document to cancelled in the database.
+	 *
+	 * The user and date arguments are to register who and when does the cancel action took place.
+	 * @param EntryIA $entry
+	 * @param UserAccount $user
+	 * @param string $date
+	 */
+	static public function cancel(EntryIA $entry, UserAccount $user, $date){
+		// Code here...
+	}
+	
+	/**
+	 * Returns an entry inventory adjustment document with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return EntryIA
+	 */
+	static public function getInstance($id, &$total_pages, &$total_items, $page){
+		switch($id){
+			case 123:
+				$entry = new EntryIA('25/04/2009', UserAccount::getInstance('roboli'), $id,
+						PersistDocument::CREATED);
+				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
+				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
+				$entry->setData('Ajuste.', 39.50, $details);
+				$total_pages = 1;
+				$total_items = 1;
+				return $entry;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+	
+	/**
+	 * Inserts the document's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param EntryIA $obj
+	 * @return integer
+	 */
+	static public function insert(EntryIA $obj){
+		return 123;
+	}
+}
 ?>
