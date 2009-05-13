@@ -36,4 +36,32 @@ class ComparisonDAM{
 		}
 	}
 }
+
+
+/**
+ * Utility class to manipulate the detail data in the database.
+ * @package InventoryDAM
+ * @author Roberto Oliveros
+ */
+class CountDetailDAM{
+	/**
+	 * Inserts the detail's data in the database.
+	 *
+	 * @param Count $count
+	 * @param CountDetail $detail
+	 */
+	static public function insert(Count $count, CountDetail $detail){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes the provided detail from the database.
+	 *
+	 * @param Count $count
+	 * @param CountDetail $detail
+	 */
+	static public function delete(Count $count, CountDetail $detail){
+		// Code here...
+	}
+}
 ?>
