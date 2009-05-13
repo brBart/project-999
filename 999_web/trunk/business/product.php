@@ -433,8 +433,8 @@ class ProductSupplier extends Persist{
 	/**
 	 * Sets the productsupplier's deleted flag to true.
 	 *
-	 * Must not be called. If you need to delete the object call Product::delete method instead and pass
-	 * this object as the parameter.
+	 * Must not be called. If you need to delete the object call Product::deleteProductSupplier() method
+	 * instead and pass this object as the parameter.
 	 */
 	public function delete(){
 		$this->_mDeleted = true;
