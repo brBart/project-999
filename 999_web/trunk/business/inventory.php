@@ -6,6 +6,10 @@
  */
 
 /**
+ * For persistence purposes.
+ */
+require_once('business/persist.php');
+/**
  * Library for accessing the database.
  */
 require_once('data/inventory_dam.php');
@@ -282,6 +286,125 @@ class Comparison{
 			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
 			
 		return ComparisonDAM::getInstance($id, $total_pages, $total_items, $page);
+	}
+}
+
+
+
+class CountDetail extends Persist{
+	/**
+	 * Holds the detail's product.
+	 *
+	 * @var Product
+	 */
+	private $_mProduct;
+	
+	/**
+	 * Holds the product's quantity counted.
+	 *
+	 * @var integer
+	 */
+	private $_mQuantity;
+	
+	/**
+	 * Flag that indicates if the detail has to be deteled.
+	 *
+	 * @var boolean
+	 */
+	private $_mDeleted = false;
+	
+	/**
+	 * Constructs the detail with the provided data.
+	 *
+	 * @param Product $product
+	 * @param integer $quantity
+	 * @param integer $status
+	 */
+	public function __construct(Product $product, $quantity, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		self::validateObjectFromDatabase($product);
+		Number::validateUnsignedInteger($quantity, 'Cantidad inv&aacute;lida.');
+		
+		$this->_mProduct = $product;
+		$this->_mQuantity = $quantity;
+	}
+	
+	/**
+	 * Returns the detail's product.
+	 *
+	 * @return Product
+	 */
+	public function getProduct(){
+		return $this->_mProduct;
+	}
+	
+	/**
+	 * Returns the detail's quantity.
+	 *
+	 * @return integer
+	 */
+	public function getQuantity(){
+		return $this->_mQuantity;
+	}
+	
+	/**
+	 * Returns the value of the detail's deleted flag.
+	 *
+	 * @return boolean
+	 */
+	public function isDeleted(){
+		return $this->_mDeleted;
+	}
+	
+	/**
+	 * Returns an array with the detail's data.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, packaging, um and quantity.
+	 * @return array
+	 */
+	public function show(){
+		$manufacturer = $this->_mProduct->getManufacturer();
+		$um = $this->_mProduct->getUnitOfMeasure();
+		
+		return array('bar_code' => $this->_mProduct->getBarCode(), 'manufacturer' => $manufacturer->getName(),
+				'name' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
+				'um' => $um->getName(), 'quantity' => $this->_mQuantity);
+	}
+	
+	/**
+	 * Increases the detail's quantity property.
+	 *
+	 * @param integer $quantity
+	 */
+	public function increase($quantity){
+		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		$this->_mQuantity += $quantity;
+	}
+	
+	/**
+	 * Sets the detail's deleted flag to true.
+	 *
+	 * Must not be called. If you need to delete the object call Count::deleteDetail() method instead and pass
+	 * this object as the parameter.
+	 */
+	public function delete(){
+		$this->_mDeleted = true;
+	}
+	
+	/**
+	 * Insert or deletes the detail in the database.
+	 *
+	 * Depending of the status property or its deleted flag, the appropiate action is taken.
+	 * @param Count $count
+	 */
+	public function commit(Count $count){
+		self::validateObjectFromDatabase($count);
+		
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			CountDetailDAM::insert($count, $this);
+		elseif($this->_mStatus == Persist::CREATED && $this->_mDeleted)
+			CountDetailDAM::delete($count, $this);
 	}
 }
 ?>
