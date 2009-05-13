@@ -6,6 +6,11 @@
  */
 
 /**
+ * Library for accessing the database.
+ */
+require_once('data/inventory_dam.php');
+
+/**
  * Represents a detail in a comparison report.
  * @package Inventory
  * @author Roberto Oliveros
@@ -39,6 +44,7 @@ class ComparisonDetail{
 	 * @param Product $product
 	 * @param integer $physical
 	 * @param integer $system
+	 * @throws Exception
 	 */
 	public function __construct(Product $product, $physical, $system){
 		try{
@@ -74,17 +80,21 @@ class ComparisonDetail{
 }
 
 
-
+/**
+ * Represents a comparison report of a physical count of the inventory against the system's inventory.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
 class Comparison{
 	/**
-	 * Holds the report's internal id.
+	 * Holds the comparison's internal id.
 	 *
 	 * @var integer
 	 */
 	private $_mId;
 	
 	/**
-	 * Holds the report's creation date.
+	 * Holds the comparison's creation date.
 	 *
 	 * Date format: 'dd/mm/yyyy'.
 	 * @var string
@@ -92,14 +102,14 @@ class Comparison{
 	private $_mDate;
 	
 	/**
-	 * Holds the user who created the report.
+	 * Holds the user who created the comparison.
 	 *
 	 * @var UserAccount
 	 */
 	private $_mUser;
 	
 	/**
-	 * Holds the reason of why the creation of the report.
+	 * Holds the reason of why the creation of the comparison.
 	 *
 	 * @var string
 	 */
@@ -113,7 +123,7 @@ class Comparison{
 	private $_mGeneral;
 	
 	/**
-	 * Holds the report details.
+	 * Holds the comparison details.
 	 *
 	 * @var array<ComparisonDetail>
 	 */
@@ -132,5 +142,146 @@ class Comparison{
 	 * @var integer
 	 */
 	private $_mSystemTotal;
+	
+	/**
+	 * Constructs the comparison with the provided data.
+	 *
+	 * Call only from the database layer please.
+	 * @param integer $id
+	 * @param string $date
+	 * @param UserAccount $user
+	 * @param string $reason
+	 * @param boolean $general
+	 * @param array<ComparisonDetail> $details
+	 * @param integer $physical
+	 * @param integer $system
+	 * @throws Exception
+	 */
+	public function __construct($id, $date, UserAccount $user, $reason, $general, $details, $physical, $system){
+		try{
+			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+			Date::validateDate($date, 'Fecha inv&aacute;lida.');
+			Persist::validateObjectFromDatabase($user);
+			String::validateString($reason, 'Motivo inv&aacute;lido.');
+			if(empty($details))
+				throw new Exception('No hay ningun detalle.');
+			Number::validateUnsignedInteger($physical, 'Total fisico inv&aacute;lido.');
+			Number::validateUnsignedInteger($system, 'Total del sistema inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo construct en Comparison con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mId = $id;
+		$this->_mDate = $date;
+		$this->_mUser = $user;
+		$this->_mReason = $reason;
+		$this->_mGeneral = (boolean)$general;
+		$this->_mDetails = $details;
+		$this->_mPhysicalTotal = $physical;
+		$this->_mSystemTotal = $system;
+	}
+	
+	/**
+	 * Returns the comparison's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns the comparison's date.
+	 *
+	 * @return string
+	 */
+	public function getDate(){
+		return $this->_mDate;
+	}
+	
+	/**
+	 * Returns the comparison's creator.
+	 *
+	 * @return UserAccount
+	 */
+	public function getUser(){
+		return $this->_mUser;
+	}
+	
+	/**
+	 * Returns the comparison's reason.
+	 *
+	 * @return string
+	 */
+	public function getReason(){
+		return $this->_mReason;
+	}
+	
+	/**
+	 * Return an array with all the comparison's details.
+	 *
+	 * @return array<ComparisonDetail>
+	 */
+	public function getDetails(){
+		return $this->_mDetails;
+	}
+	
+	/**
+	 * Returns true if the comparison was against the whole inventory.
+	 *
+	 * @return boolean
+	 */
+	public function isGeneral(){
+		return $this->_mGeneral;
+	}
+	
+	/**
+	 * Returns the comparison's physical total.
+	 *
+	 * @return integer
+	 */
+	public function getPhysicalTotal(){
+		return $this->_mPhysicalTotal;
+	}
+	
+	/**
+	 * Returns the comparison's system total.
+	 *
+	 * @return integer
+	 */
+	public function getSystemTotal(){
+		return $this->_mSystemTotal;
+	}
+	
+	/**
+	 * Returns the diference between the total physical and total system quantities.
+	 *
+	 * Returns an string to display the integer sign also.
+	 * @return string
+	 */
+	public function getTotalDiference(){
+		return sprintf('%+d', $this->_mPhysicalTotal - $this->_mSystemTotal);
+	}
+	
+	/**
+	 * Returns a comparison with the details corresponding to the requested page.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return Comparison
+	 */
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			
+		return ComparisonDAM::getInstance($id, $total_pages, $total_items, $page);
+	}
 }
 ?>
