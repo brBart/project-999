@@ -754,7 +754,7 @@ class Product extends Identifier{
 	 */
 	public function addProductSupplier(ProductSupplier $newDetail){
 		foreach($this->_mProductSuppliers as $detail)
-			if($detail == $newDetail && !$detail->isDeleted())
+			if($detail->getId() == $newDetail->getId() && !$detail->isDeleted())
 				throw new Exception('Codigo del proveedor ya esta ingresado.');
 				
 		$this->verifyProductSupplier($newDetail);
@@ -762,7 +762,7 @@ class Product extends Identifier{
 	}
 	
 	/**
-	 * Removes a supplier from this product.
+	 * Deletes the supplier from the product.
 	 *
 	 * @param ProductSupplier $purgeDetail
 	 */
@@ -770,7 +770,7 @@ class Product extends Identifier{
 		$temp_details = array();
 		
 		foreach($this->_mProductSuppliers as &$detail)
-			if($detail != $purgeDetail)
+			if($detail->getId() != $purgeDetail->getId())
 				$temp_details[] = $detail;
 			else
 				if($detail->getStatus() == Persist::CREATED){
@@ -809,7 +809,7 @@ class Product extends Identifier{
 				ChangePriceLog::write($this, $this->_mLastPrice, $this->_mPrice);
 		}
 		
-		foreach($this->_mProductSuppliers as $detail)
+		foreach($this->_mProductSuppliers as &$detail)
 			$detail->commit($this);
 	}
 	

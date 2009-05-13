@@ -331,10 +331,8 @@ class Deposit extends PersistDocument{
 		foreach($this->_mDetails as &$detail)
 			if($detail->getCash()->getId() != $newDetail->getCash()->getId())
 				$temp_details[] = $detail;
-			else{
-				$detail->increase($newDetail->getAmount());
-				$newDetail = $detail;
-			}
+			else
+				$newDetail->increase($detail->getAmount());
 			
 		$temp_details[] = $newDetail;
 		$this->_mDetails = $temp_details;
@@ -1134,10 +1132,8 @@ class CashReceipt extends PersistDocument{
 		foreach($this->_mVouchers as &$voucher)
 			if($voucher->getTransactionNumber() != $newVoucher->getTransactionNumber())
 				$temp_vouchers[] = $voucher;
-			else {
-				$voucher->increase($newVoucher->getAmount());
-				$newVoucher = $voucher;
-			}
+			else
+				$newVoucher->increase($voucher->getAmount());
 			
 		$temp_vouchers[] = $newVoucher;
 		$this->_mVouchers = $temp_vouchers;

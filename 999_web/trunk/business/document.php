@@ -200,7 +200,7 @@ abstract class Document extends PersistDocument{
 							$reserve->merge($new_reserve);
 					}
 				}
-					
+				
 				$newDetail = $detail;
 			}
 		}

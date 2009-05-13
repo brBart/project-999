@@ -290,7 +290,11 @@ class Comparison{
 }
 
 
-
+/**
+ * Represents a detail in a count document, a sole product physical count.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
 class CountDetail extends Persist{
 	/**
 	 * Holds the detail's product.
@@ -405,6 +409,355 @@ class CountDetail extends Persist{
 			CountDetailDAM::insert($count, $this);
 		elseif($this->_mStatus == Persist::CREATED && $this->_mDeleted)
 			CountDetailDAM::delete($count, $this);
+	}
+}
+
+
+/**
+ * Represents a physical count of the inventory.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
+class Count extends PersistObject{
+	/**
+	 * Holds the count's internal id.
+	 *
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
+	 * Holds the count's creation date.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mDate;
+	
+	/**
+	 * Holds the user who created the count.
+	 *
+	 * @var UserAccount
+	 */
+	private $_mUser;
+	
+	/**
+	 * Holds the why of the count.
+	 *
+	 * @var string
+	 */
+	private $_mReason;
+	
+	/**
+	 * Holds an array with all the count's details.
+	 *
+	 * @var array<CountDetail>
+	 */
+	private $_mDetails = array();
+	
+	/**
+	 * Holds the count's total.
+	 *
+	 * @var integer
+	 */
+	private $_mTotal = 0;
+	
+	/**
+	 * Constructs the count with data provided.
+	 *
+	 * Arguments must be passed only when called from the database layer correponding class.
+	 * @param integer $id
+	 * @param string $date
+	 * @param UserAccount $user
+	 * @param integer $status
+	 */
+	public function __construct($id = NULL, $date = NULL, $user = NULL, $status = Persist::IN_PROGRESS){
+		parent::__construct($status);
+		
+		if(!is_null($id))
+			try{
+				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+			} catch(Exception $e){
+				$et = new Exception('Interno: Llamando al metodo construct en Count con datos erroneos! ' .
+						$e->getMessage());
+				throw $et;
+			}
+		
+		if(!is_null($date)){
+			try{
+				Date::validateDate($date, 'Fecha inv&aacute;lida.');
+			} catch(Exception $e){
+				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			$this->_mDate = $date;
+		}
+		else
+			$this->_mDate = date('d/m/Y');
+		
+		if(!is_null($user)){
+			try{
+				Persist::validateObjectFromDatabase($user);
+			} catch(Exception $e){
+				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
+						$e->getMessage());
+				throw $et;
+			}
+			$this->_mUser = $user;
+		}
+		else
+			$this->_mUser = SessionHelper::getUser();
+			
+		$this->_mId = $id;
+	}
+	
+	/**
+	 * Returns the count's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
+	}
+	
+	/**
+	 * Returns the count's creation date.
+	 *
+	 * @return string
+	 */
+	public function getDate(){
+		return $this->_mDate;
+	}
+	
+	/**
+	 * Retursn the count's creator.
+	 *
+	 * @return UserAccount
+	 */
+	public function getUser(){
+		return $this->_mUser;
+	}
+	
+	/**
+	 * Returns the count's reason.
+	 *
+	 * @return string
+	 */
+	public function getReason(){
+		return $this->_mReason;
+	}
+	
+	/**
+	 * Returns the detail which id matches the id provided.
+	 *
+	 * NULL is returned in case there was no match.
+	 * @param integer $id
+	 * @return CountDetail
+	 */
+	public function getDetail($id){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		foreach($this->_mDetails as &$detail)
+			if($detail->getProduct()->getId() == $id)
+				return $detail;
+				
+		return NULL;
+	}
+	
+	/**
+	 * Returns an array with all the count's details.
+	 *
+	 * @return array<CountDetail>
+	 */
+	public function getDetails(){
+		$details = array();
+		
+		foreach($this->_mDetails as &$detail)
+			if(!$detail->isDeleted())
+				$details[] = $detail;
+				
+		return $details;
+	}
+	
+	/**
+	 * Returns the count's total.
+	 *
+	 * @return integer
+	 */
+	public function getTotal(){
+		return $this->_mTotal;
+	}
+	
+	/**
+	 * Sets the count's reason.
+	 *
+	 * Method can only be called if the object's status property is set to Persist::IN_PROGRESS.
+	 * @param string $reason
+	 * @throws Exception
+	 */
+	public function setReason($reason){
+		if($this->_mStatus == Persist::CREATED)
+			throw new Exception('No se puede editar el motivo.');
+			
+		String::validateString($reason, 'Motivo inv&aacute;lido.');
+		$this->_mReason = $reason;
+	}
+	
+	/**
+	 * Sets the count properties.
+	 *
+	 * Must be called only from the database layer. The object's status must be set to
+	 * Persist::CREATED in the constructor method too.
+	 * @param string $reason
+	 * @param integer $total
+	 * @param array<CountDetail> $details
+	 */
+	public function setData($reason, $total, $details){
+		try{
+			String::validateString($reason, 'Motivo inv&aacute;lido.');
+			Number::validatePositiveInteger($total, 'Total inv&aacute;lido.');
+			if(empty($details))
+				throw new Exception('No hay ningun detalle.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo setData en Count con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mReason = $reason;
+		$this->_mTotal = $total;
+		$this->_mDetails = $details;
+	}
+	
+	/**
+	 * Adds a detail to the count.
+	 *
+	 * @param CountDetail $newDetail
+	 */
+	public function addDetail(CountDetail $newDetail){
+		$this->_mTotal += $newDetail->getQuantity();
+		
+		foreach($this->_mDetails as $detail)
+			if($detail->getProduct()->getId() == $newDetail->getProduct()->getId() && !$detail->isDeleted()){
+				$newDetail->increase($detail->getQuantity());
+				$detail->delete();
+			}
+			
+		$this->_mDetails[] = $newDetail;
+	}
+	
+	/**
+	 * Deletes the detail from the count.
+	 *
+	 * @param CountDetail $purgeDetail
+	 */
+	public function deleteDetail(CountDetail $purgeDetail){
+		$temp_details = array();
+		
+		foreach($this->_mDetails as &$detail)
+			if($detail->getProduct()->getId() != $purgeDetail->getProduct()->getId())
+				$temp_details[] = $detail;
+			else
+				if($detail->getStatus() == Persist::CREATED){
+					$temp_details[] = $detail;
+					$detail->delete();
+				}
+		
+		$this->_mDetails = $temp_details;
+	}
+	
+	/**
+	 * Saves the count's data in the database.
+	 *
+	 */
+	public function save(){
+		$this->validateMainProperties();
+		
+		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->_mId = $this->insert();
+			$this->_mStatus = Persist::CREATED;
+		}
+		else
+			$this->update();
+		
+		foreach($this->_mDetails as &$detail)
+			$detail->commit($this);
+	}
+	
+	/**
+	 * Returns an instance of a count.
+	 *
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @return Count
+	 */
+	static public function getInstance($id){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		return CountDAM::getInstance($id);
+	}
+	
+	/**
+	 * Deletes the count from the database.
+	 * 
+	 * Throws an exception due dependencies.
+	 * @param Count $obj
+	 * @throws Exception
+	 */
+	static public function delete(Count $obj){
+		self::validateObjectFromDatabase($obj);
+		if(!CountDAM::delete($obj))
+			throw new Exception('Conteo tiene dependencias y no se puede eliminar.');
+	}
+	
+	/**
+	 * Validates the count main properties.
+	 *
+	 * Reason must not be NULL and details must not be empty.
+	 */
+	protected function validateMainProperties(){
+		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
+		if(!$this->hasDetails())
+			throw new Exception('No hay ningun detalle.');
+	}
+	
+	/**
+	 * Inserts the count's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @return integer
+	 */
+	protected function insert(){
+		return CountDAM::insert($this);
+	}
+	
+	/**
+	 * Updates the count's data in the database.
+	 *
+	 */
+	protected function update(){
+		CountDAM::update($this);
+	}
+	
+	/**
+	 * Returns true if the count has any details. False if not.
+	 *
+	 * @return boolean
+	 */
+	private function hasDetails(){
+		if(empty($this->_mDetails))
+			return false;
+			
+		$count = count($this->_mDetails);
+		$deleted = 0;
+		
+		foreach($this->_mDetails as $detail)
+			if($detail->isDeleted())
+				$deleted++;
+				
+		if($deleted == $count)
+			return false;
+		else
+			return true;
 	}
 }
 ?>
