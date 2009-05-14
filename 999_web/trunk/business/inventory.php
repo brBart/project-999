@@ -772,4 +772,30 @@ class Count extends PersistObject{
 			return true;
 	}
 }
+
+
+/**
+ * Utility class for creating a comparison report.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
+class ComparisonEvent{
+	/**
+	 * Creates the comparison report in the database and returns the new created report's id.
+	 *
+	 * @param Count $count
+	 * @param string $reason
+	 * @param boolean $general
+	 * @return integer
+	 */
+	static public function apply(Count $count, $reason, $general = false){
+		Persist::validateObjectFromDatabase($count);
+		String::validateString($reason, 'Motivo inv&aacute;lido.');
+		
+		$date = date('d/m/Y');
+		$user = SessionHelper::getInstance()->getUser();
+		
+		return ComparisonDAM::insert($date, $user, $count, $reason, $general);
+	}
+}
 ?>
