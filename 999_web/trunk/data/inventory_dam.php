@@ -35,6 +35,20 @@ class ComparisonDAM{
 				return NULL;
 		}
 	}
+	
+	/**
+	 * Creates a comparison in the database and returns the new created comparison's id.
+	 *
+	 * @param string $date
+	 * @param UserAccount $user
+	 * @param Count $count
+	 * @param string $reason
+	 * @param boolean $general
+	 * @return integer
+	 */
+	static public function insert($date, UserAccount $user, Count $count, $reason, $general){
+		return 123;
+	}
 }
 
 
