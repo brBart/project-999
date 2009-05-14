@@ -456,7 +456,7 @@ class Count extends PersistObject{
 	private $_mDetails = array();
 	
 	/**
-	 * Holds the count's total.
+	 * Holds the count's total, the sum of all the details' quantities.
 	 *
 	 * @var integer
 	 */
@@ -637,13 +637,21 @@ class Count extends PersistObject{
 	public function addDetail(CountDetail $newDetail){
 		$this->_mTotal += $newDetail->getQuantity();
 		
-		foreach($this->_mDetails as $detail)
-			if($detail->getProduct()->getId() == $newDetail->getProduct()->getId() && !$detail->isDeleted()){
+		// For moving the modified detail to the last place.
+		$temp_details = array();
+		foreach($this->_mDetails as &$detail)
+			if($detail->getProduct()->getId() != $newDetail->getProduct()->getId())
+				$temp_details[] = $detail;
+			elseif($detail->_mStatus == Persist::CREATED){
 				$newDetail->increase($detail->getQuantity());
 				$detail->delete();
+				$temp_details[] = $detail;
 			}
+			else
+				$newDetail->increase($detail->getQuantity());
 			
-		$this->_mDetails[] = $newDetail;
+		$temp_details[] = $newDetail;
+		$this->_mDetails = $temp_details;
 	}
 	
 	/**
@@ -657,11 +665,15 @@ class Count extends PersistObject{
 		foreach($this->_mDetails as &$detail)
 			if($detail->getProduct()->getId() != $purgeDetail->getProduct()->getId())
 				$temp_details[] = $detail;
+			elseif($detail->getStatus() == Persist::CREATED){
+				// In case it was already deleted.
+				if(!$detail->isDeleted())
+					$this->_mTotal -= $detail->getQuantity();
+				$temp_details[] = $detail;
+				$detail->delete();
+			}
 			else
-				if($detail->getStatus() == Persist::CREATED){
-					$temp_details[] = $detail;
-					$detail->delete();
-				}
+				$this->_mTotal -= $detail->getQuantity();
 		
 		$this->_mDetails = $temp_details;
 	}
