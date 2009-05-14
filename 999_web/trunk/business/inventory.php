@@ -781,7 +781,8 @@ class Count extends PersistObject{
  */
 class ComparisonEvent{
 	/**
-	 * Creates the comparison report in the database and returns the new created report's id.
+	 * Creates the comparison report against the inventory in the database and returns the new created
+	 * report's id.
 	 *
 	 * @param Count $count
 	 * @param string $reason
@@ -796,6 +797,71 @@ class ComparisonEvent{
 		$user = SessionHelper::getInstance()->getUser();
 		
 		return ComparisonDAM::insert($date, $user, $count, $reason, $general);
+	}
+}
+
+
+/**
+ * Utility class for adding details to a count document through a text file.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
+class Parser{
+	/**
+	 * Parse the file located in the provided url and add the details to the provided count.
+	 *
+	 * @param Count $count
+	 * @param string $url
+	 * @throws Exception
+	 */
+	static public function parseFile(Count $count, $url){
+		if(!file_exists($url))
+			throw new Exception('Archivo no encontrado en: ' . $url);
+			
+		$data = file($url);
+		
+		if(empty($data))
+			throw new Exception('Archivo no tiene detalles.');
+		
+		$newDetails = array();
+		for($i = 0; $i < count($data); $i++){
+			$line = explode(',', $data[$i]);
+			
+			if(count($line) != 2)
+				throw new Exception('Formato inv&aacute;lido en linea: ' . ($i + 1));
+			
+			$detail[0] = (int)$line[0];
+			$detail[1] = (int)$line[1];
+ 			Number::validatePositiveInteger($detail[0], 'Id inv&aacute;lido en linea: ' . ($i + 1));
+			Number::validateUnsignedInteger($detail[1], 'Cantidad inv&aacute;lida en linea: ' . ($i + 1));
+			
+			$newDetails[] = $detail;
+		}
+		
+		self::addDetails($count, $newDetails);
+	}
+	
+	/**
+	 * Add all the provided array's items to the provided count as details.
+	 *
+	 * @param Count $count
+	 * @param array $newDetails
+	 * @throws Exception
+	 */
+	static private function addDetails(Count $count, $newDetails){
+		$details = array();
+		
+		for($i = 0; $i < count($newDetails); $i++){
+			$product = Product::getInstance($newDetails[$i][0]);
+			if(is_null($product))
+				throw new Exception('Codigo de producto no existe: ' . $newDetails[$i][0] . ' . Linea: ' .
+						($i + 1));
+						
+			$details[] = new CountDetail($product, $newDetails[$i][1]);
+		}
+		
+		foreach($details as $detail)
+			$count->addDetail($detail);
 	}
 }
 ?>
