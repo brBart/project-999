@@ -64,4 +64,67 @@ class CountDetailDAM{
 		// Code here...
 	}
 }
+
+
+/**
+ * Utility class for manipulate counts' data in the database.
+ * @package InventoryDAM
+ * @author Roberto Oliveros
+ */
+class CountDAM{
+	/**
+	 * Returns an instance of a count.
+	 *
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
+	 * @return Count
+	 */
+	static public function getInstance($id){
+		switch($id){
+			case 123:
+				$count = new Count($id, '01/04/2009', UserAccount::getInstance('roboli'), Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(125), 21, Persist::CREATED);
+				$count->setData('Los hay pues.', 21, $details);
+				return $count;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+	
+	/**
+	 * Inserts the count's data in the database.
+	 *
+	 * Returns the new created id from the database.
+	 * @param Count $obj
+	 * @return integer
+	 */
+	static public function insert(Count $obj){
+		return 123;
+	}
+	
+	/**
+	 * Updates the count's data in the database.
+	 *
+	 * @param Count $obj
+	 */
+	static public function update(Count $obj){
+		// Code here...
+	}
+	
+	/**
+	 * Deletes the count from the database.
+	 *
+	 * Returns true on success. Otherwise false due dependencies.
+	 * @param Count $obj
+	 * @return boolean
+	 */
+	static public function delete(Count $obj){
+		if($obj->getId() == 123)
+			return true;
+		else
+			return false;
+	}
+}
 ?>
