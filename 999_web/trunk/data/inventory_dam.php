@@ -141,4 +141,43 @@ class CountDAM{
 			return false;
 	}
 }
+
+
+/**
+ * Utility class for recolecting the necessary data from the database for printing a counting template.
+ * @package InventoryDAM
+ * @author Roberto Oliveros
+ */
+class CountingTemplateDAM{
+	/**
+	 * Returns an array with the necessary data for printing the template ordered by product name.
+	 *
+	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * @param boolean $general
+	 * @param Product $first
+	 * @param Product $last
+	 * @return array
+	 */
+	static public function getDataByProduct($general, Product $first = NULL, Product $last = NULL){
+		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
+				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
+				'name' => 'Racomin', 'packaging' => 'caja'));
+	}
+	
+	/**
+	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
+	 *
+	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * @param boolean $general
+	 * @param Manufacturer $first
+	 * @param Manufacturer $last
+	 * @return array
+	 */
+	static public function getDataByManufacturer($general, Manufacturer $first = NULL,
+			Manufacturer $last = NULL){
+		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
+				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
+				'name' => 'Racomin', 'packaging' => 'caja'));
+	}
+}
 ?>
