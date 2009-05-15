@@ -1,6 +1,6 @@
 <?php
 /**
- * Library with utility classes to accesing database tables.
+ * Library with utility classes to accessing database tables.
  * @package ListDAM
  * @author Roberto Oliveros
  */
