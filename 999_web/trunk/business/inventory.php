@@ -869,4 +869,57 @@ class Parser{
 			$count->addDetail($detail);
 	}
 }
+
+
+/**
+ * Class with the necessary data for printing a counting template.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
+class CountingTemplate{
+	/**
+	 * Returns an array with the necessary data for printing the template ordered by product name.
+	 *
+	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * @param boolean $general
+	 * @param Product $first
+	 * @param Product $last
+	 * @return array
+	 */
+	static public function getDataByProduct($general, Product $first = NULL, Product $last = NULL){
+		if(!$general && (is_null($first) || is_null($last)))
+			throw new Exception('Ingrese los campos requeridos.');
+		
+		if(!is_null($first))
+			Persist::validateObjectFromDatabase($first);
+			
+		if(!is_null($last))
+			Persist::validateObjectFromDatabase($last);
+		
+		return CountingTemplateDAM::getDataByProduct($general, $first, $last);
+	}
+	
+	/**
+	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
+	 *
+	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * @param boolean $general
+	 * @param Manufacturer $first
+	 * @param Manufacturer $last
+	 * @return array
+	 */
+	static public function getDataByManufacturer($general, Manufacturer $first = NULL,
+			Manufacturer $last = NULL){
+		if(!$general && (is_null($first) || is_null($last)))
+			throw new Exception('Ingrese los campos requeridos.');
+			
+		if(!is_null($first))
+			Persist::validateObjectFromDatabase($first);
+			
+		if(!is_null($last))
+			Persist::validateObjectFromDatabase($last);
+			
+		return CountingTemplateDAM::getDataByManufacturer($general, $first, $last);
+	}
+}
 ?>
