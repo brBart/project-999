@@ -6,6 +6,15 @@
  */
 
 /**
+ * For validation purposes.
+ */
+require_once('business/validator.php');
+/**
+ * For accessing the database.
+ */
+require_once('data/list_dam.php');
+
+/**
  * Defines the interface for the rest of the classes that extend it.
  * @package List
  * @author Roberto Oliveros
@@ -30,9 +39,10 @@ abstract class DataList{
  */
 class BankList extends DataList{
 	/**
-	 * Returns an array with the banks' names from the database.
+	 * Returns an array with the banks' ids and names from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values.
+	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
@@ -40,7 +50,7 @@ class BankList extends DataList{
 	 */
 	static public function getList($page = 0, &$total_pages = 0, &$total_items = 0){
 		if($page !== 0)
-			Number::validatePositiveInteger($page);
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
 		return BankListDAM::getList($page, $total_pages, $total_items);
 	}
