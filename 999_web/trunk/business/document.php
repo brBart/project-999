@@ -279,7 +279,8 @@ abstract class Document extends PersistDocument{
 	/**
 	 * Returns a document with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values.
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * argument is passed, all the details are returned.
 	 * @param integer $id
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
@@ -1635,8 +1636,9 @@ class Invoice extends Document{
 	/**
 	 * Returns an invoice with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database. 
+	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
+	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided
+	 * id in the database. 
 	 * @param integer $id
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
@@ -1979,8 +1981,9 @@ class PurchaseReturn extends Document{
 	/**
 	 * Returns a purchase return with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database. 
+	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
+	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
+	 * in the database. 
 	 * @param integer $id
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
@@ -2126,8 +2129,9 @@ class Shipment extends Document{
 	/**
 	 * Returns a shipment with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database. 
+	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
+	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
+	 * in the database. 
 	 * @param integer $id
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
@@ -2301,8 +2305,9 @@ class Receipt extends Document{
 	/**
 	 * Returns a receipt with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database. 
+	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
+	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
+	 * in the database. 
 	 * @param integer $id
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
@@ -2443,8 +2448,9 @@ class EntryIA extends AdjustmentDocument{
 	/**
 	 * Returns an entry inventory adjustment document with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database. 
+	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
+	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
+	 * in the database. 
 	 * @param integer $id
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
@@ -2498,8 +2504,9 @@ class WithdrawIA extends AdjustmentDocument{
 	/**
 	 * Returns a withdraw inventory adjustment document with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database. 
+	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
+	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
+	 * in the database. 
 	 * @param integer $id
 	 * @param integer &$total_pages
 	 * @param integer &$total_items

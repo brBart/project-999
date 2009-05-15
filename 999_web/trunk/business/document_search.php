@@ -15,14 +15,14 @@ require_once('business/validator.php');
 require_once('data/document_search_dam.php');
 
 /**
- * Defines common functionality for DocumentSearch derived classes.
+ * Defines the interface for DocumentSearch derived classes.
  * @package DocumentSearch
  * @author Roberto Oliveros
  *
  */
 abstract class DocumentSearch{
 	/**
-	 * Realizes a document search in the database.
+	 * Defines the method signature.
 	 *
 	 * Date format: 'dd/mm/yyyy'.
 	 * @param string $startDate
