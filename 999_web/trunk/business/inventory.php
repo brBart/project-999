@@ -830,6 +830,11 @@ class Parser{
 			if(count($line) != 2)
 				throw new Exception('Formato inv&aacute;lido en linea: ' . ($i + 1));
 			
+			if(!is_numeric(trim($line[0])))
+				throw new Exception('Valor no n&uacute;merico. Id inv&aacute;lido en linea: ' . ($i + 1));
+			if(!is_numeric(trim($line[1])))
+				throw new Exception('Valor no n&uacute;merico. Cantidad inv&aacute;lida en linea: ' . ($i + 1));
+			
 			$detail[0] = (int)$line[0];
 			$detail[1] = (int)$line[1];
  			Number::validatePositiveInteger($detail[0], 'Id inv&aacute;lido en linea: ' . ($i + 1));
