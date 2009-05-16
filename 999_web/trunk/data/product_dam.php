@@ -1143,4 +1143,24 @@ class ChangePriceLogDAM{
 		// Code here...
 	}
 }
+
+
+/**
+ * Utility class for accessing the database for searches.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ProductSearchDAM{
+	/**
+	 * Makes a search for a product in the database.
+	 *
+	 * The array returned contains the fields bar_code, name.
+	 * @param string $searchString
+	 * @return array
+	 */
+	static public function search($searchString){
+		return array(array('bar_code' => '3245325', 'name' => 'Aspirina Niños'), array('bar_code' => '3245325',
+				'name' => 'Aspirina Adultos'));
+	}
+}
 ?>
