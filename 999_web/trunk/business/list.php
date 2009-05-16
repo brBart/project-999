@@ -41,7 +41,7 @@ class BankList extends DataList{
 	/**
 	 * Returns an array with the banks' ids and names from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -66,7 +66,7 @@ class PendingDepositList extends DataList{
 	/**
 	 * Returns an array with the deposits' date, id, number, bank_account, bank and amount from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -91,7 +91,7 @@ class ManufacturerList extends DataList{
 	/**
 	 * Returns an array with the manufacturers' id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -116,7 +116,7 @@ class CorrelativeList extends DataList{
 	/**
 	 * Returns an array with the correlatives' serial_number and default flag from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -141,7 +141,7 @@ class BankAccountList extends DataList{
 	/**
 	 * Returns an array with the bank accounts' number and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -166,7 +166,7 @@ class UserAccountList extends DataList{
 	/**
 	 * Returns an array with the user accounts' username and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -191,7 +191,7 @@ class PaymentCardBrandList extends DataList{
 	/**
 	 * Returns an array with the payment card brands' id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -216,7 +216,7 @@ class ProductList extends DataList{
 	/**
 	 * Returns an array with the products' id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -241,7 +241,7 @@ class SupplierList extends DataList{
 	/**
 	 * Returns an array with the suppliers' id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -266,7 +266,7 @@ class RoleList extends DataList{
 	/**
 	 * Returns an array with the user roles' id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -291,7 +291,7 @@ class BranchList extends DataList{
 	/**
 	 * Returns an array with the branches' id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -316,7 +316,7 @@ class PaymentCardTypeList extends DataList{
 	/**
 	 * Returns an array with the payment card types' id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -339,9 +339,9 @@ class PaymentCardTypeList extends DataList{
  */
 class ShiftList extends DataList{
 	/**
-	 * Returns an array with the cash register shifts' id, name and time_table from the database.
+	 * Returns an array with the shifts' id, name and time_table from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
@@ -366,7 +366,7 @@ class UnitOfMeasureList extends DataList{
 	/**
 	 * Returns an array with the units' of measure id and name from the database.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. If no page
+	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
 	 * @param integer $page
 	 * @param integer &$total_pages
