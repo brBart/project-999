@@ -1524,4 +1524,24 @@ class ChangePriceLog{
 		ChangePriceLogDAM::write($date, $helper->getUser(), $product, $lastPrice, $newPrice);
 	}
 }
+
+
+/**
+ * Utility class for making product searches.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class ProductSearch{
+	/**
+	 * Returns an array with the results of the search.
+	 * 
+	 * The array contains the fields bar_code, name.
+	 * @param string $searchString
+	 * @return array
+	 */
+	static public function search($searchString){
+		String::validateString($searchString, 'Valor inv&aacute;lido.');
+		return ProductSearchDAM::search($searchString);
+	}
+}
 ?>
