@@ -1544,4 +1544,102 @@ class ProductSearch{
 		return ProductSearchDAM::search($searchString);
 	}
 }
+
+
+/**
+ * Utility for obtaining a list of products belonging to a specific manufacturer.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class ManufacturerProductList{
+	/**
+	 * Returns an array with the products' id and name that belongs to the provided manufacturer.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param Manufacturer $obj
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getList(Manufacturer $obj, $page = 1, &$total_pages = 0, &$total_items = 0){
+		Persist::validateObjectFromDatabase($obj);
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+		return ManufacturerProductListDAM::getList($obj, $page, $total_pages, $total_items);
+	}
+}
+
+
+/**
+ * Class for creating a kardex report.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class Kardex{
+	/**
+	 * Returns an array with the kardex details of the product provided.
+	 *
+	 * The array's fields are date, document, number, entry, withdraw and balance. The balance
+	 * argument returns it respective value. If no page argument or cero is passed all the details are
+	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param Product $product
+	 * @param integer &$balance
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getData(Product $product, &$balance, $page = 0, &$total_pages = 0,
+			&$total_items = 0){
+		Persist::validateObjectFromDatabase($product);
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
+			
+		return KardexDAM::getData($product, $balance, $page, $total_pages, $total_items);
+	}
+}
+
+
+/**
+ * Utility class for obtaining a list of bonuses.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class ProductBonusList{
+	/**
+	 * Returns an array containing the bonus details belonging to the provided product.
+	 *
+	 * The array's fields are id, quantity, percentage, created_date and expiration_date.
+	 * @param Product $product
+	 * @return array
+	 */
+	static public function getList(Product $product){
+		Persist::validateObjectFromDatabase($product);
+		return ProductBonusListDAM::getList($product);
+	}
+}
+
+
+/**
+ * Utility class for generating the report.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class NegativeBalanceProducts{
+	/**
+	 * Returns an array containging the data of the products which has a negative balance.
+	 *
+	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
+	 * and balance. The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getData($page = 0, &$total_pages = 0, &$total_items = 0){
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
+			return NegativeBalanceProductsDAM::getData($page, $total_pages, $total_items);
+	}
+}
 ?>
