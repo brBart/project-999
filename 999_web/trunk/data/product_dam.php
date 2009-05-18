@@ -1163,4 +1163,102 @@ class ProductSearchDAM{
 				'name' => 'Aspirina Adultos'));
 	}
 }
+
+
+/**
+ * Class for accessing database tables regarding manufacturers and products.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ManufacturerProductListDAM{
+	/**
+	 * Returns an array with the products' id and name that belongs to the provided manufacturer.
+	 *
+	 * @param Manufacturer $obj
+	 * @return array
+	 */
+	static public function getList(Manufacturer $obj, $page, &$total_pages, &$total_items){
+		$total_pages = 1;
+		$total_items = 2;
+		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
+	}
+}
+
+
+/**
+ * Class for creating a kardex report.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class KardexDAM{
+	/**
+	 * Returns an array with the kardex details of the product provided.
+	 *
+	 * The array's fields are date, document, number, entry, withdraw and balance. The balance
+	 * argument returns it respective value. If no page argument or cero is passed all the details are
+	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param Product $product
+	 * @param integer &$balance
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getData(Product $product, &$balance, $page, &$total_pages, &$total_items){
+		$balance = 30;
+		$total_pages = 1;
+		$total_items = 2;
+		return array(array('date' => '21/04/2009', 'document' => 'Factura', 'number' => 'A021-32442',
+				'entry' => 0, 'withdraw' => 5, 'balance' => 25), array('date' => '29/04/2009',
+				'document' => 'Recibo', 'number' => '98465', 'entry' => 10, 'withdraw' => 0, 'balance' => 35));
+	}
+}
+
+
+/**
+ * Utility class for obtaining a list of bonuses.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ProductBonusListDAM{
+	/**
+	 * Returns an array containing the bonus details belonging to the provided product.
+	 *
+	 * The array's fields are id, quantity, percentage, created_date and expiration_date.
+	 * @param Product $product
+	 * @return array
+	 */
+	static public function getList(Product $product){
+		return array(array('id' => 123, 'quantity' => 4, 'percentage' => 15, 'created_date' => '20/04/2009',
+				'expiration_date' => '10/10/2009'), array('id' => 124, 'quantity' => 8, 'percentage' => 25,
+				'created_date' => '30/04/2009', 'expiration_date' => '10/11/2009'));
+	}
+}
+
+
+/**
+ * Utility class for generating the report.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class NegativeBalanceProductsDAM{
+	/**
+	 * Returns an array containging the data of the products which has a negative balance.
+	 *
+	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
+	 * and balance. The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getData($page, &$total_pages, &$total_items){
+		$total_pages = 1;
+		$total_items = 2;
+		return array(array('bar_code' => '47349292', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
+				'packaging' => 'caja', 'general_quantity' => 5, 'lots_quantity' => 6, 'balance' => -1),
+				array('bar_code' => '17846291', 'manufacturer' => 'Mattel', 'name' => 'Barby',
+				'packaging' => 'caja', 'general_quantity' => 0, 'lots_quantity' => -1, 'balance' => -1));
+	}
+}
 ?>
