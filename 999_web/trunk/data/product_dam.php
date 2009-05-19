@@ -1311,4 +1311,25 @@ class SupplierProductListDAM{
 		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
 	}
 }
+
+
+/**
+ * Utility class for obtaining a list of reserves belonging to certain product.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ReserveListDAM{
+	/**
+	 * Returns an array containing the details of the reserves belonging to the provided product.
+	 *
+	 * The array's fields are id, date, username, lot_id and quantity.
+	 * @param Product $product
+	 * @return array
+	 */
+	static public function getList(Product $product){
+		return array(array('id' => 123, 'date' => '15/05/2009', 'username' => 'roboli', 'id' => '4321',
+				'quantity' => 2), array('id' => 129, 'date' => '15/05/2009', 'username' => 'roboli',
+				'id' => '4329', 'quantity' => 1));
+	}
+}
 ?>
