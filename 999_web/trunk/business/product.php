@@ -1625,21 +1625,50 @@ class ProductBonusList{
  * @package Product
  * @author Roberto Oliveros
  */
-class NegativeBalanceProducts{
+class NegativeBalanceProductList{
 	/**
 	 * Returns an array containging the data of the products which has a negative balance.
 	 *
 	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
-	 * and balance. The total_pages and total_items arguments are necessary to return their respective values.
+	 * and balance. If no page argument or cero is passed all the details are returned. The total_pages and
+	 * total_items arguments are necessary to return their respective values.
 	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
 	 * @return array
 	 */
-	static public function getData($page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function getList($page = 0, &$total_pages = 0, &$total_items = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
-			return NegativeBalanceProductsDAM::getData($page, $total_pages, $total_items);
+			return NegativeBalanceProductListDAM::getList($page, $total_pages, $total_items);
+	}
+}
+
+
+/**
+ * Utility class for creating the report.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class InactiveProductList{
+	/**
+	 * Returns an array with the details of the products which have not seen activity during the days provided.
+	 *
+	 * The array fields are bar_code, manufacturer, name, packaging, quantity, last_sale and sale_quantity. If
+	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values.
+	 * @param integer $days
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getList($days, $page = 0, &$total_pages = 0, &$total_items = 0){
+		Number::validatePositiveInteger($days, 'N&uacute;mero de dias inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return InactiveProductListDAM::getList($days, $page, $total_pages, $total_items);
 	}
 }
 ?>
