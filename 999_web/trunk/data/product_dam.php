@@ -1291,4 +1291,24 @@ class InactiveProductListDAM{
 				'packaging' => 'caja', 'quantity' => 12, 'last_sale' => '01/03/2009', 'sale_quantity' => 1));
 	}
 }
+
+
+/**
+ * Class for accessing database tables regarding suppliers and products.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class SupplierProductListDAM{
+	/**
+	 * Returns an array with the products' id and name that belongs to the provided supplier.
+	 *
+	 * @param Supplier $obj
+	 * @return array
+	 */
+	static public function getList(Supplier $obj, $page, &$total_pages, &$total_items){
+		$total_pages = 1;
+		$total_items = 2;
+		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
+	}
+}
 ?>
