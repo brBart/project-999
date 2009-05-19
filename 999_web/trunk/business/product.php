@@ -1695,4 +1695,24 @@ class SupplierProductList{
 		return SupplierProductListDAM::getList($obj, $page, $total_pages, $total_items);
 	}
 }
+
+
+/**
+ * Utility class for obtaining a list of reserves belonging to certain product.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class ReserveList{
+	/**
+	 * Returns an array containing the details of the reserves belonging to the provided product.
+	 *
+	 * The array's fields are id, date, username, lot_id and quantity.
+	 * @param Product $product
+	 * @return array
+	 */
+	static public function getList(Product $product){
+		Persist::validateObjectFromDatabase($product);
+		return ReserveListDAM::getList($product);
+	}
+}
 ?>
