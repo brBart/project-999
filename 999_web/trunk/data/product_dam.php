@@ -1241,24 +1241,54 @@ class ProductBonusListDAM{
  * @package ProductDAM
  * @author Roberto Oliveros
  */
-class NegativeBalanceProductsDAM{
+class NegativeBalanceProductListDAM{
 	/**
 	 * Returns an array containging the data of the products which has a negative balance.
 	 *
 	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
-	 * and balance. The total_pages and total_items arguments are necessary to return their respective values.
+	 * and balance. If no page argument or cero is passed all the details are returned. The total_pages and
+	 * total_items arguments are necessary to return their respective values.
 	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
 	 * @return array
 	 */
-	static public function getData($page, &$total_pages, &$total_items){
+	static public function getList($page, &$total_pages, &$total_items){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('bar_code' => '47349292', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
 				'packaging' => 'caja', 'general_quantity' => 5, 'lots_quantity' => 6, 'balance' => -1),
 				array('bar_code' => '17846291', 'manufacturer' => 'Mattel', 'name' => 'Barby',
 				'packaging' => 'caja', 'general_quantity' => 0, 'lots_quantity' => -1, 'balance' => -1));
+	}
+}
+
+
+/**
+ * Utility class for creating the report.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class InactiveProductListDAM{
+	/**
+	 * Returns an array with the details of the products which have not seen activity during the days provided.
+	 *
+	 * The array fields are bar_code, manufacturer, name, packaging, quantity, last_sale and sale_quantity. If
+	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values.
+	 * @param integer $days
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getList($days, $page = 0, &$total_pages = 0, &$total_items = 0){
+		$total_pages = 1;
+		$total_items = 2;
+		return array(array('bar_code' => '438929', 'manufacturer' => 'Mattel', 'name' => 'Caperi',
+				'packaging' => 'caja', 'quantity' => 6, 'last_sale' => '28/02/2009', 'sale_quantity' => 1),
+				array('bar_code' => '639922', 'manufacturer' => 'Chiplte', 'name' => 'Yeah',
+				'packaging' => 'caja', 'quantity' => 12, 'last_sale' => '01/03/2009', 'sale_quantity' => 1));
 	}
 }
 ?>
