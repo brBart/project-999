@@ -7,7 +7,7 @@
 
 /**
  * Class to perform a closing event in the system's data.
- * @package Various
+ * @package VariousDAM
  * @author Roberto Oliveros
  */
 class ClosingEventDAM{
