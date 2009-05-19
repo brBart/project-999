@@ -1671,4 +1671,28 @@ class InactiveProductList{
 		return InactiveProductListDAM::getList($days, $page, $total_pages, $total_items);
 	}
 }
+
+
+/**
+ * Utility for obtaining a list of products belonging to a specific supplier.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class SupplierProductList{
+	/**
+	 * Returns an array with the products' id and name that belongs to the provided supplier.
+	 *
+	 * The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param Supplier $obj
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getList(Supplier $obj, $page = 1, &$total_pages = 0, &$total_items = 0){
+		Persist::validateObjectFromDatabase($obj);
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+		return SupplierProductListDAM::getList($obj, $page, $total_pages, $total_items);
+	}
+}
 ?>
