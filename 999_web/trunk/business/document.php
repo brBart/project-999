@@ -1248,8 +1248,13 @@ class Vat{
 	 * @param float $percentage
 	 */
 	public function __construct($percentage){
-		Number::validatePositiveFloat($percentage,
-				'Interno: Llamando al metodo construct en Vat con datos erroneos! Porcentaje inv&aacute;lido.');
+		try{
+			Number::validatePositiveFloat($percentage, 'Porcentaje inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo construct en Vat con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
 		
 		$this->_mPercentage = $percentage;
 	}
