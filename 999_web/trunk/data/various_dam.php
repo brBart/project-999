@@ -20,4 +20,30 @@ class ClosingEventDAM{
 		// Code here...
 	}
 }
+
+
+/**
+ * Class for accessing database information regarding the company.
+ * @package VariousDAM
+ * @author Roberto Oliveros
+ */
+class CompanyDAM{
+	/**
+	 * Returns an instace of the company with database information.
+	 *
+	 * @return Company
+	 */
+	static public function getInstance(){
+		return new Company('1725045-5', 'Infodes');
+	}
+	
+	/**
+	 * Updates the company's data in the database.
+	 *
+	 * @param Company $obj
+	 */
+	static public function update(Company $obj){
+		// Code here...
+	}
+}
 ?>
