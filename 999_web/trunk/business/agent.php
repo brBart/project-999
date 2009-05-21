@@ -56,7 +56,7 @@ class Customer extends PersistObject{
 			$this->_mNit = CF;
 		else{
 			try{
-				$this->validateNit($nit);
+				String::validateNit($nit, 'Nit inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Customer con datos erroneos! ' .
 						$e->getMessage());
@@ -117,19 +117,6 @@ class Customer extends PersistObject{
 	}
 	
 	/**
-	 * Validates the customer's nit.
-	 * 
-	 * Verifies that the nit is set correctly, e.g. 1725045-5. Otherwise it throws an exception.
-	 * @param string $nit
-	 * @return void
-	 * @throws Exception
-	 */
-	public function validateNit($nit){
-		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
-			throw new Exception('Nit inv&aacute:lido. Formato debe ser ######-#');
-	}
-	
-	/**
 	 * Saves customer's data to the database.
 	 * 
 	 * If the object's status set to Persist::IN_PROGRESS the method insert()
@@ -166,7 +153,7 @@ class Customer extends PersistObject{
 			return new Customer(CF);   
 		}
 		else{
-			self::validateNit($nit);
+			String::validateNit($nit, 'Nit inv&accute;lido.');
 			$customer = CustomerDAM::getInstance($nit);
 			if(!$customer)
 				return new Customer($nit);
@@ -198,7 +185,7 @@ class Customer extends PersistObject{
 	 * @return void
 	 */
 	protected function validateMainProperties(){
-		$this->validateNit($this->_mNit);
+		String::validateNit($this->_mNit, 'Nit inv&aacute;lido.');
 		String::validateString($this->_mName, 'Nombre inv&aacute;lido.');
 	}
 	
@@ -326,7 +313,7 @@ abstract class Organization extends Identifier{
 	 * @param string $nit
 	 */
 	public function setNit($nit){
-		Customer::validateNit($nit);			
+		String::validateNit($nit, 'Nit inv&aacute;lido.');			
 		$this->_mNit = $nit;
 	}
 	
@@ -386,7 +373,7 @@ abstract class Organization extends Identifier{
 		parent::setData($name);
 		
 		try{
-			Customer::validateNit($nit);
+			String::validateNit($nit, 'Nit inv&aacute;lido.');
 			String::validateString($telephone, 'Telefono inv&aacute;lido.');
 			String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
 			$this->validateEmail($email);
@@ -421,7 +408,7 @@ abstract class Organization extends Identifier{
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
 		
-		Customer::validateNit($this->_mNit);
+		String::validateNit($this->_mNit, 'Nit inv&aacute;lido.');
 		String::validateString($this->_mTelephone, 'Telefono inv&aacute;lido.');
 		String::validateString($this->_mAddress, 'Direcci&oacute;n inv&aacute;lida.');
 	}
