@@ -178,5 +178,19 @@ class String{
 		if(empty($string))
 			throw new Exception($msg . ' Valor no puede ser vacio.');
 	}
+	
+	/**
+	 * Validates the provided nit.
+	 * 
+	 * Verifies that the nit is set correctly, e.g. 1725045-5. Otherwise it throws an exception. The msg
+	 * parameter is for displaying the desire message.
+	 * @param string $nit
+	 * @return void
+	 * @throws Exception
+	 */
+	static public function validateNit($nit, $msg){
+		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
+			throw new Exception($msg . ' Formato debe ser ######-#');
+	}
 }
 ?>
