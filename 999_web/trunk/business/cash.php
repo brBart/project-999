@@ -10,6 +10,10 @@
  */
 require_once('business/persist.php');
 /**
+ * For paging purposes.
+ */
+require_once('business/itemized.php');
+/**
  * Includes the CashDAM package.
  */
 require_once('data/cash_dam.php');
@@ -81,7 +85,7 @@ class Bank extends Identifier{
  * @package Cash
  * @author Roberto Oliveros
  */
-class Deposit extends PersistDocument{
+class Deposit extends PersistDocument implements Itemized{
 	/**
 	 * Statys type.
 	 * 
@@ -424,12 +428,12 @@ class Deposit extends PersistDocument{
 	 * @param integer $page
 	 * @return Invoice
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page = 0){
+	static public function getInstance($id, $page = 0, &$total_pages = 0, &$total_items = 0){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
 			
-		return DepositDAM::getInstance($id, $total_pages, $total_items, $page);
+		return DepositDAM::getInstance($id, $page, $total_pages, $total_items);
 	}
 	
 	/**
