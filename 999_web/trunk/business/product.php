@@ -1589,7 +1589,7 @@ class Kardex{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData(Product $product, &$balance, &$total_pages = 0,
+	static public function getList(Product $product, &$balance, &$total_pages = 0,
 			&$total_items = 0, $page = 0){
 		Persist::validateObjectFromDatabase($product);
 		if($page !== 0)
