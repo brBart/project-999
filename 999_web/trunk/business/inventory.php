@@ -10,6 +10,10 @@
  */
 require_once('business/persist.php');
 /**
+ * For paging purposes.
+ */
+require_once('business/itemized.php');
+/**
  * Library for accessing the database.
  */
 require_once('data/inventory_dam.php');
@@ -89,7 +93,7 @@ class ComparisonDetail{
  * @package Inventory
  * @author Roberto Oliveros
  */
-class Comparison{
+class Comparison implements Itemized{
 	/**
 	 * Holds the comparison's internal id.
 	 *
@@ -280,12 +284,12 @@ class Comparison{
 	 * @param integer $page
 	 * @return Comparison
 	 */
-	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getInstance($id, $page = 0, &$total_pages = 0, &$total_items = 0){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
 			
-		return ComparisonDAM::getInstance($id, $total_pages, $total_items, $page);
+		return ComparisonDAM::getInstance($id, $page, $total_pages, $total_items);
 	}
 }
 
@@ -418,7 +422,7 @@ class CountDetail extends Persist{
  * @package Inventory
  * @author Roberto Oliveros
  */
-class Count extends PersistObject{
+class Count extends PersistObject implements Itemized{
 	/**
 	 * Holds the count's internal id.
 	 *
