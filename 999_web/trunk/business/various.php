@@ -128,4 +128,64 @@ class Company{
 		return CompanyDAM::getInstance();
 	}
 }
+
+
+/**
+ * Utility class for obtaining the history of changes of prices on products.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class ChangePriceReport{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are date, username, bar_code, manufacturer, name, packaging, last_price and new_price.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getData($firstDate, $lastDate, $page = 0, &$total_pages = 0, &$total_items = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return ChangePriceReportDAM::getData($firstDate, $lastDate, $page, $total_pages, $total_items);
+	}
+}
+
+
+/**
+ * Utility class for obtaing the discount report data.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class DiscountReport{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are date, username, serial_number, number, subtotal, percentage, amount and total.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $page
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @return array
+	 */
+	static public function getData($firstDate, $lastDate, $page = 0, &$total_pages = 0, &$total_items = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return DiscountReportDAM::getData($firstDate, $lastDate, $page, $total_pages, $total_items);
+	}
+}
 ?>
