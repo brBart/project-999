@@ -14,6 +14,10 @@ require_once('business/persist.php');
  */
 require_once('business/validator.php');
 /**
+ * For paging purposes.
+ */
+require_once('business/itemized.php');
+/**
  * For accessing the database.
  */
 require_once('data/document_dam.php');
@@ -23,7 +27,7 @@ require_once('data/document_dam.php');
  * @package Document
  * @author Roberto Oliveros
  */
-abstract class Document extends PersistDocument{
+abstract class Document extends PersistDocument implements Itemized{
 	/**
 	 * Holds the date in which the document was created.
 	 *
