@@ -53,7 +53,7 @@ class CompanyDAM{
  * @package VariousDAM
  * @author Roberto Oliveros
  */
-class ChangePriceReportDAM{
+class ChangePriceListDAM{
 	/**
 	 * Retuns an array with the report information.
 	 *
@@ -67,7 +67,7 @@ class ChangePriceReportDAM{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, &$total_pages, &$total_items, $page){
+	static public function getList($firstDate, $lastDate, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('date' => '21/04/2009', 'username' => 'roboli', 'bar_code' => '32532',
@@ -84,7 +84,7 @@ class ChangePriceReportDAM{
  * @package VariousDAM
  * @author Roberto Oliveros
  */
-class DiscountReportDAM{
+class DiscountListDAM{
 	/**
 	 * Retuns an array with the report information.
 	 *
@@ -98,7 +98,7 @@ class DiscountReportDAM{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, &$total_pages, &$total_items, $page){
+	static public function getList($firstDate, $lastDate, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('date' => '01/05/2009', 'username' => 'roboli', 'serial_number' => 'A021',
