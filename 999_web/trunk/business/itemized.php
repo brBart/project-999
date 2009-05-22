@@ -41,7 +41,12 @@ class DetailsPrinter{
 		$obj_details = $obj->getDetails();
 		$details = array();
 		
+		// If there are no details.
+		if(empty($obj_details))
+			return $details;
+		
 		if($page == 0)
+			// Return all the details available.
 			foreach($obj_details as $detail)
 				$details[] = $detail->show();
 		else{
@@ -58,6 +63,8 @@ class DetailsPrinter{
 			for($i = $first_item; $i <= $last_item; $i++)
 				$details[] = $obj_details[$i]->show();
 		}
+		
+		return $details;
 	}
 }
 ?>
