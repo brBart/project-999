@@ -135,7 +135,7 @@ class Company{
  * @package Various
  * @author Roberto Oliveros
  */
-class ChangePriceReport{
+class ChangePriceList{
 	/**
 	 * Retuns an array with the report information.
 	 *
@@ -149,13 +149,13 @@ class ChangePriceReport{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return ChangePriceReportDAM::getData($firstDate, $lastDate, $total_pages, $total_items, $page);
+		return ChangePriceListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
 
@@ -165,7 +165,7 @@ class ChangePriceReport{
  * @package Various
  * @author Roberto Oliveros
  */
-class DiscountReport{
+class DiscountList{
 	/**
 	 * Retuns an array with the report information.
 	 *
@@ -179,13 +179,13 @@ class DiscountReport{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return DiscountReportDAM::getData($firstDate, $lastDate, $total_pages, $total_items, $page);
+		return DiscountListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
 ?>
