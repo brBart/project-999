@@ -61,7 +61,7 @@ class DetailsPrinter{
 			else
 				$last_item = $first_item + ITEMS_PER_PAGE;
 				
-			for($i = $first_item; $i <= $last_item; $i++)
+			for($i = $first_item; $i < $last_item; $i++)
 				$details[] = $obj_details[$i]->show();
 		}
 		
