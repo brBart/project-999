@@ -555,6 +555,25 @@ class ReceiptDAM{
 				return $receipt;
 				break;
 				
+			case 124:
+				$receipt = new Receipt('15/05/2009', UserAccount::getInstance('roboli'), $id,
+						PersistDocument::CREATED);
+				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
+				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
+				$lot = new Lot(Product::getInstance(124), 10, 8.00, '10/12/2009');
+				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
+				$lot = new Lot(Product::getInstance(125), 10, 8.00, '10/12/2009');
+				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
+				$lot = new Lot(Product::getInstance(123), 10, 8.00, '01/02/2010');
+				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
+				$lot = new Lot(Product::getInstance(125), 10, 8.00, '01/02/2010');
+				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
+				$receipt->setData(Supplier::getInstance(123), '8289', 39.50, $details);
+				$total_pages = 1;
+				$total_items = 5;
+				return $receipt;
+				break;
+				
 			default:
 				return NULL;
 		}

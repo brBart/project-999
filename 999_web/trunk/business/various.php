@@ -144,18 +144,18 @@ class ChangePriceReport{
 	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
 	 * @param string $lastDate
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, $page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function getData($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return ChangePriceReportDAM::getData($firstDate, $lastDate, $page, $total_pages, $total_items);
+		return ChangePriceReportDAM::getData($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
 
@@ -174,18 +174,18 @@ class DiscountReport{
 	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
 	 * @param string $lastDate
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, $page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function getData($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return DiscountReportDAM::getData($firstDate, $lastDate, $page, $total_pages, $total_items);
+		return DiscountReportDAM::getData($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
 ?>

@@ -1557,15 +1557,15 @@ class ManufacturerProductList{
 	 *
 	 * The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Manufacturer $obj
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Manufacturer $obj, $page = 1, &$total_pages = 0, &$total_items = 0){
+	static public function getList(Manufacturer $obj, &$total_pages = 0, &$total_items = 0, $page = 1){
 		Persist::validateObjectFromDatabase($obj);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return ManufacturerProductListDAM::getList($obj, $page, $total_pages, $total_items);
+		return ManufacturerProductListDAM::getList($obj, $total_pages, $total_items, $page);
 	}
 }
 
@@ -1584,18 +1584,18 @@ class Kardex{
 	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Product $product
 	 * @param integer &$balance
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData(Product $product, &$balance, $page = 0, &$total_pages = 0,
-			&$total_items = 0){
+	static public function getData(Product $product, &$balance, &$total_pages = 0,
+			&$total_items = 0, $page = 0){
 		Persist::validateObjectFromDatabase($product);
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
 			
-		return KardexDAM::getData($product, $balance, $page, $total_pages, $total_items);
+		return KardexDAM::getData($product, $balance, $total_pages, $total_items, $page);
 	}
 }
 
@@ -1632,15 +1632,15 @@ class NegativeBalanceProductList{
 	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
 	 * and balance. If no page argument or cero is passed all the details are returned. The total_pages and
 	 * total_items arguments are necessary to return their respective values.
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
-			return NegativeBalanceProductListDAM::getList($page, $total_pages, $total_items);
+			return NegativeBalanceProductListDAM::getList($total_pages, $total_items, $page);
 	}
 }
 
@@ -1658,17 +1658,17 @@ class InactiveProductList{
 	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values.
 	 * @param integer $days
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($days, $page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function getList($days, &$total_pages = 0, &$total_items = 0, $page = 0){
 		Number::validatePositiveInteger($days, 'N&uacute;mero de dias inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return InactiveProductListDAM::getList($days, $page, $total_pages, $total_items);
+		return InactiveProductListDAM::getList($days, $total_pages, $total_items, $page);
 	}
 }
 
@@ -1684,15 +1684,15 @@ class SupplierProductList{
 	 *
 	 * The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Supplier $obj
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Supplier $obj, $page = 1, &$total_pages = 0, &$total_items = 0){
+	static public function getList(Supplier $obj, &$total_pages = 0, &$total_items = 0, $page = 1){
 		Persist::validateObjectFromDatabase($obj);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return SupplierProductListDAM::getList($obj, $page, $total_pages, $total_items);
+		return SupplierProductListDAM::getList($obj, $total_pages, $total_items, $page);
 	}
 }
 

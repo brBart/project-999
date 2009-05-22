@@ -30,11 +30,12 @@ class DetailsPrinter{
 	 * If no page argument or cero is passed all the details are returned. The total_pages and
 	 * total_items arguments are necessary to return their respective values.
 	 * @param Itemized $obj
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
 	 */
-	static public function showPage(Itemized $obj, $page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function showPage(Itemized $obj, &$total_pages = 0, &$total_items = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		

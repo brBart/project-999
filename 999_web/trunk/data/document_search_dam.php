@@ -22,7 +22,7 @@ class DepositSearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -62,7 +62,7 @@ class ComparisonSearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -102,7 +102,7 @@ class CountSearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -142,7 +142,7 @@ class PurchaseReturnSearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -182,7 +182,7 @@ class ShipmentSearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -222,7 +222,7 @@ class InvoiceSearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -262,7 +262,7 @@ class ReceiptSearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -302,7 +302,7 @@ class EntryIASearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){
@@ -342,7 +342,7 @@ class WithdrawIASearchDAM{
 	 * @param integer $totaItems
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page, &$totalPages, &$totaItems){
+	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$data_array = array();
 		
 		if($page == 1){

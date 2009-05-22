@@ -684,7 +684,7 @@ class DepositDAM{
 	 * @param integer $page
 	 * @return Deposit
 	 */
-	static public function getInstance($id, $page, &$total_pages, &$total_items){
+	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
 				$deposit = new Deposit(CashRegister::getInstance(123), '12/03/2009',

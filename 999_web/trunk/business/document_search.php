@@ -27,13 +27,12 @@ abstract class DocumentSearch{
 	 * Date format: 'dd/mm/yyyy'.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	abstract static public function search($startDate, $endDate, $page = 1,
-			&$totalPages = 0, &$totalItems = 0);
+	abstract static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1);
 }
 
 
@@ -53,16 +52,16 @@ class DepositSearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return DepositSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return DepositSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -82,16 +81,16 @@ class ComparisonSearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return ComparisonSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return ComparisonSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -111,16 +110,16 @@ class CountSearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return CountSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return CountSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -140,16 +139,16 @@ class PurchaseReturnSearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return PurchaseReturnSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return PurchaseReturnSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -169,16 +168,16 @@ class ShipmentSearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return ShipmentSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return ShipmentSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -198,16 +197,16 @@ class InvoiceSearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return InvoiceSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return InvoiceSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -227,16 +226,16 @@ class ReceiptSearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return ReceiptSearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return ReceiptSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -256,16 +255,16 @@ class EntryIASearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return EntryIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return EntryIASearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -285,16 +284,16 @@ class WithdrawIASearch extends DocumentSearch{
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
-	 * @param integer $page
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, $page = 1, &$totalPages = 0, &$totalItems = 0){
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return WithdrawIASearchDAM::search($startDate, $endDate, $page, $totalPages, $totalItems);
+		return WithdrawIASearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 }
 ?>

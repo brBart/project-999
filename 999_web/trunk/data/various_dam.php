@@ -62,12 +62,12 @@ class ChangePriceReportDAM{
 	 * arguments are necessary to return their respective values.
 	 * @param string $firstDate
 	 * @param string $lastDate
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, $page, &$total_pages, &$total_items){
+	static public function getData($firstDate, $lastDate, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('date' => '21/04/2009', 'username' => 'roboli', 'bar_code' => '32532',
@@ -93,12 +93,12 @@ class DiscountReportDAM{
 	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
 	 * @param string $lastDate
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData($firstDate, $lastDate, $page, &$total_pages, &$total_items){
+	static public function getData($firstDate, $lastDate, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('date' => '01/05/2009', 'username' => 'roboli', 'serial_number' => 'A021',

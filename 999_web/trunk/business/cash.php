@@ -428,12 +428,12 @@ class Deposit extends PersistDocument implements Itemized{
 	 * @param integer $page
 	 * @return Invoice
 	 */
-	static public function getInstance($id, $page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
 			
-		return DepositDAM::getInstance($id, $page, $total_pages, $total_items);
+		return DepositDAM::getInstance($id, $total_pages, $total_items, $page);
 	}
 	
 	/**

@@ -1175,9 +1175,12 @@ class ManufacturerProductListDAM{
 	 * Returns an array with the products' id and name that belongs to the provided manufacturer.
 	 *
 	 * @param Manufacturer $obj
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Manufacturer $obj, $page, &$total_pages, &$total_items){
+	static public function getList(Manufacturer $obj, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
@@ -1199,12 +1202,12 @@ class KardexDAM{
 	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Product $product
 	 * @param integer &$balance
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData(Product $product, &$balance, $page, &$total_pages, &$total_items){
+	static public function getData(Product $product, &$balance, &$total_pages, &$total_items, $page){
 		$balance = 30;
 		$total_pages = 1;
 		$total_items = 2;
@@ -1248,12 +1251,12 @@ class NegativeBalanceProductListDAM{
 	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
 	 * and balance. If no page argument or cero is passed all the details are returned. The total_pages and
 	 * total_items arguments are necessary to return their respective values.
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($page, &$total_pages, &$total_items){
+	static public function getList(&$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('bar_code' => '47349292', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
@@ -1277,12 +1280,12 @@ class InactiveProductListDAM{
 	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values.
 	 * @param integer $days
-	 * @param integer $page
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($days, $page = 0, &$total_pages = 0, &$total_items = 0){
+	static public function getList($days, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('bar_code' => '438929', 'manufacturer' => 'Mattel', 'name' => 'Caperi',
@@ -1303,9 +1306,12 @@ class SupplierProductListDAM{
 	 * Returns an array with the products' id and name that belongs to the provided supplier.
 	 *
 	 * @param Supplier $obj
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Supplier $obj, $page, &$total_pages, &$total_items){
+	static public function getList(Supplier $obj, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
