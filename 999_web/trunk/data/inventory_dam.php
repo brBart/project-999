@@ -102,6 +102,21 @@ class CountDAM{
 				return $count;
 				break;
 				
+			case 124:
+				$count = new Count($id, '11/05/2009', UserAccount::getInstance('roboli'), Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(125), 21, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(123), 21, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(124), 21, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(125), 2, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(123), 2, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(124), 2, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(125), 12, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(123), 12, Persist::CREATED);
+				$details[] = new CountDetail(Product::getInstance(124), 12, Persist::CREATED);
+				$count->setData('Siempre hay.', 21, $details);
+				return $count;
+				break;
+				
 			default:
 				return NULL;
 		}
