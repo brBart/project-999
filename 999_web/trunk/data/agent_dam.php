@@ -6,6 +6,11 @@
  */
 
 /**
+ * For accessing the database.
+ */
+require_once('data/database_handler.php');
+
+/**
  * Class that provides access to the database.
  * @package AgentDAM
  * @author Roberto Oliveros
@@ -18,9 +23,13 @@ class CustomerDAM{
 	 * @return Customer
 	 */
 	static public function getInstance($nit){
-		if($nit == '1725045-5'){
-			$customer = new Customer('1725045-5', PersistObject::CREATED);
-			$customer->setData('Infodes');
+		$sql = 'CALL customer_get(:nit)';
+		$params = array(':nit' => $nit);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$customer = new Customer($result['nit'], 1);
+			$customer->setData($result['name']);
 			return $customer;
 		}
 		else
@@ -34,7 +43,11 @@ class CustomerDAM{
 	 * @return boolean
 	 */
 	static public function exist($nit){
-		if($nit == '1725045-5')
+		$sql = 'CALL customer_exists(:nit)';
+		$params = array(':nit' => $nit);
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		if($result > 0)
 			return true;
 		else
 			return false;
@@ -44,20 +57,22 @@ class CustomerDAM{
 	 * Insert Customer's data to the database.
 	 *
 	 * @param Customer $customer
-	 * @return void
 	 */
 	static public function insert(Customer $customer){
-		// Code here...
+		$sql = 'CALL customer_insert(:nit, :name)';
+		$params = array(':nit' => $customer->getNit(), ':name' => $customer->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
 	 * Update Customer's data in the database.
 	 *
 	 * @param Customer $customer
-	 * @return void
 	 */
 	static public function update(Customer $customer){
-		// Code here...
+		$sql = 'CALL customer_update(:nit, :name)';
+		$params = array(':nit' => $customer->getNit(), ':name' => $customer->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
