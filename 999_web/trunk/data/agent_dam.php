@@ -17,7 +17,7 @@ require_once('data/database_handler.php');
  */
 class CustomerDAM{
 	/**
-	 * Returns Customer instance object if a match for the nit providad was found in database. NULL if not.
+	 * Returns customer instance object if a match for the nit providad was found in database. NULL if not.
 	 *
 	 * @param string $nit
 	 * @return Customer
@@ -37,7 +37,7 @@ class CustomerDAM{
 	}
 	
 	/**
-	 * Returns true or false depending if a Customer already has the provided nit in the database.
+	 * Returns true or false depending if a customer already has the provided nit in the database.
 	 *
 	 * @param string $nit
 	 * @return boolean
@@ -54,7 +54,7 @@ class CustomerDAM{
 	}
 	
 	/**
-	 * Insert Customer's data to the database.
+	 * Insert customer's data to the database.
 	 *
 	 * @param Customer $customer
 	 */
@@ -65,7 +65,7 @@ class CustomerDAM{
 	}
 	
 	/**
-	 * Update Customer's data in the database.
+	 * Update customer's data in the database.
 	 *
 	 * @param Customer $customer
 	 */
@@ -84,8 +84,6 @@ class CustomerDAM{
  *
  */
 class SupplierDAM{
-	static private $_mName = 'Jose Gil';
-	
 	/**
 	 * Returns a Supplier if founds an id match in the database, otherwise returns NULL.
 	 *
@@ -114,26 +112,36 @@ class SupplierDAM{
 	}
 	
 	/**
-	 * Update Supplier's data in the database.
+	 * Update supplier's data in the database.
 	 *
 	 * @param Supplier $supplier
-	 * @return void
 	 */
 	static public function update(Supplier $supplier){
-		self::$_mName = $supplier->getName();
+		$sql = 'CALL supplier_update(:supplier_id, :name, :nit, :telephone, :address, :email, :contact)';
+		$params = array(':supplier_id' => $supplier->getId(), ':name' => $supplier->getName(),
+				':nit' => $supplier->getNit(), ':telephone' => $supplier->getTelephone(),
+				':address' => $supplier->getAddress(), ':email' => $supplier->getEmail(),
+				':contact' => $supplier->getContact());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
-	 * Deletes Supplier from database.
+	 * Deletes supplier from database.
 	 *
 	 * @param Supplier $supplier
 	 * @return boolean
 	 */
 	static public function delete(Supplier $supplier){
-		if($supplier->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL supplier_dependencies(:supplier_id)';
+		$params = array(':supplier_id' => $supplier->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the tables product_supplier, shipment and purchase_return.
+		if($result) return false;
+		
+		$sql = 'CALL supplier_delete(:supplier_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 

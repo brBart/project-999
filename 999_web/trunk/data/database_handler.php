@@ -1,6 +1,8 @@
 <?php
 /**
  * Library class with utility classes for accessing the database.
+ * @package DatabaseHandler
+ * @author Roberto Oliveros (With help of the PHP E-Commerce authors).
  */
 
 /**
