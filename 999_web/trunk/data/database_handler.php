@@ -163,7 +163,7 @@ class DatabaseHandler{
 	 * @return PDO
 	 */
 	static private function getHandler(){
-		if(self::$_mHandler == NULL){
+		if(is_null(self::$_mHandler)){
 			try{
 				self::$_mHandler = new PDO(PDO_DSN, DB_USERNAME, DB_PASSWORD,
 						array(PDO::ATTR_PERSISTENT => DB_PERSISTENCY));
