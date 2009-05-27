@@ -369,14 +369,15 @@ abstract class Organization extends Identifier{
 	 * @param string $contact
 	 * @throws Exception
 	 */
-	public function setData($nit, $name, $telephone, $address, $email, $contact){
+	public function setData($nit, $name, $telephone, $address, $email = NULL, $contact = NULL){
 		parent::setData($name);
 		
 		try{
 			String::validateNit($nit, 'Nit inv&aacute;lido.');
 			String::validateString($telephone, 'Telefono inv&aacute;lido.');
 			String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
-			$this->validateEmail($email);
+			if(!is_null($email))
+				$this->validateEmail($email);
 		} catch(Exception $e){
 			$et = new Exception('Interno: LLamando al metodo setData en Organization con datos erroneos! ' .
 					$e->getMessage());
@@ -460,7 +461,8 @@ class Supplier extends Organization{
 	static public function delete(Supplier $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!SupplierDAM::delete($obj))
-			throw new Exception('Proveedor tiene dependencias y no se puede eliminar.');
+			throw new Exception('Proveedor tiene dependencias (recibos, devoluciones o productos) y no se ' .
+					'puede eliminar.');
 	}
 	
 	/**
