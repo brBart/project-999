@@ -343,8 +343,10 @@ abstract class Organization extends Identifier{
 	 * @param string $email
 	 */
 	public function setEmail($email){
-		$this->validateEmail($email);
-		$this->_mEmail = $email;
+		if(!empty($email)){
+			$this->validateEmail($email);
+			$this->_mEmail = $email;
+		}
 	}
 	
 	/**
@@ -423,11 +425,9 @@ abstract class Organization extends Identifier{
 	 * @throws Exception
 	 */
 	private function validateEmail($email){
-		if(!empty($email)){
-			$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
-			if(!preg_match($pattern, $email))
-				throw new Exception('Email inv&aacute;lido. Ejemplo: fulano@dominio.com');
-		}
+		$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
+		if(!preg_match($pattern, $email))
+			throw new Exception('Email inv&aacute;lido. Ejemplo: fulano@dominio.com');
 	}
 }
 
