@@ -85,16 +85,20 @@ class CustomerDAM{
  */
 class SupplierDAM{
 	/**
-	 * Returns a Supplier if founds an id match in the database, otherwise returns NULL.
+	 * Returns a supplier if founds an id match in the database, otherwise returns NULL.
 	 *
 	 * @param integer $id
 	 * @return Supplier
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$supplier = new Supplier(123, PersistObject::CREATED);
-			$supplier->setData('350682-7', self::$_mName, '24129999', '3a calle 7-32 z.1',
-					'info@josegil.net', 'Roberto');
+		$sql = 'CALL supplier_get(:supplier_id)';
+		$params = array(':supplier_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$supplier = new Supplier($result['supplier_id'], 1);
+			$supplier->setData($result['nit'], $result['name'], $result['telephone'], $result['address'],
+					$result['email'], $result['contact']);
 			return $supplier;
 		}
 		else
@@ -102,13 +106,21 @@ class SupplierDAM{
 	}
 	
 	/**
-	 * Insert Supplier in the database.
+	 * Insert supplier in the database.
 	 *
+	 * Returns the last created id from the database.
 	 * @param Supplier $supplier
-	 * @return void
+	 * @return integer
 	 */
 	static public function insert(Supplier $supplier){
-		return 123;
+		$sql = 'CALL supplier_insert(:name, :nit, :telephone, :address, :email, :contact)';
+		$params = array(':name' => $supplier->getName(), ':nit' => $supplier->getNit(),
+				':telephone' => $supplier->getTelephone(), ':address' => $supplier->getAddress(),
+				':email' => $supplier->getEmail(), ':contact' => $supplier->getContact());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -136,7 +148,7 @@ class SupplierDAM{
 		$params = array(':supplier_id' => $supplier->getId());
 		$result = DatabaseHandler::getOne($sql, $params);
 		
-		// If there are dependencies in the tables product_supplier, shipment and purchase_return.
+		// If there are dependencies in the tables product_supplier, receipt and purchase_return.
 		if($result) return false;
 		
 		$sql = 'CALL supplier_delete(:supplier_id)';
