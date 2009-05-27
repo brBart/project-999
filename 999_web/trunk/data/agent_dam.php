@@ -96,7 +96,7 @@ class SupplierDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$supplier = new Supplier($result['supplier_id'], 1);
+			$supplier = new Supplier((int)$result['supplier_id'], 1);
 			$supplier->setData($result['nit'], $result['name'], $result['telephone'], $result['address'],
 					$result['email'], $result['contact']);
 			return $supplier;
