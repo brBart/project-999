@@ -48,7 +48,7 @@ class DepositSearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -77,7 +77,7 @@ class ComparisonSearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -106,7 +106,7 @@ class CountSearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -135,7 +135,7 @@ class PurchaseReturnSearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -164,7 +164,7 @@ class ShipmentSearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -193,7 +193,7 @@ class InvoiceSearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -251,7 +251,7 @@ class EntryIASearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -280,7 +280,7 @@ class WithdrawIASearch extends DocumentSearch{
 	 * 
 	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
