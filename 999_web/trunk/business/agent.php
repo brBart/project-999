@@ -513,7 +513,7 @@ class Branch extends Organization{
 	static public function delete(Branch $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!BranchDAM::delete($obj))
-			throw new Exception('Sucursal tiene dependencias y no se puede eliminar.');
+			throw new Exception('Sucursal tiene dependencias (envios) y no se puede eliminar.');
 	}
 	
 	/**
