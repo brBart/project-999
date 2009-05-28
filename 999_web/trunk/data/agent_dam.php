@@ -140,6 +140,7 @@ class SupplierDAM{
 	/**
 	 * Deletes supplier from database.
 	 *
+	 * Returns true on success, otherwise it has dependencies and returns false.
 	 * @param Supplier $supplier
 	 * @return boolean
 	 */
@@ -164,19 +165,21 @@ class SupplierDAM{
  * @author Roberto Oliveros
  */
 class BranchDAM{
-	static private $_mName = 'JG Jutiapa';
-	
 	/**
-	 * Returns a Branch if it founds an id match in the database. Otherwise returns NULL.
+	 * Returns a branch if it founds an id match in the database. Otherwise returns NULL.
 	 *
 	 * @param integer $id
 	 * @return Branch
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$branch = new Branch(123, PersistObject::CREATED);
-			$branch->setData('350682-7', self::$_mName, '78123456', 'Mercado central.',
-					'jutiapa@josegil.net', 'Idania');
+		$sql = 'CALL branch_get(:branch_id)';
+		$params = array(':branch_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$branch = new Branch((int)$result['branch_id'], 1);
+			$branch->setData($result['nit'], $result['name'], $result['telephone'], $result['address'],
+					$result['email'], $result['contact']);
 			return $branch;
 		}
 		else
@@ -184,37 +187,55 @@ class BranchDAM{
 	}
 	
 	/**
-	 * Inserts Branch into the database.
+	 * Inserts branch into the database.
 	 *
+	 * Returns the last created id from the database.
 	 * @param Branch $branch
-	 * @return void
+	 * @return integer
 	 */
 	static public function insert(Branch $branch){
-		return 123;
+		$sql = 'CALL branch_insert(:name, :nit, :telephone, :address, :email, :contact)';
+		$params = array(':name' => $branch->getName(), ':nit' => $branch->getNit(),
+				':telephone' => $branch->getTelephone(), ':address' => $branch->getAddress(),
+				':email' => $branch->getEmail(), ':contact' => $branch->getContact());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return DatabaseHandler::getOne($sql);
 	}
 	
 	/**
-	 * Updates Branch's data in the database.
+	 * Updates branch's data in the database.
 	 *
 	 * @param Branch $branch
-	 * @return void
 	 */
 	static public function update(Branch $branch){
-		self::$_mName = $branch->getName();
+		$sql = 'CALL branch_update(:branch_id, :name, :nit, :telephone, :address, :email, :contact)';
+		$params = array(':branch_id' => $branch->getId(), ':name' => $branch->getName(),
+				':nit' => $branch->getNit(), ':telephone' => $branch->getTelephone(),
+				':address' => $branch->getAddress(), ':email' => $branch->getEmail(),
+				':contact' => $branch->getContact());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
-	 * Deletes Branch from the database. Returns true on success, otherwise it has dependencies and returns
-	 * false.
+	 * Deletes branch from the database.
 	 *
+	 * Returns true on success, otherwise it has dependencies and returns false.
 	 * @param Branch $branch
 	 * @return boolean
 	 */
 	static public function delete(Branch $branch){
-		if($branch->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL branch_dependencies(:branch_id)';
+		$params = array(':branch_id' => $branch->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the shipment table.
+		if($result) return false;
+		
+		$sql = 'CALL branch_delete(:branch_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 ?>
