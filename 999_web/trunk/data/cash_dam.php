@@ -667,7 +667,9 @@ class DepositDAM{
 	 * @param Deposit $obj
 	 */
 	static public function confirm(Deposit $obj){
-		// Code here...
+		$sql = 'CALL deposit_confirm(:deposit_id)';
+		$params = array(':deposit_id' => $obj->getId());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -693,6 +695,7 @@ class DepositDAM{
 		$sql = 'CALL deposit_cancel(:deposit_id, :username, :date)';
 		$params = array(':deposit_id' => $deposit->getId(), ':username' => $user->getUserName(),
 				':date' => $date);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
