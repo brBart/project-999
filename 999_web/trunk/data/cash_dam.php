@@ -6,23 +6,30 @@
  */
 
 /**
+ * For accessing the database.
+ */
+require_once('data/database_handler.php');
+
+/**
  * Defines functionality for accessing the bank's database tables.
  * @package CashDAM
  * @author Roberto Oliveros
  */
 class BankDAM{
-	static private $_mName = 'GyT Continental';
-	
 	/**
-	 * Returns a Bank if it founds an id match in the database. Otherwise returns NULL.
+	 * Returns a bank if it founds an id match in the database. Otherwise returns NULL.
 	 *
 	 * @param integer $id
 	 * @return Bank
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$bank = new Bank(123, PersistObject::CREATED);
-			$bank->setData(self::$_mName);
+		$sql = 'CALL bank_get(:bank_id)';
+		$params = array(':bank_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$bank = new Bank((int)$result['bank_id'], 1);
+			$bank->setData($result['name']);
 			return $bank;
 		}
 		else
@@ -30,37 +37,50 @@ class BankDAM{
 	}
 	
 	/**
-	 * Insert a Bank in the database.
+	 * Insert a bank in the database.
 	 *
+	 * Returns the new created id from the database.
 	 * @param Bank $obj
-	 * @return void
+	 * @return integer
 	 */
 	static public function insert(Bank $obj){
-		return 123;
+		$sql = 'CALL bank_insert(:name)';
+		$params = array(':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return DatabaseHandler::getOne($sql);
 	}
 	
 	/**
-	 * Updates a Bank data in the database.
+	 * Updates a bank data in the database.
 	 *
 	 * @param Bank $obj
-	 * @return void
 	 */
 	static public function update(Bank $obj){
-		self::$_mName = $obj->getName();
+		$sql = 'CALL bank_update(:bank_id, :name)';
+		$params = array(':bank_id' => $obj->getId(), ':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
-	 * Deletes a Bank from the database. Returns true on success, otherwise it has dependencies and
+	 * Deletes a bank from the database. Returns true on success, otherwise it has dependencies and
 	 * returns false.
 	 *
 	 * @param Bank $obj
 	 * @return boolean
 	 */
 	static public function delete(Bank $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL bank_dependencies(:bank_id)';
+		$params = array(':bank_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the bank_account table.
+		if($result) return false;
+		
+		$sql = 'CALL bank_delete(:bank_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
