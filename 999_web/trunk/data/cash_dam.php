@@ -690,7 +690,9 @@ class DepositDAM{
 	 * @param string $date
 	 */
 	static public function cancel(Deposit $deposit, UserAccount $user, $date){
-		// Code here...
+		$sql = 'CALL deposit_cancel(:deposit_id, :username, :date)';
+		$params = array(':deposit_id' => $deposit->getId(), ':username' => $user->getUserName(),
+				':date' => $date);
 	}
 	
 	/**
