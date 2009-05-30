@@ -18,7 +18,6 @@ require_once('data/document_search_dam.php');
  * Defines the interface for DocumentSearch derived classes.
  * @package DocumentSearch
  * @author Roberto Oliveros
- *
  */
 abstract class DocumentSearch{
 	/**
@@ -46,7 +45,7 @@ class DepositSearch extends DocumentSearch{
 	/**
 	 * Realizes a deposit search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * Returns an array with the found data in the database. The array fields are created_date & deposit_id which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
 	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
@@ -60,6 +59,8 @@ class DepositSearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return DepositSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -75,9 +76,9 @@ class ComparisonSearch extends DocumentSearch{
 	/**
 	 * Realizes a comparison search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
+	 * Returns an array with the found data in the database. The array fields are created_date & comparison_id 
+	 * which is the date when the document was created and its respective id. The first 2 paramters must be in
+	 * the the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -89,6 +90,8 @@ class ComparisonSearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return ComparisonSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -104,7 +107,7 @@ class CountSearch extends DocumentSearch{
 	/**
 	 * Realizes a count search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * Returns an array with the found data in the database. The array fields are created_date & count_id which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
 	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
@@ -118,6 +121,8 @@ class CountSearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return CountSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -133,10 +138,10 @@ class PurchaseReturnSearch extends DocumentSearch{
 	/**
 	 * Realizes a purchase return search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
-	 * arguments are passed by reference so the respective values can be return.
+	 * Returns an array with the found data in the database. The array fields are created_date &
+	 * purchase_return_id which is the date when the document was created and its respective id. The first 2
+	 * paramters must be in the the format dd/mm/YYYY. The $page parameter is necesary because of the use of
+	 * pagination. The other 2 arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
@@ -147,6 +152,8 @@ class PurchaseReturnSearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return PurchaseReturnSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -162,9 +169,9 @@ class ShipmentSearch extends DocumentSearch{
 	/**
 	 * Realizes a shipment search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
+	 * Returns an array with the found data in the database. The array fields are created_date & shipment_id
+	 * which is the date when the document was created and its respective id. The first 2 paramters must be in
+	 * the the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
 	 * arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
@@ -176,6 +183,8 @@ class ShipmentSearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return ShipmentSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -191,10 +200,10 @@ class InvoiceSearch extends DocumentSearch{
 	/**
 	 * Realizes an invoice search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
-	 * arguments are passed by reference so the respective values can be return.
+	 * Returns an array with the found data in the database. The array fields are created_date, serial_number &
+	 * number which is the date when the document was created and its respective ids. The first 2 paramters must
+	 * be in the the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The
+	 * other 2 arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
@@ -205,6 +214,8 @@ class InvoiceSearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return InvoiceSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -220,7 +231,7 @@ class ReceiptSearch extends DocumentSearch{
 	/**
 	 * Realizes a receipt search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * Returns an array with the found data in the database. The array fields are created_date & receipt_id which
 	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
 	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
 	 * arguments are passed by reference so the respective values can be return.
@@ -234,6 +245,8 @@ class ReceiptSearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return ReceiptSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -249,10 +262,10 @@ class EntryIASearch extends DocumentSearch{
 	/**
 	 * Realizes a search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
-	 * arguments are passed by reference so the respective values can be return.
+	 * Returns an array with the found data in the database. The array fields are created_date &
+	 * entry_adjustment_id which is the date when the document was created and its respective id. The first 2
+	 * paramters must be in the the format dd/mm/YYYY. The $page parameter is necesary because of the use of
+	 * pagination. The other 2 arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
@@ -263,6 +276,8 @@ class EntryIASearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return EntryIASearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
@@ -278,10 +293,10 @@ class WithdrawIASearch extends DocumentSearch{
 	/**
 	 * Realizes a search in the database.
 	 * 
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
-	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The other 2 
-	 * arguments are passed by reference so the respective values can be return.
+	 * Returns an array with the found data in the database. The array fields are created_date &
+	 * withdraw_adjustment_id which is the date when the document was created and its respective id. The first 2
+	 * paramters must be in the the format dd/mm/YYYY. The $page parameter is necesary because of the use of
+	 * pagination. The other 2 arguments are passed by reference so the respective values can be return.
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
@@ -292,6 +307,8 @@ class WithdrawIASearch extends DocumentSearch{
 	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
 		Date::validateDate($startDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($endDate, 'Fecha final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return WithdrawIASearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
