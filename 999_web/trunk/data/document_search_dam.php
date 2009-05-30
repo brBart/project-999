@@ -17,22 +17,22 @@ require_once('data/database_handler.php');
  */
 class DepositSearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * Returns an array with the found data in the database. The array fields are created_date & deposit_id which
 	 * is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
 		$sql = 'CALL deposit_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$total_count = DatabaseHandler::getOne($sql, $params);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		$total_pages = ceil($total_count / ITEMS_PER_PAGE);
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL deposit_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -49,35 +49,27 @@ class DepositSearchDAM{
  */
 class ComparisonSearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id.
+	 * Returns an array with the found data in the database. The array fields are created_date & comparison_id
+	 * which is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL comparison_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL comparison_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -89,35 +81,27 @@ class ComparisonSearchDAM{
  */
 class CountSearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * Returns an array with the found data in the database. The array fields are created_date & count_id which
 	 * is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL count_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL count_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -129,35 +113,27 @@ class CountSearchDAM{
  */
 class PurchaseReturnSearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id.
+	 * Returns an array with the found data in the database. The array fields are created_date &
+	 * purchase_return_id which is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL purchase_return_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL purchase_return_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -169,35 +145,27 @@ class PurchaseReturnSearchDAM{
  */
 class ShipmentSearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id.
+	 * Returns an array with the found data in the database. The array fields are created_date & shipment_id
+	 * which is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL shipment_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL shipment_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -209,35 +177,27 @@ class ShipmentSearchDAM{
  */
 class InvoiceSearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id.
+	 * Returns an array with the found data in the database. The array fields are created_date, serial_number &
+	 * number which is the date when the document was created and its respective ids.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL invoice_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL invoice_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -249,35 +209,27 @@ class InvoiceSearchDAM{
  */
 class ReceiptSearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
+	 * Returns an array with the found data in the database. The array fields are created_date & receipt_id which
 	 * is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL receipt_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL receipt_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -289,35 +241,27 @@ class ReceiptSearchDAM{
  */
 class EntryIASearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id.
+	 * Returns an array with the found data in the database. The array fields are created_date &
+	 * entry_adjustment_id which is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL entry_adjustment_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL entry_adjustment_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -329,35 +273,27 @@ class EntryIASearchDAM{
  */
 class WithdrawIASearchDAM{
 	/**
-	 * Returns an array with the found data in the database. The array consists of the 2 fields(Date & Id) which
-	 * is the date when the document was created and its respective id.
+	 * Returns an array with the found data in the database. The array fields are created_date &
+	 * withdraw_adjustment_id which is the date when the document was created and its respective id.
 	 *
 	 * @param string $startDate
-	 * @param string_type $endDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totaItems
 	 * @param integer $page
-	 * @param integer $totalPages
-	 * @param integer $totaItems
 	 * @return array
 	 */
 	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
-		$data_array = array();
+		$sql = 'CALL withdraw_adjustment_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totaItems = DatabaseHandler::getOne($sql, $params);
 		
-		if($page == 1){
-			$data_array[] = array('date' => '10/01/2009', 'id' => '123');
-			$data_array[] = array('date' => '11/01/2009', 'id' => '124');
-			$data_array[] = array('date' => '12/01/2009', 'id' => '125');
-			$data_array[] = array('date' => '13/01/2009', 'id' => '126');
-			$data_array[] = array('date' => '14/01/2009', 'id' => '127');
-		}
-		else{
-			$data_array[] = array('date' => '15/01/2009', 'id' => '128');
-			$data_array[] = array('date' => '16/01/2009', 'id' => '129');
-		}
+		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
 		
-		$totalPages = 2;
-		$totaItems = 7;
-		
-		return $data_array;
+		$sql = 'CALL withdraw_adjustment_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 ?>
