@@ -53,6 +53,20 @@ class Date{
 	}
 	
 	/**
+	 * Change the dates format 'dd/mm/yyyy' to a database format 'yyyy/mm/dd'.
+	 *
+	 * @param string $date
+	 * @return string
+	 */
+	static public function dbFormat($date){
+		$date_array = explode('/', $date);
+		
+		$db_date_array = array($date_array[2], $date_array[1], $date_array[0]);
+		
+		return implode('/', $db_date_array);
+	}
+	
+	/**
 	 * Change the dates format 'dd/mm/yyyy' to an english format 'mm/dd/yyyy'.
 	 *
 	 * @param string $date
