@@ -680,7 +680,32 @@ class DepositDAM{
 	 * @return integer
 	 */
 	static public function insert(Deposit $obj){
-		return 123;
+		$sql = 'CALL deposit_insert(:bank_account_number, :cash_register_id, :username, :date, :number, ' .
+				':total, :status)';
+		
+		$bank_account = $obj->getBankAccount();
+		$cash_register = $obj->getCashRegister();
+		$user = $obj->getUser();
+		
+		$params = array(':bank_account_number' => $bank_account->getNumber(),
+				':cash_register_id' => $cash_register->getId(), ':username' => $user->getUserName(),
+				':date' => Date::dbFormat($obj->getDate()), ':number' => $obj->getNumber(),
+				':total' => $obj->getTotal(), ':status' => 1);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		$id = DatabaseHandler::getOne($sql);
+		
+		$details = $obj->getDetails();
+		foreach($details as $detail){
+			$sql = 'CALL deposit_cash_receipt_insert(:deposit_id, :cash_receipt_id, :amount)';
+			$cash = $detail->getCash();
+			$params = array(':deposit_id' => $id, ':cash_receipt_id' => $cash->getId(),
+					':amount' => $detail->getAmount());
+			DatabaseHandler::execute($sql, $params);
+		}
+		
+		return $id;
 	}
 	
 	/**
