@@ -420,20 +420,20 @@ class Deposit extends PersistDocument implements Itemized{
 	/**
 	 * Returns a deposit with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
+	 * The totalPages and totalItems arguments are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database. 
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return Invoice
 	 */
-	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getInstance($id, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
 			
-		return DepositDAM::getInstance($id, $total_pages, $total_items, $page);
+		return DepositDAM::getInstance($id, $totalPages, $totalItems, $page);
 	}
 	
 	/**
@@ -1727,6 +1727,18 @@ class Cash extends Persist{
 			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 			CashDAM::decreaseDeposit($this, $amount);
 		}
+	}
+	
+	/**
+	 * Returns an instance of a cash that match the provided id.
+	 *
+	 * Use exclusively for the creation of the Deposit class. Returns NULL in case of no match.
+	 * @param integer $id
+	 * @return Cash
+	 */
+	static public function getInstance($id){
+		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		return CashReceiptDAM::getCash($id);
 	}
 }
 
