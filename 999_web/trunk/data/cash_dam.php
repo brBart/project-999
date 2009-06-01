@@ -28,7 +28,7 @@ class BankDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$bank = new Bank((int)$result['bank_id'], 1);
+			$bank = new Bank((int)$result['bank_id'], Persist::CREATED);
 			$bank->setData($result['name']);
 			return $bank;
 		}
@@ -615,6 +615,19 @@ class CashDAM{
  */
 class CashReceiptDAM{
 	/**
+	 * Returns an instance of a cash class.
+	 *
+	 * @param integer $id
+	 * @param Cash
+	 */
+	static public function getCash($id){
+		if($id == 123)
+			return new Cash(123.45, $id, Persist::CREATED);
+		else
+			return NULL;
+	}
+	
+	/**
 	 * Returns an instance of a receipt.
 	 *
 	 * Returns NULL if there was no match for the provided invoice in the database.
@@ -690,7 +703,7 @@ class DepositDAM{
 		$params = array(':bank_account_number' => $bank_account->getNumber(),
 				':cash_register_id' => $cash_register->getId(), ':username' => $user->getUserName(),
 				':date' => Date::dbFormat($obj->getDate()), ':number' => $obj->getNumber(),
-				':total' => $obj->getTotal(), ':status' => 1);
+				':total' => $obj->getTotal(), ':status' => Deposit::CREATED);
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
@@ -734,8 +747,35 @@ class DepositDAM{
 	 * @param integer $page
 	 * @return Deposit
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL deposit_get(:deposit_id)';
+		$params = array(':deposit_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
 		
+		if(!empty($result)){
+			$bank_account = BankAccount::getInstance($result['bank_account_number']);
+			$cash_register = CashRegister::getInstance($result['cash_register_id']);
+			$user = UserAccount::getInstance($result['user_account_username']);
+			$deposit = new Deposit($cash_register, $result['date'], $user, $result['deposit_id'],
+					$result['status']);
+					
+			$sql = 'CALL deposit_cash_receipt_count(:deposit_id)';
+			$totalItems = DatabaseHandler::getOne($sql);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('deposit_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('deposit_id' => $id, ':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL deposit_cash_receipt_get(:deposit_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			foreach($items_result as $detail){
+				
+			}
+		}
 	}
 }
 
