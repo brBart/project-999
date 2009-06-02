@@ -645,7 +645,7 @@ class BankAccount extends PersistObject{
 	static public function delete(BankAccount $obj){
 		self::validateObjectFromDatabase($obj);			
 		if(!BankAccountDAM::delete($obj))
-			throw new Exception('Cuenta Bancaria tiene dependencias y no se puede eliminar.');
+			throw new Exception('Cuenta Bancaria tiene dependencias (depositos) y no se puede eliminar.');
 	}
 	
 	/**
