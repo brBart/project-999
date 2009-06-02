@@ -108,16 +108,20 @@ class BankAccountDAM{
 			return false;
 	}
 	
- 	/** Returns a BankAccount if it founds a match in the database. Otherwise returns NULL.
+ 	/** Returns a bank account if it founds a match in the database. Otherwise returns NULL.
 	 *
 	 * @param string $number
 	 * @return BankAccount
 	 */
 	static public function getInstance($number){
-		if($number == '123'){
-			$bank_account = new BankAccount('123', PersistObject::CREATED);
-			$bank = Bank::getInstance(123);
-			$bank_account->setData('Roberto Oliveros', $bank);
+		$sql = 'CALL bank_account_get(:bank_account_number)';
+		$params = array(':bank_account_number' => $number);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$bank = Bank::getInstance((int)$result['bank_id']);
+			$bank_account = new BankAccount($result['bank_account_number'], Persist::CREATED);
+			$bank_account->setData($result['name'], $bank);
 			return $bank_account;
 		}
 		else
@@ -796,6 +800,8 @@ class DepositDAM{
 			$deposit->setData($result['number'], $bank_account, $result['total'], $details);
 			return $deposit;
 		}
+		else
+			return NULL;
 	}
 }
 
