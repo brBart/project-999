@@ -773,8 +773,12 @@ class DepositDAM{
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			foreach($items_result as $detail){
-				
+				$cash = Cash::getInstance($detail['cash_receipt_id']);
+				$details[] = new DepositDetail($cash, $detail['amount']);
 			}
+			
+			$deposit->setData($result['number'], $bank_account, $result['total'], $details);
+			return $deposit;
 		}
 	}
 }
