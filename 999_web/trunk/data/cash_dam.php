@@ -98,7 +98,11 @@ class BankAccountDAM{
 	 * @return boolean
 	 */
 	static public function exists($number){
-		if($number == '123')
+		$sql = 'CALL bank_account_exists(:bank_account_number)';
+		$params = array(':bank_account_number' => $number);
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		if($result > 0)
 			return true;
 		else
 			return false;
@@ -124,34 +128,46 @@ class BankAccountDAM{
 	 * Insert a BankAccount in the database.
 	 *
 	 * @param BankAccount $obj
-	 * @return void
 	 */
 	static public function insert(BankAccount $obj){
-		// Code here...
+		$sql = 'CALL bank_account_insert(:bank_account_number, :bank_id, :name)';
+		$bank = $obj->getBank();
+		$params = array(':bank_account_number' => $obj->getNumber(), ':bank_id' => $bank->getId(),
+				':name' => $obj->getHolderName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
-	 * Updates a BankAccount data in the database.
+	 * Updates a bank account data in the database.
 	 *
 	 * @param BankAccount $obj
-	 * @return void
 	 */
 	static public function update(BankAccount $obj){
-		// Code here...
+		$sql = 'CALL bank_account_update(:bank_account_number, :bank_id, :name)';
+		$bank = $obj->getBank();
+		$params = array(':bank_account_number' => $obj->getNumber(), ':bank_id' => $bank->getId(),
+				':name' => $obj->getHolderName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
-	 * Deletes a BankAccount from the datase. Returns true on success, otherwise it has dependencies and 
+	 * Deletes a bank account from the datase. Returns true on success, otherwise it has dependencies and 
 	 * returns false.
 	 *
 	 * @param BankAccount $obj
 	 * @return boolean
 	 */
 	static public function delete(BankAccount $obj){
-		if($obj->getNumber() == '123')
-			return true;
-		else
-			return false;
+		$sql = 'CALL bank_account_dependencies(:bank_account_number)';
+		$params = array(':bank_account_number' => $obj->getNumber());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the deposit table.
+		if($result) return false;
+		
+		$sql = 'CALL bank_account_delete(:bank_account_number)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
