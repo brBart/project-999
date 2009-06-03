@@ -28,7 +28,7 @@ class BankDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$bank = new Bank((int)$result['bank_id'], Persist::CREATED);
+			$bank = new Bank($id, Persist::CREATED);
 			$bank->setData($result['name']);
 			return $bank;
 		}
@@ -49,7 +49,7 @@ class BankDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		return DatabaseHandler::getOne($sql);
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -120,7 +120,7 @@ class BankAccountDAM{
 		
 		if(!empty($result)){
 			$bank = Bank::getInstance((int)$result['bank_id']);
-			$bank_account = new BankAccount($result['bank_account_number'], Persist::CREATED);
+			$bank_account = new BankAccount($number, Persist::CREATED);
 			$bank_account->setData($result['name'], $bank);
 			return $bank_account;
 		}
@@ -182,64 +182,69 @@ class BankAccountDAM{
  * @author Roberto Oliveros
  */
 class ShiftDAM{
-	static private $_mName = 'Diurno';
-	
 	/**
-	 * Returns a Shift if it founds an id match in the database. Otherwise returns NULL.
+	 * Returns a shift if it founds an id match in the database. Otherwise returns NULL.
 	 *
 	 * @param integer $id
 	 * @return Shift
 	 */
 	static public function getInstance($id){
-		switch($id){
-			case 123:
-				$shift = new Shift($id, PersistObject::CREATED);
-				$shift->setData(self::$_mName, '8am - 6pm');
-				return $shift;
-				break;
-				
-			case 124:
-				$shift = new Shift($id, PersistObject::CREATED);
-				$shift->setData('Nocturno', '6pm - 11pm');
-				return $shift;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL shift_get(:shift_id)';
+		$params = array(':shift_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$shift = new Shift($id, Persist::CREATED);
+			$shift->setData($result['name'], $result['time_table']);
+			return $shift;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
-	 * Insert a Shift in the database.
+	 * Insert a shift in the database.
 	 *
 	 * @param Shift $obj
-	 * @return void
 	 */
 	static public function insert(Shift $obj){
-		return 123;
+		$sql = 'CALL shift_insert(:name, :time_table)';
+		$params = array(':name' => $obj->getName(), ':time_table' => $obj->getTimeTable());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
-	 * Updates a Shift data in the database.
+	 * Updates a shift data in the database.
 	 *
 	 * @param Shift $obj
-	 * @return void
 	 */
 	static public function update(Shift $obj){
-		self::$_mName = $obj->getName();
+		$sql = 'CALL shift_update(:shift_id, :name, :time_table)';
+		$params = array(':shift_id' => $obj->getId(), ':name' => $obj->getName(),
+				':time_table' => $obj->getTimeTable());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
-	 * Deletes a Shift from the datase. Returns true on success, otherwise it has dependencies and returns false.
+	 * Deletes a shift from the datase. Returns true on success, otherwise it has dependencies and returns false.
 	 *
 	 * @param Bank $obj
 	 * @return boolean
 	 */
 	static public function delete(Shift $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL shift_dependencies(:shift_id)';
+		$params = array(':shift_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the cash_register table.
+		if($result) return false;
+		
+		$sql = 'CALL shift_delete(:shift_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
@@ -250,11 +255,6 @@ class ShiftDAM{
  *  @author Roberto Oliveros
  */
 class CashRegisterDAM{
-	static private $_mIsOpen123 = true;
-	static private $_mIsOpen124 = true;
-	static private $_mIsOpen125 = true;
-	static private $_mIsOpen126 = true;
-	
 	/**
 	 * Returns the status of the cash register.
 	 *
@@ -290,25 +290,9 @@ class CashRegisterDAM{
 	 * @param CashRegister $obj
 	 */
 	static public function close(CashRegister $obj){
-		switch($obj->getId()){
-			case 123:
-				self::$_mIsOpen123 = false;
-				break;
-				
-			case 124:
-				self::$_mIsOpen124 = false;
-				break;
-				
-			case 125:
-				self::$_mIsOpen125 = false;
-				break;
-				
-			case 126:
-				self::$_mIsOpen126 = false;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL cash_register_close(:cash_register_id)';
+		$params = array(':cash_register_id' => $obj->getId());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -727,7 +711,7 @@ class DepositDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		$id = DatabaseHandler::getOne($sql);
+		$id = (int)DatabaseHandler::getOne($sql);
 		
 		$details = $obj->getDetails();
 		foreach($details as $detail){
@@ -774,10 +758,9 @@ class DepositDAM{
 		
 		if(!empty($result)){
 			$bank_account = BankAccount::getInstance($result['bank_account_number']);
-			$cash_register = CashRegister::getInstance($result['cash_register_id']);
+			$cash_register = CashRegister::getInstance((int)$result['cash_register_id']);
 			$user = UserAccount::getInstance($result['user_account_username']);
-			$deposit = new Deposit($cash_register, $result['date'], $user, $result['deposit_id'],
-					$result['status']);
+			$deposit = new Deposit($cash_register, $result['date'], $user, $id, (int)$result['status']);
 					
 			$sql = 'CALL deposit_cash_receipt_count(:deposit_id)';
 			$totalItems = DatabaseHandler::getOne($sql);
@@ -793,11 +776,11 @@ class DepositDAM{
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			foreach($items_result as $detail){
-				$cash = Cash::getInstance($detail['cash_receipt_id']);
+				$cash = Cash::getInstance((int)$detail['cash_receipt_id']);
 				$details[] = new DepositDetail($cash, $detail['amount']);
 			}
 			
-			$deposit->setData($result['number'], $bank_account, $result['total'], $details);
+			$deposit->setData($result['number'], $bank_account, (float)$result['total'], $details);
 			return $deposit;
 		}
 		else

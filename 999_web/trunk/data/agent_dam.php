@@ -28,7 +28,7 @@ class CustomerDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$customer = new Customer($result['nit'], Persist::CREATED);
+			$customer = new Customer($nit, Persist::CREATED);
 			$customer->setData($result['name']);
 			return $customer;
 		}
@@ -96,7 +96,7 @@ class SupplierDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$supplier = new Supplier((int)$result['supplier_id'], Persist::CREATED);
+			$supplier = new Supplier($id, Persist::CREATED);
 			$supplier->setData($result['nit'], $result['name'], $result['telephone'], $result['address'],
 					$result['email'], $result['contact']);
 			return $supplier;
@@ -120,7 +120,7 @@ class SupplierDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		return DatabaseHandler::getOne($sql);
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -177,7 +177,7 @@ class BranchDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$branch = new Branch((int)$result['branch_id'], Persist::CREATED);
+			$branch = new Branch($id, Persist::CREATED);
 			$branch->setData($result['nit'], $result['name'], $result['telephone'], $result['address'],
 					$result['email'], $result['contact']);
 			return $branch;
@@ -201,7 +201,7 @@ class BranchDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		return DatabaseHandler::getOne($sql);
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
