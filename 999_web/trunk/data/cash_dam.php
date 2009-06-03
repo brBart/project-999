@@ -129,7 +129,7 @@ class BankAccountDAM{
 	}
 	
 	/**
-	 * Insert a BankAccount in the database.
+	 * Insert a bank account in the database.
 	 *
 	 * @param BankAccount $obj
 	 */
@@ -262,26 +262,9 @@ class CashRegisterDAM{
 	 * @return boolean
 	 */
 	static public function isOpen(CashRegister $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mIsOpen123;
-				break;
-				
-			case 124:
-				return self::$_mIsOpen124;
-				break;
-				
-			case 125:
-				return self::$_mIsOpen125;
-				break;
-				
-			case 126:
-				return self::$_mIsOpen126;
-				break;
-				
-			default:
-				return false;
-		}
+		$sql = 'CALL cash_register_is_open(:cash_register_id)';
+		$params = array(':cash_register_id' => $obj->getId());
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -303,34 +286,17 @@ class CashRegisterDAM{
 	 * @return CashRegister
 	 */
 	static public function getInstance($id){
-		switch($id){
-			case 123:
-				$shift = Shift::getInstance(123);
-				$cash_register = new CashRegister($shift, 123, Persist::CREATED);
-				return $cash_register;
-				break;
-				
-			case 124:
-				$shift = Shift::getInstance(123);
-				$cash_register = new CashRegister($shift, 124, Persist::CREATED);
-				return $cash_register;
-				break;
-				
-			case 125:
-				$shift = Shift::getInstance(123);
-				$cash_register = new CashRegister($shift, 125, Persist::CREATED);
-				return $cash_register;
-				break;
-				
-			case 126:
-				$shift = Shift::getInstance(123);
-				$cash_register = new CashRegister($shift, 126, Persist::CREATED);
-				return $cash_register;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL cash_register_get(:cash_register_id)';
+		$params = array(':cash_register_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$shift = Shift::getInstance((int)$result['shift_id']);
+			$cash_register = new CashRegister($shift, $id, Persist::CREATED);
+			return $cash_register;
 		}
+		else
+			return NULL;
 	}
 }
 
