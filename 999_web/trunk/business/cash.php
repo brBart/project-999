@@ -783,7 +783,7 @@ class Shift extends Identifier{
 	static public function delete(Shift $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!ShiftDAM::delete($obj))
-			throw new Exception('Turno tiene dependencias y no se puede eliminar.');
+			throw new Exception('Turno tiene dependencias (cajas) y no se puede eliminar.');
 	}
 	
 	/**
