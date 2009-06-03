@@ -6,6 +6,11 @@
  */
 
 /**
+ * For accessing the database.
+ */
+require_once('data/database_handler.php');
+
+/**
  * Defines functionality for accessing the role's database tables.
  * @package UserAccountDAM
  * @author Roberto Oliveros
@@ -19,10 +24,12 @@ class RoleDAM{
 	 * @return Role
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$role = new Role($id, 'Administrador');
-			return $role;
-		}
+		$sql = 'CALL role_get(:role_id)';
+		$params = array(':role_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result))
+			return new role($id, $result['name']);
 		else
 			return NULL;
 	}
@@ -36,13 +43,17 @@ class RoleDAM{
  */
 class UserAccountDAM{
 	/**
-	 * Verifies if the account's name already exists in the database.
+	 * Verifies if the account's username already exists in the database.
 	 *
 	 * @param string $userName
 	 * @return boolean
 	 */
 	static public function exists($userName){
-		if($userName == 'roboli')
+		$sql = 'CALL user_account_exists(:username)';
+		$params = array(':username' => $userName);
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		if($result > 0)
 			return true;
 		else
 			return false;
@@ -56,11 +67,15 @@ class UserAccountDAM{
 	 * @return UserAccount
 	 */
 	static public function getInstance($userName){
-		if($userName == 'roboli'){
-			$user_account = new UserAccount($userName, PersistObject::CREATED);
-			$role = Role::getInstance(123);
-			$user_account->setData('Roberto', 'Oliveros', $role,false);
-			return $user_account;
+		$sql = 'CALL user_account_get(:username)';
+		$params = array(':username' => $userName);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = new UserAccount($userName, Persist::CREATED);
+			$role = Role::getInstance((int)$result['role_id']);
+			$user->setData($result['first_name'], $result['last_name'], $role, (bool)$result['deactivated']);
+			return $user;
 		}
 		else
 			return NULL;
@@ -72,7 +87,12 @@ class UserAccountDAM{
 	 * @param UserAccount $obj
 	 */
 	static public function insert(UserAccount $obj){
-		// Code here...
+		$sql = 'CALL user_account_insert(:username, :role_id, :first_name, :last_name, :password, :deactivated)';
+		$role = $obj->getRole();
+		$params = array(':username' => $obj->getUserName(), ':role_id' => $role->getId(),
+				':first_name' => $obj->getFirstName(), ':last_name' => $obj->getLastName(),
+				':password' => $obj->getPassword(), ':deactivated' => (int)$obj->isDeactivated());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -81,7 +101,12 @@ class UserAccountDAM{
 	 * @param UserAccount $obj
 	 */
 	static public function update(UserAccount $obj){
-		// Code here...
+		$sql = 'CALL user_account_update(:username, :role_id, :first_name, :last_name, :password, :deactivated)';
+		$role = $obj->getRole();
+		$params = array(':username' => $obj->getUserName(), ':role_id' => $role->getId(),
+				':first_name' => $obj->getFirstName(), ':last_name' => $obj->getLastName(),
+				':password' => $obj->getPassword(), ':deactivated' => (int)$obj->isDeactivated());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -92,10 +117,19 @@ class UserAccountDAM{
 	 * @return boolean
 	 */
 	static public function delete(UserAccount $obj){
-		if($obj->getUserName() == 'roboli')
-			return true;
-		else
-			return false;
+		$sql = 'CALL user_account_dependencies(:username)';
+		$params = array(':username' => $obj->getUserName());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		/**
+		 * If there are dependencies in the change_price_log, purchase_return, shipment, invoice, count, reserve,
+		 * comparison, deposit, entry_adjustment, receipt and withdraw_adjustment database tables.
+		 */
+		if($result) return false;
+		
+		$sql = 'CALL user_account_delete(:username)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
