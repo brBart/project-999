@@ -140,10 +140,6 @@ class UserAccountDAM{
  * @author Roberto Oliveros
  */
 class UserAccountUtilityDAM{
-	static private $_mRoboliPassword = 'c83aca09889f9820c6916fb16b5f97d6ab164d4f';
-	
-	static private $_mRootPassword = '202adf3cf87a7aa765da24baf28cfdb12c39768e';
-	
 	/**
 	 * Verifies the user account exists in the database.
 	 *
@@ -153,10 +149,9 @@ class UserAccountUtilityDAM{
 	 * @return boolean
 	 */
 	static public function isValid($userName, $password){
-		if($userName == 'roboli' && $password == self::$_mRoboliPassword)
-			return true;
-		else
-			return false;
+		$sql = 'CALL user_account_is_valid(:username, :password)';
+		$params = array(':username' => $userName, ':password' => $password);
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -167,7 +162,9 @@ class UserAccountUtilityDAM{
 	 * @return boolean
 	 */
 	static public function isValidRoot($password){
-		return ($password == self::$_mRootPassword ? true : false);
+		$sql = 'CALL root_is_valid(:password)';
+		$params = array(':password' => $password);
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -176,9 +173,10 @@ class UserAccountUtilityDAM{
 	 * @param UserAccount $account
 	 * @param string $newPassword
 	 */
-	static public function changePassword(UserAccount $account, $newPassword){
-		if($account->getUserName() == 'roboli')
-			self::$_mRoboliPassword = $newPassword;
+	static public function changePassword(UserAccount $user, $newPassword){
+		$sql = 'CALL user_account_change_password(:username, :password)';
+		$params = array(':username' => $user->getUserName(), ':password' => $newPassword);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -187,7 +185,9 @@ class UserAccountUtilityDAM{
 	 * @param string $newPassword
 	 */
 	static public function changeRootPassword($newPassword){
-		self::$_mRootPassword = $newPassword;
+		$sql = 'CALL root_change_password(:password)';
+		$params = array(':password' => $newPassword);
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 ?>
