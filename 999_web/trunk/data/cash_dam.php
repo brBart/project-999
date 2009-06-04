@@ -726,7 +726,7 @@ class DepositDAM{
 			$bank_account = BankAccount::getInstance($result['bank_account_number']);
 			$cash_register = CashRegister::getInstance((int)$result['cash_register_id']);
 			$user = UserAccount::getInstance($result['user_account_username']);
-			$deposit = new Deposit($cash_register, $result['date'], $user, $id, (int)$result['status']);
+			$deposit = new Deposit($cash_register, $result['created_date'], $user, $id, (int)$result['status']);
 					
 			$sql = 'CALL deposit_cash_receipt_count(:deposit_id)';
 			$totalItems = DatabaseHandler::getOne($sql);
