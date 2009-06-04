@@ -422,19 +422,7 @@ class PaymentCardBrandDAM{
  * @package CashDAM
  * @author Roberto Oliveros
  */
-class CashDAM{
-	static private $_mAmount123 = 95.55;
-	static private $_mReserved123 = 10.00;
-	static private $_mDeposited123 = 0.0;
-	
-	static private $_mAmount124 = 68.91;
-	static private $_mReserved124 = 22.75;
-	static private $_mDeposited124 = 24.00;
-	
-	static private $_mAmount125 = 128.61;
-	static private $_mReserved125 = 12.75;
-	static private $_mDeposited125 = 30.00;
-	
+class CashDAM{	
 	/**
 	 * Returns the cash amount of the provided object from the database.
 	 *
@@ -442,42 +430,21 @@ class CashDAM{
 	 * @return float
 	 */
 	static public function getAmount(Cash $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mAmount123;
-				break;
-				
-			case 124:
-				return self::$_mAmount124;
-				break;
-				
-			case 125:
-				return self::$_mAmount125;
-				break;
-			
-			default:
-				return 0;
-		}
+		$sql = 'CALL cash_receipt_cash_get(:cash_receipt_id)';
+		$params = array(':cash_receipt_id' => $obj->getId());
+		return (float)DatabaseHandler::getOne($sql, $params);
 	}
 	
-	
+	/**
+	 * Returns the cash amount available of the provided object from the database.
+	 *
+	 * @param Cash $obj
+	 * @return float
+	 */
 	static public function getAvailable(Cash $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mAmount123 - (self::$_mReserved123 + self::$_mDeposited123);
-				break;
-				
-			case 124:
-				return self::$_mAmount124 - (self::$_mReserved124 + self::$_mDeposited124);
-				break;
-				
-			case 125:
-				return self::$_mAmount125 - (self::$_mReserved125 + self::$_mDeposited125);
-				break;
-			
-			default:
-				return 0;
-		}
+		$sql = 'CALL cash_receipt_cash_available_get(:cash_receipt_id)';
+		$params = array(':cash_receipt_id' => $obj->getId());
+		return (float)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -487,21 +454,9 @@ class CashDAM{
 	 * @param float $amount
 	 */
 	static public function reserve(Cash $obj, $amount){
-		switch($obj->getId()){
-			case 123:
-				self::$_mReserved123 += $amount;
-				return;
-				
-			case 124:
-				self::$_mReserved124 += $amount;
-				return;
-				
-			case 125:
-				self::$_mReserved125 += $amount;
-				return;
-				
-			default:
-		}
+		$sql = 'CALL cash_receipt_increase_reserved(:cash_receipt_id, :amount)';
+		$params = array(':cash_receipt_id' => $obj->getId(), ':amount' => $amount);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -511,21 +466,9 @@ class CashDAM{
 	 * @param float $amount
 	 */
 	static public function decreaseReserve(Cash $obj, $amount){
-		switch($obj->getId()){
-			case 123:
-				self::$_mReserved123 -= $amount;
-				return;
-				
-			case 124:
-				self::$_mReserved124 -= $amount;
-				return;
-				
-			case 125:
-				self::$_mReserved125 -= $amount;
-				return;
-				
-			default:
-		}
+		$sql = 'CALL cash_receipt_decrease_reserved(:cash_receipt_id, :amount)';
+		$params = array(':cash_receipt_id' => $obj->getId(), ':amount' => $amount);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -535,21 +478,9 @@ class CashDAM{
 	 * @param float $amount
 	 */
 	static public function deposit(Cash $obj, $amount){
-		switch($obj->getId()){
-			case 123:
-				self::$_mDeposited123 += $amount;
-				return;
-				
-			case 124:
-				self::$_mDeposited124 += $amount;
-				return;
-				
-			case 125:
-				self::$_mDeposited125 += $amount;
-				return;
-				
-			default:
-		}
+		$sql = 'CALL cash_receipt_increase_deposited(:cash_receipt_id, :amount)';
+		$params = array(':cash_receipt_id' => $obj->getId(), ':amount' => $amount);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -559,21 +490,9 @@ class CashDAM{
 	 * @param float $amount
 	 */
 	static public function decreaseDeposit(Cash $obj, $amount){
-		switch($obj->getId()){
-			case 123:
-				self::$_mDeposited123 -= $amount;
-				return;
-				
-			case 124:
-				self::$_mDeposited124 -= $amount;
-				return;
-				
-			case 125:
-				self::$_mDeposited125 -= $amount;
-				return;
-				
-			default:
-		}
+		$sql = 'CALL cash_receipt_decrease_deposited(:cash_receipt_id, :amount)';
+		$params = array(':cash_receipt_id' => $obj->getId(), ':amount' => $amount);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -583,8 +502,13 @@ class CashDAM{
 	 * @param Cash
 	 */
 	static public function getInstance($id){
-		if($id == 123)
-			return new Cash(123.45, $id, Persist::CREATED);
+		$sql = 'CALL cash_receipt_cash_get(:cash_receipt_id)';
+		$params = array(':cash_receipt_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result))
+			// Because the cash object consults directly with the database.
+			return new Cash(0.00, $id, Persist::CREATED);
 		else
 			return NULL;
 	}
@@ -742,7 +666,8 @@ class DepositDAM{
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			foreach($items_result as $detail){
-				$cash = Cash::getInstance((int)$detail['cash_receipt_id']);
+				// Because the cash object consults directly with the database.
+				$cash = new Cash(0.00, (int)$detail['cash_receipt_id'], Persist::CREATED);
 				$details[] = new DepositDetail($cash, $detail['amount']);
 			}
 			
