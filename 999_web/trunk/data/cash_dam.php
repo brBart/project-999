@@ -575,6 +575,19 @@ class CashDAM{
 			default:
 		}
 	}
+	
+	/**
+	 * Returns an instance of a cash class.
+	 *
+	 * @param integer $id
+	 * @param Cash
+	 */
+	static public function getInstance($id){
+		if($id == 123)
+			return new Cash(123.45, $id, Persist::CREATED);
+		else
+			return NULL;
+	}
 }
 
 
@@ -584,19 +597,6 @@ class CashDAM{
  * @author Roberto Oliveros
  */
 class CashReceiptDAM{
-	/**
-	 * Returns an instance of a cash class.
-	 *
-	 * @param integer $id
-	 * @param Cash
-	 */
-	static public function getCash($id){
-		if($id == 123)
-			return new Cash(123.45, $id, Persist::CREATED);
-		else
-			return NULL;
-	}
-	
 	/**
 	 * Returns an instance of a receipt.
 	 *
