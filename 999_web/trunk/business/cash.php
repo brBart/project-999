@@ -1738,7 +1738,7 @@ class Cash extends Persist{
 	 */
 	static public function getInstance($id){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-		return CashReceiptDAM::getCash($id);
+		return CashDAM::getInstance($id);
 	}
 }
 
