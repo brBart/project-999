@@ -1902,13 +1902,6 @@ class DepositEvent{
  */
 class SalesReport{
 	/**
-	 * Holds the total monetary amount of the report.
-	 *
-	 * @var float
-	 */
-	private $_mTotal = 0.00;
-	
-	/**
 	 * Holds the total monetary amount of all the vouchers in the report.
 	 *
 	 * @var float
@@ -1921,6 +1914,13 @@ class SalesReport{
 	 * @var float
 	 */
 	private $_mTotalCash = 0.00;
+	
+	/**
+	 * Holds the total monetary amount of the vat of all the invoices.
+	 *
+	 * @var float
+	 */
+	private $_mTotalVat = 0.00;
 	
 	/**
 	 * Holds an array with the invoices' id and total amounts belonging to the report's cash register.
@@ -1939,7 +1939,7 @@ class SalesReport{
 	 * @param array $invoices
 	 * @throws Exception
 	 */
-	public function __construct($total, $totalVouchers, $totalCash, $invoices){
+	public function __construct($totalVouchers, $totalCash, $totalVat, $invoices){
 		try{
 			Number::validateFloat($total, 'Total inv&aacute;lido.');
 			Number::validateFloat($totalVouchers, 'Total de vouchers inv&aacute;lido.');
@@ -1962,7 +1962,7 @@ class SalesReport{
 	 * @return float
 	 */
 	public function getTotal(){
-		return $this->_mTotal;
+		return $this->_mTotalVouchers + $this->_mTotalCash;
 	}
 	
 	/**
@@ -1989,7 +1989,7 @@ class SalesReport{
 	 * @return float
 	 */
 	public function getTotalVat(){
-		return $this->_mTotal * (Vat::getInstance()->getPercentage() / 100);
+		return $this->_mTotalVat;
 	}
 	
 	/**
