@@ -1941,18 +1941,18 @@ class SalesReport{
 	 */
 	public function __construct($totalVouchers, $totalCash, $totalVat, $invoices){
 		try{
-			Number::validateFloat($total, 'Total inv&aacute;lido.');
 			Number::validateFloat($totalVouchers, 'Total de vouchers inv&aacute;lido.');
 			Number::validateFloat($totalCash, 'Total de efectivo inv&aacute;lido.');
+			Number::validateFloat($totalVat, 'Total de I.V.A. inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en SalesReport con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
 		}
 		
-		$this->_mTotal = $total;
 		$this->_mTotalVouchers = $totalVouchers;
 		$this->_mTotalCash = $totalCash;
+		$this->_mTotalVat = $totalVat;
 		$this->_mInvoices = $invoices;
 	}
 	
