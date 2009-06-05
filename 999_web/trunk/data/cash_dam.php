@@ -499,7 +499,7 @@ class CashDAM{
 	 * Returns an instance of a cash class.
 	 *
 	 * @param integer $id
-	 * @param Cash
+	 * @return Cash
 	 */
 	static public function getInstance($id){
 		$sql = 'CALL cash_receipt_cash_get(:cash_receipt_id)';
@@ -626,7 +626,7 @@ class DepositDAM{
 	static public function cancel(Deposit $deposit, UserAccount $user, $date){
 		$sql = 'CALL deposit_cancel(:deposit_id, :username, :date)';
 		$params = array(':deposit_id' => $deposit->getId(), ':username' => $user->getUserName(),
-				':date' => $date);
+				':date' => Date::dbFormat($date));
 		DatabaseHandler::execute($sql, $params);
 	}
 	
@@ -653,7 +653,8 @@ class DepositDAM{
 			$deposit = new Deposit($cash_register, $result['created_date'], $user, $id, (int)$result['status']);
 					
 			$sql = 'CALL deposit_cash_receipt_count(:deposit_id)';
-			$totalItems = DatabaseHandler::getOne($sql);
+			$params = array(':deposit_id' => $id);
+			$totalItems = DatabaseHandler::getOne($sql, $params);
 			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 			
 			if($page > 0)
@@ -668,7 +669,7 @@ class DepositDAM{
 			foreach($items_result as $detail){
 				// Because the cash object consults directly with the database.
 				$cash = new Cash(0.00, (int)$detail['cash_receipt_id'], Persist::CREATED);
-				$details[] = new DepositDetail($cash, $detail['amount']);
+				$details[] = new DepositDetail($cash, (float)$detail['amount']);
 			}
 			
 			$deposit->setData($result['number'], $bank_account, (float)$result['total'], $details);
@@ -872,8 +873,9 @@ class DepositListDAM{
 	 * @return array
 	 */
 	static public function getList(CashRegister $obj){
-		if($obj->getId() == 123)
-			return array(123, 124, 125);
+		$sql = 'CALL deposit_list_get(:cash_register_id)';
+		$params = array(':cash_register_id' => $obj->getId());
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
