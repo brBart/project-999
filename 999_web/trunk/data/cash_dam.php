@@ -694,20 +694,21 @@ class SalesReportDAM{
 	 * @return SalesReport
 	 */
 	static public function getInstance(CashRegister $obj){
-		switch($obj->getId()){
-			case 123:
-				$invoices = array(array('serial_number' => 'A021', 'number' => 123,
-									'name' => 'Roberto', 'total' => 23.45),
-								array('serial_number' => 'A021', 'number' => 124,
-									'name' => 'Carlos', 'total' => 33.81),
-								array('serial_number' => 'A021', 'number' => 125,
-									'name' => 'Jose', 'total' => 135.15));
-				$report = new SalesReport(231.49, 0.0, 231.49, $invoices);
-				return $report;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL sales_report_total_vouchers(:cash_register_id)';
+		$params = array(':cash_register_id' => $obj->getId());
+		$total_vouchers = (float)DatabaseHandler::getOne($sql, $params);
+		
+		$sql = 'CALL sales_report_total_cash(:cash_register_id)';
+		$total_cash = (float)DatabaseHandler::getOne($sql, $params);
+		
+		$sql = 'CALL sales_report_total_vat(:cash_register_id)';
+		$total_vat = (float)DatabaseHandler::getOne($sql, $params);
+		
+		$sql = 'CALL sales_report_invoices_get(:cash_register_id)';
+		$invoices = DatabaseHandler::getAll($sql, $params);
+		
+		return new SalesReport(($total_vouchers + $total_cash), $total_vouchers, $total_cash, $total_vat,
+				$invoices);
 	}
 }
 
