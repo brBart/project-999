@@ -707,8 +707,7 @@ class SalesReportDAM{
 		$sql = 'CALL sales_report_invoices_get(:cash_register_id)';
 		$invoices = DatabaseHandler::getAll($sql, $params);
 		
-		return new SalesReport(($total_vouchers + $total_cash), $total_vouchers, $total_cash, $total_vat,
-				$invoices);
+		return new SalesReport($total_vouchers, $total_cash, $total_vat, $invoices);
 	}
 }
 
