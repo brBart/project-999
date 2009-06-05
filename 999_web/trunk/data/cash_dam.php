@@ -889,8 +889,9 @@ class InvoiceListDAM{
 	 * @return array
 	 */
 	static public function getList(CashRegister $obj){
-		if($obj->getId() == 123)
-			return array(123, 124, 125);
+		$sql = 'CALL invoice_list_get(:cash_register_id)';
+		$params = array(':cash_register_id' => $obj->getId());
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
