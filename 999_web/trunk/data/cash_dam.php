@@ -725,13 +725,9 @@ class DepositDetailListDAM{
 	 * @return array
 	 */
 	static public function getList(Cash $obj){
-		switch($obj->getId()){
-			case 123:
-				return array(array('id' => 123), array('id' => 124), array('id' => 125));
-				break;
-				
-			default:
-		}
+		$sql = 'CALL deposit_cash_list_get(:cash_receipt_id)';
+		$params = array(':cash_receipt_id' => $obj->getId());
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
