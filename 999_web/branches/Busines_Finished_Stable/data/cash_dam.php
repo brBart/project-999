@@ -585,6 +585,16 @@ class CashDAM{
 			default:
 		}
 	}
+	
+	/**
+	 * Returns an instance of a cash class.
+	 *
+	 * @param integer $id
+	 * @return Cash
+	 */
+	static public function getInstance($id){
+		return new Cash(0.00, $id, Persist::CREATED);
+	}
 }
 
 
@@ -724,7 +734,7 @@ class SalesReportDAM{
 									'name' => 'Carlos', 'total' => 33.81),
 								array('serial_number' => 'A021', 'number' => 125,
 									'name' => 'Jose', 'total' => 135.15));
-				$report = new SalesReport(231.49, 0.0, 231.49, $invoices);
+				$report = new SalesReport(0.0, 231.49, 23.14, $invoices);
 				return $report;
 				break;
 				
@@ -830,7 +840,7 @@ class WorkingDayDAM{
 	 * @param Shift $shift
 	 * @return CashRegister
 	 */
-	static public function insertCashRegister(Shift $shift){
+	static public function insertCashRegister(WorkingDay $workingDay, Shift $shift){
 		return new CashRegister($shift, 127, Persist::CREATED);
 	}
 	
