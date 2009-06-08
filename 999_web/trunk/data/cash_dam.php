@@ -738,9 +738,6 @@ class DepositDetailListDAM{
  * @author Roberto Oliveros
  */
 class WorkingDayDAM{
-	static private $_mIsOpenCurrent = true;
-	static private $_mIsOpenPast = true;
-	
 	/**
 	 * Returns true if the working day stills open.
 	 *
@@ -748,14 +745,9 @@ class WorkingDayDAM{
 	 * @return boolean
 	 */
 	static public function isOpen(WorkingDay $obj){
-		switch($obj->getDate()){
-			case date('d/m/Y'):
-				return self::$_mIsOpenCurrent;
-				break;
-				
-			default:
-				return self::$_mIsOpenPast;
-		}
+		$sql = 'CALL working_day_is_open(:working_day)';
+		$params = array(':working_day' => Date::dbFormat($obj->getDate()));
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -764,7 +756,9 @@ class WorkingDayDAM{
 	 * @param WorkingDay $obj
 	 */
 	static public function closeCashRegisters(WorkingDay $obj){
-		// Code here...
+		$sql = 'CALL working_day_close_cash_registers(:working_day)';
+		$params = array(':working_day' => Date::dbFormat($obj->getDate()));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -773,14 +767,9 @@ class WorkingDayDAM{
 	 * @param WorkingDay $obj
 	 */
 	static public function close(WorkingDay $obj){
-		switch($obj->getDate()){
-			case date('d/m/Y'):
-				self::$_mIsOpenCurrent = false;
-				break;
-				
-			default:
-				self::$_mIsOpenPast = false;
-		}
+		$sql = 'CALL working_day_close(:working_day)';
+		$params = array(':working_day' => Date::dbFormat($obj->getDate()));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -804,7 +793,7 @@ class WorkingDayDAM{
 	 * @param Shift $shift
 	 * @return CashRegister
 	 */
-	static public function insertCashRegister(Shift $shift){
+	static public function insertCashRegister(WorkingDay $workingDay, Shift $shift){
 		return new CashRegister($shift, 127, Persist::CREATED);
 	}
 	
@@ -836,6 +825,10 @@ class WorkingDayDAM{
 	 * @return WorkingDay
 	 */
 	static public function insert($date){
+		$sql = 'CALL working_day_insert(:working_day, open)';
+		$params = array(':working_day' => $date, ':open' => 1);
+		DatabaseHandler::execute($sql, $params);
+		
 		return new WorkingDay($date, Persist::CREATED);
 	}
 }
