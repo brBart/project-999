@@ -2173,7 +2173,7 @@ class WorkingDay extends Persist{
 			if(!$this->isOpen())
 				throw new Exception('Jornada ya esta cerrada y no se pueden abrir mas cajas.');
 			
-			return WorkingDayDAM::insertCashRegister($shift);
+			return WorkingDayDAM::insertCashRegister($this, $shift);
 		}
 	}
 	
