@@ -614,7 +614,7 @@ class CashReceiptDAM{
 	static public function getInstance(Invoice $obj){
 		switch($obj->getId()){
 			case 123:
-				$receipt = new CashReceipt($obj, 123, PersistDocument::CREATED);
+				$receipt = new CashReceipt($obj, 123, $obj->getStatus());
 				$cash = new Cash(43.50, 123, Persist::CREATED);
 				$receipt->setData($cash);
 				return $receipt;
@@ -631,15 +631,6 @@ class CashReceiptDAM{
 	 * @param CashReceipt $obj
 	 */
 	static public function insert(CashReceipt $obj){
-		// Code here...
-	}
-	
-	/**
-	 * Cancels the document in the database.
-	 *
-	 * @param CashReceipt $obj
-	 */
-	static public function cancel(CashReceipt $obj){
 		// Code here...
 	}
 }
