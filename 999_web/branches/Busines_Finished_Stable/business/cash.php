@@ -1196,8 +1196,7 @@ class CashReceipt extends PersistDocument{
 						$deposit = Deposit::getInstance($id);
 						$deposit->cancel($user);
 					}
-					
-				CashReceiptDAM::cancel($this);
+				
 				$this->_mStatus = PersistDocument::CANCELLED;
 			}
 		}
@@ -1348,7 +1347,7 @@ class PaymentCardBrand extends Identifier{
 	static public function delete(PaymentCardBrand $obj){
 		self::validateObjectFromDatabase($obj);		
 		if(!PaymentCardBrandDAM::delete($obj))
-			throw new Exception('Marca de Tarjeta tiene dependencias y no se puede eliminar.');
+			throw new Exception('Marca de Tarjeta tiene dependencias (vouchers) y no se puede eliminar.');
 	}
 	
 	/**
