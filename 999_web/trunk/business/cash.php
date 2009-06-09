@@ -1196,8 +1196,7 @@ class CashReceipt extends PersistDocument{
 						$deposit = Deposit::getInstance($id);
 						$deposit->cancel($user);
 					}
-					
-				CashReceiptDAM::cancel($this);
+				
 				$this->_mStatus = PersistDocument::CANCELLED;
 			}
 		}
