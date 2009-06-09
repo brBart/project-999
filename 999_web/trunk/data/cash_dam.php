@@ -365,8 +365,6 @@ class PaymentCardTypeDAM{
  * @author Roberto Oliveros
  */
 class PaymentCardBrandDAM{
-	static private $_mName = 'Visa';
-	
 	/**
 	 * Returns a payment card brand if it founds an id match in the database. Otherwise returns NULL.
 	 *
@@ -374,9 +372,13 @@ class PaymentCardBrandDAM{
 	 * @return PaymentCardBrand
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$brand = new PaymentCardBrand(123, PersistObject::CREATED);
-			$brand->setData(self::$_mName);
+		$sql = 'CALL payment_card_brand_get(:payment_card_brand_id)';
+		$params = array(':payment_card_brand_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$brand = new PaymentCardBrand($id, Persist::CREATED);
+			$brand->setData($result['name']);
 			return $brand;
 		}
 		else
@@ -389,7 +391,12 @@ class PaymentCardBrandDAM{
 	 * @param PaymentCardBrand $obj
 	 */
 	static public function insert(PaymentCardBrand $obj){
-		return 123;
+		$sql = 'CALL payment_card_brand_insert(:name)';
+		$params = array(':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -398,7 +405,9 @@ class PaymentCardBrandDAM{
 	 * @param PaymentCardBrand $obj
 	 */
 	static public function update(PaymentCardBrand $obj){
-		self::$_mName = $obj->getName();
+		$sql = 'CALL payment_card_brand_update(:payment_card_brand_id, :name)';
+		$params = array(':payment_card_brand_id' => $obj->getId(), ':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -409,10 +418,16 @@ class PaymentCardBrandDAM{
 	 * @return boolean
 	 */
 	static public function delete(PaymentCardBrand $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL payment_card_brand_dependencies(:payment_card_brand_id)';
+		$params = array(':payment_card_brand_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the voucher table.
+		if($result) return false;
+		
+		$sql = 'CALL payment_card_brand_delete(:payment_card_brand_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
@@ -502,11 +517,11 @@ class CashDAM{
 	 * @return Cash
 	 */
 	static public function getInstance($id){
-		$sql = 'CALL cash_receipt_cash_get(:cash_receipt_id)';
+		$sql = 'CALL cash_receipt_exists(:cash_receipt_id)';
 		$params = array(':cash_receipt_id' => $id);
-		$result = DatabaseHandler::getRow($sql, $params);
+		$result = DatabaseHandler::getOne($sql, $params);
 		
-		if(!empty($result))
+		if($result > 0)
 			// Because the cash object consults directly with the database.
 			return new Cash(0.00, $id, Persist::CREATED);
 		else
@@ -781,8 +796,8 @@ class WorkingDayDAM{
 	 * @return CashRegister
 	 */
 	static public function getCashRegister(WorkingDay $workingDay, Shift $shift){
-		$sql = 'CALL cash_register_get(:working_day, :shift_id)';
-		$params = array(':working_day' => $workingDay->getDate(), ':shift_id' => $shift->getId());
+		$sql = 'CALL cash_register_working_day_shift_get(:working_day, :shift_id)';
+		$params = array(':working_day' => Date::dbFormat($workingDay->getDate()), ':shift_id' => $shift->getId());
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result))
@@ -815,11 +830,11 @@ class WorkingDayDAM{
 	 * @return WorkingDay
 	 */
 	static public function getInstance($date){
-		$sql = 'CALL working_day_get(:working_day)';
+		$sql = 'CALL working_day_exists(:working_day)';
 		$params = array(':working_day' => Date::dbFormat($date));
-		$result = DatabaseHandler::getRow($sql, $params);
+		$result = DatabaseHandler::getOne($sql, $params);
 		
-		if(!empty($result))
+		if($result > 0)
 			return new WorkingDay($date, Persist::CREATED);
 		else
 			return NULL;
@@ -834,7 +849,7 @@ class WorkingDayDAM{
 	 */
 	static public function insert($date){
 		$sql = 'CALL working_day_insert(:working_day)';
-		$params = array(':working_day' => $date);
+		$params = array(':working_day' => Date::dbFormat($date));
 		DatabaseHandler::execute($sql, $params);
 		
 		return new WorkingDay($date, Persist::CREATED);
