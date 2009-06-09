@@ -781,8 +781,12 @@ class WorkingDayDAM{
 	 * @return CashRegister
 	 */
 	static public function getCashRegister(WorkingDay $workingDay, Shift $shift){
-		if($workingDay->getDate() == date('d/m/Y') && $shift->getId() == 123)
-			return CashRegister::getInstance(123);
+		$sql = 'CALL cash_register_get(:working_day, :shift_id)';
+		$params = array(':working_day' => $workingDay->getDate(), ':shift_id' => $shift->getId());
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result))
+			return new CashRegister($shift, (int)$result['cash_register_id'], Persist::CREATED);
 		else
 			return NULL;
 	}
@@ -794,7 +798,13 @@ class WorkingDayDAM{
 	 * @return CashRegister
 	 */
 	static public function insertCashRegister(WorkingDay $workingDay, Shift $shift){
-		return new CashRegister($shift, 127, Persist::CREATED);
+		$sql = 'CALL cash_register_insert(:working_day, :shift_id)';
+		$params = array(':working_day' => Date::dbFormat($workingDay->getDate()), ':shift_id' => $shift->getId());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'Call get_last_insert_id()';
+		$id = (int)DatabaseHandler::getOne($sql);
+		return new CashRegister($shift, $id, Persist::CREATED);
 	}
 	
 	/**
@@ -805,16 +815,14 @@ class WorkingDayDAM{
 	 * @return WorkingDay
 	 */
 	static public function getInstance($date){
-		switch($date){
-			case date('d/m/Y'):
-				$working_day = new WorkingDay(date('d/m/Y'), Persist::CREATED);
-				return $working_day;
-				break;
-				
-			default:
-				$working_day = new WorkingDay($date, Persist::CREATED);
-				return $working_day;
-		}
+		$sql = 'CALL working_day_get(:working_day)';
+		$params = array(':working_day' => Date::dbFormat($date));
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result))
+			return new WorkingDay($date, Persist::CREATED);
+		else
+			return NULL;
 	}
 	
 	/**
@@ -825,8 +833,8 @@ class WorkingDayDAM{
 	 * @return WorkingDay
 	 */
 	static public function insert($date){
-		$sql = 'CALL working_day_insert(:working_day, open)';
-		$params = array(':working_day' => $date, ':open' => 1);
+		$sql = 'CALL working_day_insert(:working_day)';
+		$params = array(':working_day' => $date);
 		DatabaseHandler::execute($sql, $params);
 		
 		return new WorkingDay($date, Persist::CREATED);
