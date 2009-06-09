@@ -565,15 +565,6 @@ class CashReceiptDAM{
 	static public function insert(CashReceipt $obj){
 		// Code here...
 	}
-	
-	/**
-	 * Cancels the document in the database.
-	 *
-	 * @param CashReceipt $obj
-	 */
-	static public function cancel(CashReceipt $obj){
-		// Code here...
-	}
 }
 
 
