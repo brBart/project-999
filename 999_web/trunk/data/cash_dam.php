@@ -544,17 +544,29 @@ class CashReceiptDAM{
 	 * @return CashReceipt
 	 */
 	static public function getInstance(Invoice $obj){
-		switch($obj->getId()){
-			case 123:
-				$receipt = new CashReceipt($obj, 123, PersistDocument::CREATED);
-				$cash = new Cash(43.50, 123, Persist::CREATED);
-				$receipt->setData($cash);
-				return $receipt;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL cash_receipt_get(:cash_receipt_id)';
+		$params = array(':cash_receipt_id' => $obj->getId());
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$cash_receipt = new CashReceipt($obj, $obj->getId(), $obj->getStatus());
+			$cash = new Cash(0.0, $obj->getId(), Persist::CREATED);
+			
+			$sql = 'CALL voucher_get(:cash_receipt_id)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			foreach($items_result as $voucher){
+				$type = PaymentCardType::getInstance((int)$voucher['payment_card_type_id']);
+				$brand = PaymentCardBrand::getInstance((int)$voucher['payment_card_brand_id']);
+				$card = new PaymentCard($voucher['number'], $type, $brand, $voucher['name'],
+						$voucher['expiration_date']);
+				$vouchers[] = new Voucher($voucher['transaction'], $card, $voucher['amount']);
+			}
+			
+			$cash_receipt->setData($cash, $result['total_vouchers'], $result['change_amount'], $vouchers);
+			return $cash_receipt;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -563,7 +575,27 @@ class CashReceiptDAM{
 	 * @param CashReceipt $obj
 	 */
 	static public function insert(CashReceipt $obj){
-		// Code here...
+		$sql = 'CALL cash_receipt_insert(:cash_receipt_id, :change, :cash, :total_vouchers)';
+		$invoice = $obj->getInvoice();
+		$cash = $obj->getCash();
+		$params = array(':cash_receipt_id' => $invoice->getId(), ':change' => $obj->getChange(),
+				':cash' => $cash->getAmount(), ':total_vouchers' => $obj->getTotalVouchers());
+		DatabaseHandler::execute($sql, $params);
+		
+		$vouchers = $obj->getVouchers();
+		foreach($vouchers as $voucher){
+			$sql = 'CALL voucher_insert(:cash_receipt_id, :transaction, :amount, :payment_card_number, ' .
+					':payment_card_type_id, :payment_card_brand_id, :name, :expiration_date)';
+			$card = $voucher->getPaymentCard();
+			$type = $card->getType();
+			$brand = $card->getBrand();
+			$params = array(':cash_receipt_id' => $invoice->getId(),
+					':transaction' => $voucher->getTransactionNumber(), ':amount' => $voucher->getAmount(),
+					':payment_card_number' => $card->getNumber(), ':payment_card_type_id' => $type->getId(),
+					':payment_card_brand_id' => $brand->getId(), ':name' => $card->getHolderName(),
+					':expiration_date' => Date::dbFormat($card->getExpirationDate()));
+			DatabaseHandler::execute($sql, $params);
+		}
 	}
 }
 
