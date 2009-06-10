@@ -902,11 +902,21 @@ class WorkingDayDAM{
  * @author Roberto Oliveros
  */
 class GeneralSalesReportDAM{
-	
+	/**
+	 * Returns a general sales report with data from the database.
+	 *
+	 * @param WorkingDay $obj
+	 * @return GeneralSalesReport
+	 */
 	static public function getInstance(WorkingDay $obj){
-		$registers = array(array('register_id' => 123, 'shift' => 'Diurno', 'total' => 235.38),
-							array('register_id' => 124, 'shift' => 'Nocturno', 'total' => 212.43));
-		return new GeneralSalesReport(525.32, $registers);
+		$sql = 'CALL general_sales_report_cash_registers_get(:working_day)';
+		$params = array(':working_day' => Date::dbFormat($obj->getDate()));
+		$cash_registers = DatabaseHandler::getAll($sql, $params);
+		
+		$sql = 'CALL general_sales_report_total(:working_day)';
+		$total = (float)DatabaseHandler::getOne($sql, $params);
+		
+		return new GeneralSalesReport($total, $cash_registers);
 	}
 }
 
