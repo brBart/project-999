@@ -1284,7 +1284,7 @@ class PaymentCardType extends Identifier{
 	static public function delete(PaymentCardType $obj){
 		self::validateObjectFromDatabase($obj);		
 		if(!PaymentCardTypeDAM::delete($obj))
-			throw new Exception('Tipo de Tarjeta tiene dependencias y no se puede eliminar.');
+			throw new Exception('Tipo de Tarjeta tiene dependencias (vouchers) y no se puede eliminar.');
 	}
 	
 	/**
