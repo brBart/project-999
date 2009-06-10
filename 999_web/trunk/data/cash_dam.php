@@ -307,8 +307,6 @@ class CashRegisterDAM{
  * @author Roberto Oliveros
  */
 class PaymentCardTypeDAM{
-	static private $_mName = 'Credito';
-	
 	/**
 	 * Returns a type of payment card if it founds an id match in the database. Otherwise returns NULL.
 	 *
@@ -316,9 +314,13 @@ class PaymentCardTypeDAM{
 	 * @return PaymentCardType
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$type = new PaymentCardType(123, PersistObject::CREATED);
-			$type->setData(self::$_mName);
+		$sql = 'CALL payment_card_type_get(:payment_card_type_id)';
+		$params = array(':payment_card_type_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$type = new PaymentCardType($id, Persist::CREATED);
+			$type->setData($result['name']);
 			return $type;
 		}
 		else
@@ -331,7 +333,12 @@ class PaymentCardTypeDAM{
 	 * @param PaymentCardType $obj
 	 */
 	static public function insert(PaymentCardType $obj){
-		return 123;
+		$sql = 'CALL payment_card_type_insert(:name)';
+		$params = array(':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -340,7 +347,9 @@ class PaymentCardTypeDAM{
 	 * @param PaymentCardType $obj
 	 */
 	static public function update(PaymentCardType $obj){
-		self::$_mName = $obj->getName();
+		$sql = 'CALL payment_card_type_update(:payment_card_type_id, :name)';
+		$params = array(':payment_card_type_id' => $obj->getId(), ':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -351,10 +360,16 @@ class PaymentCardTypeDAM{
 	 * @return boolean
 	 */
 	static public function delete(PaymentCardType $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL payment_card_type_dependencies(:payment_card_type_id)';
+		$params = array(':payment_card_type_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the voucher table.
+		if($result) return false;
+		
+		$sql = 'CALL payment_card_type_delete(:payment_card_type_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
