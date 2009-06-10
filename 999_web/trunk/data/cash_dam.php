@@ -567,7 +567,7 @@ class CashReceiptDAM{
 			$cash_receipt = new CashReceipt($obj, $obj->getId(), $obj->getStatus());
 			$cash = new Cash(0.0, $obj->getId(), Persist::CREATED);
 			
-			$sql = 'CALL voucher_get(:cash_receipt_id)';
+			$sql = 'CALL voucher_list_get(:cash_receipt_id)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			foreach($items_result as $voucher){
 				$type = PaymentCardType::getInstance((int)$voucher['payment_card_type_id']);
@@ -960,14 +960,14 @@ class AvailableCashReceiptListDAM{
 	/**
 	 * Returns an array with all the receipts with cash available that belongs to the provided cash register.
 	 *
-	 * The array contains the fields receipt_id, received_cash and available_cash.
+	 * The array contains the fields cash_receipt_id, received_cash and available_cash.
 	 * @param CashRegister $obj
 	 * @return array
 	 */
 	static public function getList(CashRegister $obj){
-		if($obj->getId() == 123)
-			return array(array('receipt_id' => 123, 'received_cash' => 42.39, 'available_cash' => 20.00),
-						array('receipt_id' => 124, 'received_cash' => 480.32, 'available_cash' => 100.00));
+		$sql = 'CALL cash_receipt_available_list_get(:cash_register_id)';
+		$params = array(':cash_register_id' => $obj->getId());
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 ?>
