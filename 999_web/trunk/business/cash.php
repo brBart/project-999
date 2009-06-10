@@ -1932,9 +1932,9 @@ class SalesReport{
 	 * Constructs the sales report with the provided data.
 	 *
 	 * Call only from the database layer. Use getInstance() method instead.
-	 * @param float $total
 	 * @param float $totalVouchers
 	 * @param float $totalCash
+	 * @param float $totalVat
 	 * @param array $invoices
 	 * @throws Exception
 	 */
