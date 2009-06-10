@@ -572,12 +572,13 @@ class CashReceiptDAM{
 			foreach($items_result as $voucher){
 				$type = PaymentCardType::getInstance((int)$voucher['payment_card_type_id']);
 				$brand = PaymentCardBrand::getInstance((int)$voucher['payment_card_brand_id']);
-				$card = new PaymentCard($voucher['number'], $type, $brand, $voucher['name'],
+				$card = new PaymentCard((int)$voucher['payment_card_number'], $type, $brand, $voucher['name'],
 						$voucher['expiration_date']);
-				$vouchers[] = new Voucher($voucher['transaction'], $card, $voucher['amount']);
+				$vouchers[] = new Voucher($voucher['transaction'], $card, (float)$voucher['amount']);
 			}
 			
-			$cash_receipt->setData($cash, $result['total_vouchers'], $result['change_amount'], $vouchers);
+			$cash_receipt->setData($cash, (float)$result['total_vouchers'], (float)$result['change_amount'],
+					$vouchers);
 			return $cash_receipt;
 		}
 		else
