@@ -1098,10 +1098,9 @@ class CashReceipt extends PersistDocument{
 	 * @param float $totalVouchers
 	 * @param array<Voucher> $vouchers
 	 */
-	public function setData(Cash $cash = NULL, $totalVouchers = 0.0, $change = 0.0, $vouchers = NULL){
+	public function setData(Cash $cash, $totalVouchers = 0.0, $change = 0.0, $vouchers = NULL){
 		try{
-			if(!is_null($cash))
-				self::validateObjectFromDatabase($cash);
+			self::validateObjectFromDatabase($cash);
 				
 			if($totalVouchers !== 0.0){
 				Number::validatePositiveFloat($totalVouchers, 'Total inv&aacute;lido.');
