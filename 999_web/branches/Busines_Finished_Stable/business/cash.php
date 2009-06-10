@@ -994,6 +994,7 @@ class CashReceipt extends PersistDocument{
 			
 		$invoice->hasCashReceipt(true);
 		$this->_mInvoice = $invoice;
+		$this->_mCash = new Cash(0.0);
 	}
 	
 	/**
@@ -1233,7 +1234,7 @@ class CashReceipt extends PersistDocument{
 	 * @throws Exception
 	 */
 	private function validateMainProperties(){
-		if(is_null($this->_mCash) && empty($this->_mVouchers))
+		if($this->_mCash->getAmount() <= 0 && empty($this->_mVouchers))
 			throw new Exception('Favor ingresar efectivo o algun voucher.');
 
 		if(bccomp($this->getTotal(), $this->_mInvoice->getTotal(), 2))
@@ -1284,7 +1285,7 @@ class PaymentCardType extends Identifier{
 	static public function delete(PaymentCardType $obj){
 		self::validateObjectFromDatabase($obj);		
 		if(!PaymentCardTypeDAM::delete($obj))
-			throw new Exception('Tipo de Tarjeta tiene dependencias y no se puede eliminar.');
+			throw new Exception('Tipo de Tarjeta tiene dependencias (vouchers) y no se puede eliminar.');
 	}
 	
 	/**
