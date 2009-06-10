@@ -2246,7 +2246,7 @@ class GeneralSalesReport{
 	 */
 	public function __construct($total, $cashRegisters){
 		try{
-			Number::validatePositiveFloat($total, 'Monto inv&aacute;lido.');
+			Number::validateUnsignedFloat($total, 'Monto inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en GeneralSalesReport con datos ' .
 					'erroneos! ' . $e->getMessage());
