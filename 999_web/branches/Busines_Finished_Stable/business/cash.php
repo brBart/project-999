@@ -1905,21 +1905,28 @@ class SalesReport{
 	 *
 	 * @var float
 	 */
-	private $_mTotalVouchers = 0.00;
+	private $_mTotalVouchers;
 	
 	/**
 	 * Holds the total monetary amount in cash.
 	 *
 	 * @var float
 	 */
-	private $_mTotalCash = 0.00;
+	private $_mTotalCash;
+	
+	/**
+	 * Holds the total monetary amount of the discounts made of all the invoices.
+	 *
+	 * @var float
+	 */
+	private $_mTotalDiscount;
 	
 	/**
 	 * Holds the total monetary amount of the vat of all the invoices.
 	 *
 	 * @var float
 	 */
-	private $_mTotalVat = 0.00;
+	private $_mTotalVat;
 	
 	/**
 	 * Holds an array with the invoices' id and total amounts belonging to the report's cash register.
@@ -1932,16 +1939,18 @@ class SalesReport{
 	 * Constructs the sales report with the provided data.
 	 *
 	 * Call only from the database layer. Use getInstance() method instead.
-	 * @param float $total
 	 * @param float $totalVouchers
 	 * @param float $totalCash
+	 * @param float $totalDiscount
+	 * @param float $totalVat
 	 * @param array $invoices
 	 * @throws Exception
 	 */
-	public function __construct($totalVouchers, $totalCash, $totalVat, $invoices){
+	public function __construct($totalVouchers, $totalCash, $totalDiscount, $totalVat, $invoices){
 		try{
 			Number::validateFloat($totalVouchers, 'Total de vouchers inv&aacute;lido.');
 			Number::validateFloat($totalCash, 'Total de efectivo inv&aacute;lido.');
+			Number::validateFloat($totalDiscount, 'Total de descuento inv&aacute;lido.');
 			Number::validateFloat($totalVat, 'Total de I.V.A. inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en SalesReport con datos erroneos! ' .
@@ -1951,6 +1960,7 @@ class SalesReport{
 		
 		$this->_mTotalVouchers = $totalVouchers;
 		$this->_mTotalCash = $totalCash;
+		$this->_mTotalDiscount = $totalDiscount;
 		$this->_mTotalVat = $totalVat;
 		$this->_mInvoices = $invoices;
 	}
@@ -1961,7 +1971,7 @@ class SalesReport{
 	 * @return float
 	 */
 	public function getTotal(){
-		return $this->_mTotalVouchers + $this->_mTotalCash;
+		return ($this->_mTotalVouchers + $this->_mTotalCash) - $this->_mTotalDiscount;
 	}
 	
 	/**
