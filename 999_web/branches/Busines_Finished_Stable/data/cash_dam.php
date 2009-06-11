@@ -719,12 +719,12 @@ class SalesReportDAM{
 	static public function getInstance(CashRegister $obj){
 		switch($obj->getId()){
 			case 123:
-				$invoices = array(array('serial_number' => 'A021', 'number' => 123,
-									'name' => 'Roberto', 'total' => 23.45),
-								array('serial_number' => 'A021', 'number' => 124,
-									'name' => 'Carlos', 'total' => 33.81),
-								array('serial_number' => 'A021', 'number' => 125,
-									'name' => 'Jose', 'total' => 135.15));
+				$invoices = array(array('serial_number' => 'A021', 'number' => 123, 'name' => 'Roberto',
+						'cash' => 2.23, 'payment_cards' => 2.34, 'discount' => 32.32, 'total' => 23.45),
+						array('serial_number' => 'A021', 'number' => 124, 'name' => 'Carlos',
+						'cash' => 2.23, 'payment_cards' => 2.34, 'discount' => 32.32, 'total' => 33.81),
+						array('serial_number' => 'A021', 'number' => 125, 'name' => 'Jose',
+						'cash' => 2.23, 'payment_cards' => 2.34, 'discount' => 32.32, 'total' => 135.15));
 				$report = new SalesReport(0.0, 231.49, 25.50, 23.14, $invoices);
 				return $report;
 				break;
