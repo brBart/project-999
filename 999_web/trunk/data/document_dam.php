@@ -6,6 +6,11 @@
  */
 
 /**
+ * For accessing the database.
+ */
+require_once('data/database_handler.php');
+
+/**
  * Class for accessing document bonus detail tables.
  * @package DocumentDAM
  * @author Roberto Oliveros
@@ -114,12 +119,6 @@ class ReserveDAM{
  * @author Roberto Oliveros
  */
 class CorrelativeDAM{
-	static private $_mDefaultA021 = false;
-	static private $_mCurrentA021 = 457;
-	
-	static private $_mDefaultA022 = true;
-	static private $_mCurrentA022 = 0;
-	
 	/**
 	 * Returns true if a a correlative with the provided serial number exists in the database.
 	 *
@@ -127,18 +126,14 @@ class CorrelativeDAM{
 	 * @return boolean
 	 */
 	static public function exists($serialNumber){
-		switch($serialNumber){
-			case 'A021':
-				return true;
-				break;
-				
-			case 'A022':
-				return true;
-				break;
-				
-			default:
-				return false;
-		}
+		$sql = 'CALL correlative_exists(:serial_number)';
+		$params = array(':serial_number' => $serialNumber);
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		if($result > 0)
+			return true;
+		else
+			return false;
 	}
 	
 	/**
@@ -171,19 +166,9 @@ class CorrelativeDAM{
 	 * @param Correlative $obj
 	 */
 	static public function makeDefault(Correlative $obj){
-		switch($obj->getSerialNumber()){
-			case 'A021':
-				self::$_mDefaultA021 = true;
-				self::$_mDefaultA022 = false;
-				break;
-			
-			case 'A022':
-				self::$_mDefaultA021 = false;
-				self::$_mDefaultA022 = true;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL correlative_make_default(:serial_number)';
+		$params = array(':serial_number' => $obj->getSerialNumber());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -194,24 +179,19 @@ class CorrelativeDAM{
 	 * @return Correlative
 	 */
 	static public function getInstance($serialNumber){
-		switch($serialNumber){
-			case 'A021':
-				$correlative = new Correlative($serialNumber, self::$_mDefaultA021,
-						self::$_mCurrentA021, Persist::CREATED);
-				$correlative->setData('2008-10', '15/01/2008', 100, 5000);
-				return $correlative;
-				break;
-				
-			case 'A022':
-				$correlative = new Correlative($serialNumber, self::$_mDefaultA022,
-						self::$_mCurrentA022, Persist::CREATED);
-				$correlative->setData('2008-05', '15/01/2008', 5000, 10000);
-				return $correlative;
-				break;
-			
-			default:
-				return NULL;
+		$sql = 'CALL correlative_get(:serial_number)';
+		$params = array(':serial_number' => $serialNumber);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$correlative = new Correlative($serialNumber, (boolean)$result['is_default'], (int)$result['current'],
+					Persist::CREATED);
+			$correlative->setData($result['resolution_number'], $result['resolution_date'],
+					(int)$result['initial_number'], (int)$result['final_number']);
+			return $correlative;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -240,7 +220,13 @@ class CorrelativeDAM{
 	 * @param Correlative $obj
 	 */
 	static public function insert(Correlative $obj){
-		// Code here...
+		$sql = 'CALLL correlative_insert(:serial_number, :resolution_number, :resolution_date, :initial_number ' .
+				':final_number)';
+		$params = array(':serial_number' => $obj->getSerialNumber(),
+				':resolution_number' => $obj->getResolutionNumber(),
+				':resolution_date' => $obj->getResolutionDate(), ':initial_number' => $obj->getInitialNumber(),
+				':final_number' => $obj->getFinalNumber());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -251,10 +237,16 @@ class CorrelativeDAM{
 	 * @return boolean
 	 */
 	static public function delete(Correlative $obj){
-		if($obj->getSerialNumber() == 'A021')
-			return true;
-		else
-			return false;
+		$sql = 'CALL correlative_dependencies(:serial_number)';
+		$params = array(':serial_number' => $obj->getSerialNumber());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the invoice table.
+		if($result) return false;
+		
+		$sql = 'CALL correlative_delete(:serial_number)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
