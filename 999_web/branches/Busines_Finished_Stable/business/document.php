@@ -1155,12 +1155,12 @@ class Correlative extends Persist{
 	}
 	
 	/**
-	 * Returns the default correlative.
+	 * Returns the serial number of the default correlative.
 	 *
-	 * @return Correlative
+	 * @return string
 	 */
-	static public function getDefaultInstance(){
-		return CorrelativeDAM::getDefaultInstance();
+	static public function getDefaultSerialNumber(){
+		return CorrelativeDAM::getDefaultSerialNumber();
 	}
 	
 	/**
@@ -1187,7 +1187,7 @@ class Correlative extends Persist{
 			throw new Exception('Correlativo predeterminado, no se puede eliminar.');
 		
 		if(!CorrelativeDAM::delete($obj))
-			throw new Exception('Correlativo tiene dependencias y no se puede eliminar.');
+			throw new Exception('Correlativo tiene dependencias (facturas) y no se puede eliminar.');
 	}
 	
 	/**
@@ -1584,7 +1584,8 @@ class Invoice extends Document{
 	 */
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
-			$this->_mCorrelative = Correlative::getDefaultInstance();
+			$serial_number = Correlative::getDefaultSerialNumber();
+			$this->_mCorrelative = Correlative::getInstance($serial_number);
 			$this->validateMainProperties();
 			
 			$this->_mVatPercentage = Vat::getInstance()->getPercentage();
