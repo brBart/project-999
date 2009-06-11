@@ -1187,7 +1187,7 @@ class Correlative extends Persist{
 			throw new Exception('Correlativo predeterminado, no se puede eliminar.');
 		
 		if(!CorrelativeDAM::delete($obj))
-			throw new Exception('Correlativo tiene dependencias y no se puede eliminar.');
+			throw new Exception('Correlativo tiene dependencias (facturas) y no se puede eliminar.');
 	}
 	
 	/**
