@@ -142,22 +142,20 @@ class CorrelativeDAM{
 	 * @return boolean
 	 */
 	static public function isEmpty(){
-		return false;
+		$sql = 'CALL correlative_is_empty()';
+		return (boolean)DatabaseHandler::getOne($sql);
 	}
 	
-	
+	/**
+	 * Returns the next number in the correlative and increments the current field by one.
+	 *
+	 * @param Correlative $obj
+	 * @return integer
+	 */
 	static public function getNextNumber(Correlative $obj){
-		switch($obj->getSerialNumber()){
-			case 'A021':
-				return ++self::$_mCurrentA021;
-				break;
-			
-			case 'A022':
-				return ++self::$_mCurrentA022;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL correlative_next_number(:serial_number)';
+		$params = array(':serial_number' => $obj->getSerialNumber());
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -210,12 +208,12 @@ class CorrelativeDAM{
 	 * @param Correlative $obj
 	 */
 	static public function insert(Correlative $obj){
-		$sql = 'CALLL correlative_insert(:serial_number, :resolution_number, :resolution_date, :initial_number ' .
+		$sql = 'CALL correlative_insert(:serial_number, :resolution_number, :resolution_date, :initial_number, ' .
 				':final_number)';
 		$params = array(':serial_number' => $obj->getSerialNumber(),
 				':resolution_number' => $obj->getResolutionNumber(),
-				':resolution_date' => $obj->getResolutionDate(), ':initial_number' => $obj->getInitialNumber(),
-				':final_number' => $obj->getFinalNumber());
+				':resolution_date' => Date::dbFormat($obj->getResolutionDate()),
+				':initial_number' => $obj->getInitialNumber(), ':final_number' => $obj->getFinalNumber());
 		DatabaseHandler::execute($sql, $params);
 	}
 	
