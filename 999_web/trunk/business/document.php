@@ -1155,12 +1155,12 @@ class Correlative extends Persist{
 	}
 	
 	/**
-	 * Returns the default correlative.
+	 * Returns the serial number of the default correlative.
 	 *
-	 * @return Correlative
+	 * @return string
 	 */
-	static public function getDefaultInstance(){
-		return CorrelativeDAM::getDefaultInstance();
+	static public function getDefaultSerialNumber(){
+		return CorrelativeDAM::getDefaultSerialNumber();
 	}
 	
 	/**
@@ -1584,7 +1584,8 @@ class Invoice extends Document{
 	 */
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
-			$this->_mCorrelative = Correlative::getDefaultInstance();
+			$serial_number = Correlative::getDefaultSerialNumber();
+			$this->_mCorrelative = Correlative::getInstance($serial_number);
 			$this->validateMainProperties();
 			
 			$this->_mVatPercentage = Vat::getInstance()->getPercentage();
