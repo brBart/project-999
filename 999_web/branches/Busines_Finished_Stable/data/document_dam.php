@@ -215,21 +215,15 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Returns the default correlative.
+	 * Returns the serial number of the default correlative.
 	 *
-	 * @return Correlative
+	 * @return String
 	 */
-	static public function getDefaultInstance(){
-		if(self::$_mDefaultA021){
-			$correlative = new Correlative('A021', true, self::$_mCurrentA021, Persist::CREATED);
-			$correlative->setData('2008-10', '15/01/2008', 5000, 10000);
-			return $correlative;
-		}
-		elseif(self::$_mDefaultA022){
-			$correlative = new Correlative('A022', true, self::$_mCurrentA022, Persist::CREATED);
-			$correlative->setData('2008-05', '15/01/2008', 100, 5000);
-			return $correlative;
-		}
+	static public function getDefaultSerialNumber(){
+		if(self::$_mDefaultA021)
+			return 'A021';
+		elseif(self::$_mDefaultA022)
+			return 'A022';
 		else
 			return NULL;
 	}
