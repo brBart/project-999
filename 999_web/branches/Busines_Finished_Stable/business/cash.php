@@ -1993,6 +1993,15 @@ class SalesReport{
 	}
 	
 	/**
+	 * Returns the total discount amount of the report.
+	 *
+	 * @return float
+	 */
+	public function getTotalDiscount(){
+		return $this->_mTotalDiscount;
+	}
+	
+	/**
 	 * Returns the Vat percentage applied to the report's total amount.
 	 *
 	 * @return float
