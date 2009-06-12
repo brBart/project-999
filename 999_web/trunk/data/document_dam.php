@@ -47,7 +47,24 @@ class DocProductDetailDAM{
 	 * @param integer $number
 	 */
 	static public function insert(DocProductDetail $detail, Document $doc, $number){
-		// Code here...
+		if($doc instanceof PurchaseReturn)
+			$sp = 'purchase_return_lot_insert';
+		elseif($doc instanceof Shipment)
+			$sp = 'shipment_lot_insert';
+		elseif($doc instanceof Invoice)
+			$sp = 'invoice_lot_insert';
+		elseif($doc instanceof Receipt)
+			$sp = 'receipt_lot_insert';
+		elseif($doc instanceof EntryIA)
+			$sp = 'entry_adjustment_lot_insert';
+		elseif($doc instanceof WithdrawIA)
+			$sp = 'withdraw_adjustment_lot_insert';
+			
+		$sql = 'CALL '. $sp . '(:document_id, :lot_id, :quantity, :price, :number)';
+		$lot = $detail->getLot();
+		$params = array(':document_id' => $doc->getId(), ':lot_id' => $lot->getId(),
+				':quantity' => $detail->getQuantity(), ':price' => $detail->getPrice(), ':number' => $number);
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
