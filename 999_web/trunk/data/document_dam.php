@@ -279,10 +279,14 @@ class DiscountDAM{
 	 * @return Discount
 	 */
 	static public function getInstance(Invoice $obj){
-		if($obj->getId() == 123){
-			$user = UserAccount::getInstance('roboli');
+		$sql = 'CALL discount_get(:invoice_id)';
+		$params = array(':invoice_id' => $obj->getId());
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
 			$discount = new Discount($user, Persist::CREATED);
-			$discount->setData($obj, 25.00);
+			$discount->setData($obj, (float)$result['percentage']);
 			return $discount;
 		}
 		else
@@ -295,7 +299,12 @@ class DiscountDAM{
 	 * @param Discount $obj
 	 */
 	static public function insert(Discount $obj){
-		// Code here...
+		$sql = 'CALL discount_insert(:invoice_id, :username, :percentage)';
+		$invoice = $obj->getInvoice();
+		$user = $obj->getUser();
+		$params = array(':invoice_id' => $invoice->getId(), ':username' => $user->getUserName(),
+				':percentage' => $obj->getPercentage());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
