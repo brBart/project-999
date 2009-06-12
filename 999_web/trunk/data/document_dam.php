@@ -24,7 +24,11 @@ class DocBonusDetailDAM{
 	 * @param integer $number
 	 */
 	static public function insert(DocBonusDetail $detail, Document $doc, $number){
-		// Code here...
+		$sql = 'CALL invoice_bonus_insert(:invoice_id, :bonus_id, :number, :price)';
+		$bonus = $detail->getBonus();
+		$params = array(':invoice_id' => $doc->getId(), ':bonus_id' => $bonus->getId(), ':number' => $number,
+				':price' => $detail->getPrice());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
