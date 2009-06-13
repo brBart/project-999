@@ -6,6 +6,11 @@
  */
 
 /**
+ * For accessing the database.
+ */
+require_once('data/database_handler.php');
+
+/**
  * Class for accessing unit of measure tables in the database.
  * @package ProductDAM
  * @author Roberto Oliveros
@@ -72,8 +77,6 @@ class UnitOfMeasureDAM{
  * @author Roberto Oliveros
  */
 class ManufacturerDAM{
-	static private $_mName = 'Bayer';
-	
 	/**
 	 * Returns an instance of a manufacturer.
 	 *
@@ -82,9 +85,13 @@ class ManufacturerDAM{
 	 * @return Manufacturer
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$manufacturer = new Manufacturer($id, PersistObject::CREATED);
-			$manufacturer->setData(self::$_mName);
+		$sql = 'CALL manufacturer_get(:manufacturer_id)';
+		$params = array(':manufacturer_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$manufacturer = new Manufacturer($id, Persist::CREATED);
+			$manufacturer->setData($result['name']);
 			return $manufacturer;
 		}
 		else
@@ -99,7 +106,12 @@ class ManufacturerDAM{
 	 * @return integer
 	 */
 	static public function insert(Manufacturer $obj){
-		return 123;
+		$sql = 'CALL manufacturer_insert(:name)';
+		$params = array(':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -108,7 +120,9 @@ class ManufacturerDAM{
 	 * @param Manufacturer $obj
 	 */
 	static public function update(Manufacturer $obj){
-		self::$_mName = $obj->getName();
+		$sql = 'CALL manufacturer_update(:manufacturer_id, :name)';
+		$params = array(':manufacturer_id' => $obj->getId(), ':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -119,10 +133,16 @@ class ManufacturerDAM{
 	 * @return boolean
 	 */
 	static public function delete(Manufacturer $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL manufacturer_dependencies(:manufacturer_id)';
+		$params = array(':manufacturer_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the product table.
+		if($result) return false;
+		
+		$sql = 'CALL manufacturer_delete(:manufacturer_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
