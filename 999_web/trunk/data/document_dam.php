@@ -420,7 +420,10 @@ class PurchaseReturnDAM{
 	 * @param string $date
 	 */
 	static public function cancel(PurchaseReturn $purchaseReturn, UserAccount $user, $date){
-		// Code here...
+		$sql = 'CALL purchase_return_cancel(:purchase_return_id, :username, :date)';
+		$params = array(':purchase_return_id' => $purchaseReturn->getId(), ':username' => $user->getUserName(),
+				':date' => Date::dbFormat($date));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -429,26 +432,48 @@ class PurchaseReturnDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return PurchaseReturn
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
-		switch($id){
-			case 123:
-				$return = new PurchaseReturn('25/04/2009', UserAccount::getInstance('roboli'), $id,
-						PersistDocument::CREATED);
-				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
-				$return->setData(Supplier::getInstance(123), 'Product en mal estado.', 39.50, $details);
-				$total_pages = 1;
-				$total_items = 1;
-				return $return;
-				break;
-				
-			default:
-				return NULL;
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL purchase_return_get(:purchase_return_id)';
+		$params = array(':purchase_return_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
+			$purchase_return = new PurchaseReturn($result['date'], $user, $id, (int)$result['status']);
+			$supplier = Supplier::getInstance((int)$result['supplier_id']);
+			
+			$sql = 'CALL purchase_return_lot_count(:purchase_return_id)';
+			$totalItems = DatabaseHandler::getOne($sql, $params);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('purchase_return_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('purchase_return_id' => $id, ':start_item' => 0,
+						':items_per_page' => $totalItems);
+			
+			$sql = 'CALL purchase_return_lot_get(:purchase_return_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$lot = Lot::getInstance((int)$detail['lot_id']);
+				$details[] = new DocProductDetail($lot, new Withdraw(), (int)$detail['quantity'],
+						(float)$detail['price']);
+			}
+			
+			$purchase_return->setData($supplier, $result['reason'], (float)$result['total'], $details,
+					$result['contact']);
+			return $purchase_return;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -459,7 +484,17 @@ class PurchaseReturnDAM{
 	 * @return integer
 	 */
 	static public function insert(PurchaseReturn $obj){
-		return 123;
+		$sql = 'CALL purchase_return_insert(:username, :supplier_id, :date, :reason, :contact, :total, :status)';
+		$user = $obj->getUser();
+		$supplier = $obj->getSupplier();
+		$params = array(':username' => $user->getUserName(), ':supplier_id' => $supplier->getId(),
+				':date' => Date::dbFormat($obj->getDate()), ':reason' => $obj->getReason(),
+				':contact' => $obj->getContact(), ':total' => $obj->getTotal(),
+				':status' => PersistDocument::CREATED);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 }
 
