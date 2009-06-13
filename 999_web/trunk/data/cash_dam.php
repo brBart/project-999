@@ -569,6 +569,8 @@ class CashReceiptDAM{
 			
 			$sql = 'CALL voucher_list_get(:cash_receipt_id)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$vouchers = array();
 			foreach($items_result as $voucher){
 				$type = PaymentCardType::getInstance((int)$voucher['payment_card_type_id']);
 				$brand = PaymentCardBrand::getInstance((int)$voucher['payment_card_brand_id']);
@@ -707,7 +709,6 @@ class DepositDAM{
 			$deposit = new Deposit($cash_register, $result['created_date'], $user, $id, (int)$result['status']);
 					
 			$sql = 'CALL deposit_cash_receipt_count(:deposit_id)';
-			$params = array(':deposit_id' => $id);
 			$totalItems = DatabaseHandler::getOne($sql, $params);
 			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 			
@@ -720,6 +721,7 @@ class DepositDAM{
 			$sql = 'CALL deposit_cash_receipt_get(:deposit_id, :start_item, :items_per_page)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
+			$details = array();
 			foreach($items_result as $detail){
 				// Because the cash object consults directly with the database.
 				$cash = new Cash(0.00, (int)$detail['cash_receipt_id'], Persist::CREATED);
