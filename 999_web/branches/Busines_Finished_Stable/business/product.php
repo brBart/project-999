@@ -57,7 +57,7 @@ class UnitOfMeasure extends Identifier{
 	static public function delete(UnitOfMeasure $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!UnitOfMeasureDAM::delete($obj))
-			throw new Exception('Unidad de Medida tiene dependencias y no se puede eliminar.');
+			throw new Exception('Unidad de Medida tiene dependencias (productos) y no se puede eliminar.');
 	}
 	
 	/**
@@ -119,7 +119,7 @@ class Manufacturer extends Identifier{
 	static public function delete(Manufacturer $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!ManufacturerDAM::delete($obj))
-			throw new Exception('Casa tiene dependencias y no se puede eliminar.');
+			throw new Exception('Casa tiene dependencias (productos) y no se puede eliminar.');
 	}
 	
 	/**
@@ -635,8 +635,9 @@ class Product extends Identifier{
 	 * @param string $barCode
 	 */
 	public function setBarCode($barCode){
-		String::validateString($barCode, 'Codigo de barra inv&aacute;lido.');
-		$this->verifyBarCode($barCode);
+		if(!empty($barCode))
+			$this->verifyBarCode($barCode);
+			
 		$this->_mBarCode = $barCode;
 	}
 	
@@ -795,7 +796,7 @@ class Product extends Identifier{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->_mId = $this->insert();
 			
-			if(is_null($this->_mBarCode)){
+			if(is_null($this->_mBarCode) && !ProductDAM::existsBarCode($this, $this->_mId)){
 				ProductDAM::setBarCode($this);
 				$this->_mBarCode = $this->_mId;
 			}
@@ -888,6 +889,9 @@ class Product extends Identifier{
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
+		
+		if(!empty($this->_mBarCode))
+			$this->verifyBarCode($this->_mBarCode);
 		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.');
 		String::validateString($this->_mDescription, 'Descripci&oacute;n inv&aacute;lida.');
 		
