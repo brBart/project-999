@@ -57,7 +57,7 @@ class UnitOfMeasure extends Identifier{
 	static public function delete(UnitOfMeasure $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!UnitOfMeasureDAM::delete($obj))
-			throw new Exception('Unidad de Medida tiene dependencias y no se puede eliminar.');
+			throw new Exception('Unidad de Medida tiene dependencias (productos) y no se puede eliminar.');
 	}
 	
 	/**
