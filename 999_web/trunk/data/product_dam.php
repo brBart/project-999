@@ -481,61 +481,27 @@ class ProductDAM{
 	 * @return Product
 	 */
 	static public function getInstance($id){
-		switch($id){
-			case 123:
-				$product = new Product($id, Persist::CREATED);
-				$um = UnitOfMeasure::getInstance(123);
-				$manufacturer = Manufacturer::getInstance(123);
-				$details = array();
-				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-				$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-						$manufacturer, 12.65, false, $details);
-				return $product;
-				break;
-				
-			case 124:
-				$product = new Product($id, Persist::CREATED);
-				$um = UnitOfMeasure::getInstance(123);
-				$manufacturer = Manufacturer::getInstance(123);
-				$details = array();
-				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Bom214', Persist::CREATED);
-				$product->setData('Aspirina', '65432', self::$_mPackaging, 'Para dolores de cabeza.', $um,
-						$manufacturer, 7.90, false, $details);
-				return $product;
-				break;
-				
-			case 125:
-				$product = new Product($id, Persist::CREATED);
-				$um = UnitOfMeasure::getInstance(123);
-				$manufacturer = Manufacturer::getInstance(123);
-				$details = array();
-				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Raf214', Persist::CREATED);
-				$product->setData('Pharmaton', '35138', self::$_mPackaging, 'Puras vitaminas.', $um,
-						$manufacturer, 65.73, false, $details);
-				return $product;
-				break;
-				
-			default:
-				return NULL;
-		}	
-	}
-	
-	/**
-	 * Returns an instance of a product.
-	 *
-	 * Returns a product whick bar code matches the one provided. If not found returns NULL.
-	 * @param string $barCode
-	 * @return Product
-	 */
-	static public function getInstanceByBarCode($barCode){
-		if($barCode == '12345'){
-			$product = new Product(123, Persist::CREATED);
-			$um = UnitOfMeasure::getInstance(123);
-			$manufacturer = Manufacturer::getInstance(123);
+		$sql = 'CALL product_get(:product_id)';
+		$params = array(':product_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$product = new Product($id, Persist::CREATED);
+			$um = UnitOfMeasure::getInstance((int)$result['unit_of_measure_id']);
+			$manufacturer = Manufacturer::getInstance((int)$result['manufacturer_id']);
+			
+			$sql = 'CALL product_supplier_get(:product_id)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
 			$details = array();
-			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-					$manufacturer, 12.65, false, $details);
+			foreach($items_result as $detail){
+				$supplier = Supplier::getInstance((int)$detail['supplier_id']);
+				$details[] = new ProductSupplier($supplier, $detail['sku'], Persist::CREATED);
+			}
+			
+			$product->setData($result['name'], $result['bar_code'], $result['packaging'],
+					$result['description'], $um, $manufacturer, (float)$result['price'],
+					(boolean)$result['deactivated'], $details);
 			return $product;
 		}
 		else
@@ -543,26 +509,26 @@ class ProductDAM{
 	}
 	
 	/**
-	 * Returns an instance of a product.
+	 * Returns the product's id of the provided bar code.
 	 *
-	 * Returns a product which has a supplier with the provided product's sku. If not found returns NULL.
+	 * If not found returns 0.
+	 * @param string $barCode
+	 * @return integer
+	 */
+	static public function getIdByBarCode($barCode){
+		
+	}
+	
+	/**
+	 * Returns the product's id of the provided supplier and sku.
+	 *
+	 * If not found returns 0.
 	 * @param Supplier $supplier
 	 * @param string $sku
-	 * @return Product
+	 * @return integer
 	 */
-	static public function getInstanceBySupplier(Supplier $supplier, $sku){
-		if($supplier->getId() == 123 && $sku == 'Abb213'){
-			$product = new Product(123, Persist::CREATED);
-			$um = UnitOfMeasure::getInstance(123);
-			$manufacturer = Manufacturer::getInstance(123);
-			$details = array();
-			$details[] = new ProductSupplier($supplier, 'Abb213', Persist::CREATED);
-			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-					$manufacturer, 12.65, false, $details);
-			return $product;
-		}
-		else
-			return NULL;
+	static public function getIdBySupplier(Supplier $supplier, $sku){
+		
 	}
 
 	/**
@@ -573,7 +539,18 @@ class ProductDAM{
 	 * @return integer
 	 */
 	static public function insert(Product $obj){
-		return 123;
+		$sql = 'CALL product_insert(:bar_code, :name, :packaging, :description, :unit_of_measure_id, ' .
+				':manufacturer_id, :price, :deactivated)';
+		$um = $obj->getUnitOfMeasure();
+		$manufacturer = $obj->getManufacturer();
+		$params = array(':bar_code' => $obj->getBarCode(), ':name' => $obj->getName(),
+				':packaging' => $obj->getPackaging(), ':description' => $obj->getDescription(),
+				':unit_of_measure_id' => $um->getId(), ':manufacturer_id' => $manufacturer->getId(),
+				':price' => $obj->getPrice(), ':deactivated' => (int)$obj->isDeactivated());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
