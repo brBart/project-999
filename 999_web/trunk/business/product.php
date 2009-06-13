@@ -827,29 +827,29 @@ class Product extends Identifier{
 	}
 	
 	/**
-	 * Returns an instance of a product.
+	 * Returns the product's id of the provided bar code.
 	 *
-	 * Returns a product which bar code matches the one provided. If not found returns NULL.
+	 * If not found returns 0.
 	 * @param string $barCode
-	 * @return Product
+	 * @return integer
 	 */
-	static public function getInstanceByBarCode($barCode){
+	static public function getProductIdByBarCode($barCode){
 		String::validateString($barCode, 'Codigo de barra inv&aacute;lido.');
-		return ProductDAM::getInstanceByBarCode($barCode);
+		return ProductDAM::getIdByBarCode($barCode);
 	}
 	
 	/**
-	 * Returns an instance of a product.
+	 * Returns the product's id of the provided supplier and sku.
 	 *
-	 * Returns a product which has a supplier with the provided product's sku. If not found returns NULL.
+	 * If not found returns 0.
 	 * @param Supplier $supplier
 	 * @param string $sku
-	 * @return Product
+	 * @return integer
 	 */
-	static public function getInstanceBySupplier(Supplier $supplier, $sku){
+	static public function getProductIdBySupplier(Supplier $supplier, $sku){
 		self::validateObjectFromDatabase($supplier);
 		String::validateString($sku, 'Codigo inv&aacute;lido.');
-		return ProductDAM::getInstanceBySupplier($supplier, $sku);
+		return ProductDAM::getIdBySupplier($supplier, $sku);
 	}
 	
 	/**
