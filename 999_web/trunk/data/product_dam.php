@@ -427,8 +427,6 @@ class ProductSupplierDAM{
  * @author Roberto Oliveros
  */
 class ProductDAM{
-	static private $_mPackaging = '120 ml';
-	
 	/**
 	 * Returns true if a product already uses the bar code in the database.
 	 *
@@ -436,7 +434,11 @@ class ProductDAM{
 	 * @return boolean
 	 */
 	static public function existsBarCode(Product $product, $barCode){
-		if($barCode == '123456')
+		$sql = 'CALL product_bar_code_exists(:product_id, :bar_code)';
+		$params = array(':product_id' => $product->getId(), ':bar_code' => $barCode);
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		if($result > 0)
 			return true;
 		else
 			return false;
@@ -449,7 +451,12 @@ class ProductDAM{
 	 * @return boolean
 	 */
 	static public function existsProductSupplier(ProductSupplier $detail){
-		if($detail->getId() == '123ABC')
+		$sql = 'CALL product_supplier_exists(:supplier_id, :sku)';
+		$supplier = $detail->getSupplier();
+		$params = array(':supplier_id' => $supplier->getId(), ':sku' => $detail->getProductSKU());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		if($result > 0)
 			return true;
 		else
 			return false;
@@ -458,10 +465,12 @@ class ProductDAM{
 	/**
 	 * Sets the bar code of an existing product.
 	 *
-	 * @param string $barCode
+	 * @param Product $obj
 	 */
-	static public function setBarCode($barCode){
-		// Code here...
+	static public function setBarCode(Product $obj){
+		$sql = 'CALL product_bar_code_update(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -573,7 +582,16 @@ class ProductDAM{
 	 * @param Product $obj
 	 */
 	static public function update(Product $obj){
-		self::$_mPackaging = $obj->getPackaging();
+		$sql = 'CALL product_update(:product_id, :bar_code, :name, :packaging, :description, ' .
+				':unit_of_measure_id, :manufacturer_id, :price, :deactivated)';
+		$um = $obj->getUnitOfMeasure();
+		$manufacturer = $obj->getManufacturer();
+		$params = array(':product_id' => $obj->getId(), ':bar_code' => $obj->getBarCode(),
+				':name' => $obj->getName(), ':packaging' => $obj->getPackaging(),
+				':description' => $obj->getDescription(), ':unit_of_measure_id' => $um->getId(),
+				':manufacturer_id' => $manufacturer->getId(), ':price' => $obj->getPrice(),
+				':deactivated' => (int)$obj->isDeactivated());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -584,10 +602,16 @@ class ProductDAM{
 	 * @return boolean
 	 */
 	static public function delete(Product $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL product_dependencies(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the lot, bonus, comparison and count tables.
+		if($result) return false;
+		
+		$sql = 'CALL product_delete(:product_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
