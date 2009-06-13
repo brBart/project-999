@@ -343,10 +343,10 @@ abstract class Organization extends Identifier{
 	 * @param string $email
 	 */
 	public function setEmail($email){
-		if(!empty($email)){
+		if(!empty($email))
 			$this->validateEmail($email);
-			$this->_mEmail = $email;
-		}
+		
+		$this->_mEmail = $email;
 	}
 	
 	/**
