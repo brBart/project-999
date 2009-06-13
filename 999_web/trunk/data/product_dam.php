@@ -499,9 +499,9 @@ class ProductDAM{
 				$details[] = new ProductSupplier($supplier, $detail['sku'], Persist::CREATED);
 			}
 			
-			$product->setData($result['name'], $result['bar_code'], $result['packaging'],
+			$product->setData($result['name'], $result['packaging'],
 					$result['description'], $um, $manufacturer, (float)$result['price'],
-					(boolean)$result['deactivated'], $details);
+					(boolean)$result['deactivated'], $details, $result['bar_code']);
 			return $product;
 		}
 		else
@@ -516,7 +516,9 @@ class ProductDAM{
 	 * @return integer
 	 */
 	static public function getIdByBarCode($barCode){
-		
+		$sql = 'CALL product_id_get(:bar_code)';
+		$params = array(':bar_code' => $barCode);
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -528,7 +530,9 @@ class ProductDAM{
 	 * @return integer
 	 */
 	static public function getIdBySupplier(Supplier $supplier, $sku){
-		
+		$sql = 'CALL product_supplier_product_id_get(:supplier_id, :sku)';
+		$params = array(':supplier_id' => $supplier->getId(), ':sku' => $sku);
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 
 	/**
