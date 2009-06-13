@@ -16,8 +16,6 @@ require_once('data/database_handler.php');
  * @author Roberto Oliveros
  */
 class UnitOfMeasureDAM{
-	static private $_mName = 'Unitario';
-	
 	/**
 	 * Returns an instance of a unit of measure.
 	 *
@@ -26,9 +24,13 @@ class UnitOfMeasureDAM{
 	 * @return UnitOfMeasure
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$um = new UnitOfMeasure($id, PersistObject::CREATED);
-			$um->setData(self::$_mName);
+		$sql = 'CALL unit_of_measure_get(:unit_of_measure_id)';
+		$params = array(':unit_of_measure_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$um = new UnitOfMeasure($id, Persist::CREATED);
+			$um->setData($result['name']);
 			return $um;
 		}
 		else
@@ -43,7 +45,12 @@ class UnitOfMeasureDAM{
 	 * @return integer
 	 */
 	static public function insert(UnitOfMeasure $obj){
-		return 123;
+		$sql = 'CALL unit_of_measure_insert(:name)';
+		$params = array(':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -52,7 +59,9 @@ class UnitOfMeasureDAM{
 	 * @param UnitOfMeasure $obj
 	 */
 	static public function update(UnitOfMeasure $obj){
-		self::$_mName = $obj->getName();
+		$sql = 'CALL unit_of_measure_update(:unit_of_measure_id, :name)';
+		$params = array(':unit_of_measure_id' => $obj->getId(), ':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -63,10 +72,16 @@ class UnitOfMeasureDAM{
 	 * @return boolean
 	 */
 	static public function delete(UnitOfMeasure $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL unit_of_measure_dependencies(:unit_of_measure_id)';
+		$params = array(':unit_of_measure_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the product table.
+		if($result) return false;
+		
+		$sql = 'CALL unit_of_measure_delete(:unit_of_measure_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
