@@ -119,7 +119,7 @@ class Manufacturer extends Identifier{
 	static public function delete(Manufacturer $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!ManufacturerDAM::delete($obj))
-			throw new Exception('Casa tiene dependencias y no se puede eliminar.');
+			throw new Exception('Casa tiene dependencias (productos) y no se puede eliminar.');
 	}
 	
 	/**
