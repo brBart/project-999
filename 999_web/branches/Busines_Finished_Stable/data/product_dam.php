@@ -483,19 +483,11 @@ class ProductDAM{
 	 * @param string $barCode
 	 * @return Product
 	 */
-	static public function getInstanceByBarCode($barCode){
-		if($barCode == '12345'){
-			$product = new Product(123, Persist::CREATED);
-			$um = UnitOfMeasure::getInstance(123);
-			$manufacturer = Manufacturer::getInstance(123);
-			$details = array();
-			$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-					$manufacturer, 12.65, false, $details);
-			return $product;
-		}
+	static public function getIdByBarCode($barCode){
+		if($barCode == '12345')
+			return 123;
 		else
-			return NULL;
+			return 0;
 	}
 	
 	/**
@@ -506,19 +498,11 @@ class ProductDAM{
 	 * @param string $sku
 	 * @return Product
 	 */
-	static public function getInstanceBySupplier(Supplier $supplier, $sku){
-		if($supplier->getId() == 123 && $sku == 'Abb213'){
-			$product = new Product(123, Persist::CREATED);
-			$um = UnitOfMeasure::getInstance(123);
-			$manufacturer = Manufacturer::getInstance(123);
-			$details = array();
-			$details[] = new ProductSupplier($supplier, 'Abb213', Persist::CREATED);
-			$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-					$manufacturer, 12.65, false, $details);
-			return $product;
-		}
+	static public function getIdBySupplier(Supplier $supplier, $sku){
+		if($supplier->getId() == 123 && $sku == 'Abb213')
+			return 123;
 		else
-			return NULL;
+			return 0;
 	}
 
 	/**
