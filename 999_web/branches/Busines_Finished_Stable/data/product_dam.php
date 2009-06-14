@@ -444,8 +444,8 @@ class ProductDAM{
 				$manufacturer = Manufacturer::getInstance(123);
 				$details = array();
 				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-				$product->setData('Pepto Bismol', '12345', self::$_mPackaging, 'Para dolores de estomagol.', $um,
-						$manufacturer, 12.65, false, $details);
+				$product->setData('Pepto Bismol', self::$_mPackaging, 'Para dolores de estomagol.', $um,
+						$manufacturer, 12.65, false, $details, '12345');
 				return $product;
 				break;
 				
@@ -455,8 +455,8 @@ class ProductDAM{
 				$manufacturer = Manufacturer::getInstance(123);
 				$details = array();
 				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Bom214', Persist::CREATED);
-				$product->setData('Aspirina', '65432', self::$_mPackaging, 'Para dolores de cabeza.', $um,
-						$manufacturer, 7.90, false, $details);
+				$product->setData('Aspirina', self::$_mPackaging, 'Para dolores de cabeza.', $um,
+						$manufacturer, 7.90, false, $details, '65432');
 				return $product;
 				break;
 				
@@ -466,8 +466,8 @@ class ProductDAM{
 				$manufacturer = Manufacturer::getInstance(123);
 				$details = array();
 				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Raf214', Persist::CREATED);
-				$product->setData('Pharmaton', '35138', self::$_mPackaging, 'Puras vitaminas.', $um,
-						$manufacturer, 65.73, false, $details);
+				$product->setData('Pharmaton', self::$_mPackaging, 'Puras vitaminas.', $um,
+						$manufacturer, 65.73, false, $details, '35138');
 				return $product;
 				break;
 				
