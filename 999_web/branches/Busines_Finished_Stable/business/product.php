@@ -718,12 +718,11 @@ class Product extends Identifier{
 	 * @param array<ProductSupplier> $details
 	 * @throws Exception
 	 */
-	public function setData($name, $barCode, $packaging, $description, UnitOfMeasure $um,
-			Manufacturer $manufacturer, $price, $deactivated, $details){
+	public function setData($name, $packaging, $description, UnitOfMeasure $um,
+			Manufacturer $manufacturer, $price, $deactivated, $details, $barCode = NULL){
 		parent::setData($name);
 		
 		try{
-			String::validateString($barCode, 'Codigo de barra inv&aacute;lido.');
 			String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
 			String::validateString($description, 'Descripci&oacute;n inv&aacute;lida.');
 			self::validateObjectFromDatabase($um);
