@@ -710,31 +710,6 @@ class BonusDAM{
  * @author Roberto Oliveros
  */
 class LotDAM{
-	static private $_mQuantity123 = 18;
-	static private $_mReserve123 = 3;
-	
-	static private $_mQuantity4320 = -3;
-	static private $_mReserve4320 = 0;
-	static private $_mNegative4320 = 0;
-	
-	static private $_mQuantity4321 = 8;
-	static private $_mReserve4321 = 4;
-	
-	static private $_mQuantity4322 = 12;
-	static private $_mReserve4322 = 4;
-	
-	static private $_mQuantity5432 = 15;
-	static private $_mReserve5432 = 10;
-	
-	static private $_mQuantity5433 = 30;
-	static private $_mReserve5433 = 5;
-	
-	static private $_mQuantity6543 = 40;
-	static private $_mReserve6543 = 10;
-	
-	static private $_mQuantity6544 = 30;
-	static private $_mReserve6544 = 0;
-	
 	/**
 	 * Returns the lot's quantity.
 	 *
@@ -742,42 +717,9 @@ class LotDAM{
 	 * @return integer
 	 */
 	static public function getQuantity(Lot $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mQuantity123;
-				break;
-				
-			case 4320:
-				return self::$_mQuantity4320;
-				break;
-			
-			case 4321:
-				return self::$_mQuantity4321;
-				break;
-				
-			case 4322;
-				return self::$_mQuantity4322;
-				break;
-				
-			case 5432:
-				return self::$_mQuantity5432;
-				break;
-				
-			case 5433;
-				return self::$_mQuantity5433;
-				break;
-				
-			case 6543:
-				return self::$_mQuantity6543;
-				break;
-				
-			case 6544;
-				return self::$_mQuantity6544;
-				break;
-
-			default:
-				return 0;
-		}
+		$sql = 'CALL lot_quantity_get(:lot_id)';
+		$params = array(':lot_id' => $obj->getId());
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -787,42 +729,9 @@ class LotDAM{
 	 * @return integer
 	 */
 	static public function getAvailable(Lot $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mQuantity123 - self::$_mReserve123;
-				break;
-				
-			case 4320:
-				return self::$_mQuantity4320 - self::$_mReserve4320;
-				break;
-			
-			case 4321:
-				return self::$_mQuantity4321 - self::$_mReserve4321;
-				break;
-				
-			case 4322;
-				return self::$_mQuantity4322 - self::$_mReserve4322;
-				break;
-				
-			case 5432:
-				return self::$_mQuantity5432 - self::$_mReserve5432;
-				break;
-				
-			case 5433;
-				return self::$_mQuantity5433 - self::$_mReserve5433;
-				break;
-				
-			case 6543:
-				return self::$_mQuantity6543 - self::$_mReserve6543;
-				break;
-				
-			case 6544;
-				return self::$_mQuantity6544 - self::$_mReserve6544;
-				break;
-				
-			default:
-				return 0;
-		}
+		$sql = 'CALL lot_available_quantity_get(:lot_id)';
+		$params = array(':lot_id' => $obj->getId());
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -832,10 +741,9 @@ class LotDAM{
 	 * @return integer
 	 */
 	static public function getNegativeQuantity(NegativeLot $obj){
-		if($obj->getId() == 4320)
-			return self::$_mNegative4320;
-		else
-			return 0;
+		$sql = 'CALL lot_negative_quantity_get(:lot_id)';
+		$params = array(':lot_id' => $obj->getId());
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -844,50 +752,9 @@ class LotDAM{
 	 * @param Lot $obj
 	 */
 	static public function deactivate(Lot $obj){
-		switch($obj->getId()){
-			case 123:
-				self::$_mQuantity123 = 0;
-				self::$_mReserve123 = 0;
-				break;
-				
-			case 4320:
-				self::$_mQuantity4320 = 0;
-				self::$_mReserve4320 = 0;
-				break;
-			
-			case 4321:
-				self::$_mQuantity4321 = 0;
-				self::$_mReserve4321 = 0;
-				break;
-				
-			case 4322;
-				self::$_mQuantity4322 = 0;
-				self::$_mReserve4322 = 0;
-				break;
-				
-			case 5432:
-				self::$_mQuantity5432 = 0;
-				self::$_mReserve5432 = 0;
-				break;
-				
-			case 5433;
-				self::$_mQuantity5433 = 0;
-				self::$_mReserve5433 = 0;
-				break;
-				
-			case 6543:
-				self::$_mQuantity6543 = 0;
-				self::$_mReserve6543 = 0;
-				break;
-				
-			case 6544;
-				self::$_mQuantity6544 = 0;
-				self::$_mReserve6544 = 0;
-				break;
-
-			default:
-				// Do nothing
-		}
+		$sql = 'CALL lot_deactivate(:lot_id)';
+		$params = array(':lot_id' => $obj->getId());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -897,7 +764,9 @@ class LotDAM{
 	 * @param float $price
 	 */
 	static public function setPrice(Lot $obj, $price){
-		// Code here...
+		$sql = 'CALL lot_price_update(:lot_id, :price)';
+		$params = array(':lot_id' => $obj->getId(), ':price' => $price);
+		DatabaseHandler::execute($sql ,$params);
 	}
 	
 	/**
@@ -907,7 +776,7 @@ class LotDAM{
 	 * @param string $date
 	 */
 	static public function setExpirationDate(Lot $obj, $date){
-		// Code here...
+		
 	}
 	
 	/**
@@ -917,42 +786,9 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function increase(Lot $obj, $quantity){
-		switch($obj->getId()){
-			case 123:
-				self::$_mQuantity123 += $quantity;
-				break;
-				
-			case 4320:
-				self::$_mQuantity4320 += $quantity;
-				break;
-			
-			case 4321:
-				self::$_mQuantity4321 += $quantity;
-				break;
-				
-			case 4322;
-				self::$_mQuantity4322 += $quantity;
-				break;
-				
-			case 5432:
-				self::$_mQuantity5432 += $quantity;
-				break;
-				
-			case 5433;
-				self::$_mQuantity5433 += $quantity;
-				break;
-				
-			case 6543:
-				self::$_mQuantity6543 += $quantity;
-				break;
-				
-			case 6544;
-				self::$_mQuantity6544 += $quantity;
-				break;
-
-			default:
-				// Do nothing
-		}
+		$sql = 'CALL lot_increase_quantity(:lot_id, :quantity)';
+		$params = array(':lot_id' => $obj->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -962,42 +798,9 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function decrease(Lot $obj, $quantity){
-		switch($obj->getId()){
-			case 123:
-				self::$_mQuantity123 -= $quantity;
-				break;
-				
-			case 4320:
-				self::$_mQuantity4320 -= $quantity;
-				break;
-			
-			case 4321:
-				self::$_mQuantity4321 -= $quantity;
-				break;
-				
-			case 4322;
-				self::$_mQuantity4322 -= $quantity;
-				break;
-				
-			case 5432:
-				self::$_mQuantity5432 -= $quantity;
-				break;
-				
-			case 5433;
-				self::$_mQuantity5433 -= $quantity;
-				break;
-				
-			case 6543:
-				self::$_mQuantity6543 -= $quantity;
-				break;
-				
-			case 6544;
-				self::$_mQuantity6544 -= $quantity;
-				break;
-
-			default:
-				// Do nothing
-		}
+		$sql = 'CALL lot_decrease_quantity(:lot_id, :quantity)';
+		$params = array(':lot_id' => $obj->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -1007,42 +810,9 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function reserve(Lot $obj, $quantity){
-		switch($obj->getId()){
-			case 123:
-				self::$_mReserve123 += $quantity;
-				break;
-				
-			case 4320:
-				self::$_mReserve4320 += $quantity;
-				break;
-			
-			case 4321:
-				self::$_mReserve4321 += $quantity;
-				break;
-				
-			case 4322;
-				self::$_mReserve4322 += $quantity;
-				break;
-				
-			case 5432:
-				self::$_mReserve5432 += $quantity;
-				break;
-				
-			case 5433;
-				self::$_mReserve5433 += $quantity;
-				break;
-				
-			case 6543:
-				self::$_mReserve6543 += $quantity;
-				break;
-				
-			case 6544;
-				self::$_mReserve6544 += $quantity;
-				break;
-
-			default:
-				// Do nothing
-		}
+		$sql = 'CALL lot_increase_reserved(:lot_id, :quantity)';
+		$params = array(':lot_id' => $obj->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -1052,42 +822,9 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function decreaseReserve(Lot $obj, $quantity){
-		switch($obj->getId()){
-			case 123:
-				self::$_mReserve123 -= $quantity;
-				break;
-				
-			case 4320:
-				self::$_mReserve4320 -= $quantity;
-				break;
-			
-			case 4321:
-				self::$_mReserve4321 -= $quantity;
-				break;
-				
-			case 4322;
-				self::$_mReserve4322 -= $quantity;
-				break;
-				
-			case 5432:
-				self::$_mReserve5432 -= $quantity;
-				break;
-				
-			case 5433;
-				self::$_mReserve5433 -= $quantity;
-				break;
-				
-			case 6543:
-				self::$_mReserve6543 -= $quantity;
-				break;
-				
-			case 6544;
-				self::$_mReserve6544 -= $quantity;
-				break;
-
-			default:
-				// Do nothing
-		}
+		$sql = 'CALL lot_decrease_reserved(:lot_id, :quantity)';
+		$params = array(':lot_id' => $obj->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -1097,8 +834,9 @@ class LotDAM{
 	 * @param integer $quantity
 	 */
 	static public function updateNegativeQuantity(NegativeLot $lot, $quantity){
-		if($lot->getId() == 4320)
-			self::$_mNegative4320 = $quantity;
+		$sql = 'CALL lot_negative_quantity_update(:lot_id, :quantity)';
+		$params = array(':lot_id' => $lot->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -1109,53 +847,25 @@ class LotDAM{
 	 * @return Lot
 	 */
 	static public function getInstance($id){
-		$product = Product::getInstance(123);
-		$product2 = Product::getInstance(124);
-		$product3 = Product::getInstance(125);
-		switch($id){
-			case 123:
-				$lot = new Lot($product, 0, 12.65, '31/12/2009', '15/04/2009', $id, Persist::CREATED);
-				return $lot;
-				break;
-				
-			case 4320:
-				$lot = new NegativeLot($product, 0, 0.00, NULL, NULL, 4320, Persist::CREATED);
-				return $lot;
-				break; 
-
-			case 4321:
-				$lot = new Lot($product, 0, 14.68, '15/08/2009', '10/01/2009', $id, Persist::CREATED);
-				return $lot;
-				break;
-				
-			case 4322:
-				$lot = new Lot($product, 0, 15.25, '15/11/2009', '15/02/2009', $id, Persist::CREATED);
-				return $lot;
-				break;
-				
-			case 5432:
-				$lot = new Lot($product2, 0, 7.10, '15/12/2009', '10/01/2009', $id, Persist::CREATED);
-				return $lot;
-				break;
-				
-			case 5433:
-				$lot = new Lot($product2, 0, 7.55, '20/12/2009', '15/02/2009', $id, Persist::CREATED);
-				return $lot;
-				break;
-				
-			case 6543:
-				$lot = new Lot($product3, 0, 65.00, '15/12/2009', '10/01/2009', $id, Persist::CREATED);
-				return $lot;
-				break;
-				
-			case 6544:
-				$lot = new Lot($product3, 0, 64.55, '20/12/2009', '15/02/2009', $id, Persist::CREATED);
-				return $lot;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL lot_get(:lot_id)';
+		$params = array(':lot_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$product = Product::getInstance((int)$result['product_id']);
+			
+			$quantity = (int)$result['quantity'];
+			$negative = (int)$result['negative_quantity'];
+			if($quantity < 0 || $negative < 0)
+				$lot = new NegativeLot($product, $quantity, (float)$result['price'], $result['expiration_date'],
+						$result['entry_date'], $id, Persist::CREATED);
+			else
+				$lot = new Lot($product, $quantity, (float)$result['price'], $result['expiration_date'],
+						$result['entry_date'], $id, Persist::CREATED);
+			
+			return $lot;
 		}
+		return NULL;
 	}
 	
 	/**
@@ -1166,7 +876,17 @@ class LotDAM{
 	 * @return integer
 	 */
 	static public function insert(Lot $obj){
-		return 123;
+		$sql = 'CALL lot_insert(:product_id, :entry_date, :expiration_date, :price, :quantity)';
+		$product = $obj->getProduct();
+		$params = array(':product_id' => $product->getId(),
+				':entry_date' => Date::dbFormat($obj->getEntryDate()),
+				'expiration_date' =>
+				(is_null($obj->getExpirationDate())) ? NULL : Date::dbFormat($obj->getExpirationDate()),
+				':price' => $obj->getPrice(), ':quantity' => $obj->getQuantity());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 }
 
