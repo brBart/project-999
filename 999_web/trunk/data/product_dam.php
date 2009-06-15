@@ -442,7 +442,8 @@ class ProductDAM{
 	 */
 	static public function existsBarCode(Product $product, $barCode){
 		$sql = 'CALL product_bar_code_exists(:product_id, :bar_code)';
-		$params = array(':product_id' => $product->getId(), ':bar_code' => $barCode);
+		$params = array(':product_id' => (is_null($product->getId())) ? 0 : $product->getId(),
+				':bar_code' => $barCode);
 		$result = DatabaseHandler::getOne($sql, $params);
 		
 		if($result > 0)
@@ -594,7 +595,7 @@ class ProductDAM{
 		$params = array(':product_id' => $obj->getId());
 		$result = DatabaseHandler::getOne($sql, $params);
 		
-		// If there are dependencies in the lot, bonus, comparison and count tables.
+		// If there are dependencies in the lot, bonus, comparison_product and count_product tables.
 		if($result) return false;
 		
 		$sql = 'CALL product_delete(:product_id)';
