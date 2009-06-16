@@ -401,7 +401,7 @@ class ProductDAM{
 	 * @return boolean
 	 */
 	static public function existsBarCode(Product $product, $barCode){
-		if($barCode == '123456')
+		if($barCode == '123456' || $barCode == '0')
 			return true;
 		else
 			return false;
