@@ -1369,9 +1369,9 @@ class Lot extends Persist{
 	 * @param string $date
 	 */
 	public function setExpirationDate($date){
-		if(!is_null($date))
+		if(!empty($date))
 			Date::validateDate($date, 'Fecha de vencimiento inv&aacute;lida.');
-			
+		
 		if($this->_mStatus == Persist::CREATED){
 			LotDAM::setExpirationDate($this, $date);
 			$this->_mExpirationDate = $date;
