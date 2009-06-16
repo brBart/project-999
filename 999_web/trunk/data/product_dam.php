@@ -776,7 +776,10 @@ class LotDAM{
 	 * @param string $date
 	 */
 	static public function setExpirationDate(Lot $obj, $date){
-		
+		$sql = 'CALL lot_price_update(:lot_id, :expiration_date)';
+		$params = array(':lot_id' => $obj->getId(), 'expiration_date' =>
+				(empty($obj->getExpirationDate())) ? NULL : Date::dbFormat($obj->getExpirationDate()));
+		DatabaseHandler::execute($sql ,$params);
 	}
 	
 	/**
@@ -881,7 +884,7 @@ class LotDAM{
 		$params = array(':product_id' => $product->getId(),
 				':entry_date' => Date::dbFormat($obj->getEntryDate()),
 				'expiration_date' =>
-				(is_null($obj->getExpirationDate())) ? NULL : Date::dbFormat($obj->getExpirationDate()),
+				(empty($obj->getExpirationDate())) ? NULL : Date::dbFormat($obj->getExpirationDate()),
 				':price' => $obj->getPrice(), ':quantity' => $obj->getQuantity());
 		DatabaseHandler::execute($sql, $params);
 		
