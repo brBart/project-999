@@ -776,9 +776,9 @@ class LotDAM{
 	 * @param string $date
 	 */
 	static public function setExpirationDate(Lot $obj, $date){
-		$sql = 'CALL lot_price_update(:lot_id, :expiration_date)';
+		$sql = 'CALL lot_expiration_date_update(:lot_id, :expiration_date)';
 		$params = array(':lot_id' => $obj->getId(), 'expiration_date' =>
-				(empty($obj->getExpirationDate())) ? NULL : Date::dbFormat($obj->getExpirationDate()));
+				(is_null($date) || $date == '') ? NULL : Date::dbFormat($date));
 		DatabaseHandler::execute($sql ,$params);
 	}
 	
@@ -881,10 +881,11 @@ class LotDAM{
 	static public function insert(Lot $obj){
 		$sql = 'CALL lot_insert(:product_id, :entry_date, :expiration_date, :price, :quantity)';
 		$product = $obj->getProduct();
+		$expiration_date = $obj->getExpirationDate();
 		$params = array(':product_id' => $product->getId(),
 				':entry_date' => Date::dbFormat($obj->getEntryDate()),
 				'expiration_date' =>
-				(empty($obj->getExpirationDate())) ? NULL : Date::dbFormat($obj->getExpirationDate()),
+				(is_null($expiration_date) || $expiration_date == '') ? NULL : Date::dbFormat($expiration_date),
 				':price' => $obj->getPrice(), ':quantity' => $obj->getQuantity());
 		DatabaseHandler::execute($sql, $params);
 		
