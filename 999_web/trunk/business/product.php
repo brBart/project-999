@@ -635,7 +635,7 @@ class Product extends Identifier{
 	 * @param string $barCode
 	 */
 	public function setBarCode($barCode){
-		if($barCode =! '')
+		if($barCode != '')
 			$this->verifyBarCode($barCode);
 			
 		$this->_mBarCode = $barCode;
