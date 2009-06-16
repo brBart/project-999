@@ -91,7 +91,9 @@ class Customer extends PersistObject{
 	 * @return void
 	 */
 	public function setName($name){
-		String::validateString($name, 'Nombre inv&aacute;lido.');
+		if($this->_mNit != CF)
+			String::validateString($name, 'Nombre inv&aacute;lido.');
+		
 		$this->_mName = $name;
 	}
 	
