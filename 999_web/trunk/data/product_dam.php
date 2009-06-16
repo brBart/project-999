@@ -749,6 +749,7 @@ class LotDAM{
 	/**
 	 * Deactivates the lot in the database.
 	 *
+	 * Sets the quantity and reserved quantity of the lot to 0.
 	 * @param Lot $obj
 	 */
 	static public function deactivate(Lot $obj){
@@ -833,7 +834,7 @@ class LotDAM{
 	/**
 	 * Updates the negative quantity of a negative lot.
 	 *
-	 * @param NegativeLot $log
+	 * @param NegativeLot $lot
 	 * @param integer $quantity
 	 */
 	static public function updateNegativeQuantity(NegativeLot $lot, $quantity){
