@@ -378,7 +378,7 @@ abstract class Organization extends Identifier{
 			String::validateNit($nit, 'Nit inv&aacute;lido.');
 			String::validateString($telephone, 'Telefono inv&aacute;lido.');
 			String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
-			if(!is_null($email) || $email != '')
+			if(!is_null($email) && $email != '')
 				$this->validateEmail($email);
 		} catch(Exception $e){
 			$et = new Exception('Interno: LLamando al metodo setData en Organization con datos erroneos! ' .
