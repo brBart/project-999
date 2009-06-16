@@ -635,7 +635,7 @@ class Product extends Identifier{
 	 * @param string $barCode
 	 */
 	public function setBarCode($barCode){
-		if(!empty($barCode))
+		if($barCode =! '')
 			$this->verifyBarCode($barCode);
 			
 		$this->_mBarCode = $barCode;
@@ -889,7 +889,7 @@ class Product extends Identifier{
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
 		
-		if(!empty($this->_mBarCode))
+		if(!is_null($this->_mBarCode) && $this->_mBarCode != '')
 			$this->verifyBarCode($this->_mBarCode);
 		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.');
 		String::validateString($this->_mDescription, 'Descripci&oacute;n inv&aacute;lida.');
