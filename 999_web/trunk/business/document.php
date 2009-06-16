@@ -1551,8 +1551,8 @@ class Invoice extends Document{
 	 * @param array<DocumentDetail> $details
 	 * @throws Exception
 	 */
-	public function setData($number, Correlative $correlative, $nit, $name, $vatPercentage,
-			$total, $details, Discount $discount = NULL){
+	public function setData($number, Correlative $correlative, $nit, $vatPercentage, $total, $details,
+			$name = NULL, Discount $discount = NULL){
 		parent::setData($total, $details);
 		
 		try{
