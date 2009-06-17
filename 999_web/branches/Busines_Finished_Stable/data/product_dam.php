@@ -610,6 +610,8 @@ class BonusDAM{
 			case 123:
 				if($quantity >= 4)
 					return 123;
+				else
+					return 0;
 				break;
 				
 			case 124:
@@ -617,6 +619,8 @@ class BonusDAM{
 					return 125;
 				elseif($quantity >= 4)
 					return 124;
+				else
+					return 0;
 				break;
 				
 			case 125:
@@ -624,6 +628,8 @@ class BonusDAM{
 					return 127;
 				elseif($quantity >= 5)
 					return 126;
+				else
+					return 0;
 				break;
 				
 			default:
