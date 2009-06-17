@@ -514,7 +514,10 @@ class ShipmentDAM{
 	 * @param string $date
 	 */
 	static public function cancel(Shipment $shipment, UserAccount $user, $date){
-		// Code here...
+		$sql = 'CALL shipment_cancel(:shipment_id, :username, :date)';
+		$params = array(':shipment_id' => $shipment->getId(), ':username' => $user->getUserName(),
+				':date' => Date::dbFormat($date));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -529,20 +532,41 @@ class ShipmentDAM{
 	 * @return Shipment
 	 */
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
-		switch($id){
-			case 123:
-				$shipment = new Shipment('25/04/2009', UserAccount::getInstance('roboli'), $id,
-						PersistDocument::CREATED);
-				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
-				$shipment->setData(Branch::getInstance(123), 39.50, $details);
-				$total_pages = 1;
-				$total_items = 1;
-				return $shipment;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL shipment_get(:shipment_id)';
+		$params = array(':shipment_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
+			$shipment = new Shipment($result['created_date'], $user, $id, (int)$result['status']);
+			$branch = Branch::getInstance((int)$result['branch_id']);
+			
+			$sql = 'CALL shipment_lot_count(:shipment_id)';
+			$totalItems = DatabaseHandler::getOne($sql, $params);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('shipment_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('shipment_id' => $id, ':start_item' => 0,
+						':items_per_page' => $totalItems);
+			
+			$sql = 'CALL shipment_lot_get(:shipment_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$lot = Lot::getInstance((int)$detail['lot_id']);
+				$details[] = new DocProductDetail($lot, new Withdraw(), (int)$detail['quantity'],
+						(float)$detail['price']);
+			}
+			
+			$shipment->setData($branch, (float)$result['total'], $details, $result['contact']);
+			return $shipment;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -553,7 +577,16 @@ class ShipmentDAM{
 	 * @return integer
 	 */
 	static public function insert(Shipment $obj){
-		return 123;
+		$sql = 'CALL shipment_insert(:username, :branch_id, :date, :contact, :total, :status)';
+		$user = $obj->getUser();
+		$branch = $obj->getBranch();
+		$params = array(':username' => $user->getUserName(), ':branch_id' => $branch->getId(),
+				':date' => Date::dbFormat($obj->getDate()), ':contact' => $obj->getContact(),
+				':total' => $obj->getTotal(), ':status' => PersistDocument::CREATED);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 }
 
