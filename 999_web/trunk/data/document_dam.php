@@ -444,7 +444,7 @@ class PurchaseReturnDAM{
 		
 		if(!empty($result)){
 			$user = UserAccount::getInstance($result['user_account_username']);
-			$purchase_return = new PurchaseReturn($result['date'], $user, $id, (int)$result['status']);
+			$purchase_return = new PurchaseReturn($result['created_date'], $user, $id, (int)$result['status']);
 			$supplier = Supplier::getInstance((int)$result['supplier_id']);
 			
 			$sql = 'CALL purchase_return_lot_count(:purchase_return_id)';
