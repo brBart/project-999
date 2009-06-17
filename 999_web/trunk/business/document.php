@@ -255,9 +255,11 @@ abstract class Document extends PersistDocument implements Itemized{
 			$this->validateMainProperties();
 			$this->insert();
 			$this->_mStatus = PersistDocument::CREATED;
+			
+			$i = 1;
 			foreach($this->_mDetails as &$detail)
-				// Because is unnecessary to register the order of details, 1 is provided for all.
-				$detail->save($this, 1);
+				$detail->save($this, $i++);
+				
 			return $this->_mId;
 		}
 	}
