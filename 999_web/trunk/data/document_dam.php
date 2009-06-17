@@ -345,7 +345,10 @@ class InvoiceDAM{
 	 * @param string $date
 	 */
 	static public function cancel(Invoice $invoice, UserAccount $user, $date){
-		// Code here...
+		$sql = 'CALL invoice_cancel(:invoice_id, :username, :date)';
+		$params = array(':invoice_id' => $shipment->getId(), ':username' => $user->getUserName(),
+				':date' => Date::dbFormat($date));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -375,21 +378,51 @@ class InvoiceDAM{
 	 * @return Invoice
 	 */
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
-		switch($id){
-			case 123:
-				$invoice = new Invoice(CashRegister::getInstance(123), '25/04/2009',
-						UserAccount::getInstance('roboli'), $id, PersistDocument::CREATED);
-				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
-				$invoice->setData(457, Correlative::getInstance('A022'), 'C/F', '', 12.00,
-						39.50, $details);
-				$total_pages = 1;
-				$total_items = 1;
-				return $invoice;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL invoice_get(:invoice_id)';
+		$params = array(':invoice_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
+			$cash_register = CashRegister::getInstance((int)$result['cash_register_id']);
+			$invoice = new Invoice($cash_register, $result['created_date'], $user, $id, (int)$result['status']);
+			
+			$correlative = Correlative::getInstance($result['serial_number']);
+			$discount = Discount::getInstance($invoice);
+			$cash_receipt = CashReceipt::getInstance($invoice);
+			
+			$sql = 'CALL invoice_items_count(:invoice_id)';
+			$totalItems = DatabaseHandler::getOne($sql, $params);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('invoice_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('invoice_id' => $id, ':start_item' => 0,
+						':items_per_page' => $totalItems);
+			
+			$sql = 'CALL invoice_items_get(:invoice_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail)
+				if(!is_null($detail['lot_id'])){
+					$lot = Lot::getInstance((int)$detail['lot_id']);
+					$details[] = new DocProductDetail($lot, new Withdraw(), (int)$detail['quantity'],
+							(float)$detail['price']);
+				}
+				else{
+					$bonus = Bonus::getInstance($detail['bonus_id']);
+					$details[] = new DocBonusDetail($bonus, $detail['price']);
+				}
+			
+			$invoice->setData((int)$result['number'], $correlative, $result['nit'], (float)$result['vat'],
+					(float)$result['total'], $details, $result['name'], $discount);
+			return $invoice;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -400,7 +433,20 @@ class InvoiceDAM{
 	 * @return integer
 	 */
 	static public function insert(Invoice $obj){
-		return 123;
+		$sql = 'CALL invoice_insert(:serial_number, :number, :username, :date, :nit, :name, total, :vat, ' .
+				'cash_register_id, :status)';
+		$correlative = $obj->getCorrelative();
+		$user = $obj->getUser();
+		$cash_register = $obj->getCashRegister();
+		$params = array(':serial_number' => $correlative->getSerialNumber(), ':number' => $obj->getNumber(),
+				':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
+				':nit' => $obj->getCustomerNit(), ':name' => $obj->getCustomerName(), ':total' => $obj->getTotal(),
+				':vat' => $obj->getVatPercentage(), ':cash_register_id' => $cash_register->getId(),
+				':status' => PersistDocument::CREATED);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 }
 
