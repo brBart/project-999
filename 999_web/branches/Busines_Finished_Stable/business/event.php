@@ -236,7 +236,8 @@ class RetailEvent{
 			
 		$quantity = $invoice->getProductQuantity($product);
 		if($quantity > 0){
-			$bonus = Bonus::getInstanceByProduct($product, $quantity);
+			$id = Bonus::getBonusIdByProduct($product, $quantity);
+			$bonus = Bonus::getInstance($id);
 			if(!is_null($bonus))
 				/**
 			 	* @todo Verify if the result needs rounding.
