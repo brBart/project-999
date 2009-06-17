@@ -50,7 +50,7 @@ class UnitOfMeasureDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		return (int)DatabaseHandler::getOne($sql, $params);
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -126,7 +126,7 @@ class ManufacturerDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		return (int)DatabaseHandler::getOne($sql, $params);
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -562,7 +562,7 @@ class ProductDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		return (int)DatabaseHandler::getOne($sql, $params);
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -620,7 +620,11 @@ class BonusDAM{
 	 * @return boolean
 	 */
 	static public function exists(Product $product, $quantity){
-		if($product->getId() == 123 && $quantity == 4)
+		$sql = 'CALL bonus_exists(:product_id, :quantity)';
+		$params = array(':product_id' => $product->getId(), ':quantity' => $quantity);
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		if($result > 0)
 			return true;
 		else
 			return false;
@@ -634,9 +638,14 @@ class BonusDAM{
 	 * @return Bonus
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$product = Product::getInstance(123);
-			$bonus = new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', $id, Persist::CREATED);
+		$sql = 'CALL bonus_get(:bonus_id)';
+		$params = array(':bonus_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$product = Product::getInstance((int)$result['product_id']);
+			$bonus = new Bonus($product, (int)$result['quantity'], (float)$result['percentage'],
+					$result['expiration_date'], $result['created_date'], $id, Persist::CREATED);
 			return $bonus;
 		}
 		else
@@ -651,30 +660,8 @@ class BonusDAM{
 	 * @param integer $quantity
 	 * @return Bonus
 	 */
-	static public function getInstanceByProduct(Product $product, $quantity){
-		switch($product->getId()){
-			case 123:
-				if($quantity >= 4)
-					return new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', 123, Persist::CREATED);
-				break;
-				
-			case 124:
-				if($quantity >= 11)
-					return new Bonus($product, 11, 15.00, '15/06/2009', '01/04/2009', 125, Persist::CREATED);
-				elseif($quantity >= 4)
-					return new Bonus($product, 4, 5.00, '15/06/2009', '01/04/2009', 124, Persist::CREATED);
-				break;
-				
-			case 125:
-				if($quantity >= 11)
-					return new Bonus($product, 11, 25.00, '15/06/2009', '01/04/2009', 127, Persist::CREATED);
-				elseif($quantity >= 5)
-					return new Bonus($product, 5, 15.00, '15/06/2009', '01/04/2009', 126, Persist::CREATED);
-				break;
-				
-			default:
-				return NULL;
-		}
+	static public function getIdByProduct(Product $product, $quantity){
+		
 	}
 	
 	/**
@@ -685,7 +672,15 @@ class BonusDAM{
 	 * @return integer
 	 */
 	static public function insert(Bonus $obj){
-		return 123;
+		$sql = 'CALL bonus_insert(:product_id, :quantity, :percentage, :created_date, :expiration_date)';
+		$product = $obj->getProduct();
+		$params = array(':product_id' => $product->getId(), ':quantity' => $obj->getQuantity(),
+				':percentage' => $obj->getPercentage(), ':create_date' => Date::dbFormat($obj->getCreatedDate()),
+				':expiration_date' => Date::dbFormat($obj->getExpirationDate()));
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -696,10 +691,16 @@ class BonusDAM{
 	 * @return boolean
 	 */
 	static public function delete(Bonus $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL bonus_dependencies(:bonus_id)';
+		$params = array(':bonus_id' => $obj->getId());
+		$result = DatabaseHandler::getOne($sql, $params);
+		
+		// If there are dependencies in the invoice_bonus table.
+		if($result) return false;
+		
+		$sql = 'CALL bonus_delete(:bonus_id)';
+		DatabaseHandler::execute($sql, $params);
+		return true;
 	}
 }
 
@@ -891,7 +892,7 @@ class LotDAM{
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
-		return (int)DatabaseHandler::getOne($sql, $params);
+		return (int)DatabaseHandler::getOne($sql);
 	}
 }
 
