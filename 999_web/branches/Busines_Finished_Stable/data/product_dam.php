@@ -570,25 +570,29 @@ class BonusDAM{
 	 * @return Bonus
 	 */
 	static public function getInstance($id){
-		$product = Product::getInstance(123);
 		switch($id){
 			case 123:
+				$product = Product::getInstance(123);
 				return new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', $id, Persist::CREATED);
 				break;
 				
 			case 124:
+				$product = Product::getInstance(124);
 				return new Bonus($product, 4, 5.00, '15/06/2009', '01/04/2009', 124, Persist::CREATED);
 				break;
 			
 			case 125:
+				$product = Product::getInstance(124);
 				return new Bonus($product, 11, 15.00, '15/06/2009', '01/04/2009', 125, Persist::CREATED);
 				break;
 			
 			case 126:
+				$product = Product::getInstance(125);
 				return new Bonus($product, 5, 15.00, '15/06/2009', '01/04/2009', 126, Persist::CREATED);
 				break;
 				
 			case 127:
+				$product = Product::getInstance(125);
 				return new Bonus($product, 11, 25.00, '15/06/2009', '01/04/2009', 127, Persist::CREATED);
 				break;
 				
