@@ -1125,17 +1125,17 @@ class Bonus extends Persist{
 	}
 	
 	/**
-	 * Returns an instance of a bonus.
+	 * Returns an bonus' id which has the provided product and quantity.
 	 *
-	 * Returns the bonus which belongs to the provided product and contains the same quantity.
+	 * If not found returns 0.
 	 * @param Product $product
 	 * @param integer $quantity
-	 * @return Bonus
+	 * @return integer
 	 */
-	static public function getInstanceByProduct(Product $product, $quantity){
+	static public function getBonusIdByProduct(Product $product, $quantity){
 		self::validateObjectFromDatabase($product);
 		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-		return BonusDAM::getInstanceByProduct($product, $quantity);
+		return BonusDAM::getId($product, $quantity);
 	}
 	
 	/**

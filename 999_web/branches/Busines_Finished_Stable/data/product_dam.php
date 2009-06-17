@@ -570,13 +570,31 @@ class BonusDAM{
 	 * @return Bonus
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$product = Product::getInstance(123);
-			$bonus = new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', $id, Persist::CREATED);
-			return $bonus;
-		}
-		else
-			return NULL;
+		$product = Product::getInstance(123);
+		switch($id){
+			case 123:
+				return new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', $id, Persist::CREATED);
+				break;
+				
+			case 124:
+				return new Bonus($product, 4, 5.00, '15/06/2009', '01/04/2009', 124, Persist::CREATED);
+				break;
+			
+			case 125:
+				return new Bonus($product, 11, 15.00, '15/06/2009', '01/04/2009', 125, Persist::CREATED);
+				break;
+			
+			case 126:
+				return new Bonus($product, 5, 15.00, '15/06/2009', '01/04/2009', 126, Persist::CREATED);
+				break;
+				
+			case 127:
+				return new Bonus($product, 11, 25.00, '15/06/2009', '01/04/2009', 127, Persist::CREATED);
+				break;
+				
+			default:
+				return NULL;
+		}	
 	}
 	
 	/**
@@ -587,29 +605,29 @@ class BonusDAM{
 	 * @param integer $quantity
 	 * @return Bonus
 	 */
-	static public function getInstanceByProduct(Product $product, $quantity){
+	static public function getId(Product $product, $quantity){
 		switch($product->getId()){
 			case 123:
 				if($quantity >= 4)
-					return new Bonus($product, 4, 25.00, '15/05/2009', '01/04/2009', 123, Persist::CREATED);
+					return 123;
 				break;
 				
 			case 124:
 				if($quantity >= 11)
-					return new Bonus($product, 11, 15.00, '15/06/2009', '01/04/2009', 125, Persist::CREATED);
+					return 125;
 				elseif($quantity >= 4)
-					return new Bonus($product, 4, 5.00, '15/06/2009', '01/04/2009', 124, Persist::CREATED);
+					return 124;
 				break;
 				
 			case 125:
 				if($quantity >= 11)
-					return new Bonus($product, 11, 25.00, '15/06/2009', '01/04/2009', 127, Persist::CREATED);
+					return 127;
 				elseif($quantity >= 5)
-					return new Bonus($product, 5, 15.00, '15/06/2009', '01/04/2009', 126, Persist::CREATED);
+					return 126;
 				break;
 				
 			default:
-				return NULL;
+				return 0;
 		}
 	}
 	
