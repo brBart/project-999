@@ -444,12 +444,7 @@ class ProductDAM{
 		$sql = 'CALL product_bar_code_exists(:product_id, :bar_code)';
 		$params = array(':product_id' => (is_null($product->getId())) ? 0 : $product->getId(),
 				':bar_code' => $barCode);
-		$result = DatabaseHandler::getOne($sql, $params);
-		
-		if($result > 0)
-			return true;
-		else
-			return false;
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -462,12 +457,7 @@ class ProductDAM{
 		$sql = 'CALL product_supplier_exists(:supplier_id, :sku)';
 		$supplier = $detail->getSupplier();
 		$params = array(':supplier_id' => $supplier->getId(), ':sku' => $detail->getProductSKU());
-		$result = DatabaseHandler::getOne($sql, $params);
-		
-		if($result > 0)
-			return true;
-		else
-			return false;
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -622,12 +612,7 @@ class BonusDAM{
 	static public function exists(Product $product, $quantity){
 		$sql = 'CALL bonus_exists(:product_id, :quantity)';
 		$params = array(':product_id' => $product->getId(), ':quantity' => $quantity);
-		$result = DatabaseHandler::getOne($sql, $params);
-		
-		if($result > 0)
-			return true;
-		else
-			return false;
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -677,7 +662,7 @@ class BonusDAM{
 		$sql = 'CALL bonus_insert(:product_id, :quantity, :percentage, :created_date, :expiration_date)';
 		$product = $obj->getProduct();
 		$params = array(':product_id' => $product->getId(), ':quantity' => $obj->getQuantity(),
-				':percentage' => $obj->getPercentage(), ':create_date' => Date::dbFormat($obj->getCreatedDate()),
+				':percentage' => $obj->getPercentage(), ':created_date' => Date::dbFormat($obj->getCreatedDate()),
 				':expiration_date' => Date::dbFormat($obj->getExpirationDate()));
 		DatabaseHandler::execute($sql, $params);
 		
