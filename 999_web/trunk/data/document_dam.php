@@ -360,10 +360,9 @@ class InvoiceDAM{
 	 * @return integer
 	 */
 	static public function getId($serialNumber, $number){
-		if($serialNumber == 'A022' && $number == 457)
-			return 123;
-		else
-			return 0;
+		$sql = 'CALL invoice_id_get(:serial_number, :number)';
+		$params = array(':serial_number' => $serialNumber, ':number' => $number);
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -433,8 +432,8 @@ class InvoiceDAM{
 	 * @return integer
 	 */
 	static public function insert(Invoice $obj){
-		$sql = 'CALL invoice_insert(:serial_number, :number, :username, :date, :nit, :name, total, :vat, ' .
-				'cash_register_id, :status)';
+		$sql = 'CALL invoice_insert(:serial_number, :number, :username, :date, :nit, :name, :total, :vat, ' .
+				':cash_register_id, :status)';
 		$correlative = $obj->getCorrelative();
 		$user = $obj->getUser();
 		$cash_register = $obj->getCashRegister();
