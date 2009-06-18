@@ -1587,6 +1587,9 @@ class Invoice extends Document{
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$serial_number = Correlative::getDefaultSerialNumber();
+			if(is_null($serial_number))
+				throw new Exception('No hay correlativo predeterminado.');
+			
 			$this->_mCorrelative = Correlative::getInstance($serial_number);
 			$this->validateMainProperties();
 			
