@@ -149,7 +149,7 @@ class CorrelativeDAM{
 	static public function exists($serialNumber){
 		$sql = 'CALL correlative_exists(:serial_number)';
 		$params = array(':serial_number' => $serialNumber);
-		$result = DatabaseHandler::getOne($sql, $params);
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 		
 		if($result > 0)
 			return true;

@@ -100,12 +100,7 @@ class BankAccountDAM{
 	static public function exists($number){
 		$sql = 'CALL bank_account_exists(:bank_account_number)';
 		$params = array(':bank_account_number' => $number);
-		$result = DatabaseHandler::getOne($sql, $params);
-		
-		if($result > 0)
-			return true;
-		else
-			return false;
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
  	/** Returns a bank account if it founds a match in the database. Otherwise returns NULL.

@@ -51,12 +51,7 @@ class UserAccountDAM{
 	static public function exists($userName){
 		$sql = 'CALL user_account_exists(:username)';
 		$params = array(':username' => $userName);
-		$result = DatabaseHandler::getOne($sql, $params);
-		
-		if($result > 0)
-			return true;
-		else
-			return false;
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**

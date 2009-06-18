@@ -45,12 +45,7 @@ class CustomerDAM{
 	static public function exist($nit){
 		$sql = 'CALL customer_exists(:nit)';
 		$params = array(':nit' => $nit);
-		$result = DatabaseHandler::getOne($sql, $params);
-		
-		if($result > 0)
-			return true;
-		else
-			return false;
+		return (boolean)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
