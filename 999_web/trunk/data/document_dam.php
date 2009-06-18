@@ -346,7 +346,7 @@ class InvoiceDAM{
 	 */
 	static public function cancel(Invoice $invoice, UserAccount $user, $date){
 		$sql = 'CALL invoice_cancel(:invoice_id, :username, :date)';
-		$params = array(':invoice_id' => $shipment->getId(), ':username' => $user->getUserName(),
+		$params = array(':invoice_id' => $invoice->getId(), ':username' => $user->getUserName(),
 				':date' => Date::dbFormat($date));
 		DatabaseHandler::execute($sql, $params);
 	}
@@ -371,12 +371,12 @@ class InvoiceDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return Invoice
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL invoice_get(:invoice_id)';
 		$params = array(':invoice_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
@@ -388,7 +388,6 @@ class InvoiceDAM{
 			
 			$correlative = Correlative::getInstance($result['serial_number']);
 			$discount = Discount::getInstance($invoice);
-			$cash_receipt = CashReceipt::getInstance($invoice);
 			
 			$sql = 'CALL invoice_items_count(:invoice_id)';
 			$totalItems = DatabaseHandler::getOne($sql, $params);
@@ -412,8 +411,8 @@ class InvoiceDAM{
 							(float)$detail['price']);
 				}
 				else{
-					$bonus = Bonus::getInstance($detail['bonus_id']);
-					$details[] = new DocBonusDetail($bonus, $detail['price']);
+					$bonus = Bonus::getInstance((int)$detail['bonus_id']);
+					$details[] = new DocBonusDetail($bonus, (float)$detail['price']);
 				}
 			
 			$invoice->setData((int)$result['number'], $correlative, $result['nit'], (float)$result['vat'],
@@ -571,12 +570,12 @@ class ShipmentDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return Shipment
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL shipment_get(:shipment_id)';
 		$params = array(':shipment_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
