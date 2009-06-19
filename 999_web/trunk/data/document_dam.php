@@ -654,7 +654,10 @@ class ReceiptDAM{
 	 * @param string $date
 	 */
 	static public function cancel(Receipt $receipt, UserAccount $user, $date){
-		// Code here...
+		$sql = 'CALL receipt_cancel(:receipt_id, :username, :date)';
+		$params = array(':receipt_id' => $receipt->getId(), ':username' => $user->getUserName(),
+				':date' => Date::dbFormat($date));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -663,46 +666,47 @@ class ReceiptDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return Receipt
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
-		switch($id){
-			case 123:
-				$receipt = new Receipt('25/04/2009', UserAccount::getInstance('roboli'), $id,
-						PersistDocument::CREATED);
-				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
-				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
-				$receipt->setData(Supplier::getInstance(123), '8289', 39.50, $details);
-				$total_pages = 1;
-				$total_items = 1;
-				return $receipt;
-				break;
-				
-			case 124:
-				$receipt = new Receipt('15/05/2009', UserAccount::getInstance('roboli'), $id,
-						PersistDocument::CREATED);
-				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
-				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
-				$lot = new Lot(Product::getInstance(124), 10, 8.00, '10/12/2009');
-				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
-				$lot = new Lot(Product::getInstance(125), 10, 8.00, '10/12/2009');
-				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
-				$lot = new Lot(Product::getInstance(123), 10, 8.00, '01/02/2010');
-				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
-				$lot = new Lot(Product::getInstance(125), 10, 8.00, '01/02/2010');
-				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
-				$receipt->setData(Supplier::getInstance(123), '8289', 39.50, $details);
-				$total_pages = 1;
-				$total_items = 5;
-				return $receipt;
-				break;
-				
-			default:
-				return NULL;
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL receipt_get(:receipt_id)';
+		$params = array(':receipt_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
+			$receipt = new Receipt($result['created_date'], $user, $id, (int)$result['status']);
+			$supplier = Supplier::getInstance((int)$result['supplier_id']);
+			
+			$sql = 'CALL receipt_lot_count(:receipt_id)';
+			$totalItems = DatabaseHandler::getOne($sql, $params);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('receipt_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('receipt_id' => $id, ':start_item' => 0,
+						':items_per_page' => $totalItems);
+			
+			$sql = 'CALL receipt_lot_get(:receipt_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$lot = Lot::getInstance((int)$detail['lot_id']);
+				$details[] = new DocProductDetail($lot, new Entry(), (int)$detail['quantity'],
+						(float)$detail['price']);
+			}
+			
+			$receipt->setData($supplier, $result['shipment_number'], (float)$result['total'], $details);
+			return $receipt;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -713,7 +717,16 @@ class ReceiptDAM{
 	 * @return integer
 	 */
 	static public function insert(Receipt $obj){
-		return 123;
+		$sql = 'CALL receipt_insert(:username, :supplier_id, :date, :shipment_number, :total, :status)';
+		$user = $obj->getUser();
+		$supplier = $obj->getSupplier();
+		$params = array(':username' => $user->getUserName(), ':supplier_id' => $supplier->getId(),
+				':date' => Date::dbFormat($obj->getDate()), ':shipment_number' => $obj->getShipmentNumber(),
+				':total' => $obj->getTotal(), ':status' => PersistDocument::CREATED);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 }
 
@@ -742,12 +755,12 @@ class EntryIADAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return EntryIA
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
 		switch($id){
 			case 123:
 				$entry = new EntryIA('25/04/2009', UserAccount::getInstance('roboli'), $id,
@@ -802,12 +815,12 @@ class WithdrawIADAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return WithdrawIA
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
 		switch($id){
 			case 123:
 				$withdraw = new WithdrawIA('25/04/2009', UserAccount::getInstance('roboli'), $id,
