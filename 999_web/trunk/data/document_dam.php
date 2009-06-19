@@ -757,7 +757,10 @@ class EntryIADAM{
 	 * @param string $date
 	 */
 	static public function cancel(EntryIA $entry, UserAccount $user, $date){
-		// Code here...
+		$sql = 'CALL entry_adjustment_cancel(:entry_adjustment_id, :username, :date)';
+		$params = array(':entry_adjustment_id' => $entry->getId(), ':username' => $user->getUserName(),
+				':date' => Date::dbFormat($date));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -772,21 +775,40 @@ class EntryIADAM{
 	 * @return EntryIA
 	 */
 	static public function getInstance($id, &$totalPages, &$totalItems, $page){
-		switch($id){
-			case 123:
-				$entry = new EntryIA('25/04/2009', UserAccount::getInstance('roboli'), $id,
-						PersistDocument::CREATED);
-				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
-				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
-				$entry->setData('Ajuste.', 39.50, $details);
-				$total_pages = 1;
-				$total_items = 1;
-				return $entry;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL entry_adjustment_get(:entry_adjustment_id)';
+		$params = array(':entry_adjustment_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
+			$entry = new EntryIA($result['created_date'], $user, $id, (int)$result['status']);
+			
+			$sql = 'CALL entry_adjustment_lot_count(:entry_adjustment_id)';
+			$totalItems = DatabaseHandler::getOne($sql, $params);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('entry_adjustment_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('entry_adjustment_id' => $id, ':start_item' => 0,
+						':items_per_page' => $totalItems);
+			
+			$sql = 'CALL entry_adjustment_lot_get(:entry_adjustment_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$lot = Lot::getInstance((int)$detail['lot_id']);
+				$details[] = new DocProductDetail($lot, new Entry(), (int)$detail['quantity'],
+						(float)$detail['price']);
+			}
+			
+			$entry->setData($result['reason'], (float)$result['total'], $details);
+			return $entry;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -797,7 +819,15 @@ class EntryIADAM{
 	 * @return integer
 	 */
 	static public function insert(EntryIA $obj){
-		return 123;
+		$sql = 'CALL entry_adjustment_insert(:username, :date, :reason, :total, :status)';
+		$user = $obj->getUser();
+		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
+				':reason' => $obj->getReason(), ':total' => $obj->getTotal(),
+				':status' => PersistDocument::CREATED);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 }
 
@@ -817,7 +847,10 @@ class WithdrawIADAM{
 	 * @param string $date
 	 */
 	static public function cancel(WithdrawIA $withdraw, UserAccount $user, $date){
-		// Code here...
+		$sql = 'CALL withdraw_adjustment_cancel(:withdraw_adjustment_id, :username, :date)';
+		$params = array(':withdraw_adjustment_id' => $withdraw->getId(), ':username' => $user->getUserName(),
+				':date' => Date::dbFormat($date));
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -832,20 +865,40 @@ class WithdrawIADAM{
 	 * @return WithdrawIA
 	 */
 	static public function getInstance($id, &$totalPages, &$totalItems, $page){
-		switch($id){
-			case 123:
-				$withdraw = new WithdrawIA('25/04/2009', UserAccount::getInstance('roboli'), $id,
-						PersistDocument::CREATED);
-				$details[] = new DocProductDetail(Lot::getInstance(123), new Withdraw(), 5, 7.90);
-				$withdraw->setData('Ajuste.', 39.50, $details);
-				$total_pages = 1;
-				$total_items = 1;
-				return $withdraw;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL withdraw_adjustment_get(:withdraw_adjustment_id)';
+		$params = array(':withdraw_adjustment_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
+			$withdraw = new WithdrawIA($result['created_date'], $user, $id, (int)$result['status']);
+			
+			$sql = 'CALL withdraw_adjustment_lot_count(:withdraw_adjustment_id)';
+			$totalItems = DatabaseHandler::getOne($sql, $params);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('withdraw_adjustment_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('withdraw_adjustment_id' => $id, ':start_item' => 0,
+						':items_per_page' => $totalItems);
+			
+			$sql = 'CALL withdraw_adjustment_lot_get(:withdraw_adjustment_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$lot = Lot::getInstance((int)$detail['lot_id']);
+				$details[] = new DocProductDetail($lot, new Withdraw(), (int)$detail['quantity'],
+						(float)$detail['price']);
+			}
+			
+			$withdraw->setData($result['reason'], (float)$result['total'], $details);
+			return $withdraw;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -856,7 +909,15 @@ class WithdrawIADAM{
 	 * @return integer
 	 */
 	static public function insert(WithdrawIA $obj){
-		return 123;
+		$sql = 'CALL withdraw_adjustment_insert(:username, :date, :reason, :total, :status)';
+		$user = $obj->getUser();
+		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
+				':reason' => $obj->getReason(), ':total' => $obj->getTotal(),
+				':status' => PersistDocument::CREATED);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 }
 ?>
