@@ -272,7 +272,9 @@ class VatDAM{
 	 * @return Vat
 	 */
 	static public function getInstance(){
-		return new Vat(12.00);
+		$sql = 'CALL vat_get()';
+		$result = DatabaseHandler::getOne($sql);
+		return new Vat((float)$result);
 	}
 	
 	/**
@@ -281,7 +283,9 @@ class VatDAM{
 	 * @param Vat $obj
 	 */
 	static public function update(Vat $obj){
-		// Code here...
+		$sql = 'CALL vat_update(:percentage)';
+		$params = array(':percentage' => $obj->getPercentage());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
