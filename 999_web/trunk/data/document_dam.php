@@ -83,7 +83,9 @@ class ReserveDAM{
 	 * @param integer $quantity
 	 */
 	static public function increase(Reserve $obj, $quantity){
-		// Code here...
+		$sql = 'CALL reserve_increase_quantity(:reserve_id, :quantity)';
+		$params = array(':reserve_id' => $obj->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -94,11 +96,15 @@ class ReserveDAM{
 	 * @return Reserve
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$lot = Lot::getInstance(123);
-			$user = UserAccount::getInstance('roboli');
-			$reserve = new Reserve($id, $lot, 5, $user, '15/04/2009', Persist::CREATED);
-			return $reserve;
+		$sql = 'CALL reserve_get(:reserve_id)';
+		$params = array(':reserve_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$lot = Lot::getInstance((int)$result['lot_id']);
+			$user = UserAccount::getInstance($result['user_account_username']);
+			return new Reserve($id, $lot, (int)$result['quantity'], $user, $result['created_date'],
+					Persist::CREATED);
 		}
 		else
 			return NULL;
@@ -115,21 +121,26 @@ class ReserveDAM{
 	 * @return Reserve
 	 */
 	static public function insert(Lot $lot, $quantity, UserAccount $user, $date){
-		return new Reserve(123, $lot, $quantity, $user, $date, Persist::CREATED);
+		$sql = 'CALL reserve_insert(:username, :lot_id, :date, :quantity)';
+		$params = array(':username' => $user->getUserName(), ':lot_id' => $lot->getId(), 
+				':date' => Date::dbFormat($date), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		$id = (int)DatabaseHandler::getOne($sql, $params);
+		
+		return new Reserve($id, $lot, $quantity, $user, $date, Persist::CREATED);
 	}
 	
 	/**
 	 * Deletes the reserve from the database.
 	 *
-	 * Returns true on success. Otherwise false due dependencies.
 	 * @param Reserve $obj
-	 * @return boolean
 	 */
 	static public function delete(Reserve $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL reserve_delete(:reserve_id)';
+		$params = array(':reserve_id' => $obj->getId());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
