@@ -6,6 +6,11 @@
  */
 
 /**
+ * For accessing the database.
+ */
+require_once('data/database_handler.php');
+
+/**
  * Utility class for accessing comparison data in the database.
  * @package InventoryDAM
  * @author Roberto Oliveros
@@ -167,32 +172,43 @@ class CountingTemplateDAM{
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by product name.
 	 *
-	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * The array's fields are product_id, bar_code, manufacturer, name and packaging.
 	 * @param boolean $general
 	 * @param Product $first
 	 * @param Product $last
 	 * @return array
 	 */
 	static public function getDataByProduct($general, Product $first = NULL, Product $last = NULL){
-		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
-				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
-				'name' => 'Racomin', 'packaging' => 'caja'));
+		if($general){
+			$sql = 'CALL product_counting_template_general_get()';
+			return DatabaseHandler::getAll($sql);
+		}
+		else{
+			$sql = 'CALL product_counting_template_get(:first_id, :last_id)';
+			$params = array(':first_id' => $first->getName(), ':last_id' => $last->getName());
+			return DatabaseHandler::getAll($sql, $params);
+		}
 	}
 	
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
 	 *
-	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * The array's fields are product_id, bar_code, manufacturer, name and packaging.
 	 * @param boolean $general
 	 * @param Manufacturer $first
 	 * @param Manufacturer $last
 	 * @return array
 	 */
-	static public function getDataByManufacturer($general, Manufacturer $first = NULL,
-			Manufacturer $last = NULL){
-		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
-				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
-				'name' => 'Racomin', 'packaging' => 'caja'));
+	static public function getDataByManufacturer($general, Manufacturer $first = NULL, Manufacturer $last = NULL){
+		if($general){
+			$sql = 'CALL manufacturer_counting_template_general_get()';
+			return DatabaseHandler::getAll($sql);
+		}
+		else{
+			$sql = 'CALL manufacturer_counting_template_get(:first_id, :last_id)';
+			$params = array(':first_id' => $first->getName(), ':last_id' => $last->getName());
+			return DatabaseHandler::getAll($sql, $params);
+		}
 	}
 }
 ?>
