@@ -106,32 +106,28 @@ class CountDAM{
 	 * @return Count
 	 */
 	static public function getInstance($id){
-		switch($id){
-			case 123:
-				$count = new Count($id, '01/04/2009', UserAccount::getInstance('roboli'), Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(125), 21, Persist::CREATED);
-				$count->setData('Los hay pues.', 21, $details);
-				return $count;
-				break;
-				
-			case 124:
-				$count = new Count($id, '11/05/2009', UserAccount::getInstance('roboli'), Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(125), 21, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(123), 21, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(124), 21, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(125), 2, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(123), 2, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(124), 2, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(125), 12, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(123), 12, Persist::CREATED);
-				$details[] = new CountDetail(Product::getInstance(124), 12, Persist::CREATED);
-				$count->setData('Siempre hay.', 21, $details);
-				return $count;
-				break;
-				
-			default:
-				return NULL;
+		$sql = 'CALL count_get(:count_id)';
+		$params = array(':count_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$user = UserAccount::getInstance('roboli');
+			$count = new Count($id, $result['created_date'], $user, Persist::CREATED);
+			
+			$sql = 'CALL count_product_get(:count_id)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$product = Product::getInstance((int)$detail['product_id']);
+				$details[] = new CountDetail($product, (int)$detail['quantity'], Persist::CREATED);
+			}
+			
+			$count->setData($result['reason'], (int)$result['total'], $details);
+			return $count;
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -142,7 +138,14 @@ class CountDAM{
 	 * @return integer
 	 */
 	static public function insert(Count $obj){
-		return 123;
+		$sql = 'CALL count_insert(:username, :date, :reason, :total)';
+		$user = $obj->getUser();
+		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
+				':reason' => $obj->getReason(), ':total' => $obj->getTotal());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -151,21 +154,20 @@ class CountDAM{
 	 * @param Count $obj
 	 */
 	static public function update(Count $obj){
-		// Code here...
+		$sql = 'CALL count_update(:count_id, :total)';
+		$params = array(':count_id' => $obj->getId(), ':total' => $obj->getTotal());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
 	 * Deletes the count from the database.
 	 *
-	 * Returns true on success. Otherwise false due dependencies.
 	 * @param Count $obj
-	 * @return boolean
 	 */
 	static public function delete(Count $obj){
-		if($obj->getId() == 123)
-			return true;
-		else
-			return false;
+		$sql = 'CALL count_delete(:count_id)';
+		$params = array(':count_id' => $obj->getId());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
