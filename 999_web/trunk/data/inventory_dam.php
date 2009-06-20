@@ -70,7 +70,11 @@ class CountDetailDAM{
 	 * @param CountDetail $detail
 	 */
 	static public function insert(Count $count, CountDetail $detail){
-		// Code here...
+		$sql = 'CALL count_product_insert(:count_id, :product_id, :quantity)';
+		$product = $detail->getProduct();
+		$params = array(':count_id' => $count->getId(), ':product_id' => $product->getId(),
+				':quantity' => $detail->getQuantity());
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -80,7 +84,10 @@ class CountDetailDAM{
 	 * @param CountDetail $detail
 	 */
 	static public function delete(Count $count, CountDetail $detail){
-		// Code here...
+		$sql = 'CALL count_product_delete(:count_id, :product_id)';
+		$product = $detail->getProduct();
+		$params = array(':count_id' => $count->getId(), ':product_id' => $product->getId());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
