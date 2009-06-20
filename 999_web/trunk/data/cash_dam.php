@@ -562,7 +562,7 @@ class CashReceiptDAM{
 			$cash_receipt = new CashReceipt($obj, $obj->getId(), $obj->getStatus());
 			$cash = new Cash(0.0, $obj->getId(), Persist::CREATED);
 			
-			$sql = 'CALL voucher_list_get(:cash_receipt_id)';
+			$sql = 'CALL voucher_get(:cash_receipt_id)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			$vouchers = array();
