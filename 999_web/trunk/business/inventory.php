@@ -715,14 +715,11 @@ class Count extends PersistObject implements Itemized{
 	/**
 	 * Deletes the count from the database.
 	 * 
-	 * Throws an exception due dependencies.
 	 * @param Count $obj
-	 * @throws Exception
 	 */
 	static public function delete(Count $obj){
 		self::validateObjectFromDatabase($obj);
-		if(!CountDAM::delete($obj))
-			throw new Exception('Conteo tiene dependencias y no se puede eliminar.');
+		CountDAM::delete($obj);
 	}
 	
 	/**
