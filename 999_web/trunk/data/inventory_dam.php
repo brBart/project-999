@@ -22,23 +22,45 @@ class ComparisonDAM{
 	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database. 
 	 * @param integer $id
-	 * @param integer $total_pages
-	 * @param integer $total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return Comparison
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
-		switch($id){
-			case 123:
-				$details[] = new ComparisonDetail(Product::getInstance(125), 10, 10);
-				$comparison = new Comparison($id, '01/05/2009', UserAccount::getInstance('roboli'), 'Los hay.',
-						false, $details, 10, 10);
-				return $comparison;
-				break;
-				
-			default:
-				return NULL;
+	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL comparison_get(:comparison_id)';
+		$params = array(':comparison_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			$sql = 'CALL comparison_product_count(:comparison_id)';
+			$totalItems = DatabaseHandler::getOne($sql, $params);
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array('comparison_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+						'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array('comparison_id' => $id, ':start_item' => 0,
+						':items_per_page' => $totalItems);
+			
+			$sql = 'CALL comparison_product_get(:comparison_id, :start_item, :items_per_page)';
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$product = Product::getInstance((int)$detail['product_id']);
+				$details[] = new ComparisonDetail($product, (int)$detail['physical'], (int)$detail['system']);
+			}
+			
+			$user = UserAccount::getInstance($result['user_account_username']);
+			
+			return new Comparison($id, $result['created_date'], $user, $result['reason'],
+					(boolean)$result['general'], $details, (int)$result['physical_total'],
+					(int)$result['system_total']);
 		}
+		else
+			return NULL;
 	}
 	
 	/**
@@ -52,7 +74,23 @@ class ComparisonDAM{
 	 * @return integer
 	 */
 	static public function insert($date, UserAccount $user, Count $count, $reason, $general){
-		return 123;
+		$sql = 'CALL comparison_insert(:username, :date, :reason, :general, :physical_total)';
+		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($date),
+				':reason' => $reason, ':general' => (int)$general, ':physical_total' => $count->getTotal());
+		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		$id = (int)DatabaseHandler::getOne($sql);
+		
+		if($general)
+			$sql = 'CALL comparison_product_general_insert(:comparison_id, :count_id)';
+		else
+			$sql = 'CALL comparison_product_insert(:comparison_id, :count_id)';
+			
+		$params = array(':comparison_id' => $id, ':count_id' => $count->getId());
+		DatabaseHandler::execute($sql, $params);
+		
+		return $id;
 	}
 }
 
