@@ -383,7 +383,7 @@ class InvoiceDAM{
 	/**
 	 * Returns an invoice with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @param integer &$totalPages
@@ -488,7 +488,7 @@ class PurchaseReturnDAM{
 	/**
 	 * Returns a purchase return with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @param integer &$totalPages
@@ -582,7 +582,7 @@ class ShipmentDAM{
 	/**
 	 * Returns a shipment with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @param integer &$totalPages
@@ -674,7 +674,7 @@ class ReceiptDAM{
 	/**
 	 * Returns a receipt with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @param integer &$totalPages
@@ -766,7 +766,7 @@ class EntryIADAM{
 	/**
 	 * Returns an entry inventory adjustment document with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @param integer &$totalPages
@@ -856,7 +856,7 @@ class WithdrawIADAM{
 	/**
 	 * Returns a withdraw inventory adjustment document with the details corresponding to the requested page.
 	 *
-	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
+	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @param integer &$totalPages

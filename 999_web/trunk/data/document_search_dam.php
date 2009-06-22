@@ -23,16 +23,16 @@ class DepositSearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL deposit_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL deposit_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -55,16 +55,16 @@ class ComparisonSearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL comparison_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL comparison_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -87,16 +87,16 @@ class CountSearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL count_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL count_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -119,16 +119,16 @@ class PurchaseReturnSearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL purchase_return_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL purchase_return_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -151,16 +151,16 @@ class ShipmentSearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL shipment_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL shipment_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -183,16 +183,16 @@ class InvoiceSearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL invoice_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL invoice_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -215,16 +215,16 @@ class ReceiptSearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL receipt_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL receipt_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -247,16 +247,16 @@ class EntryIASearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL entry_adjustment_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL entry_adjustment_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
@@ -279,16 +279,16 @@ class WithdrawIASearchDAM{
 	 * @param string $startDate
 	 * @param string $endDate
 	 * @param integer &$totalPages
-	 * @param integer &$totaItems
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function search($startDate, $endDate, &$totalPages, &$totaItems, $page){
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL withdraw_adjustment_search_count(:start_date, :end_date)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
-		$totaItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
-		$totalPages = ceil($totaItems / ITEMS_PER_PAGE);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		$sql = 'CALL withdraw_adjustment_search_get(:start_date, :end_date, :start_item, :items_per_page)';
 		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
