@@ -365,13 +365,13 @@ class BranchListDAM{
 
 
 /**
- * Class for accesing database data for creating lists.
+ * Class for accesing database data for creating payment card types lists.
  * @package ListDAM
  * @author Roberto Oliveros
  */
 class PaymentCardTypeListDAM{
 	/**
-	 * Returns an array with the payment card types' id and name from the database.
+	 * Returns an array with the fields payment_card_type_id and name from all the types in the database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages
@@ -380,9 +380,18 @@ class PaymentCardTypeListDAM{
 	 * @return array
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
-		$totalPages = 1;
-		$totalItems = 2;
-		return array(array('id' => 123, 'name' => 'Credito'), array('id' => 124, 'name' => 'Debito'));
+		$sql = 'CALL payment_card_type_list_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL payment_card_type_list_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
