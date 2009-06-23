@@ -1524,7 +1524,7 @@ class ChangePriceLog{
 		
 		$date = date('d/m/Y');
 		$helper = SessionHelper::getInstance();
-		ChangePriceLogDAM::write($date, $helper->getUser(), $product, $lastPrice, $newPrice);
+		ChangePriceLogDAM::insert($date, $helper->getUser(), $product, $lastPrice, $newPrice);
 	}
 }
 
