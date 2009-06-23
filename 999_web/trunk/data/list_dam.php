@@ -108,13 +108,13 @@ class ManufacturerListDAM{
 
 
 /**
- * Class for accesing database data for creating lists.
+ * Class for accesing database data for creating correlative lists.
  * @package ListDAM
  * @author Roberto Oliveros
  */
 class CorrelativeListDAM{
 	/**
-	 * Returns an array with the correlatives' serial_number and default flag from the database.
+	 * Returns an array with the fields serial_number and is_default from all the correlatives in the database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages
@@ -123,10 +123,18 @@ class CorrelativeListDAM{
 	 * @return array
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
-		$totalPages = 1;
-		$totalItems = 2;
-		return array(array('serial_number' => 'A021', 'default' => 1), array('serial_number' => 'A022',
-				'default' => 0));
+		$sql = 'CALL correlative_list_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL correlative_list_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
