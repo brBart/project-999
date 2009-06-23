@@ -397,13 +397,13 @@ class PaymentCardTypeListDAM{
 
 
 /**
- * Class for accesing database data for creating lists.
+ * Class for accesing database data for creating shift lists.
  * @package ListDAM
  * @author Roberto Oliveros
  */
 class ShiftListDAM{
 	/**
-	 * Returns an array with the cash register shifts' id, name and time_table from the database.
+	 * Returns an array with the fields shift_id and name from all the shifts in the database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages
@@ -412,10 +412,18 @@ class ShiftListDAM{
 	 * @return array
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
-		$totalPages = 1;
-		$totalItems = 2;
-		return array(array('id' => 123, 'name' => 'Diurno', 'time_table' => '8am - 12pm'), array('id' => 124,
-				'name' => 'Nocturno', 'time_table' => '6pm - 11pm'));
+		$sql = 'CALL shift_list_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL shift_list_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
