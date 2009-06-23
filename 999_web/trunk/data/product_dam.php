@@ -910,7 +910,7 @@ class ChangePriceLogDAM{
 
 
 /**
- * Utility class for accessing the database for searches.
+ * Utility class for accessing the database for product searches.
  * @package ProductDAM
  * @author Roberto Oliveros
  */
@@ -918,12 +918,15 @@ class ProductSearchDAM{
 	/**
 	 * Makes a search for a product in the database.
 	 *
-	 * The array returned contains the fields bar_code, name.
+	 * The array returned contains the fields bar_code and name of the product which name is similar or exactly as
+	 * the search string provided.
 	 * @param string $searchString
 	 * @return array
 	 */
 	static public function getList($searchString){
-		
+		$sql = 'CALL product_search(:search_string)';
+		$params = array(':search_string' => $searchString);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
