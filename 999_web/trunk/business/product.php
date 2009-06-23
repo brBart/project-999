@@ -1544,7 +1544,7 @@ class ProductSearch{
 	 */
 	static public function search($searchString){
 		String::validateString($searchString, 'Valor inv&aacute;lido.');
-		return ProductSearchDAM::search($searchString);
+		return ProductSearchDAM::getList($searchString);
 	}
 }
 
