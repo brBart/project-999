@@ -132,13 +132,13 @@ class CorrelativeListDAM{
 
 
 /**
- * Class for accesing database data for creating lists.
+ * Class for accesing database data for creating bank account lists.
  * @package ListDAM
  * @author Roberto Oliveros
  */
 class BankAccountListDAM{
 	/**
-	 * Returns an array with the bank accounts' number and name from the database.
+	 * Returns an array with the fields bank_account_number and name from all the bank accounts in the database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages
