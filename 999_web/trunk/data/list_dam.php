@@ -301,13 +301,13 @@ class SupplierListDAM{
 
 
 /**
- * Class for accesing database data for creating lists.
+ * Class for accesing database data for creating role lists.
  * @package ListDAM
  * @author Roberto Oliveros
  */
 class RoleListDAM{
 	/**
-	 * Returns an array with the user roles' id and name from the database.
+	 * Returns an array with the fields role_id and name from all the roles in the database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages
@@ -316,9 +316,18 @@ class RoleListDAM{
 	 * @return array
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
-		$totalPages = 1;
-		$totalItems = 2;
-		return array(array('id' => 123, 'name' => 'Administrador'), array('id' => 124, 'name' => 'Operador'));
+		$sql = 'CALL role_list_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL role_list_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
