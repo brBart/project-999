@@ -938,18 +938,30 @@ class ProductSearchDAM{
  */
 class ManufacturerProductListDAM{
 	/**
-	 * Returns an array with the products' id and name that belongs to the provided manufacturer.
+	 * Returns an array with the fields product_id and name of the product that belongs to the provided
+	 * manufacturer.
 	 *
 	 * @param Manufacturer $obj
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Manufacturer $obj, &$total_pages, &$total_items, $page){
-		$total_pages = 1;
-		$total_items = 2;
-		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
+	static public function getList(Manufacturer $obj, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL manufacturer_product_list_count(:manufacturer_id)';
+		$params = array(':manufacturer_id' => $obj->getId());
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL manufacturer_product_list_get(:manufacturer_id, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
