@@ -1170,7 +1170,7 @@ class ProductSearchDAM{
 	 * @param string $searchString
 	 * @return array
 	 */
-	static public function search($searchString){
+	static public function getList($searchString){
 		return array(array('bar_code' => '3245325', 'name' => 'Aspirina Niños'), array('bar_code' => '3245325',
 				'name' => 'Aspirina Adultos'));
 	}
