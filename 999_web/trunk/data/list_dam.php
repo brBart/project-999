@@ -147,10 +147,18 @@ class BankAccountListDAM{
 	 * @return array
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
-		$totalPages = 1;
-		$totalItems = 2;
-		return array(array('number' => '2950000', 'name' => 'Central'), array('number' => '49230004',
-				'name' => 'Jutiapa'));
+		$sql = 'CALL bank_account_list_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL bank_account_list_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
