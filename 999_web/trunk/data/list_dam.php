@@ -172,13 +172,14 @@ class BankAccountListDAM{
 
 
 /**
- * Class for accesing database data for creating lists.
+ * Class for accesing database data for creating user account lists.
  * @package ListDAM
  * @author Roberto Oliveros
  */
 class UserAccountListDAM{
 	/**
-	 * Returns an array with the user accounts' username and name from the database.
+	 * Returns an array with the fields username, first_name and last_name from all the user account in the
+	 * database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages
@@ -187,10 +188,18 @@ class UserAccountListDAM{
 	 * @return array
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
-		$totalPages = 1;
-		$totalItems = 2;
-		return array(array('username' => 'roboli', 'name' => 'Roberto'), array('username' => 'josoli',
-				'name' => 'Jose'));
+		$sql = 'CALL user_account_list_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL user_account_list_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
