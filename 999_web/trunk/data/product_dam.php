@@ -885,7 +885,7 @@ class LotDAM{
 
 
 /**
- * Utility class for logging in the database any change price event.
+ * Utility class for logging in the database any change on product price.
  * @package ProductDAM
  * @author Roberto Oliveros
  */
@@ -900,8 +900,11 @@ class ChangePriceLogDAM{
 	 * @param float $lastPrice
 	 * @param float $newPrice
 	 */
-	static public function write($date, UserAccount $user, Product $product, $lastPrice, $newPrice){
-		// Code here...
+	static public function insert($date, UserAccount $user, Product $product, $lastPrice, $newPrice){
+		$sql = 'CALL change_price_log_insert(:username, :product_id, :date, :last_price, :new_price)';
+		$params = array(':username' => $user->getUserName(), ':product_id' => $product->getId(),
+				':date' => Date::dbFormat($date), ':last_price' => $lastPrice, ':new_price' => $newPrice);
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
