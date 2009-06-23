@@ -205,13 +205,13 @@ class UserAccountListDAM{
 
 
 /**
- * Class for accesing database data for creating lists.
+ * Class for accesing database data for creating payment card brands lists.
  * @package ListDAM
  * @author Roberto Oliveros
  */
 class PaymentCardBrandListDAM{
 	/**
-	 * Returns an array with the payment card brands' id and name from the database.
+	 * Returns an array with the fields payment_card_brand_id and name from all the brands in the database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages
@@ -220,9 +220,18 @@ class PaymentCardBrandListDAM{
 	 * @return array
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
-		$totalPages = 1;
-		$totalItems = 2;
-		return array(array('id' => 123, 'name' => 'Visa'), array('id' => 124, 'name' => 'Master Card'));
+		$sql = 'CALL payment_card_brand_list_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL payment_card_brand_list_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
