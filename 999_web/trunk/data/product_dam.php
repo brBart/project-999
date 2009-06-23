@@ -885,7 +885,7 @@ class LotDAM{
 
 
 /**
- * Utility class for logging in the database any change on product price.
+ * Utility class for logging in the database any change on a product's price.
  * @package ProductDAM
  * @author Roberto Oliveros
  */
