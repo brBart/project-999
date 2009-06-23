@@ -1151,7 +1151,7 @@ class ChangePriceLogDAM{
 	 * @param float $lastPrice
 	 * @param float $newPrice
 	 */
-	static public function write($date, UserAccount $user, Product $product, $lastPrice, $newPrice){
+	static public function insert($date, UserAccount $user, Product $product, $lastPrice, $newPrice){
 		// Code here...
 	}
 }
