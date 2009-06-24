@@ -168,15 +168,6 @@ class ManufacturerDAM{
  * @author Roberto Oliveros
  */
 class InventoryDAM{
-	static private $_mQuantity123 = 20;
-	static private $_mReserve123 = 8;
-	
-	static private $_mQuantity124 = 45;
-	static private $_mReserve124 = 15;
-	
-	static private $_mQuantity125 = 70;
-	static private $_mReserve125 = 10;
-	
 	/**
 	 * Returns the available quantity of the product's inventory.
 	 *
@@ -184,21 +175,9 @@ class InventoryDAM{
 	 * @return integer
 	 */
 	static public function getAvailable(Product $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mQuantity123 - self::$_mReserve123;
-				break;
-				
-			case 124:
-				return self::$_mQuantity124 - self::$_mReserve124;
-				break;
-				
-			case 125:
-				return self::$_mQuantity125 - self::$_mReserve125;
-				break;
-				
-			default:
-		}	
+		$sql = 'CALL product_available_quantity_get(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -208,21 +187,9 @@ class InventoryDAM{
 	 * @return integer
 	 */
 	static public function getQuantity(Product $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mQuantity123;
-				break;
-				 
-			case 124:
-				return self::$_mQuantity124;
-				break;
-				
-			case 125:
-				return self::$_mQuantity125;
-				break;
-				
-			default:
-		}	
+		$sql = 'CALL product_quantity_get(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
 	/**
@@ -233,51 +200,15 @@ class InventoryDAM{
 	 * @return array<Lot>
 	 */
 	static public function getLots(Product $obj){
-		switch($obj->getId()){
-			case 123:
-				$lots = array();
-				
-				$lot = Lot::getInstance(4321);
-				if($lot->getAvailable() > 0)
-					$lots[] = $lot;
-					
-				$lot = Lot::getInstance(4322);
-				if($lot->getAvailable() > 0)
-					$lots[] = $lot;
-				
-				return $lots;
-				break;
-				
-			case 124:
-				$lots = array();
-				
-				$lot = Lot::getInstance(5432);
-				if($lot->getAvailable() > 0)
-					$lots[] = $lot;
-					
-				$lot = Lot::getInstance(5433);
-				if($lot->getAvailable() > 0)
-					$lots[] = $lot;
-					
-				return $lots;
-				break;
-				
-			case 125:
-				$lots = array();
-				
-				$lot = Lot::getInstance(6543);
-				if($lot->getAvailable() > 0)
-					$lots[] = $lot;
-					
-				$lot = Lot::getInstance(6544);
-				if($lot->getAvailable() > 0)
-					$lots[] = $lot;
-					
-				return $lots;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL product_lot_available_get(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		$result = DatabaseHandler::getAll($sql, $params);
+		
+		$lots = array();
+		foreach($result as $lot)
+			$lots[] = Lot::getInstance($lot['lot_id']);
+			
+		return $lots;
 	}
 	
 	/**
@@ -288,11 +219,15 @@ class InventoryDAM{
 	 * @return array<Lot>
 	 */
 	static public function getNegativeLots(Product $obj){
-		if($obj->getId() == 123){
-			$lots = array();
-			$lots[] = Lot::getInstance(4320);
-			return $lots;
-		}
+		$sql = 'CALL product_negative_lot_get(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		$result = DatabaseHandler::getAll($sql, $params);
+		
+		$lots = array();
+		foreach($result as $lot)
+			$lots[] = Lot::getInstance($lot['lot_id']);
+			
+		return $lots;
 	}
 	
 	/**
@@ -302,21 +237,9 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function increase(Product $product, $quantity){
-		switch($product->getId()){
-			case 123:
-				self::$_mQuantity123 += $quantity;
-				break;
-				
-			case 124:
-				self::$_mQuantity124 += $quantity;
-				break;
-				
-			case 125:
-				self::$_mQuantity125 += $quantity;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL product_increase_quantity(:product_id, :quantity)';
+		$params = array(':product_id' => $product->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -326,21 +249,9 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function decrease(Product $product, $quantity){
-		switch($product->getId()){
-			case 123:
-				self::$_mQuantity123 -= $quantity;
-				break;
-				
-			case 124:
-				self::$_mQuantity124 -= $quantity;
-				break;
-				
-			case 125:
-				self::$_mQuantity125 -= $quantity;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL product_decrease_quantity(:product_id, :quantity)';
+		$params = array(':product_id' => $product->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -350,21 +261,9 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function reserve(Product $product, $quantity){
-		switch($product->getId()){
-			case 123:
-				self::$_mReserve123 += $quantity;
-				break;
-				
-			case 124:
-				self::$_mReserve124 += $quantity;
-				break;
-				
-			case 125:
-				self::$_mReserve125 += $quantity;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL product_increase_reserved(:product_id, :quantity)';
+		$params = array(':product_id' => $product->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
@@ -374,21 +273,9 @@ class InventoryDAM{
 	 * @param integer $quantity
 	 */
 	static public function decreaseReserve(Product $product, $quantity){
-		switch($product->getId()){
-			case 123:
-				self::$_mReserve123 -= $quantity;
-				break;
-				
-			case 124:
-				self::$_mReserve124 -= $quantity;
-				break;
-				
-			case 125:
-				self::$_mReserve125 -= $quantity;
-				break;
-				
-			default:
-		}
+		$sql = 'CALL product_decrease_reserved(:product_id, :quantity)';
+		$params = array(':product_id' => $product->getId(), ':quantity' => $quantity);
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
