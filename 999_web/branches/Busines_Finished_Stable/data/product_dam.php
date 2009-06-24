@@ -1072,7 +1072,7 @@ class LotDAM{
 	 * @param integer $id
 	 * @return Lot
 	 */
-	static public function getInstance($id){
+	static public function getInstance($id, Product $product = NULL){
 		$product = Product::getInstance(123);
 		$product2 = Product::getInstance(124);
 		$product3 = Product::getInstance(125);

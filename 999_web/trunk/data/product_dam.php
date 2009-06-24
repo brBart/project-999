@@ -725,13 +725,14 @@ class LotDAM{
 	 * @param integer $id
 	 * @return Lot
 	 */
-	static public function getInstance($id){
+	static public function getInstance($id, Product $product = NULL){
 		$sql = 'CALL lot_get(:lot_id)';
 		$params = array(':lot_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$product = Product::getInstance((int)$result['product_id']);
+			if(is_null($product) || $product->getId() != $result['product_id'])
+				$product = Product::getInstance((int)$result['product_id']);
 			
 			$quantity = (int)$result['quantity'];
 			$negative = (int)$result['negative_quantity'];
