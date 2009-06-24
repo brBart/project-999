@@ -1458,7 +1458,8 @@ class Lot extends Persist{
 	/**
 	 * Returns an instance of a lot.
 	 *
-	 * Returns NULL if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database. The optional argument is the
+	 * product the lot belongs to.
 	 * @param integer $id
 	 * @return Lot
 	 */
@@ -1598,7 +1599,7 @@ class Kardex{
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
 			
-		return KardexDAM::getData($product, $balance, $total_pages, $total_items, $page);
+		return KardexDAM::getList($product, $balance, $total_pages, $total_items, $page);
 	}
 }
 

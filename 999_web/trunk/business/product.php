@@ -1599,7 +1599,7 @@ class Kardex{
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
 			
-		return KardexDAM::getData($product, $balance, $total_pages, $total_items, $page);
+		return KardexDAM::getList($product, $balance, $total_pages, $total_items, $page);
 	}
 }
 
