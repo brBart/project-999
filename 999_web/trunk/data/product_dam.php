@@ -874,7 +874,9 @@ class KardexDAM{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getData(Product $product, &$balance, &$total_pages, &$total_items, $page){
+	static public function getList(Product $product, &$balance, &$total_pages, &$total_items, $page){
+		
+		
 		$balance = 30;
 		$total_pages = 1;
 		$total_items = 2;
