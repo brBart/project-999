@@ -206,7 +206,7 @@ class InventoryDAM{
 		
 		$lots = array();
 		foreach($result as $lot)
-			$lots[] = Lot::getInstance($lot['lot_id'], $obj);
+			$lots[] = Lot::getInstance((int)$lot['lot_id'], $obj);
 			
 		return $lots;
 	}
@@ -225,7 +225,7 @@ class InventoryDAM{
 		
 		$lots = array();
 		foreach($result as $lot)
-			$lots[] = Lot::getInstance($lot['lot_id'], $obj);
+			$lots[] = Lot::getInstance((int)$lot['lot_id'], $obj);
 			
 		return $lots;
 	}
