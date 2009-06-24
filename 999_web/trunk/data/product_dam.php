@@ -206,7 +206,7 @@ class InventoryDAM{
 		
 		$lots = array();
 		foreach($result as $lot)
-			$lots[] = Lot::getInstance($lot['lot_id']);
+			$lots[] = Lot::getInstance($lot['lot_id'], $obj);
 			
 		return $lots;
 	}
@@ -225,7 +225,7 @@ class InventoryDAM{
 		
 		$lots = array();
 		foreach($result as $lot)
-			$lots[] = Lot::getInstance($lot['lot_id']);
+			$lots[] = Lot::getInstance($lot['lot_id'], $obj);
 			
 		return $lots;
 	}
@@ -721,7 +721,8 @@ class LotDAM{
 	/**
 	 * Returns an instance of a lot.
 	 *
-	 * Returns NULL if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database. The optional argument is the
+	 * product the lot belongs to. If not provided, it will be fetch from the database too.
 	 * @param integer $id
 	 * @return Lot
 	 */
