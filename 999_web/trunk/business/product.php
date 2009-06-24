@@ -1458,7 +1458,8 @@ class Lot extends Persist{
 	/**
 	 * Returns an instance of a lot.
 	 *
-	 * Returns NULL if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database. The optional argument is the
+	 * product the lot belongs to.
 	 * @param integer $id
 	 * @return Lot
 	 */
