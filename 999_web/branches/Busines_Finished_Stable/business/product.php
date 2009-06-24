@@ -1462,9 +1462,9 @@ class Lot extends Persist{
 	 * @param integer $id
 	 * @return Lot
 	 */
-	static public function getInstance($id){
+	static public function getInstance($id, Product $product = NULL){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-		return LotDAM::getInstance($id);
+		return LotDAM::getInstance($id, $product);
 	}
 }
 
