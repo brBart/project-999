@@ -361,7 +361,7 @@ class InvoiceDAM{
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
-				$invoice = new Invoice(CashRegister::getInstance(123), '25/04/2009',
+				$invoice = new Invoice(CashRegister::getInstance(123), '25/04/2009 09:09:09',
 						UserAccount::getInstance('roboli'), $id, PersistDocument::CREATED);
 				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
 				$invoice->setData(457, Correlative::getInstance('A022'), 'C/F', 12.00, 39.50, $details);
@@ -420,7 +420,7 @@ class PurchaseReturnDAM{
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
-				$return = new PurchaseReturn('25/04/2009', UserAccount::getInstance('roboli'), $id,
+				$return = new PurchaseReturn('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
 						PersistDocument::CREATED);
 				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
 				$return->setData(Supplier::getInstance(123), 'Product en mal estado.', 39.50, $details);
@@ -479,7 +479,7 @@ class ShipmentDAM{
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
-				$shipment = new Shipment('25/04/2009', UserAccount::getInstance('roboli'), $id,
+				$shipment = new Shipment('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
 						PersistDocument::CREATED);
 				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
 				$shipment->setData(Branch::getInstance(123), 39.50, $details);
@@ -538,7 +538,7 @@ class ReceiptDAM{
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
-				$receipt = new Receipt('25/04/2009', UserAccount::getInstance('roboli'), $id,
+				$receipt = new Receipt('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
 						PersistDocument::CREATED);
 				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
 				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
@@ -549,7 +549,7 @@ class ReceiptDAM{
 				break;
 				
 			case 124:
-				$receipt = new Receipt('15/05/2009', UserAccount::getInstance('roboli'), $id,
+				$receipt = new Receipt('15/05/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
 						PersistDocument::CREATED);
 				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
 				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
@@ -617,7 +617,7 @@ class EntryIADAM{
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
-				$entry = new EntryIA('25/04/2009', UserAccount::getInstance('roboli'), $id,
+				$entry = new EntryIA('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
 						PersistDocument::CREATED);
 				$lot = new Lot(Product::getInstance(123), 10, 8.00, '10/12/2009');
 				$details[] = new DocProductDetail($lot, new Entry(), 5, 7.90);
@@ -677,7 +677,7 @@ class WithdrawIADAM{
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
-				$withdraw = new WithdrawIA('25/04/2009', UserAccount::getInstance('roboli'), $id,
+				$withdraw = new WithdrawIA('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
 						PersistDocument::CREATED);
 				$details[] = new DocProductDetail(Lot::getInstance(123), new Withdraw(), 5, 7.90);
 				$withdraw->setData('Ajuste.', 39.50, $details);
