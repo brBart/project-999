@@ -31,10 +31,10 @@ abstract class Document extends PersistDocument implements Itemized{
 	/**
 	 * Holds the date in which the document was created.
 	 *
-	 * Date format: 'dd/mm/yyyy'.
+	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
 	 * @var string
 	 */
-	private $_mDate;
+	private $_mDateTime;
 	
 	/**
 	 * Holds the documents grand total.
@@ -61,28 +61,28 @@ abstract class Document extends PersistDocument implements Itemized{
 	 * Constructs the document with the provided data.
 	 *
 	 * Arguments must be passed only when called from the database layer correponding class.
-	 * @param string $date
+	 * @param string $dateTime
 	 * @param UserAccount $user
 	 * @param integer $id
 	 * @param integer $status
 	 * @throws Exception
 	 */
-	public function __construct($date = NULL, UserAccount $user = NULL, $id = NULL,
+	public function __construct($dateTime = NULL, UserAccount $user = NULL, $id = NULL,
 			$status = PersistDocument::IN_PROGRESS){
 		parent::__construct($id, $status);
 		
-		if(!is_null($date)){
+		if(!is_null($dateTime)){
 			try{
-				Date::validateDate($date, 'Fecha inv&aacute;lida.');
+				Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
-			$this->_mDate = $date;
+			$this->_mDateTime = $dateTime;
 		}
 		else
-			$this->_mDate = date('d/m/Y');
+			$this->_mDateTime = date('d/m/Y H:i:s');
 		
 		if(!is_null($user)){
 			try{
@@ -99,12 +99,12 @@ abstract class Document extends PersistDocument implements Itemized{
 	}
 	
 	/**
-	 * Returns the document's creation date.
+	 * Returns the document's creation date and time.
 	 *
 	 * @return string
 	 */
-	public function getDate(){
-		return $this->_mDate;
+	public function getDateTime(){
+		return $this->_mDateTime;
 	}
 	
 	/**
@@ -156,7 +156,6 @@ abstract class Document extends PersistDocument implements Itemized{
 	 *
 	 * Must be called only from the database layer corresponding class. The object's status must be set to
 	 * PersistDocument::CREATED in the constructor method too.
-	 * @param string $date
 	 * @param float $total
 	 * @param array<DocumentDetail> $details
 	 * @throws Exception
@@ -1372,15 +1371,15 @@ class Invoice extends Document{
 	 * its been created (PersistDocument::IN_PROGRESS) the cash register must be open, otherwise it doesn't
 	 * matter because it is an already created (PersistDocument::CREATED) invoice.
 	 * @param CashRegister $cashRegister
-	 * @param string $date
+	 * @param string $dateTime
 	 * @param UserAccount $user
 	 * @param integer $id
 	 * @param integer $status
 	 * @throws Exception
 	 */
-	public function __construct(CashRegister $cashRegister, $date = NULL, UserAccount $user = NULL,
+	public function __construct(CashRegister $cashRegister, $dateTime = NULL, UserAccount $user = NULL,
 			$id = NULL, $status = PersistDocument::IN_PROGRESS){
-		parent::__construct($date, $user, $id, $status);
+		parent::__construct($dateTime, $user, $id, $status);
 		
 		if($this->_mStatus == PersistDocument::IN_PROGRESS && !$cashRegister->isOpen())
 			throw new Exception('Caja ya esta cerrada.');
