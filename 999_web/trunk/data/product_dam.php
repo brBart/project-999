@@ -869,20 +869,13 @@ class KardexDAM{
 	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Product $product
 	 * @param integer &$balance
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Product $product, &$balance, &$total_pages, &$total_items, $page){
+	static public function getList(Product $product, &$balance, &$totalPages, &$totalItems, $page){
 		
-		
-		$balance = 30;
-		$total_pages = 1;
-		$total_items = 2;
-		return array(array('date' => '21/04/2009', 'document' => 'Factura', 'number' => 'A021-32442',
-				'entry' => 0, 'withdraw' => 5, 'balance' => 25), array('date' => '29/04/2009',
-				'document' => 'Recibo', 'number' => '98465', 'entry' => 10, 'withdraw' => 0, 'balance' => 35));
 	}
 }
 
