@@ -42,7 +42,7 @@ class Date{
 	 */
 	static public function validateDateTime($dateTime, $msg){
 		$date_array = explode(' ', $dateTime);
-		self::validateDate($date_array[0]);
+		self::validateDate($date_array[0], $msg);
 		
 		if(!preg_match('/([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)/', $date_array[1]))
 			throw new Exception($msg . ' Formato de hora debe ser HH::MM:SS');
