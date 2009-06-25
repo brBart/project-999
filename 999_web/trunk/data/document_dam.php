@@ -452,7 +452,7 @@ class InvoiceDAM{
 		$user = $obj->getUser();
 		$cash_register = $obj->getCashRegister();
 		$params = array(':serial_number' => $correlative->getSerialNumber(), ':number' => $obj->getNumber(),
-				':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
+				':username' => $user->getUserName(), ':date' => Date::dbDateTimeFormat($obj->getDateTime()),
 				':nit' => $obj->getCustomerNit(), ':name' => $obj->getCustomerName(), ':total' => $obj->getTotal(),
 				':vat' => $obj->getVatPercentage(), ':cash_register_id' => $cash_register->getId(),
 				':status' => PersistDocument::CREATED);
@@ -547,7 +547,7 @@ class PurchaseReturnDAM{
 		$user = $obj->getUser();
 		$supplier = $obj->getSupplier();
 		$params = array(':username' => $user->getUserName(), ':supplier_id' => $supplier->getId(),
-				':date' => Date::dbFormat($obj->getDate()), ':reason' => $obj->getReason(),
+				':date' => Date::dbDateTimeFormat($obj->getDateTime()), ':reason' => $obj->getReason(),
 				':contact' => $obj->getContact(), ':total' => $obj->getTotal(),
 				':status' => PersistDocument::CREATED);
 		DatabaseHandler::execute($sql, $params);
@@ -640,7 +640,7 @@ class ShipmentDAM{
 		$user = $obj->getUser();
 		$branch = $obj->getBranch();
 		$params = array(':username' => $user->getUserName(), ':branch_id' => $branch->getId(),
-				':date' => Date::dbFormat($obj->getDate()), ':contact' => $obj->getContact(),
+				':date' => Date::dbDateTimeFormat($obj->getDateTime()), ':contact' => $obj->getContact(),
 				':total' => $obj->getTotal(), ':status' => PersistDocument::CREATED);
 		DatabaseHandler::execute($sql, $params);
 		
@@ -732,7 +732,8 @@ class ReceiptDAM{
 		$user = $obj->getUser();
 		$supplier = $obj->getSupplier();
 		$params = array(':username' => $user->getUserName(), ':supplier_id' => $supplier->getId(),
-				':date' => Date::dbFormat($obj->getDate()), ':shipment_number' => $obj->getShipmentNumber(),
+				':date' => Date::dbDateTimeFormat($obj->getDateTime()),
+				':shipment_number' => $obj->getShipmentNumber(),
 				':total' => $obj->getTotal(), ':status' => PersistDocument::CREATED);
 		DatabaseHandler::execute($sql, $params);
 		
@@ -821,7 +822,8 @@ class EntryIADAM{
 	static public function insert(EntryIA $obj){
 		$sql = 'CALL entry_adjustment_insert(:username, :date, :reason, :total, :status)';
 		$user = $obj->getUser();
-		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
+		$params = array(':username' => $user->getUserName(),
+				':date' => Date::dbDateTimeFormat($obj->getDateTime()),
 				':reason' => $obj->getReason(), ':total' => $obj->getTotal(),
 				':status' => PersistDocument::CREATED);
 		DatabaseHandler::execute($sql, $params);
@@ -911,7 +913,8 @@ class WithdrawIADAM{
 	static public function insert(WithdrawIA $obj){
 		$sql = 'CALL withdraw_adjustment_insert(:username, :date, :reason, :total, :status)';
 		$user = $obj->getUser();
-		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
+		$params = array(':username' => $user->getUserName(),
+				':date' => Date::dbDateTimeFormat($obj->getDateTime()),
 				':reason' => $obj->getReason(), ':total' => $obj->getTotal(),
 				':status' => PersistDocument::CREATED);
 		DatabaseHandler::execute($sql, $params);
