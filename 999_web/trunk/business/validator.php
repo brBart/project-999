@@ -32,6 +32,23 @@ class Date{
 	}
 	
 	/**
+	 * Validates the provided datetime value.
+	 *
+	 * Verifies if it is a valid date and time. Otherwise it throws an exception.
+	 * @param string $dateTime
+	 * @param string $msg
+	 * @return void
+	 * @throws Exception
+	 */
+	static public function validateDateTime($dateTime, $msg){
+		$date_array = explode(' ', $dateTime);
+		self::validateDate($date_array[0]);
+		
+		if(!preg_match('/([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)/', $date_array[1]))
+			throw new Exception($msg . ' Formato de hora debe ser HH::MM:SS');
+	}
+	
+	/**
 	 * Compares if the last date is greater than the first date.
 	 *
 	 * Returns true if it is the case.
@@ -64,6 +81,17 @@ class Date{
 		$db_date_array = array($date_array[2], $date_array[1], $date_array[0]);
 		
 		return implode('/', $db_date_array);
+	}
+	
+	/**
+	 * Change the dates format 'dd/mm/yyyy' to a database format 'yyyy/mm/dd'.
+	 *
+	 * @param string $dateTime
+	 * @return string
+	 */
+	static public function dbDateTimeFormat($dateTime){
+		$date_array = explode(' ', $dateTime);		
+		return self::dbFormat($date_array[0]) . ' ' . $date_array[1];
 	}
 	
 	/**
