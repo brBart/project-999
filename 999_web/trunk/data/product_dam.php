@@ -875,7 +875,31 @@ class KardexDAM{
 	 * @return array
 	 */
 	static public function getList(Product $product, &$balance, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL kardex_count(:product_id)';
+		$params = array(':product_id' => $product->getId());
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
+		if($page > 1){
+			$sql = 'CALL kardex_balance_foward_get(:product_id, :start_item, :items_per_page)';
+			$params = array(':product_id' => $product->getId(), ':start_item' => ($page - 2) * ITEMS_PER_PAGE,
+					'items_per_page' => ITEMS_PER_PAGE);
+		}
+		else
+			$sql = 'CALL product_balance_foward_get(product_id)';
+		
+		$balance = DatabaseHandler::getOne($sql, $params);
+		
+		if($page > 0)
+			$params = array('product_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+					'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array('product_id' => $id, ':start_item' => 0,
+					':items_per_page' => $totalItems);
+		
+		$params = array_merge($params, array(':balance_foward' => $balance));
+		$sql = 'CALL kardex_get(:product_id, :start_item, :items_per_page, :balance_foward)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
