@@ -913,14 +913,14 @@ class ProductBonusListDAM{
 	/**
 	 * Returns an array containing the bonus details belonging to the provided product.
 	 *
-	 * The array's fields are id, quantity, percentage, created_date and expiration_date.
+	 * The array's fields are bonus_id, quantity, percentage, created_date and expired_date.
 	 * @param Product $product
 	 * @return array
 	 */
 	static public function getList(Product $product){
-		return array(array('id' => 123, 'quantity' => 4, 'percentage' => 15, 'created_date' => '20/04/2009',
-				'expiration_date' => '10/10/2009'), array('id' => 124, 'quantity' => 8, 'percentage' => 25,
-				'created_date' => '30/04/2009', 'expiration_date' => '10/11/2009'));
+		$sql = 'CALL product_bonus_list_get(:product_id)';
+		$params = array(':product_id' => $product->getId());
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
