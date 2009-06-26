@@ -935,20 +935,25 @@ class NegativeBalanceProductListDAM{
 	 * Returns an array containging the data of the products which has a negative balance.
 	 *
 	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
-	 * and balance. If no page argument or cero is passed all the details are returned. The total_pages and
-	 * total_items arguments are necessary to return their respective values.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * and balance. If no page argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values.
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages, &$total_items, $page){
-		$total_pages = 1;
-		$total_items = 2;
-		return array(array('bar_code' => '47349292', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
-				'packaging' => 'caja', 'general_quantity' => 5, 'lots_quantity' => 6, 'balance' => -1),
-				array('bar_code' => '17846291', 'manufacturer' => 'Mattel', 'name' => 'Barby',
-				'packaging' => 'caja', 'general_quantity' => 0, 'lots_quantity' => -1, 'balance' => -1));
+	static public function getList(&$totalPages, &$totalItems, $page){
+		$sql = 'CALL product_negative_balance_count()';
+		$totalItems = DatabaseHandler::getOne($sql);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+		else
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+		
+		$sql = 'CALL product_negative_balance_get(:start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
