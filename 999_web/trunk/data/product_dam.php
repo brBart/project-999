@@ -864,9 +864,9 @@ class KardexDAM{
 	/**
 	 * Returns an array with the kardex details of the product provided.
 	 *
-	 * The array's fields are date, document, number, entry, withdraw and balance. The balance
+	 * The array's fields are created_date, document, number, lot_id, entry, withdraw and balance. The balance
 	 * argument returns it respective value. If no page argument or cero is passed all the details are
-	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
+	 * returned. The totalPages and totalItems arguments are necessary to return their respective values.
 	 * @param Product $product
 	 * @param integer &$balance
 	 * @param integer &$totalPages
@@ -880,21 +880,21 @@ class KardexDAM{
 		$totalItems = DatabaseHandler::getOne($sql, $params);
 		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
-		if($page > 1){
-			$sql = 'CALL kardex_balance_foward_get(:product_id, :start_item, :items_per_page)';
-			$params = array(':product_id' => $product->getId(), ':start_item' => ($page - 2) * ITEMS_PER_PAGE,
-					'items_per_page' => ITEMS_PER_PAGE);
-		}
-		else
-			$sql = 'CALL product_balance_foward_get(product_id)';
-		
+		$sql = 'CALL product_balance_foward_get(:product_id)';
 		$balance = DatabaseHandler::getOne($sql, $params);
 		
+		if($page > 1){
+			$sql = 'CALL kardex_balance_foward_get(:product_id, :last_item, :balance_foward)';
+			$params = array(':product_id' => $product->getId(),
+					':last_item' => ($page - 1) * ITEMS_PER_PAGE, ':balance_foward' => $balance);
+			$balance = DatabaseHandler::getOne($sql, $params);
+		}
+		
 		if($page > 0)
-			$params = array('product_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+			$params = array('product_id' => $product->getId(), ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
 					'items_per_page' => ITEMS_PER_PAGE);
 		else
-			$params = array('product_id' => $id, ':start_item' => 0,
+			$params = array('product_id' => $product->getId(), ':start_item' => 0,
 					':items_per_page' => $totalItems);
 		
 		$params = array_merge($params, array(':balance_foward' => $balance));
