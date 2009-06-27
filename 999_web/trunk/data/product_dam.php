@@ -990,13 +990,6 @@ class InactiveProductListDAM{
 		
 		$sql = 'CALL product_inactive_get(:days, :start_item, :items_per_page)';
 		return DatabaseHandler::getAll($sql, $params);
-		
-		$total_pages = 1;
-		$total_items = 2;
-		return array(array('bar_code' => '438929', 'manufacturer' => 'Mattel', 'name' => 'Caperi',
-				'packaging' => 'caja', 'quantity' => 6, 'last_sale' => '28/02/2009', 'sale_quantity' => 1),
-				array('bar_code' => '639922', 'manufacturer' => 'Chiplte', 'name' => 'Yeah',
-				'packaging' => 'caja', 'quantity' => 12, 'last_sale' => '01/03/2009', 'sale_quantity' => 1));
 	}
 }
 
