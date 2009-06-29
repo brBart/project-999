@@ -6,6 +6,11 @@
  */
 
 /**
+ * For accessing the database.
+ */
+require_once('data/database_handler.php');
+
+/**
  * Class to perform a closing event in the system's data.
  * @package VariousDAM
  * @author Roberto Oliveros
@@ -34,7 +39,9 @@ class CompanyDAM{
 	 * @return Company
 	 */
 	static public function getInstance(){
-		return new Company('1725045-5', 'Infodes');
+		$sql = 'CALL company_get()';
+		$result = DatabaseHandler::getRow($sql);
+		return new Company($result['nit'], $result['name']);
 	}
 	
 	/**
@@ -43,7 +50,9 @@ class CompanyDAM{
 	 * @param Company $obj
 	 */
 	static public function update(Company $obj){
-		// Code here...
+		$sql = 'CALL company_update(:nit, :name)';
+		$params = array(':nit' => $obj->getNit(), ':name' => $obj->getName());
+		DatabaseHandler::execute($sql, $params);
 	}
 }
 
