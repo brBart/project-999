@@ -1001,18 +1001,30 @@ class InactiveProductListDAM{
  */
 class SupplierProductListDAM{
 	/**
-	 * Returns an array with the products' id and name that belongs to the provided supplier.
+	 * Returns an array with the fields product_id and name of all the products that belongs to the provided
+	 * supplier.
 	 *
 	 * @param Supplier $obj
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Supplier $obj, &$total_pages, &$total_items, $page){
-		$total_pages = 1;
-		$total_items = 2;
-		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
+	static public function getList(Supplier $obj, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL supplier_product_list_count(:supplier_id)';
+		$params = array(':supplier_id' => $obj->getId());
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL supplier_product_list_get(:supplier_id, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 
@@ -1026,14 +1038,14 @@ class ReserveListDAM{
 	/**
 	 * Returns an array containing the details of the reserves belonging to the provided product.
 	 *
-	 * The array's fields are id, date, username, lot_id and quantity.
+	 * The array's fields are reserve_id, created_date, user_account_username, lot_id and quantity.
 	 * @param Product $product
 	 * @return array
 	 */
 	static public function getList(Product $product){
-		return array(array('id' => 123, 'date' => '15/05/2009', 'username' => 'roboli', 'id' => '4321',
-				'quantity' => 2), array('id' => 129, 'date' => '15/05/2009', 'username' => 'roboli',
-				'id' => '4329', 'quantity' => 1));
+		$sql = 'CALL reserve_list_get(:product_id)';
+		$params = array(':product_id' => $product->getId());
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 ?>
