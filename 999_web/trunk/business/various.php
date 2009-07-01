@@ -21,13 +21,21 @@ require_once('data/various_dam.php');
  */
 class ClosingEvent{
 	/**
-	 * Makes a closing on the system's data leaving only the provided months of information.
+	 * Makes a closing on the system's data leaving only the provided days of information.
 	 *
-	 * @param integer $months
+	 * @param integer $days
+	 * @return string
 	 */
-	static public function apply($months){
-		Number::validatePositiveInteger($months, 'Cantidad de meses inv&aacute;lida.');
-		ClosingEventDAM::apply($months);
+	static public function apply($days){
+		Number::validatePositiveInteger($days, 'Cantidad de dias inv&aacute;lida.');
+		
+		$backup_file = DB_DATABASE . '_' . date('Y-m-d-H-i-s')  . '.sql';
+		$command = 'mysqldump -u ' . DB_USERNAME . ' -p ' . DB_PASSWORD . ' --opt --routines ' . DB_DATABASE .
+				' > ' . BACKUP_DIR . $backup_file;
+		system($command);
+		
+		ClosingEventDAM::apply($days);
+		return $backup_file;
 	}
 }
 
