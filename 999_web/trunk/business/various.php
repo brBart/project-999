@@ -28,14 +28,7 @@ class ClosingEvent{
 	 */
 	static public function apply($days){
 		Number::validatePositiveInteger($days, 'Cantidad de dias inv&aacute;lida.');
-		
-		$backup_file = DB_DATABASE . '_' . date('Y-m-d-H-i-s')  . '.sql';
-		$command = 'mysqldump -u ' . DB_USERNAME . ' -p ' . DB_PASSWORD . ' --opt --routines ' . DB_DATABASE .
-				' > ' . BACKUP_DIR . $backup_file;
-		system($command);
-		
-		ClosingEventDAM::apply($days);
-		return $backup_file;
+		return ClosingEventDAM::apply($days);
 	}
 }
 
