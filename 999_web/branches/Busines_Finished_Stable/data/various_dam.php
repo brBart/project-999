@@ -15,9 +15,10 @@ class ClosingEventDAM{
 	 * Makes a closing on the system's data leaving only the provided days of information.
 	 *
 	 * @param integer $days
+	 * @return string
 	 */
 	static public function apply($days){
-		// Code here...
+		return 'hola.sql';
 	}
 }
 
