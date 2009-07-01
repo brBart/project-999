@@ -23,6 +23,8 @@ class ClosingEvent{
 	/**
 	 * Makes a closing on the system's data leaving only the provided days of information.
 	 *
+	 * It also makes a backup of the database till the actual date. It returns the name of the backup file that
+	 * is stored in the BACKUP_DIR constant directory value.
 	 * @param integer $days
 	 * @return string
 	 */
