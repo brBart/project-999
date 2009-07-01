@@ -17,11 +17,11 @@ require_once('data/database_handler.php');
  */
 class ClosingEventDAM{
 	/**
-	 * Makes a closing on the system's data leaving only the provided months of information.
+	 * Makes a closing on the system's data leaving only the provided days of information.
 	 *
-	 * @param integer $months
+	 * @param integer $days
 	 */
-	static public function apply($months){
+	static public function apply($days){
 		// Code here...
 	}
 }
