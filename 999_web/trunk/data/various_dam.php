@@ -30,6 +30,10 @@ class ClosingEventDAM{
 				' > ' . BACKUP_DIR . $backup_file;
 		system($command);
 		
+		$sql = 'CALL general_closure(:days)';
+		$params = array(':days' => $days);
+		DatabaseHandler::execute($sql, $params);
+		
 		return $backup_file;
 	}
 }
