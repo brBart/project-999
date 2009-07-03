@@ -27,7 +27,8 @@ class ClosingEventDAM{
 	static public function apply($days){
 		$backup_file = DB_DATABASE . '_' . date('Y-m-d-H-i-s')  . '.sql';
 		$command = 'mysqldump -u ' . DB_USERNAME . ' --password=' . DB_PASSWORD . ' --opt --routines ' .
-				DB_DATABASE . ' > ' . $backup_file;
+				DB_DATABASE . ' > ' . BACKUP_DIR . $backup_file;
+		
 		system($command);
 		
 		$sql = 'CALL general_closure(:days)';
