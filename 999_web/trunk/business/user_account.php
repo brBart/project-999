@@ -488,4 +488,17 @@ class UserAccountUtility{
 		return sha1(HASH_PREFIX . $password);
 	}
 }
+
+
+/**
+ * Class in charge of coordinating the access authorizations in the system.
+ * @package UserAccount
+ * @author Roberto Oliveros
+ */
+class AccessManager{
+	
+	static public function isAllowed(UserAccount $user, $subject, $action){
+		
+	}
+}
 ?>
