@@ -496,9 +496,40 @@ class UserAccountUtility{
  * @author Roberto Oliveros
  */
 class AccessManager{
+	/**
+	 * Contains the subjects of the system.
+	 *
+	 * Remember that this list of subjects has to map to all the subjects stored in the database.
+	 * @var array
+	 */
+	private $_mSubjects = array('operations' => 0, 'cash_register' => 1);
 	
-	static public function isAllowed(UserAccount $user, $subject, $action){
+	/**
+	 * Contains the actions that a user can perform on any subject.
+	 *
+	 * Remember that this list of actions has to map to all the actions stored in the database.
+	 * @var array
+	 */
+	private $_mActions = array('access' => 0, 'close' => 1);
+	
+	/**
+	 * Returns true if the user has to right to perform the provided action over the provided subject.
+	 *
+	 * It throws an exception in case the provided action or subject doesn't exists.
+	 * @param UserAccount $user
+	 * @param string $subject
+	 * @param string $action
+	 * @throws Exception
+	 */
+	static public function isAllowed(UserAccount $account, $subject, $action){
+		Persist::validateObjectFromDatabase($account);
 		
+		if(!in_array($subject, $this->_mSubjects))
+			throw new Exception('Interno: Subject no existe.');
+		if(!in_array($action, $this->_mActions))
+			throw new Exception('Interno: Action no existe.');
+			
+		return AccessManagerDAM::isAllowed($account, $subject, $action);		
 	}
 }
 ?>
