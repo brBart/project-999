@@ -529,7 +529,8 @@ class AccessManager{
 		if(!in_array($action, $this->_mActions))
 			throw new Exception('Interno: Action no existe.');
 			
-		return AccessManagerDAM::isAllowed($account, $subject, $action);		
+		return AccessManagerDAM::isAllowed($account, $this->_mSubjects[$subject],
+				$this->_mActions[$action]);		
 	}
 }
 ?>
