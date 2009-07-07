@@ -547,7 +547,7 @@ class Subject{
 			$subject_id = SubjectDAM::getId($subject);
 			if(!is_null($subject_id)){
 				// Cache the subject.
-				$subjects_array[] = array($subject => $subject_id);
+				$subjects_array[$subject] = $subject_id;
 				self::setSubjects($subjects_array);
 				return $subject_id;
 			}
@@ -602,7 +602,7 @@ class Action{
 			$action_id = ActionDAM::getId($action);
 			if(!is_null($action_id)){
 				// Cache the subject.
-				$actions_array[] = array($action => $action_id);
+				$actions_array[$action] = $action_id;
 				self::setActions($actions_array);
 				return $action_id;
 			}
