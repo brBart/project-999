@@ -176,4 +176,24 @@ class SubjectDAM{
 		}
 	}
 }
+
+
+
+class ActionDAM{
+	
+	static public function getId($action){
+		switch($action){
+			case 'prueba1':
+				return 0;
+				break;
+				
+			case 'prueba2';
+				return 1;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+}
 ?>
