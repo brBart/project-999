@@ -511,11 +511,11 @@ class AccessManager{
 		String::validateString($action, 'Action inv&aacute;lido.');
 		
 		$subject_id = Subject::getId($subject);
-		if(is_null($subject_id))
+		if($subject_id == 0)
 			throw new Exception('Interno: Subject no existe.');
 			
 		$action_id = Action::getId($action);
-		if(is_null($action_id))
+		if($action_id == 0)
 			throw new Exception('Interno: Action no existe.');
 			
 		return AccessManagerDAM::isAllowed($account, $this->_mSubjects[$subject],
@@ -545,7 +545,7 @@ class Subject{
 		else{
 			// If not in the cached array, look in the database.
 			$subject_id = SubjectDAM::getId($subject);
-			if(!is_null($subject_id)){
+			if($subject_id != 0){
 				// Cache the subject.
 				$subjects_array[$subject] = $subject_id;
 				self::setSubjects($subjects_array);				
@@ -599,7 +599,7 @@ class Action{
 		else{
 			// If not in the cached array, look in the database.
 			$action_id = ActionDAM::getId($action);
-			if(!is_null($action_id)){
+			if($action_id != 0){
 				// Cache the subject.
 				$actions_array[$action] = $action_id;
 				self::setActions($actions_array);	

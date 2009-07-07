@@ -164,23 +164,23 @@ class SubjectDAM{
 	static public function getId($subject){
 		switch($subject){
 			case 'prueba1':
-				return 0;
-				break;
-				
-			case 'prueba2';
 				return 1;
 				break;
 				
-			case 'operaciones':
+			case 'prueba2';
 				return 2;
 				break;
 				
-			case 'caja';
+			case 'operaciones':
 				return 3;
 				break;
 				
+			case 'caja';
+				return 4;
+				break;
+				
 			default:
-				return NULL;
+				return 0;
 		}
 	}
 }
@@ -192,23 +192,23 @@ class ActionDAM{
 	static public function getId($action){
 		switch($action){
 			case 'prueba1':
-				return 0;
+				return 1;
 				break;
 				
 			case 'prueba2';
-				return 1;
-				break;
-				
-			case 'accesar':
 				return 2;
 				break;
 				
+			case 'accesar':
+				return 3;
+				break;
+				
 			case 'cerrar';
-				return 1;
+				return 4;
 				break;
 				
 			default:
-				return NULL;
+				return 0;
 		}
 	}
 }
