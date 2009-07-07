@@ -171,6 +171,14 @@ class SubjectDAM{
 				return 1;
 				break;
 				
+			case 'operaciones':
+				return 2;
+				break;
+				
+			case 'caja';
+				return 3;
+				break;
+				
 			default:
 				return NULL;
 		}
@@ -191,9 +199,28 @@ class ActionDAM{
 				return 1;
 				break;
 				
+			case 'accesar':
+				return 2;
+				break;
+				
+			case 'cerrar';
+				return 1;
+				break;
+				
 			default:
 				return NULL;
 		}
+	}
+}
+
+
+
+class AccessManagerDAM{
+	
+	static public function isAllowed(UserAccount $account, $subjectId, $actionId){
+		$role = $account->getRole();
+		
+		
 	}
 }
 ?>
