@@ -548,11 +548,10 @@ class Subject{
 			if(!is_null($subject_id)){
 				// Cache the subject.
 				$subjects_array[$subject] = $subject_id;
-				self::setSubjects($subjects_array);
-				return $subject_id;
+				self::setSubjects($subjects_array);				
 			}
-			else
-				return NULL;
+
+			return $subject_id;
 		}
 	}
 	
@@ -603,11 +602,10 @@ class Action{
 			if(!is_null($action_id)){
 				// Cache the subject.
 				$actions_array[$action] = $action_id;
-				self::setActions($actions_array);
-				return $action_id;
+				self::setActions($actions_array);	
 			}
-			else
-				return NULL;
+			
+			return $action_id;
 		}
 	}
 	
