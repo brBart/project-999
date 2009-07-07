@@ -488,4 +488,148 @@ class UserAccountUtility{
 		return sha1(HASH_PREFIX . $password);
 	}
 }
+
+
+/**
+ * Class in charge of coordinating the access authorizations in the system.
+ * @package UserAccount
+ * @author Roberto Oliveros
+ */
+class AccessManager{
+	/**
+	 * Returns true if the user has to right to perform the provided action over the provided subject.
+	 *
+	 * It throws an exception in case the provided action or subject doesn't exists.
+	 * @param UserAccount $user
+	 * @param string $subject
+	 * @param string $action
+	 * @throws Exception
+	 */
+	static public function isAllowed(UserAccount $account, $subject, $action){
+		Persist::validateObjectFromDatabase($account);
+		String::validateString($subject, 'Subject inv&aacute;lido.');
+		String::validateString($action, 'Action inv&aacute;lido.');
+		
+		$subject_id = Subject::getId($subject);
+		if(is_null($subject_id))
+			throw new Exception('Interno: Subject no existe.');
+			
+		$action_id = Action::getId($action);
+		if(is_null($action_id))
+			throw new Exception('Interno: Action no existe.');
+			
+		return AccessManagerDAM::isAllowed($account, $this->_mSubjects[$subject],
+				$this->_mActions[$action]);		
+	}
+}
+
+
+/**
+ * Class that keep the requested subjects cached.
+ * @package UserAccount
+ * @author Roberto Oliveros
+ */
+class Subject{
+	/**
+	 * Returns the id for the provided subject name.
+	 * 
+	 * In case the subject doesn't exists it returns NULL.
+	 * @param $subject string
+	 * @return integer
+	 */
+	static public function getId($subject){
+		$subjects_array = self::getSubjects();
+		
+		if(in_array($subject, $subjects_array))
+			return $subjects_array[$subject];
+		else{
+			// If not in the cached array, look in the database.
+			$subject_id = SubjectDAM::getId($subject);
+			if(!is_null($subject_id)){
+				// Cache the subject.
+				$subjects_array[] = array($subject => $subject_id);
+				self::setSubjects($subjects_array);
+				return $subject_id;
+			}
+			else
+				return NULL;
+		}
+	}
+	
+	/**
+	 * Returns the cached array of subjects from the session.
+	 * 
+	 * @return array
+	 */
+	static private function getSubjects(){
+		$array = SessionHelper::getInstance()->getSubjects();
+		// If there was no array, return an new one.
+		(empty($array)) ? $subjects_array = array() : $subjects_array = $array;
+		return $subjects_array;
+	}
+	
+	/**
+	 * Stores the array of subjects in the session.
+	 * 
+	 * @param $subjectsArray
+	 */
+	static private function setSubjects($subjectsArray){
+		SessionHelper::getInstance()->setSubjects($subjectsArray);
+	}
+}
+
+
+/**
+ * Class that keep the requested actions cached.
+ * @package UserAccount
+ * @author Roberto Oliveros
+ */
+class Action{
+	/**
+	 * Returns the id for the provided action name.
+	 * 
+	 * In case the action doesn't exists it returns NULL.
+	 * @param $action string
+	 * @return integer
+	 */
+	static public function getId($action){
+		$actions_array = self::getActions();
+		
+		if(in_array($action, $actions_array))
+			return $actions_array[$action];
+		else{
+			// If not in the cached array, look in the database.
+			$action_id = ActionDAM::getId($action);
+			if(!is_null($action_id)){
+				// Cache the subject.
+				$actions_array[] = array($action => $action_id);
+				self::setActions($actions_array);
+				return $action_id;
+			}
+			else
+				return NULL;
+		}
+	}
+	
+	/**
+	 * Returns the cached array of actions from the session.
+	 * 
+	 * @return array
+	 */
+	static private function getActions(){
+		$array = SessionHelper::getInstance()->getActions();
+		// If there was no array, return an new one.
+		(empty($array)) ? $actions_array = array() : $actions_array = $array;
+		return $actions_array;
+	}
+	
+	/**
+	 * Stores the array of actions in the session.
+	 * 
+	 * @param $subjectsArray
+	 */
+	static private function setActions($actionsArray){
+		SessionHelper::getInstance()->setActions($actionsArray);
+	}
+}
 ?>
