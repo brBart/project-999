@@ -540,7 +540,7 @@ class Subject{
 	static public function getId($subject){
 		$subjects_array = self::getSubjects();
 		
-		if(in_array($subject, $subjects_array))
+		if(array_key_exists($subject, $subjects_array))
 			return $subjects_array[$subject];
 		else{
 			// If not in the cached array, look in the database.
@@ -595,7 +595,7 @@ class Action{
 	static public function getId($action){
 		$actions_array = self::getActions();
 		
-		if(in_array($action, $actions_array))
+		if(array_key_exists($action, $actions_array))
 			return $actions_array[$action];
 		else{
 			// If not in the cached array, look in the database.
