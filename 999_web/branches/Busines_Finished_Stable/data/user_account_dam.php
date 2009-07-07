@@ -156,4 +156,24 @@ class UserAccountUtilityDAM{
 		self::$_mRootPassword = $newPassword;
 	}
 }
+
+
+
+class SubjectDAM{
+	
+	static public function getId($subject){
+		switch($subject){
+			case 'prueba1':
+				return 0;
+				break;
+				
+			case 'prueba2';
+				return 1;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+}
 ?>
