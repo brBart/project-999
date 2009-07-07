@@ -19,12 +19,20 @@ class RoleDAM{
 	 * @return Role
 	 */
 	static public function getInstance($id){
-		if($id == 123){
-			$role = new Role($id, 'Administrador');
-			return $role;
+		switch($id){
+			case 123:
+				$role = new Role($id, 'Administrador');
+				return $role;
+				break;
+				
+			case 124:
+				$role = new Role($id, 'Operador');
+				return $role;
+				break;
+				
+			default:
+				return NULL;
 		}
-		else
-			return NULL;
 	}
 }
 
@@ -56,14 +64,24 @@ class UserAccountDAM{
 	 * @return UserAccount
 	 */
 	static public function getInstance($userName){
-		if($userName == 'roboli'){
-			$user_account = new UserAccount($userName, PersistObject::CREATED);
-			$role = Role::getInstance(123);
-			$user_account->setData('Roberto', 'Oliveros', $role,false);
-			return $user_account;
+		switch($userName){
+			case 'roboli':
+				$user_account = new UserAccount($userName, PersistObject::CREATED);
+				$role = Role::getInstance(123);
+				$user_account->setData('Roberto', 'Oliveros', $role, false);
+				return $user_account;
+				break;
+				
+			case 'josoli':
+				$user_account = new UserAccount($userName, PersistObject::CREATED);
+				$role = Role::getInstance(124);
+				$user_account->setData('Jose', 'Oliveros', $role, false);
+				return $user_account;
+				break;
+				
+			default:
+				return NULL;
 		}
-		else
-			return NULL;
 	}
 	
 	/**
@@ -220,7 +238,28 @@ class AccessManagerDAM{
 	static public function isAllowed(UserAccount $account, $subjectId, $actionId){
 		$role = $account->getRole();
 		
-		
+		switch($role->getId()){
+			case 123:
+				if($subjectId == 3 && $actionId == 3)
+		 			return true;
+		 		elseif($subjectId == 4 && $actionId == 4)
+		 			return true;
+		 		else
+		 			return false;
+		 		break;
+		 		
+			case 124:
+				if($subjectId == 3 && $actionId == 3)
+		 			return true;
+		 		elseif($subjectId == 4 && $actionId == 4)
+		 			return false;
+		 		else
+		 			return false;
+		 		break;
+		 		
+			default:
+				return false;
+		}
 	}
 }
 ?>
