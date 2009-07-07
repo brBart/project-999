@@ -48,6 +48,24 @@ class SessionHelper{
 	}
 	
 	/**
+	 * Returns the array of subjects cached.
+	 * 
+	 * @return array
+	 */
+	public function getSubjects(){
+		return $_SESSION['subjects'];
+	}
+	
+	/**
+	 * Returns the array of actions cached.
+	 * 
+	 * @return array
+	 */
+	public function getActions(){
+		return $_SESSION['actions'];
+	}
+	
+	/**
 	 * Sets the session's user.
 	 *
 	 * @param UserAccount $user
@@ -66,6 +84,24 @@ class SessionHelper{
 	public function setObject($key, $obj){
 		$this->validateKey($key);
 		$_SESSION[$key] = $obj;
+	}
+	
+	/**
+	 * Sets the array of subjects cached.
+	 * 
+	 * @param $subjectsArray
+	 */
+	public function setSubjects($subjectsArray){
+		$_SESSION['subjects'] = $subjectsArray;
+	}
+	
+	/**
+	 * Sets the array of actions cached.
+	 * 
+	 * @param $actionsArray
+	 */
+	public function setActions($actionsArray){
+		$_SESSION['actions'] = $actionsArray;
 	}
 	
 	/**
