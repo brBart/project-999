@@ -197,7 +197,7 @@ class SubjectDAM{
 	 * Returns the id of the provided subject.
 	 * 
 	 * Returns 0 in case there is no such subject.
-	 * @param $subject string
+	 * @param string $subject
 	 * @return integer
 	 */
 	static public function getId($subject){
@@ -218,7 +218,7 @@ class ActionDAM{
 	 * Returns the id of the provided action.
 	 * 
 	 * Returns 0 in case there is no such action.
-	 * @param $action string
+	 * @param string $action
 	 * @return integer
 	 */
 	static public function getId($action){
@@ -239,8 +239,8 @@ class AccessManagerDAM{
 	 * Returns true if the user has to right to perform the provided action over the provided subject.
 	 * 
 	 * @param UserAccount $account
-	 * @param $subjectId integer
-	 * @param $actionId integer
+	 * @param integer $subjectId
+	 * @param integer $actionId
 	 * @return boolean
 	 */
 	static public function isAllowed(UserAccount $account, $subjectId, $actionId){
