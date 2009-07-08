@@ -185,4 +185,25 @@ class UserAccountUtilityDAM{
 		DatabaseHandler::execute($sql, $params);
 	}
 }
+
+
+/**
+ * Class in charge of accessing the subject table in the database.
+ * @package UserAccountDAM
+ * @author Roberto Oliveros
+ */
+class SubjectDAM{
+	/**
+	 * Returns the id of the provided subject.
+	 * 
+	 * Returns 0 in case there is no such subject.
+	 * @param $subject string
+	 * @return integer
+	 */
+	static public function getId($subject){
+		$sql = 'CALL subject_id_get(:subject)';
+		$params = array(':subject' => $subject);
+		return (int)DatabaseHandler::getOne($sql, $params);
+	}
+}
 ?>
