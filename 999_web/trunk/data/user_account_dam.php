@@ -206,4 +206,25 @@ class SubjectDAM{
 		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 }
+
+
+/**
+ * Class in charge of accessing the action table in the database.
+ * @package UserAccountDAM
+ * @author Roberto Oliveros
+ */
+class ActionDAM{
+	/**
+	 * Returns the id of the provided action.
+	 * 
+	 * Returns 0 in case there is no such action.
+	 * @param $action string
+	 * @return integer
+	 */
+	static public function getId($action){
+		$sql = 'CALL action_id_get(:action)';
+		$params = array(':action' => $action);
+		return (int)DatabaseHandler::getOne($sql, $params);
+	}
+}
 ?>
