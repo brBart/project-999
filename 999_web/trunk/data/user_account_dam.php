@@ -227,4 +227,27 @@ class ActionDAM{
 		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 }
+
+
+/**
+ * Class in charge of accessing the role_subject_action table in the database.
+ * @package UserAccountDAM
+ * @author Roberto Oliveros
+ */
+class AccessManagerDAM{
+	/**
+	 * Returns true if the user has to right to perform the provided action over the provided subject.
+	 * 
+	 * @param UserAccount $account
+	 * @param $subjectId integer
+	 * @param $actionId integer
+	 * @return boolean
+	 */
+	static public function isAllowed(UserAccount $account, $subjectId, $actionId){
+		$sql = 'CALL role_subject_action_value_get(:role_id, :subject_id, :action_id)';
+		$role = $account->getRole();
+		$params = array(':role_id' => $role->getId(), ':subject_id' => $subjectId, ':action_id' => $actionId);
+		return (boolean)DatabaseHandler::getOne($sql, $params);
+	}
+}
 ?>
