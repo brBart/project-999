@@ -66,6 +66,12 @@ class Request{
  */
 abstract class Controller{
 	/**
+	 * Holds the session helper.
+	 * @var SessionHelper
+	 */
+	private $_mHelper;
+	
+	/**
 	 * Private constructor to make the run method the only way.
 	 */
 	private function __construct(){}
@@ -76,18 +82,31 @@ abstract class Controller{
 	 * It obtains and executes the command in the cmd argument provided by the user.
 	 */
 	static public function run(){
-		$helper = SessionHelper::getInstance();
+		$instance = new Controller();
+		$instance->init();
+		$instance->handleRequest();	
+	}
+	
+	/**
+	 * Obtains and sets the session helper.
+	 */
+	private function init(){
+		$this->_mHelper = SessionHelper::getInstance();
+	}
+	
+	/**
+	 * Handles the request from the user.
+	 */
+	private function handleRequest(){
 		$request = new Request();
-		$type = $request->getProperty('type');
 		
 		// Check if the user has already login.
-		if($helper->getUser()){
+		if(!is_null($helper->getUser())){
 			$cmd = $request->getProperty('cmd');
-			$cmd = str_replace(array('.', '/'), '', $cmd);
 			$command = CommandResolver::getCommand($cmd);
 			
 			// If the command provided was not found.
-			if(!$command){
+			if(is_null($command)){
 				$command = $this->getNotFoundCommand();
 				$command->execute($request, $helper);
 			}
@@ -99,6 +118,18 @@ abstract class Controller{
 			$command->execute($request, $helper);
 		}
 	}
+	
+	/**
+	 * Returns the default NotFoundCommand for the controller.
+	 * @return Command
+	 */
+	abstract protected function getNotFoundCommand();
+	
+	/**
+	 * Returns the default NotLoginCommand for the controller.
+	 * @return Command
+	 */
+	abstract protected function getNotLoginCommand();
 }
 
 
@@ -108,7 +139,53 @@ abstract class Controller{
  * @author Roberto Oliveros
  */
 class OperationsController extends Controller{
+	/**
+	 * Returns the default NotFoundCommand for the controller.
+	 * @return Command
+	 */
+	protected function getNotFoundCommand(){
+		return CommandResolver::getCommand('NotFoundOperations');
+	}
 	
-	
+	/**
+ 	 * Returns the default NotLoginCommand for the controller.
+	 * @return Command
+ 	 */
+	protected function getNotLoginCommand(){
+		return CommandResolver::getCommand('ShowLoginOperations');
+	}
+}
+
+
+/**
+ * Class in charge of obtaining the requested command.
+ * @package Controller
+ * @author Roberto Oliveros
+ */
+class CommandResolver{
+	/**
+	 * Returns an instance of the command name provided.
+	 * 
+	 * Returns NULL in case such command does not exists.
+	 * @param string $cmd
+	 * @return Command
+	 */
+	static public function getCommand($cmd){
+		if($cmd == '')
+			return NULL;
+			
+		$cmd = str_replace(array('.', '/'), '', $cmd);
+		$file_path = 'commands/' . $cmd . '.php';
+		$class_name = $cmd . 'Command';
+		if(file_exists($file_path)){
+			require_once($file_path);
+			if(class_exists($class_name)){
+				$cmd_class = new ReflectionClass($class_name);
+				return $cmd_class->newInstance();
+			}
+		}
+		
+		return NULL;
+	}
 }
 ?>
