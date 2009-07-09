@@ -1,7 +1,7 @@
 <?php
 /**
  * Library containing utility classes for presentation purposes.
- * @package Presentation
+ * @package Session
  * @author Roberto Oliveros
  */
 
@@ -89,7 +89,7 @@ class SessionHelper{
 	/**
 	 * Sets the array of subjects cached.
 	 * 
-	 * @param $subjectsArray
+	 * @param array $subjectsArray
 	 */
 	public function setSubjects($subjectsArray){
 		$_SESSION['subjects'] = $subjectsArray;
@@ -98,7 +98,7 @@ class SessionHelper{
 	/**
 	 * Sets the array of actions cached.
 	 * 
-	 * @param $actionsArray
+	 * @param array $actionsArray
 	 */
 	public function setActions($actionsArray){
 		$_SESSION['actions'] = $actionsArray;
