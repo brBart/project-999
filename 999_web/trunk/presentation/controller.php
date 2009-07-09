@@ -144,7 +144,7 @@ class OperationsController extends Controller{
 	 * @return Command
 	 */
 	protected function getNotFoundCommand(){
-		return CommandResolver::getCommand('NotFoundOperations');
+		return CommandResolver::getCommand('not_found_operations');
 	}
 	
 	/**
@@ -152,7 +152,7 @@ class OperationsController extends Controller{
 	 * @return Command
  	 */
 	protected function getNotLoginCommand(){
-		return CommandResolver::getCommand('ShowLoginOperations');
+		return CommandResolver::getCommand('show_login_operations');
 	}
 }
 
@@ -175,8 +175,8 @@ class CommandResolver{
 			return NULL;
 			
 		$cmd = str_replace(array('.', '/'), '', $cmd);
-		$file_path = 'commands/' . $cmd . '.php';
-		$class_name = $cmd . 'Command';
+		$file_path = COMMANDS_DIR . $cmd . '.php';
+		$class_name = self::getCommandName($cmd) . 'Command';
 		if(file_exists($file_path)){
 			require_once($file_path);
 			if(class_exists($class_name)){
@@ -186,6 +186,19 @@ class CommandResolver{
 		}
 		
 		return NULL;
+	}
+	
+	/**
+	 * Receives the name of the file of the command and it returns the formated name of the command.
+	 * 
+	 * e.g. show_login_operations, returns ShowLoginOperations.
+	 * @param string $cmd
+	 * @return string
+	 */
+	static private function getCommandName($cmd){
+		$cmd = str_replace(array('_'), ' ', $cmd);
+		$cmd = ucwords($cmd);
+		return str_replace(array(' '), '', $cmd);
 	}
 }
 ?>
