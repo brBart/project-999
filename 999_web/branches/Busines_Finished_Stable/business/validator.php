@@ -217,7 +217,7 @@ class String{
 	 * @throws Exception
 	 */
 	static public function validateString($string, $msg){
-		if(empty($string))
+		if($string == '')
 			throw new Exception($msg . ' Valor no puede ser vacio.');
 	}
 	
