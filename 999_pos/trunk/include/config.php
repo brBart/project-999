@@ -11,4 +11,8 @@ define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
 define('SITE_ROOT', dirname(dirname(__FILE__)));
 define('BACKUP_DIR', SITE_ROOT . '/backup/');
 define('COMMANDS_DIR', SITE_ROOT . '/commands/');
+define('SMARTY_DIR', 'C:\\xampp\\php\\Smarty-2.6.26\\libs\\');
+define('TEMPLATE_DIR', SITE_ROOT . '/templates/');
+define('COMPILE_DIR', SITE_ROOT . '/templates_c/');
+define('CONFIG_DIR', SITE_ROOT . '/include/configs');
 ?>
