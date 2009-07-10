@@ -41,7 +41,7 @@ class Request{
 	
 	/**
 	 * Returns an item of the properties array.
-	 * @param $key
+	 * @param string $key
 	 * @return string
 	 */
 	public function getProperty($key){
@@ -50,8 +50,8 @@ class Request{
 	
 	/**
 	 * Sets an item in the properties array.
-	 * @param $key
-	 * @param $val
+	 * @param string $key
+	 * @param string $val
 	 */
 	private function setProperty($key, $val){
 		$this->_mProperties[$key] = $val;
