@@ -74,50 +74,46 @@ abstract class Controller{
 	/**
 	 * Private constructor to make the run method the only way.
 	 */
-	private function __construct(){}
-	
-	/**
-	 * It starts to run the system.
-	 * 
-	 * It obtains and executes the command in the cmd argument provided by the user.
-	 */
-	static public function run(){
-		$instance = new Controller();
-		$instance->init();
-		$instance->handleRequest();	
-	}
+	protected function __construct(){}
 	
 	/**
 	 * Obtains and sets the session helper.
 	 */
-	private function init(){
+	protected function init(){
 		$this->_mHelper = SessionHelper::getInstance();
 	}
 	
 	/**
 	 * Handles the request from the user.
 	 */
-	private function handleRequest(){
+	protected function handleRequest(){
 		$request = new Request();
 		
 		// Check if the user has already login.
-		if(!is_null($helper->getUser())){
+		if(!is_null($this->_mHelper->getUser())){
 			$cmd = $request->getProperty('cmd');
 			$command = CommandResolver::getCommand($cmd);
 			
 			// If the command provided was not found.
 			if(is_null($command)){
 				$command = $this->getNotFoundCommand();
-				$command->execute($request, $helper);
+				$command->execute($request, $this->_mHelper);
 			}
 			else
-				$command->execute($request, $helper);
+				$command->execute($request, $this->_mHelper);
 		}
 		else{
 			$command = $this->getNotLoginCommand();
-			$command->execute($request, $helper);
+			$command->execute($request, $this->_mHelper);
 		}
 	}
+	
+	/**
+	 * It starts to run the system.
+	 * 
+	 * It obtains and executes the command in the cmd argument provided by the user.
+	 */
+	abstract static public function run();
 	
 	/**
 	 * Returns the default NotFoundCommand for the controller.
@@ -139,6 +135,17 @@ abstract class Controller{
  * @author Roberto Oliveros
  */
 class OperationsController extends Controller{
+	/**
+	 * It starts to run the system.
+	 * 
+	 * It obtains and executes the command in the cmd argument provided by the user.
+	 */
+	static public function run(){
+		$instance = new OperationsController();
+		$instance->init();
+		$instance->handleRequest();	
+	}
+	
 	/**
 	 * Returns the default NotFoundCommand for the controller.
 	 * @return Command
