@@ -159,7 +159,7 @@ class OperationsController extends Controller{
 	 * @return Command
  	 */
 	protected function getNotLoginCommand(){
-		return CommandResolver::getCommand('show_login_operations');
+		return CommandResolver::getCommand('show_login_form_operations');
 	}
 }
 
