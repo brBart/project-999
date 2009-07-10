@@ -11,6 +11,11 @@
 require_once('presentation/command.php');
 
 /**
+ * For displaying the results.
+ */
+require_once('presentation/page.php');
+
+/**
  * Displays the login form for the operations side of the system.
  * @package Command
  * @author Roberto Oliveros
@@ -21,7 +26,7 @@ class ShowLoginFormOperationsCommand extends Command{
 	 * @see 999_web/presentation/commands/Command#execute($request, $helper)
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		echo 'Hello System!!!';
+		Page::display(array('success' => '1'), 'login_form_operations_html.tpl');
 	}
 }
 ?>
