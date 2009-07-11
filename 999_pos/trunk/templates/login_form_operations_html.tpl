@@ -18,6 +18,9 @@
 				<label for="password">Contrase&ntilde;a:</label>
 				<input name="password" id="password" type="password" />
 		  	</p>
+		  	{if success eq 0}
+		  	<p>{$message}</p>
+		  	{/if}
 		  	<p>
 				<input type="submit" name="login" value="Iniciar sesi&oacute;n" />
 		  	</p>
