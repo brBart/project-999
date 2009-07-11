@@ -7,19 +7,21 @@
 <title>{#operations_title#}</title>
 </head>
 <body>
-	<fieldset>
-		<legend>Login</legend>
-	  	<p>
-			<label for="username">Usuario:</label>
-			<input name="username" id="username" type="text" />
-	  	</p>
-	  	<p>
-			<label for="password">Contraseña:</label>
-			<input name="password" id="password" type="password" />
-	  	</p>
-	  	<p>
-			<input value="Iniciar sesi&oacute;n" type="button" onclick="" />
-	  	</p>
-  	</fieldset>
+	<form method="post" action="index.php">
+		<fieldset>
+			<legend>Login</legend>
+		  	<p>
+				<label for="username">Usuario:</label>
+				<input name="username" id="username" type="text" />
+		  	</p>
+		  	<p>
+				<label for="password">Contrase&ntilde;a:</label>
+				<input name="password" id="password" type="password" />
+		  	</p>
+		  	<p>
+				<input type="submit" name="login" value="Iniciar sesi&oacute;n" />
+		  	</p>
+	  	</fieldset>
+  	</form>
 </body>
 </html>
