@@ -9,11 +9,14 @@
  * Base class.
  */
 require_once('presentation/command.php');
-
 /**
  * For displaying the results.
  */
 require_once('presentation/page.php');
+/**
+ * For user accounts validations.
+ */
+require_once('business/user_account.php');
 
 /**
  * Displays the login form for the operations side of the system.
@@ -29,7 +32,12 @@ class LoginOperationsCommand extends Command{
 		if(is_null($request->getProperty('login')))
 			Page::display(array('success' => '1'), 'login_form_operations_html.tpl');
 		
-		
+		$username = $request->getProperty('username');
+		$password = $request->getProperty('password');
+		if(!UserAccountUtility::isValid($username, $password)){
+			$msg = 'Usuario o contrase&ntilde;a inv&aacute;lido.';
+			Page::display(array('success' => '0', 'message' => $msg), 'login_form_operations_html.tpl');
+		}
 	}
 }
 ?>
