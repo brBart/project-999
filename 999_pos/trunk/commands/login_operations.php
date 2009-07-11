@@ -26,7 +26,10 @@ class LoginOperationsCommand extends Command{
 	 * @see 999_web/presentation/commands/Command#execute($request, $helper)
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		Page::display(array('success' => '1'), 'login_form_operations_html.tpl');
+		if(is_null($request->getProperty('login')))
+			Page::display(array('success' => '1'), 'login_form_operations_html.tpl');
+		
+		
 	}
 }
 ?>
