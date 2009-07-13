@@ -77,6 +77,13 @@ abstract class Controller{
 	protected function __construct(){}
 	
 	/**
+	 * It starts to run the system.
+	 * 
+	 * It obtains and executes the command in the cmd argument provided by the user.
+	 */
+	abstract static public function run();
+	
+	/**
 	 * Obtains and sets the session helper.
 	 */
 	protected function init(){
@@ -92,10 +99,15 @@ abstract class Controller{
 		// Check if the user has already login.
 		if(!is_null($this->_mHelper->getUser())){
 			$cmd = $request->getProperty('cmd');
-			$command = CommandResolver::getCommand($cmd);
+			if($cmd == ''){
+				$command = $this->getDefaultCommand();
+				$command->execute($request, $this->_mHelper);
+				return;
+			}
 			
-			// If the command provided was not found.
+			$command = CommandResolver::getCommand($cmd);
 			if(is_null($command)){
+				// If the command provided was not found.
 				$command = $this->getNotFoundCommand();
 				$command->execute($request, $this->_mHelper);
 			}
@@ -109,11 +121,10 @@ abstract class Controller{
 	}
 	
 	/**
-	 * It starts to run the system.
-	 * 
-	 * It obtains and executes the command in the cmd argument provided by the user.
+	 * Returns the default command for the controller.
+	 * @return Command
 	 */
-	abstract static public function run();
+	abstract protected function getDefaultCommand();
 	
 	/**
 	 * Returns the default NotFoundCommand for the controller.
@@ -144,6 +155,14 @@ class OperationsController extends Controller{
 		$instance = new OperationsController();
 		$instance->init();
 		$instance->handleRequest();	
+	}
+	
+	/**
+	 * Returns the default command for the controller.
+	 * @return Command
+	 */
+	protected function getDefaultCommand(){
+		return CommandResolver::getCommand('show_home_operations');
 	}
 	
 	/**
