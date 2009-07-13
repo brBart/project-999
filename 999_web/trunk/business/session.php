@@ -24,7 +24,7 @@ class SessionHelper{
 	 *
 	 */
 	private function __construct(){
-		//session_start();
+		session_start();
 	}
 	
 	/**
