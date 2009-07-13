@@ -1,19 +1,19 @@
 <?php
 /**
  * Point of departure for the 999 operations system.
+ * @package 999_pos
  * @author Roberto Oliveros
  */
 
 /**
- * Indicate where all the system libraries reside.
+ * Web site path.
  */
-set_include_path(get_include_path() . ';c:\\xampp\\htdocs\\sistema999\\999_project\\999_web\\' .
-		';c:\\xampp\\htdocs\\sistema999\\999_pos\\999_pos\\');
+define('SITE_ROOT', dirname(dirname(__FILE__)));
 
 /**
- * Load the system variables.
+ * Load the system configuration.
  */
-require_once('include/config.php');
+require_once(SITE_ROOT . '/include/config.php');
 
 /**
  * Load the controller library.

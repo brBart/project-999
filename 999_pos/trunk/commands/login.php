@@ -25,8 +25,9 @@ require_once('business/user_account.php');
  */
 abstract class LoginCommand extends Command{
 	/**
-	 * (non-PHPdoc)
-	 * @see 999_web/presentation/commands/Command#execute($request, $helper)
+	 * Executes the tasks of the command.
+	 * @param Request $request
+	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		if(is_null($request->getProperty('login'))){
