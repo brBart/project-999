@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowMenuOperations command.
+ * Library containing the ShowHomeOperations command.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the operations main menu.
+ * Command to display the operations site.
  * @package Command
  * @author Roberto Oliveros
  */
