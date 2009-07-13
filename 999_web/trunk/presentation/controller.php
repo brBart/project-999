@@ -170,7 +170,7 @@ class OperationsController extends Controller{
 	 * @return Command
 	 */
 	protected function getNotFoundCommand(){
-		return CommandResolver::getCommand('not_found_operations');
+		return CommandResolver::getCommand('show_not_found_operations');
 	}
 	
 	/**
