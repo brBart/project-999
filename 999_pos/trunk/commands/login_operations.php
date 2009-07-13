@@ -37,7 +37,7 @@ class LoginOperationsCommand extends LoginCommand{
 	 * Take actions on success.
 	 */
 	protected function displaySuccess(){
-		header('index.php?cmd=show_menu_operations');
+		header('Location: index.php');
 	}
 }
 ?>
