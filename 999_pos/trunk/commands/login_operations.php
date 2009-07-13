@@ -8,36 +8,36 @@
 /**
  * Base class.
  */
-require_once('presentation/command.php');
-/**
- * For displaying the results.
- */
-require_once('presentation/page.php');
-/**
- * For user accounts validations.
- */
-require_once('business/user_account.php');
+require_once('commands/login.php');
 
 /**
  * Displays the login form for the operations side of the system.
  * @package Command
  * @author Roberto Oliveros
  */
-class LoginOperationsCommand extends Command{
+class LoginOperationsCommand extends LoginCommand{
 	/**
-	 * (non-PHPdoc)
-	 * @see 999_web/presentation/commands/Command#execute($request, $helper)
+	 * Returns the name of the template.
+	 * @return string
 	 */
-	public function execute(Request $request, SessionHelper $helper){
-		if(is_null($request->getProperty('login')))
-			Page::display(array('success' => '1'), 'login_form_operations_html.tpl');
-		
-		$username = $request->getProperty('username');
-		$password = $request->getProperty('password');
-		if(!UserAccountUtility::isValid($username, $password)){
-			$msg = 'Usuario o contrase&ntilde;a inv&aacute;lido.';
-			Page::display(array('success' => '0', 'message' => $msg), 'login_form_operations_html.tpl');
-		}
+	protected function getTemplate(){
+		return 'login_form_operations_html.tpl';
+	}
+	
+	/**
+	 * Tests if the user has the right to login.
+	 * @param UserAccount $user
+	 * @return boolean
+	 */
+	protected function testRights(UserAccount $user){
+		return AccessManager::isAllowed($user, 'operations', 'access');
+	}
+	
+	/**
+	 * Take actions on success.
+	 */
+	protected function displaySuccess(){
+		header('index.php?cmd=show_menu_operations');
 	}
 }
 ?>
