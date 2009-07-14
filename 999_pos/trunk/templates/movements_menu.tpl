@@ -7,4 +7,4 @@
     <li><a href="index.php?cmd=show_purchase_returns_menu">Devoluciones</a></li>
     <li><a href="index.php?cmd=show_invoices_menu">Facturas</a></li>
     <li><a href="index.php?cmd=show_deposits_menu">Depositos</a></li>
-  </ul>
+</ul>
