@@ -23,5 +23,13 @@ class ChangePasswordOperationsCommand extends ChangePasswordCommand{
 	protected function getModuleTitle(){
 		return OPERATIONS_TITLE;
 	}
+	
+	/**
+	 * Returns the main menu template file name.
+	 * @return string
+	 */
+	protected function getMainMenuTemplate(){
+		return 'main_menu_operations_html.tpl';
+	}
 }
 ?>
