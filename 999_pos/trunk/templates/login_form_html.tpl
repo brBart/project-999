@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>{#operations_title#} - {$module_title}</title>
+<title>{#site_title#} - {$module_title}</title>
 {literal}
 <script type="text/javascript">
 	function init(){
