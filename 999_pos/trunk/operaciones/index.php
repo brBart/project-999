@@ -6,15 +6,13 @@
  */
 
 /**
- * Web site path.
- */
-define('SITE_ROOT', dirname(dirname(__FILE__)));
-
-/**
  * Load the system configuration.
  */
-require_once(SITE_ROOT . '/include/config.php');
-
+require_once('../include/config.php');
+/**
+ * Load the autoload function.
+ */
+require_once('include/auto_load_libs.php');
 /**
  * Load the controller library.
  */
