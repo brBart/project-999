@@ -20,8 +20,8 @@ class LoginOperationsCommand extends LoginCommand{
 	 * Returns the name of the template.
 	 * @return string
 	 */
-	protected function getTemplate(){
-		return 'login_form_operations_html.tpl';
+	protected function getModuleTitle(){
+		return OPERATIONS_TITLE;
 	}
 	
 	/**
@@ -31,13 +31,6 @@ class LoginOperationsCommand extends LoginCommand{
 	 */
 	protected function testRights(UserAccount $user){
 		return AccessManager::isAllowed($user, 'operations', 'access');
-	}
-	
-	/**
-	 * Take actions on success.
-	 */
-	protected function displaySuccess(){
-		header('Location: index.php');
 	}
 }
 ?>

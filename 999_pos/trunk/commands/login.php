@@ -30,8 +30,10 @@ abstract class LoginCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
+		$module_title = $this->getModuleTitle();
+		
 		if(is_null($request->getProperty('login'))){
-			Page::display(array('success' => '1'), $this->getTemplate());
+			Page::display(array('module_title' => $module_title, 'success' => '1'), 'login_form_html.tpl');
 			return;
 		}
 
@@ -41,31 +43,34 @@ abstract class LoginCommand extends Command{
 		try{
 			if(!UserAccountUtility::isValid($username, $password)){
 				$msg = 'Usuario o contrase&ntilde;a inv&aacute;lido.';
-				Page::display(array('success' => '0', 'message' => $msg), $this->getTemplate());
+				Page::display(array('module_title' => $module_title, 'success' => '0', 'message' => $msg),
+						'login_form_html.tpl');
 			}
 			else{
 				$user = UserAccount::getInstance($username);
 				
 				if(!$this->testRights($user)){
 					$msg = 'Acceso denegado.';
-					Page::display(array('success' => '0', 'message' => $msg), $this->getTemplate());
+					Page::display(array('module_title' => $module_title, 'success' => '0', 'message' => $msg),
+							'login_form_html.tpl');
 				}
 				else{
 					$helper->setUser($user);
-					$this->displaySuccess();
+					header('Location: index.php');
 				}
 			}
 		} catch(Exception $e){
 			$msg = $e->getMessage();
-			Page::display(array('success' => '0', 'message' => $msg), $this->getTemplate());
+			Page::display(array('module_title' => $module_title, 'success' => '0', 'message' => $msg),
+					'login_form_html.tpl');
 		}
 	}
 	
 	/**
-	 * Returns the name of the template.
+	 * Returns the module's name.
 	 * @return string
 	 */
-	abstract protected function getTemplate();
+	abstract protected function getModuleTitle();
 	
 	/**
 	 * Tests if the user has the right to login.
@@ -73,10 +78,5 @@ abstract class LoginCommand extends Command{
 	 * @return boolean
 	 */
 	abstract protected function testRights(UserAccount $user);
-	
-	/**
-	 * Take actions on success.
-	 */
-	abstract protected function displaySuccess();
 }
 ?>
