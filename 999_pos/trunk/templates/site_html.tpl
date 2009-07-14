@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>{#operations_title#}</title>
+<title>{#site_title#} - {$module_title}</title>
 </head>
 <body>
 	<div>
-		<h1>Sistema 999</h1>
+		<h2>Sistema 999 - {$module_title}</h2>
 		{foreach from=$back_trace item=trace name=back_trace_loop}
 			{$trace}
 			{if not $smarty.foreach.back_trace_loop.last} >> {/if}
