@@ -7,5 +7,5 @@
     <li><a href="index.php?cmd=show_reports_menu">Reportes</a></li>
     <li><a href="index.php?cmd=show_log_menu">Bitacoras</a></li>
     <li><a href="index.php?cmd=change_password_operations">Cambio Contraseña</a></li>
-    <li><a href="index.php?cmd=logout_operations">Logout</a></li>
+    <li><a href="index.php?cmd=logout">Logout</a></li>
  </ul>
