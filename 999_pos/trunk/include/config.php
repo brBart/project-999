@@ -6,6 +6,10 @@
  */
 
 /**
+ * Web site path.
+ */
+define('SITE_ROOT', dirname(dirname(__FILE__)));
+/**
  * 999 libraries path.
  */
 define('LIBS_999', 'C:\\xampp\\htdocs\\sistema999\\999_project\\999_web\\');
