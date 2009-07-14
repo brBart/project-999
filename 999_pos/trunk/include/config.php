@@ -65,4 +65,8 @@ define('DB_DATABASE', '999_store');
  * Database configuration.
  */
 define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
+/**
+ * Title of the operations module.
+ */
+define('OPERATIONS_TITLE', 'Operaciones');
 ?>
