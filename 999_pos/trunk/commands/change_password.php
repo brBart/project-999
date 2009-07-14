@@ -34,7 +34,7 @@ abstract class ChangePasswordCommand extends Command{
 		if(is_null($request->getProperty('change_password'))){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
-				'content' => 'change_password_form.tpl', 'username' => $username, 'notify' => '0'),
+				'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '0'),
 				'site_html.tpl');
 			return;
 		}
@@ -53,7 +53,7 @@ abstract class ChangePasswordCommand extends Command{
 		if($msg != ''){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
-					'content' => 'change_password_form.tpl', 'username' => $username, 'notify' => '1',
+					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
 					'message' => $msg), 'site_html.tpl');
 			return;
 		}
@@ -62,14 +62,14 @@ abstract class ChangePasswordCommand extends Command{
 			UserAccountUtility::changePassword($user, $password, $new_password);
 			$back_trace = array('Inicio');
 			$msg = 'Su contrase&ntilde;a cambio correctamente.';
-			Page::display(array('module_title' => $module_title, 'main_menu' => 'main_menu_operations.tpl',
+			Page::display(array('module_title' => $module_title, 'main_menu' => $this->getMainMenuTemplate(),
 					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl', 'content' => 'blank.tpl',
 					'username' => $username, 'notify' => '1', 'message' => $msg), 'site_html.tpl');
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
-					'content' => 'change_password_form.tpl', 'username' => $username, 'notify' => '1',
+					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
 					'message' => $msg), 'site_html.tpl');
 		}
 	}
@@ -79,5 +79,11 @@ abstract class ChangePasswordCommand extends Command{
 	 * @return string
 	 */
 	abstract protected function getModuleTitle();
+	
+	/**
+	 * Returns the main menu template file name.
+	 * @return string
+	 */
+	abstract protected function getMainMenuTemplate();
 }
 ?>
