@@ -30,7 +30,7 @@
 		  	<p>{$message}</p>
 		  	{/if}
 		  	<p>
-				<input type="submit" name="login" value="Iniciar sesi&oacute;n" />
+				<input name="login" type="submit" value="Iniciar sesi&oacute;n" />
 		  	</p>
 	  	</fieldset>
   	</form>
