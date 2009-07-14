@@ -5,14 +5,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>{#operations_title#} - {$module_title}</title>
+{literal}
+<script type="text/javascript">
+	function init(){
+		var oInput = document.getElementById('username');
+		oInput.focus();
+	}
+</script>
+{/literal}
 </head>
-<body>
+<body onload="init()">
 	<form method="post" action="index.php">
 		<fieldset>
 			<legend>Login - {$module_title}</legend>
 		  	<p>
 				<label for="username">Usuario:</label>
-				<input name="username" id="username" type="text" />
+				<input name="username" id="username" type="text" value="{$username}" />
 		  	</p>
 		  	<p>
 				<label for="password">Contrase&ntilde;a:</label>

@@ -43,16 +43,16 @@ abstract class LoginCommand extends Command{
 		try{
 			if(!UserAccountUtility::isValid($username, $password)){
 				$msg = 'Usuario o contrase&ntilde;a inv&aacute;lido.';
-				Page::display(array('module_title' => $module_title, 'success' => '0', 'message' => $msg),
-						'login_form_html.tpl');
+				Page::display(array('module_title' => $module_title, 'username' => $username, 'success' => '0',
+						'message' => $msg), 'login_form_html.tpl');
 			}
 			else{
 				$user = UserAccount::getInstance($username);
 				
 				if(!$this->testRights($user)){
 					$msg = 'Acceso denegado.';
-					Page::display(array('module_title' => $module_title, 'success' => '0', 'message' => $msg),
-							'login_form_html.tpl');
+					Page::display(array('module_title' => $module_title, 'username' => $username,
+							'success' => '0', 'message' => $msg), 'login_form_html.tpl');
 				}
 				else{
 					$helper->setUser($user);
@@ -61,8 +61,8 @@ abstract class LoginCommand extends Command{
 			}
 		} catch(Exception $e){
 			$msg = $e->getMessage();
-			Page::display(array('module_title' => $module_title, 'success' => '0', 'message' => $msg),
-					'login_form_html.tpl');
+			Page::display(array('module_title' => $module_title, 'username' => $username, 'success' => '0',
+					'message' => $msg), 'login_form_html.tpl');
 		}
 	}
 	
