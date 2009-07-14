@@ -27,18 +27,51 @@ abstract class ChangePasswordCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$module_title = $this->getModuleTitle();
-		$username = $helper->getUser()->getUserName();
+		$user = $helper->getUser();
+		$username = $user->getUserName();
 		$back_trace = array('Inicio', 'Constrase&ntilde;a');
 		
 		if(is_null($request->getProperty('change_password'))){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
-				'content' => 'change_password_form.tpl', 'username' => $username, 'success' => '1'),
+				'content' => 'change_password_form.tpl', 'username' => $username, 'notify' => '0'),
 				'site_html.tpl');
 			return;
 		}
 		
+		$password = $request->getProperty('password');
+		$new_password = $request->getProperty('new_password');
+		$confirm_password = $request->getProperty('confirm_password');
 		
+		if($new_password == '')
+			$msg = 'Nueva contrase&ntilde;a inv&aacute;lida. Valor no puede ser vacio.';
+		if($new_password != $confirm_password)
+			$msg = 'Nueva contrase&ntilde;a y confirmaci&oacute;n no coinciden.';
+		if($password == '')
+			$msg = 'Contrase&ntilde;a actual inv&aacute;lida. Valor no puede ser vacio.';
+			
+		if($msg != ''){
+			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
+					'content' => 'change_password_form.tpl', 'username' => $username, 'notify' => '1',
+					'message' => $msg), 'site_html.tpl');
+			return;
+		}
+		
+		try{
+			UserAccountUtility::changePassword($user, $password, $new_password);
+			$back_trace = array('Inicio');
+			$msg = 'Su contrase&ntilde;a cambio correctamente.';
+			Page::display(array('module_title' => $module_title, 'main_menu' => 'main_menu_operations.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl', 'content' => 'blank.tpl',
+					'username' => $username, 'notify' => '1', 'message' => $msg), 'site_html.tpl');
+		} catch(Exception $e){
+			$msg = $e->getMessage();
+			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
+					'content' => 'change_password_form.tpl', 'username' => $username, 'notify' => '1',
+					'message' => $msg), 'site_html.tpl');
+		}
 	}
 	
 	/**
