@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>{#operations_title#}</title>
+<title>{#operations_title#} - {$module_title}</title>
 </head>
 <body>
 	<form method="post" action="index.php">
 		<fieldset>
-			<legend>Login</legend>
+			<legend>Login - {$module_title}</legend>
 		  	<p>
 				<label for="username">Usuario:</label>
 				<input name="username" id="username" type="text" />
