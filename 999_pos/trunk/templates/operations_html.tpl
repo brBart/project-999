@@ -10,8 +10,8 @@
 	<div>
 		<h1>Sistema 999</h1>
 		{foreach from=$back_trace item=trace name=back_trace_loop}
-			{$trace}&nbsp;
-			{if not $smarty.foreach.back_trace_loop.last} >> &nbsp;{/if}
+			{$trace}
+			{if not $smarty.foreach.back_trace_loop.last} >> {/if}
 		{/foreach}
 	</div>
 	<div>
