@@ -27,7 +27,7 @@ class ShowHomeOperationsCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations.tpl',
+		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl', 'content' => 'blank.tpl',
 				'notify' => '0'), 'site_html.tpl');
 	}
