@@ -470,12 +470,12 @@ class UserAccountUtility{
 		
 		$account_name = $account->getUserName();
 		if(!self::isValid($account_name, $password))
-			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
+			throw new Exception('Contrase&ntilde;a actual inv&aacute;lida.');
 		
 		if(self::isRoot($account_name))
-			return UserAccountUtilityDAM::changeRootPassword(self::encrypt($newPassword));
+			UserAccountUtilityDAM::changeRootPassword(self::encrypt($newPassword));
 		else
-			return UserAccountUtilityDAM::changePassword($account, self::encrypt($newPassword));
+			UserAccountUtilityDAM::changePassword($account, self::encrypt($newPassword));
 	}
 	
 	/**
