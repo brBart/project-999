@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to logout to user from the system.
+ * Command to logout the user from the system.
  * @package Command
  * @author Roberto Oliveros
  */
