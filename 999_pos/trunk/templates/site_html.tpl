@@ -17,7 +17,7 @@
 	<div>
 		{include file=$main_menu}
 	</div>
-	{if success eq 0}
+	{if $notify eq 1}
 		<div><p>{$message}</p></div>
 	{/if}
 	<div>

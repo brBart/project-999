@@ -30,7 +30,7 @@ class ShowNotFoundOperationsCommand extends Command{
 		$msg = 'Comando no existe.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl', 'content' => 'blank.tpl',
-				'success' => '0', 'message' => $msg), 'site_html.tpl');
+				'notify' => '0', 'message' => $msg), 'site_html.tpl');
 	}
 }
 ?>
