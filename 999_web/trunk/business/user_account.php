@@ -460,7 +460,6 @@ class UserAccountUtility{
 	 * @param UserAccount $account
 	 * @param string $password
 	 * @param string $newPassword
-	 * @return boolean
 	 * @throws Exception
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
