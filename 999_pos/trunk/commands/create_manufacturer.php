@@ -58,7 +58,7 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
-				'content' => 'manufacturer_form_html.tpl', 'status' => 'create', 'key' => $key,
+				'content' => 'manufacturer_form_html.tpl', 'status' => '0', 'key' => $key,
 				'on_cancel' => 'index.php?cmd=show_manufacturers_menu', 'notify' => '0'),
 				'site_html.tpl');
 	}
