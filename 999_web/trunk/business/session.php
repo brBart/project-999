@@ -155,7 +155,7 @@ class SessionHelper{
  */
 class KeyGenerator{
 	/**
-	 * Generates an random integer key between 1000 and 9999.
+	 * Generates a random integer key between 1000 and 9999.
 	 * @return integer
 	 */
 	static public function generateKey(){
