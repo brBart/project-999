@@ -1,14 +1,14 @@
 <?php
 /**
  * Library containing utility classes for presentation purposes.
- * @package Presentation
+ * @package Session
  * @author Roberto Oliveros
  */
 
 
 /**
  * Utility class for keeping session data.
- * @package Presentation
+ * @package Session
  * @author Roberto Oliveros
  */
 class SessionHelper{
@@ -89,7 +89,7 @@ class SessionHelper{
 	/**
 	 * Sets the array of subjects cached.
 	 * 
-	 * @param $subjectsArray
+	 * @param array $subjectsArray
 	 */
 	public function setSubjects($subjectsArray){
 		$_SESSION['subjects'] = $subjectsArray;
@@ -98,7 +98,7 @@ class SessionHelper{
 	/**
 	 * Sets the array of actions cached.
 	 * 
-	 * @param $actionsArray
+	 * @param array $actionsArray
 	 */
 	public function setActions($actionsArray){
 		$_SESSION['actions'] = $actionsArray;
@@ -144,6 +144,22 @@ class SessionHelper{
 	private function validateKey($key){
 		if(!is_int($key) || $key < 1)
 			throw new Exception('Internal error, invalid key value!');
+	}
+}
+
+
+/**
+ * Class for generating keys to identify objects in the session object.
+ * @package Session
+ * @author Roberto Oliveros
+ */
+class KeyGenerator{
+	/**
+	 * Generates an random integer key between 1000 and 9999.
+	 * @return integer
+	 */
+	static public function generateKey(){
+		return rand(1000, 9999);
 	}
 }
 ?>
