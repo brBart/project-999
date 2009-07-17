@@ -32,7 +32,7 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 	/**
 	 * Display failure in case the user doesn't have rights.
 	 */
-	abstract protected function displayFailure(){
+	protected function displayFailure(){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		$msg = 'Usuario no cuenta con los suficientes privilegios.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
@@ -45,7 +45,7 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 	 * Creates the desired object.
 	 * @return variant
 	 */
-	abstract protected function createObject(){
+	protected function createObject(){
 		return new Manufacturer();
 	}
 	
@@ -54,7 +54,7 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 	 * @param string $key
 	 * @param variant $obj
 	 */
-	abstract protected function displayObject($key, $obj){
+	protected function displayObject($key, $obj){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
