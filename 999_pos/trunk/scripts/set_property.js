@@ -35,10 +35,10 @@ SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
 	if(sCmd == '' || sElementId == '')
 		this.console.displayError('Interno: Argumentos sCmd y sElementId inv&aacute;lidos.');
 	else{
-		var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
-		str = Url.addUrlParam(str, 'key', this.key);
-		str = Url.addUrlParam(str, 'value', sValue);
-		str = Url.addUrlParam(str, 'elementid', sElementId);
+		var str = oUrl.addUrlParam(Url.getUrl(), 'cmd', sCmd);
+		str = oUrl.addUrlParam(str, 'key', this.key);
+		str = oUrl.addUrlParam(str, 'value', sValue);
+		str = oUrl.addUrlParam(str, 'elementid', sElementId);
 		this.requestQueue.push(str);
 		this.sendParams();
 	}
