@@ -17,9 +17,11 @@
 	<div>
 		{include file=$main_menu}
 	</div>
+	<div id="console">
 	{if $notify eq 1}
-		<div><p>{$message}</p></div>
+		<p>{$message}</p>
 	{/if}
+	</div>
 	<div>
 		{include file=$second_menu}
 	</div>
