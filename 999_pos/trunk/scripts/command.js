@@ -5,16 +5,21 @@
  */
 
 /**
- * Constructor function for creating the request object and setting the console for displaying messages.
+ * Constructor function for creating the request object and setting the console for displaying the results.
  * @param Console oConsole
  */
 function Command(oConsole){
+	/**
+	  * Holds the console where to display the results.
+	  * @var Console
+	  */
+	 this.console = oConsole;
+	
 	/**
 	 * Holds the request object.
 	 * @var XmlHttpRequest
 	 */
 	 this.request = this.createXmlHttpRequestObject();
-	 this.console = oConsole;
 }
 
 /**
@@ -52,29 +57,25 @@ Command.prototype.createXmlHttpRequestObject = function(){
 	  	}
 	  	// return the created object or display an error message
 	  	if (!xmlHttp)
-	  		displayError("Error creating the XMLHttpRequest object.");
+	  		this.console.displayError('Interno: Imposible crear el objeto XmlHttpRequest.');
 	  	else 
 	  		return xmlHttp;
 }
 
 /**
- * Handles the server response.
+ * Read the server response.
  */
 Command.prototype.readResponse = function (){
 	var xmlResponse = this.request.responseXML;
 	
 	// Potential errors with IE and Opera
 	if(!xmlResponse || !xmlResponse.documentElement){
-		this.console.displayError(this.request.responseText);
-		return;
-	}
+		throw('Interno: ' + this.request.responseText);
 	
 	// Potential erros with Firefox
 	var rootNodeName = this.request.documentElement.nodeName;
 	if(rootNodeName == 'parsererror'){
-		this.console.displayError(this.request.responseText);
-		return;
-	}
+		throw('Interno: ' + this.request.responseText);
 	
 	var xmlDoc = xmlResponse.documentElement;
 	var success = xmlDoc.getElementByTagName('success').firstChild.data;
@@ -83,6 +84,26 @@ Command.prototype.readResponse = function (){
 	else{
 		var msg = xmlDoc.getElementByTagName('message').firstChild.data;
 		this.displayFailure(xmlDoc, msg);
+	}
+}
+
+/**
+ * Handle the server response of the request.
+ */
+Command.prototype.handleRequestStateChange = function(){
+	// When readyState is 4, read server response.
+	if(this.request.readyState == 4){
+		// Continue only if HTTP status is OK.
+		if(this.request.status == 200){
+			try{
+				this.readResponse();
+			}
+			catch(e){
+				this.console.displayError('Interno: ' + e.toString());
+			}
+		}
+		else
+			this.console.displayError(this.request.statusText);
 	}
 }
 
