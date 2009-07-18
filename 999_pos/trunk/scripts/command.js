@@ -120,6 +120,6 @@ Command.prototype.displaySuccess = function(xmlDoc){
  * @param DocumentElement xmlDoc
  * @param string msg
  */
-Command.prototype.displayFailure = function(xmlDoc, msg){
+Command.prototype.displayFailure = function(xmlDoc, strMsg){
 	return 0;
 }
