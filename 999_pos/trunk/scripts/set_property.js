@@ -57,3 +57,31 @@ SetPropertyCommand.prototype.sendRequest = function(){
 		this.request.send(null);
 	}
 }
+ 
+/**
+ * Read the server response.
+ */
+SetPropertyCommand.prototype.readResponse = function(){
+	// Call the parents function first.
+	Command.prototype.readResponse.call(this);
+	this.sendRequest();
+}
+
+/**
+* Function for displaying success.
+* @param DocumentElement xmlDoc
+*/
+SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
+	var elementId = xmlDoc.getElementByTagName('elementid').firstChild.data;
+	this.console.cleanFailure(strMsg, elementId);
+}
+
+/**
+* Function for displaying failure.
+* @param DocumentElement xmlDoc
+* @param string msg
+*/
+SetPropertyCommand.prototype.displayFailure = function(xmlDoc, strMsg){
+	var elementId = xmlDoc.getElementByTagName('elementid').firstChild.data;
+	this.console.displayFailure(strMsg, elementId);
+}
