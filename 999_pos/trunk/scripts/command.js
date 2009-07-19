@@ -69,12 +69,12 @@ Command.prototype.readResponse = function (){
 	var xmlResponse = this.request.responseXML;
 	
 	// Potential errors with IE and Opera
-	if(!xmlResponse || !xmlResponse.documentElement){
+	if(!xmlResponse || !xmlResponse.documentElement)
 		throw('Interno: ' + this.request.responseText);
 	
 	// Potential erros with Firefox
 	var rootNodeName = this.request.documentElement.nodeName;
-	if(rootNodeName == 'parsererror'){
+	if(rootNodeName == 'parsererror')
 		throw('Interno: ' + this.request.responseText);
 	
 	var xmlDoc = xmlResponse.documentElement;
