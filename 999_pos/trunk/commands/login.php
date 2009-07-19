@@ -30,6 +30,15 @@ abstract class LoginCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
+		$type = $request->getProperty('type');
+		if($type == 'xml'){
+			// Is an ajax request.
+			$msg = 'La cesi&oacute;n ha caducado.';
+			header('Content-Type: text/xml');
+			Page::display(array('message' => $msg), 'error_xml.tpl');
+			return;
+		}
+		
 		$module_title = $this->getModuleTitle();
 		
 		if(is_null($request->getProperty('login'))){
