@@ -1,4 +1,13 @@
 {* Smarty *}
+<script type="text/javascript" src="../scripts/console.js"></script>
+<script type="text/javascript" src="../scripts/url.js"></script>
+<script type="text/javascript" src="../scripts/command.js"></script>
+<script type="text/javascript" src="../scripts/set_property.js"></script>
+<script type="text/javascript">
+	var oConsole = new Console();
+	var oUrl = new Url();
+	var oSetProperty = new SetPropertyCommand(oConsole, {$key});
+</script>
 <div id="form">
 	<fieldset>
 		<label>Status:</label><span id="status_label"></span>
@@ -18,12 +27,3 @@
 	  	<input name="status" id="status" type="hidden" value="{$status}" />
 	</fieldset>
 </div>
-<script type="text/javascript" src="scripts/console.js"></script>
-<script type="text/javascript" src="scripts/url.js"></script>
-<script type="text/javascript" src="scripts/command.js"></script>
-<script type="text/javascript" src="scripts/set_property.js"></script>
-<script type="text/javascript">
-	var oConsole = new Console();
-	var oUrl = new Url();
-	var oSetProperty = new SetPropertyCommand(oConsole, {$key});
-</script>
