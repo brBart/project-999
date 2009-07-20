@@ -30,19 +30,27 @@ Command.prototype.readResponse = function (){
 	
 	// Potential errors with IE and Opera
 	if(!xmlResponse || !xmlResponse.documentElement)
-		throw('Interno: ' + this.request.responseText);
+		throw(this.request.responseText);
 	
 	// Potential erros with Firefox
-	var rootNodeName = this.request.documentElement.nodeName;
+	var rootNodeName = xmlResponse.documentElement.nodeName;
 	if(rootNodeName == 'parsererror')
-		throw('Interno: ' + this.request.responseText);
+		throw(this.request.responseText);
 	
 	var xmlDoc = xmlResponse.documentElement;
-	var success = xmlDoc.getElementByTagName('success').firstChild.data;
+	
+	// Look if there was an error response.
+	var error = xmlDoc.getElementsByTagName('error');
+	if(error){
+		var msg = xmlDoc.getElementsByTagName('message')[0].firstChild.data;
+		throw(msg);
+	}
+	
+	var success = xmlDoc.getElementsByTagName('success')[0].firstChild.data;
 	if(success == 1)
 		this.displaySuccess(xmlDoc);
 	else{
-		var msg = xmlDoc.getElementByTagName('message').firstChild.data;
+		var msg = xmlDoc.getElementsByTagName('message')[0].firstChild.data;
 		this.displayFailure(xmlDoc, msg);
 	}
 }
@@ -59,7 +67,7 @@ Command.prototype.handleRequestStateChange = function(){
 				this.readResponse();
 			}
 			catch(e){
-				this.console.displayError('Interno: ' + e.toString());
+				this.console.displayError(e.toString());
 			}
 		}
 		else
