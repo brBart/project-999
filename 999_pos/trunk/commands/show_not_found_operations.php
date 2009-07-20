@@ -26,7 +26,7 @@ class ShowNotFoundOperationsCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$msg = 'Comando no existe.';
+		$msg = 'Interno: Comando no existe.';
 		$type = $request->getProperty('type');
 		
 		if($type == 'xml'){
