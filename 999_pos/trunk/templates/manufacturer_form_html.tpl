@@ -1,12 +1,14 @@
 {* Smarty *}
 <script type="text/javascript" src="../scripts/console.js"></script>
 <script type="text/javascript" src="../scripts/url.js"></script>
+<script type="text/javascript" src="../scripts/http_request.js"></script>
 <script type="text/javascript" src="../scripts/command.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oUrl = new Url();
-	var oSetProperty = new SetPropertyCommand(oConsole, {$key});
+	var oRequest = createXmlHttpRequestObject();
+	var oSetProperty = new SetPropertyCommand(oConsole, oRequest, {$key});
 </script>
 <div id="form">
 	<fieldset>
