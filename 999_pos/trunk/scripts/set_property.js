@@ -58,7 +58,12 @@ SetPropertyCommand.prototype.sendRequest = function(){
 		var queueEntry = this.requestQueue.shift();
 		var urlParams = oUrl.addUrlParam(queueEntry, 'type', 'xml');
 		this.request.open('GET', urlParams, true);
-		this.request.onreadystatechange = this.handleRequestStateChange;
+		
+		// Necessary for lexical closure, because of the onreadystatchange call.
+		var oCommand = this
+		this.request.onreadystatechange = function(){
+			oCommand.handleRequestStateChange();
+		}
 		this.request.send(null);
 	}
 }
@@ -77,7 +82,7 @@ SetPropertyCommand.prototype.readResponse = function(){
 * @param DocumentElement xmlDoc
 */
 SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
-	var elementId = xmlDoc.getElementByTagName('elementid').firstChild.data;
+	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
 	this.console.cleanFailure(strMsg, elementId);
 }
 
@@ -87,6 +92,6 @@ SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
 * @param string msg
 */
 SetPropertyCommand.prototype.displayFailure = function(xmlDoc, strMsg){
-	var elementId = xmlDoc.getElementByTagName('elementid').firstChild.data;
+	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
 	this.console.displayFailure(strMsg, elementId);
 }
