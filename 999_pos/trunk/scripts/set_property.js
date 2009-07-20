@@ -9,9 +9,9 @@
  * @param Console oConsole
  * @param string sKey
  */
-function SetPropertyCommand(oConsole, sKey){
+function SetPropertyCommand(oConsole, oRequest, sKey){
 	// Call the parent constructor.
-	Command.call(oConsole);
+	Command.call(this, oConsole, oRequest);
 	
 	/**
 	 * Holds the key of the session object.
@@ -26,6 +26,11 @@ function SetPropertyCommand(oConsole, sKey){
 }
 
 /**
+ * Inherit the Command class methods.
+ */
+SetPropertyCommand.prototype = new Command();
+
+/**
  * Executes the command.
  * @param string sCmd
  * @param string sValue
@@ -35,12 +40,12 @@ SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
 	if(sCmd == '' || sElementId == '')
 		this.console.displayError('Interno: Argumentos sCmd y sElementId inv&aacute;lidos.');
 	else{
-		var str = oUrl.addUrlParam(Url.getUrl(), 'cmd', sCmd);
+		var str = oUrl.addUrlParam(oUrl.getUrl(), 'cmd', sCmd);
 		str = oUrl.addUrlParam(str, 'key', this.key);
 		str = oUrl.addUrlParam(str, 'value', sValue);
 		str = oUrl.addUrlParam(str, 'elementid', sElementId);
 		this.requestQueue.push(str);
-		this.sendParams();
+		this.sendRequest();
 	}
 }
 
@@ -49,9 +54,9 @@ SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
  */
 SetPropertyCommand.prototype.sendRequest = function(){
 	// Continue only if the request is not busy or the queue is not empty.
-	if((this.request.readyState == 4 || this.request.readyState == 0) && this.requestQueue.lenght > 0){
+	if((this.request.readyState == 4 || this.request.readyState == 0) && this.requestQueue.length > 0){
 		var queueEntry = this.requestQueue.shift();
-		var urlParams = Url.addUrlParam(queueEntry, 'type', 'xml');
+		var urlParams = oUrl.addUrlParam(queueEntry, 'type', 'xml');
 		this.request.open('GET', urlParams, true);
 		this.request.onreadystatechange = this.handleRequestStateChange;
 		this.request.send(null);
