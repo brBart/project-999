@@ -18,3 +18,7 @@ h3 {
 	font-size: 14px;
 	font-weight: normal;
 }
+
+#main_menu a {
+	font-weight: bold;
+}

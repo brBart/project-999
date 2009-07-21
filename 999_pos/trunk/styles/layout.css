@@ -1,5 +1,29 @@
 @CHARSET "ISO-8859-1";
 
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+#main_menu li {
+	float: left;
+}
+
+#main_menu a {
+	display: block;
+	padding: 0 10px;
+	line-height: 30px;
+}
+
+#second_menu a {
+	display: block;
+	padding: 10px 10px;
+}
+
+#content li{
+	padding: 20px 10px;
+}
+
 #wrapper {
 	width: 800px;
 	margin: 0 auto;
@@ -12,19 +36,21 @@
 }
 
 #main_menu {
-	height: 35px;
-}
-
-#main_menu ul {
-	margin: 0;
-	padding: 0;
-}
-
-#main_menu ul li {
-	float: left;
-	margin: 7px 5px;
+	height: 30px;
 }
 
 #console {
-	height: 40px;
+	min-height: 10px;
+	max-height: 40px;
+}
+
+#second_menu {
+	float: left;
+	width: 200px;
+}
+
+#content {
+	float: right;
+	min-width: 550px;
+	margin: 0 15px;
 }
