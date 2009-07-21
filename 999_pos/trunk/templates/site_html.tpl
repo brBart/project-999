@@ -25,7 +25,7 @@
 		</div>
 		<div id="console">
 		{if $notify eq 1}
-			<p>{$message}</p>
+			<p class="error">{$message}</p>
 		{/if}
 		</div>
 		<div id="second_menu">

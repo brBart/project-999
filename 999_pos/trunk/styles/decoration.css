@@ -41,6 +41,13 @@ ul a {
 	border-width: 1px;
 }
 
+.error {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	background-color: #FFB5B5;
+}
+
 #wrapper {
 	background-color: #EEEEEE;
 }

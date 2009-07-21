@@ -24,6 +24,12 @@ ul {
 	padding: 20px 10px;
 }
 
+#console p {
+	width: 500px;
+	margin: 10px auto;
+	padding: 5px 5px;
+}
+
 #wrapper {
 	width: 800px;
 	margin: 0 auto;
@@ -41,7 +47,9 @@ ul {
 
 #console {
 	min-height: 10px;
-	max-height: 40px;
+	max-height: 50px;
+	padding: 0;
+	overflow: auto;
 }
 
 #second_menu {
