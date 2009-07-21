@@ -5,28 +5,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>{#site_title#} - {$module_title}</title>
+<link href="../styles/layout.css" rel="stylesheet" type="text/css" />
+<link href="../styles/typography.css" rel="stylesheet" type="text/css" />
+<link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<div>
-		<h2>Sistema 999 - {$module_title}</h2>
-		{foreach from=$back_trace item=trace name=back_trace_loop}
-			{$trace}
-			{if not $smarty.foreach.back_trace_loop.last} >> {/if}
-		{/foreach}
-	</div>
-	<div>
-		{include file=$main_menu}
-	</div>
-	<div id="console">
-	{if $notify eq 1}
-		<p>{$message}</p>
-	{/if}
-	</div>
-	<div>
-		{include file=$second_menu}
-	</div>
-	<div>
-		{include file=$content}
+	<div id="wrapper">
+		<div id="header">
+			<h1>Sistema 999 - {$module_title}</h1>
+			<h3>
+			{foreach from=$back_trace item=trace name=back_trace_loop}
+				{$trace}
+				{if not $smarty.foreach.back_trace_loop.last} >> {/if}
+			{/foreach}
+			</h3>
+		</div>
+		<div id="main_menu">
+			{include file=$main_menu}
+		</div>
+		<div id="console">
+		{if $notify eq 1}
+			<p>{$message}</p>
+		{/if}
+		</div>
+		<div id="second_menu">
+			{include file=$second_menu}
+		</div>
+		<div id="content">
+			{include file=$content}
+		</div>
 	</div>
 </body>
 </html>
