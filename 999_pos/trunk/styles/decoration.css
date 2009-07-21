@@ -1,0 +1,17 @@
+@CHARSET "ISO-8859-1";
+
+#wrapper {
+	background-color: #EEEEEE;
+}
+
+#header {
+	background-color: #FFFDC0;
+}
+
+#main_menu {
+	background-color: #E93737;
+}
+
+#main_menu ul {
+	list-style: none;
+}

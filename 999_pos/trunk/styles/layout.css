@@ -1,0 +1,30 @@
+@CHARSET "ISO-8859-1";
+
+#wrapper {
+	width: 800px;
+	margin: 0 auto;
+	min-height: 580px;
+}
+
+#header {
+	padding: 1px;
+	padding-left: 20px;
+}
+
+#main_menu {
+	height: 35px;
+}
+
+#main_menu ul {
+	margin: 0;
+	padding: 0;
+}
+
+#main_menu ul li {
+	float: left;
+	margin: 7px 5px;
+}
+
+#console {
+	height: 40px;
+}
