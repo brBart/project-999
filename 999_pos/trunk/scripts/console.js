@@ -12,6 +12,14 @@ function Console(){
 }
 
 /**
+ * Displays the message in the div element.
+ */
+Console.prototype.displayMessage = function(sMsg){
+	this.elementDiv.innerHTML += sMsg;
+	this.elementDiv.scrollTop = this.elementDiv.scrollHeight;
+}
+
+/**
  * For displaying any kind of failure on the console div and right next to the element.
  * @param string sMsg
  * @param string sElementId
@@ -21,7 +29,7 @@ Console.prototype.displayFailure = function(sMsg, sElementId){
 	var oElement = document.getElementById(sElementId + '_failed');
 	
 	// Display the message and indicate which property cause the failure.
-	this.elementDiv.innerHTML += newP;
+	this.displayMessage(newP);
 	oElement.className = 'error';
 }
 
@@ -30,7 +38,7 @@ Console.prototype.displayFailure = function(sMsg, sElementId){
 * @param string sMsg
 */
 Console.prototype.displayError = function(sMsg){
-	var newP = '<p>' + sMsg + '</p>';
+	var newP = '<p class="error">' + sMsg + '</p>';
 	// Display the error message.
-	this.elementDiv.innerHTML += newP;
+	this.displayMessage(newP);
 }
