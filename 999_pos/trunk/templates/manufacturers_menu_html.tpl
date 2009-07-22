@@ -1,5 +1,5 @@
 {* Smarty * }
 <ul>
-    <li><a href="index.php?cmd=create_manufacturer">Crear</a></li>
-    <li><a href="index.php?cmd=get_manufacturer">Consultar</a></li>
+    <li><a href="index.php?cmd=create_manufacturer" onclick="return oSession.setIsLink(true);">Crear</a></li>
+    <li><a href="index.php?cmd=get_manufacturer" onclick="return oSession.setIsLink(true);">Consultar</a></li>
 </ul>
