@@ -8,6 +8,15 @@
 <link href="../styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="../styles/typography.css" rel="stylesheet" type="text/css" />
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../scripts/session.js"></script>
+{literal}
+<script type="text/javascript">
+	var oSession = new Session();
+	window.onbeforeunload = function(oEvent){
+		oSession.verifyStatus(oEvent);
+	}
+</script>
+{/literal}
 </head>
 <body oncontextmenu="return false;">
 	<div id="wrapper">
