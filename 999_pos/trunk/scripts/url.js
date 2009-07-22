@@ -5,17 +5,10 @@
  */
 
 /**
- * Constructor function.
- */
-function Url(){
-	this._mSiteUrl = 'index.php';
-}
-
-/**
  * Method for returning the site url.
  */
-Url.prototype.getUrl = function(){
-	return this._mSiteUrl;
+Url.getUrl = function(){
+	return 'index.php';
 }
 
 /**
@@ -24,7 +17,7 @@ Url.prototype.getUrl = function(){
  * @param string sParam
  * @param string sValue
  */
-Url.prototype.addUrlParam = function(sUrl, sParam, sValue){
+Url.addUrlParam = function(sUrl, sParam, sValue){
 	sUrl += (sUrl.indexOf('?') == -1) ? '?' : '&';
 	sUrl += encodeURIComponent(sParam) + '=' + encodeURIComponent(sValue);
 	return sUrl;

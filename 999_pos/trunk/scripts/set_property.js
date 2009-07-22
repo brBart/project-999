@@ -40,10 +40,10 @@ SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
 	if(sCmd == '' || sElementId == '')
 		this._mConsole.displayError('Interno: Argumentos sCmd y sElementId inv&aacute;lidos.');
 	else{
-		var str = oUrl.addUrlParam(oUrl.getUrl(), 'cmd', sCmd);
-		str = oUrl.addUrlParam(str, 'key', this._mKey);
-		str = oUrl.addUrlParam(str, 'value', sValue);
-		str = oUrl.addUrlParam(str, 'elementid', sElementId);
+		var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
+		str = Url.addUrlParam(str, 'key', this._mKey);
+		str = Url.addUrlParam(str, 'value', sValue);
+		str = Url.addUrlParam(str, 'elementid', sElementId);
 		this._mRequestQueue.push(str);
 		this.sendRequest();
 	}
@@ -56,7 +56,7 @@ SetPropertyCommand.prototype.sendRequest = function(){
 	// Continue only if the request is not busy or the queue is not empty.
 	if((this._mRequest.readyState == 4 || this._mRequest.readyState == 0) && this._mRequestQueue.length > 0){
 		var queueEntry = this._mRequestQueue.shift();
-		var urlParams = oUrl.addUrlParam(queueEntry, 'type', 'xml');
+		var urlParams = Url.addUrlParam(queueEntry, 'type', 'xml');
 		this._mRequest.open('GET', urlParams, true);
 		
 		// Necessary for lexical closure, because of the onreadystatchange call.
