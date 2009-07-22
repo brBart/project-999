@@ -16,6 +16,13 @@ ul a {
 	text-decoration: none;
 }
 
+.error {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	background-color: #FFB5B5;
+}
+
 #main_menu a {
 	color: #2A3373;
 }
@@ -39,13 +46,6 @@ ul a {
 	border-style: solid;
 	border-color: white;
 	border-width: 1px;
-}
-
-.error {
-	border-style: solid;
-	border-color: red;
-	border-width: 1px;
-	background-color: #FFB5B5;
 }
 
 #wrapper {
