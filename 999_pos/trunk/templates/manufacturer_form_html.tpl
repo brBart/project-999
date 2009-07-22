@@ -6,7 +6,6 @@
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
-	var oUrl = new Url();
 	var oRequest = createXmlHttpRequestObject();
 	var oSetProperty = new SetPropertyCommand(oConsole, oRequest, {$key});
 </script>
