@@ -42,7 +42,7 @@ input [type="password"]{
 </script>
 {/literal}
 </head>
-<body onload="init()">
+<body onload="init();">
 	<div id="wrapper">
 		<form method="post" action="index.php">
 			<fieldset>
