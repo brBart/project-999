@@ -35,6 +35,12 @@ Session.prototype.setIsLink = function(bValue){
 	this._mIsLink = bValue;
 	return true;
 }
+ 
+
+Session.prototype.loadHref = function(sHref){
+	this._mIsLink = true;
+	document.location.href = sHref;
+}
 
 /**
  * Check before unloading the current page if the event was a system click event or other thing.
