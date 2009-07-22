@@ -8,14 +8,14 @@
  * Constructor function.
  */
 function Url(){
-	this.siteUrl = 'index.php';
+	this._mSiteUrl = 'index.php';
 }
 
 /**
  * Method for returning the site url.
  */
 Url.prototype.getUrl = function(){
-	return this.siteUrl;
+	return this._mSiteUrl;
 }
 
 /**

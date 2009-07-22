@@ -8,15 +8,15 @@
  * Constructor function.
  */
 function Console(){
-	this.elementDiv = document.getElementById('console');
+	this._mElementDiv = document.getElementById('console');
 }
 
 /**
  * Displays the message in the div element.
  */
 Console.prototype.displayMessage = function(sMsg){
-	this.elementDiv.innerHTML += sMsg;
-	this.elementDiv.scrollTop = this.elementDiv.scrollHeight;
+	this._mElementDiv.innerHTML += sMsg;
+	this._mElementDiv.scrollTop = this._mElementDiv.scrollHeight;
 }
 
 /**
