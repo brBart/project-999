@@ -9,7 +9,7 @@
 <link href="../styles/typography.css" rel="stylesheet" type="text/css" />
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body oncontextmenu="return false;">
 	<div id="wrapper">
 		<div id="header">
 			<h1>Sistema 999 - {$module_title}</h1>
