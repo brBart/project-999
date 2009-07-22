@@ -16,13 +16,13 @@ function SetPropertyCommand(oConsole, oRequest, sKey){
 	/**
 	 * Holds the key of the session object.
 	 */
-	this.key = sKey;
+	this._mKey = sKey;
 	
 	/**
 	 * Queue for storing the future requests in case the request object is busy.
 	 * @var Array
 	 */
-	this.requestQueue = new Array();
+	this._mRequestQueue = new Array();
 }
 
 /**
@@ -38,13 +38,13 @@ SetPropertyCommand.prototype = new Command();
  */
 SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
 	if(sCmd == '' || sElementId == '')
-		this.console.displayError('Interno: Argumentos sCmd y sElementId inv&aacute;lidos.');
+		this._mConsole.displayError('Interno: Argumentos sCmd y sElementId inv&aacute;lidos.');
 	else{
 		var str = oUrl.addUrlParam(oUrl.getUrl(), 'cmd', sCmd);
-		str = oUrl.addUrlParam(str, 'key', this.key);
+		str = oUrl.addUrlParam(str, 'key', this._mKey);
 		str = oUrl.addUrlParam(str, 'value', sValue);
 		str = oUrl.addUrlParam(str, 'elementid', sElementId);
-		this.requestQueue.push(str);
+		this._mRequestQueue.push(str);
 		this.sendRequest();
 	}
 }
@@ -54,17 +54,17 @@ SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
  */
 SetPropertyCommand.prototype.sendRequest = function(){
 	// Continue only if the request is not busy or the queue is not empty.
-	if((this.request.readyState == 4 || this.request.readyState == 0) && this.requestQueue.length > 0){
-		var queueEntry = this.requestQueue.shift();
+	if((this._mRequest.readyState == 4 || this._mRequest.readyState == 0) && this._mRequestQueue.length > 0){
+		var queueEntry = this._mRequestQueue.shift();
 		var urlParams = oUrl.addUrlParam(queueEntry, 'type', 'xml');
-		this.request.open('GET', urlParams, true);
+		this._mRequest.open('GET', urlParams, true);
 		
 		// Necessary for lexical closure, because of the onreadystatchange call.
 		var oCommand = this
-		this.request.onreadystatechange = function(){
+		this._mRequest.onreadystatechange = function(){
 			oCommand.handleRequestStateChange();
 		}
-		this.request.send(null);
+		this._mRequest.send(null);
 	}
 }
  
@@ -83,7 +83,7 @@ SetPropertyCommand.prototype.readResponse = function(){
 */
 SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
 	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
-	this.console.cleanFailure(strMsg, elementId);
+	this._mConsole.cleanFailure(strMsg, elementId);
 }
 
 /**
@@ -93,5 +93,5 @@ SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
 */
 SetPropertyCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
-	this.console.displayFailure(strMsg, elementId);
+	this._mConsole.displayFailure(strMsg, elementId);
 }

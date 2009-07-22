@@ -13,29 +13,29 @@ function Command(oConsole, oRequest){
 	  * Holds the console where to display the results.
 	  * @var Console
 	  */
-	 this.console = oConsole;
+	 this._mConsole = oConsole;
 	
 	/**
 	 * Holds the request object.
 	 * @var XmlHttpRequest
 	 */
-	 this.request = oRequest;
+	 this._mRequest = oRequest;
 }
 
 /**
  * Read the server response.
  */
 Command.prototype.readResponse = function (){
-	var xmlResponse = this.request.responseXML;
+	var xmlResponse = this._mRequest.responseXML;
 	
 	// Potential errors with IE and Opera
 	if(!xmlResponse || !xmlResponse.documentElement)
-		throw(this.request.responseText);
+		throw(this._mRequest.responseText);
 	
 	// Potential erros with Firefox
 	var rootNodeName = xmlResponse.documentElement.nodeName;
 	if(rootNodeName == 'parsererror')
-		throw(this.request.responseText);
+		throw(this._mRequest.responseText);
 	
 	var xmlDoc = xmlResponse.documentElement;
 	
@@ -60,18 +60,18 @@ Command.prototype.readResponse = function (){
  */
 Command.prototype.handleRequestStateChange = function(){
 	// When readyState is 4, read server response.
-	if(this.request.readyState == 4){
+	if(this._mRequest.readyState == 4){
 		// Continue only if HTTP status is OK.
-		if(this.request.status == 200){
+		if(this._mRequest.status == 200){
 			try{
 				this.readResponse();
 			}
 			catch(e){
-				this.console.displayError(e.toString());
+				this._mConsole.displayError(e.toString());
 			}
 		}
 		else
-			this.console.displayError(this.request.statusText);
+			this._mConsole.displayError(this._mRequest.statusText);
 	}
 }
 
