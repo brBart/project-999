@@ -25,7 +25,7 @@
 	  	<input name="edit" id="edit" type="button" value="Editar" />
 	  	<input name="delete" id="delete" type="button" value="Eliminar" />
 	  	<input name="cancel" id="cancel" type="button" value="Cancelar"
-	  			onclick="document.location.href='{$on_cancel}';"/>
+	  			onclick="oSession.loadHref('{$on_cancel}');"/>
 	  	<input name="status" id="status" type="hidden" value="{$status}" />
 	</fieldset>
 </div>
