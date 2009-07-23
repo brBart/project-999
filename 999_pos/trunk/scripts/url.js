@@ -5,6 +5,11 @@
  */
 
 /**
+ * Constructor. Does nothing because methods are static.
+ */
+function Url(){}
+
+/**
  * Method for returning the site url.
  */
 Url.getUrl = function(){
