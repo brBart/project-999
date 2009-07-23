@@ -23,6 +23,10 @@ ul a {
 	background-color: #FFB5B5;
 }
 
+.failed {
+	color: red;
+}
+
 #main_menu a {
 	color: #2A3373;
 }

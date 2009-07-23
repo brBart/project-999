@@ -9,6 +9,14 @@ fieldset {
 	padding: 10px;
 }
 
+.hidden {
+	display: none;
+}
+
+.failed {
+	display: inline;
+}
+	
 .frm_small {
 	padding: 0 185px;
 }
