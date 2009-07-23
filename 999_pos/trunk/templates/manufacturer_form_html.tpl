@@ -6,8 +6,7 @@
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
-	var oRequest = createXmlHttpRequestObject();
-	var oSetProperty = new SetPropertyCommand(oConsole, oRequest, {$key});
+	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 </script>
 <div id="form">
 	<fieldset>

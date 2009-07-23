@@ -9,9 +9,9 @@
  * @param Console oConsole
  * @param string sKey
  */
-function SetPropertyCommand(oConsole, oRequest, sKey){
+function SetPropertyCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
-	Command.call(this, oConsole, oRequest);
+	Command.call(this, oSession, oConsole, oRequest);
 	
 	/**
 	 * Holds the key of the session object.
