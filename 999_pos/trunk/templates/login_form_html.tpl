@@ -7,18 +7,16 @@
 <title>{#site_title#} - {$module_title}</title>
 {literal}
 <style type="text/css">
-#wrapper {
-	width: 350px;
-	margin: 0 auto;
-}
-
-#console {
-	color: red;
-}
-
 fieldset {
 	margin: 150px 0;
 	padding: 10px;
+	font-family: Verdana, Arial;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+legend {
+	font-size: 14px;
 }
 
 label {
@@ -26,12 +24,17 @@ label {
 	width: 100px;
 }
 
-input [type="text"]{
-	width: 100px;
+input[type="text"], input[type="password"]{
+	width: 200px;
 }
 
-input [type="password"]{
-	width: 100px;
+#wrapper {
+	width: 350px;
+	margin: 0 auto;
+}
+
+#console {
+	color: red;
 }
 </style>
 <script type="text/javascript">
