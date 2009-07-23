@@ -16,7 +16,7 @@
 		<p><label>Codigo:</label><span>{$manufacturer_id}&nbsp;</span></p>
 	  	<p><label for="name">Nombre:</label><input name="name" id="name" type="text"
 	  			onblur="oSetProperty.execute('set_name_object', this.value, this.id);" />
-	  	<span id="name_failed">*</span></p>
+	  	<span id="name_failed" class="hidden">*</span></p>
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="save" id="save" type="button" value="Guardar" onclick="oSaveObject.execute();" />
