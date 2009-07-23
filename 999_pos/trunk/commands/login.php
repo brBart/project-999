@@ -33,9 +33,9 @@ abstract class LoginCommand extends Command{
 		$type = $request->getProperty('type');
 		if($type == 'xml'){
 			// Is an ajax request.
-			$msg = 'La cesi&oacute;n ha caducado.';
+			$msg = 'La sesi&oacute;n ha caducado.';
 			header('Content-Type: text/xml');
-			Page::display(array('message' => $msg), 'error_xml.tpl');
+			Page::display(array('message' => $msg), 'logout_xml.tpl');
 			return;
 		}
 		
