@@ -1,0 +1,51 @@
+<?php
+/**
+ * Library containing the SetPropertyObject base class command.
+ * @package Command
+ * @author Roberto Oliveros
+ */
+
+/**
+ * Base class.
+ */
+require_once('presentation/command.php');
+/**
+ * For displaying the results.
+ */
+require_once('presentation/page.php');
+
+/**
+ * Defines common functionality for the set property object derived classes.
+ * @package Command
+ * @author Roberto Oliveros
+ */
+abstract class SetPropertyObjectCommand extends Command{
+	/**
+	 * Execute the command.
+	 * @param Request $request
+	 * @param SessionHelper $helper
+	 */
+	public function execute(Request $request, SessionHelper $helper){
+		$value = $request->getProperty('value');
+		$element_id = $request->getProperty('elementid');
+		$obj = $helper->getObject((int)$request->getProperty('key'));
+		
+		try{
+			$this->setProperty($value, $obj);
+		} catch(Exception $e){
+			$msg = $e->getMessage();
+			Page::display(array('success' => '0', 'elementid' => $element_id, 'message' => $msg),
+					'response_xml.tpl');
+		}
+			
+		Page::display(array('success' => '1'), 'response_xml.tpl');
+	}
+	
+	/**
+	 * Set the desired property on the object.
+	 * @param variant $value
+	 * @param variant $obj
+	 */
+	abstract protected function setProperty($value, $obj);
+}
+?>
