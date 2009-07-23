@@ -5,6 +5,18 @@ ul {
 	padding: 0;
 }
 
+fieldset {
+	padding: 10px;
+}
+
+.frm_small {
+	padding: 0 185px;
+}
+
+.frm_small fieldset {
+	width: 400px;
+}
+
 #main_menu li {
 	float: left;
 }
@@ -28,6 +40,15 @@ ul {
 	width: 500px;
 	margin: 10px auto;
 	padding: 5px 5px;
+}
+
+#form label {
+	float: left;
+	width: 150px;
+}
+
+#form input[type="text"], input[type="password"] {
+	width: 200px;
 }
 
 #wrapper {
@@ -61,4 +82,8 @@ ul {
 	float: right;
 	min-width: 550px;
 	margin: 0 15px;
+}
+
+#form {
+	margin: 10px 0;
 }

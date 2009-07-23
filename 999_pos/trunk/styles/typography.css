@@ -22,3 +22,11 @@ h3 {
 #main_menu a {
 	font-weight: bold;
 }
+
+#form {
+	font-size: 10px;
+}
+
+#form label {
+	font-weight: bold;
+}

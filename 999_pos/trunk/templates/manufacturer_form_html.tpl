@@ -8,15 +8,15 @@
 	var oConsole = new Console();
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 </script>
-<div id="form">
+<div id="form" class="frm_small">
 	<fieldset id="status_bar">
-		<label>Status:</label><span id="status_label"></span>
+		<p><label>Status:</label><span id="status_label">&nbsp;</span></p>
 	</fieldset>
 	<fieldset id="main_data">
-		<label>Codigo:</label><span>{$manufacturer_id}</span><br />
-	  	<label for="name">Nombre:</label><input name="name" id="name" type="text"
+		<p><label>Codigo:</label><span>{$manufacturer_id}&nbsp;</span></p>
+	  	<p><label for="name">Nombre:</label><input name="name" id="name" type="text"
 	  			onblur="oSetProperty.execute('set_name_object', this.value, this.id);" />
-	  	<span id="name_failed">*</span>
+	  	<span id="name_failed">*</span></p>
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="save" id="save" type="button" value="Guardar" onclick="oSaveObject.execute();" />

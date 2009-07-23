@@ -1,12 +1,12 @@
 {* Smarty *}
-<div id="form">
+<div id="form" class="frm_small">
 	<form method="post" action="index.php?cmd=change_password_operations" onsubmit="return oSession.setIsLink(true);">
 		<fieldset id="main_data">
-			<label>Usuario:</label><span>{$username}</span><br />
-		    <label>Contrase&ntilde;a actual:</label><input name="password" id="password" type="password" /><br />
-		    <label>Contrase&ntilde;a nueva:</label><input name="new_password" id="new_password" type="password" /><br />
-		    <label>Confirmar:</label>
-		    		<input name="confirm_password" id="confirm_password" type="password" />
+			<p><label>Usuario:</label><span>{$username}</span></p>
+		    <p><label>Contrase&ntilde;a actual:</label><input name="password" id="password" type="password" maxlength="20" /></p>
+		    <p><label>Contrase&ntilde;a nueva:</label><input name="new_password" id="new_password" type="password" maxlength="20" /></p>
+		    <p><label>Confirmar:</label>
+		    		<input name="confirm_password" id="confirm_password" type="password" maxlength="20" /></p>
 		</fieldset>
 		<fieldset id="controls">
 			<input name="change_password" type="submit"  value="Guardar" />
