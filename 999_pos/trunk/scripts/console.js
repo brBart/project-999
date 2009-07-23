@@ -30,7 +30,7 @@ Console.prototype.displayFailure = function(sMsg, sElementId){
 	
 	// Display the message and indicate which property cause the failure.
 	this.displayMessage(newP);
-	oElement.className = 'error';
+	oElement.className = 'failed';
 }
 
 /**
