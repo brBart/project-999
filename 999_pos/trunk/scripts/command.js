@@ -35,12 +35,12 @@ Command.prototype.readResponse = function (){
 	
 	// Potential errors with IE and Opera
 	if(!xmlResponse || !xmlResponse.documentElement)
-		throw('FATAL ERROR ' + this._mRequest.responseText);
+		throw('FATAL ERROR: ' + this._mRequest.responseText);
 	
 	// Potential erros with Firefox
 	var rootNodeName = xmlResponse.documentElement.nodeName;
 	if(rootNodeName == 'parsererror')
-		throw('FATAL ERROR ' + this._mRequest.responseText);
+		throw('FATAL ERROR: ' + this._mRequest.responseText);
 	
 	var xmlDoc = xmlResponse.documentElement;
 	
@@ -48,7 +48,7 @@ Command.prototype.readResponse = function (){
 	var error = xmlDoc.getElementsByTagName('error');
 	if(error.length > 0){
 		var msg = xmlDoc.getElementsByTagName('message')[0].firstChild.data;
-		throw('Error ' + msg);
+		throw(msg);
 	}
 	
 	// Look if it was an logout message.
