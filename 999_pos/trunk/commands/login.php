@@ -33,7 +33,7 @@ abstract class LoginCommand extends Command{
 		$type = $request->getProperty('type');
 		if($type == 'xml'){
 			// Is an ajax request.
-			$msg = 'La sesi&oacute;n ha caducado.';
+			$msg = 'La sesi&oacute;n ha terminado.';
 			header('Content-Type: text/xml');
 			Page::display(array('message' => $msg), 'logout_xml.tpl');
 			return;
@@ -41,11 +41,22 @@ abstract class LoginCommand extends Command{
 		
 		$module_title = $this->getModuleTitle();
 		
+		// Verify if the submit button of the login form was pressed.
 		if(is_null($request->getProperty('login'))){
-			Page::display(array('module_title' => $module_title, 'notify' => '0'), 'login_form_html.tpl');
+			// Check if the user was kicked out or was sending a command.
+			if(!is_null($request->getProperty('cmd'))){
+				$notify = 1;
+				$msg = 'La sesi&oacute;n ha terminado. Ingrese de nuevo.';
+			}
+			else
+				$notify = 0;
+			
+			Page::display(array('module_title' => $module_title, 'notify' => $notify, 'message' => $msg),
+					'login_form_html.tpl');
 			return;
 		}
-
+		
+		// If the submit button was pressed.
 		$username = $request->getProperty('username');
 		$password = $request->getProperty('password');
 		
