@@ -41,7 +41,7 @@ abstract class SetPropertyObjectCommand extends Command{
 			return;
 		}
 			
-		Page::display(array('success' => '1'), 'validate_xml.tpl');
+		Page::display(array('success' => '1', 'elementid' => $element_id), 'validate_xml.tpl');
 	}
 	
 	/**
