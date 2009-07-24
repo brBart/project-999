@@ -25,7 +25,7 @@ Console.prototype.displayMessage = function(sMsg){
  * @param string sElementId
  */
 Console.prototype.displayFailure = function(sMsg, sElementId){
-	var newP = '<p id="failed_' + sElementId + '">' + sMsg + '</p>';
+	var newP = '<p id="failed_' + sElementId + '" class="failure">' + sMsg + '</p>';
 	var oElement = document.getElementById(sElementId + '_failed');
 	
 	// Display the message and indicate which property cause the failure.

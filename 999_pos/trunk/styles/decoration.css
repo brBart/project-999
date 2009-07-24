@@ -26,8 +26,18 @@ ul a {
 	background-position: left center;
 }
 
+.failure {
+	border-style: solid;
+	border-color: orange;
+	border-width: 1px;
+	background-color: #FFCAA6;
+	background-image: url(../images/warning.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
 .failed {
-	color: red;
+	color: orange;
 }
 
 #main_menu a {
