@@ -119,7 +119,7 @@ class SessionHelper{
 	 */
 	public function removeObject($key){
 		$this->validateKey($key);
-		$_SESSION[$key] = NULL;
+		$_SESSION['objects'][$key] = NULL;
 	}
 	
 	/**
