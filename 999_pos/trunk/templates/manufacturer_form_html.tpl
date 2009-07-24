@@ -10,7 +10,16 @@
 </script>
 <div id="form" class="frm_small">
 	<fieldset id="status_bar">
-		<p><label>Status:</label><span id="status_label">&nbsp;</span></p>
+		<p>
+			<label>Status:</label>
+			<span id="status_label">
+				{if $status eq 0}
+					Creando...
+				{else}
+					Consulta
+				{/if}
+			</span>
+		</p>
 	</fieldset>
 	<fieldset id="main_data">
 		<p><label>Codigo:</label><span>{$manufacturer_id}&nbsp;</span></p>
@@ -19,11 +28,13 @@
 	  	<span id="name_failed" class="hidden">*</span></p>
 	</fieldset>
 	<fieldset id="controls">
-	  	<input name="save" id="save" type="button" value="Guardar" onclick="oSaveObject.execute();" />
-	  	<input name="edit" id="edit" type="button" value="Editar" />
-	  	<input name="delete" id="delete" type="button" value="Eliminar" />
+	  	<input name="save" id="save" type="button" value="Guardar" onclick="oSaveObject.execute();"
+	  		{if $status eq 1}disabled="disabled"{/if}  />
+	  	<input name="edit" id="edit" type="button" value="Editar" {if $status eq 0}disabled="disabled"{/if} />
+	  	<input name="delete" id="delete" type="button" value="Eliminar"
+	  		{if $status eq 0}disabled="disabled"{/if} />
 	  	<input name="cancel" id="cancel" type="button" value="Cancelar"
-	  			onclick="oSession.loadHref('{$on_cancel}');"/>
+	  			onclick="oSession.loadHref('{$on_cancel}');" {if $status eq 1}disabled="disabled"{/if}/>
 	  	<input name="status" id="status" type="hidden" value="{$status}" />
 	</fieldset>
 </div>
