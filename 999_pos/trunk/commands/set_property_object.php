@@ -30,15 +30,18 @@ abstract class SetPropertyObjectCommand extends Command{
 		$element_id = $request->getProperty('elementid');
 		$obj = $helper->getObject((int)$request->getProperty('key'));
 		
+		header('Content-Type: text/xml');
+		
 		try{
 			$this->setProperty($value, $obj);
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			Page::display(array('success' => '0', 'elementid' => $element_id, 'message' => $msg),
-					'response_xml.tpl');
+					'validate_xml.tpl');
+			return;
 		}
 			
-		Page::display(array('success' => '1'), 'response_xml.tpl');
+		Page::display(array('success' => '1'), 'validate_xml.tpl');
 	}
 	
 	/**
