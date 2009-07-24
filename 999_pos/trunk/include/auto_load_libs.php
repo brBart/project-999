@@ -16,7 +16,11 @@ function __autoload($className){
 		case 'UserAccount':
 			require_once('business/user_account.php');
 			break;
-		
+			
+		case 'Manufacturer':
+			require_once('business/product.php');
+			break;
+			
 		default:
 	}
 }
