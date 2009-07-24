@@ -44,7 +44,7 @@ class SessionHelper{
 	 */
 	public function getObject($key){
 		$this->validateKey($key);
-		return $_SESSION[$key];
+		return $_SESSION['objects'][$key];
 	}
 	
 	/**
@@ -83,7 +83,7 @@ class SessionHelper{
 	 */
 	public function setObject($key, $obj){
 		$this->validateKey($key);
-		$_SESSION[$key] = $obj;
+		$_SESSION['objects'][$key] = $obj;
 	}
 	
 	/**
