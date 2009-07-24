@@ -83,7 +83,7 @@ SetPropertyCommand.prototype.readResponse = function(){
 */
 SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
 	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
-	this._mConsole.cleanFailure(strMsg, elementId);
+	this._mConsole.cleanFailure(elementId);
 }
 
 /**

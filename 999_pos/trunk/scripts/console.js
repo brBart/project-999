@@ -42,3 +42,19 @@ Console.prototype.displayError = function(sMsg){
 	// Display the error message.
 	this.displayMessage(newP);
 }
+
+/**
+ * Removes the failure message from the console and from the element that provoked.
+ * @param string sElementId
+ */
+Console.prototype.cleanFailure = function(sElementId){
+	var elementP = document.getElementById('failed_' + sElementId);
+	
+	// If there was no message.
+	if(elementP){
+		this._mElementDiv.removeChild(elementP);
+	
+		var oElement = document.getElementById(sElementId + '_failed');
+		oElement.className = 'hidden';
+	}
+}
