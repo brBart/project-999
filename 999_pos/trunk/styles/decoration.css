@@ -21,6 +21,9 @@ ul a {
 	border-color: red;
 	border-width: 1px;
 	background-color: #FFB5B5;
+	background-image: url(../images/error.png);
+	background-repeat: no-repeat;
+	background-position: left center;
 }
 
 .failed {
