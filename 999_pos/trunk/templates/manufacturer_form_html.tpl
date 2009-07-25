@@ -37,7 +37,7 @@
 	  	<input name="form_widget" id="delete" type="button" value="Eliminar"
 	  		{if $status eq 0}disabled="disabled"{/if} />
 	  	<input name="form_widget" id="cancel" type="button" value="Cancelar"
-	  			onclick="oSession.loadHref('{$on_cancel}');" {if $status eq 1}disabled="disabled"{/if} onfocus="return false;"/>
+	  			onclick="oSession.loadHref('{$on_cancel}');" {if $status eq 1}disabled="disabled"{/if} "/>
 	</fieldset>
 </div>
 {if $status eq 0}
