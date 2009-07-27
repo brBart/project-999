@@ -59,8 +59,8 @@ ul a {
 	text-decoration: none;
 }
 
-#content li:hover {
-	border-style: solid;
+#content li {
+	border-top-style: solid;
 	border-color: white;
 	border-width: 1px;
 }
@@ -75,4 +75,10 @@ ul a {
 
 #main_menu {
 	background-color: #E93737;
+}
+
+#li_last {
+	border-bottom-style: solid;
+	border-color: white;
+	border-width: 1px;
 }
