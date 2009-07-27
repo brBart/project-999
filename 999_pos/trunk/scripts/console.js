@@ -53,6 +53,7 @@ Console.prototype.cleanFailure = function(sElementId){
 	// If there was no message.
 	if(elementP){
 		this._mElementDiv.removeChild(elementP);
+		this._mElementDiv.scrollTop = this._mElementDiv.scrollHeight;
 	
 		var oElement = document.getElementById(sElementId + '_failed');
 		oElement.className = 'hidden';
