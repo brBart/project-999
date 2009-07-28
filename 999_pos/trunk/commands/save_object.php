@@ -26,26 +26,28 @@ class SaveObjectCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$key = $request->getProperty('key');
-		$obj = $helper->getObject((int)$key);
-		
-		header('Content-Type: text/xml');
+		$key = (int)$request->getProperty('key');
+		$obj = $helper->getObject($key);
 		
 		try{
 			$id = $obj->save();
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			$elementid = $e->getProperty();
+			header('Content-Type: text/xml');
 			Page::display(array('success' => '0', 'elementid' => $element_id, 'message' => $msg),
 					'validate_xml.tpl');
 			return;
 		} catch(Exception $e){
 			$msg = $e->getMessage();
+			header('Content-Type: text/xml');
 			Page::display(array('message' => $msg), 'error_xml.tpl');
 			return;
 		}
 		
+		header('Content-Type: text/xml');
 		Page::display(array('id' => $id), 'save_object_xml.tpl');
+		$helper->removeObject($key);
 	}
 }
 ?>
