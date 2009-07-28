@@ -16,6 +16,16 @@ ul a {
 	text-decoration: none;
 }
 
+.success {
+	border-style: solid;
+	border-color: green;
+	border-width: 1px;
+	background-color: #CCFFC4;
+	background-image: url(../images/success.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
 .error {
 	border-style: solid;
 	border-color: red;
