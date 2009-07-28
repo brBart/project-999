@@ -154,7 +154,7 @@ abstract class Identifier extends PersistObject{
 		if(!is_null($id))
 			try{
 				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-			} catch(Exception $e){
+			} catch(ValidateException $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Identifier con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
@@ -204,7 +204,7 @@ abstract class Identifier extends PersistObject{
 	public function setData($name){
 		try{
 			String::validateString($name, 'Nombre inv&aacute;lido.');
-		} catch(Exception $e){
+		} catch(ValidateException $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Identifier con datos erroneos! ' .
 					$e->getMessage());
 			throw $et;
@@ -238,7 +238,7 @@ abstract class Identifier extends PersistObject{
 	 * @return void
 	 */
 	protected function validateMainProperties(){
-		String::validateString($this->_mName, 'Nombre inv&aacute;lido.');
+		String::validateString($this->_mName, 'Nombre inv&aacute;lido.', 'name');
 	}
 }
 
