@@ -61,5 +61,5 @@ SaveObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	var iId = xmlDoc.getElementsByTagName('id')[0].firstChild.data;
 	/*var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmdSuccess);
 	str = Url.addUrlParam(str, 'id', iId);*/
-	document.location.href = 'index.php?cmd=show_manufacturers_menu';
+	this._mSession.loadHref('index.php?cmd=show_manufacturers_menu');
 }
