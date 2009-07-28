@@ -469,7 +469,7 @@ class UserAccountUtility{
 		
 		$account_name = $account->getUserName();
 		if(!self::isValid($account_name, $password))
-			throw new Exception('Contrase&ntilde;a actual inv&aacute;lida.');
+			throw new ValidateException('Contrase&ntilde;a actual incorrecta.');
 		
 		if(self::isRoot($account_name))
 			UserAccountUtilityDAM::changeRootPassword(self::encrypt($newPassword));
