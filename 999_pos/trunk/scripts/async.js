@@ -26,7 +26,7 @@ AsyncCommand.prototype = new Command();
  */
 AsyncCommand.prototype.sendRequest = function(sUrlParams){
 	sUrlParams = Url.addUrlParam(sUrlParams, 'type', 'xml');
-	this._mRequest.open('GET', urlParams, false);
+	this._mRequest.open('GET', sUrlParams, false);
 	this._mRequest.send(null);
 	this.handleRequestStateChange();
 }
