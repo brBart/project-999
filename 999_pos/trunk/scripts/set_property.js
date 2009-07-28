@@ -6,7 +6,9 @@
 
 /**
  * Constructor function.
+ * @param Session oSession
  * @param Console oConsole
+ * @param Request oRequest
  * @param string sKey
  */
 function SetPropertyCommand(oSession, oConsole, oRequest, sKey){
@@ -15,6 +17,7 @@ function SetPropertyCommand(oSession, oConsole, oRequest, sKey){
 	
 	/**
 	 * Holds the key of the session object.
+	 * @var string
 	 */
 	this._mKey = sKey;
 	

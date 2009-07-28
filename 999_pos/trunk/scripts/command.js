@@ -6,11 +6,14 @@
 
 /**
  * Constructor function for creating the request object and setting the console for displaying the results.
+ * @param Session oSession
  * @param Console oConsole
+ * @param Request oRequest
  */
 function Command(oSession, oConsole, oRequest){
 	/**
 	 * Holds the session tracker.
+	 * @var Session
 	 */
 	this._mSession = oSession;
 	
