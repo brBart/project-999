@@ -5,6 +5,34 @@
  * @author Roberto Oliveros
  */
 
+
+class ValidateException extends Exception{
+	/**
+	 * Holds the name of the property.
+	 * @var string
+	 */
+	private $_mProperty;
+	
+	/**
+	 * Constructs the exception object with the property name.
+	 * @param string $property
+	 * @param string $msg
+	 */
+	public function __construct($msg, $property = NULL){
+		parent::__construct($msg);
+		
+		$this->_mProperty = $property;
+	}
+	
+	/**
+	 * Returns the property name.
+	 * @return string
+	 */
+	public function getProperty(){
+		return $this->_mProperty;
+	}
+}
+
 /**
  * Class with needed routines regarding dates.
  * @package Validator
@@ -14,13 +42,13 @@ class Date{
 	/**
 	 * Validates the provided date.
 	 *
-	 * Verifies if it is a valid date. Otherwise it throws an exception.
+	 * Verifies if it is a valid date. Otherwise it throws a validate exception.
 	 * @param string $date
 	 * @param string $msg
-	 * @return void
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validateDate($date, $msg){
+	static public function validateDate($date, $msg, $property = NULL){
 		$date_array = explode('/', $date);
 		
 		$day = (int)$date_array[0];
@@ -28,24 +56,24 @@ class Date{
 		$year = (int)$date_array[2];
 		
 		if(!checkdate($month, $day, $year))
-			throw new Exception($msg . ' No existe o debe ser en formato \'dd\\mm\\yyyy\'.');
+			throw new ValidateException($msg . ' No existe o debe ser en formato \'dd\\mm\\yyyy\'.', $property);
 	}
 	
 	/**
 	 * Validates the provided datetime value.
 	 *
-	 * Verifies if it is a valid date and time. Otherwise it throws an exception.
+	 * Verifies if it is a valid date and time. Otherwise it throws a validate exception.
 	 * @param string $dateTime
 	 * @param string $msg
-	 * @return void
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validateDateTime($dateTime, $msg){
+	static public function validateDateTime($dateTime, $msg, $property = NULL){
 		$date_array = explode(' ', $dateTime);
 		self::validateDate($date_array[0], $msg);
 		
 		if(!preg_match('/([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)/', $date_array[1]))
-			throw new Exception($msg . ' Formato de hora debe ser HH::MM:SS');
+			throw new ValidateException($msg . ' Formato de hora debe ser HH::MM:SS', $property);
 	}
 	
 	/**
@@ -119,42 +147,45 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be an integer. Otherwise it throws an exception. The msg parameter is for displaying the desire
-	 * message.
+	 * Must be an integer. Otherwise it throws a validate exception. The msg parameter is for displaying the
+	 * desire message.
 	 * @param integer $quantity
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validateInteger($number, $msg){
+	static public function validateInteger($number, $msg, $property = NULL){
 		if(!is_int($number))
-			throw new Exception($msg . ' Valor debe ser numerico.');
+			throw new ValidateException($msg . ' Valor debe ser numerico.', $property);
 	}
 	
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be greater than cero. Otherwise it throws an exception. The msg parameter is for displaying
+	 * Must be greater than cero. Otherwise it throws a validate exception. The msg parameter is for displaying
 	 * the desire message.
 	 * @param integer $number
 	 * @param string $msg
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validatePositiveInteger($number, $msg){
+	static public function validatePositiveInteger($number, $msg, $property = NULL){
 		if(!is_int($number) || $number < 1)
-			throw new Exception($msg . ' Valor debe ser mayor que cero.');
+			throw new ValidateException($msg . ' Valor debe ser mayor que cero.', $property);
 	}
 	
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be greater or equal to cero. Otherwise it throws an exception. The msg parameter is for
+	 * Must be greater or equal to cero. Otherwise it throws a validate exception. The msg parameter is for
 	 * displaying the desire message.
 	 * @param integer $number
 	 * @param string $msg
+	 * @param string $property
 	 * @throws Exception
 	 */
-	static public function validateUnsignedInteger($number, $msg){
+	static public function validateUnsignedInteger($number, $msg, $property = NULL){
 		if(!is_int($number) || $number < 0)
-			throw new Exception($msg . ' Valor no debe ser menor que cero.');
+			throw new ValidateException($msg . ' Valor no debe ser menor que cero.', $property);
 	}
 	
 	/**
@@ -164,39 +195,42 @@ class Number{
 	 * message.
 	 * @param float $number
 	 * @param string $msg
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validateFloat($number, $msg){
+	static public function validateFloat($number, $msg, $property = NULL){
 		if(!is_float($number))
-			throw new Exception($msg . ' Valor debe ser numerico.');
+			throw new ValidateException($msg . ' Valor debe ser numerico.', $property);
 	}
 	
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be greater than cero. Otherwise it throws an exception. The msg parameter is for displaying
+	 * Must be greater than cero. Otherwise it throws a validate exception. The msg parameter is for displaying
 	 * the desire message.
 	 * @param float $number
 	 * @param string $msg
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validatePositiveFloat($number, $msg){
+	static public function validatePositiveFloat($number, $msg, $property = NULL){
 		if(!is_float($number) || $number < 1)
-			throw new Exception($msg . ' Valor no debe ser menor que cero.');
+			throw new ValidateException($msg . ' Valor no debe ser menor que cero.', $property);
 	}
 	
 	/**
 	 * Validates the provided number.
 	 *
-	 * Must be greater or equal to cero. Otherwise it throws an exception. The msg parameter is for
+	 * Must be greater or equal to cero. Otherwise it throws a validate exception. The msg parameter is for
 	 * displaying the desire message.
 	 * @param float $number
 	 * @param string $msg
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validateUnsignedFloat($number, $msg){
+	static public function validateUnsignedFloat($number, $msg, $property = NULL){
 		if(!is_float($number) || $number < 0)
-			throw new Exception($msg . ' Valor no debe ser menor que cero.');
+			throw new ValidateException($msg . ' Valor no debe ser menor que cero.', $property);
 	}
 }
 
@@ -214,25 +248,26 @@ class String{
 	 * message.
 	 * @param string $string
 	 * @param string $msg
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validateString($string, $msg){
+	static public function validateString($string, $msg, $property = NULL){
 		if($string == '')
-			throw new Exception($msg . ' Valor no puede ser vacio.');
+			throw new ValidateException($msg . ' Valor no puede ser vacio.', $property);
 	}
 	
 	/**
 	 * Validates the provided nit.
 	 * 
-	 * Verifies that the nit is set correctly, e.g. 1725045-5. Otherwise it throws an exception. The msg
+	 * Verifies that the nit is set correctly, e.g. 1725045-5. Otherwise it throws a validate exception. The msg
 	 * parameter is for displaying the desire message.
 	 * @param string $nit
-	 * @return void
-	 * @throws Exception
+	 * @param string $property
+	 * @throws ValidateException
 	 */
-	static public function validateNit($nit, $msg){
+	static public function validateNit($nit, $msg, $property = NULL){
 		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
-			throw new Exception($msg . ' Formato debe ser ######-#');
+			throw new ValidateException($msg . ' Formato debe ser ######-#', $property);
 	}
 }
 ?>
