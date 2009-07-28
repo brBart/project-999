@@ -4,10 +4,13 @@
 <script type="text/javascript" src="../scripts/http_request.js"></script>
 <script type="text/javascript" src="../scripts/command.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
+<script type="text/javascript" src="../scripts/async.js"></script>
+<script type="text/javascript" src="../scripts/save_object.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oSaveObject = new SaveObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 </script>
 <div id="form" class="frm_small">
 	<fieldset id="status_bar">
@@ -30,7 +33,7 @@
 	  	<span id="name_failed" class="hidden">*</span></p>
 	</fieldset>
 	<fieldset id="controls">
-	  	<input name="form_widget" id="save" type="button" value="Guardar" onclick="oSaveObject.execute();"
+	  	<input name="form_widget" id="save" type="button" value="Guardar" onclick="oSaveObject.execute('get_manufacturer');"
 	  		{if $status eq 1}disabled="disabled"{/if}  />
 	  	<input name="form_widget" id="edit" type="button" value="Editar"
 	  		{if $status eq 0}disabled="disabled"{/if} />
