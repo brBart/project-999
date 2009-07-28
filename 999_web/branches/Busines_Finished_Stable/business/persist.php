@@ -218,7 +218,7 @@ abstract class Identifier extends PersistObject{
 	 * 
 	 * If the object's status set to Persist::IN_PROGRESS the method insert()
 	 * is called, if it's set to Persist::CREATED the method update() is called.
-	 * @return void
+	 * @return integer
 	 */
 	public function save(){
 		$this->validateMainProperties();
@@ -229,6 +229,9 @@ abstract class Identifier extends PersistObject{
 		}
 		else
 			$this->update();
+
+		// Needed by the presentation layer.
+		return $this->_mId;
 	}
 	
 	/**
@@ -276,7 +279,7 @@ abstract class PersistDocument extends Persist{
 		if(!is_null($id))
 			try{
 				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-			} catch(Exception $e){
+			} catch(ValidateException $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
