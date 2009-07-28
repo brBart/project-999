@@ -18,7 +18,7 @@ class ValidateException extends Exception{
 	 * @param string $property
 	 * @param string $msg
 	 */
-	public function __construct($property, $msg){
+	public function __construct($msg, $property = NULL){
 		parent::__construct($msg);
 		
 		$this->_mProperty = $property;
@@ -46,10 +46,9 @@ class Date{
 	 * @param string $date
 	 * @param string $msg
 	 * @param string $property
-	 * @return void
 	 * @throws ValidateException
 	 */
-	static public function validateDate($date, $msg, $property){
+	static public function validateDate($date, $msg, $property = NULL){
 		$date_array = explode('/', $date);
 		
 		$day = (int)$date_array[0];
@@ -57,7 +56,7 @@ class Date{
 		$year = (int)$date_array[2];
 		
 		if(!checkdate($month, $day, $year))
-			throw new ValidateException($property, $msg . ' No existe o debe ser en formato \'dd\\mm\\yyyy\'.');
+			throw new ValidateException($msg . ' No existe o debe ser en formato \'dd\\mm\\yyyy\'.', $property);
 	}
 	
 	/**
@@ -67,15 +66,14 @@ class Date{
 	 * @param string $dateTime
 	 * @param string $msg
 	 * @param string $property
-	 * @return void
 	 * @throws ValidateException
 	 */
-	static public function validateDateTime($dateTime, $msg, $property){
+	static public function validateDateTime($dateTime, $msg, $property = NULL){
 		$date_array = explode(' ', $dateTime);
 		self::validateDate($date_array[0], $msg);
 		
 		if(!preg_match('/([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)/', $date_array[1]))
-			throw new ValidateException($property, $msg . ' Formato de hora debe ser HH::MM:SS');
+			throw new ValidateException($msg . ' Formato de hora debe ser HH::MM:SS', $property);
 	}
 	
 	/**
@@ -155,9 +153,9 @@ class Number{
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validateInteger($number, $msg, $property){
+	static public function validateInteger($number, $msg, $property = NULL){
 		if(!is_int($number))
-			throw new ValidateException($property, $msg . ' Valor debe ser numerico.');
+			throw new ValidateException($msg . ' Valor debe ser numerico.', $property);
 	}
 	
 	/**
@@ -170,9 +168,9 @@ class Number{
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validatePositiveInteger($number, $msg, $property){
+	static public function validatePositiveInteger($number, $msg, $property = NULL){
 		if(!is_int($number) || $number < 1)
-			throw new ValidateException($property, $msg . ' Valor debe ser mayor que cero.');
+			throw new ValidateException($msg . ' Valor debe ser mayor que cero.', $property);
 	}
 	
 	/**
@@ -185,9 +183,9 @@ class Number{
 	 * @param string $property
 	 * @throws Exception
 	 */
-	static public function validateUnsignedInteger($number, $msg, $property){
+	static public function validateUnsignedInteger($number, $msg, $property = NULL){
 		if(!is_int($number) || $number < 0)
-			throw new ValidateException($property, $msg . ' Valor no debe ser menor que cero.');
+			throw new ValidateException($msg . ' Valor no debe ser menor que cero.', $property);
 	}
 	
 	/**
@@ -200,9 +198,9 @@ class Number{
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validateFloat($number, $msg, $property){
+	static public function validateFloat($number, $msg, $property = NULL){
 		if(!is_float($number))
-			throw new ValidateException($property, $msg . ' Valor debe ser numerico.');
+			throw new ValidateException($msg . ' Valor debe ser numerico.', $property);
 	}
 	
 	/**
@@ -215,9 +213,9 @@ class Number{
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validatePositiveFloat($number, $msg, $property){
+	static public function validatePositiveFloat($number, $msg, $property = NULL){
 		if(!is_float($number) || $number < 1)
-			throw new ValidateException($property, $msg . ' Valor no debe ser menor que cero.');
+			throw new ValidateException($msg . ' Valor no debe ser menor que cero.', $property);
 	}
 	
 	/**
@@ -230,9 +228,9 @@ class Number{
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validateUnsignedFloat($number, $msg, $property){
+	static public function validateUnsignedFloat($number, $msg, $property = NULL){
 		if(!is_float($number) || $number < 0)
-			throw new ValidateException($property, $msg . ' Valor no debe ser menor que cero.');
+			throw new ValidateException($msg . ' Valor no debe ser menor que cero.', $property);
 	}
 }
 
@@ -253,9 +251,9 @@ class String{
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validateString($string, $msg, $property){
+	static public function validateString($string, $msg, $property = NULL){
 		if($string == '')
-			throw new ValidateException($property, $msg . ' Valor no puede ser vacio.');
+			throw new ValidateException($msg . ' Valor no puede ser vacio.', $property);
 	}
 	
 	/**
@@ -267,9 +265,9 @@ class String{
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validateNit($nit, $msg, $property){
+	static public function validateNit($nit, $msg, $property = NULL){
 		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
-			throw new ValidateException($property, $msg . ' Formato debe ser ######-#');
+			throw new ValidateException($msg . ' Formato debe ser ######-#', $property);
 	}
 }
 ?>
