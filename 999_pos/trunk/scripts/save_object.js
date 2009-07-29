@@ -66,3 +66,16 @@ SaveObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	str = Url.addUrlParam(str, 'key', this._mKey);
 	this._mSession.loadHref(str);
 }
+
+/**
+* Method for displaying failure.
+* @param DocumentElement xmlDoc
+* @param string msg
+*/
+SaveObjectCommand.prototype.displayFailure = function(xmlDoc, strMsg){
+	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
+	
+	// Must clean it in case a failure has been already display for the same element.
+	this._mConsole.reset();
+	this._mConsole.displayFailure(strMsg, elementId);
+}
