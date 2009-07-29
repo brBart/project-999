@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Defines functionality for saving an objects data in the database.
+ * Defines functionality for saving an object's data in the database.
  * @package Command
  * @author Roberto Oliveros
  */
