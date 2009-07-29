@@ -53,7 +53,7 @@ class GetManufacturerCommand extends GetObjectCommand{
 				'back_link' => 'index.php?cmd=show_manufacturers_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_form_html.tpl',
 				'status' => '1', 'key' => $key, 'id' => $id, 'name' => $obj->getName(),
-				'on_cancel' => 'index.php?get_manufacturer&id=' . $id, 'notify' => '0'), 'site_html.tpl');
+				'on_cancel' => 'index.php?cmd=get_manufacturer&id=' . $id, 'notify' => '0'), 'site_html.tpl');
 	}
 }
 ?>
