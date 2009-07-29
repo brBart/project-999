@@ -26,17 +26,17 @@
 		</p>
 	</fieldset>
 	<fieldset id="main_data">
-		<p><label>Codigo:</label><span>{$manufacturer_id}&nbsp;</span></p>
+		<p><label>Codigo:</label><span>{$id}&nbsp;</span></p>
 	  	<p><label for="name">Nombre:</label><input name="form_widget" id="name" type="text"
 	  			value="{$name}" onblur="oSetProperty.execute('set_name_object', this.value, this.id);"
 	  			{if $status eq 1}disabled="disabled"{/if} />
 	  	<span id="name_failed" class="hidden">*</span></p>
 	</fieldset>
 	<fieldset id="controls">
-	  	<input name="form_widget" id="save" type="button" value="Guardar" onclick="oSaveObject.execute('get_manufacturer');"
-	  		{if $status eq 1}disabled="disabled"{/if}  />
+	  	<input name="form_widget" id="save" type="button" value="Guardar"
+	  		onclick="oSaveObject.execute('get_manufacturer');" {if $status eq 1}disabled="disabled"{/if}  />
 	  	<input name="form_widget" id="edit" type="button" value="Editar"
-	  		{if $status eq 0}disabled="disabled"{/if} />
+	  		onclick="StateMachine.changeToEditState('name');" {if $status eq 0}disabled="disabled"{/if} />
 	  	<input name="form_widget" id="delete" type="button" value="Eliminar"
 	  		{if $status eq 0}disabled="disabled"{/if} />
 	  	<input name="form_widget" id="cancel" type="button" value="Cancelar"
