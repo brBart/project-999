@@ -15,10 +15,13 @@
 	window.onbeforeunload = function(oEvent){
 		oSession.verifyStatus(oEvent);
 	}
+	document.oncontextmenu = function(){
+		return false;
+	}
 </script>
 {/literal}
 </head>
-<body oncontextmenu="return false;">
+<body>
 	<div id="wrapper">
 		<div id="header">
 			<h1>Sistema 999 - {$module_title}</h1>
