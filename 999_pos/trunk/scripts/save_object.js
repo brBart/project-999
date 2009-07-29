@@ -61,5 +61,7 @@ SaveObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	var iId = xmlDoc.getElementsByTagName('id')[0].firstChild.data;
 	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmdSuccess);
 	str = Url.addUrlParam(str, 'id', iId);
+	// Remove the object from the session on the server.
+	str = Url.addUrlParam(str, 'key', this._mKey);
 	this._mSession.loadHref(str);
 }
