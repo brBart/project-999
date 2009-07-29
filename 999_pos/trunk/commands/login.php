@@ -69,14 +69,14 @@ abstract class LoginCommand extends Command{
 			else{
 				$user = UserAccount::getInstance($username);
 				
-				if(!$this->testRights($user)){
+				if($this->testRights($user)){
+					$helper->setUser($user);
+					header('Location: index.php');
+				}
+				else{
 					$msg = 'Acceso denegado.';
 					Page::display(array('module_title' => $module_title, 'username' => $username,
 							'notify' => '1', 'message' => $msg), 'login_form_html.tpl');
-				}
-				else{
-					$helper->setUser($user);
-					header('Location: index.php');
 				}
 			}
 		} catch(Exception $e){

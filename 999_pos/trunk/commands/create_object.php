@@ -27,14 +27,14 @@ abstract class CreateObjectCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$user = $helper->getUser();
-		if(!$this->testRights($user))
-			$this->displayFailure();
-		else{
+		if($this->testRights($user)){
 			$obj = $this->createObject();
 			$key = KeyGenerator::generateKey();
 			$helper->setObject($key, $obj);
 			$this->displayObject($key, $obj);
 		}
+		else
+			$this->displayFailure();
 	}
 	
 	/**
