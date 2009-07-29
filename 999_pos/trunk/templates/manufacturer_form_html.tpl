@@ -1,4 +1,5 @@
 {* Smarty *}
+{* status = 0 Edit, status = 1 Consult *}
 <script type="text/javascript" src="../scripts/console.js"></script>
 <script type="text/javascript" src="../scripts/url.js"></script>
 <script type="text/javascript" src="../scripts/http_request.js"></script>
@@ -7,10 +8,16 @@
 <script type="text/javascript" src="../scripts/async.js"></script>
 <script type="text/javascript" src="../scripts/save_object.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
+{if $status eq 1}
+<script type="text/javascript" src="../scripts/edit.js"></script>
+{/if}
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSaveObject = new SaveObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	{if $status eq 1}
+	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
+	{/if}
 </script>
 <div id="form" class="frm_small">
 	<fieldset id="status_bar">
@@ -36,7 +43,11 @@
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
 	  		onclick="oSaveObject.execute('get_manufacturer');" {if $status eq 1}disabled="disabled"{/if}  />
 	  	<input name="form_widget" id="edit" type="button" value="Editar"
-	  		onclick="StateMachine.changeToEditState('name');" {if $status eq 0}disabled="disabled"{/if} />
+	  		{if $status eq 1}
+	  			onclick="oEdit.execute('edit_manufacturer', 'name')"
+	  		{else}
+	  			disabled="disabled"
+	  		{/if} />
 	  	<input name="form_widget" id="delete" type="button" value="Eliminar"
 	  		{if $status eq 0}disabled="disabled"{/if} />
 	  	<input name="form_widget" id="cancel" type="button" value="Cancelar"
