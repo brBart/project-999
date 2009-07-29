@@ -185,11 +185,11 @@ abstract class Identifier extends PersistObject{
 	 * Sets the object's name.
 	 *
 	 * @param string $name
-	 * @return void
 	 */
 	public function setName($name){
-		String::validateString($name, 'Nombre inv&aacute;lido.');
 		$this->_mName = $name;
+		// Validation move last for presentation purposes.
+		String::validateString($name, 'Nombre inv&aacute;lido.');
 	}
 	
 	/**
