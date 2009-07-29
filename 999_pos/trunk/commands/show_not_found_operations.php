@@ -29,11 +29,9 @@ class ShowNotFoundOperationsCommand extends Command{
 		$msg = 'Interno: Comando no existe.';
 		$type = $request->getProperty('type');
 		
-		if($type == 'xml'){
+		if($type == 'xml')
 			// Is an ajax request.
-			header('Content-Type: text/xml');
 			Page::display(array('message' => $msg), 'error_xml.tpl');
-		}
 		else{
 			$back_trace = array('Inicio');
 			Page::display(array('module_title' => OPERATIONS_TITLE,

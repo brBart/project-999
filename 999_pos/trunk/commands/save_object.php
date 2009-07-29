@@ -34,18 +34,15 @@ class SaveObjectCommand extends Command{
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			$element_id = $e->getProperty();
-			header('Content-Type: text/xml');
 			Page::display(array('success' => '0', 'elementid' => $element_id, 'message' => $msg),
 					'validate_xml.tpl');
 			return;
 		} catch(Exception $e){
 			$msg = $e->getMessage();
-			header('Content-Type: text/xml');
 			Page::display(array('message' => $msg), 'error_xml.tpl');
 			return;
 		}
 		
-		header('Content-Type: text/xml');
 		Page::display(array('id' => $id), 'save_object_xml.tpl');
 		$helper->removeObject($key);
 	}

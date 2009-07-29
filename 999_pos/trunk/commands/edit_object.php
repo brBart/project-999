@@ -27,12 +27,9 @@ abstract class EditObjectCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$user = $helper->getUser();
-		if($this->testRights($user)){
-			header('Content-Type: text/xml');
+		if($this->testRights($user))
 			Page::display(array(), 'success_xml.tpl');
-		}
 		else{
-			header('Content-Type: text/xml');
 			$msg = 'Usuario no cuenta con los suficientes privilegios.';
 			Page::display(array('message' => $msg), 'error_xml.tpl');
 		}

@@ -34,7 +34,6 @@ abstract class LoginCommand extends Command{
 		if($type == 'xml'){
 			// Is an ajax request.
 			$msg = 'La sesi&oacute;n ha terminado.';
-			header('Content-Type: text/xml');
 			Page::display(array('message' => $msg), 'logout_xml.tpl');
 			return;
 		}
