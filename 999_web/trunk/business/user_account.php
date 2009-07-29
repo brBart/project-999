@@ -510,6 +510,9 @@ class AccessManager{
 		String::validateString($subject, 'Subject inv&aacute;lido.');
 		String::validateString($action, 'Action inv&aacute;lido.');
 		
+		if(UserAccountUtility::isRoot($account->getUserName()))
+			return true;
+		
 		$subject_id = Subject::getId($subject);
 		if($subject_id == 0)
 			throw new Exception('Interno: Subject no existe.');
