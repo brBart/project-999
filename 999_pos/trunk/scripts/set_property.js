@@ -81,7 +81,7 @@ SetPropertyCommand.prototype.readResponse = function(){
 }
 
 /**
-* Function for displaying success.
+* Method for displaying success.
 * @param DocumentElement xmlDoc
 */
 SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
@@ -90,7 +90,7 @@ SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
-* Function for displaying failure.
+* Method for displaying failure.
 * @param DocumentElement xmlDoc
 * @param string msg
 */
