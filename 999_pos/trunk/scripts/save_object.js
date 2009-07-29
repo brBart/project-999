@@ -40,7 +40,8 @@ function SaveObjectCommand(oSession, oConsole, oRequest, sKey){
 SaveObjectCommand.prototype = new AsyncCommand();
 
 /**
- * Executes the command.
+ * Executes the command. Receives the name of the command to execute on success.
+ * @param string sCmdSuccess
  */
 SaveObjectCommand.prototype.execute = function(sCmdSuccess){
 	if(sCmdSuccess == '')
@@ -54,7 +55,7 @@ SaveObjectCommand.prototype.execute = function(sCmdSuccess){
 }
 
 /**
-* Function for displaying success.
+* Method for displaying success.
 * @param DocumentElement xmlDoc
 */
 SaveObjectCommand.prototype.displaySuccess = function(xmlDoc){
