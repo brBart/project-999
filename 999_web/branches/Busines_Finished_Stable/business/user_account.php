@@ -460,7 +460,6 @@ class UserAccountUtility{
 	 * @param UserAccount $account
 	 * @param string $password
 	 * @param string $newPassword
-	 * @return boolean
 	 * @throws Exception
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
@@ -470,12 +469,12 @@ class UserAccountUtility{
 		
 		$account_name = $account->getUserName();
 		if(!self::isValid($account_name, $password))
-			throw new Exception('Contrase&ntilde;a inv&aacute;lida.');
+			throw new ValidateException('Contrase&ntilde;a actual incorrecta.');
 		
 		if(self::isRoot($account_name))
-			return UserAccountUtilityDAM::changeRootPassword(self::encrypt($newPassword));
+			UserAccountUtilityDAM::changeRootPassword(self::encrypt($newPassword));
 		else
-			return UserAccountUtilityDAM::changePassword($account, self::encrypt($newPassword));
+			UserAccountUtilityDAM::changePassword($account, self::encrypt($newPassword));
 	}
 	
 	/**
@@ -500,15 +499,19 @@ class AccessManager{
 	 * Returns true if the user has to right to perform the provided action over the provided subject.
 	 *
 	 * It throws an exception in case the provided action or subject doesn't exists.
-	 * @param UserAccount $user
+	 * @param UserAccount $account
 	 * @param string $subject
 	 * @param string $action
+	 * @return boolean
 	 * @throws Exception
 	 */
 	static public function isAllowed(UserAccount $account, $subject, $action){
 		Persist::validateObjectFromDatabase($account);
 		String::validateString($subject, 'Subject inv&aacute;lido.');
 		String::validateString($action, 'Action inv&aacute;lido.');
+		
+		if(UserAccountUtility::isRoot($account->getUserName()))
+			return true;
 		
 		$subject_id = Subject::getId($subject);
 		if($subject_id == 0)
@@ -533,7 +536,7 @@ class Subject{
 	 * Returns the id for the provided subject name.
 	 * 
 	 * In case the subject doesn't exists it returns NULL.
-	 * @param $subject string
+	 * @param string $subject
 	 * @return integer
 	 */
 	static public function getId($subject){
@@ -569,7 +572,7 @@ class Subject{
 	/**
 	 * Stores the array of subjects in the session.
 	 * 
-	 * @param $subjectsArray
+	 * @param array $subjectsArray
 	 */
 	static private function setSubjects($subjectsArray){
 		SessionHelper::getInstance()->setSubjects($subjectsArray);
@@ -587,7 +590,7 @@ class Action{
 	 * Returns the id for the provided action name.
 	 * 
 	 * In case the action doesn't exists it returns NULL.
-	 * @param $action string
+	 * @param string $action
 	 * @return integer
 	 */
 	static public function getId($action){
@@ -623,7 +626,7 @@ class Action{
 	/**
 	 * Stores the array of actions in the session.
 	 * 
-	 * @param $subjectsArray
+	 * @param array $actionsArray
 	 */
 	static private function setActions($actionsArray){
 		SessionHelper::getInstance()->setActions($actionsArray);
