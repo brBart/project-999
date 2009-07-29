@@ -37,8 +37,8 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 		$msg = 'Usuario no cuenta con los suficientes privilegios.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
-				'content' => 'manufacturers_menu_html.tpl', 'notify' => '1', 'message' => $msg),
-				'site_html.tpl');
+				'content' => 'manufacturers_menu_html.tpl', 'notify' => '1', 'type' => 'error',
+				'message' => $msg), 'site_html.tpl');
 	}
 	
 	/**
