@@ -27,17 +27,23 @@ class BankListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL bank_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL bank_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL bank_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
