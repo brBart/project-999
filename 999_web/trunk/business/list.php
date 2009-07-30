@@ -23,12 +23,12 @@ abstract class DataList{
 	/**
 	 * Defines the method signature.
 	 *
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	abstract static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0);
+	abstract static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0);
 }
 
 
@@ -41,18 +41,18 @@ class BankList extends DataList{
 	/**
 	 * Returns an array with the banks' ids and names from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return BankListDAM::getList($total_pages, $total_items, $page);
+		return BankListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -66,18 +66,18 @@ class PendingDepositList extends DataList{
 	/**
 	 * Returns an array with the deposits' date, id, number, bank_account, bank and amount from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return PendingDepositListDAM::getList($total_pages, $total_items, $page);
+		return PendingDepositListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -91,18 +91,18 @@ class ManufacturerList extends DataList{
 	/**
 	 * Returns an array with the manufacturers' id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return ManufacturerListDAM::getList($total_pages, $total_items, $page);
+		return ManufacturerListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -116,18 +116,18 @@ class CorrelativeList extends DataList{
 	/**
 	 * Returns an array with the correlatives' serial_number and default flag from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return CorrelativeListDAM::getList($total_pages, $total_items, $page);
+		return CorrelativeListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -141,18 +141,18 @@ class BankAccountList extends DataList{
 	/**
 	 * Returns an array with the bank accounts' number and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return BankAccountListDAM::getList($total_pages, $total_items, $page);
+		return BankAccountListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -166,18 +166,18 @@ class UserAccountList extends DataList{
 	/**
 	 * Returns an array with the user accounts' username and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return UserAccountListDAM::getList($total_pages, $total_items, $page);
+		return UserAccountListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -191,18 +191,18 @@ class PaymentCardBrandList extends DataList{
 	/**
 	 * Returns an array with the payment card brands' id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return PaymentCardBrandListDAM::getList($total_pages, $total_items, $page);
+		return PaymentCardBrandListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -216,18 +216,18 @@ class ProductList extends DataList{
 	/**
 	 * Returns an array with the products' id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return ProductListDAM::getList($total_pages, $total_items, $page);
+		return ProductListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -241,18 +241,18 @@ class SupplierList extends DataList{
 	/**
 	 * Returns an array with the suppliers' id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return SupplierListDAM::getList($total_pages, $total_items, $page);
+		return SupplierListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -266,18 +266,18 @@ class RoleList extends DataList{
 	/**
 	 * Returns an array with the user roles' id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return RoleListDAM::getList($total_pages, $total_items, $page);
+		return RoleListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -291,18 +291,18 @@ class BranchList extends DataList{
 	/**
 	 * Returns an array with the branches' id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return BranchListDAM::getList($total_pages, $total_items, $page);
+		return BranchListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -316,18 +316,18 @@ class PaymentCardTypeList extends DataList{
 	/**
 	 * Returns an array with the payment card types' id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return PaymentCardTypeListDAM::getList($total_pages, $total_items, $page);
+		return PaymentCardTypeListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -341,18 +341,18 @@ class ShiftList extends DataList{
 	/**
 	 * Returns an array with the shifts' id, name and time_table from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return ShiftListDAM::getList($total_pages, $total_items, $page);
+		return ShiftListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 
@@ -366,18 +366,18 @@ class UnitOfMeasureList extends DataList{
 	/**
 	 * Returns an array with the units' of measure id and name from the database.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
+	 * The totalPages and totalItems arguments are necessary to return their respective values. If no page
 	 * argument is passed or a cero is passed, all the details are returned.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return UnitOfMeasureListDAM::getList($total_pages, $total_items, $page);
+		return UnitOfMeasureListDAM::getList($totalPages, $totalItems, $page);
 	}
 }
 ?>
