@@ -6,7 +6,7 @@
 <script type="text/javascript" src="../scripts/command.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/async.js"></script>
-<script type="text/javascript" src="../scripts/save_object.js"></script>
+<script type="text/javascript" src="../scripts/save.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
@@ -14,7 +14,7 @@
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oSaveObject = new SaveObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{if $status eq 1}
 	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
 	{/if}
@@ -42,7 +42,7 @@
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
-	  		onclick="oSaveObject.execute('get_manufacturer');" {if $status eq 1}disabled="disabled"{/if}  />
+	  		onclick="oSave.execute('get_manufacturer');" {if $status eq 1}disabled="disabled"{/if}  />
 	  	<input name="form_widget" id="edit" type="button" value="Editar"
 	  		{if $status eq 1}
 	  			onclick="oEdit.execute('edit_manufacturer', 'name')"

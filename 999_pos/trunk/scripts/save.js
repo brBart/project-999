@@ -1,5 +1,5 @@
 /**
- * Library with the save object command class.
+ * Library with the save command class.
  * @package Client
  * @author Roberto Oliveros
  */
@@ -11,7 +11,7 @@
  * @param Request oRequest
  * @param string sKey
  */
-function SaveObjectCommand(oSession, oConsole, oRequest, sKey){
+function SaveCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
 	AsyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -37,13 +37,13 @@ function SaveObjectCommand(oSession, oConsole, oRequest, sKey){
 /**
 * Inherit the Async command class methods.
 */
-SaveObjectCommand.prototype = new AsyncCommand();
+SaveCommand.prototype = new AsyncCommand();
 
 /**
  * Executes the command. Receives the name of the command to execute on success.
  * @param string sCmdSuccess
  */
-SaveObjectCommand.prototype.execute = function(sCmdSuccess){
+SaveCommand.prototype.execute = function(sCmdSuccess){
 	if(sCmdSuccess == '')
 		this._mConsole.displayError('Interno: Argumento sCmdSuccess inv&aacute;lidos.');
 	else{
@@ -58,7 +58,7 @@ SaveObjectCommand.prototype.execute = function(sCmdSuccess){
 * Method for displaying success.
 * @param DocumentElement xmlDoc
 */
-SaveObjectCommand.prototype.displaySuccess = function(xmlDoc){
+SaveCommand.prototype.displaySuccess = function(xmlDoc){
 	var iId = xmlDoc.getElementsByTagName('id')[0].firstChild.data;
 	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmdSuccess);
 	str = Url.addUrlParam(str, 'id', iId);
@@ -72,7 +72,7 @@ SaveObjectCommand.prototype.displaySuccess = function(xmlDoc){
 * @param DocumentElement xmlDoc
 * @param string msg
 */
-SaveObjectCommand.prototype.displayFailure = function(xmlDoc, strMsg){
+SaveCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
 	
 	// Must clean it in case a failure has been already display for the same element.
