@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
+<script type="text/javascript" src="../scripts/delete.js"></script>
 {/if}
 <script type="text/javascript">
 	var oConsole = new Console();
@@ -17,6 +18,7 @@
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{if $status eq 1}
 	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
+	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{/if}
 </script>
 <div id="form" class="frm_small">
@@ -45,12 +47,16 @@
 	  		onclick="oSave.execute('get_manufacturer');" {if $status eq 1}disabled="disabled"{/if}  />
 	  	<input name="form_widget" id="edit" type="button" value="Editar"
 	  		{if $status eq 1}
-	  			onclick="oEdit.execute('edit_manufacturer', 'name')"
+	  			onclick="oEdit.execute('edit_manufacturer', 'name');"
 	  		{else}
 	  			disabled="disabled"
 	  		{/if} />
 	  	<input name="form_widget" id="delete" type="button" value="Eliminar"
-	  		{if $status eq 0}disabled="disabled"{/if} />
+	  		{if $status eq 1}
+	  			onclick="if(confirm('¿Esta seguro que desea eliminar?')) oDelete.execute('delete_manufacturer', 'show_manufacturers_menu');"
+	  		{else}
+	  			disabled="disabled"
+	  		{/if} />
 	  	<input name="form_widget" id="cancel" type="button" value="Cancelar"
 	  			onclick="oSession.loadHref('{$on_cancel}');" {if $status eq 1}disabled="disabled"{/if} />
 	</fieldset>
