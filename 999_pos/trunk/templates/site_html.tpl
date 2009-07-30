@@ -28,7 +28,7 @@
 			<h3>
 			{foreach from=$back_trace item=trace name=back_trace_loop}
 				{$trace}
-				{if not $smarty.foreach.back_trace_loop.last} >> {/if}
+				{if not $smarty.foreach.back_trace_loop.last} <img src="../images/trace.png"> {/if}
 			{/foreach}
 			</h3>
 		</div>
