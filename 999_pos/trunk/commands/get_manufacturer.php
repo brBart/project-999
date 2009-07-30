@@ -37,7 +37,7 @@ class GetManufacturerCommand extends GetObjectCommand{
 		$msg = 'Casa no existe.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
-				'content' => 'manufacturers_menu_html.tpl', 'notify' => '1', 'type' => 'error',
+				'content' => 'manufacturer_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg), 'site_html.tpl');
 	}
 	
@@ -50,7 +50,7 @@ class GetManufacturerCommand extends GetObjectCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		$id = $obj->getId();
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
-				'back_link' => 'index.php?cmd=show_manufacturers_menu&key=' . $key, 'back_trace' => $back_trace,
+				'back_link' => 'index.php?cmd=show_manufacturer_menu&key=' . $key, 'back_trace' => $back_trace,
 				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_form_html.tpl',
 				'status' => '1', 'key' => $key, 'id' => $id, 'name' => $obj->getName(),
 				'on_cancel' => 'index.php?cmd=get_manufacturer&id=' . $id . '&key=' . $key,

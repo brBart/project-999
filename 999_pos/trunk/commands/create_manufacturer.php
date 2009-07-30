@@ -37,7 +37,7 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 		$msg = 'Usuario no cuenta con los suficientes privilegios.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
-				'content' => 'manufacturers_menu_html.tpl', 'notify' => '1', 'type' => 'error',
+				'content' => 'manufacturer_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg), 'site_html.tpl');
 	}
 	
@@ -59,7 +59,7 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
 				'content' => 'manufacturer_form_html.tpl', 'status' => '0', 'key' => $key,
-				'on_cancel' => 'index.php?cmd=show_manufacturers_menu&key=' . $key, 'notify' => '0'),
+				'on_cancel' => 'index.php?cmd=show_manufacturer_menu&key=' . $key, 'notify' => '0'),
 				'site_html.tpl');
 	}
 }
