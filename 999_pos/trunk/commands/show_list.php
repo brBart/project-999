@@ -29,8 +29,26 @@ abstract class ShowListCommand extends Command{
 		$page = $request->getProperty('page');
 		$list = $this->getList($total_pages, $total_items, $page);
 		
-		Page::display(array('list' => $list, 'page' => $page, 'total_pages' => $total_pages,
-				'total_items' => $total_items), $this->getTemplate());
+		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
+		$args = array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+					'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
+					'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl');
+		
+		if($total_items > 0){
+			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
+			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
+			
+			$link = 'index.php?cmd=' . $request->getProperty('cmd');
+			$previous_link = ($page == 1) ? '' : $link . '&page=' . $page - 1;
+			$next_link = ($page == $total_pages) ? '' : $link . '&page=' . $page + 1;
+			
+			Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+					'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
+					'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl',
+					'total_items' => '0'), 'site_html.tpl');
+		}
+		else
+			Page::display(array_merge($args, array('total_items' => '0')), 'site_html.tpl');
 	}
 	
 	/**
