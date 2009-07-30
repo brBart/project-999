@@ -66,17 +66,23 @@ class PendingDepositListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL deposit_pending_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL deposit_pending_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL deposit_pending_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -98,17 +104,23 @@ class ManufacturerListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL manufacturer_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL manufacturer_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL manufacturer_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -130,17 +142,23 @@ class CorrelativeListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL correlative_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL correlative_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL correlative_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -162,17 +180,23 @@ class BankAccountListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL bank_account_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL bank_account_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL bank_account_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -195,17 +219,23 @@ class UserAccountListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL user_account_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL user_account_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL user_account_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -227,17 +257,23 @@ class PaymentCardBrandListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL payment_card_brand_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL payment_card_brand_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL payment_card_brand_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -259,17 +295,23 @@ class ProductListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL product_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL product_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL product_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -291,17 +333,23 @@ class SupplierListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL supplier_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL supplier_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL supplier_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -323,17 +371,23 @@ class RoleListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL role_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL role_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL role_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -355,17 +409,23 @@ class BranchListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL branch_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL branch_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL branch_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -387,17 +447,23 @@ class PaymentCardTypeListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL payment_card_type_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL payment_card_type_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL payment_card_type_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -419,17 +485,23 @@ class ShiftListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL shift_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL shift_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL shift_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 
@@ -451,17 +523,23 @@ class UnitOfMeasureListDAM{
 	 */
 	static public function getList(&$totalPages, &$totalItems, $page){
 		$sql = 'CALL unit_of_measure_list_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
-		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
-		
-		$sql = 'CALL unit_of_measure_list_get(:start_item, :items_per_page)';
-		return DatabaseHandler::getAll($sql, $params);
+		if($totalItems > 0){
+			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			
+			if($page > 0)
+				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			else
+				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			
+			$sql = 'CALL unit_of_measure_list_get(:start_item, :items_per_page)';
+			return DatabaseHandler::getAll($sql, $params);
+		}
+		else{
+			$totalPages = 0;
+			return array();
+		}
 	}
 }
 ?>
