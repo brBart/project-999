@@ -35,11 +35,29 @@ abstract class DeleteObjectCommand extends Command{
 				$this->deleteObject($obj);
 			} catch(Exception $e){
 				$msg = $e->getMessage();
-				
 				Page::display(array('message' => $msg), 'error_xml.tpl');
 				return;
 			}
+			
+			Page::display(array(), 'success_xml.tpl');
+		}
+		else{
+			$msg = 'Usuario no cuenta con los suficientes privilegios.';
+			Page::display(array('message' => $msg), 'error_xml.tpl');
 		}
 	}
+	
+	/**
+	 * Tests if the user has the right to delete the object.
+	 * @param UserAccount $user
+	 * @return boolean
+	 */
+	abstract protected function testRights(UserAccount $user);
+	
+	/**
+	 * Deletes the desired object.
+	 * @param variant $obj
+	 */
+	abstract protected function deleteObject($obj);
 }
 ?>
