@@ -124,9 +124,9 @@ class UserAccountDAM{
  * @author Roberto Oliveros
  */
 class UserAccountUtilityDAM{
-	static private $_mRoboliPassword = 'c83aca09889f9820c6916fb16b5f97d6ab164d4f';
+	static private $_mRoboliPassword = '558236dd6a4c52c8d30d07ad714734ff8f6b3028';
 	
-	static private $_mRootPassword = '202adf3cf87a7aa765da24baf28cfdb12c39768e';
+	static private $_mRootPassword = 'd8bc384f08624a7ec7426ed5dce21edcab122afe';
 	
 	/**
 	 * Verifies the user account exists in the database.
