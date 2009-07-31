@@ -447,7 +447,7 @@ class UserAccountUtility{
 	 * @return boolean
 	 */
 	static public function isRoot($userName){
-		if(strtoupper($userName) == 'ROOT')
+		if(strtoupper($userName) == self::ROOT)
 			return true;
 		else
 			return false;
@@ -484,7 +484,7 @@ class UserAccountUtility{
 	 * @return string
 	 */
 	static public function encrypt($password){
-		return sha1(HASH_PREFIX . $password);
+		return sha1(self::HASH_PREFIX . $password);
 	}
 }
 
