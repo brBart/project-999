@@ -53,7 +53,7 @@ class Customer extends PersistObject{
 		parent::__construct($status);
 		
 		if($this->isConsumidorFinal($nit))
-			$this->_mNit = CF;
+			$this->_mNit = self::CF;
 		else{
 			try{
 				String::validateNit($nit, 'Nit inv&aacute;lido.');
@@ -91,7 +91,7 @@ class Customer extends PersistObject{
 	 * @return void
 	 */
 	public function setName($name){
-		if($this->_mNit != CF)
+		if($this->_mNit != self::CF)
 			String::validateString($name, 'Nombre inv&aacute;lido.');
 		
 		$this->_mName = $name;
@@ -127,7 +127,7 @@ class Customer extends PersistObject{
 	 * @throws Exception
 	 */
 	public function save(){
-		if($this->_mNit == CF)
+		if($this->_mNit == self::CF)
 			return;
 		
 		$this->validateMainProperties();
@@ -152,7 +152,7 @@ class Customer extends PersistObject{
 	 */
 	static public function getInstance($nit){
 		if(self::isConsumidorFinal($nit)){
-			return new Customer(CF);   
+			return new Customer(self::CF);   
 		}
 		else{
 			String::validateNit($nit, 'Nit inv&accute;lido.');
