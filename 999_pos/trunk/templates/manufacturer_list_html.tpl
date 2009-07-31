@@ -1,14 +1,37 @@
 {* Smarty *}
 <div id="list_results">
-	{if $count eq 0}
+	{if $total_items eq 0}
 		<p>No hay resultados.</p>
 	{else}
-		<p>
-			<span>
-				{(($page - 1) * $items_per_page) + 1} -
-				{if $page eq $total_pages $total_items else $page * $items_per_page} de {$total_items}
-			</span>
-			<span></span>
-		</p>
+		<table>
+			<caption>
+				<span>{$first_item} - {$last_item} de {$total_items}</span>
+				<span>
+					{if $previous_link not eq ''}
+						<a href="{$previous_link}" onclick="oSession.setIsLink(true);">Anterior</a>
+					{else}
+						Anterior
+					{/if} | 
+					{if $next_link not eq ''}
+						<a href="{$next_link}" onclick="oSession.setIsLink(true);">Siguiente</a>
+					{else}
+						Siguiente
+					{/if}
+				</span>
+				<span>P&aacute;gina {$page} de {$total_pages}</span>
+			</caption>
+			<thead>
+				<tr>
+					<th>Nombre</th>
+				</tr>
+			</thead>
+			<tbody>
+			{section name=i loop=$list}
+				<tr>
+					<td>{$list[i].name}</td>
+				</tr>
+			{/section}
+			</tbody>
+		</table>
 	{/if}
 </div>

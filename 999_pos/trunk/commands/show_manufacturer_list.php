@@ -28,11 +28,36 @@ class ShowManufacturerListCommand extends ShowListCommand{
 	}
 	
 	/**
-	 * Returns the name of the template.
-	 * @return string
+	 * Displays an empty list.
 	 */
-	protected function getTemplate(){
-		return 'manufacturer_list_html.tpl';
+	protected function displayFailure(){
+		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
+		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
+				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl',
+				'total_items' => '0'), 'site_html.tpl');
+	}
+	
+	/**
+	 * Displays the list.
+	 * @param array $list
+	 * @param integer $totalPages
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @param integer $firstItem
+	 * @param integer $lastItem
+	 * @param string $previousLink
+	 * @param string $nextLink
+	 */
+	protected function displayList($list, $totalPages, $totalItems, $page, $firstItem, $lastItem, $previousLink,
+			$nextLink){
+		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
+		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
+				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl', 'list' => $list,
+				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
+				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,
+				'next_link' => $nextLink), 'site_html.tpl');
 	}
 }
 ?>
