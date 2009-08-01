@@ -12,7 +12,7 @@
  */
 function EditCommand(oSession, oConsole, oRequest){
 	// Call the parent constructor.
-	AsyncCommand.call(this, oSession, oConsole, oRequest);
+	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
 	/**
 	 * Holds the id of the element to receive focus in case on success.
@@ -21,9 +21,9 @@ function EditCommand(oSession, oConsole, oRequest){
 }
 
 /**
-* Inherit the Async command class methods.
+* Inherit the Sync command class methods.
 */
-EditCommand.prototype = new AsyncCommand();
+EditCommand.prototype = new SyncCommand();
 
 /**
  * Executes the command. Receives the name of the command to execute on the server.

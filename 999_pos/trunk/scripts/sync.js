@@ -1,5 +1,5 @@
 /**
- * Library with the Async command base class.
+ * Library with the Sync command base class.
  * @package Client
  * @author Roberto Oliveros
  */
@@ -10,7 +10,7 @@
  * @param Console oConsole
  * @param Request oRequest
  */
-function AsyncCommand(oSession, oConsole, oRequest){
+function SyncCommand(oSession, oConsole, oRequest){
 	// Call the parent constructor.
 	Command.call(this, oSession, oConsole, oRequest);
 }
@@ -18,13 +18,13 @@ function AsyncCommand(oSession, oConsole, oRequest){
 /**
 * Inherit the Command class methods.
 */
-AsyncCommand.prototype = new Command();
+SyncCommand.prototype = new Command();
 
 /**
  * Send the request to the server.
  * @param string sUrlParams
  */
-AsyncCommand.prototype.sendRequest = function(sUrlParams){
+SyncCommand.prototype.sendRequest = function(sUrlParams){
 	sUrlParams = Url.addUrlParam(sUrlParams, 'type', 'xml');
 	this._mRequest.open('GET', sUrlParams, false);
 	this._mRequest.send(null);

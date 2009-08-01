@@ -13,7 +13,7 @@
  */
 function DeleteCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
-	AsyncCommand.call(this, oSession, oConsole, oRequest);
+	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
 	/**
 	 * Holds the key of the session object.
@@ -29,9 +29,9 @@ function DeleteCommand(oSession, oConsole, oRequest, sKey){
 }
 
 /**
-* Inherit the Async command class methods.
+* Inherit the Sync command class methods.
 */
-DeleteCommand.prototype = new AsyncCommand();
+DeleteCommand.prototype = new SyncCommand();
 
 /**
  * Executes the command. Receives the name of the command to execute on the server and on success.
