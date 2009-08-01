@@ -9,6 +9,10 @@
  * Base class.
  */
 require_once('commands/show_list.php');
+/**
+ * For obtaining the list.
+ */
+require_once('business/list.php');
 
 /**
  * Implements functionality for showing the manufacturer list.
@@ -57,7 +61,7 @@ class ShowManufacturerListCommand extends ShowListCommand{
 				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl', 'list' => $list,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
 				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,
-				'next_link' => $nextLink), 'site_html.tpl');
+				'next_link' => $nextLink, 'item_link' => 'index.php?cmd=get_manufacturer&id='), 'site_html.tpl');
 	}
 }
 ?>
