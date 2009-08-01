@@ -7,12 +7,12 @@
 			<caption>
 				<span>{$first_item} - {$last_item} de {$total_items}</span>
 				<span>
-					{if $previous_link not eq ''}
+					{if $previous_link neq ''}
 						<a href="{$previous_link}" onclick="oSession.setIsLink(true);">Anterior</a>
 					{else}
 						Anterior
-					{/if} | 
-					{if $next_link not eq ''}
+					{/if} |
+					{if $next_link neq ''}
 						<a href="{$next_link}" onclick="oSession.setIsLink(true);">Siguiente</a>
 					{else}
 						Siguiente
@@ -28,7 +28,8 @@
 			<tbody>
 			{section name=i loop=$list}
 				<tr>
-					<td>{$list[i].name}</td>
+					<td><a href="{$item_link|cat:$list[i].manufacturer_id}"
+							onclick="oSession.setIsLink(true);">{$list[i].name}</a></td>
 				</tr>
 			{/section}
 			</tbody>
