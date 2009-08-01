@@ -26,11 +26,6 @@ class ShowMaintenanceMenuOperationsCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		// Removed previos session object if necessary.
-		$key = $request->getProperty('key');
-		if(!is_null($key))
-			$helper->removeObject((int)$key);
-		
 		$back_trace = array('Inicio', 'Mantenimiento');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',

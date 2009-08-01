@@ -44,7 +44,6 @@ class SaveObjectCommand extends Command{
 		}
 		
 		Page::display(array('id' => $id), 'save_object_xml.tpl');
-		$helper->removeObject($key);
 	}
 }
 ?>

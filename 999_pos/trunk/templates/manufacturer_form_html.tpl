@@ -8,6 +8,8 @@
 <script type="text/javascript" src="../scripts/sync.js"></script>
 <script type="text/javascript" src="../scripts/save.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
+<script type="text/javascript" src="../scripts/async.js"></script>
+<script type="text/javascript" src="../scripts/remove_session_object.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
 <script type="text/javascript" src="../scripts/delete.js"></script>
@@ -16,10 +18,16 @@
 	var oConsole = new Console();
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{if $status eq 1}
 	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
 	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{/if}
+	{literal}
+	window.onunload = function(){
+		oRemoveObject.execute();
+	}
+	{/literal}
 </script>
 <div id="form" class="frm_small">
 	<fieldset id="status_bar">

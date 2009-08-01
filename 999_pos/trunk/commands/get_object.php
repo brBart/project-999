@@ -26,11 +26,6 @@ abstract class GetObjectCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		// Removed previos session object if necessary.
-		$key = $request->getProperty('key');
-		if(!is_null($key))
-			$helper->removeObject((int)$key);
-		
 		$obj = $this->getObject($request->getProperty('id'));
 		if(is_null($obj))
 			$this->displayFailure();
