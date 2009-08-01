@@ -26,7 +26,7 @@ abstract class ShowListCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$page = $request->getProperty('page');
+		$page = (int)$request->getProperty('page');
 		$list = $this->getList($total_pages, $total_items, $page);
 		
 		if($total_items > 0){
@@ -34,8 +34,8 @@ abstract class ShowListCommand extends Command{
 			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 			
 			$link = 'index.php?cmd=' . $request->getProperty('cmd');
-			$previous_link = ($page == 1) ? '' : $link . '&page=' . $page - 1;
-			$next_link = ($page == $total_pages) ? '' : $link . '&page=' . $page + 1;
+			$previous_link = ($page == 1) ? '' : $link . '&page=' . ($page - 1);
+			$next_link = ($page == $total_pages) ? '' : $link . '&page=' . ($page + 1);
 			
 			$this->displayList($list, $total_pages, $total_items, $page, $first_item, $last_item, $previous_link,
 					$next_link);
