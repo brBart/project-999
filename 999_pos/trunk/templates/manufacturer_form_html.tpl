@@ -5,7 +5,7 @@
 <script type="text/javascript" src="../scripts/http_request.js"></script>
 <script type="text/javascript" src="../scripts/command.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
-<script type="text/javascript" src="../scripts/async.js"></script>
+<script type="text/javascript" src="../scripts/sync.js"></script>
 <script type="text/javascript" src="../scripts/save.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 {if $status eq 1}
