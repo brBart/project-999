@@ -54,14 +54,15 @@ class GetManufacturerCommand extends GetObjectCommand{
 		// Build the back link and on cancel link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_manufacturer_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
-		$on_cancel = (is_null($backQuery)) ? 'index.php?cmd=get_manufacturer&id=' . $id :
+		$foward_link = (is_null($backQuery)) ? 'index.php?cmd=get_manufacturer&id=' . $id :
 				'index.php?cmd=get_manufacturer&id=' . $id . '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
 				'content' => 'manufacturer_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
-				'name' => $obj->getName(), 'on_cancel' =>  $on_cancel, 'notify' => '0'), 'site_html.tpl');
+				'name' => $obj->getName(), 'foward_link' => $foward_link, 'notify' => '0'), 'site_html.tpl');
+		
 	}
 }
 ?>
