@@ -36,10 +36,11 @@ class ShowManufacturerListCommand extends ShowListCommand{
 	 */
 	protected function displayFailure(){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
+		$msg = 'No hay casas en la base de datos.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
-				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl',
-				'total_items' => '0'), 'site_html.tpl');
+				'second_menu' => 'blank.tpl', 'content' => 'blank.tpl', 'notify' => '1', 'type' => 'info',
+				'message' => $msg), 'site_html.tpl');
 	}
 	
 	/**
