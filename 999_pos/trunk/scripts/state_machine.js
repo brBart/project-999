@@ -32,6 +32,10 @@ StateMachine.changeToEditState = function(sElementId){
 			oElement.disabled = true;
 	}
 	
+	// Hide back link option.
+	var oLink = document.getElementById('back_link');
+	oLink.className = 'hidden';
+	
 	// Change the status_label to edit.
 	var oStatus = document.getElementById('status_label');
 	oStatus.innerHTML = 'Editando...';
