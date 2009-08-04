@@ -61,7 +61,7 @@
 	  		{/if} />
 	  	<input name="form_widget" id="delete" type="button" value="Eliminar"
 	  		{if $status eq 1}
-	  			onclick="if(confirm('¿Esta seguro que desea eliminar?')) oDelete.execute('delete_manufacturer', 'show_manufacturers_menu');"
+	  			onclick="if(confirm('¿Esta seguro que desea eliminar?')) oDelete.execute('delete_manufacturer', 'show_manufacturer_menu');"
 	  		{else}
 	  			disabled="disabled"
 	  		{/if} />
