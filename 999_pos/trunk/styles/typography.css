@@ -27,12 +27,16 @@ h3 {
 	font-weight: bold;
 }
 
-#list table caption{
+#list table caption {
 	font-size: 10px;
 }
 
 #list table th{
 	text-align: left;
+}
+
+#list table td {
+	font-size: 11px;
 }
 
 #form label {
