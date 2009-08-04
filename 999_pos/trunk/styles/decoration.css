@@ -2,6 +2,7 @@
 
 a {
 	color: blue;
+	text-decoration: none;
 }
 
 a:hover {
@@ -10,10 +11,6 @@ a:hover {
 
 ul {
 	list-style: none;
-}
-
-ul a {
-	text-decoration: none;
 }
 
 .success {
@@ -90,5 +87,23 @@ ul a {
 #li_last {
 	border-bottom-style: solid;
 	border-color: white;
+	border-width: 1px;
+}
+
+#list table {
+	border-collapse: collapse;
+}
+
+#list table th{
+	background-color: #00067F;
+	border-bottom-style: solid;
+	border-color: #AED9FF;
+	border-width: 3px;
+	color: white;
+}
+
+#list table td{
+	border-bottom-style: solid;
+	border-color: #00067F;
 	border-width: 1px;
 }

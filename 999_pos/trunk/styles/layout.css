@@ -25,6 +25,14 @@ fieldset {
 	width: 400px;
 }
 
+.list_small {
+	padding: 0 210px;
+}
+
+.list_small table {
+	width: 350px;
+}
+
 #main_menu li {
 	float: left;
 }
@@ -57,6 +65,18 @@ fieldset {
 
 #form input[type="text"], input[type="password"] {
 	width: 200px;
+}
+
+#list table th, td {
+	padding: 10px 20px;
+}
+
+#list caption span {
+	float: left;
+}
+
+#list caption * + span {
+	float: right;
 }
 
 #wrapper {
