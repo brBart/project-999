@@ -25,7 +25,7 @@ function DeleteCommand(oSession, oConsole, oRequest, sKey){
 	 * Holds the name of the command to execute on the server in case of success.
 	 * @var string
 	 */
-	this._mCmdSuccess = '';
+	this._mLinkSuccess = '';
 }
 
 /**
@@ -38,11 +38,11 @@ DeleteCommand.prototype = new SyncCommand();
  * @param string sCmd
  * @param string sCmdSuccess
  */
-DeleteCommand.prototype.execute = function(sCmd, sCmdSuccess){
-	if(sCmd == '' || sCmdSuccess == '')
+DeleteCommand.prototype.execute = function(sCmd, sLinkSuccess){
+	if(sCmd == '' || sLinkSuccess == '')
 		this._mConsole.displayError('Interno: Argumentos sCmd y sCmdSuccess inv&aacute;lidos.');
 	else{
-		this._mCmdSuccess = sCmdSuccess;
+		this._mLinkSuccess = sLinkSuccess;
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
 		str = Url.addUrlParam(str, 'key', this._mKey);
 		this.sendRequest(str);
@@ -54,8 +54,5 @@ DeleteCommand.prototype.execute = function(sCmd, sCmdSuccess){
 * @param DocumentElement xmlDoc
 */
 DeleteCommand.prototype.displaySuccess = function(xmlDoc){
-	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmdSuccess);
-	// Remove the object from the session on the server.
-	str = Url.addUrlParam(str, 'key', this._mKey);
-	this._mSession.loadHref(str);
+	this._mSession.loadHref(this._mLinkSuccess);
 }

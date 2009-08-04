@@ -52,7 +52,7 @@
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
-	  		onclick="oSave.execute('get_manufacturer');" {if $status eq 1}disabled="disabled"{/if}  />
+	  		onclick="oSave.execute('{$foward_link}');" {if $status eq 1}disabled="disabled"{/if}  />
 	  	<input name="form_widget" id="edit" type="button" value="Editar"
 	  		{if $status eq 1}
 	  			onclick="oEdit.execute('edit_manufacturer', 'name');"
@@ -61,12 +61,13 @@
 	  		{/if} />
 	  	<input name="form_widget" id="delete" type="button" value="Eliminar"
 	  		{if $status eq 1}
-	  			onclick="if(confirm('¿Esta seguro que desea eliminar?')) oDelete.execute('delete_manufacturer', 'show_manufacturer_menu');"
+	  			onclick="if(confirm('¿Esta seguro que desea eliminar?')) oDelete.execute('delete_manufacturer', '{$back_link}');"
 	  		{else}
 	  			disabled="disabled"
 	  		{/if} />
 	  	<input name="form_widget" id="cancel" type="button" value="Cancelar"
-	  			onclick="oSession.loadHref('{$on_cancel}');" {if $status eq 1}disabled="disabled"{/if} />
+	  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link}{/if}');"
+	  			{if $status eq 1}disabled="disabled"{/if} />
 	</fieldset>
 </div>
 {if $status eq 0}

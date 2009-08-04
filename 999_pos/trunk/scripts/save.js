@@ -31,7 +31,7 @@ function SaveCommand(oSession, oConsole, oRequest, sKey){
 	 * Holds the name of the command to execute on the server in case of success.
 	 * @var string
 	 */
-	this._mCmdSuccess = '';
+	this._mLinkSuccess = '';
 }
 
 /**
@@ -41,13 +41,13 @@ SaveCommand.prototype = new SyncCommand();
 
 /**
  * Executes the command. Receives the name of the command to execute on success.
- * @param string sCmdSuccess
+ * @param string sLinkSuccess
  */
-SaveCommand.prototype.execute = function(sCmdSuccess){
-	if(sCmdSuccess == '')
-		this._mConsole.displayError('Interno: Argumento sCmdSuccess inv&aacute;lidos.');
+SaveCommand.prototype.execute = function(sLinkSuccess){
+	if(sLinkSuccess == '')
+		this._mConsole.displayError('Interno: Argumento sLinkSuccess inv&aacute;lidos.');
 	else{
-		this._mCmdSuccess = sCmdSuccess;
+		this._mLinkSuccess = sLinkSuccess;
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
 		str = Url.addUrlParam(str, 'key', this._mKey);
 		this.sendRequest(str);
@@ -60,10 +60,7 @@ SaveCommand.prototype.execute = function(sCmdSuccess){
 */
 SaveCommand.prototype.displaySuccess = function(xmlDoc){
 	var iId = xmlDoc.getElementsByTagName('id')[0].firstChild.data;
-	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmdSuccess);
-	str = Url.addUrlParam(str, 'id', iId);
-	// Remove the object from the session on the server.
-	str = Url.addUrlParam(str, 'key', this._mKey);
+	str = Url.addUrlParam(this._mLinkSuccess, 'id', iId);
 	this._mSession.loadHref(str);
 }
 
