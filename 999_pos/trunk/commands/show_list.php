@@ -33,12 +33,15 @@ abstract class ShowListCommand extends Command{
 			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
 			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 			
-			$link = 'index.php?cmd=' . $request->getProperty('cmd');
-			$previous_link = ($page == 1) ? '' : $link . '&page=' . ($page - 1);
-			$next_link = ($page == $total_pages) ? '' : $link . '&page=' . ($page + 1);
+			// For back link purposes.
+			$actual_cmd = $request->getProperty('cmd');
+			
+			$link = 'index.php?cmd=' . $actual_cmd . '&page=';
+			$previous_link = ($page == 1) ? '' : $link . ($page - 1);
+			$next_link = ($page == $total_pages) ? '' : $link . ($page + 1);
 			
 			$this->displayList($list, $total_pages, $total_items, $page, $first_item, $last_item, $previous_link,
-					$next_link);
+					$next_link, $actual_cmd);
 		}
 		else
 			$this->displayFailure();
@@ -70,6 +73,6 @@ abstract class ShowListCommand extends Command{
 	 * @param string $nextLink
 	 */
 	abstract protected function displayList($list, $totalPages, $totalItems, $page, $firstItem, $lastItem,
-			$previousLink, $nextLink);
+			$previousLink, $nextLink, $actualCmd);
 }
 ?>

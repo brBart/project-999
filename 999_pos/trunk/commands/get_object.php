@@ -30,9 +30,16 @@ abstract class GetObjectCommand extends Command{
 		if(is_null($obj))
 			$this->displayFailure();
 		else{
+			// Verify from which page this location was accessed.
+			$last_cmd = $request->getProperty('last_cmd');
+			if(!is_null($last_cmd)){
+				$page = $request->getProperty('page');
+				$back_query = array('cmd' => $last_cmd, 'page' => $page);
+			}
+			
 			$key = KeyGenerator::generateKey();
 			$helper->setObject($key, $obj);
-			$this->displayObject($key, $obj);
+			$this->displayObject($key, $obj, $back_query);
 		}
 	}
 	
@@ -52,7 +59,8 @@ abstract class GetObjectCommand extends Command{
 	 * Display the form for the object.
 	 * @param string $key
 	 * @param variant $obj
+	 * @param array $backQuery
 	 */
-	abstract protected function displayObject($key, $obj);
+	abstract protected function displayObject($key, $obj, $backQuery);
 }
 ?>

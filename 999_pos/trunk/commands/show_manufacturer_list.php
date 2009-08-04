@@ -54,14 +54,15 @@ class ShowManufacturerListCommand extends ShowListCommand{
 	 * @param string $nextLink
 	 */
 	protected function displayList($list, $totalPages, $totalItems, $page, $firstItem, $lastItem, $previousLink,
-			$nextLink){
+			$nextLink, $actualCmd){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl', 'list' => $list,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
 				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,
-				'next_link' => $nextLink, 'item_link' => 'index.php?cmd=get_manufacturer&id='), 'site_html.tpl');
+				'next_link' => $nextLink, 'item_link' => 'index.php?cmd=get_manufacturer&id=',
+				'actual_cmd' => $actualCmd), 'site_html.tpl');
 	}
 }
 ?>
