@@ -43,6 +43,16 @@ ul {
 	background-position: left center;
 }
 
+.info {
+	border-style: solid;
+	border-color: blue;
+	border-width: 1px;
+	background-color: #C6CCFF;
+	background-image: url(../images/info.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
 .failed {
 	color: orange;
 }
