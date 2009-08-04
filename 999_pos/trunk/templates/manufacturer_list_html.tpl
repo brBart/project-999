@@ -28,7 +28,7 @@
 			<tbody>
 			{section name=i loop=$list}
 				<tr>
-					<td><a href="{$item_link|cat:$list[i].manufacturer_id}"
+					<td><a href="{$item_link|cat:$list[i].manufacturer_id|cat:'&last_cmd='|cat:$actual_cmd|cat:'&page='|cat:$page}"
 							onclick="oSession.setIsLink(true);">{$list[i].name}</a></td>
 				</tr>
 			{/section}
