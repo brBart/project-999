@@ -60,7 +60,7 @@ class CreateManufacturerCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
 				'content' => 'manufacturer_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_manufacturer_menu',
-				'foward_link' => 'index.php?cmd=get_manufacturer', 'notify' => '0'), 'site_html.tpl');
+				'foward_link' => 'index.php?cmd=get_manufacturer'), 'site_html.tpl');
 	}
 }
 ?>
