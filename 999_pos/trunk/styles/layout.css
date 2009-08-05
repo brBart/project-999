@@ -25,6 +25,10 @@ fieldset {
 	width: 400px;
 }
 
+li form {
+	display: inline;
+}
+
 .list_small {
 	padding: 0 210px;
 }
