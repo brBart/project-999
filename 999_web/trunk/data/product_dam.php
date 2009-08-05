@@ -385,9 +385,8 @@ class ProductDAM{
 				$details[] = new ProductSupplier($supplier, $detail['sku'], Persist::CREATED);
 			}
 			
-			$product->setData($result['name'], $result['packaging'],
-					$result['description'], $um, $manufacturer, (float)$result['price'],
-					(boolean)$result['deactivated'], $details, $result['bar_code']);
+			$product->setData($result['bar_code'], $result['name'], $result['packaging'], $um, $manufacturer,
+					(float)$result['price'], (boolean)$result['deactivated'], $details, $result['description']);
 			return $product;
 		}
 		else

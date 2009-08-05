@@ -657,7 +657,6 @@ class Product extends Identifier{
 	 * @param string $description
 	 */
 	public function setDescription($description){
-		String::validateString($description, 'Descripci&oacute;n inv&aacute;lida.');
 		$this->_mDescription = $description;
 	}
 	
@@ -718,19 +717,18 @@ class Product extends Identifier{
 	 * @param array<ProductSupplier> $details
 	 * @throws Exception
 	 */
-	public function setData($name, $packaging, $description, UnitOfMeasure $um,
-			Manufacturer $manufacturer, $price, $deactivated, $details, $barCode){
+	public function setData($barCode, $name, $packaging, UnitOfMeasure $um, Manufacturer $manufacturer, $price,
+			$deactivated, $details, $description = NULL){
 		parent::setData($name);
 		
 		try{
+			String::validateString($barCode, 'C&oacute;digo de barra inv&aacute;lido.');
 			String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
-			String::validateString($description, 'Descripci&oacute;n inv&aacute;lida.');
 			self::validateObjectFromDatabase($um);
 			self::validateObjectFromDatabase($manufacturer);
 			Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
-			String::validateString($barCode, 'C&oacute;digo de barra inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Product con datos erroneos! ' .
 					$e->getMessage());
@@ -896,7 +894,6 @@ class Product extends Identifier{
 		if(!is_null($this->_mBarCode) && $this->_mBarCode != '')
 			$this->verifyBarCode($this->_mBarCode);
 		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.');
-		String::validateString($this->_mDescription, 'Descripci&oacute;n inv&aacute;lida.');
 		
 		if(is_null($this->_mUM))
 			throw new Exception('Unidad de medida inv&aacute;lida.');
