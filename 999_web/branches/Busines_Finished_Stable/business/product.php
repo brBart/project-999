@@ -719,7 +719,7 @@ class Product extends Identifier{
 	 * @throws Exception
 	 */
 	public function setData($name, $packaging, $description, UnitOfMeasure $um,
-			Manufacturer $manufacturer, $price, $deactivated, $details, $barCode = NULL){
+			Manufacturer $manufacturer, $price, $deactivated, $details, $barCode){
 		parent::setData($name);
 		
 		try{
@@ -730,6 +730,7 @@ class Product extends Identifier{
 			Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
+			String::validateString($barCode, 'C&oacute;digo de barra inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Product con datos erroneos! ' .
 					$e->getMessage());
@@ -795,14 +796,17 @@ class Product extends Identifier{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->_mId = $this->insert();
 			
-			if(is_null($this->_mBarCode) && !ProductDAM::existsBarCode($this, $this->_mId)){
-				ProductDAM::setBarCode($this);
-				$this->_mBarCode = $this->_mId;
-			}
+			if(is_null($this->_mBarCode) || $this->_mBarCode == ''){
+				$this->_mBarCode = $this->generateBarCode();
+				ProductDAM::setBarCode($this, $this->_mBarCode);
+			}	
 			
 			$this->_mStatus = Persist::CREATED;
 		}
 		else {
+			if(is_null($this->_mBarCode) || $this->_mBarCode == '')
+				$this->_mBarCode = $this->generateBarCode();
+			
 			$this->update();
 			
 			if($this->_mLastPrice)
@@ -948,6 +952,28 @@ class Product extends Identifier{
 	private function verifyProductSupplier(ProductSupplier $detail){
 		if(ProductDAM::existsProductSupplier($detail))
 			throw new Exception('Codigo del proveedor ya existe en la base de datos.');
+	}
+	
+	/**
+	 * Generates a bar code.
+	 * 
+	 * If the product id can't be used a 6 digit number is returned.
+	 * @return string
+	 */
+	private function generateBarCode(){
+		if(!ProductDAM::existsBarCode($this, $this->_mId)){
+			return $this->_mId;
+		}
+		else{
+			$found = false;
+			
+			do{
+				$new_code = rand(100000, 999999);
+				if(!ProductDAM::existsBarCode($this, $new_code)) $found = true;
+			}while(!$found);
+			
+			return $new_code;
+		}
 	}
 }
 
