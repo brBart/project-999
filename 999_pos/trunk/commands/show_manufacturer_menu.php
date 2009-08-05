@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowManufacturersMenu command.
+ * Library containing the ShowManufacturerMenu command.
  * @package Command
  * @author Roberto Oliveros
  */
