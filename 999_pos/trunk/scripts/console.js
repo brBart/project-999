@@ -25,8 +25,8 @@ Console.prototype.displayMessage = function(sMsg){
  * @param string sElementId
  */
 Console.prototype.displayFailure = function(sMsg, sElementId){
-	var newP = '<p id="failed_' + sElementId + '" class="failure">' + sMsg + '</p>';
-	var oElement = document.getElementById(sElementId + '_failed');
+	var newP = '<p id="failed-' + sElementId + '" class="failure">' + sMsg + '</p>';
+	var oElement = document.getElementById(sElementId + '-failed');
 	
 	// Display the message and indicate which property cause the failure.
 	this.displayMessage(newP);
@@ -53,14 +53,14 @@ Console.prototype.displayError = function(sMsg){
  * @param string sElementId
  */
 Console.prototype.cleanFailure = function(sElementId){
-	var elementP = document.getElementById('failed_' + sElementId);
+	var elementP = document.getElementById('failed-' + sElementId);
 	
 	// If there was a message.
 	if(elementP){
 		this._mElementDiv.removeChild(elementP);
 		this._mElementDiv.scrollTop = this._mElementDiv.scrollHeight;
 	
-		var oElement = document.getElementById(sElementId + '_failed');
+		var oElement = document.getElementById(sElementId + '-failed');
 		oElement.className = 'hidden';
 	}
 }
@@ -73,7 +73,7 @@ Console.prototype.reset = function(){
 	for (var i = 0; i < arrElements.length; i++){
 		var sId = arrElements[i].getAttribute('id'); 
 		if(sId != 'error')
-			this.cleanFailure(sId.substring(sId.indexOf('_') + 1));
+			this.cleanFailure(sId.substring(sId.indexOf('-') + 1));
 	}
 	
 	this._mElementDiv.innerHTML = '';

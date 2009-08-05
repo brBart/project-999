@@ -48,7 +48,7 @@
 	  			value="{$name}" maxlength="100"
 	  			onblur="oSetProperty.execute('set_name_object', this.value, this.id);"
 	  			{if $status eq 1}disabled="disabled"{/if} />
-	  	<span id="name_failed" class="hidden">*</span></p>
+	  	<span id="name-failed" class="hidden">*</span></p>
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
