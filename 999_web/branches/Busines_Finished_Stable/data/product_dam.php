@@ -424,8 +424,9 @@ class ProductDAM{
 	 * Sets the bar code of an existing product.
 	 *
 	 * @param Product $obj
+	 * @param string $barCode
 	 */
-	static public function setBarCode(Product $obj){
+	static public function setBarCode(Product $obj, $barCode){
 		// Code here...
 	}
 	
