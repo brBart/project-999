@@ -100,4 +100,5 @@ SetPropertyCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	// Must clean it in case a failure has been already display for the same element.
 	this._mConsole.cleanFailure(elementId);
 	this._mConsole.displayFailure(strMsg, elementId);
+	StateMachine.setFocus(elementId);
 }
