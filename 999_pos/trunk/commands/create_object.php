@@ -27,6 +27,7 @@ abstract class CreateObjectCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$user = $helper->getUser();
+		
 		if($this->testRights($user)){
 			$obj = $this->createObject();
 			$key = KeyGenerator::generateKey();
