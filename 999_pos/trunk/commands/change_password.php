@@ -31,11 +31,11 @@ abstract class ChangePasswordCommand extends Command{
 		$username = $user->getUserName();
 		$back_trace = array('Inicio', 'Constrase&ntilde;a');
 		
+		// If the submit button was pressed.
 		if(is_null($request->getProperty('change_password'))){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
-				'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '0'),
-				'site_html.tpl');
+				'content' => 'change_password_form_html.tpl', 'username' => $username), 'site_html.tpl');
 			return;
 		}
 		
@@ -43,13 +43,15 @@ abstract class ChangePasswordCommand extends Command{
 		$new_password = $request->getProperty('new_password');
 		$confirm_password = $request->getProperty('confirm_password');
 		
+		// Check if data was entered correctly.
 		if($new_password == '')
 			$msg = 'Nueva contrase&ntilde;a inv&aacute;lida. Valor no puede ser vacio.';
 		if($new_password != $confirm_password)
 			$msg = 'Nueva contrase&ntilde;a y confirmaci&oacute;n no coinciden.';
 		if($password == '')
 			$msg = 'Contrase&ntilde;a actual inv&aacute;lida. Valor no puede ser vacio.';
-			
+		
+		// If was not.
 		if($msg != ''){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
@@ -58,6 +60,7 @@ abstract class ChangePasswordCommand extends Command{
 			return;
 		}
 		
+		// If it was entered correctly.
 		try{
 			UserAccountUtility::changePassword($user, $password, $new_password);
 			$back_trace = array('Inicio');
