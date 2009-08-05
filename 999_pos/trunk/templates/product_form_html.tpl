@@ -54,10 +54,16 @@
 	  	<p>
 	  		<label for="bar_code">C&oacute;digo barra:</label>
 	  		<input name="form_widget" id="bar_code" type="text" value="{$bar_code}" maxlength="100"
-	  			onblur="oSetProperty.execute('set_bar_code_object', this.value, this.id);"
+	  			onblur="oSetProperty.execute('set_bar_code_product', this.value, this.id);"
 	  			{if $status eq 1}disabled="disabled"{/if} />
 	  		<span id="bar_code-failed" class="hidden">*</span>
-	  		<input id="empty_bar_code" type="checkbox" />
+	  	</p>
+	  	<p>
+	  		<label for="packaging">Presentaci&oacute;n:</label>
+	  		<input name="form_widget" id="packaging" type="text" value="{$packaging}" maxlength="150"
+	  			onblur="oSetProperty.execute('set_packaging_product', this.value, this.id);"
+	  			{if $status eq 1}disabled="disabled"{/if} />
+	  		<span id="packaging-failed" class="hidden">*</span>
 	  	</p>
 	</fieldset>
 	<fieldset id="controls">
