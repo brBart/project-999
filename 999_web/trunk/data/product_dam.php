@@ -351,10 +351,11 @@ class ProductDAM{
 	 * Sets the bar code of an existing product.
 	 *
 	 * @param Product $obj
+	 * @param string $barCode
 	 */
-	static public function setBarCode(Product $obj){
-		$sql = 'CALL product_bar_code_update(:product_id)';
-		$params = array(':product_id' => $obj->getId());
+	static public function setBarCode(Product $obj, $barCode){
+		$sql = 'CALL product_bar_code_update(:product_id, :bar_code)';
+		$params = array(':product_id' => $obj->getId(), ':bar_code' => $barCode);
 		DatabaseHandler::execute($sql, $params);
 	}
 	
