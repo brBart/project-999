@@ -94,7 +94,8 @@
 	  			onblur="oSetProperty.execute('set_unit_of_measure_product', this.value, this.id);"
 	  			{if $status eq 1}disabled="disabled"{/if}>
     			{section name=i loop=$um_list}
-    				<option value="{$um_list[i].um_id}" {if $um_list[i].um_id eq $um_id}selected="selected"{/if}>
+    				<option value="{$um_list[i].unit_of_measure_id}"
+    					{if $um_list[i].unit_of_measure_id eq $um_id}selected="selected"{/if}>
     					{$um_list[i].name}
     				</option>
     			{/section}
@@ -110,13 +111,29 @@
 	  	</p>
 	  	<p>
 	  		<label for="deactivated">Desactivado:</label>
-	  		<input name="form_widget" id="deactivated" type="checkbox" value="{$price}" maxlength="15"
-	  			onblur="oSetProperty.execute('set_price_product', this.value, this.id);"
+	  		<input name="form_widget" id="deactivated" type="checkbox"
+	  			{if $deactivated eq 1}checked="checked"{/if}
+	  			onblur="oSetProperty.execute('set_deactivated_object', this.checked, this.id);"
 	  			{if $status eq 1}disabled="disabled"{/if} />
-	  		<span id="price-failed" class="hidden">*</span>
+	  		<span id="deactivated-failed" class="hidden">*</span>
 	  	</p>
 	  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 	  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
+	  	<p>
+	  		<label for="supplier_id">Proveedor:</label>
+	  		<select name="form_widget" id="supplier_id" {if $status eq 1}disabled="disabled"{/if}>
+    			{section name=i loop=$supplier_list}
+    				<option value="{$supplier_list[i].supplier_id}">
+    					{$supplier_list[i].name}
+    				</option>
+    			{/section}
+    		</select>
+	  		<label for="product_code">C&oacute;digo:</label>
+	  		<input name="form_widget" id="product_code" type="text" {if $status eq 1}disabled="disabled"{/if} />
+	  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
+	  			{if $status eq 1}disabled="disabled"{/if}  />
+	  	</p>
+	  	
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
