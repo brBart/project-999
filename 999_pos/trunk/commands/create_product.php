@@ -13,6 +13,10 @@ require_once('commands/create_object.php');
  * Library with the product class.
  */
 require_once('business/product.php');
+/**
+ * For creating the select options.
+ */
+require_once('business/list.php');
 
 /**
  * Displays the product form.
@@ -60,8 +64,8 @@ class CreateProductCommand extends CreateObjectCommand{
 		// Get the lists for the select options.
 		$empty_item = array(array());
 		$manufacturer_list = array_merge($empty_item, ManufacturerList::getList($pages, $items, 0));
-		$um_list = array($empty_item, UnitOfMeasureList::getList($pages, $items, 0));
-		$supplier_list = array($empty_item, SupplierList::getList($pages, $items, 0));
+		$um_list = array_merge($empty_item, UnitOfMeasureList::getList($pages, $items, 0));
+		$supplier_list = array_merge($empty_item, SupplierList::getList($pages, $items, 0));
 		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
