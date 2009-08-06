@@ -65,6 +65,58 @@
 	  			{if $status eq 1}disabled="disabled"{/if} />
 	  		<span id="packaging-failed" class="hidden">*</span>
 	  	</p>
+	  	<p>
+	  		<label for="description">Descripci&oacute;n:</label>
+	  		<textarea name="form_widget" id="description" rows="3" cols="60"
+	  			onblur="oSetProperty.execute('set_description_product', this.value, this.id);"
+	  			{if $status eq 1}disabled="disabled"{/if}>
+	  			{$description}
+	  		</textarea>
+	  		<span id="description-failed" class="hidden">*</span>
+	  	</p>
+	  	<p>
+	  		<label for="manufacturer_id">Casa:</label>
+	  		<select name="form_widget" id="manufacturer_id"
+	  			onblur="oSetProperty.execute('set_manufacturer_product', this.value, this.id);"
+	  			{if $status eq 1}disabled="disabled"{/if}>
+    			{section name=i loop=$manufacturer_list}
+    				<option value="{$manufacturer_list[i].manufacturer_id}" 
+    					{if $manufacturer_list[i].manufacturer_id eq $manufacturer_id}selected="selected"{/if}>
+    					{$manufacturer_list[i].name}
+    				</option>
+    			{/section}
+    		</select>
+	  		<span id="manufacturer_id-failed" class="hidden">*</span>
+	  	</p>
+	  	<p>
+	  		<label for="um_id">Unidad de Medida:</label>
+	  		<select name="form_widget" id="um_id"
+	  			onblur="oSetProperty.execute('set_unit_of_measure_product', this.value, this.id);"
+	  			{if $status eq 1}disabled="disabled"{/if}>
+    			{section name=i loop=$um_list}
+    				<option value="{$um_list[i].um_id}" {if $um_list[i].um_id eq $um_id}selected="selected"{/if}>
+    					{$um_list[i].name}
+    				</option>
+    			{/section}
+    		</select>
+	  		<span id="um_id-failed" class="hidden">*</span>
+	  	</p>
+	  	<p>
+	  		<label for="price">Precio:</label>
+	  		<input name="form_widget" id="price" type="text" value="{$price}" maxlength="15"
+	  			onblur="oSetProperty.execute('set_price_product', this.value, this.id);"
+	  			{if $status eq 1}disabled="disabled"{/if} />
+	  		<span id="price-failed" class="hidden">*</span>
+	  	</p>
+	  	<p>
+	  		<label for="deactivated">Desactivado:</label>
+	  		<input name="form_widget" id="deactivated" type="checkbox" value="{$price}" maxlength="15"
+	  			onblur="oSetProperty.execute('set_price_product', this.value, this.id);"
+	  			{if $status eq 1}disabled="disabled"{/if} />
+	  		<span id="price-failed" class="hidden">*</span>
+	  	</p>
+	  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
+	  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
