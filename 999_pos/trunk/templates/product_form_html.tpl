@@ -21,8 +21,7 @@
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key}, 'product_suppliers');
-	oProductSuppliers.init('../xsl/product_suppliers.xsl');
+	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{if $status eq 1}
 	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
 	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
@@ -164,6 +163,7 @@
 {if $status eq 0}
 <script type="text/javascript">
 StateMachine.setFocus('name');
+oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details');
 oProductSuppliers.update();
 </script>
 {/if}
