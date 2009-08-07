@@ -13,7 +13,7 @@
  * @param string sCmd
  * @param string sTableId
  */
-function Details(oSession, oConsole, oRequest, sKey, sTableId){
+function Details(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -24,10 +24,10 @@ function Details(oSession, oConsole, oRequest, sKey, sTableId){
 	this._mKey = sKey;
 	
 	/**
-	 * Holds the id of the table.
+	 * Holds the object div which holds the dynamic data.
 	 * @var string
 	 */
-	this._mTableId = sTableId;
+	this._mDiv = null;
 	
 	/**
 	 * Holds the XSLT document.
@@ -45,7 +45,9 @@ Details.prototype = new SyncCommand();
  * Test if the browser supports XSLT functionality.
  * @param string sUrlXsltFile
  */
-Details.prototype.init = function(sUrlXsltFile){
+Details.prototype.init = function(sUrlXsltFile, sDivId){
+	this._mDiv = document.getElementById(sDivId);
+	
 	// test if user has browser that supports native XSLT functionality
 	if(window.XMLHttpRequest && window.XSLTProcessor && window.DOMParser)
 	{
@@ -112,7 +114,7 @@ Details.prototype.loadStylesheet = function(sUrlXsltFile){
 	{
 		this._mStylesheetDoc = this.createMsxml2DOMDocumentObject();         
 		this._mStylesheetDoc.async = false;         
-		this._mStylesheetDoc.load(xmlHttp.responseXML);
+		this._mStylesheetDoc.load(this._mRequest.responseXML);
 	}
 }
 
@@ -126,14 +128,13 @@ Details.prototype.displaySuccess = function(xmlDoc){
         window.DOMParser)
     {      
     	// load the XSLT document
-    	var xsltProcessor = new XSLTProcessor(this._mStylesheetDoc);
-    	xsltProcessor.importStylesheet();
+    	var xsltProcessor = new XSLTProcessor();
+    	xsltProcessor.importStylesheet(this._mStylesheetDoc);
     	// generate the HTML code for the new page of products
     	page = xsltProcessor.transformToFragment(xmlDoc, document);
     	// display the page of products
-    	var gridDiv = document.getElementById(this._mTableId);
-    	gridDiv.innerHTML = "";
-    	gridDiv.appendChild(page);
+    	this._mDiv.innerHTML = "";
+    	this._mDiv.appendChild(page);
     } 
     // Internet Explorer code
     else if (window.ActiveXObject) 
@@ -142,8 +143,8 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	var theDocument = this.createMsxml2DOMDocumentObject();
     	theDocument.async = false;
     	theDocument.load(xmlDoc);
+    	alert('Hera am i');
     	// display the page of products
-    	var gridDiv = document.getElementById(this._mTableId);
-    	gridDiv.innerHTML = theDocument.transformNode(this._mStylesheetDoc);
+    	this._mDiv.innerHTML = theDocument.transformNode(this._mStylesheetDoc);
     }
 }
