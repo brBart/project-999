@@ -21,6 +21,10 @@ function __autoload($className){
 			require_once('business/product.php');
 			break;
 			
+		case 'Product':
+			require_once('business/product.php');
+			break;
+			
 		default:
 	}
 }
