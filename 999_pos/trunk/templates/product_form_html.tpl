@@ -10,6 +10,8 @@
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 <script type="text/javascript" src="../scripts/async.js"></script>
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
+<script type="text/javascript" src="../scripts/details.js"></script>
+<script type="text/javascript" src="../scripts/product_suppliers.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
 <script type="text/javascript" src="../scripts/delete.js"></script>
@@ -19,6 +21,8 @@
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key}, 'product_suppliers');
+	oProductSuppliers.init('../xsl/product_suppliers.xsl');
 	{if $status eq 1}
 	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
 	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
@@ -134,6 +138,8 @@
 	  			{if $status eq 1}disabled="disabled"{/if}  />
 	  	</p>
 	  	<div id="details"></div>
+	  	<input name="form_widget" id="remove_supplier" type="button" value="Quitar"
+	  			{if $status eq 1}disabled="disabled"{/if}  />
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
@@ -158,5 +164,6 @@
 {if $status eq 0}
 <script type="text/javascript">
 StateMachine.setFocus('name');
+oProductSuppliers.update();
 </script>
 {/if}
