@@ -113,7 +113,7 @@
 	  		<label for="deactivated">Desactivado:</label>
 	  		<input name="form_widget" id="deactivated" type="checkbox"
 	  			{if $deactivated eq 1}checked="checked"{/if}
-	  			onblur="oSetProperty.execute('set_deactivated_object', this.checked, this.id);"
+	  			onblur="oSetProperty.execute('deactivate_object', this.checked, this.id);"
 	  			{if $status eq 1}disabled="disabled"{/if} />
 	  		<span id="deactivated-failed" class="hidden">*</span>
 	  	</p>
