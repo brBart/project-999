@@ -19,7 +19,7 @@ require_once('presentation/page.php');
  * @package Command
  * @author Roberto Oliveros
  */
-abstract class GetProductSuppliersCommand extends Command{
+class GetProductSuppliersCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
