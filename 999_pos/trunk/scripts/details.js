@@ -48,23 +48,18 @@ Details.prototype = new SyncCommand();
 Details.prototype.init = function(sUrlXsltFile, sDivId){
 	this._mDiv = document.getElementById(sDivId);
 	
-	// test if user has browser that supports native XSLT functionality
-	if(window.XMLHttpRequest && window.XSLTProcessor && window.DOMParser)
-	{
-		// load the grid
-		this.loadStylesheet(sUrlXsltFile);
-		return;
+	// load the file from the server
+	this._mRequest.open("GET", sUrlXsltFile, false);        
+	this._mRequest.send(null);
+	
+	try{
+		var dp = new DOMParser();
+		this._mStylesheetDoc = dp.parseFromString(this._mRequest.responseText, "text/xml");
 	}
-	// test if user has Internet Explorer with proper XSLT support
-	if (window.ActiveXObject && this.createMsxml2DOMDocumentObject())
-	{
-		// load the grid
-		this.loadStylesheet(sUrlXsltFile);
-		// exit the function
-		return;  
+	catch(e){
+		// if browser functionality failed, alert the user
+		this._mConsole.displayError('Interno: Navegador no soporta funcionalidad XSLT.');
 	}
-	// if browser functionality testing failed, alert the user
-	this._mConsole.displayError('Interno: Navegador no soporta funcionalidad XSLT.');
 }
 
 /**
@@ -101,14 +96,11 @@ Details.prototype.createMsxml2DOMDocumentObject = function(){
  * @param string sUrlXsltFile
  */
 Details.prototype.loadStylesheet = function(sUrlXsltFile){
-	// load the file from the server
-	this._mRequest.open("GET", sUrlXsltFile, false);        
-	this._mRequest.send(null);    
+	    
 	// try to load the XSLT document
 	if (window.DOMParser) // browsers with native functionality
 	{
-		var dp = new DOMParser();
-		this._mStylesheetDoc = dp.parseFromString(this._mRequest.responseText, "text/xml");
+		
 	}
 	else if (window.ActiveXObject) // Internet Explorer? 
 	{
