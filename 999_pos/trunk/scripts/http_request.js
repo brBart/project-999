@@ -17,27 +17,9 @@ function createXmlHttpRequestObject(){
 		}
 	  	catch(e)
 	  	{
-	  		// assume IE6 or older
-	  		var XmlHttpVersions = new Array("MSXML2.XMLHTTP.6.0",
-	  					"MSXML2.XMLHTTP.5.0",
-	                    "MSXML2.XMLHTTP.4.0",
-	                    "MSXML2.XMLHTTP.3.0",
-	                    "MSXML2.XMLHTTP",
-	                    "Microsoft.XMLHTTP");
-	  		// try every id until one works
-	  		for (var i=0; i<XmlHttpVersions.length && !xmlHttp; i++) 
-	  		{
-	  			try 
-	  			{ 
-	  				// try to create XMLHttpRequest object
-	  				xmlHttp = new ActiveXObject(XmlHttpVersions[i]);
-	  			} 
-	  			catch (e) {} // ignore potential error
-	  		}
+	  		oConsole.displayError('Interno: Imposible crear el objeto XmlHttpRequest. Verifique la version del' +
+	  				'navegador.');
 	  	}
-	  	// return the created object or display an error message
-	  	if (!xmlHttp)
-	  		oConsole.displayError('Interno: Imposible crear el objeto XmlHttpRequest.');
-	  	else 
-	  		return xmlHttp;
+	  	
+  		return xmlHttp;
 }
