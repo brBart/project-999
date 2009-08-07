@@ -427,7 +427,8 @@ class ProductSupplier extends Persist{
 	 * @return array
 	 */
 	public function show(){
-		return array('supplier' => $this->_mSupplier->getName(), 'product_sku' => $this->_mProductSKU);
+		return array('product_supplier_id' => $this->getId(), 'supplier' => $this->_mSupplier->getName(),
+				'product_sku' => $this->_mProductSKU);
 	}
 	
 	/**
