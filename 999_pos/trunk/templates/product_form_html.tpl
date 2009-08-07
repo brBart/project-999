@@ -133,7 +133,7 @@
 	  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
 	  			{if $status eq 1}disabled="disabled"{/if}  />
 	  	</p>
-	  	
+	  	<div id="details"></div>
 	</fieldset>
 	<fieldset id="controls">
 	  	<input name="form_widget" id="save" type="button" value="Guardar"
