@@ -9,11 +9,6 @@ header('Content-Type: text/xml');
 		<total_items>{$total_items}</total_items>
 	</params>
 	<grid>
-		<row>
-			<product_supplier_id></product_supplier_id>
-			<supplier></supplier>
-			<product_sku></product_sku>
-		</row>
 		{section name=i loop=$suppliers}
 		<row>
 			<product_supplier_id>{$suppliers[i].product_supplier_id}</product_supplier_id>
