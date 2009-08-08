@@ -53,8 +53,18 @@ Details.prototype.init = function(sUrlXsltFile, sDivId){
 	this._mRequest.send(null);
 	
 	try{
-		var dp = new DOMParser();
-		this._mStylesheetDoc = dp.parseFromString(this._mRequest.responseText, "text/xml");
+		// try to load the XSLT document
+		if (window.DOMParser) // browsers with native functionality
+		{
+			var dp = new DOMParser();
+			this._mStylesheetDoc = dp.parseFromString(this._mRequest.responseText, "text/xml");
+		}
+		else if (window.ActiveXObject) // Internet Explorer? 
+		{
+			this._mStylesheetDoc = this.createMsxml2DOMDocumentObject();         
+			this._mStylesheetDoc.async = false;         
+			this._mStylesheetDoc.load(this._mRequest.responseXML);
+		}
 	}
 	catch(e){
 		// if browser functionality failed, alert the user
@@ -67,8 +77,8 @@ Details.prototype.init = function(sUrlXsltFile, sDivId){
  * @return MSXML
  */
 Details.prototype.createMsxml2DOMDocumentObject = function(){
-	// will store the reference to the MSXML object
-	var msxml2DOM;
+	var msxml2DOM; 
+	
 	// MSXML versions that can be used for our grid
 	var msxml2DOMDocumentVersions = new Array("Msxml2.DOMDocument.6.0",
                                             "Msxml2.DOMDocument.5.0",
@@ -92,29 +102,12 @@ Details.prototype.createMsxml2DOMDocumentObject = function(){
 }
 
 /**
- * Load the stylesheet from the server.
- * @param string sUrlXsltFile
- */
-Details.prototype.loadStylesheet = function(sUrlXsltFile){
-	    
-	// try to load the XSLT document
-	if (window.DOMParser) // browsers with native functionality
-	{
-		
-	}
-	else if (window.ActiveXObject) // Internet Explorer? 
-	{
-		this._mStylesheetDoc = this.createMsxml2DOMDocumentObject();         
-		this._mStylesheetDoc.async = false;         
-		this._mStylesheetDoc.load(this._mRequest.responseXML);
-	}
-}
-
-/**
 * Method for displaying success.
 * @param DocumentElement xmlDoc
 */
 Details.prototype.displaySuccess = function(xmlDoc){
+	var xmlResponse = this._mRequest.responseXML;
+	
 	// browser with native functionality?    
     if (window.XMLHttpRequest && window.XSLTProcessor && 
         window.DOMParser)
@@ -123,7 +116,7 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	var xsltProcessor = new XSLTProcessor();
     	xsltProcessor.importStylesheet(this._mStylesheetDoc);
     	// generate the HTML code for the new page of products
-    	page = xsltProcessor.transformToFragment(xmlDoc, document);
+    	page = xsltProcessor.transformToFragment(xmlResponse, document);
     	// display the page of products
     	this._mDiv.innerHTML = "";
     	this._mDiv.appendChild(page);
@@ -134,8 +127,7 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	// load the XSLT document
     	var theDocument = this.createMsxml2DOMDocumentObject();
     	theDocument.async = false;
-    	theDocument.load(xmlDoc);
-    	alert('Hera am i');
+    	theDocument.load(xmlResponse);
     	// display the page of products
     	this._mDiv.innerHTML = theDocument.transformNode(this._mStylesheetDoc);
     }
