@@ -131,8 +131,8 @@
     				</option>
     			{/section}
     		</select>
-	  		<label for="product_code">C&oacute;digo:</label>
-	  		<input name="form_widget" id="product_code" type="text" {if $status eq 1}disabled="disabled"{/if} />
+	  		<label for="product_sku">C&oacute;digo:</label>
+	  		<input name="form_widget" id="product_sku" type="text" {if $status eq 1}disabled="disabled"{/if} />
 	  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
 	  			{if $status eq 1}disabled="disabled"{/if}  />
 	  	</p>
