@@ -27,14 +27,14 @@ abstract class SetPropertyObjectCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$value = $request->getProperty('value');
-		$element_id = $request->getProperty('elementid');
+		$element_id = $request->getProperty('element_id');
 		$obj = $helper->getObject((int)$request->getProperty('key'));
 		
 		try{
 			$this->setProperty($value, $obj);
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
-			Page::display(array('success' => '0', 'elementid' => $element_id, 'message' => $msg),
+			Page::display(array('success' => '0', 'element_id' => $element_id, 'message' => $msg),
 					'validate_xml.tpl');
 			return;
 		} catch(Exception $e){
@@ -43,7 +43,7 @@ abstract class SetPropertyObjectCommand extends Command{
 			return;
 		}
 			
-		Page::display(array('success' => '1', 'elementid' => $element_id), 'validate_xml.tpl');
+		Page::display(array('success' => '1', 'element_id' => $element_id), 'validate_xml.tpl');
 	}
 	
 	/**

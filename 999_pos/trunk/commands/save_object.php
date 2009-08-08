@@ -34,7 +34,7 @@ class SaveObjectCommand extends Command{
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			$element_id = $e->getProperty();
-			Page::display(array('success' => '0', 'elementid' => $element_id, 'message' => $msg),
+			Page::display(array('success' => '0', 'element_id' => $element_id, 'message' => $msg),
 					'validate_xml.tpl');
 			return;
 		} catch(Exception $e){

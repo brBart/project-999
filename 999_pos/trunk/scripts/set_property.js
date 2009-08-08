@@ -46,7 +46,7 @@ SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
 		str = Url.addUrlParam(str, 'key', this._mKey);
 		str = Url.addUrlParam(str, 'value', sValue);
-		str = Url.addUrlParam(str, 'elementid', sElementId);
+		str = Url.addUrlParam(str, 'element_id', sElementId);
 		this._mRequestQueue.push(str);
 		this.sendRequest();
 	}
@@ -85,7 +85,7 @@ SetPropertyCommand.prototype.readResponse = function(){
 * @param DocumentElement xmlDoc
 */
 SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
-	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
+	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	this._mConsole.cleanFailure(elementId);
 }
 
@@ -95,7 +95,7 @@ SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
 * @param string msg
 */
 SetPropertyCommand.prototype.displayFailure = function(xmlDoc, strMsg){
-	var elementId = xmlDoc.getElementsByTagName('elementid')[0].firstChild.data;
+	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	
 	// Must clean it in case a failure has been already display for the same element.
 	this._mConsole.cleanFailure(elementId);
