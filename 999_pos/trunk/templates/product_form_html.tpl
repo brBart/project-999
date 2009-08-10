@@ -139,6 +139,7 @@
 	  			{if $status eq 1}disabled="disabled"{/if}  />
 	  	</p>
 	  	<div id="details"></div>
+	  	<span id="product_suppliers-failed" class="hidden">*</span>
 	  	<input name="form_widget" id="remove_supplier" type="button" value="Quitar"
 	  			{if $status eq 1}disabled="disabled"{/if}  />
 	</fieldset>
