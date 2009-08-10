@@ -25,6 +25,10 @@ function __autoload($className){
 			require_once('business/product.php');
 			break;
 			
+		case 'Supplier':
+			require_once('business/agent.php');
+			break;
+			
 		default:
 	}
 }
