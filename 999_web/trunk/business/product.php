@@ -755,7 +755,7 @@ class Product extends Identifier{
 	public function addProductSupplier(ProductSupplier $newDetail){
 		foreach($this->_mProductSuppliers as $detail)
 			if($detail->getId() == $newDetail->getId() && !$detail->isDeleted())
-				throw new Exception('Codigo del proveedor ya esta ingresado.');
+				throw new ValidateException('Codigo del proveedor ya esta ingresado.', 'product_suppliers');
 				
 		$this->verifyProductSupplier($newDetail);
 		$this->_mProductSuppliers[] = $newDetail;
