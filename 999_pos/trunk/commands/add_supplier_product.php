@@ -61,6 +61,9 @@ abstract class AddSupplierProductCommand extends Command{
 				Page::display(array('message' => $msg), 'error_xml.tpl');
 				return;
 			}
+			
+			$product = $helper->getObject((int)$request->getProperty('key'));
+			
 		}
 	}
 }
