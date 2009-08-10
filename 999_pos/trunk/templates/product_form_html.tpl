@@ -12,6 +12,7 @@
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/product_suppliers.js"></script>
+<script type="text/javascript" src="../scripts/add_supplier_product.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
 <script type="text/javascript" src="../scripts/delete.js"></script>
@@ -22,6 +23,7 @@
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oAddSupplierProduct = new AddSupplierProductCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oProductSuppliers);
 	{if $status eq 1}
 	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
 	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
@@ -136,6 +138,7 @@
 	  		<input name="form_widget" id="product_sku" type="text" {if $status eq 1}disabled="disabled"{/if} />
 	  		<span id="product_sku-failed" class="hidden">*</span>
 	  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
+	  			onclick="oAddSupplierProduct.execute(document.getElementById('supplier_id'), document.getElementById('product_sku'));"
 	  			{if $status eq 1}disabled="disabled"{/if}  />
 	  	</p>
 	  	<div id="details"></div>
