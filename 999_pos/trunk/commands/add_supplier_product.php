@@ -23,7 +23,7 @@ require_once('business/agent.php');
  * @package Command
  * @author Roberto Oliveros
  */
-abstract class AddSupplierProductCommand extends Command{
+class AddSupplierProductCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
@@ -49,6 +49,7 @@ abstract class AddSupplierProductCommand extends Command{
 			$product_sku = $request->getProperty('product_sku');
 			
 			try{
+				// Create the detail.
 				$detail = new ProductSupplier($supplier, $product_sku);
 			} catch(ValidateException $e){
 				$msg = $e->getMessage();
@@ -64,6 +65,21 @@ abstract class AddSupplierProductCommand extends Command{
 			
 			$product = $helper->getObject((int)$request->getProperty('key'));
 			
+			try {
+				$product->addProductSupplier($detail);
+			} catch(ValidateException $e){
+				$msg = $e->getMessage();
+				$element_id = $e->getProperty();
+				Page::display(array('success' => '0', 'element_id' => $element_id, 'message' => $msg),
+						'validate_xml.tpl');
+				return;
+			} catch(Exception $e){
+				$msg = $e->getMessage();
+				Page::display(array('message' => $msg), 'error_xml.tpl');
+				return;
+			}
+			
+			Page::display(array(), 'success_xml.tpl');
 		}
 	}
 }
