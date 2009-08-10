@@ -378,7 +378,7 @@ class ProductSupplier extends Persist{
 		parent::__construct($status);
 		
 		self::validateObjectFromDatabase($supplier);
-		String::validateString($productSKU, 'Codigo inv&aacute;lido.');
+		String::validateString($productSKU, 'Codigo inv&aacute;lido.', 'product_sku');
 		
 		$this->_mSupplier = $supplier;
 		$this->_mProductSKU = $productSKU;
