@@ -949,7 +949,8 @@ class Product extends Identifier{
 	 */
 	private function verifyProductSupplier(ProductSupplier $detail){
 		if(ProductDAM::existsProductSupplier($detail))
-			throw new Exception('Codigo del proveedor ya existe en la base de datos.');
+			throw new ValidateException('Codigo del proveedor ya existe en la base de datos.',
+					'product_suppliers');
 	}
 	
 	/**
