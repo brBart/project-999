@@ -46,6 +46,7 @@
 		<div id="content">
 			{include file=$content}
 		</div>
+		<div id="footer"></div>
 	</div>
 </body>
 </html>
