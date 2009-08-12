@@ -9,6 +9,10 @@ fieldset {
 	padding: 10px;
 }
 
+fieldset p {
+	margin: 5px;
+}
+
 table th, td {
 	padding: 10px 20px;
 }
@@ -47,6 +51,11 @@ li form {
 
 .list_small table {
 	width: 350px;
+}
+
+#header p, h1 {
+	display: inline;
+	margin: 0 10px;
 }
 
 #main_menu li {
@@ -124,7 +133,7 @@ li form {
 
 #header {
 	padding: 1px;
-	padding-left: 20px;
+	padding: 15px 0;
 }
 
 #main_menu {
