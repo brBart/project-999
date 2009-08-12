@@ -30,13 +30,16 @@
 	</xsl:template>
 	<xsl:template name="body">
 		<xsl:for-each select="response/grid/row">
-          	<xsl:element name="tr">
-            	<xsl:attribute name="id">
-              		<xsl:value-of select="product_supplier_id" />
-            	</xsl:attribute>
-            	<td><xsl:value-of select="supplier" /></td>
-            	<td><xsl:value-of select="product_sku" /> </td>
-          	</xsl:element>
+			<xsl:element name="tr">
+	           	<xsl:attribute name="id">
+	             	<xsl:value-of select="product_supplier_id" />
+	           	</xsl:attribute>
+	           	<xsl:if test="position() mod 2 = 0">
+	           		<xsl:attribute name="class">even</xsl:attribute>
+	           	</xsl:if>
+	       		<td><xsl:value-of select="supplier" /></td>
+			    <td><xsl:value-of select="product_sku" /></td>
+			</xsl:element>
         </xsl:for-each>
 	</xsl:template>
 </xsl:stylesheet>
