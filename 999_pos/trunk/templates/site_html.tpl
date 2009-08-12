@@ -40,12 +40,16 @@
 			<p class="{$type}">{$message}</p>
 		{/if}
 		</div>
-		<div id="second_menu">
-			{include file=$second_menu}
-		</div>
-		<div id="content">
-			{include file=$content}
-		</div>
+		{if $second_menu neq 'none'}
+			<div id="second_menu">
+				{include file=$second_menu}
+			</div>
+		{/if}
+		{if $content neq 'none'}
+			<div id="content">
+				{include file=$content}
+			</div>
+		{/if}
 		<div id="footer"></div>
 	</div>
 </body>
