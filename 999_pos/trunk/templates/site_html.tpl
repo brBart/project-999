@@ -25,12 +25,12 @@
 	<div id="wrapper">
 		<div id="header">
 			<h1>Sistema 999 - {$module_title}</h1>
-			<h3>
+			<p>
 			{foreach from=$back_trace item=trace name=back_trace_loop}
 				{$trace}
 				{if not $smarty.foreach.back_trace_loop.last} <img src="../images/trace.png"> {/if}
 			{/foreach}
-			</h3>
+			</p>
 		</div>
 		<div id="main_menu">
 			{include file=$main_menu}
