@@ -91,12 +91,21 @@ li form {
 	float: none;
 }
 
-.frm_medium #toolbar input[type="text"], select {
+.frm_medium #toolbar select {
+	width: 150px;
+}
+
+.frm_medium #toolbar input[type="text"] {
 	width: 150px;
 }
 
 .frm_medium #details table {
 	width: 350px;
+}
+
+.frm_medium #details{
+	float: left;
+	margin: 10px 0 10px 30px;
 }
 
 #list caption span {
