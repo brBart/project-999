@@ -13,6 +13,18 @@ ul {
 	list-style: none;
 }
 
+table {
+	border-collapse: collapse;
+}
+
+table th{
+	background-color: #00067F;
+	border-bottom-style: solid;
+	border-color: #AED9FF;
+	border-width: 3px;
+	color: white;
+}
+
 .success {
 	border-style: solid;
 	border-color: green;
@@ -100,20 +112,16 @@ ul {
 	border-width: 1px;
 }
 
-#list table {
-	border-collapse: collapse;
-}
-
-#list table th{
-	background-color: #00067F;
-	border-bottom-style: solid;
-	border-color: #AED9FF;
-	border-width: 3px;
-	color: white;
-}
-
-#list table td{
+#list table td {
 	border-bottom-style: solid;
 	border-color: #00067F;
 	border-width: 1px;
+}
+
+#form #details table tr {
+	background-color: white;
+}
+
+#form #details table tbody .even {
+	background-color: #EFFEFE;
 }

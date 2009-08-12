@@ -9,6 +9,10 @@ fieldset {
 	padding: 10px;
 }
 
+table th, td {
+	padding: 10px 20px;
+}
+
 .hidden {
 	display: none;
 }
@@ -23,6 +27,14 @@ fieldset {
 
 .frm_small fieldset {
 	width: 400px;
+}
+
+.frm_medium {
+	padding: 0 110px;
+}
+
+.frm_medium fieldset {
+	width: 550px;
 }
 
 li form {
@@ -67,12 +79,24 @@ li form {
 	width: 150px;
 }
 
-#form input[type="text"], input[type="password"] {
+#form input[type="text"], input[type="password"], textarea, select {
 	width: 200px;
 }
 
-#list table th, td {
-	padding: 10px 20px;
+#form textarea {
+	height: 70px;
+}
+
+#form #toolbar label {
+	float: none;
+}
+
+.frm_medium #toolbar input[type="text"], select {
+	width: 150px;
+}
+
+.frm_medium #details table {
+	width: 350px;
 }
 
 #list caption span {
@@ -117,4 +141,8 @@ li form {
 
 #form {
 	margin: 10px 0;
+}
+
+#footer {
+	clear: both;
 }

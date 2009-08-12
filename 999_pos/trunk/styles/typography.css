@@ -19,6 +19,10 @@ h3 {
 	font-weight: normal;
 }
 
+table th{
+	text-align: left;
+}
+
 .failed {
 	font-weight: bold;
 }
@@ -29,10 +33,6 @@ h3 {
 
 #list table caption {
 	font-size: 10px;
-}
-
-#list table th{
-	text-align: left;
 }
 
 #list table td {

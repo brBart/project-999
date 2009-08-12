@@ -72,11 +72,9 @@
 	  	</p>
 	  	<p>
 	  		<label for="description">Descripci&oacute;n:</label>
-	  		<textarea name="form_widget" id="description" rows="3" cols="60"
+	  		<textarea name="form_widget" id="description" rows="5" cols="30"
 	  			onblur="oSetProperty.execute('set_description_product', this.value, this.id);"
-	  			{if $status eq 1}disabled="disabled"{/if}>
-	  			{$description}
-	  		</textarea>
+	  			{if $status eq 1}disabled="disabled"{/if}>{$description}</textarea>
 	  		<span id="description-failed" class="hidden">*</span>
 	  	</p>
 	  	<p>
@@ -124,7 +122,7 @@
 	  	</p>
 	  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 	  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
-	  	<p>
+	  	<p id="toolbar">
 	  		<label for="supplier_id">Proveedor:</label>
 	  		<select name="form_widget" id="supplier_id" {if $status eq 1}disabled="disabled"{/if}>
     			{section name=i loop=$supplier_list}
