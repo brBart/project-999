@@ -68,7 +68,7 @@ class CreateProductCommand extends CreateObjectCommand{
 		$supplier_list = array_merge($empty_item, SupplierList::getList($pages, $items, 0));
 		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'product_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_product_menu',
 				'foward_link' => 'index.php?cmd=get_product', 'manufacturer_list' => $manufacturer_list,

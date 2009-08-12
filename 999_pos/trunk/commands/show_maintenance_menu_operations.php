@@ -29,7 +29,7 @@ class ShowMaintenanceMenuOperationsCommand extends Command{
 		$back_trace = array('Inicio', 'Mantenimiento');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
-				'content' => 'blank.tpl', 'notify' => '0'), 'site_html.tpl');
+				'content' => 'none', 'notify' => '0'), 'site_html.tpl');
 	}
 }
 ?>

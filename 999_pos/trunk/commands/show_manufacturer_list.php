@@ -39,7 +39,7 @@ class ShowManufacturerListCommand extends ShowListCommand{
 		$msg = 'No hay casas en la base de datos.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
-				'second_menu' => 'blank.tpl', 'content' => 'blank.tpl', 'notify' => '1', 'type' => 'info',
+				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'info',
 				'message' => $msg), 'site_html.tpl');
 	}
 	
@@ -59,7 +59,7 @@ class ShowManufacturerListCommand extends ShowListCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
-				'second_menu' => 'blank.tpl', 'content' => 'manufacturer_list_html.tpl', 'list' => $list,
+				'second_menu' => 'none', 'content' => 'manufacturer_list_html.tpl', 'list' => $list,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
 				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,
 				'next_link' => $nextLink, 'item_link' => 'index.php?cmd=get_manufacturer&id=',

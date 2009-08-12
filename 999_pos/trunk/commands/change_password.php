@@ -34,7 +34,7 @@ abstract class ChangePasswordCommand extends Command{
 		// If the submit button was pressed.
 		if(is_null($request->getProperty('change_password'))){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'change_password_form_html.tpl', 'username' => $username), 'site_html.tpl');
 			return;
 		}
@@ -54,7 +54,7 @@ abstract class ChangePasswordCommand extends Command{
 		// If was not.
 		if($msg != ''){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
-					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
 					'type' => 'failure', 'message' => $msg), 'site_html.tpl');
 			return;
@@ -66,19 +66,19 @@ abstract class ChangePasswordCommand extends Command{
 			$back_trace = array('Inicio');
 			$msg = 'Su contrase&ntilde;a cambio correctamente.';
 			Page::display(array('module_title' => $module_title, 'main_menu' => $this->getMainMenuTemplate(),
-					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl', 'content' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'none',
 					'username' => $username, 'notify' => '1', 'type' => 'success', 'message' => $msg),
 					'site_html.tpl');
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
-					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
 					'type' => 'failure', 'message' => $msg), 'site_html.tpl');
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
-					'back_trace' => $back_trace, 'second_menu' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
 					'type' => 'error', 'message' => $msg), 'site_html.tpl');
 		}

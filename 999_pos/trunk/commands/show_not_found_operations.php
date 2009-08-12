@@ -36,7 +36,7 @@ class ShowNotFoundOperationsCommand extends Command{
 			$back_trace = array('Inicio');
 			Page::display(array('module_title' => OPERATIONS_TITLE,
 					'main_menu' => 'main_menu_operations_html.tpl', 'back_trace' => $back_trace,
-					'second_menu' => 'blank.tpl', 'content' => 'blank.tpl', 'notify' => '1', 'type' => 'error',
+					'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'error',
 					'message' => $msg), 'site_html.tpl');
 		}
 	}
