@@ -1,5 +1,10 @@
 @CHARSET "ISO-8859-1";
 
+body {
+	margin: 0;
+	padding: 0;
+}
+
 ul {
 	margin: 0;
 	padding: 0;
@@ -126,9 +131,9 @@ li form {
 }
 
 #wrapper {
-	width: 800px;
+	width: 85%;
 	margin: 0 auto;
-	min-height: 600px;
+	min-height: 500px;
 }
 
 #header {
@@ -148,12 +153,12 @@ li form {
 
 #second_menu {
 	float: left;
-	width: 200px;
+	width: 23%;
 }
 
 #content {
 	float: right;
-	min-width: 550px;
+	min-width: 75%;
 	margin: 0 15px;
 }
 
