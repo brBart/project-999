@@ -46,9 +46,7 @@
 			</div>
 		{/if}
 		{if $content neq 'none'}
-			<div id="content">
-				{include file=$content}
-			</div>
+			{include file=$content}
 		{/if}
 		<div id="footer"></div>
 	</div>

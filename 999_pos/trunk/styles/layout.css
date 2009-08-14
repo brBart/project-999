@@ -97,12 +97,12 @@ li form {
 	padding: 10px 10px;
 }
 
-#content ul {
+#third_menu ul {
 	width: 90%;
 	margin: 0 auto;
 }
 
-#content li{
+#third_menu li{
 	padding: 20px 10px;
 }
 
@@ -166,7 +166,7 @@ li form {
 	width: 25%;
 }
 
-#content {
+#third_menu {
 	float: right;
 	width: 70%;
 	margin-bottom: 20px;
