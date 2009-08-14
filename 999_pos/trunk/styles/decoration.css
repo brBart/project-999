@@ -69,6 +69,12 @@ table th{
 	color: orange;
 }
 
+.list_small td {
+	border-bottom-style: solid;
+	border-color: #00067F;
+	border-width: 1px;
+}
+
 #main_menu a {
 	color: #2A3373;
 }
@@ -111,12 +117,6 @@ table th{
 #li_last {
 	border-bottom-style: solid;
 	border-color: white;
-	border-width: 1px;
-}
-
-#list table td {
-	border-bottom-style: solid;
-	border-color: #00067F;
 	border-width: 1px;
 }
 

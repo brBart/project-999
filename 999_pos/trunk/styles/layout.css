@@ -33,6 +33,14 @@ table th, td {
 	padding: 10px 20px;
 }
 
+caption span {
+	float: left;
+}
+
+caption * + span {
+	float: right;
+}
+
 .hidden {
 	display: none;
 }
@@ -66,11 +74,8 @@ li form {
 }
 
 .list_small {
-	padding: 0 210px;
-}
-
-.list_small table {
-	width: 350px;
+	width: 40%;
+	margin: 0 auto;
 }
 
 #header p, h1 {
@@ -124,14 +129,6 @@ li form {
 .frm_medium #details{
 	float: left;
 	margin: 10px 0 10px 30px;
-}
-
-#list caption span {
-	float: left;
-}
-
-#list caption * + span {
-	float: right;
 }
 
 #wrapper {
