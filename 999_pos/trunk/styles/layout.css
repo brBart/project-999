@@ -42,11 +42,7 @@ table th, td {
 }
 	
 .frm_small {
-	padding: 0 185px;
-}
-
-.frm_small fieldset {
-	width: 400px;
+	width: 42%;
 }
 
 .frm_medium {
@@ -114,7 +110,7 @@ li form {
 
 #form label {
 	float: left;
-	width: 150px;
+	width: 12em;
 }
 
 #form .toolbar label {
@@ -172,8 +168,13 @@ li form {
 	margin-bottom: 20px;
 }
 
+#content {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
 #form {
-	margin: 10px 0;
+	margin: 0 auto;
 }
 
 #footer {
