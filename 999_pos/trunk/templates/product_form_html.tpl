@@ -122,7 +122,7 @@
 	  	</p>
 	  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 	  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
-	  	<p id="toolbar">
+	  	<p class="toolbar">
 	  		<label for="supplier_id">Proveedor:</label>
 	  		<select name="form_widget" id="supplier_id" {if $status eq 1}disabled="disabled"{/if}>
     			{section name=i loop=$supplier_list}
