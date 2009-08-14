@@ -9,6 +9,10 @@ h1 {
 	font-size: 1.8em;
 }
 
+input, select, textarea {
+	font-size: 1.1em;
+}
+
 table th{
 	text-align: left;
 }
