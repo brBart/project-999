@@ -96,6 +96,8 @@ table th{
 
 #wrapper {
 	background-color: #EEEEEE;
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
 }
 
 #header {
