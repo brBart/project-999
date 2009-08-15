@@ -26,7 +26,7 @@ input[type="text"], input[type="password"], textarea, select {
 }
 
 textarea {
-	height: 70px;
+	height: 60px;
 }
 
 table th, td {
@@ -50,23 +50,20 @@ caption * + span {
 }
 	
 .frm_small {
-	width: 42%;
+	width: 40%;
 }
 
 .frm_medium {
-	padding: 0 110px;
+	width: 86%;
+	max-width: 780px;
 }
 
-.frm_medium fieldset {
-	width: 550px;
+#form #prod_supp_tb input[type="text"] {
+	width: 8em;
 }
 
-.toolbar input[type="text"] {
-	width: 11em;
-}
-
-.toolbar select {
-	width: 11em;
+#form #prod_supp_tb select {
+	width: 10em;
 }
 
 li form {
@@ -113,29 +110,37 @@ li form {
 	padding: 5px 5px 5px 20px;
 }
 
+#form div {
+	float: left;
+}
+
+#form div + div {
+	float: right;
+}
+
 #form label {
 	float: left;
 	width: 12em;
 }
 
-#form .toolbar label {
+#form #prod_supp_tb label {
 	float: none;
 }
 
 .frm_medium #details table {
-	width: 350px;
+	width: 25%;
 }
 
 .frm_medium #details{
 	float: left;
-	margin: 10px 0 10px 30px;
+	margin: 10px 0;
 }
 
 #wrapper {
 	margin: 0 auto;
-	width: 85%;
+	width: 95%;
 	max-width: 1100px;
-	min-width: 80em;
+	min-width: 90em;
 	min-height: 95%;
 }
 
