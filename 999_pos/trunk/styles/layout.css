@@ -112,10 +112,12 @@ li form {
 
 #form div {
 	float: left;
+	width: 42%;
 }
 
 #form div + div {
 	float: right;
+	width: 56%;
 }
 
 #form label {
@@ -128,10 +130,15 @@ li form {
 }
 
 .frm_medium #details table {
-	width: 25%;
+	width: 75%;
+	margin: 0 auto;
 }
 
-.frm_medium #details{
+.frm_medium #details table th, td {
+	padding: 5px 10px;
+}
+
+.frm_medium #details {
 	float: left;
 	margin: 10px 0;
 }
@@ -179,6 +186,14 @@ li form {
 	margin: 0 auto;
 }
 
+#form #details {
+	width: 100%;
+}
+
 #footer {
 	clear: both;
+}
+
+#btn_col {
+	width: 1px;
 }
