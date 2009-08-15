@@ -19,7 +19,7 @@
 	    	</form>
 	    </li>
 	    <li>
-	    	<form action="index.php?cmd=get_product_supplier" class="toolbar">
+	    	<form action="index.php?cmd=get_product_supplier">
 	    		<label for="supplier_id">Proveedor:</label>
 	    		<select name="supplier_id" id="supplier_id">
 	    			{section name=i loop=$supplier_list}
