@@ -93,7 +93,9 @@ AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
 AddSupplierProductCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	
-	// Must clean it in case a failure has been already display for the same element.
-	this._mConsole.cleanFailure(elementId);
+	// Must clean all 3 possibilities in case a failure has been already been display.
+	this._mConsole.cleanFailure('supplier_id');
+	this._mConsole.cleanFailure('product_sku');
+	this._mConsole.cleanFailure('product_suppliers');
 	this._mConsole.displayFailure(strMsg, elementId);
 }
