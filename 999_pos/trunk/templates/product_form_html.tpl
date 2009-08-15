@@ -142,11 +142,9 @@
 			  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
 			  			onclick="oAddSupplierProduct.execute(document.getElementById('supplier_id'), document.getElementById('product_sku'));"
 			  			{if $status eq 1}disabled="disabled"{/if}  />
+			  		<span id="product_suppliers-failed" class="hidden">*</span>
 			  	</p>
 			  	<div id="details"></div>
-			  	<span id="product_suppliers-failed" class="hidden">*</span>
-			  	<input name="form_widget" id="remove_supplier" type="button" value="Quitar"
-			  			{if $status eq 1}disabled="disabled"{/if}  />
 			</div>
 		</fieldset>
 		<fieldset id="controls">
