@@ -9,6 +9,9 @@
 	      		<tr>
 	        		<th>Proveedor</th> 
 	         		<th>Codigo</th>
+	         		<th id="btn_col">
+	         			<input name="form_widget" id="remove_supplier" type="button" value="Quitar" />
+	         		</th>
 	         	</tr>
 	       	</thead>
 	       	<tbody>
@@ -17,7 +20,7 @@
 	       				<xsl:call-template name="body" />
 	       			</xsl:when>
 	       			<xsl:otherwise>
-	       				<tr><td colspan="2"></td></tr>
+	       				<tr><td colspan="3"></td></tr>
 	       			</xsl:otherwise>
 	       		</xsl:choose>
 	       	</tbody>
@@ -38,7 +41,7 @@
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
 	       		<td><xsl:value-of select="supplier" /></td>
-			    <td><xsl:value-of select="product_sku" /></td>
+			    <td colspan="2"><xsl:value-of select="product_sku" /></td>
 			</xsl:element>
         </xsl:for-each>
 	</xsl:template>
