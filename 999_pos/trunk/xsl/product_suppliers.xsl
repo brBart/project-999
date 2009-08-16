@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:param name="status" />
 	<xsl:template match="/">  
 		<table>
 	     	<caption>
@@ -10,7 +11,14 @@
 	        		<th>Proveedor</th> 
 	         		<th>Codigo</th>
 	         		<th id="btn_col">
-	         			<input name="form_widget" id="remove_supplier" type="button" value="Quitar" />
+	         			<xsl:choose>
+			       			<xsl:when test="$status = 1">
+			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" disabled="disabled" />
+			       			</xsl:when>
+			       			<xsl:otherwise>
+			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" />
+			       			</xsl:otherwise>
+			       		</xsl:choose>
 	         		</th>
 	         	</tr>
 	       	</thead>
