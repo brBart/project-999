@@ -19,13 +19,14 @@
 {/if}
 <script type="text/javascript">
 	var oConsole = new Console();
+	var oMachine = new StateMachine({$status});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
 	var oAddSupplierProduct = new AddSupplierProductCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oProductSuppliers);
 	{if $status eq 1}
-	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject());
+	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject(), oMachine);
 	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{/if}
 	{literal}
