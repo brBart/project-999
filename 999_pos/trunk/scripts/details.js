@@ -10,10 +10,9 @@
  * @param Console oConsole
  * @param Request oRequest
  * @param string sKey
- * @param string sCmd
- * @param string sTableId
+ * @param StateMachine oMachine
  */
-function Details(oSession, oConsole, oRequest, sKey){
+function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -22,6 +21,12 @@ function Details(oSession, oConsole, oRequest, sKey){
 	 * @var string
 	 */
 	this._mKey = sKey;
+	
+	/**
+	 * Holds the form state machine.
+	 * @var StateMachine
+	 */
+	this._mMachine = oMachine;
 	
 	/**
 	 * Holds the object div which holds the dynamic data.
@@ -61,7 +66,7 @@ Details.prototype.init = function(sUrlXsltFile, sDivId){
 		}
 		else if (window.ActiveXObject) // Internet Explorer? 
 		{
-			this._mStylesheetDoc = this.createMsxml2DOMDocumentObject();         
+			this._mStylesheetDoc = this.createMsxml2FreeThreadedDOMDocument();         
 			this._mStylesheetDoc.async = false;         
 			this._mStylesheetDoc.load(this._mRequest.responseXML);
 		}
@@ -73,7 +78,7 @@ Details.prototype.init = function(sUrlXsltFile, sDivId){
 }
 
 /**
- * IE specific routine to create the MSXML object.
+ * IE specific routine to create the MSXML DOMDocument object.
  * @return MSXML
  */
 Details.prototype.createMsxml2DOMDocumentObject = function(){
@@ -100,6 +105,64 @@ Details.prototype.createMsxml2DOMDocumentObject = function(){
 	else 
 		return msxml2DOM;
 }
+ 
+/**
+ * IE specific routine to create the MSXML FreeThreadedDOMDocument object.
+ * @return MSXML
+ */
+Details.prototype.createMsxml2FreeThreadedDOMDocument = function(){
+	var msxml2FreeDOM; 
+ 	
+ 	// MSXML versions that can be used for our grid
+	var msxml2FreeDOMDocumentVersions = new Array("Msxml2.FreeThreadedDOMDocument.6.0",
+                                 			"Msxml2.FreeThreadedDOMDocument.5.0",
+                                 			"Msxml2.FreeThreadedDOMDocument.4.0");
+	// try to find a good MSXML object
+	for (var i=0; i<msxml2FreeDOMDocumentVersions.length && !msxml2FreeDOM; i++) 
+	{
+		try 
+		{ 
+			// try to create an object
+			msxml2FreeDOM = new ActiveXObject(msxml2FreeDOMDocumentVersions[i]);
+		} 
+		catch (e) {}
+	}
+	// return the created object or display an error message
+	if (!msxml2FreeDOM)
+		this._mConsole.displayError("Interno: Por favor actualize su version MSXML en \n" + 
+				"http://msdn.microsoft.com/XML/XMLDownloads/default.aspx");
+ 	else 
+ 		return msxml2FreeDOM;
+}
+
+/**
+* IE specific routine to create the MSXML XSLTemplate object.
+* @return MSXML
+*/
+Details.prototype.createMsxml2XSLTemplate = function(){
+	var msxml2XSL; 
+	
+	// MSXML versions that can be used for our grid
+	var msxml2XSLTemplateVersions = new Array("Msxml2.XSLTemplate.6.0",
+                                           "Msxml2.XSLTemplate.5.0",
+                                           "Msxml2.XSLTemplate.4.0");
+	// try to find a good MSXML object
+	for (var i=0; i<msxml2XSLTemplateVersions.length && !msxml2XSL; i++) 
+	{
+		try 
+		{ 
+			// try to create an object
+			msxml2XSL = new ActiveXObject(msxml2XSLTemplateVersions[i]);
+		} 
+		catch (e) {}
+	}
+	// return the created object or display an error message
+	if (!msxml2XSL)
+		this._mConsole.displayError("Interno: Por favor actualize su version MSXML en \n" + 
+         "http://msdn.microsoft.com/XML/XMLDownloads/default.aspx");
+	else 
+		return msxml2XSL;
+}
 
 /**
 * Method for displaying success.
@@ -115,6 +178,7 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	// load the XSLT document
     	var xsltProcessor = new XSLTProcessor();
     	xsltProcessor.importStylesheet(this._mStylesheetDoc);
+    	xsltProcessor.setParameter(null, 'status', this._mMachine.getStatus());
     	// generate the HTML code for the new page of products
     	page = xsltProcessor.transformToFragment(xmlResponse, document);
     	// display the page of products
@@ -128,7 +192,18 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	var theDocument = this.createMsxml2DOMDocumentObject();
     	theDocument.async = false;
     	theDocument.load(xmlResponse);
+    	
+    	// create the template
+    	var oTemplate = this.createMsxml2XSLTemplate();
+    	oTemplate.stylesheet = this._mStylesheetDoc;
+    	
+    	// create the processor and set the form status
+    	var xsltProcessor = oTemplate.createProcessor();
+    	xsltProcessor.input = theDocument;
+    	xsltProcessor.addParameter('status', this._mMachine.getStatus());
+    	xsltProcessor.transform();
+    	
     	// display the page of products
-    	this._mDiv.innerHTML = theDocument.transformNode(this._mStylesheetDoc);
+    	this._mDiv.innerHTML = xsltProcessor.output;
     }
 }
