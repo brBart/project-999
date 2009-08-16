@@ -5,9 +5,16 @@
  */
 
 /**
- * Constructor. Does nothing because methods are static.
+ * Constructor. Receives the actual status of the form.
+ * @param integer iStatus
  */
-function StateMachine(){}
+function StateMachine(iStatus){
+	/**
+	 * Holds the actual status of the form. 0 = edit, 1 = idle.
+	 * @var integer
+	 */
+	this._mStatus = iStatus;
+}
 
 /**
  * Set the focus on the element with the provided id.
@@ -19,9 +26,10 @@ StateMachine.setFocus = function(sElementId){
 }
 
 /**
- * Set the form the edit state.
+ * Set the form the edit state. Receive the name of the element which receives the focus.
+ * @param string sElementId
  */
-StateMachine.changeToEditState = function(sElementId){
+StateMachine.prototype.changeToEditState = function(sElementId){
 	// Disabled and enabled the required widgets in the form.
 	var arrElements = document.getElementsByName('form_widget');
 	for (var i = 0; i < arrElements.length; i++){
@@ -40,5 +48,14 @@ StateMachine.changeToEditState = function(sElementId){
 	var oStatus = document.getElementById('status_label');
 	oStatus.innerHTML = 'Editando...';
 	
-	this.setFocus(sElementId);
+	StateMachine.setFocus(sElementId);
+	
+	this._mStatus = 0;
+}
+ 
+/**
+ * Returns the actual value of the status property.
+ */
+StateMachine.prototype.getStatus = function(){
+	return this._mStatus;
 }
