@@ -10,11 +10,11 @@
  * @param Console oConsole
  * @param Request oRequest
  * @param string sKey
- * @param string sTableId
+ * @param StateMachine oMachine
  */
-function ProductSuppliers(oSession, oConsole, oRequest, sKey, sTableId){
+function ProductSuppliers(oSession, oConsole, oRequest, sKey, oMachine){
 	// Call the parent constructor.
-	Details.call(this, oSession, oConsole, oRequest, sKey, sTableId);
+	Details.call(this, oSession, oConsole, oRequest, sKey, oMachine);
 	
 	/**
 	 * Holds the command name on the server.
