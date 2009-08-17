@@ -11,6 +11,14 @@ ul {
 	padding: 0;
 }
 
+textarea, select {
+	width: 15em;
+}
+
+textarea {
+	height: 60px;
+}
+
 fieldset {
 	padding: 10px;
 }
@@ -19,24 +27,20 @@ fieldset p {
 	margin: 5px;
 }
 
-input[type="text"], input[type="password"], textarea, select {
-	width: 15em;
-}
-
-textarea {
-	height: 60px;
-}
-
-#list th, td {
-	padding: 10px 20px;
-}
-
 caption span {
 	float: left;
 }
 
 caption * + span {
 	float: right;
+}
+
+li form {
+	display: inline;
+}
+
+input[type="text"], input[type="password"] {
+	width: 15em;
 }
 
 .hidden {
@@ -56,16 +60,63 @@ caption * + span {
 	max-width: 780px;
 }
 
-#frm #prod_supp_tb input[type="text"] {
-	width: 8em;
+#wrapper {
+	margin: 0 auto;
+	width: 95%;
+	max-width: 1100px;
+	min-width: 90em;
+	min-height: 95%;
 }
 
-#frm #prod_supp_tb select {
-	width: 10em;
+#header {
+	padding: 1px;
+	padding: 15px 0;
 }
 
-li form {
-	display: inline;
+#main_menu {
+	height: 30px;
+}
+
+#console {
+	height: 50px;
+	padding: 0;
+	overflow: auto;
+}
+
+#second_menu {
+	float: left;
+	width: 25%;
+}
+
+#third_menu {
+	float: right;
+	width: 70%;
+	margin-bottom: 20px;
+}
+
+#content {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+#content > div, table {
+	margin: 0 auto;
+}
+
+#frm {
+	margin: 0 auto;
+}
+
+#footer {
+	clear: both;
+}
+
+#btn_col {
+	width: 1px;
+}
+
+#list th, td {
+	padding: 10px 20px;
 }
 
 #header p, h1 {
@@ -118,78 +169,31 @@ li form {
 	width: 12em;
 }
 
-#prod_supp_tb label {
-	float: none;
-}
-
 #details table {
 	width: 75%;
 	margin: 0 auto;
 }
 
-#details table th {
+#details th {
 	padding: 5px 10px;
 }
 
-#details table td {
+#details td {
 	padding: 5px 10px;
 }
 
-#wrapper {
-	margin: 0 auto;
-	width: 95%;
-	max-width: 1100px;
-	min-width: 90em;
-	min-height: 95%;
+#prod_supp_tb label {
+	float: none;
 }
 
-#header {
-	padding: 1px;
-	padding: 15px 0;
+#prod_supp_tb select {
+	width: 10em;
 }
 
-#main_menu {
-	height: 30px;
-}
-
-#console {
-	height: 50px;
-	padding: 0;
-	overflow: auto;
-}
-
-#second_menu {
-	float: left;
-	width: 25%;
-}
-
-#third_menu {
-	float: right;
-	width: 70%;
-	margin-bottom: 20px;
-}
-
-#content {
-	width: 100%;
-	margin-bottom: 20px;
-}
-
-#content > div, table {
-	margin: 0 auto;
-}
-
-#frm {
-	margin: 0 auto;
+#prod_supp_tb input[type="text"] {
+	width: 8em;
 }
 
 #frm #details {
 	width: 100%;
-}
-
-#footer {
-	clear: both;
-}
-
-#btn_col {
-	width: 1px;
 }
