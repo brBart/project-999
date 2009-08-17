@@ -118,10 +118,10 @@ table th{
 	border-width: 1px;
 }
 
-#form #details table tr {
+#frm #details table tr {
 	background-color: white;
 }
 
-#form #details table tbody .even {
+#frm #details table tbody .even {
 	background-color: #EFFEFE;
 }

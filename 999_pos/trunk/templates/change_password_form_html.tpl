@@ -1,6 +1,6 @@
 {* Smarty *}
 <div id="content">
-	<div id="form" class="content_small">
+	<div id="frm" class="content_small">
 		<form method="post" action="index.php?cmd=change_password_operations" onsubmit="return oSession.setIsLink(true);">
 			<fieldset id="main_data">
 				<p><label>Usuario:</label><span>{$username}</span></p>

@@ -56,11 +56,11 @@ caption * + span {
 	max-width: 780px;
 }
 
-#form #prod_supp_tb input[type="text"] {
+#frm #prod_supp_tb input[type="text"] {
 	width: 8em;
 }
 
-#form #prod_supp_tb select {
+#frm #prod_supp_tb select {
 	width: 10em;
 }
 
@@ -103,31 +103,31 @@ li form {
 	padding: 5px 5px 5px 20px;
 }
 
-#form div {
+#frm div {
 	float: left;
 	width: 42%;
 }
 
-#form div + div {
+#frm div + div {
 	float: right;
 	width: 56%;
 }
 
-#form label {
+#frm label {
 	float: left;
 	width: 12em;
 }
 
-#form #prod_supp_tb label {
+#frm #prod_supp_tb label {
 	float: none;
 }
 
-#form #details table {
+#frm #details table {
 	width: 75%;
 	margin: 0 auto;
 }
 
-#form #details table th, td {
+#frm #details table th, td {
 	padding: 5px 10px;
 }
 
@@ -174,11 +174,11 @@ li form {
 	margin: 0 auto;
 }
 
-#form {
+#frm {
 	margin: 0 auto;
 }
 
-#form #details {
+#frm #details {
 	width: 100%;
 }
 
