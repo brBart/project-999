@@ -1,6 +1,6 @@
 {* Smarty *}
 <div id="content">
-	<table class="list_small">
+	<table id="list" class="content_small">
 		<caption>
 			<span>{$first_item} - {$last_item} de {$total_items}</span>
 			<span>P&aacute;gina {$page} de {$total_pages}</span>

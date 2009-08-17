@@ -47,7 +47,7 @@ caption * + span {
 	display: inline;
 }
 	
-.frm_small {
+.content_small {
 	width: 40%;
 }
 
@@ -66,11 +66,6 @@ caption * + span {
 
 li form {
 	display: inline;
-}
-
-.list_small {
-	width: 40%;
-	margin: 0 auto;
 }
 
 #header p, h1 {
@@ -173,6 +168,10 @@ li form {
 #content {
 	width: 100%;
 	margin-bottom: 20px;
+}
+
+#content > div, table {
+	margin: 0 auto;
 }
 
 #form {

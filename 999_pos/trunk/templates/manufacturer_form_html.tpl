@@ -31,7 +31,7 @@
 	{/literal}
 </script>
 <div id="content">
-	<div id="form" class="frm_small">
+	<div id="form" class="content_small">
 		<fieldset id="status_bar">
 			<p>
 				<label>Status:</label>
