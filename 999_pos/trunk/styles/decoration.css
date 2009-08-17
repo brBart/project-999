@@ -3,10 +3,6 @@ a {
 	text-decoration: none;
 }
 
-a:hover {
-	text-decoration: underline;
-}
-
 ul {
 	list-style: none;
 }
@@ -15,12 +11,8 @@ table {
 	border-collapse: collapse;
 }
 
-table th{
-	background-color: #00067F;
-	border-bottom-style: solid;
-	border-color: #AED9FF;
-	border-width: 3px;
-	color: white;
+a:hover {
+	text-decoration: underline;
 }
 
 .success {
@@ -67,35 +59,12 @@ table th{
 	color: orange;
 }
 
-#list td {
-	border-bottom-style: solid;
-	border-color: #00067F;
-	border-width: 1px;
-}
-
-#main_menu a {
-	color: #2A3373;
-}
-
-#second_menu a {
-	color: white;
+table th{
 	background-color: #00067F;
-}
-
-#main_menu a:hover {
-	background-color: #E87171;
-	text-decoration: none;
-}
-
-#second_menu a:hover {
-	background-color: #4B62A1;
-	text-decoration: none;
-}
-
-#third_menu li {
-	border-top-style: solid;
-	border-color: white;
-	border-width: 1px;
+	border-bottom-style: solid;
+	border-color: #AED9FF;
+	border-width: 3px;
+	color: white;
 }
 
 #wrapper {
@@ -118,10 +87,41 @@ table th{
 	border-width: 1px;
 }
 
-#frm #details table tr {
+#list td {
+	border-bottom-style: solid;
+	border-color: #00067F;
+	border-width: 1px;
+}
+
+#main_menu a {
+	color: #2A3373;
+}
+
+#second_menu a {
+	color: white;
+	background-color: #00067F;
+}
+
+#third_menu li {
+	border-top-style: solid;
+	border-color: white;
+	border-width: 1px;
+}
+
+#details tr {
 	background-color: white;
 }
 
-#frm #details table tbody .even {
+#main_menu a:hover {
+	background-color: #E87171;
+	text-decoration: none;
+}
+
+#second_menu a:hover {
+	background-color: #4B62A1;
+	text-decoration: none;
+}
+
+#details .even {
 	background-color: #EFFEFE;
 }
