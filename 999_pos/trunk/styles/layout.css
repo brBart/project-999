@@ -51,7 +51,7 @@ caption * + span {
 	width: 40%;
 }
 
-.frm_medium {
+.content_medium {
 	width: 86%;
 	max-width: 780px;
 }
@@ -122,12 +122,12 @@ li form {
 	float: none;
 }
 
-.frm_medium #details table {
+#form #details table {
 	width: 75%;
 	margin: 0 auto;
 }
 
-.frm_medium #details table th, td {
+#form #details table th, td {
 	padding: 5px 10px;
 }
 
