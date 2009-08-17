@@ -27,7 +27,7 @@ textarea {
 	height: 60px;
 }
 
-table th, td {
+#list th, td {
 	padding: 10px 20px;
 }
 
@@ -118,16 +118,20 @@ li form {
 	width: 12em;
 }
 
-#frm #prod_supp_tb label {
+#prod_supp_tb label {
 	float: none;
 }
 
-#frm #details table {
+#details table {
 	width: 75%;
 	margin: 0 auto;
 }
 
-#frm #details table th, td {
+#details table th {
+	padding: 5px 10px;
+}
+
+#details table td {
 	padding: 5px 10px;
 }
 
