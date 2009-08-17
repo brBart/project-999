@@ -67,7 +67,7 @@ table th{
 	color: orange;
 }
 
-.list_small td {
+#list td {
 	border-bottom-style: solid;
 	border-color: #00067F;
 	border-width: 1px;
