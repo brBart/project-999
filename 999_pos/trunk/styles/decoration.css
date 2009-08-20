@@ -125,3 +125,8 @@ a:hover {
 #details .even {
 	background-color: #EFFEFE;
 }
+
+#details .hightlightrow {
+	background-color: blue;
+	color: white;
+}
