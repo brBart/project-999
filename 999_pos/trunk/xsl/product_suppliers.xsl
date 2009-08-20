@@ -13,10 +13,10 @@
 	         		<th id="btn_col">
 	         			<xsl:choose>
 			       			<xsl:when test="$status = 1">
-			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" disabled="disabled" />
+			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" onfocus="this.blur();" disabled="disabled" />
 			       			</xsl:when>
 			       			<xsl:otherwise>
-			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" />
+			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" onfocus="this.blur();" />
 			       			</xsl:otherwise>
 			       		</xsl:choose>
 	         		</th>
@@ -38,12 +38,17 @@
 		<xsl:for-each select="response/grid/row">
 			<xsl:element name="tr">
 	           	<xsl:attribute name="id">
-	             	<xsl:value-of select="product_supplier_id" />
+	             	<xsl:value-of select="concat('tr', position())" />
 	           	</xsl:attribute>
 	           	<xsl:if test="position() mod 2 = 0">
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
-	       		<td><xsl:value-of select="supplier" /></td>
+	       		<td>
+	       			<xsl:attribute name="id">
+		             	<xsl:value-of select="product_supplier_id" />
+		           	</xsl:attribute>
+	       			<xsl:value-of select="supplier" />
+	       		</td>
 			    <td colspan="2"><xsl:value-of select="product_sku" /></td>
 			</xsl:element>
         </xsl:for-each>
