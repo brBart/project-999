@@ -50,8 +50,8 @@ Details.prototype = new SyncCommand();
  * Test if the browser supports XSLT functionality.
  * @param string sUrlXsltFile
  */
-Details.prototype.init = function(sUrlXsltFile, sDivId){
-	this._mDiv = document.getElementById(sDivId);
+Details.prototype.init = function(sUrlXsltFile, oDiv){
+	this._mDiv = oDiv;
 	
 	// load the file from the server
 	this._mRequest.open("GET", sUrlXsltFile, false);        
