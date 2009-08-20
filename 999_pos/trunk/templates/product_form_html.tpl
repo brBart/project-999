@@ -172,7 +172,7 @@
 {if $status eq 0}
 <script type="text/javascript">
 StateMachine.setFocus('name');
-oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details');
+oProductSuppliers.init('../xsl/product_suppliers.xsl', document.getElementById('details'));
 oProductSuppliers.update();
 </script>
 {/if}
