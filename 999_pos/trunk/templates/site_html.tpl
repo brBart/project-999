@@ -22,6 +22,16 @@
 {/literal}
 </head>
 <body>
+	{literal}
+	<script type="text/javascript">
+		if(screen.width <= 1000 && screen.height <= 700){
+			document.body.style.fontSize = '8px';
+		}
+		else{
+			document.body.style.fontSize = '10px';
+		}
+	</script>
+	{/literal}
 	<div id="wrapper">
 		<div id="header">
 			<h1>Sistema 999 - {$module_title}</h1>
@@ -50,15 +60,5 @@
 		{/if}
 		<div id="footer"></div>
 	</div>
-	{literal}
-	<script type="text/javascript">
-		if(screen.width <= 1000 && screen.height <= 700){
-			document.body.style.fontSize = '8px';
-		}
-		else{
-			document.body.style.fontSize = '10px';
-		}
-	</script>
-	{/literal}
 </body>
 </html>
