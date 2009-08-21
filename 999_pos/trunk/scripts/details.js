@@ -63,6 +63,17 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	 * @var object
 	 */
 	this._mNextWidget = null;
+	
+	/**
+	 * Flag that indicates if the object is listening.
+	 * @var boolean
+	 */
+	this._mIsListening = false;
+	
+	/**
+	 * Holds the id of the actual selected detail (row).
+	 */
+	this._mDetailId = 0;
 }
 
 /**
@@ -338,6 +349,24 @@ Details.prototype.handleKeyDown = function(oEvent){
 			this._mNextWidget.focus();
 	}
 }
+ 
+/**
+ * Handles click on all the table area.
+ * @param Event oEvent
+ */
+Details.prototype.detailsHandleClick = function(oEvent){
+	oEvent = (!oEvent) ? window.event : oEvent;
+	oEvent.cancelBubble = true;
+}
+ 
+/**
+ * If anything but the table area was click, remove focus.
+ * @param Event oEvent
+ */
+Details.prototype.documentHandleClick = function(oEvent){
+	this.deselectRow();
+	this.stopListening();
+}
 
 /**
  * Method that controls the key down for the table element.
@@ -347,6 +376,14 @@ Details.prototype.startListening = function(){
 	document.onkeydown = function(oEvent){
 		oTemp.handleKeyDown(oEvent);
 	}
+	this._mDiv.getElementsByTagName('table')[0].onclick = function(oEvent){
+		oTemp.detailsHandleClick(oEvent);
+	}
+	document.onclick = function(oEvent){
+		oTemp.documentHandleClick(oEvent);
+	}
+	
+	this._mIsListening = true;
 }
  
 /**
@@ -354,6 +391,10 @@ Details.prototype.startListening = function(){
  */
 Details.prototype.stopListening = function(){
  	document.onkeydown = null;
+ 	this._mDiv.getElementsByTagName('table')[0].onclick = null;
+ 	document.onclick = null;
+ 	
+ 	this._mIsListening = false;
 }
  
 /**
@@ -373,7 +414,12 @@ Details.prototype.selectRow = function(iPos){
 		oldTr.className = (this._mSelectedRow % 2 == 0) ? 'even' : '';
 	}
 	
-	this._mSelectedRow = iPos;
+	this._mSelectedRow = parseInt(iPos);
+	
+	// Enable remove button and set the detail id property.
+	this.getDetailId(newTr);
+	oButton = document.getElementById('remove_detail');
+	oButton.disabled = false;
 }
  
 /**
@@ -383,6 +429,10 @@ Details.prototype.deselectRow = function(){
 	oldTr = document.getElementById('tr' + this._mSelectedRow);
 	oldTr.className = (this._mSelectedRow % 2 == 0) ? 'even' : '';
 	this._mSelectedRow = 0;
+	
+	// Disable remove button.
+	oButton = document.getElementById('remove_detail');
+	oButton.disabled = true;
 }
  
 /**
@@ -407,4 +457,25 @@ Details.prototype.movePrevious = function(){
 Details.prototype.moveNext = function(){
 	if(this._mTotalItems > 0 && this._mSelectedRow < this._mTotalItems)
 		this.selectRow(this._mSelectedRow + 1);
+}
+ 
+/**
+ * Select row when click on it.
+ * @param object oRow
+ */
+Details.prototype.clickRow = function(oRow){
+	if(!this._mIsListening)
+		this.startListening();
+	
+	iPos = oRow.id.substring(2);
+	this.selectRow(iPos);
+}
+
+/**
+ * Get the id of the detail.
+ * @param object oRow
+ */
+Details.prototype.getDetailId = function(oRow){
+	oTd = oRow.getElementsByTagName('td')[0];
+	this._mDetailId = oTd.id;
 }
