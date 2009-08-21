@@ -11,14 +11,7 @@
 	        		<th>Proveedor</th> 
 	         		<th>Codigo</th>
 	         		<th id="btn_col">
-	         			<xsl:choose>
-			       			<xsl:when test="$status = 1">
-			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" onfocus="this.blur();" disabled="disabled" />
-			       			</xsl:when>
-			       			<xsl:otherwise>
-			       				<input name="form_widget" id="remove_supplier" type="button" value="Quitar" onfocus="this.blur();" />
-			       			</xsl:otherwise>
-			       		</xsl:choose>
+			       		<input name="form_widget" id="remove_supplier" type="button" value="Quitar" onfocus="this.blur();" disabled="disabled" />
 	         		</th>
 	         	</tr>
 	       	</thead>
