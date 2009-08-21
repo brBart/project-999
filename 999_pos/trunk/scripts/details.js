@@ -255,14 +255,14 @@ Details.prototype.displaySuccess = function(xmlDoc){
  */
 Details.prototype.handlePrevTabKey = function(oEvent){
 	oEvent = (!oEvent) ? window.event : oEvent;
-	code = (oEvent.charCode) ? oEvent.charCode :
-			((oEvent.keyCode) ? oEvent.keyCode :
-			((oEvent.which) ? oEvent.which : 0));
+	code = (oEvent.keyCode) ? oEvent.keyCode :
+			((oEvent.which) ? oEvent.which : 0);
 	
 	// If tab key was pressed.
-	if(code == 9){
+	if(this._mTotalItems > 0 && (code == 9 && !oEvent.shiftKey)){
 		this.moveFirst();
 		this.startListening();
+		oEvent.cancelBubble = true;
 	}
 }
 
@@ -272,14 +272,14 @@ Details.prototype.handlePrevTabKey = function(oEvent){
 */
 Details.prototype.handleNextTabKey = function(oEvent){
 	oEvent = (!oEvent) ? window.event : oEvent;
-	code = (oEvent.charCode) ? oEvent.charCode :
-			((oEvent.keyCode) ? oEvent.keyCode :
-			((oEvent.which) ? oEvent.which : 0));
+	code = (oEvent.keyCode) ? oEvent.keyCode :
+			((oEvent.which) ? oEvent.which : 0);
 	
 	// If shift + tab keys were pressed.
-	if(oEvent.shiftKey && code == 9){
+	if(this._mTotalItems > 0 && (oEvent.shiftKey && code == 9)){
 		this.moveFirst();
 		this.startListening();
+		oEvent.cancelBubble = true;
 	}
 }
 
@@ -289,9 +289,8 @@ Details.prototype.handleNextTabKey = function(oEvent){
  */
 Details.prototype.handleKeyDown = function(oEvent){
 	oEvent = (!oEvent) ? window.event : oEvent;
-	code = (oEvent.charCode) ? oEvent.charCode :
-			((oEvent.keyCode) ? oEvent.keyCode :
-			((oEvent.which) ? oEvent.which : 0));
+	code = (oEvent.keyCode) ? oEvent.keyCode :
+			((oEvent.which) ? oEvent.which : 0);
 	
 	// If the up arrow was pressed.
 	if(code == 38)
@@ -303,14 +302,20 @@ Details.prototype.handleKeyDown = function(oEvent){
 	
 	// If the tab key was pressed.
 	if(code == 9){
+		this.deselectRow();
 		this.stopListening();
-		this._mNextWidget.focus();
-	}
-	
-	// If shift + tab keys were pressed.
-	if(oEvent.shiftKey && code == 9){
-		this.stopListening();
-		this._mPrevWidget.focus();
+		
+		//Cancel default behaviour, also detect if it is FF.
+		if(document.addEventListener)
+			oEvent.preventDefault();
+		else
+			oEvent.returnValue = false;
+		
+		// If the shift key was pressed.
+		if(oEvent.shiftKey)
+			this._mPrevWidget.focus();
+		else
+			this._mNextWidget.focus();
 	}
 }
 
@@ -319,27 +324,16 @@ Details.prototype.handleKeyDown = function(oEvent){
  */
 Details.prototype.startListening = function(){
 	oTemp = this;
-	if(document.addEventListener){
-		document.addEventListener('keydown', function(oEvent){oTemp.handleKeyDown(oEvent)}, false);
-	}
-	else if(document.attachEvent){
-		document.attachEvent('onkeydown', function(oEvent){oEvent = (!oEvent) ? window.event : oEvent;
-				oTemp.handleKeyDown(oEvent)});
+	document.onkeydown = function(oEvent){
+		oTemp.handleKeyDown(oEvent);
 	}
 }
  
- /**
-  * Method that removed the event handlers for the table.
-  */
+/**
+ * Method that removed the event handlers for the table.
+ */
 Details.prototype.stopListening = function(){
- 	oTemp = this;
- 	if(document.addEventListener){
- 		document.addEventListener('keydown', function(oEvent){oTemp.handleKeyDown(oEvent)}, false);
- 	}
- 	else if(document.attachEvent){
- 		document.attachEvent('onkeydown', function(oEvent){oEvent = (!oEvent) ? window.event : oEvent;
- 				oTemp.handleKeyDown(oEvent)});
- 	}
+ 	document.onkeydown = null;
 }
  
 /**
@@ -360,6 +354,15 @@ Details.prototype.selectRow = function(iPos){
 	}
 	
 	this._mSelectedRow = iPos;
+}
+ 
+/**
+ * Remove focus from the actual selected row.
+ */
+Details.prototype.deselectRow = function(){
+	oldTr = document.getElementById('tr' + this._mSelectedRow);
+	oldTr.className = (this._mSelectedRow % 2 == 0) ? 'even' : '';
+	this._mSelectedRow = 0;
 }
  
 /**
