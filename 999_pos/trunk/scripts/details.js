@@ -73,7 +73,7 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	/**
 	 * Holds the id of the actual selected detail (row).
 	 */
-	this._mDetailId = 0;
+	this._mDetailId = '';
 }
 
 /**
