@@ -11,7 +11,7 @@
 	        		<th>Proveedor</th> 
 	         		<th>Codigo</th>
 	         		<th id="btn_col">
-			       		<input name="form_widget" id="remove_supplier" type="button" value="Quitar" onfocus="this.blur();" disabled="disabled" />
+			       		<input name="form_widget" id="remove_detail" type="button" value="Quitar" onfocus="this.blur();" disabled="disabled" />
 	         		</th>
 	         	</tr>
 	       	</thead>
@@ -33,6 +33,7 @@
 	           	<xsl:attribute name="id">
 	             	<xsl:value-of select="concat('tr', position())" />
 	           	</xsl:attribute>
+	           	<xsl:attribute name="onclick">oProductSuppliers.clickRow(this);</xsl:attribute>
 	           	<xsl:if test="position() mod 2 = 0">
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
