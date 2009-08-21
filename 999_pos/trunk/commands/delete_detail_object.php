@@ -30,7 +30,7 @@ abstract class DeleteDetailObjectCommand extends Command{
 		$detail_id = $request->getProperty('detail_id');
 		
 		try{
-			$detail = $this->getDetail($detail_id);
+			$detail = $this->getDetail($detail_id, $obj);
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			Page::display(array('message' => $msg), 'error_xml.tpl');
@@ -42,9 +42,26 @@ abstract class DeleteDetailObjectCommand extends Command{
 			Page::display(array('message' => $msg), 'error_xml.tpl');
 		}
 		else{
-			$this->deleteDetail($detail);
+			$this->deleteDetail($detail, $obj);
 			Page::display(array(), 'success_xml.tpl');
-		}	
+		}
 	}
+	
+	/**
+	 * Returns the detail of the actual object.
+	 * 
+	 * @param string $detailId
+	 * @param variant $obj
+	 * @return variant
+	 */
+	abstract protected function getDetail($detailId, $obj);
+	
+	/**
+	 * Deletes the detail from the actual object.
+	 * 
+	 * @param variant $detail
+	 * @param variant $obj
+	 */
+	abstract protected function deleteDetail($detail, $obj);
 }
 ?>
