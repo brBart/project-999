@@ -262,7 +262,17 @@ Details.prototype.handlePrevTabKey = function(oEvent){
 	if(this._mTotalItems > 0 && (code == 9 && !oEvent.shiftKey)){
 		this.moveFirst();
 		this.startListening();
+		// Stop propagation because the document is already listening.
 		oEvent.cancelBubble = true;
+		
+		// Cancel default behaviour (which is tab foward), also detect if it is FF.
+		if(document.addEventListener)
+			oEvent.preventDefault();
+		else
+			oEvent.returnValue = false;
+		
+		// Remove focus from the previous widget.
+		this._mPrevWidget.blur();
 	}
 }
 
@@ -279,7 +289,17 @@ Details.prototype.handleNextTabKey = function(oEvent){
 	if(this._mTotalItems > 0 && (oEvent.shiftKey && code == 9)){
 		this.moveFirst();
 		this.startListening();
+		// Stop propagation because the document is already listening.
 		oEvent.cancelBubble = true;
+		
+		// Cancel default behaviour (which is tab foward), also detect if it is FF.
+		if(document.addEventListener)
+			oEvent.preventDefault();
+		else
+			oEvent.returnValue = false;
+		
+		// Remove focus from the next widget.
+		this._mNextWidget.blur();
 	}
 }
 
