@@ -7,7 +7,7 @@
 	     		<xsl:call-template name="menu" />
 	     	</caption>
 	      	<thead>
-	      		<tr>
+	      		<tr onclick="oProductSuppliers.setFocus();">
 	        		<th>Proveedor</th> 
 	         		<th>Codigo</th>
 	         		<th id="btn_col">

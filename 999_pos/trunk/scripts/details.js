@@ -227,8 +227,9 @@ Details.prototype.createMsxml2XSLTemplate = function(){
 Details.prototype.displaySuccess = function(xmlDoc){
 	// Obtain the value of the total_items parameter.
 	this._mTotalItems = xmlDoc.getElementsByTagName('total_items')[0].firstChild.data;
-	// Reset selected row position.
+	// Reset selected row position and focus.
 	this._mSelectedRow = 0;
+	this._mHasFocus = false;
 	
 	var xmlResponse = this._mRequest.responseXML;
 	// browser with native functionality?    
@@ -341,7 +342,7 @@ Details.prototype.handleKeyDown = function(oEvent){
 	
 	// If the delete key was pressed.
 	if(code == 46)
-		if(this._mTotalItems > 0)
+		if(this._mTotalItems > 0 && this._mSelectedRow > 0)
 			this.deleteDetail();
 	
 	// If the tab key was pressed.
@@ -385,23 +386,25 @@ Details.prototype.documentHandleClick = function(oEvent){
  * Method that controls the key down for the table element.
  */
 Details.prototype.setFocus = function(){
-	oTemp = this;
-	
-	document.onkeydown = function(oEvent){
-		oTemp.handleKeyDown(oEvent);
+	if(!this._mHasFocus){
+		oTemp = this;
+		
+		document.onkeydown = function(oEvent){
+			oTemp.handleKeyDown(oEvent);
+		}
+		
+		oTable = this._mDiv.getElementsByTagName('table')[0];
+		
+		oTable.onclick = function(oEvent){
+			oTemp.detailsHandleClick(oEvent);
+		}
+		document.onclick = function(oEvent){
+			oTemp.documentHandleClick(oEvent);
+		}
+		
+		oTable.className = 'has_focus';
+		this._mHasFocus = true;
 	}
-	
-	oTable = this._mDiv.getElementsByTagName('table')[0];
-	
-	oTable.onclick = function(oEvent){
-		oTemp.detailsHandleClick(oEvent);
-	}
-	document.onclick = function(oEvent){
-		oTemp.documentHandleClick(oEvent);
-	}
-	
-	oTable.className = 'has_focus';
-	this._mHasFocus = true;
 }
  
 /**
@@ -496,9 +499,7 @@ Details.prototype.moveTo = function(iPos){
  * @param object oRow
  */
 Details.prototype.clickRow = function(oRow){
-	if(!this._mHasFocus)
-		this.setFocus();
-	
+	this.setFocus();
 	iPos = oRow.id.substring(2);
 	this.selectRow(iPos);
 }
