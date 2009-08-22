@@ -130,3 +130,9 @@ a:hover {
 	background-color: blue;
 	color: white;
 }
+
+#details .has_focus {
+	border-style: solid;
+	border-color: #AED9FF;
+	border-width: 2px;
+}
