@@ -11,7 +11,7 @@
 	        		<th>Proveedor</th> 
 	         		<th>Codigo</th>
 	         		<th id="btn_col">
-			       		<input name="form_widget" id="remove_detail" type="button" value="Quitar" onclick="oDeleteSupplierProduct.execute('delete_supplier_product')" onfocus="this.blur();" disabled="disabled" />
+			       		<input name="form_widget" id="remove_detail" type="button" value="Quitar" onclick="oDeleteSupplierProduct.execute('delete_supplier_product');" onfocus="this.blur();" disabled="disabled" />
 	         		</th>
 	         	</tr>
 	       	</thead>
