@@ -13,6 +13,8 @@
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/product_suppliers.js"></script>
 <script type="text/javascript" src="../scripts/add_supplier_product.js"></script>
+<script type="text/javascript" src="../scripts/delete_detail.js"></script>
+<script type="text/javascript" src="../scripts/delete_supplier_product.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
 <script type="text/javascript" src="../scripts/delete.js"></script>
@@ -25,6 +27,7 @@
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
 	var oAddSupplierProduct = new AddSupplierProductCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oProductSuppliers);
+	var oDeleteSupplierProduct = new DeleteSupplierProductCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oProductSuppliers);
 	{if $status eq 1}
 	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject(), oMachine);
 	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
@@ -33,6 +36,7 @@
 	window.onunload = function(){
 		oRemoveObject.execute();
 	}
+	oProductSuppliers.mDeleteFunction = function(sCmd){oDeleteSupplierProduct.execute(sCmd);}
 	{/literal}
 </script>
 <div id="content">

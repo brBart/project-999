@@ -18,10 +18,16 @@ function DeleteSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProdu
 }
 
 /**
+* Inherit the Sync command class methods.
+*/
+DeleteSupplierProductCommand.prototype = new DeleteDetailCommand();
+
+/**
 * Method for displaying success.
 * @param DocumentElement xmlDoc
 */
-AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
+DeleteSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mDetails.update();
+	this._mDetails.setFocus();
 	this._mDetails.moveTo(this._mRowPos);
 }

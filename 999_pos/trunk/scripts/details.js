@@ -17,6 +17,12 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
 	/**
+	 * Holds the delete function to be executed.
+	 * @var object
+	 */
+	this.mDeleteFunction = null;
+	
+	/**
 	 * Holds the key of the session object.
 	 * @var string
 	 */
@@ -221,6 +227,8 @@ Details.prototype.createMsxml2XSLTemplate = function(){
 Details.prototype.displaySuccess = function(xmlDoc){
 	// Obtain the value of the total_items parameter.
 	this._mTotalItems = xmlDoc.getElementsByTagName('total_items')[0].firstChild.data;
+	// Reset selected row position.
+	this._mSelectedRow = 0;
 	
 	var xmlResponse = this._mRequest.responseXML;
 	// browser with native functionality?    
@@ -331,6 +339,11 @@ Details.prototype.handleKeyDown = function(oEvent){
 	if(code == 40)
 		this.moveNext();
 	
+	// If the delete key was pressed.
+	if(code == 46)
+		if(this._mTotalItems > 0)
+			this.deleteDetail();
+	
 	// If the tab key was pressed.
 	if(code == 9){
 		this.deselectRow();
@@ -411,10 +424,6 @@ Details.prototype.loseFocus = function(){
  * @param integer iPos
  */
 Details.prototype.selectRow = function(iPos){
-	// If already selected.
-	if(this._mSelectedRow == iPos)
-		return;
-	
 	newTr = document.getElementById('tr' + iPos);
 	newTr.className = 'hightlightrow';
 	
@@ -426,7 +435,7 @@ Details.prototype.selectRow = function(iPos){
 	this._mSelectedRow = parseInt(iPos);
 	
 	// Enable remove button and set the detail id property.
-	this.getDetailId(newTr);
+	this.setDetailId(newTr);
 	oButton = document.getElementById('remove_detail');
 	oButton.disabled = false;
 }
@@ -471,6 +480,18 @@ Details.prototype.moveNext = function(){
 }
  
 /**
+ * Select the row in the provided position, if it does not exists, move to the last position.
+ * @param integer iPos
+ */
+Details.prototype.moveTo = function(iPos){
+	if(this._mTotalItems > 0)
+		if(iPos > this._mTotalItems)
+			this.selectRow(this._mTotalItems);
+		else
+			this.selectRow(iPos);
+}
+ 
+/**
  * Select row when click on it.
  * @param object oRow
  */
@@ -486,7 +507,30 @@ Details.prototype.clickRow = function(oRow){
  * Get the id of the detail.
  * @param object oRow
  */
-Details.prototype.getDetailId = function(oRow){
+Details.prototype.setDetailId = function(oRow){
 	oTd = oRow.getElementsByTagName('td')[0];
 	this._mDetailId = oTd.id;
+}
+ 
+/**
+ * Returns the detail id.
+ * @return integer
+ */
+Details.prototype.getDetailId = function(){
+	return this._mDetailId;
+}
+
+/**
+ * Returns the selected row position.
+ * @return integer
+ */
+Details.prototype.getPosition = function(){
+	return this._mSelectedRow;
+}
+
+/**
+ * Abstract method.
+ */
+Details.prototype.deleteDetail = function(){
+	return 0;
 }
