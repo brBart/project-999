@@ -10,6 +10,7 @@
  * @param Console oConsole
  * @param Request oRequest
  * @param string sKey
+ * @param Details oDetails
  */
 function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	// Call the parent constructor.
@@ -26,6 +27,12 @@ function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	 * @var ProductSuppliers
 	 */
 	this._mDetails = oDetails;
+	
+	/**
+	 * Holds the row position before the deletion.
+	 * @var integer
+	 */
+	this._mRowPos = 0;
 }
 
 /**
@@ -43,6 +50,7 @@ DeleteDetailCommand.prototype.execute = function(sCmd){
 	else{
 		sDetailId = this._mDetails.getDetailId();
 		if(sDetailId != ''){
+			this._mRowPos = this._mDetails.getPosition();
 			var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
 			str = Url.addUrlParam(str, 'key', this._mKey);
 			str = Url.addUrlParam(str, 'detail_id', sDetailId);
