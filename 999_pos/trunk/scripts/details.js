@@ -427,7 +427,7 @@ Details.prototype.selectRow = function(iPos){
 	newTr = document.getElementById('tr' + iPos);
 	newTr.className = 'hightlightrow';
 	
-	if(this._mSelectedRow > 0){
+	if(this._mSelectedRow > 0 && this._mSelectedRow != iPos){
 		oldTr = document.getElementById('tr' + this._mSelectedRow);
 		oldTr.className = (this._mSelectedRow % 2 == 0) ? 'even' : '';
 	}
