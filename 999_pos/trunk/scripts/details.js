@@ -68,7 +68,7 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	 * Flag that indicates if the object is listening.
 	 * @var boolean
 	 */
-	this._mIsListening = false;
+	this._mHasFocus = false;
 	
 	/**
 	 * Holds the id of the actual selected detail (row).
@@ -270,9 +270,9 @@ Details.prototype.handlePrevTabKey = function(oEvent){
 			((oEvent.which) ? oEvent.which : 0);
 	
 	// If tab key was pressed.
-	if(this._mTotalItems > 0 && (code == 9 && !oEvent.shiftKey)){
+	if(code == 9 && !oEvent.shiftKey){
 		this.moveFirst();
-		this.startListening();
+		this.setFocus();
 		// Stop propagation because the document is already listening.
 		oEvent.cancelBubble = true;
 		
@@ -297,9 +297,9 @@ Details.prototype.handleNextTabKey = function(oEvent){
 			((oEvent.which) ? oEvent.which : 0);
 	
 	// If shift + tab keys were pressed.
-	if(this._mTotalItems > 0 && (oEvent.shiftKey && code == 9)){
+	if(oEvent.shiftKey && code == 9){
 		this.moveFirst();
-		this.startListening();
+		this.setFocus();
 		// Stop propagation because the document is already listening.
 		oEvent.cancelBubble = true;
 		
@@ -334,7 +334,7 @@ Details.prototype.handleKeyDown = function(oEvent){
 	// If the tab key was pressed.
 	if(code == 9){
 		this.deselectRow();
-		this.stopListening();
+		this.loseFocus();
 		
 		//Cancel default behaviour, also detect if it is FF.
 		if(document.addEventListener)
@@ -365,36 +365,45 @@ Details.prototype.detailsHandleClick = function(oEvent){
  */
 Details.prototype.documentHandleClick = function(oEvent){
 	this.deselectRow();
-	this.stopListening();
+	this.loseFocus();
 }
 
 /**
  * Method that controls the key down for the table element.
  */
-Details.prototype.startListening = function(){
+Details.prototype.setFocus = function(){
 	oTemp = this;
+	
 	document.onkeydown = function(oEvent){
 		oTemp.handleKeyDown(oEvent);
 	}
-	this._mDiv.getElementsByTagName('table')[0].onclick = function(oEvent){
+	
+	oTable = this._mDiv.getElementsByTagName('table')[0];
+	
+	oTable.onclick = function(oEvent){
 		oTemp.detailsHandleClick(oEvent);
 	}
 	document.onclick = function(oEvent){
 		oTemp.documentHandleClick(oEvent);
 	}
 	
-	this._mIsListening = true;
+	oTable.className = 'has_focus';
+	this._mHasFocus = true;
 }
  
 /**
  * Method that removed the event handlers for the table.
  */
-Details.prototype.stopListening = function(){
+Details.prototype.loseFocus = function(){
  	document.onkeydown = null;
- 	this._mDiv.getElementsByTagName('table')[0].onclick = null;
+ 	
+ 	oTable = this._mDiv.getElementsByTagName('table')[0];
+ 	
+ 	oTable.onclick = null;
  	document.onclick = null;
  	
- 	this._mIsListening = false;
+ 	oTable.className = '';
+ 	this._mHasFocus = false;
 }
  
 /**
@@ -426,9 +435,11 @@ Details.prototype.selectRow = function(iPos){
  * Remove focus from the actual selected row.
  */
 Details.prototype.deselectRow = function(){
-	oldTr = document.getElementById('tr' + this._mSelectedRow);
-	oldTr.className = (this._mSelectedRow % 2 == 0) ? 'even' : '';
-	this._mSelectedRow = 0;
+	if(this._mSelectedRow > 0){
+		oldTr = document.getElementById('tr' + this._mSelectedRow);
+		oldTr.className = (this._mSelectedRow % 2 == 0) ? 'even' : '';
+		this._mSelectedRow = 0;
+	}
 	
 	// Disable remove button.
 	oButton = document.getElementById('remove_detail');
@@ -464,8 +475,8 @@ Details.prototype.moveNext = function(){
  * @param object oRow
  */
 Details.prototype.clickRow = function(oRow){
-	if(!this._mIsListening)
-		this.startListening();
+	if(!this._mHasFocus)
+		this.setFocus();
 	
 	iPos = oRow.id.substring(2);
 	this.selectRow(iPos);
