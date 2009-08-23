@@ -902,7 +902,7 @@ class Product extends Identifier{
 		if(is_null($this->_mManufacturer))
 			throw new Exception('Fabricante inv&aacute;lido.');
 		
-		Number::validateUnsignedFloat($this->_mPrice, 'Precio inv&aacute;lido.');
+		Number::validateUnsignedFloat($this->_mPrice, 'Precio inv&aacute;lido.', 'price');
 		if(!$this->hasProductSuppliers())
 			throw new Exception('No hay ningun proveedor ingresado.');
 	}
