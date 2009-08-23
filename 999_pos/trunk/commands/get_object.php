@@ -26,7 +26,7 @@ abstract class GetObjectCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$obj = $this->getObject($request->getProperty('id'));
+		$obj = $this->getObject($request);
 		if(is_null($obj))
 			$this->displayFailure();
 		else{
@@ -45,10 +45,10 @@ abstract class GetObjectCommand extends Command{
 	
 	/**
 	 * Gets the desired object.
-	 * @param string $id
+	 * @param Request
 	 * @return variant
 	 */
-	abstract protected function getObject($id);
+	abstract protected function getObject($request);
 	
 	/**
 	 * Display failure in case the object does not exists.

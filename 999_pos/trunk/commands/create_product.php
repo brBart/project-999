@@ -71,7 +71,7 @@ class CreateProductCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'product_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_product_menu',
-				'foward_link' => 'index.php?cmd=get_product', 'manufacturer_list' => $manufacturer_list,
+				'foward_link' => 'index.php?cmd=get_product_by_id', 'manufacturer_list' => $manufacturer_list,
 				'um_list' => $um_list, 'supplier_list' => $supplier_list), 'site_html.tpl');
 	}
 }

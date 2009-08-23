@@ -22,11 +22,11 @@ require_once('business/product.php');
 class GetManufacturerCommand extends GetObjectCommand{
 	/**
 	 * Gets the desired object.
-	 * @param string $id
+	 * @param Request $request
 	 * @return variant
 	 */
-	protected function getObject($id){
-		return Manufacturer::getInstance((int)$id);
+	protected function getObject($request){
+		return Manufacturer::getInstance((int)$request->getProperty('id'));
 	}
 	
 	/**
@@ -51,11 +51,12 @@ class GetManufacturerCommand extends GetObjectCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		$id = $obj->getId();
 		
-		// Build the back link and on cancel link.
+		// Build the back link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_manufacturer_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
-		$foward_link = (is_null($backQuery)) ? 'index.php?cmd=get_manufacturer&id=' . $id :
-				'index.php?cmd=get_manufacturer&id=' . $id . '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the foward link.
+		$foward_link = 'index.php?cmd=get_manufacturer&id=' . $id;
+		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
