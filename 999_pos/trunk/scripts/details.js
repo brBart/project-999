@@ -278,7 +278,7 @@ Details.prototype.handlePrevTabKey = function(oEvent){
 	code = (oEvent.keyCode) ? oEvent.keyCode :
 			((oEvent.which) ? oEvent.which : 0);
 	
-	// If tab key was pressed.
+	// If tab key was pressed and state machine is in edit status.
 	if(code == 9 && !oEvent.shiftKey){
 		this.moveFirst();
 		this.setFocus();
@@ -386,7 +386,8 @@ Details.prototype.documentHandleClick = function(oEvent){
  * Method that controls the key down for the table element.
  */
 Details.prototype.setFocus = function(){
-	if(!this._mHasFocus){
+	// Check if already has focus and state machine status equal edit.
+	if(!this._mHasFocus && this._mMachine.getStatus() == 0){
 		oTemp = this;
 		
 		document.onkeydown = function(oEvent){
@@ -499,9 +500,12 @@ Details.prototype.moveTo = function(iPos){
  * @param object oRow
  */
 Details.prototype.clickRow = function(oRow){
-	this.setFocus();
-	iPos = oRow.id.substring(2);
-	this.selectRow(iPos);
+	// State machine status has to be on edit mode.
+	if(this._mMachine.getStatus() == 0){
+		this.setFocus();
+		iPos = oRow.id.substring(2);
+		this.selectRow(iPos);
+	}
 }
 
 /**

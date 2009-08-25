@@ -67,6 +67,14 @@ a:hover {
 	color: orange;
 }
 
+.disabled {
+	color: grey;
+}
+
+.disabled th {
+	color: grey;
+}
+
 #wrapper {
 	background-color: #EEEEEE;
 	border-bottom-style: dashed;

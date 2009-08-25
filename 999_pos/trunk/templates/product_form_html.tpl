@@ -173,10 +173,10 @@
 		</fieldset>
 	</div>
 </div>
-{if $status eq 0}
 <script type="text/javascript">
+{if $status eq 0}
 StateMachine.setFocus('name');
+{/if}
 oProductSuppliers.init('../xsl/product_suppliers.xsl', document.getElementById('details'), document.getElementById('add_supplier'), document.getElementById('save'));
 oProductSuppliers.update();
 </script>
-{/if}

@@ -3,6 +3,9 @@
 	<xsl:param name="status" />
 	<xsl:template match="/">  
 		<table>
+			<xsl:if test="$status = 1">
+				<xsl:attribute name="class">disabled</xsl:attribute>
+           	</xsl:if>
 	     	<caption>
 	     		<xsl:call-template name="menu" />
 	     	</caption>
