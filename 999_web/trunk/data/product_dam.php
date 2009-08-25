@@ -307,9 +307,10 @@ class ProductSupplierDAM{
 	 * @param ProductSupplier $detail
 	 */
 	static public function delete(Product $product, ProductSupplier $detail){
-		$sql = 'CALL product_supplier_delete(:product_id, :supplier_id)';
+		$sql = 'CALL product_supplier_delete(:product_id, :supplier_id, :sku)';
 		$supplier = $detail->getSupplier();
-		$params = array(':product_id' => $product->getId(), ':supplier_id' => $supplier->getId());
+		$params = array(':product_id' => $product->getId(), ':supplier_id' => $supplier->getId(),
+				'sku' => $detail->getProductSKU());
 		DatabaseHandler::execute($sql, $params);
 	}
 }
