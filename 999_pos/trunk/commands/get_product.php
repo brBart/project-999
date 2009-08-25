@@ -65,7 +65,7 @@ abstract class GetProductCommand extends GetObjectCommand{
 		$manufacturer = $obj->getManufacturer();
 		$um = $obj->getUnitOfMeasure();
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
+		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'product_form_html.tpl', 'status' => '1', 'key' => $key,
 				'back_link' => $back_link, 'foward_link' => $foward_link,
