@@ -648,8 +648,8 @@ class Product extends Identifier{
 	 * @param string $packaging
 	 */
 	public function setPackaging($packaging){
-		String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
 		$this->_mPackaging = $packaging;
+		String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
 	}
 	
 	/**
@@ -687,11 +687,8 @@ class Product extends Identifier{
 	 * @param float $price
 	 */
 	public function setPrice($price){
-		Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
-		if($this->_mPrice != $price){
-			$this->_mLastPrice = $this->_mPrice;
-			$this->_mPrice = $price;
-		}
+		$this->_mPrice = $price;
+		Number::validateUnsignedNumber($price, 'Precio inv&aacute;lido.');
 	}
 	
 	/**
@@ -727,7 +724,7 @@ class Product extends Identifier{
 			String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
 			self::validateObjectFromDatabase($um);
 			self::validateObjectFromDatabase($manufacturer);
-			Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
+			Number::validateUnsignedNumber($price, 'Precio inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
@@ -742,6 +739,7 @@ class Product extends Identifier{
 		$this->_mUM = $um;
 		$this->_mManufacturer = $manufacturer;
 		$this->_mPrice = $price;
+		$this->_mLastPrice = $price;
 		$this->_mDeactivated = (boolean)$deactivated;
 		$this->_mProductSuppliers = $details;
 	}
@@ -809,7 +807,7 @@ class Product extends Identifier{
 			
 			$this->update();
 			
-			if($this->_mLastPrice)
+			if($this->_mLastPrice != $this->_mPrice)
 				ChangePriceLog::write($this, $this->_mLastPrice, $this->_mPrice);
 		}
 		
@@ -901,12 +899,12 @@ class Product extends Identifier{
 		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.', 'packaging');
 		
 		if(is_null($this->_mManufacturer))
-			throw new ValidateException('Fabricante inv&aacute;lido.', 'manufacturer_id');
+			throw new ValidateException('Casa inv&aacute;lida.', 'manufacturer_id');
 		
 		if(is_null($this->_mUM))
 			throw new ValidateException('Unidad de medida inv&aacute;lida.', 'um_id');
 		
-		Number::validateUnsignedFloat($this->_mPrice, 'Precio inv&aacute;lido.', 'price');
+		Number::validateUnsignedNumber($this->_mPrice, 'Precio inv&aacute;lido.', 'price');
 		if(!$this->hasProductSuppliers())
 			throw new ValidateException('No hay ningun proveedor ingresado.', 'supplier_id');
 	}
@@ -1549,8 +1547,8 @@ class ChangePriceLog{
 	 */
 	static public function write(Product $product, $lastPrice, $newPrice){
 		Persist::validateObjectFromDatabase($product);
-		Number::validateUnsignedFloat($lastPrice, 'Precio antiguo inv&aacute;lido.');
-		Number::validateUnsignedFloat($newPrice, 'Nuevo precio inv&aacute;lido.');
+		Number::validateUnsignedNumber($lastPrice, 'Precio antiguo inv&aacute;lido.');
+		Number::validateUnsignedNumber($newPrice, 'Nuevo precio inv&aacute;lido.');
 		
 		$date = date('d/m/Y');
 		$helper = SessionHelper::getInstance();
