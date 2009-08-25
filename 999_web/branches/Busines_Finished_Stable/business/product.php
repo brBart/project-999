@@ -784,6 +784,7 @@ class Product extends Identifier{
 	/**
 	 * Saves the product's data in the database.
 	 *
+	 * @return integer
 	 */
 	public function save(){
 		$this->validateMainProperties();
@@ -814,6 +815,9 @@ class Product extends Identifier{
 		
 		foreach($this->_mProductSuppliers as &$detail)
 			$detail->commit($this);
+			
+		// For presentation layer purposes.
+		return $this->_mId;
 	}
 	
 	/**
@@ -894,17 +898,17 @@ class Product extends Identifier{
 		
 		if(!is_null($this->_mBarCode) && $this->_mBarCode != '')
 			$this->verifyBarCode($this->_mBarCode);
-		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.');
+		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.', 'packaging');
+		
+		if(is_null($this->_mManufacturer))
+			throw new ValidateException('Fabricante inv&aacute;lido.', 'manufacturer_id');
 		
 		if(is_null($this->_mUM))
-			throw new Exception('Unidad de medida inv&aacute;lida.');
-			
-		if(is_null($this->_mManufacturer))
-			throw new Exception('Fabricante inv&aacute;lido.');
+			throw new ValidateException('Unidad de medida inv&aacute;lida.', 'um_id');
 		
 		Number::validateUnsignedFloat($this->_mPrice, 'Precio inv&aacute;lido.', 'price');
 		if(!$this->hasProductSuppliers())
-			throw new Exception('No hay ningun proveedor ingresado.');
+			throw new ValidateException('No hay ningun proveedor ingresado.', 'supplier_id');
 	}
 	
 	/**
@@ -937,7 +941,7 @@ class Product extends Identifier{
 	 */
 	private function verifyBarCode($barCode){
 		if(ProductDAM::existsBarCode($this, $barCode))
-			throw new Exception('Codigo de barra ya esta siendo utilizado.');
+			throw new ValidateException('Codigo de barra ya esta siendo utilizado.', 'bar_code');
 	}
 	
 	/**
