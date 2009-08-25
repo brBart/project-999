@@ -36,7 +36,7 @@ StateMachine.prototype.changeToEditState = function(sElementId){
 		var oElement = arrElements[i];
 		
 		// Check if really is an input element.
-		if(oElement.tagName == 'INPUT')
+		if(oElement.tagName == 'INPUT' || oElement.tagName == 'TEXTAREA'  || oElement.tagName == 'SELECT')
 			if(oElement.disabled == true)
 				oElement.disabled = false;
 			else
