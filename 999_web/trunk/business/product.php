@@ -941,7 +941,7 @@ class Product extends Identifier{
 	 */
 	private function verifyBarCode($barCode){
 		if(ProductDAM::existsBarCode($this, $barCode))
-			throw new Exception('Codigo de barra ya esta siendo utilizado.');
+			throw new ValidateException('Codigo de barra ya esta siendo utilizado.', 'bar_code');
 	}
 	
 	/**
