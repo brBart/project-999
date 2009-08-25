@@ -34,15 +34,17 @@ StateMachine.prototype.changeToEditState = function(sElementId){
 	var arrElements = document.getElementsByName('form_widget');
 	for (var i = 0; i < arrElements.length; i++){
 		var oElement = arrElements[i];
-		
-		// Check if really is an input element.
-		if(oElement.tagName == 'INPUT' || oElement.tagName == 'TEXTAREA'  || oElement.tagName == 'SELECT')
-			if(oElement.disabled == true)
-				oElement.disabled = false;
-			else
-				oElement.disabled = true;
+		if(oElement.disabled == true)
+			oElement.disabled = false;
 		else
-			oElement.className = '';
+			oElement.disabled = true;
+	}
+	
+	// If there is a details table.
+	oDetails = document.getElementById('details');
+	if(oDetails){
+		oTable = oDetails.getElementsByTagName('table')[0];
+		oTable.className = '';
 	}
 	
 	// Hide back link option.
