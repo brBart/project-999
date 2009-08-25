@@ -22,10 +22,7 @@ class SetPriceProductCommand extends SetPropertyObjectCommand{
 	 * @param variant $obj
 	 */
 	protected function setProperty($value, $obj){
-		if(!is_numeric($value))
-			throw new ValidateException('Precio inv&aacute;lido. Valor debe ser n&uacute;merico.');
-		
-		$obj->setPrice((float)$value);
+		$obj->setPrice($value);
 	}
 }
 ?>
