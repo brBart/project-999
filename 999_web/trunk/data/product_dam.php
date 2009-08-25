@@ -387,7 +387,7 @@ class ProductDAM{
 			}
 			
 			$product->setData($result['bar_code'], $result['name'], $result['packaging'], $um, $manufacturer,
-					(float)$result['price'], (boolean)$result['deactivated'], $details, $result['description']);
+					$result['price'], (boolean)$result['deactivated'], $details, $result['description']);
 			return $product;
 		}
 		else
