@@ -43,7 +43,6 @@ class UnitOfMeasure extends Identifier{
 	 * @return UnitOfMeasure
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return UnitOfMeasureDAM::getInstance($id);
 	}
 	
@@ -105,7 +104,6 @@ class Manufacturer extends Identifier{
 	 * @return Manufacturer
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return ManufacturerDAM::getInstance($id);
 	}
 	
@@ -666,9 +664,10 @@ class Product extends Identifier{
 	 *
 	 * @param UnitOfMeasure $um
 	 */
-	public function setUnitOfMeasure(UnitOfMeasure $um){
-		self::validateObjectFromDatabase($um);
+	public function setUnitOfMeasure(UnitOfMeasure $um = NULL){
 		$this->_mUM = $um;
+		if(is_null($um))
+			throw new ValidateException('Seleccione una unidad de medida.');
 	}
 	
 	/**
@@ -676,9 +675,10 @@ class Product extends Identifier{
 	 *
 	 * @param Manufacturer $obj
 	 */
-	public function setManufacturer(Manufacturer $obj){
-		self::validateObjectFromDatabase($obj);
+	public function setManufacturer(Manufacturer $obj = NULL){
 		$this->_mManufacturer = $obj;
+		if(is_null($obj))
+			throw new ValidateException('Seleccione una casa.');
 	}
 	
 	/**
@@ -899,10 +899,10 @@ class Product extends Identifier{
 		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.', 'packaging');
 		
 		if(is_null($this->_mManufacturer))
-			throw new ValidateException('Casa inv&aacute;lida.', 'manufacturer_id');
+			throw new ValidateException('Seleccione una casa.', 'manufacturer_id');
 		
 		if(is_null($this->_mUM))
-			throw new ValidateException('Unidad de medida inv&aacute;lida.', 'um_id');
+			throw new ValidateException('Seleccione una unidad de medida.', 'um_id');
 		
 		Number::validateUnsignedNumber($this->_mPrice, 'Precio inv&aacute;lido.', 'price');
 		if(!$this->hasProductSuppliers())
