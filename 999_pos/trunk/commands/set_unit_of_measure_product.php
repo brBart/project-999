@@ -22,14 +22,7 @@ class SetUnitOfMeasureProductCommand extends SetPropertyObjectCommand{
 	 * @param variant $obj
 	 */
 	protected function setProperty($value, $obj){
-		if($value == '')
-			throw new ValidateException('Seleccione una unidad de medida.');
-			
 		$um = UnitOfMeasure::getInstance((int)$value);
-		
-		if(is_null($um))
-			throw new Exception('Unidad de medida no existe.');
-		
 		$obj->setUnitOfMeasure($um);
 	}
 }

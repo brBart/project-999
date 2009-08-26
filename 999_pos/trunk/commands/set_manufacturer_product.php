@@ -22,14 +22,7 @@ class SetManufacturerProductCommand extends SetPropertyObjectCommand{
 	 * @param variant $obj
 	 */
 	protected function setProperty($value, $obj){
-		if($value == '')
-			throw new ValidateException('Seleccione una casa.');
-			
 		$manufacturer = Manufacturer::getInstance((int)$value);
-		
-		if(is_null($manufacturer))
-			throw new Exception('Casa no existe.');
-		
 		$obj->setManufacturer($manufacturer);
 	}
 }
