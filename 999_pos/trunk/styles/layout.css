@@ -21,6 +21,7 @@ textarea {
 
 fieldset {
 	padding: 10px;
+	margin: 0;
 }
 
 fieldset p {
@@ -186,8 +187,23 @@ input[type="text"], input[type="password"] {
 	width: 10em;
 }
 
+#sub_menu p {
+	float: left;
+}
+
+#sub_menu a {
+	display: block;
+	float: left;
+	padding: 0 15px;
+}
+
 #prod_supp_tb input[type="text"] {
 	width: 8em;
+}
+
+.content_medium #status_bar {
+	float: left;
+	width: 50%;
 }
 
 #frm #details {

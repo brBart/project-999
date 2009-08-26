@@ -34,10 +34,14 @@ StateMachine.prototype.changeToEditState = function(sElementId){
 	var arrElements = document.getElementsByName('form_widget');
 	for (var i = 0; i < arrElements.length; i++){
 		var oElement = arrElements[i];
-		if(oElement.disabled == true)
-			oElement.disabled = false;
+		
+		if(oElement.tagName == 'A')
+			oElement.className = 'invisible';
 		else
-			oElement.disabled = true;
+			if(oElement.disabled == true)
+				oElement.disabled = false;
+			else
+				oElement.disabled = true;
 	}
 	
 	// If there is a details table.

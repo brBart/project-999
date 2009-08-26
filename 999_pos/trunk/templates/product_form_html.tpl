@@ -53,6 +53,13 @@
 				</span>
 			</p>
 		</fieldset>
+		<fieldset id="sub_menu">
+			<p {if $status eq 0}class="invisible"{/if}>
+				<a name="form_widget" href="#">Kardex</a>
+				<a name="form_widget" href="#">Lotes</a>
+				<a name="form_widget" href="#">Reservados</a>
+			</p>
+		</fieldset>
 		<fieldset id="main_data">
 			<div>
 				<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
