@@ -56,7 +56,7 @@ Session.prototype.verifyStatus = function(oEvent){
 	// Otherwise not.
 	if(this._mIsActive){
 		var oEvent = oEvent || window.event;
-		oEvent.returnValue = 'Abandonar el sistema de esta forma puede causar perdida de datos. Cierre la sesión '
+		oEvent.returnValue = 'Abandonar el sistema de esta forma puede causar perdida de datos. Cierre la sesi&oacute;n '
 				+ 'mediante la opción de logout en el menu principal antes de cerrar la ventana.';
 	}
 }
