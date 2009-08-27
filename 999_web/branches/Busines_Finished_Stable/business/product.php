@@ -826,7 +826,6 @@ class Product extends Identifier{
 	 * @return Product
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return ProductDAM::getInstance($id);
 	}
 	
