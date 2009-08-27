@@ -27,10 +27,10 @@ abstract class GetProductCommand extends GetObjectCommand{
 	
 	/**
 	 * Display failure in case the manufacturer does not exists.
+	 * @param string $msg
 	 */
-	protected function displayFailure(){
+	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Productos');
-		$msg = 'Producto no existe.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
 				'content' => 'product_menu_html.tpl', 'notify' => '1', 'type' => 'error', 'message' => $msg),

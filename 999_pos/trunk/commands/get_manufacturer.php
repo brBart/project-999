@@ -26,15 +26,19 @@ class GetManufacturerCommand extends GetObjectCommand{
 	 * @return variant
 	 */
 	protected function getObject($request){
-		return Manufacturer::getInstance((int)$request->getProperty('id'));
+		$manufacturer = Manufacturer::getInstance((int)$request->getProperty('id'));
+		if(!is_null($manufacturer))
+			return $manufacturer;
+		else
+			throw new Exception('Casa no existe.');
 	}
 	
 	/**
-	 * Display failure in case the manufacturer does not exists.
+	 * Display failure in case the object does not exists or an error occurs.
+	 * @param string $msg
 	 */
-	protected function displayFailure(){
+	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
-		$msg = 'Casa no existe.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
 				'content' => 'manufacturer_menu_html.tpl', 'notify' => '1', 'type' => 'error',

@@ -26,21 +26,24 @@ abstract class GetObjectCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$obj = $this->getObject($request);
-		if(is_null($obj))
-			$this->displayFailure();
-		else{
-			// Verify from which page this location was accessed.
-			$last_cmd = $request->getProperty('last_cmd');
-			if(!is_null($last_cmd)){
-				$page = $request->getProperty('page');
-				$back_query = array('cmd' => $last_cmd, 'page' => $page);
-			}
-			
-			$key = KeyGenerator::generateKey();
-			$helper->setObject($key, $obj);
-			$this->displayObject($key, $obj, $back_query);
+		try{
+			$obj = $this->getObject($request);
+		} catch(Exception $e){
+			$msg = $e->getMessage();
+			$this->displayFailure($msg);
+			return;
 		}
+		
+		// Verify from which page this location was accessed.
+		$last_cmd = $request->getProperty('last_cmd');
+		if(!is_null($last_cmd)){
+			$page = $request->getProperty('page');
+			$back_query = array('cmd' => $last_cmd, 'page' => $page);
+		}
+		
+		$key = KeyGenerator::generateKey();
+		$helper->setObject($key, $obj);
+		$this->displayObject($key, $obj, $back_query);
 	}
 	
 	/**
@@ -51,9 +54,10 @@ abstract class GetObjectCommand extends Command{
 	abstract protected function getObject($request);
 	
 	/**
-	 * Display failure in case the object does not exists.
+	 * Display failure in case the object does not exists or an error occurs.
+	 * @param string $msg
 	 */
-	abstract protected function displayFailure();
+	abstract protected function displayFailure($msg);
 	
 	/**
 	 * Display the form for the object.
