@@ -7,6 +7,9 @@
 	    		Consultar (Orden Alfab&eacute;tico)</a>
 	    </li>
 	    <li>
+	    	<label for="name">Buscar:</label><input name="name" id="name" type="text"/>
+	    </li>
+	    <li>
 	    	<form method="post" action="index.php?cmd=get_product_by_id" onsubmit="return oSession.setIsLink(true);">
 	    		<label for="product_id">C&oacute;digo:</label><input name="id" id="product_id" type="text" value="{$id}" />
 	    		<input type="submit" value="Consultar" />
@@ -18,7 +21,7 @@
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>
-	    <li>
+	    <li id="li_last">
 	    	<form method="post" action="index.php?cmd=get_product_by_supplier" onsubmit="return oSession.setIsLink(true);">
 	    		<label for="supplier_id">Proveedor:</label>
 	    		<select name="supplier_id" id="supplier_id">
@@ -32,12 +35,6 @@
 	    		<label for="product_sku">C&oacute;digo:</label>
 	    		<input name="product_sku" id="product_sku" type="text" value="{$product_sku}" />
 	    		<input type="submit" value="Consultar" />
-	    	</form>
-	    </li>
-	    <li id="li_last">
-	    	<form action="index.php?cmd=search_product&page=1">
-	    		<label for="name">Nombre:</label><input name="name" id="name" type="text"/>
-	    		<input type="submit" value="Buscar" />
 	    	</form>
 	    </li>
 	</ul>
