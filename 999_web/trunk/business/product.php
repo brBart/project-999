@@ -849,8 +849,6 @@ class Product extends Identifier{
 	 * @return integer
 	 */
 	static public function getProductIdBySupplier(Supplier $supplier, $sku){
-		self::validateObjectFromDatabase($supplier);
-		String::validateString($sku, 'Codigo inv&aacute;lido.');
 		return ProductDAM::getIdBySupplier($supplier, $sku);
 	}
 	
