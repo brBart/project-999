@@ -7,8 +7,8 @@
 	    		Consultar (Orden Alfab&eacute;tico)</a>
 	    </li>
 	    <li>
-	    	<form action="index.php?cmd=get_product">
-	    		<label for="product_id">C&oacute;digo:</label><input name="product_id" id="product_id" type="text"/>
+	    	<form method="post" action="index.php?cmd=get_product_by_id" onsubmit="return oSession.setIsLink(true);">
+	    		<label for="product_id">C&oacute;digo:</label><input name="id" id="product_id" type="text"/>
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>

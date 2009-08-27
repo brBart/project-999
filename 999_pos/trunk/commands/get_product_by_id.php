@@ -22,7 +22,9 @@ class GetProductByIdCommand extends GetProductCommand{
 	 * @return variant
 	 */
 	protected function getObject($request){
-		return Product::getInstance((int)$request->getProperty('id'));
+		$id = $request->getProperty('id');
+		if(is_numeric($id))
+			return Product::getInstance((int)$id);
 	}
 }
 ?>
