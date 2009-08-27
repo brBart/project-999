@@ -837,7 +837,6 @@ class Product extends Identifier{
 	 * @return integer
 	 */
 	static public function getProductIdByBarCode($barCode){
-		String::validateString($barCode, 'Codigo de barra inv&aacute;lido.');
 		return ProductDAM::getIdByBarCode($barCode);
 	}
 	
