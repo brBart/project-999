@@ -24,19 +24,6 @@ require_once('business/list.php');
  * @author Roberto Oliveros
  */
 abstract class GetProductCommand extends GetObjectCommand{
-	
-	/**
-	 * Display failure in case the manufacturer does not exists.
-	 * @param string $msg
-	 */
-	protected function displayFailure($msg){
-		$back_trace = array('Inicio', 'Mantenimiento', 'Productos');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
-				'content' => 'product_menu_html.tpl', 'notify' => '1', 'type' => 'error', 'message' => $msg),
-				'site_html.tpl');
-	}
-	
 	/**
 	 * Display the form for the object.
 	 * @param string $key

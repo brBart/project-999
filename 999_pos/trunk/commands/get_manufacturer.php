@@ -22,11 +22,10 @@ require_once('business/product.php');
 class GetManufacturerCommand extends GetObjectCommand{
 	/**
 	 * Gets the desired object.
-	 * @param Request $request
 	 * @return variant
 	 */
-	protected function getObject($request){
-		$manufacturer = Manufacturer::getInstance((int)$request->getProperty('id'));
+	protected function getObject(){
+		$manufacturer = Manufacturer::getInstance((int)$this->_mRequest->getProperty('id'));
 		if(!is_null($manufacturer))
 			return $manufacturer;
 		else
