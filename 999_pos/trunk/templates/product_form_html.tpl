@@ -164,13 +164,13 @@
 		  		onclick="oSave.execute('{$foward_link}');" {if $status eq 1}disabled="disabled"{/if}  />
 		  	<input name="form_widget" id="edit" type="button" value="Editar"
 		  		{if $status eq 1}
-		  			onclick="oEdit.execute('edit_manufacturer', 'name');"
+		  			onclick="oEdit.execute('edit_product', 'name');"
 		  		{else}
 		  			disabled="disabled"
 		  		{/if} />
 		  	<input name="form_widget" id="delete" type="button" value="Eliminar"
 		  		{if $status eq 1}
-		  			onclick="if(confirm('¿Esta seguro que desea eliminar?')) oDelete.execute('delete_manufacturer', '{$back_link}');"
+		  			onclick="if(confirm('&iquest;Esta seguro que desea eliminar?')) oDelete.execute('delete_product', '{$back_link}');"
 		  		{else}
 		  			disabled="disabled"
 		  		{/if} />
