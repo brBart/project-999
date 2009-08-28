@@ -40,8 +40,14 @@ AsyncCommand.prototype.sendRequest = function(sUrlParams){
 	if(this._mRequest.readyState == 4 || this._mRequest.readyState == 0){
 		sUrlParams = Url.addUrlParam(sUrlParams, 'type', 'xml');
 		this._mRequest.open('GET', sUrlParams, true);
+		
+		// Necessary for lexical closure, because of the onreadystatchange call.
+		var oTemp = this
+		this._mRequest.onreadystatechange = function(){
+			oTemp.handleRequestStateChange();
+		}
+		
 		this._mRequest.send(null);
-		this.handleRequestStateChange();
 	}
 	else{
 		// If busy try a little later.
