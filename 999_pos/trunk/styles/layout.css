@@ -100,16 +100,16 @@ input[type="text"], input[type="password"] {
 	margin-bottom: 20px;
 }
 
-#content > div, table {
-	margin: 0 auto;
-}
-
 #footer {
 	clear: both;
 }
 
 #btn_col {
 	width: 1px;
+}
+
+#content > div, table {
+	margin: 0 auto;
 }
 
 #list th, td {
@@ -195,6 +195,10 @@ input[type="text"], input[type="password"] {
 	display: block;
 	float: left;
 	padding: 0 15px;
+}
+
+#search_product > * {
+	float: left;
 }
 
 #prod_supp_tb input[type="text"] {

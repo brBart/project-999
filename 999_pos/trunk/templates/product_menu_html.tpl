@@ -7,7 +7,15 @@
 	    		Consultar (Orden Alfab&eacute;tico)</a>
 	    </li>
 	    <li>
-	    	<label for="name">Buscar:</label><input name="name" id="name" type="text"/>
+	    	<div id="search_product">
+		    	<label for="name">Buscar:</label>
+		    	<div>
+		    		<input name="name" id="name" type="text"/>
+		    		<div id="scroll">
+		    			<div id="suggest"></div>
+		    		</div>
+		    	</div>
+	    	</div>
 	    </li>
 	    <li>
 	    	<form method="post" action="index.php?cmd=get_product_by_id" onsubmit="return oSession.setIsLink(true);">
