@@ -104,6 +104,12 @@ input[type="text"], input[type="password"] {
 	height: 1.5em;
 }
 
+#scroll {
+	position: relative;
+	z-index: 1;
+	overflow: auto;
+}
+
 #footer {
 	clear: both;
 }

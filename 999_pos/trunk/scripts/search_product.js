@@ -10,9 +10,15 @@
  * @param Console oConsole
  * @param Request oRequest
  */
-function SearchProductCommand(oSession, oConsole, oRequest){
+function SearchProduct(oSession, oConsole, oRequest){
 	// Call the parent constructor.
 	Command.call(this, oSession, oConsole, oRequest);
+	
+	/**
+	 * Holds the name of the command on the server.
+	 * @var string
+	 */
+	this._mCmd = 'search_product';
 	
 	/**
 	 * Holds the text input.
@@ -24,7 +30,7 @@ function SearchProductCommand(oSession, oConsole, oRequest){
 	 * Holds the div containing the suggest table.
 	 * @var object
 	 */
-	this._mSuggestDiv = null;
+	this._mScrollDiv = null;
 	
 	/**
 	 * Holds the settimeout id.
@@ -85,18 +91,30 @@ function SearchProductCommand(oSession, oConsole, oRequest){
 	 * @var integer
 	 */
 	this._mSuggestionMaxLength = 30;
+	
+	/**
+	 * The minimum position of the visible suggestions.
+	 * @var integer
+	 */
+	this._mMinVisiblePosition = 0;
+	
+	/**
+	 * The maximum position of the visible suggestions.
+	 * @var integer
+	 */
+	this._mMaxVisiblePosition = 9;
 }
 
 /**
 * Inherit the Command class methods.
 */
-SearchProductCommand.prototype = new Command();
+SearchProduct.prototype = new Command();
 
 /**
  * Sets the text input widget from where the user will input the search query.
  * @param object oTxtWidget
  */
-SearchProductCommand.prototype.init = function(oTxtWidget){
+SearchProduct.prototype.init = function(oTxtWidget){
 	oTemp = this;
 	oTxtWidget.onkeydown = function(oEvent){
 		oTemp.handleKeyDown(oEvent);
@@ -109,7 +127,7 @@ SearchProductCommand.prototype.init = function(oTxtWidget){
 	}
 	
 	this._mTxtWidget = oTxtWidget;
-	this._mSuggestDiv = oTxtWidget.nextSibling;
+	this._mScrollDiv = oTxtWidget.nextSibling;
 	// Initiate the cache.
 	this._mCache = new Object();
 }
@@ -117,7 +135,7 @@ SearchProductCommand.prototype.init = function(oTxtWidget){
 /**
  * Start the timeout cycle for the checkForChanges method.
  */
-SearchProductCommand.prototype.startListening = function(){
+SearchProduct.prototype.startListening = function(){
 	oTemp = this;
 	this._mTimeoutId = setTimeout('oTemp.checkForChanges()', 500);
 }
@@ -125,14 +143,14 @@ SearchProductCommand.prototype.startListening = function(){
 /**
  * Clears the timeout cycle.
  */
-SearchProductCommand.prototype.stopListening = function(){
+SearchProduct.prototype.stopListening = function(){
 	clearTimeout(this._mTimeoutId);
 }
 
 /**
  * Check if the user has change the text in the input text widget.
  */
-SearchProductCommand.prototype.checkForChanges  = function(){
+SearchProduct.prototype.checkForChanges  = function(){
 	// retrieve the keyword object 
 	var keyword = this._mTxtWidget.value;
 	// check to see if the keyword is empty
@@ -158,18 +176,18 @@ SearchProductCommand.prototype.checkForChanges  = function(){
 /**
  * Hide the div containing the suggestions.
  */
-SearchProductCommand.prototype.hideSuggestions = function(){
-	this._mSuggestDiv.visibility = 'hidden';
+SearchProduct.prototype.hideSuggestions = function(){
+	this._mScrollDiv.visibility = 'hidden';
 }
 
 /**
  * Returns a list of results from the keyword suggestions.
  * @param string sKeyword
  */
-SearchProductCommand.prototype.getSuggestions = function(sKeyword){
+SearchProduct.prototype.getSuggestions = function(sKeyword){
 	/* continue if sKeyword isn't null and the last pressed key wasn't up or 
     down */
-	if(sKeyword != "" && !this._mIsKeyUpDownPressed)
+	if(sKeyword != '' && !this._mIsKeyUpDownPressed)
 	{
 		// check to see if the sKeyword is in the cache
 		isInCache = this.checkCache(sKeyword);
@@ -198,7 +216,7 @@ SearchProductCommand.prototype.getSuggestions = function(sKeyword){
 * Send the request to the server.
 * @param string sUrlParams
 */
-SearchProductCommand.prototype.sendRequest = function(sUrlParams){
+SearchProduct.prototype.sendRequest = function(sUrlParams){
 	/* if the XMLHttpRequest object isn't busy with a previous
 	request... */
 	if(this._mRequest.readyState == 4 || this._mRequest.readyState == 0) 
@@ -235,7 +253,7 @@ SearchProductCommand.prototype.sendRequest = function(sUrlParams){
  * longest matching prefixes in the cache and adds them in the cache for the current keyword parameter.
  * @param string sKeyword
  */
-SearchProductCommand.prototype.checkCache = function(sKeyword){
+SearchProduct.prototype.checkCache = function(sKeyword){
 	// check to see if the sKeyword is already in the cache
 	if(this._mCache[sKeyword])
 		return true;
@@ -272,7 +290,7 @@ SearchProductCommand.prototype.checkCache = function(sKeyword){
  * @param string sKeyword
  * @param array values
  */
-SearchProductCommand.prototype.addToCache = function(sKeyword, values){
+SearchProduct.prototype.addToCache = function(sKeyword, values){
 	// create a new array entry in the cache
 	this._mCache[sKeyword] = new Array();
 	// add all the values to the sKeyword's entry in the cache
@@ -285,8 +303,8 @@ SearchProductCommand.prototype.addToCache = function(sKeyword, values){
  * @param string sKeyword
  * @param array resultsArray
  */
-SearchProductCommand.prototype.displayResults = function(sKeyword, resultsArray){
-	// start building the HTML table containing the results  
+SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
+	// start building the HTML table containing the results
 	var div = "<table>"; 
 	// if the searched for sKeyword is not in the cache then add it to the cache
 	if(!this._mCache[sKeyword] && sKeyword)
@@ -316,60 +334,57 @@ SearchProductCommand.prototype.displayResults = function(sKeyword, resultsArray)
 		// loop through all the results and generate the HTML list of results
 		for (var i=0; i<this._mCache[sKeyword].length; i++) 
 		{  
-			// retrieve the current function
-			crtFunction = this._mCache[sKeyword][i];
-			// set the string link for the for the current function 
-			// to the name of the function
-			crtFunctionLink = crtFunction;
-			// replace the _ with - in the string link
-			while(crtFunctionLink.indexOf("_") !=-1)
-				crtFunctionLink = crtFunctionLink.replace("_","-");
-			// start building the HTML row that contains the link to the 
-			// PHP help page of the current function
- 
+			// retrieve the product id
+			crtProductBarCode = this._mCache[sKeyword][i].bar_code;
+			// retrieve the name of the product
+			crtProductName = this._mCache[sKeyword][i].name;
 			div += "<tr id='tr" + i + 
             		"' onclick='location.href=document.getElementById(\"a" + i + 
             		"\").href;' onmouseover='handleOnMouseOver(this);' " + 
             		"onmouseout='handleOnMouseOut(this);'>" + 
             		"<td align='left'><a id='a" + i + 
-            		"' href='" + phpHelpUrl + crtFunctionLink + ".php";
+            		"' href='index.php?cmd=get_product_by_bar_code&bar_code=" + crtProductBarCode;
 			// check to see if the current function name length exceeds the maximum 
 			// number of characters that can be displayed for a function name
-			if(crtFunction.length <= this_mSuggestionMaxLength)
+			if(crtProductName.length <= this._mSuggestionMaxLength)
 			{
 				// bold the matching prefix of the function name and of the sKeyword
-				div += "'><b>" + crtFunction.substring(0, this._mHttpRequestKeyword.length) + "</b>"
-						div += crtFunction.substring(this._mHttpRequestKeyword.length, crtFunction.length) + 
-                         "</a></td></tr>";
+				div += "'><b>" + crtProductName.substring(0, this._mHttpRequestKeyword.length) + "</b>"
+						div += crtProductName.substring(this._mHttpRequestKeyword.length, crtProductName.length) + 
+                         "</a></td>";
 			}
 			else
 			{
 				// check to see if the length of the current sKeyword exceeds 
 				// the maximum number of characters that can be displayed
-				if(this._mHttpRequestKeyword.length < this_mSuggestionMaxLength)
+				if(this._mHttpRequestKeyword.length < this._mSuggestionMaxLength)
 				{
 					/* bold the matching prefix of the function name and that of the 
              		sKeyword */
-					div += "'><b>" + crtFunction.substring(0, this._mHttpRequestKeyword.length) + "</b>"
-							div += crtFunction.substring(this._mHttpRequestKeyword.length, this_mSuggestionMaxLength) + 
-							"</a></td></tr>";
+					div += "'><b>" + crtProductName.substring(0, this._mHttpRequestKeyword.length) + "</b>"
+							div += crtProductName.substring(this._mHttpRequestKeyword.length, this._mSuggestionMaxLength) + 
+							"</a></td>";
 				}
 				else
 				{
 					// bold the entire function name
-					div += "'><b>" + crtFunction.substring(0,this_mSuggestionMaxLength) + "</b></td></tr>";          
+					div += "'><b>" + crtProductName.substring(0,this._mSuggestionMaxLength) + "</b></td>";          
 				}
 			}
+			
+			// retrieve the name of the product
+			crtProductPackaging = this._mCache[sKeyword][i].packaging;
+			div += '<td>' + crtProductPackaging + '</td></tr>';
 		}
 	}
 	// end building the HTML table
 	div += "</table>";
-	var oScroll = document.getElementById("scroll");
+	var oSuggest = document.getElementById("suggest");
 	// scroll to the top of the list
-	oScroll.scrollTop = 0;
+	this._mScrollDiv.scrollTop = 0;
 	// update the suggestions list and make it visible
-	this._mSuggestDiv.innerHTML = div;
-	oScroll.style.visibility = "visible";
+	oSuggest.innerHTML = div;
+	this._mScrollDiv.style.visibility = "visible";
 	// if we had results we apply the type ahead for the current sKeyword
 	if(resultsArray.length > 0)
 		this.autocompleteKeyword();
@@ -378,7 +393,7 @@ SearchProductCommand.prototype.displayResults = function(sKeyword, resultsArray)
 /**
  * Method that autocompletes the typed keyword.
  */
-SearchProductCommand.prototype.autocompleteKeyword = function(){
+SearchProduct.prototype.autocompleteKeyword = function(){
 	// reset the position of the selected suggestion
 	this._mPosition=0;
 	// deselect all suggestions
@@ -396,11 +411,23 @@ SearchProductCommand.prototype.autocompleteKeyword = function(){
 /**
  * Method that removes the style from all suggestions.
  */
-SearchProductCommand.prototype.selectAll = function(){
+SearchProduct.prototype.selectAll = function(){
 	for(i=0; i<this._mSuggestions; i++)
 	{
 		var oCrtTr = document.getElementById("tr" + i);
 	    oCrtTr.className = "";    
+	}
+}
+ 
+/**
+ *  Method that removes the style from all suggestions
+ */
+SearchProduct.prototype.deselectAll = function()
+{ 
+	for(i=0; i<this._mSuggestions; i++)
+	{
+		var oCrtTr = document.getElementById("tr" + i);
+		oCrtTr.className = "";    
 	}
 }
 
@@ -408,7 +435,7 @@ SearchProductCommand.prototype.selectAll = function(){
  * Method that updates the keyword value with the value of the currently selected suggestion.
  * @param object oTr
  */
-SearchProductCommand.prototype.updateKeywordValue = function(oTr){
+SearchProduct.prototype.updateKeywordValue = function(oTr){
 	// retrieve the link for the current function
 	var crtLink = document.getElementById("a" + oTr.id.substring(2,oTr.id.length)).toString();
 	// replace - with _ and leave out the .php extension
@@ -425,7 +452,7 @@ SearchProductCommand.prototype.updateKeywordValue = function(oTr){
  * @param integer start
  * @param integer length
  */
-SearchProductCommand.prototype.selectRange = function(oText, start, length){
+SearchProduct.prototype.selectRange = function(oText, start, length){
 	// check to see if in IE or FF
 	if (oText.createTextRange) 
 	{
@@ -448,7 +475,7 @@ SearchProductCommand.prototype.selectRange = function(oText, start, length){
  * Method that handles the mouse entering over a suggestion's area event.
  * @param object oTr
  */
-SearchProductCommand.prototype.handleOnMouseOver = function(oTr)
+SearchProduct.prototype.handleOnMouseOver = function(oTr)
 {
 	this.deselectAll();
 	oTr.className = "highlightrow";  
@@ -459,7 +486,7 @@ SearchProductCommand.prototype.handleOnMouseOver = function(oTr)
  * Method that handles the mouse exiting a suggestion's area event.
  * @param object oTr
  */
-SearchProductCommand.prototype.handleOnMouseOut = function(oTr)
+SearchProduct.prototype.handleOnMouseOut = function(oTr)
 {
 	oTr.className = "";   
 	this._mPosition = -1;
@@ -469,7 +496,7 @@ SearchProductCommand.prototype.handleOnMouseOut = function(oTr)
 * Method for displaying success.
 * @param DocumentElement xmlDoc
 */
-SearchProductCommand.prototype.displaySuccess = function(xmlDoc){
+SearchProduct.prototype.displaySuccess = function(xmlDoc){
 	// initialize the new array of functions' names
 	nameArray = new Array();
 	// check to see if we have any results for the searched keyword
@@ -478,7 +505,7 @@ SearchProductCommand.prototype.displaySuccess = function(xmlDoc){
 	{
 		/* we retrieve the new functions' names from the document element as 
        	an array */
-		nameArray= this.xmlToArray(xmlDoc.getElementsByTagName("name"));       
+		nameArray= this.xmlToArray(xmlDoc.getElementsByTagName('result'));       
 	}
 	// check to see if other keywords are already being searched for
 	if(this._mHttpRequestKeyword == this._mUserKeyword)    
@@ -494,13 +521,116 @@ SearchProductCommand.prototype.displaySuccess = function(xmlDoc){
 	}
 }
 
-
-SearchProductCommand.prototype.xmlToArray = function(){
+/**
+ * Transforms all the children of an xml node into an array.
+ * @param Xml resultsXml
+ */
+SearchProduct.prototype.xmlToArray = function(resultsXml){
 	// initiate the resultsArray
-	  var resultsArray= new Array();  
-	  // loop through all the xml nodes retrieving the content  
-	  for(i=0;i<resultsXml.length;i++)
-	    resultsArray[i]=resultsXml.item(i).firstChild.data;
-	  // return the node's content as an array
-	  return resultsArray;
+	var resultsArray = new Array();  
+	// loop through all the xml nodes retrieving the content
+	for(i=0;i<resultsXml.length;i++){
+		resultsArray[i] = {};
+		resultsArray[i].bar_code = resultsXml.item(i).getElementsByTagName('bar_code')[0].firstChild.data;
+		resultsArray[i].name = resultsXml.item(i).getElementsByTagName('name')[0].firstChild.data;
+		resultsArray[i].packaging = resultsXml.item(i).getElementsByTagName('packaging')[0].firstChild.data;
+	}
+	// return the node's content as an array
+	return resultsArray;
+}
+
+/**
+ * Method that handles the keys that are pressed.
+ * @param object oEvent
+ */
+SearchProduct.prototype.handleKeyDown = function(oEvent){
+	// get the event
+	oEvent = (!oEvent) ? window.event : oEvent;
+	// get the character code of the pressed button
+	code = (oEvent.keyCode) ? oEvent.keyCode :
+			((oEvent.which) ? oEvent.which : 0);
+	// check to see if the event was keyup
+	if (oEvent.type == "keydown") 
+	{    
+		this._mIsKeyUpDownPressed =false; 
+		// check to see we if are interested in the current character
+		if ((code < 13 && code != 8) || 
+				(code >=14 && code < 32) || 
+				(code >= 33 && code <= 46 && code != 38 && code != 40) || 
+				(code >= 112 && code <= 123)) 
+		{
+			// simply ignore non-interesting characters
+		}
+		else
+			/* if Enter is pressed we jump to the PHP help page of the current 
+       		function */
+			if(code == 13)
+			{
+				// check to see if any function is currently selected
+				if(this._mPosition>=0)
+				{
+					location.href = document.getElementById("a" + this._mPosition).href;
+				}        
+			}        
+			else
+				// if the down arrow is pressed we go to the next suggestion
+				if(code == 40)
+				{                   
+					newTR=document.getElementById("tr"+(++this._mPosition));
+					oldTR=document.getElementById("tr"+(--this._mPosition));
+					// deselect the old selected suggestion   
+					if(this._mPosition>=0 && this._mPosition<this._mSuggestions-1)
+						oldTR.className = "";
+ 
+					// select the new suggestion and update the keyword
+					if(this._mPosition < this._mSuggestions - 1)
+					{
+						newTR.className = "highlightrow";
+						this.updateKeywordValue(newTR);
+						this._mPosition++;         
+					}     
+					oEvent.cancelBubble = true;
+					oEvent.returnValue = false;
+					this._mIsKeyUpDownPressed = true;        
+					// scroll down if the current window is no longer valid
+					if(this._mPosition > this._mMaxVisiblePosition)
+					{   
+						this._mScrollDiv.scrollTop += 18;
+						this._mMaxVisiblePosition += 1;
+						this._mMinVisiblePosition += 1;
+					}
+				}
+				else
+					// if the up arrow is pressed we go to the previous suggestion
+					if(code == 38)
+					{       
+						newTR=document.getElementById("tr"+(--this._mPosition));
+						oldTR=document.getElementById("tr"+(++this._mPosition));
+						// deselect the old selected this._mPosition
+						if(this._mPosition>=0 && this._mPosition <= this._mSuggestions - 1)
+						{       
+							oldTR.className = "";
+						}
+						// select the new suggestion and update the keyword
+						if(this._mPosition > 0)
+						{
+							newTR.className = "highlightrow";
+							this.updateKeywordValue(newTR);
+							this._mPosition--;
+							// scroll up if the current window is no longer valid
+							if(this._mPosition<this._mMinVisiblePosition)
+							{
+								this._mScrollDiv.scrollTop -= 18;
+								this._mMaxVisiblePosition -= 1;
+								this._mMinVisiblePosition -= 1;
+							}   
+						}     
+						else
+							if(this._mPosition == 0)
+								this._mPosition--;
+						oEvent.cancelBubble = true;
+						oEvent.returnValue = false;
+						this._mIsKeyUpDownPressed = true;  
+					}     
+	}
 }

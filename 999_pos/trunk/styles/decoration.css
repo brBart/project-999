@@ -99,6 +99,18 @@ a:hover {
 	border-width: 1px;
 }
 
+#scroll {
+	/*visibility: hidden;*/
+	background-color: white;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-bottom-style: solid;
+	border-collapse: collapse;
+	border-color: #000000;
+	border-width: 1px;
+}
+
 #list td {
 	border-bottom-style: solid;
 	border-color: #00067F;
