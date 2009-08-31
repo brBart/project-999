@@ -128,6 +128,7 @@ SearchProduct.prototype.init = function(oTxtWidget){
 	
 	this._mTxtWidget = oTxtWidget;
 	this._mScrollDiv = oTxtWidget.nextSibling.nextSibling;
+	oTxtWidget.setAttribute('autocomplete', 'off');
 	// Initiate the cache.
 	this._mCache = new Object();
 }
@@ -339,20 +340,16 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 			crtProductBarCode = this._mCache[sKeyword][i].bar_code;
 			// retrieve the name of the product
 			crtProductName = this._mCache[sKeyword][i].name;
-			div += "<tr id='tr" + i + 
-            		"' onclick='location.href=document.getElementById(\"a" + i + 
-            		"\").href;' onmouseover='oSearchProduct.handleOnMouseOver(this);' " + 
-            		"onmouseout='oSearchProduct.handleOnMouseOut(this);'>" + 
-            		"<td><a id='" + i + "-" + crtProductName + 
-            		"' href='index.php?cmd=get_product_by_bar_code&bar_code=" + crtProductBarCode;
+			div += '<tr id="tr' + i + '" onclick="oSession.loadHref(\'index.php?cmd=get_product_by_bar_code&bar_code=' + crtProductBarCode +'\' );" ' + 
+					'onmouseover="oSearchProduct.handleOnMouseOver(this);" onmouseout="oSearchProduct.handleOnMouseOut(this);">' +
+					'<td id="' + i + '-' + crtProductName + '">';
 			// check to see if the current function name length exceeds the maximum 
 			// number of characters that can be displayed for a function name
 			if(crtProductName.length <= this._mSuggestionMaxLength)
 			{
 				// bold the matching prefix of the function name and of the sKeyword
-				div += "'><b>" + crtProductName.substring(0, this._mHttpRequestKeyword.length) + "</b>"
-						div += crtProductName.substring(this._mHttpRequestKeyword.length, crtProductName.length) + 
-                         "</a></td>";
+				div += '<b>' + crtProductName.substring(0, this._mHttpRequestKeyword.length) + '</b>';
+				div += crtProductName.substring(this._mHttpRequestKeyword.length, crtProductName.length) + '</td>';
 			}
 			else
 			{
@@ -362,14 +359,14 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 				{
 					/* bold the matching prefix of the function name and that of the 
              		sKeyword */
-					div += "'><b>" + crtProductName.substring(0, this._mHttpRequestKeyword.length) + "</b>"
-							div += crtProductName.substring(this._mHttpRequestKeyword.length, this._mSuggestionMaxLength) + 
-							"</a></td>";
+					div += '<b>' + crtProductName.substring(0, this._mHttpRequestKeyword.length) + '</b>';
+					div += crtProductName.substring(this._mHttpRequestKeyword.length, this._mSuggestionMaxLength) + 
+							'</td>';
 				}
 				else
 				{
 					// bold the entire function name
-					div += "'><b>" + crtProductName.substring(0,this._mSuggestionMaxLength) + "</b></td>";          
+					div += '<b>' + crtProductName.substring(0,this._mSuggestionMaxLength) + '</b></td>';          
 				}
 			}
 			
@@ -379,7 +376,8 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 		}
 	}
 	// end building the HTML table
-	div += "</table>";
+	div += '</table>';
+	alert(div);
 	var oSuggest = document.getElementById("suggest");
 	// scroll to the top of the list
 	this._mScrollDiv.scrollTop = 0;
@@ -438,7 +436,7 @@ SearchProduct.prototype.deselectAll = function()
  */
 SearchProduct.prototype.updateKeywordValue = function(oTr){
 	// retrieve the link for the current function
-	var oElement = oTr.getElementsByTagName('A')[0];
+	var oElement = oTr.getElementsByTagName('TD')[0];
 	var crtLink = oElement.id.substring(oElement.id.indexOf('-') + 1);
 	// update the keyword's value
 	this._mTxtWidget.value = unescape(crtLink);
@@ -567,8 +565,10 @@ SearchProduct.prototype.handleKeyDown = function(oEvent){
 				// check to see if any function is currently selected
 				if(this._mPosition>=0)
 				{
-					location.href = document.getElementById("a" + this._mPosition).href;
-				}        
+					// TODO: Get the TD id link.
+					var oTr = document.getElementById('tr' + this._mPosition);
+					oSession.loadHref(oTr.getElementsByTagName('A')[0].href);
+				}
 			}        
 			else
 				// if the down arrow is pressed we go to the next suggestion
