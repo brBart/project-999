@@ -127,7 +127,7 @@ SearchProduct.prototype.init = function(oTxtWidget){
 	}
 	
 	this._mTxtWidget = oTxtWidget;
-	this._mScrollDiv = oTxtWidget.nextSibling;
+	this._mScrollDiv = oTxtWidget.nextSibling.nextSibling;
 	// Initiate the cache.
 	this._mCache = new Object();
 }
@@ -145,6 +145,7 @@ SearchProduct.prototype.startListening = function(){
  */
 SearchProduct.prototype.stopListening = function(){
 	clearTimeout(this._mTimeoutId);
+	this.hideSuggestions();
 }
 
 /**
@@ -177,7 +178,7 @@ SearchProduct.prototype.checkForChanges  = function(){
  * Hide the div containing the suggestions.
  */
 SearchProduct.prototype.hideSuggestions = function(){
-	this._mScrollDiv.visibility = 'hidden';
+	this._mScrollDiv.style.visibility = 'hidden';
 }
 
 /**
@@ -273,7 +274,7 @@ SearchProduct.prototype.checkCache = function(sKeyword){
 			// try to find all matching results starting with the current prefix
 			for(j=0;j<cacheResults.length;j++)
 			{
-				if(cacheResults[j].indexOf(sKeyword) == 0)               
+				if(cacheResults[j].name.indexOf(sKeyword) == 0)               
 					keywordResults[keywordResultsSize++] = cacheResults[j];
 			}      
 			// add all the sKeyword's prefix results to the cache
@@ -340,9 +341,9 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 			crtProductName = this._mCache[sKeyword][i].name;
 			div += "<tr id='tr" + i + 
             		"' onclick='location.href=document.getElementById(\"a" + i + 
-            		"\").href;' onmouseover='handleOnMouseOver(this);' " + 
-            		"onmouseout='handleOnMouseOut(this);'>" + 
-            		"<td align='left'><a id='a" + i + 
+            		"\").href;' onmouseover='oSearchProduct.handleOnMouseOver(this);' " + 
+            		"onmouseout='oSearchProduct.handleOnMouseOut(this);'>" + 
+            		"<td><a id='" + i + "-" + crtProductName + 
             		"' href='index.php?cmd=get_product_by_bar_code&bar_code=" + crtProductBarCode;
 			// check to see if the current function name length exceeds the maximum 
 			// number of characters that can be displayed for a function name
@@ -437,13 +438,10 @@ SearchProduct.prototype.deselectAll = function()
  */
 SearchProduct.prototype.updateKeywordValue = function(oTr){
 	// retrieve the link for the current function
-	var crtLink = document.getElementById("a" + oTr.id.substring(2,oTr.id.length)).toString();
-	// replace - with _ and leave out the .php extension
- 
-	crtLink = crtLink.replace("-", "_");
-	crtLink = crtLink.substring(0, crtLink.length - 4);
+	var oElement = oTr.getElementsByTagName('A')[0];
+	var crtLink = oElement.id.substring(oElement.id.indexOf('-') + 1);
 	// update the keyword's value
-	this._mTxtWidget.value = unescape(crtLink.substring(phpHelpUrl.length, crtLink.length));
+	this._mTxtWidget.value = unescape(crtLink);
 }
 
 /**

@@ -100,7 +100,7 @@ a:hover {
 }
 
 #scroll {
-	/*visibility: hidden;*/
+	visibility: hidden;
 	background-color: white;
 	border-top-style: solid;
 	border-right-style: solid;
