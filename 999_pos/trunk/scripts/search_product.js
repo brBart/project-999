@@ -103,6 +103,12 @@ function SearchProduct(oSession, oConsole, oRequest){
 	 * @var integer
 	 */
 	this._mMaxVisiblePosition = 9;
+	
+	/**
+	 * Flag that indicates if the listening cycle has started.
+	 * @var boolean
+	 */
+	this._mIsListening = false;
 }
 
 /**
@@ -115,6 +121,12 @@ SearchProduct.prototype = new Command();
  * @param object oTxtWidget
  */
 SearchProduct.prototype.init = function(oTxtWidget){
+	this._mTxtWidget = oTxtWidget;
+	this._mScrollDiv = oTxtWidget.nextSibling.nextSibling;
+	oTxtWidget.setAttribute('autocomplete', 'off');
+	// Initiate the cache.
+	this._mCache = new Object();
+	
 	oTemp = this;
 	oTxtWidget.onkeydown = function(oEvent){
 		oTemp.handleKeyDown(oEvent);
@@ -122,31 +134,40 @@ SearchProduct.prototype.init = function(oTxtWidget){
 	oTxtWidget.onfocus = function(){
 		oTemp.startListening();
 	}
-	oTxtWidget.onblur = function(){
-		oTemp.stopListening();
-	}
-	
-	this._mTxtWidget = oTxtWidget;
-	this._mScrollDiv = oTxtWidget.nextSibling.nextSibling;
-	oTxtWidget.setAttribute('autocomplete', 'off');
-	// Initiate the cache.
-	this._mCache = new Object();
 }
 
 /**
  * Start the timeout cycle for the checkForChanges method.
  */
 SearchProduct.prototype.startListening = function(){
-	oTemp = this;
-	this._mTimeoutId = setTimeout('oTemp.checkForChanges()', 500);
+	if(!this._mIsListening){
+		oDiv = document.getElementById('search_product');
+			
+		oDiv.onclick = function(oEvent){
+			oTemp.divHandleClick(oEvent);
+		}
+		document.onclick = function(oEvent){
+			oTemp.documentHandleClick(oEvent);
+		}
+		
+		oTemp = this;
+		this._mIsListening = true;
+		this._mTimeoutId = setTimeout('oTemp.checkForChanges()', 500);
+	}
 }
  
 /**
  * Clears the timeout cycle.
  */
 SearchProduct.prototype.stopListening = function(){
+	oDiv = document.getElementById('search_product');
+	 	
+ 	oDiv.onclick = null;
+ 	document.onclick = null;
+	 
 	clearTimeout(this._mTimeoutId);
 	this.hideSuggestions();
+	this._mIsListening = false;
 }
 
 /**
@@ -287,8 +308,6 @@ SearchProduct.prototype.sendRequest = function(sUrlParams){
 	// if the XMLHttpRequest object is busy...
 	else
 	{
-		// retain the sKeyword the user wanted             
-		this._mUserKeyword = sKeyword;
 		// clear any previous timeouts already set
 		if(this._mTimeoutId != 0){
 			clearTimeout(this._mTimeoutId);
@@ -296,7 +315,7 @@ SearchProduct.prototype.sendRequest = function(sUrlParams){
 		}
 		// try again in 0.5 seconds
 		oTemp = this;
-		this._mTimeoutId = setTimeout('oTemp.getSuggestions(' + this._mUserKeyword + ');', 500);
+		this._mTimeoutId = setTimeout('oTemp.getSuggestions(\'' + this._mUserKeyword + '\');', 500);
 	}
 }
 
@@ -343,7 +362,7 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 	// if the array of results is empty display a message
 	if(resultsArray.length == 0)
 	{
-		div += '<tr><td>No resultados para <strong>' + sKeyword + '</strong></td></tr>';
+		div += '<tr><td>No hay resultados para <strong>' + sKeyword + '</strong></td></tr>';
 		// set the flag indicating that no results have been found 
 		// and reset the counter for results
 		this._mHasResults = false;
@@ -543,6 +562,7 @@ SearchProduct.prototype.handleKeyDown = function(oEvent){
 	// get the character code of the pressed button
 	code = (oEvent.keyCode) ? oEvent.keyCode :
 			((oEvent.which) ? oEvent.which : 0);
+	
 	// check to see if the event was keyup
 	if (oEvent.type == 'keydown') 
 	{    
@@ -617,5 +637,26 @@ SearchProduct.prototype.handleKeyDown = function(oEvent){
 			oEvent.returnValue = false;
 			this._mIsKeyUpDownPressed = true;  
 		}
+		
+		// If the tab key was pressed.
+		if(code == 9)
+			this.stopListening();
 	}
+}
+ 
+/**
+ * Handles click on all the div area.
+ * @param Event oEvent
+ */
+SearchProduct.prototype.divHandleClick = function(oEvent){
+ 	oEvent = (!oEvent) ? window.event : oEvent;
+ 	oEvent.cancelBubble = true;
+}
+  
+/**
+ * If anything but the div area was click, stop listening.
+ * @param Event oEvent
+ */
+SearchProduct.prototype.documentHandleClick = function(oEvent){
+ 	this.stopListening();
 }
