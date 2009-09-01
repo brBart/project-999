@@ -372,12 +372,11 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 			
 			// retrieve the name of the product
 			crtProductPackaging = this._mCache[sKeyword][i].packaging;
-			div += '<td>' + crtProductPackaging + '</td></tr>';
+			div += '<td id="' + crtProductBarCode + '">' + crtProductPackaging + '</td></tr>';
 		}
 	}
 	// end building the HTML table
 	div += '</table>';
-	alert(div);
 	var oSuggest = document.getElementById("suggest");
 	// scroll to the top of the list
 	this._mScrollDiv.scrollTop = 0;
@@ -565,9 +564,9 @@ SearchProduct.prototype.handleKeyDown = function(oEvent){
 				// check to see if any function is currently selected
 				if(this._mPosition>=0)
 				{
-					// TODO: Get the TD id link.
 					var oTr = document.getElementById('tr' + this._mPosition);
-					oSession.loadHref(oTr.getElementsByTagName('A')[0].href);
+					var crtLink = oTr.getElementsByTagName('TD')[1].id;
+					oSession.loadHref('index.php?cmd=get_product_by_bar_code&bar_code=' + crtLink);
 				}
 			}        
 			else
