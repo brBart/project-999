@@ -206,7 +206,7 @@ SearchProduct.prototype.checkCache = function(sKeyword){
 	if(this._mCache[sKeyword])
 		return true;
 	// try to find the biggest prefixes
-	for(i = sKeyword.length-2; i >= 0; i--)
+	for(i = sKeyword.length - 2; i >= 0; i--)
 	{
 		// compute the current prefix sKeyword 
 		var currentKeyword = sKeyword.substring(0, i + 1);
@@ -268,8 +268,8 @@ SearchProduct.prototype.getSuggestions = function(sKeyword){
 		if(isInCache == true)          
 		{   
 			// retrieve the results from the cache          
-			this._mHttpRequestKeyword=sKeyword;
-			this._mUserKeyword=sKeyword;     
+			this._mHttpRequestKeyword = sKeyword;
+			this._mUserKeyword = sKeyword;     
 			// display the results in the cache
 			this.displayResults(sKeyword, this._mCache[sKeyword]);                          
 		}
