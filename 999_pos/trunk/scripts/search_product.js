@@ -39,6 +39,12 @@ function SearchProduct(oSession, oConsole, oRequest){
 	this._mTimeoutId = 0;
 	
 	/**
+	 * Holds the setinterval id.
+	 * @var integer
+	 */
+	this._mIntervalId = 0;
+	
+	/**
 	 * Holds the last keyword for which suggests have been requested.
 	 * @var string
 	 */
@@ -151,10 +157,9 @@ SearchProduct.prototype.startListening = function(){
 		}
 		
 		oTemp = this;
+		this._mIntervalId = setInterval('oTemp.checkForChanges()', 500);
 		this._mIsListening = true;
 	}
-	// TODO: check this one!!
-	this._mTimeoutId = setTimeout('oTemp.checkForChanges()', 500);
 }
  
 /**
@@ -166,7 +171,7 @@ SearchProduct.prototype.stopListening = function(){
  	oDiv.onclick = null;
  	document.onclick = null;
 	 
-	clearTimeout(this._mTimeoutId);
+	clearInterval(this._mIntervalId);
 	this.hideSuggestions();
 	this._mIsListening = false;
 }
@@ -186,9 +191,7 @@ SearchProduct.prototype.checkForChanges  = function(){
 	  this._mUserKeyword = '';
 	  this._mHttpRequestKeyword = '';
 	}
-	// set the timer for a new check 
-	oTemp = this;
-	this._mTimeoutId = setTimeout('oTemp.checkForChanges()', 500);
+	
 	// check to see if there are any changes
 	if((this._mUserKeyword != keyword) && 
 	   (this._mAutocompletedKeyword != keyword) && 
@@ -310,10 +313,9 @@ SearchProduct.prototype.sendRequest = function(sUrlParams){
 	else
 	{
 		// clear any previous timeouts already set
-		if(this._mTimeoutId != 0){
+		if(this._mTimeoutId != 0)
 			clearTimeout(this._mTimeoutId);
-			this._mTimeoutId = 0;
-		}
+
 		// try again in 0.5 seconds
 		oTemp = this;
 		this._mTimeoutId = setTimeout('oTemp.getSuggestions(\'' + this._mUserKeyword + '\');', 500);
