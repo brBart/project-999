@@ -152,8 +152,9 @@ SearchProduct.prototype.startListening = function(){
 		
 		oTemp = this;
 		this._mIsListening = true;
-		this._mTimeoutId = setTimeout('oTemp.checkForChanges()', 500);
 	}
+	// TODO: check this one!!
+	this._mTimeoutId = setTimeout('oTemp.checkForChanges()', 500);
 }
  
 /**
@@ -221,7 +222,7 @@ SearchProduct.prototype.checkCache = function(sKeyword){
  			// try to find all matching results starting with the current prefix
  			for(j = 0; j < cacheResults.length; j++)
  			{
- 				if(cacheResults[j].name.indexOf(sKeyword) == 0)               
+ 				if(cacheResults[j].name.toUpperCase().indexOf(sKeyword.toUpperCase()) == 0)
  					keywordResults[keywordResultsSize++] = cacheResults[j];
  			}      
  			// add all the sKeyword's prefix results to the cache
