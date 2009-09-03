@@ -75,12 +75,6 @@ function SearchProduct(oSession, oConsole, oRequest){
 	this._mAutocompletedKeyword = '';
 	
 	/**
-	 * Flag that indicates if there are results for the current requested keyword.
-	 * @var boolean
-	 */
-	this._mHasResults = false;
-	
-	/**
 	 * Number of suggestions received as results for the keyword.
 	 * @var integer
 	 */
@@ -190,6 +184,7 @@ SearchProduct.prototype.checkForChanges  = function(){
 	  // reset the keywords 
 	  this._mUserKeyword = '';
 	  this._mHttpRequestKeyword = '';
+	  this._mPosition = -1;
 	}
 	
 	// check to see if there are any changes
@@ -330,13 +325,13 @@ SearchProduct.prototype.sendRequest = function(sKeyword){
 * @param DocumentElement xmlDoc
 */
 SearchProduct.prototype.displaySuccess = function(xmlDoc){
-	// initialize the new array of functions' names
+	// initialize the new array of products' data
 	nameArray = new Array();
 	// check to see if we have any results for the searched keyword
  
 	if(xmlDoc.childNodes.length)
 	{
-		/* we retrieve the new functions' names from the document element as 
+		/* we retrieve the new products' data from the document element as 
        	an array */
 		nameArray = this.xmlToArray(xmlDoc.getElementsByTagName('result'));       
 	}
@@ -368,11 +363,10 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 	// if the array of results is empty display a message
 	if(resultsArray.length == 0)
 	{
-		div += '<tr><td>No hay resultados para <strong>' + sKeyword + '</strong></td></tr>';
-		// set the flag indicating that no results have been found 
+		div += '<tr><td>No hay resultados para <strong>' + sKeyword + '</strong></td></tr>'; 
 		// and reset the counter for results
-		this._mHasResults = false;
 		this._mSuggestions = 0;
+		this._mPosition = -1;
 	}
 	// display the results
 	else
@@ -381,9 +375,6 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 		this._mPosition = -1;
 		// resets the flag indicating whether the up or down key has been pressed
 		this._mIsKeyUpDownPressed = false;
-		/* sets the flag indicating that there are results for the searched 
-       	for sKeyword */
-		this._mHasResults = true;
 		// get the number of results from the cache
 		this._mSuggestions = this._mCache[sKeyword].length;
 		// loop through all the results and generate the HTML list of results
@@ -396,11 +387,11 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 			div += '<tr id="tr' + i + '" onclick="oSession.loadHref(\'index.php?cmd=get_product_by_bar_code&bar_code=' + crtProductBarCode +'\' );" ' + 
 					'onmouseover="oSearchProduct.handleOnMouseOver(this);" onmouseout="oSearchProduct.handleOnMouseOut(this);">' +
 					'<td id="' + i + '-' + crtProductName + '">';
-			// check to see if the current function name length exceeds the maximum 
-			// number of characters that can be displayed for a function name
+			// check to see if the current product name length exceeds the maximum 
+			// number of characters that can be displayed for a product name
 			if(crtProductName.length <= this._mSuggestionMaxLength)
 			{
-				// bold the matching prefix of the function name and of the sKeyword
+				// bold the matching prefix of the product name and of the sKeyword
 				div += '<b>' + crtProductName.substring(0, this._mHttpRequestKeyword.length) + '</b>';
 				div += crtProductName.substring(this._mHttpRequestKeyword.length, crtProductName.length) + '</td>';
 			}
@@ -410,7 +401,7 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 				// the maximum number of characters that can be displayed
 				if(this._mHttpRequestKeyword.length < this._mSuggestionMaxLength)
 				{
-					/* bold the matching prefix of the function name and that of the 
+					/* bold the matching prefix of the product name and that of the 
              		sKeyword */
 					div += '<b>' + crtProductName.substring(0, this._mHttpRequestKeyword.length) + '</b>';
 					div += crtProductName.substring(this._mHttpRequestKeyword.length, this._mSuggestionMaxLength) + 
@@ -418,12 +409,12 @@ SearchProduct.prototype.displayResults = function(sKeyword, resultsArray){
 				}
 				else
 				{
-					// bold the entire function name
+					// bold the entire product name
 					div += '<b>' + crtProductName.substring(0, this._mSuggestionMaxLength) + '</b></td>';          
 				}
 			}
 			
-			// retrieve the name of the product
+			// retrieve the packaging of the product
 			crtProductPackaging = this._mCache[sKeyword][i].packaging;
 			div += '<td id="' + crtProductBarCode + '">' + crtProductPackaging + '</td></tr>';
 		}
@@ -505,7 +496,7 @@ SearchProduct.prototype.deselectAll = function()
  * @param object oTr
  */
 SearchProduct.prototype.updateKeywordValue = function(oTr){
-	// retrieve the link for the current function
+	// retrieve the link for the current product
 	var oElement = oTr.getElementsByTagName('TD')[0];
 	var crtLink = oElement.id.substring(oElement.id.indexOf('-') + 1);
 	// update the keyword's value
@@ -573,10 +564,10 @@ SearchProduct.prototype.handleKeyDown = function(oEvent){
 	if (oEvent.type == 'keydown') 
 	{    
 		this._mIsKeyUpDownPressed = false; 
-		/* if Enter is pressed we jump to the PHP help page of the current 
-   		function */
+		/* if Enter is pressed we jump to the page of the current 
+   		product */
 		if(code == 13)
-			// check to see if any function is currently selected
+			// check to see if any product is currently selected
 			if(this._mPosition >= 0)
 			{
 				var oTr = document.getElementById('tr' + this._mPosition);
