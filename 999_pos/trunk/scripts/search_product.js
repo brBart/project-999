@@ -48,7 +48,7 @@ function SearchProduct(oSession, oConsole, oRequest){
 	 * Holds the last keyword for which suggests have been requested.
 	 * @var string
 	 */
-	this._mUserKeyword = '';
+	this.mUserKeyword = '';
 	
 	/**
 	 * Holds the keyword for which an HTTP request has been initiated.
@@ -182,13 +182,13 @@ SearchProduct.prototype.checkForChanges  = function(){
 	  // hide the suggestions
 	  this.hideSuggestions();
 	  // reset the keywords 
-	  this._mUserKeyword = '';
+	  this.mUserKeyword = '';
 	  this._mHttpRequestKeyword = '';
 	  this._mPosition = -1;
 	}
 	
 	// check to see if there are any changes
-	if((this._mUserKeyword != keyword) && 
+	if((this.mUserKeyword != keyword) && 
 	   (this._mAutocompletedKeyword != keyword) && 
 	   (!this._mIsKeyUpDownPressed))
 	  // update the suggestions
@@ -268,7 +268,7 @@ SearchProduct.prototype.getSuggestions = function(sKeyword){
 		{   
 			// retrieve the results from the cache          
 			this._mHttpRequestKeyword = sKeyword;
-			this._mUserKeyword = sKeyword;     
+			this.mUserKeyword = sKeyword;     
 			// display the results in the cache
 			this.displayResults(sKeyword, this._mCache[sKeyword]);                          
 		}
@@ -290,7 +290,7 @@ SearchProduct.prototype.sendRequest = function(sKeyword){
 	if(this._mRequest.readyState == 4 || this._mRequest.readyState == 0) 
 	{
 		this._mHttpRequestKeyword = sKeyword;
-		this._mUserKeyword = sKeyword;
+		this.mUserKeyword = sKeyword;
 		
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
 		str = Url.addUrlParam(str, 'search_str', sKeyword);
@@ -308,7 +308,7 @@ SearchProduct.prototype.sendRequest = function(sKeyword){
 	// if the XMLHttpRequest object is busy...
 	else
 	{
-		this._mUserKeyword = sKeyword;
+		this.mUserKeyword = sKeyword;
 		
 		// clear any previous timeouts already set
 		if(this._mTimeoutId != 0)
@@ -316,7 +316,7 @@ SearchProduct.prototype.sendRequest = function(sKeyword){
 
 		// try again in 0.5 seconds
 		oTemp = this;
-		this._mTimeoutId = setTimeout('oTemp.getSuggestions(\'' + this._mUserKeyword + '\');', 500);
+		this._mTimeoutId = setTimeout('oTemp.getSuggestions(oTemp.mUserKeyword);', 500);
 	}
 }
 
@@ -336,7 +336,7 @@ SearchProduct.prototype.displaySuccess = function(xmlDoc){
 		nameArray = this.xmlToArray(xmlDoc.getElementsByTagName('result'));       
 	}
 	// check to see if other keywords are already being searched for
-	if(this._mHttpRequestKeyword == this._mUserKeyword)    
+	if(this._mHttpRequestKeyword == this.mUserKeyword)    
 	{
 		// display the results array
 		this.displayResults(this._mHttpRequestKeyword, nameArray);
@@ -455,7 +455,7 @@ SearchProduct.prototype.xmlToArray = function(resultsXml){
  */
 SearchProduct.prototype.autocompleteKeyword = function(){
 	// reset the position of the selected suggestion
-	this._mPosition=0;
+	this._mPosition = 0;
 	// deselect all suggestions
 	this.deselectAll();
 	// highlight the selected suggestion 
@@ -466,17 +466,6 @@ SearchProduct.prototype.autocompleteKeyword = function(){
 	this.selectRange(this._mTxtWidget, this._mHttpRequestKeyword.length, this._mTxtWidget.value.length);  
 	// set the autocompleted word to the keyword's value
 	this._mAutocompletedKeyword = this._mTxtWidget.value;
-}
-
-/**
- * Method that removes the style from all suggestions.
- */
-SearchProduct.prototype.selectAll = function(){
-	for(i = 0; i < this._mSuggestions; i++)
-	{
-		var oCrtTr = document.getElementById('tr' + i);
-	    oCrtTr.className = '';    
-	}
 }
  
 /**
