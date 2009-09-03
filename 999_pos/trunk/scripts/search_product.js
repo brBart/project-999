@@ -280,11 +280,7 @@ SearchProduct.prototype.getSuggestions = function(sKeyword){
 		// if the sKeyword isn't in cache, make an HTTP request
 		else    
 		{
-			this._mHttpRequestKeyword = sKeyword;
-			this._mUserKeyword = sKeyword;
-			var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
-			str = Url.addUrlParam(str, 'search_str', sKeyword);
-			this.sendRequest(str);
+			this.sendRequest(sKeyword);
 		}
 	}
 }
@@ -293,13 +289,18 @@ SearchProduct.prototype.getSuggestions = function(sKeyword){
 * Send the request to the server.
 * @param string sUrlParams
 */
-SearchProduct.prototype.sendRequest = function(sUrlParams){
+SearchProduct.prototype.sendRequest = function(sKeyword){
 	/* if the XMLHttpRequest object isn't busy with a previous
 	request... */
 	if(this._mRequest.readyState == 4 || this._mRequest.readyState == 0) 
-	{    
-		sUrlParams = Url.addUrlParam(sUrlParams, 'type', 'xml');
-		this._mRequest.open('GET', sUrlParams, true);
+	{
+		this._mHttpRequestKeyword = sKeyword;
+		this._mUserKeyword = sKeyword;
+		
+		var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
+		str = Url.addUrlParam(str, 'search_str', sKeyword);
+		str = Url.addUrlParam(str, 'type', 'xml');
+		this._mRequest.open('GET', str, true);
 		
 		// Necessary for lexical closure, because of the onreadystatchange call.
 		var oTemp = this
@@ -312,6 +313,8 @@ SearchProduct.prototype.sendRequest = function(sUrlParams){
 	// if the XMLHttpRequest object is busy...
 	else
 	{
+		this._mUserKeyword = sKeyword;
+		
 		// clear any previous timeouts already set
 		if(this._mTimeoutId != 0)
 			clearTimeout(this._mTimeoutId);
@@ -590,7 +593,7 @@ SearchProduct.prototype.handleKeyDown = function(oEvent){
 			if(this._mPosition >= 0 && this._mPosition < this._mSuggestions - 1)
 				oldTR.className = '';
  
-					// select the new suggestion and update the keyword
+			// select the new suggestion and update the keyword
 			if(this._mPosition < this._mSuggestions - 1)
 			{
 				newTR.className = 'highlightrow';
