@@ -336,7 +336,7 @@ SearchProduct.prototype.displaySuccess = function(xmlDoc){
 		nameArray = this.xmlToArray(xmlDoc.getElementsByTagName('result'));       
 	}
 	// check to see if other keywords are already being searched for
-	if(this._mHttpRequestKeyword == this.mUserKeyword)    
+	if(this._mUserKeyword != '' && (this._mHttpRequestKeyword == this.mUserKeyword))    
 	{
 		// display the results array
 		this.displayResults(this._mHttpRequestKeyword, nameArray);
@@ -459,7 +459,7 @@ SearchProduct.prototype.autocompleteKeyword = function(){
 	// deselect all suggestions
 	this.deselectAll();
 	// highlight the selected suggestion 
-	document.getElementById('tr0').className = 'highlightrow';  
+	document.getElementById('tr0').className = 'highlightrow';
 	// update the keyword's value with the suggestion
 	this.updateKeywordValue(document.getElementById('tr0'));  
 	// apply the type-ahead style
