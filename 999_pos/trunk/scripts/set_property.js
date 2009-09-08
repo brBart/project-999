@@ -63,7 +63,7 @@ SetPropertyCommand.prototype.sendRequest = function(){
 		this._mRequest.open('GET', urlParams, true);
 		
 		// Necessary for lexical closure, because of the onreadystatchange call.
-		var oCommand = this
+		var oCommand = this;
 		this._mRequest.onreadystatechange = function(){
 			oCommand.handleRequestStateChange();
 		}
