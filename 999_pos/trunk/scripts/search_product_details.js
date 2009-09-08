@@ -1,5 +1,5 @@
 /**
- * Library with the SearchProductDetails class.
+ * Library with the SearchProductDetails base class.
  * @package Client
  * @author Roberto Oliveros
  */
@@ -44,7 +44,7 @@ function SearchProductDetails(oSession, oSearchProduct){
 	 * Holds the last keyword for which suggests have been requested.
 	 * @var string
 	 */
-	this.mUserKeyword = '';
+	this._mUserKeyword = '';
 	
 	/**
 	 * Number of suggestions received as results for the keyword.
@@ -101,6 +101,7 @@ SearchProductDetails.prototype.init = function(oTxtWidget){
 	}
 	
 	this._mTxtWidget = oTxtWidget;
+	this._mSearchProduct.init(this);
 }
 
 /**
@@ -156,14 +157,14 @@ SearchProductDetails.prototype.checkForChanges  = function(){
 		// hide the suggestions
 		this.hideSuggestions();
 		// reset the keyword 
-		this.mUserKeyword = '';
+		this._mUserKeyword = '';
 		this._mSelectedRow = 0;
 	}
 	// check to see if there are any changes
-	else if(this.mUserKeyword != keyword){
+	else if(this._mUserKeyword != keyword){
 		this._mUserKeyword = keyword;
 		// update the suggestions
-		this._mSearchProduct.getSuggestions(keyword, this);
+		this._mSearchProduct.getSuggestions(keyword);
 	}
 }
 
@@ -187,18 +188,19 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 		// display the results
 		else
 		{
+			this._mSelectedRow = 0;
 			// Get the number of results from the cache.
 			this._mTotalItems = resultsArray.length;
 			// loop through all the results and generate the HTML list of results
-			for (var i = 1; i <= resultsArray.length; i++) 
+			for (var i = 0; i < resultsArray.length; i++) 
 			{  
 				// retrieve the product id
 				crtProductBarCode = resultsArray[i]['bar_code'];
 				// retrieve the name of the product
 				crtProductName = resultsArray[i]['name'];
-				div += '<tr id="tr' + i + '" onclick="oSession.loadHref(\'index.php?cmd=get_product_by_bar_code&bar_code=' + crtProductBarCode +'\' );" ' + 
-						'onmouseover="oSearchProduct.handleOnMouseOver(this);" onmouseout="oSearchProduct.handleOnMouseOut(this);">' +
-						'<td id="' + i + '-' + crtProductName + '">';
+				div += '<tr id="tr' + (i + 1) + '" onclick="oSession.loadHref(\'index.php?cmd=get_product_by_bar_code&bar_code=' + crtProductBarCode +'\' );" ' + 
+						'onmouseover="oSearchDetails.handleOnMouseOver(this);" onmouseout="oSearchDetails.handleOnMouseOut(this);">' +
+						'<td id="' + (i + 1) + '-' + crtProductName + '">';
 				// check to see if the current product name length exceeds the maximum 
 				// number of characters that can be displayed for a product name
 				if(crtProductName.length < this._mSuggestionMaxLength)
@@ -301,7 +303,7 @@ SearchProductDetails.prototype.moveNext = function(){
 */
 SearchProductDetails.prototype.selectRow = function(iPos){
 	newTr = document.getElementById('tr' + iPos);
-	newTr.className = 'hightlightrow';
+	newTr.className = 'highlightrow';
 	
 	if(this._mSelectedRow > 0 && this._mSelectedRow != iPos){
 		oldTr = document.getElementById('tr' + this._mSelectedRow);
@@ -345,6 +347,7 @@ SearchProductDetails.prototype.updateKeywordValue = function(iPos){
 	var crtLink = oTd.id.substring(oTd.id.indexOf('-') + 1);
 	// update the keyword's value
 	this._mTxtWidget.value = unescape(crtLink);
+	this._mUserKeyword = this._mTxtWidget.value;
 }
 
 /**
@@ -365,12 +368,11 @@ SearchProductDetails.prototype.handleKeyDown = function(oEvent){
   		product */
 		if(code == 13)
 			// check to see if any product is currently selected
-			if(this._mSelectedRow >= 0)
+			if(this._mSelectedRow > 0)
 			{
-				var oTr = document.getElementById('tr' + this._mPosition);
+				var oTr = document.getElementById('tr' + this._mSelectedRow);
 				var crtBarCode = oTr.getElementsByTagName('TD')[1].id;
 				this.doAction(crtBarCode);
-				//this._mSession.loadHref('index.php?cmd=get_product_by_bar_code&bar_code=' + crtLink);
 			}
   		
   		// if the up arrow is pressed we go to the previous suggestion
@@ -403,7 +405,7 @@ SearchProductDetails.prototype.handleOnMouseOver = function(oTr)
 SearchProductDetails.prototype.handleOnMouseOut = function(oTr)
 {
 	oTr.className = '';   
-	this._mPosition = -1;
+	this._mSelectedRow = 0;
 }
 
 /**
@@ -421,4 +423,12 @@ SearchProductDetails.prototype.divHandleClick = function(oEvent){
 */
 SearchProductDetails.prototype.documentHandleClick = function(oEvent){
 	this.stopListening();
+}
+
+/**
+ * Abstract method.
+ * @param string sBarCode
+ */
+SearchProductDetails.prototype.doAction = function(sBarCode){
+	return 0;
 }

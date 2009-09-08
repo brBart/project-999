@@ -30,8 +30,9 @@ class SearchProductCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$list = ProductSearch::search($request->getProperty('search_str'));
-		Page::display(array('list' => $list), 'search_product_list_xml.tpl');
+		$keyword = $request->getProperty('keyword');
+		$list = ProductSearch::search($keyword);
+		Page::display(array('list' => $list, 'keyword' => $keyword), 'search_product_list_xml.tpl');
 	}
 }
 ?>
