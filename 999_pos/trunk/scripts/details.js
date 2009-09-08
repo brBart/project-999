@@ -503,8 +503,7 @@ Details.prototype.clickRow = function(oRow){
 	// State machine status has to be on edit mode.
 	if(this._mMachine.getStatus() == 0){
 		this.setFocus();
-		iPos = oRow.id.substring(2);
-		this.selectRow(iPos);
+		this.selectRow(oRow.id.substring(2));
 	}
 }
 
