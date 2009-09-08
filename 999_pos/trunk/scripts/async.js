@@ -52,6 +52,6 @@ AsyncCommand.prototype.sendRequest = function(sUrlParams){
 	else{
 		// If busy try a little later.
 		oTemp = this;
-		this._mTimeoutId = setTimeout('oTemp.sendRequest(' + sUrlParams + ')', 500);
+		this._mTimeoutId = setTimeout('oTemp.sendRequest(\'' + sUrlParams + '\')', 500);
 	}
 }
