@@ -188,7 +188,7 @@ SearchProductDetails.prototype.checkForChanges  = function(){
 SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray){
 	if(this._mUserKeyword == sKeyword){
 		// start building the HTML table containing the results
-		var div = '<table>'; 
+		var div = '<table onmouseout="oSearchDetails.handleOnMouseOut();">'; 
 		// if the array of results is empty display a message
 		if(resultsArray.length == 0)
 		{
@@ -211,8 +211,7 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 				// retrieve the name of the product
 				crtProductName = resultsArray[i]['name'];
 				div += '<tr id="tr' + (i + 1) + '" onclick="oSession.loadHref(\'index.php?cmd=get_product_by_bar_code&bar_code=' + crtProductBarCode +'\' );" ' + 
-						'onmouseover="oSearchDetails.handleOnMouseOver(this);" onmouseout="oSearchDetails.handleOnMouseOut(this);">' +
-						'<td id="' + (i + 1) + '-' + crtProductName + '">';
+						'onmouseover="oSearchDetails.handleOnMouseOver(this);">' + '<td id="' + (i + 1) + '-' + crtProductName + '">';
 				// check to see if the current product name length exceeds the maximum 
 				// number of characters that can be displayed for a product name
 				if(crtProductName.length < this._mSuggestionMaxLength)
@@ -307,7 +306,6 @@ SearchProductDetails.prototype.selectRow = function(iPos){
 	newTr.className = 'highlightrow';
 	
 	if(this._mSelectedRow > 0 && this._mSelectedRow != iPos){
-		oConsole.displayMessage('oldTr=' + this._mSelectedRow + '<br />');
 		oldTr = document.getElementById('tr' + this._mSelectedRow);
 		oldTr.className = '';
 	}
@@ -404,8 +402,9 @@ SearchProductDetails.prototype.handleOnMouseOver = function(oTr)
 * Method that handles the mouse exiting a suggestion's area event.
 * @param object oTr
 */
-SearchProductDetails.prototype.handleOnMouseOut = function(oTr)
+SearchProductDetails.prototype.handleOnMouseOut = function()
 {
+	var oTr = document.getElementById('tr' + this._mSelectedRow);
 	oTr.className = '';   
 	this._mSelectedRow = 0;
 }
