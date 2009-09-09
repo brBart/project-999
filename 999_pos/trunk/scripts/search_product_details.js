@@ -68,13 +68,25 @@ function SearchProductDetails(oSession, oSearchProduct){
 	 * The minimum position of the visible suggestions.
 	 * @var integer
 	 */
-	this._mMinVisiblePosition = 0;
+	this._mMinVisiblePosition = 1;
 	
 	/**
 	 * The maximum position of the visible suggestions.
 	 * @var integer
 	 */
-	this._mMaxVisiblePosition = 9;
+	this._mMaxVisiblePosition = 10;
+	
+	/**
+	 * Holds the actual minimum position of the visible suggestions.
+	 * @var integer
+	 */
+	this._mActualMinVisiblePosition = 0;
+	
+	/**
+	 * Holds the actual maximum position of the visible suggestions.
+	 * @var integer
+	 */
+	this._mActualMaxVisiblePosition = 0;
 	
 	/**
 	 * Flag that indicates if the listening cycle has started.
@@ -255,6 +267,7 @@ SearchProductDetails.prototype.moveFirst = function(){
 	if(this._mTotalItems > 0){
 		this.selectRow(1);
 		this.updateKeywordValue(this._mSelectedRow);
+		this.updateScroll();
 	}
 }
 
@@ -265,13 +278,7 @@ SearchProductDetails.prototype.movePrevious = function(){
 	if(this._mTotalItems > 0 && this._mSelectedRow > 1){
 		this.selectRow(this._mSelectedRow - 1);
 		this.updateKeywordValue(this._mSelectedRow);
-		// scroll up if the current window is no longer valid
-		if(this._mSelectedRow < this._mMinVisiblePosition)
-		{
-			this._mScrollDiv.scrollTop -= 18;
-			this._mMaxVisiblePosition -= 1;
-			this._mMinVisiblePosition -= 1;
-		}
+		this.updateScroll();
 	}
 	else if(this._mTotalItems > 0 && this._mSelectedRow == 1){
 		oTr = document.getElementById('tr' + this._mSelectedRow);
@@ -287,13 +294,7 @@ SearchProductDetails.prototype.moveNext = function(){
 	if(this._mTotalItems > 0 && this._mSelectedRow < this._mTotalItems){
 		this.selectRow(this._mSelectedRow + 1);
 		this.updateKeywordValue(this._mSelectedRow);
-		// scroll down if the current window is no longer valid
-		if(this._mSelectedRow > this._mMaxVisiblePosition)
-		{   
-			this._mScrollDiv.scrollTop += 18;
-			this._mMaxVisiblePosition += 1;
-			this._mMinVisiblePosition += 1;
-		}
+		this.updateScroll();
 	}
 }
 
@@ -306,6 +307,7 @@ SearchProductDetails.prototype.selectRow = function(iPos){
 	newTr.className = 'highlightrow';
 	
 	if(this._mSelectedRow > 0 && this._mSelectedRow != iPos){
+		oConsole.displayMessage('oldTr=' + this._mSelectedRow + '<br />');
 		oldTr = document.getElementById('tr' + this._mSelectedRow);
 		oldTr.className = '';
 	}
@@ -431,4 +433,29 @@ SearchProductDetails.prototype.documentHandleClick = function(oEvent){
  */
 SearchProductDetails.prototype.doAction = function(sBarCode){
 	return 0;
+}
+ 
+/**
+ * Move the scroll according to the selected row.
+ */
+SearchProductDetails.prototype.updateScroll = function(){
+	if(this._mSelectedRow == 1){
+		this._mScrollDiv.scrollTop = 0;
+		this._mActualMinVisiblePosition = this._mMinVisiblePosition;
+		this._mActualMaxVisiblePosition = this._mMaxVisiblePosition;
+	}
+	// scroll up if the current window is no longer valid
+	else if(this._mSelectedRow < this._mActualMinVisiblePosition)
+	{
+		this._mScrollDiv.scrollTop -= 18;
+		this._mActualMaxVisiblePosition -= 1;
+		this._mActualMinVisiblePosition -= 1;
+	}
+	// scroll down if the current window is no longer valid
+	else if(this._mSelectedRow > this._mActualMaxVisiblePosition)
+	{   
+		this._mScrollDiv.scrollTop += 18;
+		this._mActualMaxVisiblePosition += 1;
+		this._mActualMinVisiblePosition += 1;
+	}
 }

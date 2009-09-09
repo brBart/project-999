@@ -102,12 +102,15 @@ input[type="text"], input[type="password"] {
 
 #search_product {
 	height: 1.5em;
+	width: 27em;
 }
 
 #scroll {
 	position: absolute;
 	z-index: 1;
 	overflow: auto;
+	height: 18em;
+	width: 22em;
 }
 
 #footer {
@@ -207,8 +210,20 @@ input[type="text"], input[type="password"] {
 	padding: 0 15px;
 }
 
+#suggest table {
+	width: 100%;
+}
+
+#suggest td {
+	padding: 2px 2px;
+}
+
 #search_product > * {
 	float: left;
+}
+
+#search_product input[type="text"] {
+	width: 20em;
 }
 
 #prod_supp_tb input[type="text"] {
