@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Defines common functionality for deleting a object's detail.
+ * Defines common functionality for deleting an object's detail.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -48,7 +48,7 @@ abstract class DeleteDetailObjectCommand extends Command{
 	}
 	
 	/**
-	 * Returns the detail of the actual object.
+	 * Returns the detail of the object.
 	 * 
 	 * @param string $detailId
 	 * @param variant $obj
@@ -57,7 +57,7 @@ abstract class DeleteDetailObjectCommand extends Command{
 	abstract protected function getDetail($detailId, $obj);
 	
 	/**
-	 * Deletes the detail from the actual object.
+	 * Deletes the detail from the object.
 	 * 
 	 * @param variant $detail
 	 * @param variant $obj

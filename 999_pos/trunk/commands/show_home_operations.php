@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the operations site.
+ * Command to display the operations home page.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -19,13 +19,13 @@ require_once('business/product.php');
 require_once('business/list.php');
 
 /**
- * Displays the product form.
+ * Displays the product form in edit mode.
  * @package Command
  * @author Roberto Oliveros
  */
 class CreateProductCommand extends CreateObjectCommand{
 	/**
-	 * Tests if the user has the right to create an object.
+	 * Tests if the user has the right to create the object.
 	 * @param UserAccount $user
 	 * @return boolean
 	 */

@@ -1,6 +1,7 @@
 <?php
 /**
- * PHP file with all the configuration variables for the system to run properly.
+ * PHP file with all the configuration variables for the system to run properly. The database user and password
+ * constants are ignored in this documentation for security reasons.
  * @package 999_pos
  * @author Roberto Oliveros
  */
@@ -54,11 +55,11 @@ define('DB_PERSISTENCY', 'true');
  */
 define('DB_SERVER', 'localhost');
 /**
- * Database configuration.
+ * @ignore
  */
 define('DB_USERNAME', '999_user');
 /**
- * Database configuration.
+ * @ignore
  */
 define('DB_PASSWORD', '999_user');
 /**

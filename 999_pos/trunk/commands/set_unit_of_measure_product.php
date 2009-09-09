@@ -11,7 +11,7 @@
 require_once('commands/set_property_object.php');
 
 /**
- * Defines functionality for setting the product's manufacturer.
+ * Defines functionality for setting the product's unit of measure.
  * @package Command
  * @author Roberto Oliveros
  */

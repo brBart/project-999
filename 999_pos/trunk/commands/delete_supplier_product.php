@@ -11,13 +11,13 @@
 require_once('commands/delete_detail_object.php');
 
 /**
- * Displays the manufacturer form.
+ * Defines functionality for deleting a supplier from a product.
  * @package Command
  * @author Roberto Oliveros
  */
 class DeleteSupplierProductCommand extends DeleteDetailObjectCommand{
 	/**
-	 * Returns the detail of the actual object.
+	 * Returns the detail of the object.
 	 * 
 	 * @param string $detailId
 	 * @param variant $obj
@@ -28,7 +28,7 @@ class DeleteSupplierProductCommand extends DeleteDetailObjectCommand{
 	}
 	
 	/**
-	 * Deletes the detail from the actual object.
+	 * Deletes the detail from the object.
 	 * 
 	 * @param variant $detail
 	 * @param variant $obj

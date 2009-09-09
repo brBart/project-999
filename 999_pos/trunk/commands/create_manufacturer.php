@@ -15,13 +15,13 @@ require_once('commands/create_object.php');
 require_once('business/product.php');
 
 /**
- * Displays the manufacturer form.
+ * Displays the manufacturer form in edit mode.
  * @package Command
  * @author Roberto Oliveros
  */
 class CreateManufacturerCommand extends CreateObjectCommand{
 	/**
-	 * Tests if the user has the right to create an object.
+	 * Tests if the user has the right to create the object.
 	 * @param UserAccount $user
 	 * @return boolean
 	 */

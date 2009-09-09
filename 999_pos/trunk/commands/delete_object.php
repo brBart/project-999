@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the EditObject command.
+ * Library containing the DeleteObject command.
  * @package Command
  * @author Roberto Oliveros
  */

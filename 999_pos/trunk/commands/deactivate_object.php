@@ -11,7 +11,7 @@
 require_once('commands/set_property_object.php');
 
 /**
- * Defines functionality for setting the product's description.
+ * Defines functionality for setting the product's deactivated property.
  * @package Command
  * @author Roberto Oliveros
  */

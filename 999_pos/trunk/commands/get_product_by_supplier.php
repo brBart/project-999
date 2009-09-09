@@ -11,7 +11,7 @@
 require_once('commands/get_product.php');
 
 /**
- * Displays the product form.
+ * Defines functionality for obtaining a product object or displaying failure.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -44,7 +44,7 @@ class GetProductBySupplierCommand extends GetProductCommand{
 	}
 	
 	/**
-	 * Display failure in case the manufacturer does not exists.
+	 * Display failure in case the product does not exists.
 	 * @param string $msg
 	 */
 	protected function displayFailure($msg){

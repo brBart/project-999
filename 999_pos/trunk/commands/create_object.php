@@ -39,7 +39,7 @@ abstract class CreateObjectCommand extends Command{
 	}
 	
 	/**
-	 * Tests if the user has the right to create an object.
+	 * Tests if the user has the right to create the object.
 	 * @param UserAccount $user
 	 * @return boolean
 	 */

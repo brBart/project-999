@@ -15,7 +15,7 @@ require_once('commands/get_object.php');
 require_once('business/product.php');
 
 /**
- * Displays the manufacturer form.
+ * Displays the manufacturer form in idle mode.
  * @package Command
  * @author Roberto Oliveros
  */

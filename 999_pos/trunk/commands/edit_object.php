@@ -36,7 +36,7 @@ abstract class EditObjectCommand extends Command{
 	}
 	
 	/**
-	 * Tests if the user has the right to edit an object.
+	 * Tests if the user has the right to edit the object.
 	 * @param UserAccount $user
 	 * @return boolean
 	 */

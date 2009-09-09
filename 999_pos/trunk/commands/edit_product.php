@@ -17,7 +17,7 @@ require_once('commands/edit_object.php');
  */
 class EditProductCommand extends EditObjectCommand{
 	/**
-	 * Tests if the user has the right to edit an object.
+	 * Tests if the user has the right to edit the object.
 	 * @param UserAccount $user
 	 * @return boolean
 	 */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the get object base class command.
+ * Library containing the SearchProduct class command.
  * @package Command
  * @author Roberto Oliveros
  */

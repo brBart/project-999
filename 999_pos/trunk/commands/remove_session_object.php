@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Defines common functionality for removing an object from the session.
+ * Defines functionality for removing an object from the session.
  * @package Command
  * @author Roberto Oliveros
  */

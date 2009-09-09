@@ -17,7 +17,7 @@ require_once('commands/delete_object.php');
  */
 class DeleteProductCommand extends DeleteObjectCommand{
 	/**
-	 * Tests if the user has the right to delete an object.
+	 * Tests if the user has the right to delete the object.
 	 * @param UserAccount $user
 	 * @return boolean
 	 */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the show product list class command.
+ * Library containing the ShowProduct list class command.
  * @package Command
  * @author Roberto Oliveros
  */
