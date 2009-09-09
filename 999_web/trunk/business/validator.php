@@ -5,7 +5,11 @@
  * @author Roberto Oliveros
  */
 
-
+/**
+ * Class that represents an exception when a validation has failed.
+ * @package Validator
+ * @author Roberto Oliveros
+ */
 class ValidateException extends Exception{
 	/**
 	 * Holds the name of the property.
