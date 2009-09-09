@@ -102,10 +102,7 @@ a:hover {
 #scroll {
 	visibility: hidden;
 	background-color: white;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-left-style: solid;
-	border-bottom-style: solid;
+	border-style: solid;
 	border-collapse: collapse;
 	border-color: #000000;
 	border-width: 1px;
