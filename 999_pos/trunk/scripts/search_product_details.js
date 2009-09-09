@@ -101,7 +101,7 @@ function SearchProductDetails(oSession, oSearchProduct){
 */
 SearchProductDetails.prototype.init = function(oTxtWidget){
 	// Get the scroll div element.
-	this._mScrollDiv = oTxtWidget.nextSibling.nextSibling;
+	this._mScrollDiv = document.getElementById('scroll');
 	oTxtWidget.setAttribute('autocomplete', 'off');
 	
 	oTemp = this;
@@ -245,11 +245,10 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 		}
 		// end building the HTML table
 		div += '</table>';
-		var oSuggest = document.getElementById('suggest');
 		// scroll to the top of the list
 		this._mScrollDiv.scrollTop = 0;
 		// update the suggestions list and make it visible
-		oSuggest.innerHTML = div;
+		this._mScrollDiv.innerHTML = div;
 		this._mScrollDiv.style.visibility = 'visible';
 		// if we had results we apply the type ahead for the current sKeyword
 		if(resultsArray.length > 0){

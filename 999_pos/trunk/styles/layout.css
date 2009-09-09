@@ -102,7 +102,7 @@ input[type="text"], input[type="password"] {
 
 #search_product {
 	height: 1.5em;
-	width: 27em;
+	width: 28em;
 }
 
 #scroll {
@@ -110,7 +110,7 @@ input[type="text"], input[type="password"] {
 	z-index: 1;
 	overflow: auto;
 	height: 18em;
-	width: 22em;
+	width: 23em;
 }
 
 #footer {
@@ -210,11 +210,12 @@ input[type="text"], input[type="password"] {
 	padding: 0 15px;
 }
 
-#suggest table {
-	width: 100%;
+#scroll table {
+	float: left;
+	width: 20em;
 }
 
-#suggest td {
+#scroll td {
 	padding: 2px 2px;
 }
 
@@ -223,7 +224,7 @@ input[type="text"], input[type="password"] {
 }
 
 #search_product input[type="text"] {
-	width: 20em;
+	width: 21em;
 }
 
 #prod_supp_tb input[type="text"] {

@@ -23,8 +23,8 @@
 		    	<label for="name">Buscar:</label>
 		    	<div>
 		    		<input name="name" id="name" type="text"/>
-		    		<div id="scroll">
-		    			<div id="suggest"></div>
+		    		<div>
+		    			<div id="scroll"></div>
 		    		</div>
 		    	</div>
 	    	</div>
