@@ -8,7 +8,7 @@
 /**
  * Base class.
  */
-require_once('commands/set_agent_document.php');
+require_once('commands/set_organization_document.php');
 /**
  * For the supplier class reference.
  */
@@ -19,23 +19,23 @@ require_once('business/agent.php');
  * @package Command
  * @author Roberto Oliveros
  */
-class SetSupplierDocumentCommand extends SetAgentDocumentCommand{
+class SetSupplierDocumentCommand extends SetOrganizationDocumentCommand{
 	/**
-	 * Returns the desired agent object.
-	 * @param string $agentId
-	 * @return Agent
+	 * Returns the desired organization object.
+	 * @param string $organizationId
+	 * @return Organization
 	 */
-	protected function getAgent($agentId){
-		return Supplier::getInstance((int)$agentId);
+	protected function getOrganization($organizationId){
+		return Supplier::getInstance((int)$organizationId);
 	}
 	
 	/**
 	 * Set the desired property on the object.
 	 * @param Document $document
-	 * @param Agent $agent
+	 * @param Organization $organization
 	 */
-	protected function setAgent(Document $document, Agent $agent = NULL){
-		$document->setSupplier($agent);
+	protected function setOrganization(Document $document, Organization $organization = NULL){
+		$document->setSupplier($organization);
 	}
 }
 ?>

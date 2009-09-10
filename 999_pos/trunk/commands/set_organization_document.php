@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetAgentDocument base class command.
+ * Library containing the SetOrganizationDocument base class command.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,24 +15,24 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Defines common functionality for the set agent document derived classes.
+ * Defines common functionality for the set organization document derived classes.
  * @package Command
  * @author Roberto Oliveros
  */
-abstract class SetAgentDocumentCommand extends Command{
+abstract class SetOrganizationDocumentCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$agent_id = $request->getProperty('agent_id');
+		$organization_id = $request->getProperty('organization_id');
 		$element_id = $request->getProperty('element_id');
-		$agent = $this->getAgent($agent_id);
+		$organization = $this->getOrganization($organization_id);
 		$obj = $helper->getObject((int)$request->getProperty('key'));
 		
 		try{
-			$this->setAgent($obj, $agent);
+			$this->setOrganization($obj, $organization);
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			Page::display(array('success' => '0', 'element_id' => $element_id, 'message' => $msg),
@@ -44,22 +44,22 @@ abstract class SetAgentDocumentCommand extends Command{
 			return;
 		}
 			
-		Page::display(array('element_id' => $element_id, 'contact' => $agent->getContact()),
-				'set_agent_document_xml.tpl');
+		Page::display(array('element_id' => $element_id, 'contact' => $organization->getContact()),
+				'set_organization_document_xml.tpl');
 	}
 	
 	/**
-	 * Returns the desired agent object.
-	 * @param string $agentId
-	 * @return Agent
+	 * Returns the desired organization object.
+	 * @param string $organizationId
+	 * @return Organization
 	 */
-	abstract protected function getAgent($agentId);
+	abstract protected function getOrganization($organizationId);
 	
 	/**
-	 * Sets the agent to the desired object.
+	 * Sets the organization to the desired object.
 	 * @param Document $document
-	 * @param Agent $agent
+	 * @param Organization $organization
 	 */
-	abstract protected function setAgent(Document $document, Organization $agent = NULL);
+	abstract protected function setOrganization(Document $document, Organization $organization = NULL);
 }
 ?>

@@ -4,16 +4,17 @@
 <script type="text/javascript" src="../scripts/http_request.js"></script>
 <script type="text/javascript" src="../scripts/command.js"></script>
 <script type="text/javascript" src="../scripts/async.js"></script>
-<script type="text/javascript" src="../scripts/set_agent.js"></script>
+<script type="text/javascript" src="../scripts/set_organization.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/sync.js"></script>
 <script type="text/javascript" src="../scripts/save.js"></script>
+<script type="text/javascript" src="../scripts/state_machine.js"></script>
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
-	var oSetAgent = new SetAgentCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
@@ -43,16 +44,16 @@
 		</fieldset>
 		<fieldset id="main_data">
 			<p>
-		  		<label for="agent_id">Proveedor:*</label>
-		  		<select name="form_widget" id="agent_id"
-		  			onblur="oSetAgent.execute('set_supplier_document', this.value, this.id);">
+		  		<label for="organization_id">Proveedor:*</label>
+		  		<select name="form_widget" id="organization_id"
+		  			onblur="oSetOrganization.execute('set_supplier_document', this.value, this.id);">
 	    			{section name=i loop=$supplier_list}
 	    				<option value="{$supplier_list[i].supplier_id}">
 	    					{$supplier_list[i].name}
 	    				</option>
 	    			{/section}
 	    		</select>
-		  		<span id="agent_id-failed" class="hidden">*</span>
+		  		<span id="organization_id-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label for="shipment_number">Env&iacute;o No:*</label>
@@ -102,3 +103,6 @@
 		</fieldset>
 	</div>
 </div>
+<script type="text/javascript">
+StateMachine.setFocus('organization_id');
+</script>

@@ -1,5 +1,5 @@
 /**
- * Library with the set agent command class.
+ * Library with the set organization command class.
  * @package Client
  * @author Roberto Oliveros
  */
@@ -10,7 +10,7 @@
  * @param Console oConsole
  * @param Request oRequest
  */
-function SetAgentCommand(oSession, oConsole, oRequest, sKey){
+function SetOrganizationCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
 	AsyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -24,7 +24,7 @@ function SetAgentCommand(oSession, oConsole, oRequest, sKey){
 /**
 * Inherit the AsyncCommand class methods.
 */
-SetAgentCommand.prototype = new AsyncCommand();
+SetOrganizationCommand.prototype = new AsyncCommand();
 
 /**
  * Executes the command.
@@ -32,13 +32,13 @@ SetAgentCommand.prototype = new AsyncCommand();
  * @param string sValue
  * @param string sElementId
  */
-SetAgentCommand.prototype.execute = function(sCmd, sAgentId, sElementId){
+SetOrganizationCommand.prototype.execute = function(sCmd, sOrganizationId, sElementId){
 	if(sCmd == '' || sElementId == '')
 		this._mConsole.displayError('Interno: Argumentos sCmd y sElementId inv&aacute;lidos.');
 	else{
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
 		str = Url.addUrlParam(str, 'key', this._mKey);
-		str = Url.addUrlParam(str, 'agent_id', sAgentId);
+		str = Url.addUrlParam(str, 'organization_id', sOrganizationId);
 		str = Url.addUrlParam(str, 'element_id', sElementId);
 		this.sendRequest(str);
 	}
@@ -48,7 +48,7 @@ SetAgentCommand.prototype.execute = function(sCmd, sAgentId, sElementId){
 * Method for displaying success.
 * @param DocumentElement xmlDoc
 */
-SetAgentCommand.prototype.displaySuccess = function(xmlDoc){
+SetOrganizationCommand.prototype.displaySuccess = function(xmlDoc){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	this._mConsole.cleanFailure(elementId);
 }
@@ -58,7 +58,7 @@ SetAgentCommand.prototype.displaySuccess = function(xmlDoc){
 * @param DocumentElement xmlDoc
 * @param string msg
 */
-SetAgentCommand.prototype.displayFailure = function(xmlDoc, strMsg){
+SetOrganizationCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	
 	// Must clean it in case a failure has been already display for the same element.
