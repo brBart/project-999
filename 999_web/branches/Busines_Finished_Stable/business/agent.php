@@ -449,7 +449,6 @@ class Supplier extends Organization{
 	 * @return Supplier
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return SupplierDAM::getInstance($id);
 	}
 	
