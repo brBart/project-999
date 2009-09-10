@@ -2263,8 +2263,8 @@ class Receipt extends Document{
 	 * @param string $number
 	 */
 	public function setShipmentNumber($number){
-		String::validateString($number, 'N&uacute;mero de envio inv&aacute;lido.');
 		$this->_mShipmentNumber = $number;
+		String::validateString($number, 'N&uacute;mero de envio inv&aacute;lido.');
 	}
 	
 	/**
