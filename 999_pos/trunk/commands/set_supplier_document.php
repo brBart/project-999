@@ -9,6 +9,10 @@
  * Base class.
  */
 require_once('commands/set_agent_document.php');
+/**
+ * For the supplier class reference.
+ */
+require_once('business/agent.php');
 
 /**
  * Defines functionality for setting the document's supplier.
@@ -27,10 +31,10 @@ class SetSupplierDocumentCommand extends SetAgentDocumentCommand{
 	
 	/**
 	 * Set the desired property on the object.
-	 * @param Agent $agent
 	 * @param Document $document
+	 * @param Agent $agent
 	 */
-	protected function setAgent(Agent $agent, Document $document){
+	protected function setAgent(Document $document, Agent $agent = NULL){
 		$document->setSupplier($agent);
 	}
 }

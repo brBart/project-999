@@ -32,7 +32,7 @@ abstract class SetAgentDocumentCommand extends Command{
 		$obj = $helper->getObject((int)$request->getProperty('key'));
 		
 		try{
-			$this->setAgent($agent, $obj);
+			$this->setAgent($obj, $agent);
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			Page::display(array('success' => '0', 'element_id' => $element_id, 'message' => $msg),
@@ -56,9 +56,9 @@ abstract class SetAgentDocumentCommand extends Command{
 	
 	/**
 	 * Sets the agent to the desired object.
-	 * @param Agent $agent
 	 * @param Document $document
+	 * @param Agent $agent
 	 */
-	abstract protected function setAgent(Agent $agent, Document $document);
+	abstract protected function setAgent(Document $document, Agent $agent = NULL);
 }
 ?>
