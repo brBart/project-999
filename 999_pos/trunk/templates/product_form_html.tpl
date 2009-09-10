@@ -121,7 +121,7 @@
 			  	</p>
 			  	<p>
 			  		<label for="price">Precio:*</label>
-			  		<input name="form_widget" id="price" type="text" value="{$price}" maxlength="15"
+			  		<input name="form_widget" id="price" type="text" value="{$price}" maxlength="13"
 			  			onblur="oSetProperty.execute('set_price_product', this.value, this.id);"
 			  			{if $status eq 1}disabled="disabled"{/if} />
 			  		<span id="price-failed" class="hidden">*</span>
@@ -149,7 +149,8 @@
 		    		</select>
 		    		<span id="supplier_id-failed" class="hidden">*</span>
 			  		<label for="product_sku">C&oacute;digo:</label>
-			  		<input name="form_widget" id="product_sku" type="text" {if $status eq 1}disabled="disabled"{/if} />
+			  		<input name="form_widget" id="product_sku" type="text" maxlength="50"
+			  			{if $status eq 1}disabled="disabled"{/if} />
 			  		<span id="product_sku-failed" class="hidden">*</span>
 			  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
 			  			onclick="oAddSupplierProduct.execute(document.getElementById('supplier_id'), document.getElementById('product_sku'));"
