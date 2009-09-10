@@ -62,7 +62,7 @@ class CreateReceiptCommand extends CreateObjectCommand{
 		$back_trace = array('Inicio', 'Movimientos', 'Recibos');
 		
 		$user = $obj->getUser();
-		$date = $obj->getDate();
+		$date_time = $obj->getDateTime();
 		
 		// Get the lists for the select options.
 		$empty_item = array(array());
@@ -72,7 +72,7 @@ class CreateReceiptCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'receipt_form_html.tpl',
 				'key' => $key, 'back_link' => 'index.php?cmd=show_receipt_menu',
 				'foward_link' => 'index.php?cmd=get_receipt', 'username' => $user->getUserName(),
-				'date' => $date, 'supplier_list' => $supplier_list),
+				'date_time' => $date_time, 'supplier_list' => $supplier_list),
 				'site_html.tpl');
 	}
 }
