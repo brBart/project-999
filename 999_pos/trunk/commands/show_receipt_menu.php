@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the products menu.
+ * Command to display the receipts menu.
  * @package Command
  * @author Roberto Oliveros
  */
