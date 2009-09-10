@@ -15,7 +15,7 @@ require_once('commands/set_property_object.php');
  * @package Command
  * @author Roberto Oliveros
  */
-class SetNameObjectCommand extends SetPropertyObjectCommand{
+class SetShipmentNumberReceiptCommand extends SetPropertyObjectCommand{
 	/**
 	 * Set the desired property on the object.
 	 * @param variant $value
