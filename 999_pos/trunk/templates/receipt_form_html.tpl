@@ -3,15 +3,17 @@
 <script type="text/javascript" src="../scripts/url.js"></script>
 <script type="text/javascript" src="../scripts/http_request.js"></script>
 <script type="text/javascript" src="../scripts/command.js"></script>
+<script type="text/javascript" src="../scripts/async.js"></script>
+<script type="text/javascript" src="../scripts/set_agent.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/sync.js"></script>
 <script type="text/javascript" src="../scripts/save.js"></script>
-<script type="text/javascript" src="../scripts/async.js"></script>
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
+	var oSetAgent = new SetAgentCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
