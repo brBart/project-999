@@ -29,6 +29,10 @@ function __autoload($className){
 			require_once('business/agent.php');
 			break;
 			
+		case 'Receipt':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
