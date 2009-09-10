@@ -2273,8 +2273,8 @@ class Receipt extends Document{
 	 * @param float $amount
 	 */
 	public function setShipmentTotal($amount){
-		Number::validatePositiveFloat($amount, 'Total del envio inv&aacute;lido.');
 		$this->_mShipmentTotal = $amount;
+		Number::validatePositiveFloat($amount, 'Total del envio inv&aacute;lido.');
 	}
 	
 	/**
