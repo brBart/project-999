@@ -41,16 +41,16 @@
 		</fieldset>
 		<fieldset id="main_data">
 			<p>
-		  		<label for="supplier_id">Proveedor:*</label>
-		  		<select name="form_widget" id="supplier_id"
-		  			onblur="oSetProperty.execute('set_supplier_document', this.value, this.id);">
+		  		<label for="agent_id">Proveedor:*</label>
+		  		<select name="form_widget" id="agent_id"
+		  			onblur="oSetAgent.execute('set_supplier_document', this.value, this.id);">
 	    			{section name=i loop=$supplier_list}
 	    				<option value="{$supplier_list[i].supplier_id}">
 	    					{$supplier_list[i].name}
 	    				</option>
 	    			{/section}
 	    		</select>
-		  		<span id="supplier_id-failed" class="hidden">*</span>
+		  		<span id="agent_id-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label for="shipment_number">Env&iacute;o No:*</label>
