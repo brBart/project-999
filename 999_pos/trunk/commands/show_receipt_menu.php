@@ -19,7 +19,7 @@ require_once('presentation/page.php');
  * @package Command
  * @author Roberto Oliveros
  */
-class ShowReceiptsMenuCommand extends Command{
+class ShowReceiptMenuCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
