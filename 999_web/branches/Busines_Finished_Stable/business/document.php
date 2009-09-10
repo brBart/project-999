@@ -2251,7 +2251,7 @@ class Receipt extends Document{
 	 *
 	 * @param Supplier $obj
 	 */
-	public function setSupplier(Supplier $obj){
+	public function setSupplier(Supplier $obj = NULL){
 		$this->_mSupplier = $obj;
 		if(is_null($obj))
 			throw new ValidateException('Seleccione un proveedor.');
