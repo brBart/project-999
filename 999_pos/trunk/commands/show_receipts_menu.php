@@ -29,7 +29,7 @@ class ShowReceiptsMenuCommand extends Command{
 		$back_trace = array('Inicio', 'Movimientos', 'Recibos');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
-				'content' => 'receipts_menu_html.tpl'), 'site_html.tpl');
+				'content' => 'receipt_menu_html.tpl'), 'site_html.tpl');
 	}
 }
 ?>
