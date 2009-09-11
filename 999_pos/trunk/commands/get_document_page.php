@@ -8,14 +8,14 @@
 /**
  * Base class.
  */
-require_once('presentation/get_object_details.php');
+require_once('commands/get_object_page.php');
 
 /**
  * Returns the name of the template to use for displaying the document's details.
  * @package Command
  * @author Roberto Oliveros
  */
-class GetDocumentPageCommand extends Command{
+class GetDocumentPageCommand extends GetObjectPageCommand{
 	/**
 	 * Returns the name of the template to use.
 	 * @return string
