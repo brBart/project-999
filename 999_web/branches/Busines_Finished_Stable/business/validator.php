@@ -5,7 +5,11 @@
  * @author Roberto Oliveros
  */
 
-
+/**
+ * Class that represents an exception when a validation has failed.
+ * @package Validator
+ * @author Roberto Oliveros
+ */
 class ValidateException extends Exception{
 	/**
 	 * Holds the name of the property.
@@ -236,9 +240,24 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
+	 * Must be greater than cero. Otherwise it throws a validate exception. The msg parameter is for displaying
+	 * the desire message.
+	 * @param string $number
+	 * @param string $msg
+	 * @param string $property
+	 * @throws ValidateException
+	 */
+	static public function validatePositiveNumber($number, $msg, $property = NULL){
+		if(!is_number($number) || $number < 1)
+			throw new ValidateException($msg . ' Valor debe ser mayor que cero.', $property);
+	}
+	
+	/**
+	 * Validates the provided number.
+	 *
 	 * Must be greater or equal to cero. Otherwise it throws a validate exception. The msg parameter is for
 	 * displaying the desire message.
-	 * @param float $number
+	 * @param string $number
 	 * @param string $msg
 	 * @param string $property
 	 * @throws ValidateException
