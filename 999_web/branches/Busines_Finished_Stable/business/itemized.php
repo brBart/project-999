@@ -43,8 +43,11 @@ class DetailsPrinter{
 		$details = array();
 		
 		// If there are no details.
-		if(empty($obj_details))
+		if(empty($obj_details)){
+			$totalPages = 0;
+			$totalItems = 0;
 			return $details;
+		}
 		
 		if($page == 0)
 			// Return all the details available.
@@ -82,8 +85,11 @@ class DetailsPrinter{
 		$details = array();
 		
 		// If there are no details.
-		if(empty($obj_details))
+		if(empty($obj_details)){
+			$totalPages = 0;
+			$totalItems = 0;
 			return $details;
+		}
 		
 		$totalItems = count($obj_details);
 		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
