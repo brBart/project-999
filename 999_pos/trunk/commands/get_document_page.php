@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetDocumentDetails class command.
+ * Library containing the GetDocumentPage class command.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,13 +15,13 @@ require_once('presentation/get_object_details.php');
  * @package Command
  * @author Roberto Oliveros
  */
-class GetDocumentDetailsCommand extends Command{
+class GetDocumentPageCommand extends Command{
 	/**
 	 * Returns the name of the template to use.
 	 * @return string
 	 */
 	protected function getTemplate(){
-		return 'document_details_xml.tpl';
+		return 'document_page_xml.tpl';
 	}
 }
 ?>

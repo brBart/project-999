@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetObjectDetails base class command.
+ * Library containing the GetObjectPage base class command.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -19,11 +19,11 @@ require_once('presentation/page.php');
 require_once('business/itemized.php');
 
 /**
- * Defines common functionality for obtaining an object's details.
+ * Defines common functionality for obtaining an object's details page.
  * @package Command
  * @author Roberto Oliveros
  */
-abstract class GetObjectDetailsCommand extends Command{
+abstract class GetObjectPageCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
