@@ -11,12 +11,17 @@
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
+<script type="text/javascript" src="../scripts/object_page.js"></script>
+<script type="text/javascript" src="../scripts/document_page.js"></script>
+<script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
+	var oMachine = new StateMachine(0);
 	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{literal}
 	window.onunload = function(){
@@ -105,4 +110,6 @@
 </div>
 <script type="text/javascript">
 StateMachine.setFocus('organization_id');
+oDetails.init('../xsl/document_page.xsl', document.getElementById('details'), document.getElementById('add_product'), document.getElementById('save'));
+oDetails.getLastPage();
 </script>
