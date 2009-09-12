@@ -52,14 +52,19 @@ function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductS
 AddSupplierProductCommand.prototype = new SyncCommand();
 
 /**
- * Executes the command. Receives the supplier id and the product sku.
- * @param string sProductId
+ * Set the input elements from where the values will be read.
+ * @param string sSupplierId
  * @param string sProductSku
  */
-AddSupplierProductCommand.prototype.execute = function(oSupplierId, oProductSku){
-	this._mSupplierId = oSupplierId;
-	this._mProductSku = oProductSku;
-	
+AddSupplierProductCommand.prototype.init = function(sSupplierId, sProductSku){
+	this._mSupplierId = document.getElementById(sSupplierId);
+	this._mProductSku = document.getElementById(sProductSku);
+}
+
+/**
+ * Executes the command. Receives the supplier id and the product sku.
+ */
+AddSupplierProductCommand.prototype.execute = function(){
 	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
 	str = Url.addUrlParam(str, 'key', this._mKey);
 	str = Url.addUrlParam(str, 'supplier_id', this._mSupplierId.value);

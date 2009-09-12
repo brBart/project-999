@@ -153,8 +153,7 @@
 			  			{if $status eq 1}disabled="disabled"{/if} />
 			  		<span id="product_sku-failed" class="hidden">*</span>
 			  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
-			  			onclick="oAddSupplierProduct.execute(document.getElementById('supplier_id'), document.getElementById('product_sku'));"
-			  			{if $status eq 1}disabled="disabled"{/if}  />
+			  			onclick="oAddSupplierProduct.execute();" {if $status eq 1}disabled="disabled"{/if}  />
 			  		<span id="product_suppliers-failed" class="hidden">*</span>
 			  	</p>
 			  	<div id="details"></div>
@@ -185,6 +184,7 @@
 {if $status eq 0}
 StateMachine.setFocus('name');
 {/if}
-oProductSuppliers.init('../xsl/product_suppliers.xsl', document.getElementById('details'), document.getElementById('add_supplier'), document.getElementById('save'));
+oAddSupplierProduct.init('supplier_id', 'product_sku');
+oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'add_supplier', 'save');
 oProductSuppliers.update();
 </script>

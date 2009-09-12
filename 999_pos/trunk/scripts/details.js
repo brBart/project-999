@@ -90,12 +90,14 @@ Details.prototype = new SyncCommand();
 /**
  * Test if the browser supports XSLT functionality.
  * @param string sUrlXsltFile
- * @param object oDiv
- * @param object oPrevWidget
- * @param object oNextWidget
+ * @param string sDiv
+ * @param string sPrevWidget
+ * @param string sNextWidget
  */
-Details.prototype.init = function(sUrlXsltFile, oDiv, oPrevWidget, oNextWidget){
-	this._mDiv = oDiv;
+Details.prototype.init = function(sUrlXsltFile, sDiv, sPrevWidget, sNextWidget){
+	this._mDiv = document.getElementById(sDiv);
+	this._mPrevWidget = document.getElementById(sPrevWidget);
+	this._mNextWidget = document.getElementById(sNextWidget);
 	
 	// load the file from the server
 	this._mRequest.open("GET", sUrlXsltFile, false);        
@@ -122,15 +124,12 @@ Details.prototype.init = function(sUrlXsltFile, oDiv, oPrevWidget, oNextWidget){
 	
 	// Set the previous and next widgets from the table element for controlling the tab sequence.
 	oTemp = this;
-	oPrevWidget.onkeydown = function(oEvent){
+	this._mPrevWidget.onkeydown = function(oEvent){
 		oTemp.handlePrevTabKey(oEvent);
 	}
-	oNextWidget.onkeydown = function(oEvent){
+	this._mNextWidget.onkeydown = function(oEvent){
 		oTemp.handleNextTabKey(oEvent);
 	}
-	
-	this._mPrevWidget = oPrevWidget;
-	this._mNextWidget = oNextWidget;
 }
 
 /**
