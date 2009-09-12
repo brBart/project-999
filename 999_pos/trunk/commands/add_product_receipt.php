@@ -13,6 +13,10 @@ require_once('commands/add_product_object.php');
  * For adding the product to the receipt.
  */
 require_once('business/event.php');
+/**
+ * For generating a detail.
+ */
+require_once('business/transaction.php');
 
 /**
  * Defines functionality for adding a product to a receipt.
