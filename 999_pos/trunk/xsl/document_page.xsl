@@ -51,7 +51,7 @@
 	  			<xsl:otherwise>
 	  				Anterior
 	  			</xsl:otherwise>
-	  		</xsl:choose>
+	  		</xsl:choose>|
 	  		<xsl:choose>
 	  			<xsl:when test="next_link != ''">
 	  				<xsl:element name="a">
