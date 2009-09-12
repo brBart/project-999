@@ -60,7 +60,7 @@ class Date{
 		$year = (int)$date_array[2];
 		
 		if(!checkdate($month, $day, $year))
-			throw new ValidateException($msg . ' No existe o debe ser en formato \'dd\\mm\\yyyy\'.', $property);
+			throw new ValidateException($msg . ' No existe o debe ser en formato \'dd/mm/aaaa\'.', $property);
 	}
 	
 	/**
