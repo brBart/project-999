@@ -33,6 +33,14 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'DocProductDetail':
+			require_once('business/document.php');
+			break;
+			
+		case 'Lot':
+			require_once('business/product.php');
+			break;
+			
 		default:
 	}
 }
