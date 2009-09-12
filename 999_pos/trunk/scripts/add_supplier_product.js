@@ -10,6 +10,7 @@
  * @param Console oConsole
  * @param Request oRequest
  * @param string sKey
+ * @param ProductSuppliers oProductSuppliers
  */
 function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductSuppliers){
 	// Call the parent constructor.
@@ -22,7 +23,7 @@ function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductS
 	this._mKey = sKey;
 	
 	/**
-	 * Holds a reference to the product suppliers table element.
+	 * Holds a reference to the product suppliers object.
 	 * @var ProductSuppliers
 	 */
 	this._mProductSuppliers = oProductSuppliers;
@@ -62,7 +63,7 @@ AddSupplierProductCommand.prototype.init = function(sSupplierId, sProductSku){
 }
 
 /**
- * Executes the command. Receives the supplier id and the product sku.
+ * Executes the command. Retreives the supplier id and the product sku.
  */
 AddSupplierProductCommand.prototype.execute = function(){
 	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
