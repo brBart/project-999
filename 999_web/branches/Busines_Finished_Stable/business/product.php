@@ -1293,13 +1293,14 @@ class Lot extends Persist{
 		self::validateObjectFromDatabase($product);
 		
 		if($quantity !== 0)
-			Number::validateInteger($quantity, 'Cantidad inv&aacute;lida.');
+			Number::validateNumber($quantity, 'Cantidad inv&aacute;lida.', 'quantity');
 			
 		if($price !== 0.00)
-			Number::validatePositiveFloat($price, 'Precio inv&aacute;lido.');
+			Number::validatePositiveNumber($price, 'Precio inv&aacute;lido.', 'price');
 		
 		if(!is_null($expirationDate) && $expirationDate != '')
-			Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.');
+			Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.',
+					'expiration_date');
 		
 		if(!is_null($entryDate)){
 			Date::validateDate($entryDate, 'Fecha de ingreso inv&aacute;lida.');
