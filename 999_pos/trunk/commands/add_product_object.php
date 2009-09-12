@@ -65,5 +65,14 @@ abstract class AddProductObjectCommand extends Command{
 		
 		Page::display(array(), 'success_xml.tpl');
 	}
+	
+	/**
+	 * Adds the product to the desired object.
+	 * 
+	 * @param variant $obj
+	 * @param Product $product
+	 * @param integer $quantity
+	 */
+	abstract protected function addProduct($obj, Product $product, $quantity);
 }
 ?>

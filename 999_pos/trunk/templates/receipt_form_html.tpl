@@ -14,15 +14,17 @@
 <script type="text/javascript" src="../scripts/object_page.js"></script>
 <script type="text/javascript" src="../scripts/document_page.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
-<script type="text/javascript" src="../scripts/delete_detail.js"></script>
+<script type="text/javascript" src="../scripts/add_product_object.js"></script>
+<script type="text/javascript" src="../scripts/add_product_entry.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oMachine = new StateMachine(0);
 	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
+	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -86,16 +88,16 @@
 		  		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
 		  		<span id="bar_code-failed" class="hidden">*</span>
 		  		<div id="search_product">
-			    	<label for="name">Buscar:</label>
+			    	<label for="product_name">Buscar:</label>
 			    	<div>
-			    		<input name="name" id="name" type="text"/>
+			    		<input name="product_name" id="product_name" type="text"/>
 			    		<div>
 			    			<div id="scroll"></div>
 			    		</div>
 			    	</div>
 		    	</div>
 		  		<input name="form_widget" id="add_product" type="button" value="Agregar"
-		  			onclick="oAddProductReceipt.execute(document.getElementById('supplier_id'), document.getElementById('product_sku'));" />
+		  			onclick="oAddProductReceipt.execute('add_product_receipt');" />
 		  		<span id="receipt_product-failed" class="hidden">*</span>
 		  	</div>
 		  	<div id="details"></div>
@@ -110,6 +112,7 @@
 </div>
 <script type="text/javascript">
 StateMachine.setFocus('organization_id');
+oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
 oDetails.init('../xsl/document_page.xsl', 'details', 'add_product', 'save');
 oDetails.getLastPage();
 </script>
