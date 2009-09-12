@@ -65,7 +65,7 @@ ObjectPage.prototype.updatePage = function(){
 */
 ObjectPage.prototype.displaySuccess = function(xmlDoc){
 	// Call the parents function first.
-	Command.prototype.displaySuccess.call(this, xmlDoc);
+	Details.prototype.displaySuccess.call(this, xmlDoc);
 	// Obtain the page number.
 	this._mPage = xmlDoc.getElementsByTagName('page')[0].firstChild.data;
 }
