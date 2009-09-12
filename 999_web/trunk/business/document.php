@@ -349,8 +349,8 @@ abstract class DocumentDetail{
 	 * @param float $price
 	 */
 	public function __construct($quantity, $price){
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-		Number::validateFloat($price, 'Precio inv&aacute;lido.');
+		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
+		Number::validateNumber($price, 'Precio inv&aacute;lido.');
 		
 		$this->_mQuantity = $quantity;
 		$this->_mPrice = $price;
