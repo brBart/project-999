@@ -240,6 +240,20 @@ class Number{
 	/**
 	 * Validates the provided number.
 	 *
+	 * Must be numeric. Otherwise it throws a validate exception. The msg parameter is for displaying the
+	 * desire message.
+	 * @param integer $quantity
+	 * @param string $property
+	 * @throws ValidateException
+	 */
+	static public function validateNumber($number, $msg, $property = NULL){
+		if(!is_numeric($number))
+			throw new ValidateException($msg . ' Valor debe ser numerico.', $property);
+	}
+	
+	/**
+	 * Validates the provided number.
+	 *
 	 * Must be greater than cero. Otherwise it throws a validate exception. The msg parameter is for displaying
 	 * the desire message.
 	 * @param string $number
