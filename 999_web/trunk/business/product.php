@@ -440,6 +440,15 @@ class ProductSupplier extends Persist{
 	}
 	
 	/**
+	 * Sets the productsupplier's deleted flag to false.
+	 *
+	 * Must not be called. Use when the detail was previously deleted but is added again.
+	 */
+	public function restore(){
+		$this->_mDeleted = false;
+	}
+	
+	/**
 	 * Insert or deletes the productsupplier in the database.
 	 *
 	 * Depending of the status property or its deleted flag, the appropiate action is taken.
@@ -752,8 +761,13 @@ class Product extends Identifier{
 	 */
 	public function addProductSupplier(ProductSupplier $newDetail){
 		foreach($this->_mProductSuppliers as $detail)
-			if($detail->getId() == $newDetail->getId() && !$detail->isDeleted())
-				throw new ValidateException('Codigo del proveedor ya esta ingresado.', 'product_suppliers');
+			if($detail->getId() == $newDetail->getId())
+				if($detail->isDeleted()){
+					$this->restoreProductSupplier($detail);
+					return;
+				}
+				else
+					throw new ValidateException('Codigo del proveedor ya esta ingresado.', 'product_suppliers');
 				
 		$this->verifyProductSupplier($newDetail);
 		$this->_mProductSuppliers[] = $newDetail;
@@ -971,6 +985,24 @@ class Product extends Identifier{
 			
 			return $new_code;
 		}
+	}
+	
+	/**
+	 * Restore a previously deleted supplier from the product.
+	 *
+	 * Use to move the restore supplier to the last place to simulate it is new.
+	 * @param ProductSupplier $restoreDetail
+	 */
+	private function restoreProductSupplier(ProductSupplier $restoreDetail){
+		$temp_details = array();
+		
+		foreach($this->_mProductSuppliers as &$detail)
+			if($detail->getId() != $restoreDetail->getId())
+				$temp_details[] = $detail;
+		
+		$restoreDetail->restore();
+		$temp_details[] = $restoreDetail;
+		$this->_mProductSuppliers = $temp_details;
 	}
 }
 
