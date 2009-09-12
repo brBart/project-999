@@ -47,9 +47,12 @@ abstract class AddProductObjectCommand extends Command{
 				throw new ValidateException('C&oacute;digo de barra inv&aacute;lido. Valor no puede ser ' .
 						'vac&iacute;o.', 'bar_code');
 				
-			$obj = $helper->getObject((int)$this->_mRequest->getProperty('key'));
 			$quantity = $this->_mRequest->getProperty('quantity');
+			if(!is_numeric($quantity) || $quantity < 1)
+				throw new ValidateException('Cantidad inv&aacute;lida. Valor deber ser mayor que cero.',
+						'quantity');
 			
+			$obj = $helper->getObject((int)$this->_mRequest->getProperty('key'));
 			$this->addProduct($obj, $product, $quantity);
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
