@@ -110,6 +110,6 @@
 </div>
 <script type="text/javascript">
 StateMachine.setFocus('organization_id');
-oDetails.init('../xsl/document_page.xsl', document.getElementById('details'), document.getElementById('add_product'), document.getElementById('save'));
+oDetails.init('../xsl/document_page.xsl', 'details', 'add_product', 'save');
 oDetails.getLastPage();
 </script>
