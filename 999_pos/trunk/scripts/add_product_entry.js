@@ -59,10 +59,10 @@ AddProductEntryCommand.prototype.execute = function(sCmd){
 	 else{
 		 var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
 		 str = Url.addUrlParam(str, 'key', this._mKey);
-		 str = Url.addUrlParam(str, 'quantity', this._mQuantity);
-		 str = Url.addUrlParam(str, 'price', this._mPrice);
-		 str = Url.addUrlParam(str, 'expiration_date', this._mExpirationDate);
-		 str = Url.addUrlParam(str, 'bar_code', this._mBarCode);
+		 str = Url.addUrlParam(str, 'quantity', this._mQuantity.value);
+		 str = Url.addUrlParam(str, 'price', this._mPrice.value);
+		 str = Url.addUrlParam(str, 'expiration_date', this._mExpirationDate.value);
+		 str = Url.addUrlParam(str, 'bar_code', this._mBarCode.value);
 		 this.sendRequest(str);
 	 }
 }
@@ -95,5 +95,5 @@ AddProductEntryCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	this._mConsole.cleanFailure('expiration_date');
 	
 	// Call parent's method.
-	AddProductObjectCommand.prototype.displayFailure(this, xmlDoc, strMsg);
+	AddProductObjectCommand.prototype.displayFailure.call(this, xmlDoc, strMsg);
 }
