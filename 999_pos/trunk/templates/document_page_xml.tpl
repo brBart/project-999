@@ -20,13 +20,15 @@ header('Content-Type: text/xml');
 			<detail_id>{$details[i].id}</detail_id>
 			<bar_code>{$details[i].bar_code}</bar_code>
 			<manufacturer>{$details[i].manufacturer}</manufacturer>
-			<product>$details[i].product</product>
-			<packaging>$details[i].packaging</packaging>
-			<um>$details[i].um</um>
-			<quantity>$details[i].quantity</quantity>
-			<price>$details[i].price</price>
-			<total>$details[i].total</total>
-			<expiration_date>$details[i].expiration_date</expiration_date>
+			<product>{$details[i].product}</product>
+			<packaging>{$details[i].packaging}</packaging>
+			<um>{$details[i].um}</um>
+			<quantity>{$details[i].quantity}</quantity>
+			<price>{$details[i].price}</price>
+			<total>{$details[i].total}</total>
+			<expiration_date>
+			{if $details[i].expiration_date neq ''}{$details[i].expiration_date}{else}N/A{/if}
+			</expiration_date>
 		</row>
 		{/section}
 	</grid>
