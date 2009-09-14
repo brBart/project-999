@@ -352,8 +352,8 @@ abstract class DocumentDetail{
 		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 		Number::validateNumber($price, 'Precio inv&aacute;lido.');
 		
-		$this->_mQuantity = $quantity;
-		$this->_mPrice = $price;
+		$this->_mQuantity = round($quantity);
+		$this->_mPrice = number_format($price, 2);
 	}
 	
 	/**
@@ -381,7 +381,7 @@ abstract class DocumentDetail{
 	 * @return float
 	 */
 	public function getTotal(){
-		return $this->_mQuantity * $this->_mPrice;
+		return number_format($this->_mQuantity * $this->_mPrice, 2);
 	}
 	
 	/**
