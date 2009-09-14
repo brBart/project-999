@@ -657,7 +657,7 @@ class DocProductDetail extends DocumentDetail{
 	 * @param integer $quantity
 	 */
 	public function increase($quantity){
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 		$this->_mQuantity += $quantity;
 		if($this->_mTransaction instanceof Entry)
 			$this->_mLot->increase($quantity);
