@@ -41,6 +41,10 @@ function __autoload($className){
 			require_once('business/product.php');
 			break;
 			
+		case 'Entry':
+			require_once('business/transaction.php');
+			break;
+			
 		default:
 	}
 }
