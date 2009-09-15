@@ -353,7 +353,7 @@ abstract class DocumentDetail{
 		Number::validateNumber($price, 'Precio inv&aacute;lido.');
 		
 		$this->_mQuantity = round($quantity);
-		$this->_mPrice = number_format($price, 2);
+		$this->_mPrice = $price;
 	}
 	
 	/**

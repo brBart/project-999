@@ -1313,8 +1313,8 @@ class Lot extends Persist{
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		
 		$this->_mProduct = $product;
-		$this->_mQuantity = round($quantity);
-		$this->_mPrice = number_format($price, 2);
+		$this->_mQuantity = $quantity;
+		$this->_mPrice = $price;
 		$this->_mExpirationDate = $expirationDate;
 		$this->_mId = $id;
 	}
