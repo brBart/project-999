@@ -1187,7 +1187,6 @@ class Bonus extends Persist{
 	 */
 	static public function getBonusIdByProduct(Product $product, $quantity){
 		self::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		return BonusDAM::getId($product, $quantity);
 	}
 	
