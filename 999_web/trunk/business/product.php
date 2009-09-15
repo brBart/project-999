@@ -306,7 +306,6 @@ class Inventory{
 	 */
 	static public function decrease(Product $product, $quantity){
 		Persist::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		InventoryDAM::decrease($product, $quantity);
 	}
 	
