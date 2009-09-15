@@ -18,11 +18,11 @@ header('Content-Type: text/xml');
 		{section name=i loop=$details}
 		<row>
 			<detail_id>{$details[i].id}</detail_id>
-			<bar_code>{$details[i].bar_code}</bar_code>
-			<manufacturer>{$details[i].manufacturer}</manufacturer>
-			<product>{$details[i].product}</product>
-			<packaging>{$details[i].packaging}</packaging>
-			<um>{$details[i].um}</um>
+			<bar_code><![CDATA[{$details[i].bar_code}]]></bar_code>
+			<manufacturer><![CDATA[{$details[i].manufacturer}]]></manufacturer>
+			<product><![CDATA[{$details[i].product}]]></product>
+			<packaging><![CDATA[{$details[i].packaging}]]></packaging>
+			<um><![CDATA[{$details[i].um}]]></um>
 			<quantity>{$details[i].quantity}</quantity>
 			<price>{$details[i].price|nf:2}</price>
 			<total>{$details[i].total|nf:2}</total>

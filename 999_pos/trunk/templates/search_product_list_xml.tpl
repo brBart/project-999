@@ -8,9 +8,9 @@ header('Content-Type: text/xml');
 	<keyword>{$keyword}</keyword>
 	{section name=i loop=$list}
 	<result>
-		<bar_code>{$list[i].bar_code}</bar_code>
-		<name>{$list[i].name}</name>
-		<packaging>{$list[i].packaging}</packaging>
+		<bar_code><![CDATA[{$list[i].bar_code}]]></bar_code>
+		<name><![CDATA[{$list[i].name}]]></name>
+		<packaging><![CDATA[{$list[i].packaging}]]></packaging>
 	</result>
 	{/section}
 </response>

@@ -11,9 +11,9 @@ header('Content-Type: text/xml');
 	<grid>
 		{section name=i loop=$suppliers}
 		<row>
-			<product_supplier_id>{$suppliers[i].product_supplier_id}</product_supplier_id>
-			<supplier>{$suppliers[i].supplier}</supplier>
-			<product_sku>{$suppliers[i].product_sku}</product_sku>
+			<product_supplier_id><![CDATA[{$suppliers[i].product_supplier_id}]]></product_supplier_id>
+			<supplier><![CDATA[{$suppliers[i].supplier}]]></supplier>
+			<product_sku><![CDATA[{$suppliers[i].product_sku}]]></product_sku>
 		</row>
 		{/section}
 	</grid>
