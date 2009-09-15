@@ -25,6 +25,9 @@ class SmartyPage extends Smarty{
 		$this->template_dir = TEMPLATE_DIR;
 		$this->compile_dir = COMPILE_DIR;
 		$this->config_dir = CONFIG_DIR;
+		
+		// let's map PHP's number_format function to a Smarty modifier.
+		$this->register_modifier('nf', 'number_format');
 	}
 }
 
