@@ -825,6 +825,7 @@ class Reserve extends Persist{
 	 */
 	static public function create(Lot $lot, $quantity){
 		Persist::validateObjectFromDatabase($lot);
+		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 		
 		$lot->reserve($quantity);
 		$product = $lot->getProduct();
