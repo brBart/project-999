@@ -16,6 +16,8 @@
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/add_product_object.js"></script>
 <script type="text/javascript" src="../scripts/add_product_entry.js"></script>
+<script type="text/javascript" src="../scripts/get_property.js"></script>
+<script type="text/javascript" src="../scripts/get_amount.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oMachine = new StateMachine(0);
@@ -24,7 +26,8 @@
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
-	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
+	var oGetTotal = new GetAmountCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails, oGetTotal);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -101,6 +104,7 @@
 		  		<span id="receipt_product-failed" class="hidden">*</span>
 		  	</div>
 		  	<div id="details"></div>
+		  	<p>Total: <span id="total"></span></p>
 		</fieldset>
 		<fieldset id="controls">
 		  	<input name="form_widget" id="save" type="button" value="Guardar"
@@ -113,6 +117,7 @@
 <script type="text/javascript">
 StateMachine.setFocus('organization_id');
 oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
+oGetTotal.init('get_object_total', 'total');
 oDetails.init('../xsl/document_page.xsl', 'details', 'add_product', 'save');
 oDetails.getLastPage();
 </script>

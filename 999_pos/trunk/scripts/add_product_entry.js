@@ -11,10 +11,11 @@
  * @param Request oRequest
  * @param string sKey
  * @param ObjectPage oDetails
+ * @param GetAmountCommand oTotal
  */
-function AddProductEntryCommand(oSession, oConsole, oRequest, sKey, oDetails){
+function AddProductEntryCommand(oSession, oConsole, oRequest, sKey, oDetails, oTotal){
 	// Call the parent constructor.
-	AddProductObjectCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails);
+	AddProductObjectCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails, oTotal);
 	
 	/**
 	 * Holds a reference to the price element.
