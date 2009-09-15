@@ -11,8 +11,8 @@ header('Content-Type: text/xml');
 		<total_items>{$total_items}</total_items>
 		<first_item>{$first_item}</first_item>
 		<last_item>{$last_item}</last_item>
-		<previous_link>{$previous_link}</previous_link>
-		<next_link>{$next_link}</next_link>
+		<previous_page>{$previous_page}</previous_page>
+		<next_page>{$next_page}</next_page>
 	</params>
 	<grid>
 		{section name=i loop=$details}

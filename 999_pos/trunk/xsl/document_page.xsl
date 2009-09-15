@@ -41,10 +41,10 @@
 	  			Pagina <xsl:value-of select="page" /> de <xsl:value-of select="total_pages" />
 	  		</span>
 	  		<xsl:choose>
-	  			<xsl:when test="previous_link != ''">
+	  			<xsl:when test="previous_page != ''">
 	  				<xsl:element name="a">
-	                	<xsl:attribute name = "href" ><xsl:value-of select="previous_link" /></xsl:attribute>
-	                  	<xsl:attribute name = "onclick">oSession.setIsLink(true);</xsl:attribute>
+	                	<xsl:attribute name = "href">#</xsl:attribute>
+	                  	<xsl:attribute name = "onclick">oDetails.getPage(<xsl:value-of select="previous_page" />);</xsl:attribute>
 	                  	Anterior
 	                </xsl:element>
 	  			</xsl:when>
@@ -53,10 +53,10 @@
 	  			</xsl:otherwise>
 	  		</xsl:choose>|
 	  		<xsl:choose>
-	  			<xsl:when test="next_link != ''">
+	  			<xsl:when test="next_page != ''">
 	  				<xsl:element name="a">
-	                	<xsl:attribute name = "href" ><xsl:value-of select="next_link" /></xsl:attribute>
-	                  	<xsl:attribute name = "onclick">oSession.setIsLink(true);</xsl:attribute>
+	                	<xsl:attribute name = "href">#</xsl:attribute>
+	                  	<xsl:attribute name = "onclick">oDetails.getPage(<xsl:value-of select="next_page" />);</xsl:attribute>
 	                  	Siguiente
 	                </xsl:element>
 	  			</xsl:when>

@@ -37,14 +37,12 @@ abstract class GetObjectPageCommand extends Command{
 		$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
 		$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 		
-		$actual_cmd = $request->getProperty('cmd');
-		$link = 'index.php?cmd=' . $actual_cmd . '&page=';
-		$previous_link = ($page == 1) ? '' : $link . ($page - 1);
-		$next_link = ($page == $total_pages) ? '' : $link . ($page + 1);
+		$previous_page = ($page <= 1) ? '' : $page - 1;
+		$next_page = ($page == $total_pages) ? '' : $page + 1;
 		
 		Page::display(array('details' => $details, 'page' => $page, 'total_pages' => $total_pages,
 				'total_items' => $total_items, 'first_item' => $first_item, 'last_item' => $last_item,
-				'previous_link' => $previous_link, 'next_link' => $next_link), $this->getTemplate());
+				'previous_page' => $previous_page, 'next_page' => $next_page), $this->getTemplate());
 	}
 	
 	/**
