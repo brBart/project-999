@@ -802,26 +802,6 @@ class Reserve extends Persist{
 	}
 	
 	/**
-	 * Creates and reserve the provided quantity from the product in the database.
-	 *
-	 * Creates a reserve in the database and returns the instance of it.
-	 * @param Lot $lot
-	 * @param integer $quantity
-	 * @return Reserve
-	 */
-	public function create(Lot $lot, $quantity){
-		Persist::validateObjectFromDatabase($lot);
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-		
-		$lot->reserve($quantity);
-		$product = $lot->getProduct();
-		Inventory::reserve($product, $quantity);
-		
-		$helper = SessionHelper::getInstance();
-		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y'));
-	}
-	
-	/**
 	 * Merge the provided reserve's quantity to this object quantity.
 	 *
 	 * Took the provided reserve's quantity and adds it to this reserve's quantity property. Then it deletes
@@ -833,6 +813,26 @@ class Reserve extends Persist{
 		$this->_mQuantity += $obj->getQuantity();
 		ReserveDAM::increase($this, $obj->getQuantity());
 		ReserveDAM::delete($obj);
+	}
+	
+	/**
+	 * Creates and reserve the provided quantity from the product in the database.
+	 *
+	 * Creates a reserve in the database and returns the instance of it.
+	 * @param Lot $lot
+	 * @param integer $quantity
+	 * @return Reserve
+	 */
+	static public function create(Lot $lot, $quantity){
+		Persist::validateObjectFromDatabase($lot);
+		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
+		
+		$lot->reserve($quantity);
+		$product = $lot->getProduct();
+		Inventory::reserve($product, $quantity);
+		
+		$helper = SessionHelper::getInstance();
+		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y'));
 	}
 	
 	/**
