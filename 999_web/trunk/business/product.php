@@ -294,8 +294,6 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function increase(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		InventoryDAM::increase($product, $quantity);
 	}
 	
