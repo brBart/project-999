@@ -317,7 +317,6 @@ class Inventory{
 	 */
 	static public function reserve(Product $product, $quantity){
 		Persist::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
 		InventoryDAM::reserve($product, $quantity);
 	}
 	
@@ -1479,7 +1478,7 @@ class Lot extends Persist{
 	 */
 	public function reserve($quantity){
 		if($this->_mStatus == Persist::CREATED){
-			Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+			Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 			LotDAM::reserve($this, $quantity);
 		}
 	}
