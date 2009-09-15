@@ -24,8 +24,8 @@ header('Content-Type: text/xml');
 			<packaging>{$details[i].packaging}</packaging>
 			<um>{$details[i].um}</um>
 			<quantity>{$details[i].quantity}</quantity>
-			<price>{$details[i].price}</price>
-			<total>{$details[i].total}</total>
+			<price>{$details[i].price|nf:2}</price>
+			<total>{$details[i].total|nf:2}</total>
 			<expiration_date>
 			{if $details[i].expiration_date neq ''}{$details[i].expiration_date}{else}N/A{/if}
 			</expiration_date>
