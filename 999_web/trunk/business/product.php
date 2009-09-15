@@ -1467,7 +1467,7 @@ class Lot extends Persist{
 	 * @param integer $quantity
 	 */
 	public function decrease($quantity){
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 		if($this->_mStatus == Persist::CREATED)
 			LotDAM::decrease($this, $quantity);
 		else
