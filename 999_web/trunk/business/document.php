@@ -758,7 +758,7 @@ class Reserve extends Persist{
 		try{
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 			Persist::validateObjectFromDatabase($lot);
-			Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+			Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 			Persist::validateObjectFromDatabase($user);
 			Date::validateDate($date, 'Fecha inv&aacute;lida.');
 		} catch(Exception $e){
