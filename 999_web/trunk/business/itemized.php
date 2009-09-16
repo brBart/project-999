@@ -57,15 +57,17 @@ class DetailsPrinter{
 			$totalItems = count($obj_details);
 			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 			
-			$first_item = ($page - 1) * ITEMS_PER_PAGE;
-			
-			if($page == $totalPages)
-				$last_item = $totalItems;
-			else
-				$last_item = $first_item + ITEMS_PER_PAGE;
+			if($page <= $totalPages){
+				$first_item = ($page - 1) * ITEMS_PER_PAGE;
 				
-			for($i = $first_item; $i < $last_item; $i++)
-				$details[] = $obj_details[$i]->show();
+				if($page == $totalPages)
+					$last_item = $totalItems;
+				else
+					$last_item = $first_item + ITEMS_PER_PAGE;
+					
+				for($i = $first_item; $i < $last_item; $i++)
+					$details[] = $obj_details[$i]->show();
+			}
 		}
 		
 		return $details;
