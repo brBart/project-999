@@ -50,7 +50,7 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	 * Holds the total received in the table.
 	 * @var integer
 	 */
-	this._mTotalItems = 0;
+	this._mPageItems = 0;
 	
 	/**
 	 * Keeps track of the selected row.
@@ -78,8 +78,27 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	
 	/**
 	 * Holds the id of the actual selected detail (row).
+	 * @var string
 	 */
 	this._mDetailId = '';
+	
+	/**
+	 * Holds the name of the variable which holds this command.
+	 * @var string
+	 */
+	this._mDetailsObj = '';
+	
+	/**
+	 * Holds the name of the variable which holds the object in charge of the deleting a detail.
+	 * @var string
+	 */
+	this._mDeleteObj = '';
+	
+	/**
+	 * Holds the name of the command to use on the server for deleting a detail.
+	 * @var string
+	 */
+	this._mDeleteCmd = '';
 }
 
 /**
@@ -88,16 +107,26 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 Details.prototype = new SyncCommand();
 
 /**
- * Test if the browser supports XSLT functionality.
+ * Set necessary variables and test if the browser supports XSLT functionality. The between the two widgets
+ * is where the div element with the details table reside (necessary for the tab key order).
  * @param string sUrlXsltFile
  * @param string sDiv
  * @param string sPrevWidget
  * @param string sNextWidget
+ * @param string sDetailsObj
+ * @param string sDeleteObj
+ * @param string sDeleteCmd
  */
-Details.prototype.init = function(sUrlXsltFile, sDiv, sPrevWidget, sNextWidget){
+Details.prototype.init = function(sUrlXsltFile, sDiv, sPrevWidget, sNextWidget, sDetailsObj, sDeleteObj,
+		sDeleteCmd){
 	this._mDiv = document.getElementById(sDiv);
 	this._mPrevWidget = document.getElementById(sPrevWidget);
 	this._mNextWidget = document.getElementById(sNextWidget);
+	
+	// Set for use in the xslt processor.
+	this._mDetailsObj = sDetailsObj;
+	this._mDeleteObj = sDeleteObj;
+	this._mDeleteCmd = sDeleteCmd;
 	
 	// load the file from the server
 	this._mRequest.open("GET", sUrlXsltFile, false);        
@@ -224,8 +253,8 @@ Details.prototype.createMsxml2XSLTemplate = function(){
 * @param DocumentElement xmlDoc
 */
 Details.prototype.displaySuccess = function(xmlDoc){
-	// Obtain the value of the total_items parameter.
-	this._mTotalItems = xmlDoc.getElementsByTagName('total_items')[0].firstChild.data;
+	// Obtain the value of the page_items parameter.
+	this._mPageItems = xmlDoc.getElementsByTagName('page_items')[0].firstChild.data;
 	// Reset selected row position and focus.
 	this._mSelectedRow = 0;
 	this._mHasFocus = false;
@@ -238,7 +267,13 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	// load the XSLT document
     	var xsltProcessor = new XSLTProcessor();
     	xsltProcessor.importStylesheet(this._mStylesheetDoc);
+    	
+    	// Set parameters.
     	xsltProcessor.setParameter(null, 'status', this._mMachine.getStatus());
+    	xsltProcessor.setParameter(null, 'details_obj', this._mDetailsObj);
+    	xsltProcessor.setParameter(null, 'delete_obj', this._mDeleteObj);
+    	xsltProcessor.setParameter(null, 'delete_cmd', this._mDeleteCmd);
+    	
     	// generate the HTML code for the new page of products
     	page = xsltProcessor.transformToFragment(xmlResponse, document);
     	// display the page of products
@@ -260,9 +295,14 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	// create the processor and set the form status
     	var xsltProcessor = oTemplate.createProcessor();
     	xsltProcessor.input = theDocument;
-    	xsltProcessor.addParameter('status', this._mMachine.getStatus());
-    	xsltProcessor.transform();
     	
+    	// Set parameters.
+    	xsltProcessor.addParameter('status', this._mMachine.getStatus());
+    	xsltProcessor.addParameter('details_obj', this._mDetailsObj);
+    	xsltProcessor.addParameter('delete_obj', this._mDeleteObj);
+    	xsltProcessor.addParameter('delete_cmd', this._mDeleteCmd);
+    	
+    	xsltProcessor.transform();
     	// display the page of products
     	this._mDiv.innerHTML = xsltProcessor.output;
     }
@@ -341,7 +381,7 @@ Details.prototype.handleKeyDown = function(oEvent){
 	
 	// If the delete key was pressed.
 	if(code == 46)
-		if(this._mTotalItems > 0 && this._mSelectedRow > 0)
+		if(this._mPageItems > 0 && this._mSelectedRow > 0)
 			this.deleteDetail();
 	
 	// If the tab key was pressed.
@@ -462,7 +502,7 @@ Details.prototype.deselectRow = function(){
  * Selects the first row.
  */
 Details.prototype.moveFirst = function(){
-	if(this._mTotalItems > 0)
+	if(this._mPageItems > 0)
 		this.selectRow(1);
 }
 
@@ -470,7 +510,7 @@ Details.prototype.moveFirst = function(){
  * Selects the previous row.
  */
 Details.prototype.movePrevious = function(){
-	if(this._mTotalItems > 0 && this._mSelectedRow > 1)
+	if(this._mPageItems > 0 && this._mSelectedRow > 1)
 		this.selectRow(this._mSelectedRow - 1);
 }
 
@@ -478,7 +518,7 @@ Details.prototype.movePrevious = function(){
  * Selects the next row.
  */
 Details.prototype.moveNext = function(){
-	if(this._mTotalItems > 0 && this._mSelectedRow < this._mTotalItems)
+	if(this._mPageItems > 0 && this._mSelectedRow < this._mPageItems)
 		this.selectRow(this._mSelectedRow + 1);
 }
  
@@ -487,9 +527,9 @@ Details.prototype.moveNext = function(){
  * @param integer iPos
  */
 Details.prototype.moveTo = function(iPos){
-	if(this._mTotalItems > 0)
-		if(iPos > this._mTotalItems)
-			this.selectRow(this._mTotalItems);
+	if(this._mPageItems > 0)
+		if(iPos > this._mPageItems)
+			this.selectRow(this._mPageItems);
 		else
 			this.selectRow(iPos);
 }

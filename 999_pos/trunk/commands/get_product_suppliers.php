@@ -29,7 +29,7 @@ class GetProductSuppliersCommand extends Command{
 		$product = $helper->getObject((int)$request->getProperty('key'));
 		$product_suppliers = $product->showProductSuppliers();
 		
-		Page::display(array('suppliers' => $product_suppliers, 'total_items' => count($product_suppliers)),
+		Page::display(array('suppliers' => $product_suppliers, 'page_items' => count($product_suppliers)),
 				'product_suppliers_xml.tpl');
 	}
 }

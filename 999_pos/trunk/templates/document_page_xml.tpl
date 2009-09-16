@@ -7,6 +7,7 @@ header('Content-Type: text/xml');
 	<success>1</success>
 	<params>
 		<page>{$page}</page>
+		<page_items>{$page_items}</page_items>
 		<total_pages>{$total_pages}</total_pages>
 		<total_items>{$total_items}</total_items>
 		<first_item>{$first_item}</first_item>

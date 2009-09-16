@@ -185,6 +185,6 @@
 StateMachine.setFocus('name');
 {/if}
 oAddSupplierProduct.init('supplier_id', 'product_sku');
-oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'add_supplier', 'save');
+oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'add_supplier', 'save', 'oProductSuppliers', 'oDeleteSupplierProduct', 'delete_supplier_product');
 oProductSuppliers.update();
 </script>

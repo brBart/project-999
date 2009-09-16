@@ -35,13 +35,15 @@ abstract class GetObjectLastPageCommand extends Command{
 		$details = DetailsPrinter::showLastPage($obj, $total_pages, $total_items);
 		$first_item = ($total_pages > 0) ? (($total_pages - 1) * ITEMS_PER_PAGE) + 1 : 0;
 		$last_item = $total_items;
+		$page_items = count($details);
 		
 		$previous_page = ($total_pages <= 1) ? '' : $total_pages - 1;
 		$next_page = '';
 		
 		Page::display(array('details' => $details, 'page' => $total_pages, 'total_pages' => $total_pages,
 				'total_items' => $total_items, 'first_item' => $first_item, 'last_item' => $last_item,
-				'previous_page' => $previous_page, 'next_page' => $next_page), $this->getTemplate());
+				'previous_page' => $previous_page, 'next_page' => $next_page, 'page_items' => $page_items),
+				$this->getTemplate());
 	}
 	
 	/**
