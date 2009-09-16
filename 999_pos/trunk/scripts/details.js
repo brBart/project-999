@@ -575,5 +575,5 @@ Details.prototype.getPosition = function(){
  * Abstract method.
  */
 Details.prototype.deleteDetail = function(){
-	return 0;
+	 this.mDeleteFunction(this._mDeleteCmd);
 }

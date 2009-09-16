@@ -36,6 +36,7 @@
 	window.onunload = function(){
 		oRemoveObject.execute();
 	}
+	// For the delete key pressed. 
 	oProductSuppliers.mDeleteFunction = function(sCmd){oDeleteSupplierProduct.execute(sCmd);}
 	{/literal}
 </script>

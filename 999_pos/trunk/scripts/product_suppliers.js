@@ -36,10 +36,3 @@ ProductSuppliers.prototype.update = function(){
 	str = Url.addUrlParam(str, 'key', this._mKey);
 	this.sendRequest(str);
 }
-
-/**
- * Executes the delete function.
- */
-ProductSuppliers.prototype.deleteDetail = function(){
-	this.mDeleteFunction('delete_supplier_product');
-}

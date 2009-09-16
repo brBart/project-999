@@ -35,6 +35,8 @@
 	window.onunload = function(){
 		oRemoveObject.execute();
 	}
+	// For the delete key pressed.
+	oDetails.mDeleteFunction = function(sCmd){oDeleteProductReceipt.execute(sCmd);}
 	{/literal}
 </script>
 <div id="content">
