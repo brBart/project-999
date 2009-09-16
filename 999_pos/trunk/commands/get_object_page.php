@@ -34,9 +34,16 @@ abstract class GetObjectPageCommand extends Command{
 		$obj = $helper->getObject((int)$request->getProperty('key'));
 		
 		$details = DetailsPrinter::showPage($obj, $total_pages, $total_items, (int)$page);
-		$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
-		$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 		$page_items = count($details);
+		if($page_items > 0){
+			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
+			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
+		}
+		else{
+			$first_item = 0;
+			$last_item = 0;
+			$page = 0;
+		}
 		
 		$previous_page = ($page <= 1) ? '' : $page - 1;
 		$next_page = ($page == $total_pages) ? '' : $page + 1;
