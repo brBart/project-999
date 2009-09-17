@@ -35,14 +35,27 @@ abstract class GetObjectPageCommand extends Command{
 		
 		$details = DetailsPrinter::showPage($obj, $total_pages, $total_items, (int)$page);
 		$page_items = count($details);
+		// If the page is not empty.
 		if($page_items > 0){
 			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
 			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 		}
 		else{
-			$first_item = 0;
-			$last_item = 0;
-			$page = 0;
+			// If it is empty, check if it is not the only page.
+			if($page > 1 && $total_items > 0){
+				// If it is not the only page, return the last page instead. 
+				$details = DetailsPrinter::showLastPage($obj, $total_pages, $total_items);
+				$first_item = ($total_pages > 0) ? (($total_pages - 1) * ITEMS_PER_PAGE) + 1 : 0;
+				$last_item = $total_items;
+				$page_items = count($details);
+				$page = $total_pages;
+			}
+			// If it was the only page.
+			else{
+				$first_item = 0;
+				$last_item = 0;
+				$page = 0;
+			}
 		}
 		
 		$previous_page = ($page <= 1) ? '' : $page - 1;
