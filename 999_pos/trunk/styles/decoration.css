@@ -108,12 +108,6 @@ a:hover {
 	border-width: 1px;
 }
 
-#product_tb {
-	border-style: solid;
-	border-color: white;
-	border-width: 1px;
-}
-
 #list td {
 	border-bottom-style: solid;
 	border-color: #00067F;
@@ -137,6 +131,12 @@ a:hover {
 
 #details tr {
 	background-color: white;
+}
+
+#product_tb > div {
+	border-style: solid;
+	border-color: white;
+	border-width: 1px;
 }
 
 #main_menu a:hover {

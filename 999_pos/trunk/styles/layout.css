@@ -135,10 +135,18 @@ input[type="text"], input[type="password"] {
 	width: 1px;
 }
 
+.large_tb {
+	width: 90%;
+}
+
 #product_tb {
+	margin: 2em auto;
+	height: 2.5em;
+}
+
+#product_tb > div {
 	float: left;
 	padding: 5px 5px 0 5px;
-	margin: 2em auto;
 }
 
 #content > div, table {
