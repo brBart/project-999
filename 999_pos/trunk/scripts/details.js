@@ -99,6 +99,12 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	 * @var string
 	 */
 	this._mDeleteCmd = '';
+	
+	/**
+	 * Holds the actual page number.
+	 * @var integer
+	 */
+	this._mPage = 0;
 }
 
 /**
@@ -253,6 +259,8 @@ Details.prototype.createMsxml2XSLTemplate = function(){
 * @param DocumentElement xmlDoc
 */
 Details.prototype.displaySuccess = function(xmlDoc){
+	// Obtain the page number.
+	this._mPage = xmlDoc.getElementsByTagName('page')[0].firstChild.data;
 	// Obtain the value of the page_items parameter.
 	this._mPageItems = xmlDoc.getElementsByTagName('page_items')[0].firstChild.data;
 	// Reset selected row position and focus.
@@ -525,10 +533,11 @@ Details.prototype.moveNext = function(){
 /**
  * Select the row in the provided position, if it does not exists, move to the last position.
  * @param integer iPos
+ * @param integer iPage
  */
-Details.prototype.moveTo = function(iPos){
+Details.prototype.moveTo = function(iPos, iPage){
 	if(this._mPageItems > 0)
-		if(iPos > this._mPageItems)
+		if(iPos > this._mPageItems || this._mPage != iPage)
 			this.selectRow(this._mPageItems);
 		else
 			this.selectRow(iPos);
@@ -569,6 +578,14 @@ Details.prototype.getDetailId = function(){
  */
 Details.prototype.getPosition = function(){
 	return this._mSelectedRow;
+}
+ 
+/**
+  * Returns the actual page number.
+  * @return integer
+  */
+Details.prototype.getPageNumber = function(){
+ 	return this._mPage;
 }
 
 /**

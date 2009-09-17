@@ -33,6 +33,12 @@ function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	 * @var integer
 	 */
 	this._mRowPos = 0;
+	
+	/**
+	 * Holds the page number before the deletion.
+	 * @var integer
+	 */
+	this._mPage = 0;
 }
 
 /**
@@ -51,6 +57,7 @@ DeleteDetailCommand.prototype.execute = function(sCmd){
 		sDetailId = this._mDetails.getDetailId();
 		if(sDetailId != ''){
 			this._mRowPos = this._mDetails.getPosition();
+			this._mPage = this._mDetails.getPageNumber();
 			var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
 			str = Url.addUrlParam(str, 'key', this._mKey);
 			str = Url.addUrlParam(str, 'detail_id', sDetailId);

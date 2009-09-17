@@ -36,6 +36,6 @@ DeleteProductObjectCommand.prototype = new DeleteDetailCommand();
 DeleteProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mDetails.updatePage();
 	this._mDetails.setFocus();
-	this._mDetails.moveTo(this._mRowPos);
+	this._mDetails.moveTo(this._mRowPos, this._mPage);
 	this._mTotal.execute();
 }

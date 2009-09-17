@@ -15,12 +15,6 @@
 function ObjectPage(oSession, oConsole, oRequest, sKey, oMachine){
 	// Call the parent constructor.
 	Details.call(this, oSession, oConsole, oRequest, sKey, oMachine);
-	
-	/**
-	 * Holds the actual page number.
-	 * @var integer
-	 */
-	this._mPage = 0;
 }
 
 /**
@@ -57,17 +51,6 @@ ObjectPage.prototype.getPage = function(iPage){
  */
 ObjectPage.prototype.updatePage = function(){
 	this.getPage(this._mPage);
-}
-
-/**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
-ObjectPage.prototype.displaySuccess = function(xmlDoc){
-	// Call the parents function first.
-	Details.prototype.displaySuccess.call(this, xmlDoc);
-	// Obtain the page number.
-	this._mPage = xmlDoc.getElementsByTagName('page')[0].firstChild.data;
 }
 
 /**
