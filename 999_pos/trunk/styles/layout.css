@@ -65,6 +65,10 @@ input[type="text"], input[type="password"] {
 	width: 95%;
 }
 
+.large_tb {
+	width: 90%;
+}
+
 .content_medium div {
 	float: left;
 	width: 42%;
@@ -133,10 +137,6 @@ input[type="text"], input[type="password"] {
 
 #btn_col {
 	width: 1px;
-}
-
-.large_tb {
-	width: 90%;
 }
 
 #product_tb {
