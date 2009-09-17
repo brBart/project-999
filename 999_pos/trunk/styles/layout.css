@@ -61,6 +61,20 @@ input[type="text"], input[type="password"] {
 	max-width: 780px;
 }
 
+.content_large {
+	width: 95%;
+}
+
+.content_medium div {
+	float: left;
+	width: 42%;
+}
+
+.content_medium div + div {
+	float: right;
+	width: 56%;
+}
+
 #wrapper {
 	margin: 0 auto;
 	width: 95%;
@@ -164,16 +178,6 @@ input[type="text"], input[type="password"] {
 	padding: 5px 5px 5px 20px;
 }
 
-#frm div {
-	float: left;
-	width: 42%;
-}
-
-#frm div + div {
-	float: right;
-	width: 56%;
-}
-
 #frm label {
 	float: left;
 	width: 12em;
@@ -207,7 +211,17 @@ input[type="text"], input[type="password"] {
 #sub_menu a {
 	display: block;
 	float: left;
-	padding: 0 15px;
+	padding: 0 3em;
+}
+
+#header_data p {
+	float: left;
+	padding: 0 3em;
+}
+
+#header_data label {
+	width: auto;
+	margin-right: 1em;
 }
 
 #scroll table {
@@ -234,6 +248,11 @@ input[type="text"], input[type="password"] {
 .content_medium #status_bar {
 	float: left;
 	width: 50%;
+}
+
+.content_large #status_bar {
+	float: left;
+	width: 30%;
 }
 
 #frm #details {

@@ -46,7 +46,7 @@
 				<label>Status:</label><span id="status_label">Creando...</span>
 			</p>
 		</fieldset>
-		<fieldset>
+		<fieldset id="header_data">
 			<p>
 				<label>Recibo No:</label><span>{$id}&nbsp;</span>
 			</p>
