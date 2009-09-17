@@ -28,9 +28,11 @@ class GetProductSuppliersCommand extends Command{
 	public function execute(Request $request, SessionHelper $helper){
 		$product = $helper->getObject((int)$request->getProperty('key'));
 		$product_suppliers = $product->showProductSuppliers();
+		$page_items = count($product_suppliers);
+		$page = ($page_items > 0) ? 1 : 0;
 		
-		Page::display(array('suppliers' => $product_suppliers, 'page_items' => count($product_suppliers)),
-				'product_suppliers_xml.tpl');
+		Page::display(array('suppliers' => $product_suppliers, 'page_items' => $page_items,
+				'page' => $page), 'product_suppliers_xml.tpl');
 	}
 }
 ?>
