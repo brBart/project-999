@@ -82,31 +82,33 @@
 		  			onblur="oSetProperty.execute('set_shipment_total_receipt', this.value, this.id);" />
 		  		<span id="shipment_total-failed" class="hidden">*</span>
 		  	</p>
-		  	<div id="product_tb">
-		  		<label for="quantity">Cantidad:</label>
-		  		<input name="form_widget" id="quantity" type="text" maxlength="11" />
-		  		<span id="quantity-failed" class="hidden">*</span>
-		  		<label for="price">Precio:</label>
-		  		<input name="form_widget" id="price" type="text" maxlength="13" />
-		  		<span id="price-failed" class="hidden">*</span>
-		  		<label for="expiration_date">Vence:</label>
-		  		<input name="form_widget" id="expiration_date" type="text" maxlength="10" />
-		  		<span id="expiration_date-failed" class="hidden">*</span>
-		  		<label for="bar_code">Barra:</label>
-		  		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
-		  		<span id="bar_code-failed" class="hidden">*</span>
-		  		<div id="search_product">
-			    	<label for="product_name">Buscar:</label>
-			    	<div>
-			    		<input name="product_name" id="product_name" type="text"/>
-			    		<div>
-			    			<div id="scroll"></div>
-			    		</div>
+		  	<div id="product_tb" class="large_tb">
+		  		<div>
+			  		<label for="quantity">Cantidad:</label>
+			  		<input name="form_widget" id="quantity" type="text" maxlength="11" />
+			  		<span id="quantity-failed" class="hidden">*</span>
+			  		<label for="price">Precio:</label>
+			  		<input name="form_widget" id="price" type="text" maxlength="13" />
+			  		<span id="price-failed" class="hidden">*</span>
+			  		<label for="expiration_date">Vence:</label>
+			  		<input name="form_widget" id="expiration_date" type="text" maxlength="10" />
+			  		<span id="expiration_date-failed" class="hidden">*</span>
+			  		<label for="bar_code">Barra:</label>
+			  		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
+			  		<span id="bar_code-failed" class="hidden">*</span>
+			  		<div id="search_product">
+				    	<label for="product_name">Buscar:</label>
+				    	<div>
+				    		<input name="product_name" id="product_name" type="text"/>
+				    		<div>
+				    			<div id="scroll"></div>
+				    		</div>
+				    	</div>
 			    	</div>
-		    	</div>
-		  		<input name="form_widget" id="add_product" type="button" value="Agregar"
-		  			onclick="oAddProductReceipt.execute('add_product_receipt');" />
-		  		<span id="receipt_product-failed" class="hidden">*</span>
+			  		<input name="form_widget" id="add_product" type="button" value="Agregar"
+			  			onclick="oAddProductReceipt.execute('add_product_receipt');" />
+			  		<span id="receipt_product-failed" class="hidden">*</span>
+		  		</div>
 		  	</div>
 		  	<div id="details"></div>
 		  	<p>Total: <span id="total"></span></p>
