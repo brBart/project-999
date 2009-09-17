@@ -260,7 +260,7 @@ Details.prototype.createMsxml2XSLTemplate = function(){
 */
 Details.prototype.displaySuccess = function(xmlDoc){
 	// Obtain the page number.
-	this._mPage = xmlDoc.getElementsByTagName('page')[0].firstChild.data;
+	this._mPage = parseInt(xmlDoc.getElementsByTagName('page')[0].firstChild.data);
 	// Obtain the value of the page_items parameter.
 	this._mPageItems = xmlDoc.getElementsByTagName('page_items')[0].firstChild.data;
 	// Reset selected row position and focus.
@@ -531,6 +531,13 @@ Details.prototype.moveNext = function(){
 }
  
 /**
+  * Selects the last row.
+  */
+Details.prototype.moveLast = function(){
+	this.selectRow(this._mPageItems);
+}
+ 
+/**
  * Select the row in the provided position, if it does not exists, move to the last position.
  * @param integer iPos
  * @param integer iPage
@@ -538,7 +545,7 @@ Details.prototype.moveNext = function(){
 Details.prototype.moveTo = function(iPos, iPage){
 	if(this._mPageItems > 0)
 		if(iPos > this._mPageItems || this._mPage != iPage)
-			this.selectRow(this._mPageItems);
+			this.moveLast();
 		else
 			this.selectRow(iPos);
 }
