@@ -108,6 +108,12 @@ a:hover {
 	border-width: 1px;
 }
 
+#product_tb {
+	border-style: solid;
+	border-color: white;
+	border-width: 1px;
+}
+
 #list td {
 	border-bottom-style: solid;
 	border-color: #00067F;

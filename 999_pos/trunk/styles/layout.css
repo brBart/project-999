@@ -135,6 +135,12 @@ input[type="text"], input[type="password"] {
 	width: 1px;
 }
 
+#product_tb {
+	float: left;
+	padding: 5px 5px 0 5px;
+	margin: 2em auto;
+}
+
 #content > div, table {
 	margin: 0 auto;
 }
@@ -233,6 +239,14 @@ input[type="text"], input[type="password"] {
 	padding: 2px 2px;
 }
 
+#product_tb * {
+	float: left;
+}
+
+#product_tb label {
+	width: auto;
+}
+
 #search_product > * {
 	float: left;
 }
@@ -257,4 +271,9 @@ input[type="text"], input[type="password"] {
 
 #frm #details {
 	width: 100%;
+	clear: both;
+}
+
+#product_tb #quantity, #price, #expiration_date {
+	width: 6em;
 }
