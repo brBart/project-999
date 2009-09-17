@@ -6,6 +6,7 @@ header('Content-Type: text/xml');
 <response>
 	<success>1</success>
 	<params>
+		<page>{$page}</page>
 		<page_items>{$page_items}</page_items>
 	</params>
 	<grid>
