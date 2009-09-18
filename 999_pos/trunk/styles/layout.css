@@ -198,7 +198,6 @@ input[type="text"], input[type="password"] {
 }
 
 #details table {
-	width: 75%;
 	margin: 0 auto;
 }
 
@@ -275,6 +274,14 @@ input[type="text"], input[type="password"] {
 .content_large #status_bar {
 	float: left;
 	width: 30%;
+}
+
+.content_medium #details table {
+	width: 75%;
+}
+
+.content_large #details table {
+	width: 95%;
 }
 
 #frm #details {
