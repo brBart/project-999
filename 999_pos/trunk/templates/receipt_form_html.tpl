@@ -16,8 +16,6 @@
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/add_product_object.js"></script>
 <script type="text/javascript" src="../scripts/add_product_entry.js"></script>
-<script type="text/javascript" src="../scripts/get_property.js"></script>
-<script type="text/javascript" src="../scripts/get_amount.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript" src="../scripts/delete_product_object.js"></script>
 <script type="text/javascript" src="../scripts/toolbar.js"></script>
@@ -29,9 +27,8 @@
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
-	var oGetTotal = new GetAmountCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails, oGetTotal);
-	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails, oGetTotal);
+	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
+	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	var oToolbar = new Toolbar();
 	{literal}
 	window.onunload = function(){
@@ -126,7 +123,6 @@
 oToolbar.init('product_tb');
 StateMachine.setFocus('organization_id');
 oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
-oGetTotal.init('get_object_total', 'total');
 oDetails.init('../xsl/document_page.xsl', 'details', 'add_product', 'save', 'oDetails', 'oDeleteProductReceipt', 'delete_product_receipt');
 oDetails.getLastPage();
 </script>

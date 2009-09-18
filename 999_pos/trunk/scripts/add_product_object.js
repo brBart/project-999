@@ -11,9 +11,8 @@
  * @param Request oRequest
  * @param string sKey
  * @param ObjectPage oDetails
- * @param GetAmountCommand oTotal
  */
-function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails, oTotal){
+function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -28,12 +27,6 @@ function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails, o
 	 * @var ObjectPage
 	 */
 	this._mDetails = oDetails;
-	
-	/**
-	 * Holds a reference to the object which displays the total amount.
-	 * @var ObjectPage
-	 */
-	this._mTotal = oTotal;	
 	
 	/**
 	 * Holds a reference to the bar code element.
@@ -81,7 +74,6 @@ AddProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mConsole.cleanFailure('bar_code');
 	
 	this._mDetails.getLastPage();
-	this._mTotal.execute();
 	
 	// Clear elements.
 	this._mQuantity.value = '';

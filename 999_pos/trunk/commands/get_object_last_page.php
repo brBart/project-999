@@ -40,10 +40,13 @@ abstract class GetObjectLastPageCommand extends Command{
 		$previous_page = ($total_pages <= 1) ? '' : $total_pages - 1;
 		$next_page = '';
 		
+		// Get object total amount.
+		$total = number_format($obj->getTotal(), 2);
+		
 		Page::display(array('details' => $details, 'page' => $total_pages, 'total_pages' => $total_pages,
 				'total_items' => $total_items, 'first_item' => $first_item, 'last_item' => $last_item,
-				'previous_page' => $previous_page, 'next_page' => $next_page, 'page_items' => $page_items),
-				$this->getTemplate());
+				'previous_page' => $previous_page, 'next_page' => $next_page, 'page_items' => $page_items,
+				'total' => $total), $this->getTemplate());
 	}
 	
 	/**

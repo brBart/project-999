@@ -11,17 +11,10 @@
  * @param Request oRequest
  * @param string sKey
  * @param DocumentPage oDetails
- * @param GetTotalCommand oTotal
  */
-function DeleteProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails, oTotal){
+function DeleteProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	// Call the parent constructor.
 	DeleteDetailCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails);
-	
-	/**
-	 * Holds a reference to the object which displays the total amount.
-	 * @var ObjectPage
-	 */
-	this._mTotal = oTotal;
 }
 
 /**
@@ -37,5 +30,4 @@ DeleteProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mDetails.updatePage();
 	this._mDetails.setFocus();
 	this._mDetails.moveTo(this._mRowPos, this._mPage);
-	this._mTotal.execute();
 }
