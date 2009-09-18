@@ -45,6 +45,14 @@
        				<xsl:call-template name="body" />
        			</xsl:if>
 	       	</tbody>
+	       	<tfoot>
+	       		<tr>
+	       			<td colspan="6"></td>
+	       			<td>Total:</td>
+	       			<td id="total">0.00</td>
+	       			<td colspan="2"></td>
+	       		</tr>
+	       	</tfoot>
 		</table>
 	</xsl:template>
   	<xsl:template name="menu">

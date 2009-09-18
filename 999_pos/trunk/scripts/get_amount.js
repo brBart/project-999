@@ -17,7 +17,7 @@ function GetAmountCommand(oSession, oConsole, oRequest, sKey){
 	/**
 	 * Holds the object to display to amount value.
 	 */
-	this._mWidget = null;
+	this._mWidgetName = '';
 }
 
 /**
@@ -34,7 +34,7 @@ GetAmountCommand.prototype.init = function(sCmd, sWidget){
 	//Call the parent init function first.
 	GetPropertyCommand.prototype.init.call(this, sCmd);
 	
-	this._mWidget = document.getElementById(sWidget);
+	this._mWidgetName = sWidget;
 }
 
 /**
@@ -42,5 +42,6 @@ GetAmountCommand.prototype.init = function(sCmd, sWidget){
 * @param DocumentElement xmlDoc
 */
 GetAmountCommand.prototype.displaySuccess = function(xmlDoc){
-	this._mWidget.innerHTML = xmlDoc.getElementsByTagName('value')[0].firstChild.data;
+	var oWidget = document.getElementById(this._mWidgetName);
+	oWidget.innerHTML = xmlDoc.getElementsByTagName('value')[0].firstChild.data;
 }

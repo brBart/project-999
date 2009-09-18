@@ -113,7 +113,6 @@
 		  		</div>
 		  	</div>
 		  	<div id="details"></div>
-		  	<p>Total: <span id="total"></span></p>
 		</fieldset>
 		<fieldset id="controls">
 		  	<input name="form_widget" id="save" type="button" value="Guardar"
