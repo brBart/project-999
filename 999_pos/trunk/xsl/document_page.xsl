@@ -49,7 +49,7 @@
 	       		<tr>
 	       			<td colspan="6"></td>
 	       			<td>Total:</td>
-	       			<td id="total"><xsl:value-of select="response/params/total" /></td>
+	       			<td><xsl:value-of select="response/params/total" /></td>
 	       			<td colspan="2"></td>
 	       		</tr>
 	       	</tfoot>
