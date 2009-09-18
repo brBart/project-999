@@ -48,8 +48,8 @@
 	       	<tfoot>
 	       		<tr>
 	       			<td colspan="6"></td>
-	       			<td>Total:</td>
-	       			<td><xsl:value-of select="response/params/total" /></td>
+	       			<td class="total_col">Total:</td>
+	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
 	       			<td colspan="2"></td>
 	       		</tr>
 	       	</tfoot>
@@ -117,7 +117,7 @@
 	       		<td><xsl:value-of select="um" /></td>
 	       		<td><xsl:value-of select="quantity" /></td>
 	       		<td><xsl:value-of select="price" /></td>
-	       		<td><xsl:value-of select="total" /></td>
+	       		<td class="total_col"><xsl:value-of select="total" /></td>
 	       		<td colspan="2"><xsl:value-of select="expiration_date" /></td>
 			</xsl:element>
         </xsl:for-each>
