@@ -20,6 +20,7 @@
 <script type="text/javascript" src="../scripts/get_amount.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript" src="../scripts/delete_product_object.js"></script>
+<script type="text/javascript" src="../scripts/toolbar.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oMachine = new StateMachine(0);
@@ -31,6 +32,7 @@
 	var oGetTotal = new GetAmountCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails, oGetTotal);
 	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails, oGetTotal);
+	var oToolbar = new Toolbar();
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -122,6 +124,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+oToolbar.init('product_tb');
 StateMachine.setFocus('organization_id');
 oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
 oGetTotal.init('get_object_total', 'total');
