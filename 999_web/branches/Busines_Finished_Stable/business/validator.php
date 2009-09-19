@@ -127,6 +127,22 @@ class Date{
 	}
 	
 	/**
+	 * Adds a cero to the left side in case the day or month values contains only 1 digit.
+	 *
+	 * Eg: 1/1/2009 becomes 01/01/2009.
+	 * @param string $date
+	 * @return string
+	 */
+	static public function paddingDate($date){
+		$date_array = explode('/', $date);
+		
+		$db_date_array = array(sprintf('%02s', $date_array[0]), sprintf('%02s', $date_array[1]),
+				$date_array[2]);
+		
+		return implode('/', $db_date_array);
+	}
+	
+	/**
 	 * Change the dates format 'dd/mm/yyyy' to an english format 'mm/dd/yyyy'.
 	 *
 	 * @param string $date

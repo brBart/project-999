@@ -1293,9 +1293,11 @@ class Lot extends Persist{
 		if($price !== 0.00)
 			Number::validatePositiveNumber($price, 'Precio inv&aacute;lido.', 'price');
 		
-		if(!is_null($expirationDate) && $expirationDate != '')
+		if(!is_null($expirationDate) && $expirationDate != ''){
 			Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.',
 					'expiration_date');
+			$expirationDate = Date::paddingDate($expirationDate);
+		}
 		
 		if(!is_null($entryDate)){
 			Date::validateDate($entryDate, 'Fecha de ingreso inv&aacute;lida.');
