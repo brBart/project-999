@@ -246,15 +246,15 @@ input[type="text"], input[type="password"] {
 	padding: 2px 2px;
 }
 
-#product_tb * {
-	float: left;
-}
-
 #product_tb label {
 	width: auto;
 }
 
 #search_product > * {
+	float: left;
+}
+
+#product_tb > div > * {
 	float: left;
 }
 
