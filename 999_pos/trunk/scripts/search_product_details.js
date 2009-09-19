@@ -106,7 +106,7 @@ SearchProductDetails.prototype.init = function(sTxtWidget){
 	this._mScrollDiv = document.getElementById('scroll');
 	this._mTxtWidget.setAttribute('autocomplete', 'off');
 	
-	oTemp = this;
+	var oTemp = this;
 	this._mTxtWidget.onkeydown = function(oEvent){
 		oTemp.handleKeyDown(oEvent);
 	}
@@ -124,7 +124,7 @@ SearchProductDetails.prototype.startListening = function(){
 	if(!this._mIsListening){
 		oDiv = document.getElementById('search_product');
 		
-		oTemp = this;
+		var oTemp = this;
 		oDiv.onclick = function(oEvent){
 			oTemp.divHandleClick(oEvent);
 		}
@@ -132,7 +132,8 @@ SearchProductDetails.prototype.startListening = function(){
 			oTemp.documentHandleClick(oEvent);
 		}
 		
-		this._mIntervalId = setInterval('oTemp.checkForChanges()', 500);
+		oTemp1 = this;
+		this._mIntervalId = setInterval('oTemp1.checkForChanges()', 500);
 		this._mIsListening = true;
 	}
 }

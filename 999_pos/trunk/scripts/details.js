@@ -158,7 +158,7 @@ Details.prototype.init = function(sUrlXsltFile, sDiv, sPrevWidget, sNextWidget, 
 	}
 	
 	// Set the previous and next widgets from the table element for controlling the tab sequence.
-	oTemp = this;
+	var oTemp = this;
 	this._mPrevWidget.onkeydown = function(oEvent){
 		oTemp.handlePrevTabKey(oEvent);
 	}
@@ -435,7 +435,7 @@ Details.prototype.documentHandleClick = function(oEvent){
 Details.prototype.setFocus = function(){
 	// Check if already has focus and state machine status equal edit.
 	if(!this._mHasFocus && this._mMachine.getStatus() == 0){
-		oTemp = this;
+		var oTemp = this;
 		
 		document.onkeydown = function(oEvent){
 			oTemp.handleKeyDown(oEvent);

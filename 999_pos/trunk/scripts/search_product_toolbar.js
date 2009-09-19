@@ -32,18 +32,19 @@ SearchProductToolbar.prototype = new SearchProductDetails();
 * the bar code.
 * @param string sTxtWidget
 */
-/*SearchProductToolbar.prototype.init = function(sTxtWidget, sBarCode){
+SearchProductToolbar.prototype.init = function(sTxtWidget, sBarCode){
 	// Call the parents method.
 	SearchProductDetails.prototype.init.call(this, sTxtWidget)
 	
 	this._mBarCode = document.getElementById(sBarCode);
-}*/
+}
 
 /*
  * Took the respective action.
  * @param string sBarCode
  */
 SearchProductToolbar.prototype.doAction = function(sBarCode){
-	return 0;
-	//this._mBarCode.value = sBarCode;
+	this._mBarCode.value = sBarCode;
+	this._mBarCode.focus();
+	this.stopListening();
 }
