@@ -19,6 +19,9 @@
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript" src="../scripts/delete_product_object.js"></script>
 <script type="text/javascript" src="../scripts/toolbar.js"></script>
+<script type="text/javascript" src="../scripts/search_product.js"></script>
+<script type="text/javascript" src="../scripts/search_product_details.js"></script>
+<script type="text/javascript" src="../scripts/search_product_toolbar.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
 	var oMachine = new StateMachine(0);
@@ -30,6 +33,8 @@
 	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	var oToolbar = new Toolbar();
+	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
+	var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -122,6 +127,7 @@
 <script type="text/javascript">
 oToolbar.init('product_tb');
 StateMachine.setFocus('organization_id');
+oSearchDetails.init('product_name', 'bar_code');
 oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
 oDetails.init('../xsl/document_page.xsl', 'details', 'add_product', 'save', 'oDetails', 'oDeleteProductReceipt', 'delete_product_receipt');
 oDetails.getLastPage();

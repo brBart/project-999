@@ -60,5 +60,5 @@
 	</ul>
 </div>
 <script type="text/javascript">
-	oSearchDetails.init(document.getElementById('name'));
+	oSearchDetails.init('name');
 </script>

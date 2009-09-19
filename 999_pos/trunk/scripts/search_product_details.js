@@ -97,22 +97,23 @@ function SearchProductDetails(oSession, oSearchProduct){
 
 /**
 * Sets the text input widget from where the user will input the search query.
-* @param object oTxtWidget
+* @param string sTxtWidget
 */
-SearchProductDetails.prototype.init = function(oTxtWidget){
+SearchProductDetails.prototype.init = function(sTxtWidget){
+	this._mTxtWidget = document.getElementById(sTxtWidget);
+	
 	// Get the scroll div element.
 	this._mScrollDiv = document.getElementById('scroll');
-	oTxtWidget.setAttribute('autocomplete', 'off');
+	this._mTxtWidget.setAttribute('autocomplete', 'off');
 	
 	oTemp = this;
-	oTxtWidget.onkeydown = function(oEvent){
+	this._mTxtWidget.onkeydown = function(oEvent){
 		oTemp.handleKeyDown(oEvent);
 	}
-	oTxtWidget.onfocus = function(){
+	this._mTxtWidget.onfocus = function(){
 		oTemp.startListening();
 	}
 	
-	this._mTxtWidget = oTxtWidget;
 	this._mSearchProduct.init(this);
 }
 

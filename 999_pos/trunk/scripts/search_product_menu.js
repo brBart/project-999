@@ -1,6 +1,6 @@
 /**
- * Library with the SearchProductMenu class, is the SearchProductDetails but with functionality to be use on the
- * menu template.
+ * Library with the SearchProductMenu class, is the SearchProductDetails but with functionality to be use
+ * on the menu template.
  * @package Client
  * @author Roberto Oliveros
  */
