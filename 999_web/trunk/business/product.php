@@ -1310,7 +1310,7 @@ class Lot extends Persist{
 		$this->_mProduct = $product;
 		$this->_mQuantity = round($quantity);
 		$this->_mPrice = round($price, 2);
-		$this->_mExpirationDate = $expirationDate;
+		$this->_mExpirationDate = Date::paddingDate($expirationDate);
 		$this->_mId = $id;
 	}
 	
