@@ -41,9 +41,16 @@
 	         	</xsl:element>
 	       	</thead>
 	       	<tbody>
-       			<xsl:if test="response/params/total_items > 0">
-       				<xsl:call-template name="body" />
-       			</xsl:if>
+       			<xsl:choose>
+		  			<xsl:when test="response/params/total_items > 0">
+		  				<xsl:call-template name="body" />
+		  			</xsl:when>
+		  			<xsl:otherwise>
+		  				<tr>
+			       			<td colspan="10"></td>
+			       		</tr>
+		  			</xsl:otherwise>
+		  		</xsl:choose>
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
