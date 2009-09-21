@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 <script type="text/javascript" src="../scripts/async.js"></script>
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
+<script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/product_suppliers.js"></script>
 <script type="text/javascript" src="../scripts/add_supplier_product.js"></script>
@@ -25,7 +26,8 @@
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
+	var oEventDelegator = new EventDelegator();
+	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	var oAddSupplierProduct = new AddSupplierProductCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oProductSuppliers);
 	var oDeleteSupplierProduct = new DeleteSupplierProductCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oProductSuppliers);
 	{if $status eq 1}
@@ -186,6 +188,7 @@
 StateMachine.setFocus('name');
 {/if}
 oAddSupplierProduct.init('supplier_id', 'product_sku');
+oEventDelegator.init();
 oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'add_supplier', 'save', 'oProductSuppliers', 'oDeleteSupplierProduct', 'delete_supplier_product');
 oProductSuppliers.update();
 </script>

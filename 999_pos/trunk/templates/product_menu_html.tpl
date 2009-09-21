@@ -3,13 +3,15 @@
 <script type="text/javascript" src="../scripts/url.js"></script>
 <script type="text/javascript" src="../scripts/http_request.js"></script>
 <script type="text/javascript" src="../scripts/command.js"></script>
+<script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/search_product.js"></script>
 <script type="text/javascript" src="../scripts/search_product_details.js"></script>
 <script type="text/javascript" src="../scripts/search_product_menu.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console();
+	var oEventDelegator = new EventDelegator();
 	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
-	var oSearchDetails = new SearchProductMenu(oSession, oSearchProduct);
+	var oSearchDetails = new SearchProductMenu(oSession, oSearchProduct, oEventDelegator);
 </script>
 <div id="third_menu">
 	<ul>
@@ -60,5 +62,6 @@
 	</ul>
 </div>
 <script type="text/javascript">
+	oEventDelegator.init();
 	oSearchDetails.init('name');
 </script>

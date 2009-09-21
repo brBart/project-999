@@ -9,10 +9,11 @@
  * Constructor function.
  * @param Session oSession
  * @param SearchProduct oSearchProduct
+ * @param EventDelegator oEventDelegator
  */
-function SearchProductToolbar(oSession, oSearchProduct){
+function SearchProductToolbar(oSession, oSearchProduct, oEventDelegator){
 	// Call the parent constructor.
-	SearchProductDetails.call(this, oSession, oSearchProduct);
+	SearchProductDetails.call(this, oSession, oSearchProduct, oEventDelegator);
 	
 	/**
 	 * Holds the input elements which displays the product's bar code.

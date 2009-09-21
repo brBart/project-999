@@ -8,8 +8,15 @@
  * Constructor function.
  * @param Session oSession
  * @param SearchProduct oSearchProduct
+ * @param EventDelegator oEventDelegator
  */
-function SearchProductDetails(oSession, oSearchProduct){
+function SearchProductDetails(oSession, oSearchProduct, oEventDelegator){
+	/**
+	 * Flag that indicates if the widget was clicked.
+	 * @var boolean
+	 */
+	this.mWasClicked = false;
+	
 	/**
 	 * Holds the session tracker.
 	 * @var Session
@@ -21,6 +28,12 @@ function SearchProductDetails(oSession, oSearchProduct){
 	 * @var SearchProduct
 	 */
 	this._mSearchProduct = oSearchProduct;
+	
+	/**
+	 * Holds the object in charge of handling the click events.
+	 * @var EventDelegator
+	 */
+	this._mEventDelegator = oEventDelegator;
 	
 	/**
 	 * Holds the text input.
@@ -100,6 +113,9 @@ function SearchProductDetails(oSession, oSearchProduct){
 * @param string sTxtWidget
 */
 SearchProductDetails.prototype.init = function(sTxtWidget){
+	// Register with the event delegator.
+	this._mEventDelegator.registerObject(this);
+	
 	this._mTxtWidget = document.getElementById(sTxtWidget);
 	
 	// Get the scroll div element.
@@ -128,9 +144,6 @@ SearchProductDetails.prototype.startListening = function(){
 		oDiv.onclick = function(oEvent){
 			oTemp.divHandleClick(oEvent);
 		}
-		document.onclick = function(oEvent){
-			oTemp.documentHandleClick(oEvent);
-		}
 		
 		oTemp1 = this;
 		this._mIntervalId = setInterval('oTemp1.checkForChanges()', 500);
@@ -143,9 +156,7 @@ SearchProductDetails.prototype.startListening = function(){
 */
 SearchProductDetails.prototype.stopListening = function(){
 	oDiv = document.getElementById('search_product');
-	 	
 	oDiv.onclick = null;
-	document.onclick = null;
 	 
 	clearInterval(this._mIntervalId);
 	this.hideSuggestions();
@@ -406,8 +417,11 @@ SearchProductDetails.prototype.handleOnMouseOver = function(oTr)
 SearchProductDetails.prototype.handleOnMouseOut = function()
 {
 	var oTr = document.getElementById('tr' + this._mSelectedRow);
-	oTr.className = '';   
-	this._mSelectedRow = 0;
+	// If there are results.
+	if(oTr){
+		oTr.className = '';   
+		this._mSelectedRow = 0;
+	}
 }
 
 /**
@@ -415,16 +429,15 @@ SearchProductDetails.prototype.handleOnMouseOut = function()
 * @param Event oEvent
 */
 SearchProductDetails.prototype.divHandleClick = function(oEvent){
-	oEvent = (!oEvent) ? window.event : oEvent;
-	oEvent.cancelBubble = true;
+	this.mWasClicked = true;
 }
  
 /**
 * If anything but the div area was click, stop listening.
-* @param Event oEvent
 */
-SearchProductDetails.prototype.documentHandleClick = function(oEvent){
-	this.stopListening();
+SearchProductDetails.prototype.blur = function(){
+	if(this._mIsListening)
+		this.stopListening();
 }
 
 /**

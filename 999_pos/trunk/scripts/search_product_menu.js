@@ -9,10 +9,11 @@
  * Constructor function.
  * @param Session oSession
  * @param SearchProduct oSearchProduct
+ * @param EventDelegator oEventDelegator
  */
-function SearchProductMenu(oSession, oSearchProduct){
+function SearchProductMenu(oSession, oSearchProduct, oEventDelegator){
 	// Call the parent constructor.
-	SearchProductDetails.call(this, oSession, oSearchProduct);
+	SearchProductDetails.call(this, oSession, oSearchProduct, oEventDelegator);
 }
 
 /**

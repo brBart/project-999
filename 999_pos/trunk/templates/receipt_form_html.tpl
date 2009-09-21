@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../scripts/save.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
+<script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
 <script type="text/javascript" src="../scripts/document_page.js"></script>
@@ -29,12 +30,13 @@
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine);
+	var oEventDelegator = new EventDelegator();
+	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	var oToolbar = new Toolbar();
 	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
-	var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct);
+	var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, oEventDelegator);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -126,6 +128,7 @@
 </div>
 <script type="text/javascript">
 oToolbar.init('product_tb');
+oEventDelegator.init();
 StateMachine.setFocus('organization_id');
 oSearchDetails.init('product_name', 'bar_code');
 oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');

@@ -11,10 +11,11 @@
  * @param Request oRequest
  * @param string sKey
  * @param StateMachine oMachine
+ * @param EventDelegator oEventDelegator
  */
-function DocumentPage(oSession, oConsole, oRequest, sKey, oMachine){
+function DocumentPage(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
 	// Call the parent constructor.
-	ObjectPage.call(this, oSession, oConsole, oRequest, sKey, oMachine);
+	ObjectPage.call(this, oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator);
 }
 
 /**

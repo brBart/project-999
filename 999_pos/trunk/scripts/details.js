@@ -11,10 +11,17 @@
  * @param Request oRequest
  * @param string sKey
  * @param StateMachine oMachine
+ * @param EventDelegator oEventDelegator
  */
-function Details(oSession, oConsole, oRequest, sKey, oMachine){
+function Details(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
+	
+	/**
+	 * Flag that indicates if the widget was clicked.
+	 * @var boolean
+	 */
+	this.mWasClicked = false;
 	
 	/**
 	 * Holds the delete function to be executed.
@@ -33,6 +40,12 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine){
 	 * @var StateMachine
 	 */
 	this._mMachine = oMachine;
+	
+	/**
+	 * Holds the object in charge of handling the click events.
+	 * @var EventDelegator
+	 */
+	this._mEventDelegator = oEventDelegator;
 	
 	/**
 	 * Holds the object div which holds the dynamic data.
@@ -125,6 +138,9 @@ Details.prototype = new SyncCommand();
  */
 Details.prototype.init = function(sUrlXsltFile, sDiv, sPrevWidget, sNextWidget, sDetailsObj, sDeleteObj,
 		sDeleteCmd){
+	// Register with the event delegator.
+	this._mEventDelegator.registerObject(this);
+	
 	this._mDiv = document.getElementById(sDiv);
 	this._mPrevWidget = document.getElementById(sPrevWidget);
 	this._mNextWidget = document.getElementById(sNextWidget);
@@ -416,17 +432,17 @@ Details.prototype.handleKeyDown = function(oEvent){
  * @param Event oEvent
  */
 Details.prototype.detailsHandleClick = function(oEvent){
-	oEvent = (!oEvent) ? window.event : oEvent;
-	oEvent.cancelBubble = true;
+	this.mWasClicked = true;
 }
  
 /**
  * If anything but the table area was click, remove focus.
- * @param Event oEvent
  */
-Details.prototype.documentHandleClick = function(oEvent){
-	this.deselectRow();
-	this.loseFocus();
+Details.prototype.blur = function(){
+	if(this._mHasFocus){ 
+		this.deselectRow();
+		this.loseFocus();
+	}
 }
 
 /**
@@ -446,9 +462,6 @@ Details.prototype.setFocus = function(){
 		oTable.onclick = function(oEvent){
 			oTemp.detailsHandleClick(oEvent);
 		}
-		document.onclick = function(oEvent){
-			oTemp.documentHandleClick(oEvent);
-		}
 		
 		oTable.className = 'has_focus';
 		this._mHasFocus = true;
@@ -462,9 +475,7 @@ Details.prototype.loseFocus = function(){
  	document.onkeydown = null;
  	
  	oTable = this._mDiv.getElementsByTagName('table')[0];
- 	
  	oTable.onclick = null;
- 	document.onclick = null;
  	
  	oTable.className = '';
  	this._mHasFocus = false;
