@@ -23,8 +23,9 @@ SearchProductMenu.prototype = new SearchProductDetails();
 
 /*
  * Took the respective action.
- * @param string sBarCode
+ * @param Object oTr
  */
-SearchProductMenu.prototype.doAction = function(sBarCode){
-	this._mSession.loadHref('index.php?cmd=get_product_by_bar_code&bar_code=' + sBarCode);
+SearchProductMenu.prototype.doAction = function(oTr){
+	var crtBarCode = oTr.getElementsByTagName('TD')[1].id;
+	this._mSession.loadHref('index.php?cmd=get_product_by_bar_code&bar_code=' + crtBarCode);
 }

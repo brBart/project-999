@@ -43,10 +43,18 @@ SearchProductToolbar.prototype.init = function(sTxtWidget, sDetailsObj, sBarCode
 
 /*
  * Took the respective action.
- * @param string sBarCode
+ * @param Object oTr
  */
-SearchProductToolbar.prototype.doAction = function(sBarCode){
-	this._mBarCode.value = sBarCode;
-	this._mBarCode.focus();
-	this.stopListening();
+SearchProductToolbar.prototype.doAction = function(oTr){
+	 // retrieve the name for the current product
+	 var oTd = oTr.getElementsByTagName('TD')[0];
+	 var crtName = oTd.id.substring(oTd.id.indexOf('-') + 1);
+	 // update the keyword's value
+	 this._mTxtWidget.value = unescape(crtName);
+	 
+	 var crtBarCode = oTr.getElementsByTagName('TD')[1].id;
+	 this._mBarCode.value = crtBarCode;
+	 
+	 this._mBarCode.focus();
+	 this.stopListening();
 }

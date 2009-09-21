@@ -175,6 +175,7 @@ SearchProductDetails.prototype.stopListening = function(){
 * Hide the div containing the suggestions.
 */
 SearchProductDetails.prototype.hideSuggestions = function(){
+	this._mScrollDiv.innerHTML = '';
 	this._mScrollDiv.style.visibility = 'hidden';
 }
 
@@ -231,7 +232,7 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 				crtProductBarCode = resultsArray[i]['bar_code'];
 				// retrieve the name of the product
 				crtProductName = resultsArray[i]['name'];
-				div += '<tr id="tr' + (i + 1) + '" onclick="'+ this._mDetailsObj + '.doAction(\'' + crtProductBarCode +'\' );" ' + 
+				div += '<tr id="tr' + (i + 1) + '" onclick="'+ this._mDetailsObj + '.doAction(this);" ' + 
 						'onmouseover="' + this._mDetailsObj + '.handleOnMouseOver(this);">' + '<td id="' + (i + 1) + '-' + crtProductName + '">';
 				// check to see if the current product name length exceeds the maximum 
 				// number of characters that can be displayed for a product name
@@ -322,11 +323,11 @@ SearchProductDetails.prototype.moveNext = function(){
 * @param integer iPos
 */
 SearchProductDetails.prototype.selectRow = function(iPos){
-	newTr = document.getElementById('tr' + iPos);
+	var newTr = document.getElementById('tr' + iPos);
 	newTr.className = 'highlightrow';
 	
 	if(this._mSelectedRow > 0 && this._mSelectedRow != iPos){
-		oldTr = document.getElementById('tr' + this._mSelectedRow);
+		var oldTr = document.getElementById('tr' + this._mSelectedRow);
 		oldTr.className = '';
 	}
 	
@@ -362,11 +363,11 @@ SearchProductDetails.prototype.autocompleteKeyword = function(start, length){
 */
 SearchProductDetails.prototype.updateKeywordValue = function(iPos){
 	var oTr = document.getElementById('tr' + iPos);
-	// retrieve the link for the current product
+	// retrieve the name for the current product
 	var oTd = oTr.getElementsByTagName('TD')[0];
-	var crtLink = oTd.id.substring(oTd.id.indexOf('-') + 1);
+	var crtName = oTd.id.substring(oTd.id.indexOf('-') + 1);
 	// update the keyword's value
-	this._mTxtWidget.value = unescape(crtLink);
+	this._mTxtWidget.value = unescape(crtName);
 	this._mUserKeyword = this._mTxtWidget.value;
 }
 
@@ -391,8 +392,7 @@ SearchProductDetails.prototype.handleKeyDown = function(oEvent){
 			if(this._mSelectedRow > 0)
 			{
 				var oTr = document.getElementById('tr' + this._mSelectedRow);
-				var crtBarCode = oTr.getElementsByTagName('TD')[1].id;
-				this.doAction(crtBarCode);
+				this.doAction(oTr);
 			}
   		
   		// if the up arrow is pressed we go to the previous suggestion
@@ -450,9 +450,9 @@ SearchProductDetails.prototype.blur = function(){
 
 /**
  * Abstract method.
- * @param string sBarCode
+ * @param Object oTr
  */
-SearchProductDetails.prototype.doAction = function(sBarCode){
+SearchProductDetails.prototype.doAction = function(oTr){
 	return 0;
 }
  
