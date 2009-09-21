@@ -32,10 +32,11 @@ SearchProductToolbar.prototype = new SearchProductDetails();
 * Sets the text input widget from where the user will input the search query and the one which will display
 * the bar code.
 * @param string sTxtWidget
+* @param string sDetailsObj
 */
-SearchProductToolbar.prototype.init = function(sTxtWidget, sBarCode){
+SearchProductToolbar.prototype.init = function(sTxtWidget, sDetailsObj, sBarCode){
 	// Call the parents method.
-	SearchProductDetails.prototype.init.call(this, sTxtWidget)
+	SearchProductDetails.prototype.init.call(this, sTxtWidget, sDetailsObj);
 	
 	this._mBarCode = document.getElementById(sBarCode);
 }

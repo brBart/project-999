@@ -130,7 +130,7 @@
 oToolbar.init('product_tb');
 oEventDelegator.init();
 StateMachine.setFocus('organization_id');
-oSearchDetails.init('product_name', 'bar_code');
+oSearchDetails.init('product_name', 'oSearchDetails', 'bar_code');
 oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
 oDetails.init('../xsl/document_page.xsl', 'details', 'add_product', 'save', 'oDetails', 'oDeleteProductReceipt', 'delete_product_receipt');
 oDetails.getLastPage();

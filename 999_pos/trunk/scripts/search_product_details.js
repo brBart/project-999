@@ -42,6 +42,12 @@ function SearchProductDetails(oSession, oSearchProduct, oEventDelegator){
 	this._mTxtWidget = null;
 	
 	/**
+	 * Holds the name of the variable which holds this object.
+	 * @var string
+	 */
+	this._mDetailsObj = '';
+	
+	/**
 	 * Holds the div containing the suggest table.
 	 * @var object
 	 */
@@ -111,12 +117,14 @@ function SearchProductDetails(oSession, oSearchProduct, oEventDelegator){
 /**
 * Sets the text input widget from where the user will input the search query.
 * @param string sTxtWidget
+* @param string sDetailsObj
 */
-SearchProductDetails.prototype.init = function(sTxtWidget){
+SearchProductDetails.prototype.init = function(sTxtWidget, sDetailsObj){
 	// Register with the event delegator.
 	this._mEventDelegator.registerObject(this);
 	
 	this._mTxtWidget = document.getElementById(sTxtWidget);
+	this._mDetailsObj = sDetailsObj;
 	
 	// Get the scroll div element.
 	this._mScrollDiv = document.getElementById('scroll');
@@ -201,7 +209,7 @@ SearchProductDetails.prototype.checkForChanges  = function(){
 SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray){
 	if(this._mUserKeyword == sKeyword){
 		// start building the HTML table containing the results
-		var div = '<table onmouseout="oSearchDetails.handleOnMouseOut();">'; 
+		var div = '<table onmouseout="' + this._mDetailsObj + '.handleOnMouseOut();">'; 
 		// if the array of results is empty display a message
 		if(resultsArray.length == 0)
 		{
@@ -223,8 +231,8 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 				crtProductBarCode = resultsArray[i]['bar_code'];
 				// retrieve the name of the product
 				crtProductName = resultsArray[i]['name'];
-				div += '<tr id="tr' + (i + 1) + '" onclick="oSession.loadHref(\'index.php?cmd=get_product_by_bar_code&bar_code=' + crtProductBarCode +'\' );" ' + 
-						'onmouseover="oSearchDetails.handleOnMouseOver(this);">' + '<td id="' + (i + 1) + '-' + crtProductName + '">';
+				div += '<tr id="tr' + (i + 1) + '" onclick="'+ this._mDetailsObj + '.doAction(\'' + crtProductBarCode +'\' );" ' + 
+						'onmouseover="' + this._mDetailsObj + '.handleOnMouseOver(this);">' + '<td id="' + (i + 1) + '-' + crtProductName + '">';
 				// check to see if the current product name length exceeds the maximum 
 				// number of characters that can be displayed for a product name
 				if(crtProductName.length < this._mSuggestionMaxLength)

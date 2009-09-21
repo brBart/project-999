@@ -63,5 +63,5 @@
 </div>
 <script type="text/javascript">
 	oEventDelegator.init();
-	oSearchDetails.init('name');
+	oSearchDetails.init('name', 'oSearchDetails');
 </script>
