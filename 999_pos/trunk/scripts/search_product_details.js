@@ -385,8 +385,7 @@ SearchProductDetails.prototype.handleKeyDown = function(oEvent){
 	// check to see if the event was keyup
 	if (oEvent.type == 'keydown') 
 	{     
-		/* if Enter is pressed we jump to the page of the current 
-  		product */
+		/* if Enter is pressed we take the respective action. */
 		if(code == 13)
 			// check to see if any product is currently selected
 			if(this._mSelectedRow > 0)
