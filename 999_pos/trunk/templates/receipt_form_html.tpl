@@ -20,6 +20,8 @@
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript" src="../scripts/delete_product_object.js"></script>
 <script type="text/javascript" src="../scripts/toolbar.js"></script>
+<script type="text/javascript" src="../scripts/toolbar_text.js"></script>
+<script type="text/javascript" src="../scripts/toolbar_date.js"></script>
 <script type="text/javascript" src="../scripts/search_product.js"></script>
 <script type="text/javascript" src="../scripts/search_product_details.js"></script>
 <script type="text/javascript" src="../scripts/search_product_toolbar.js"></script>
@@ -30,11 +32,13 @@
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oQuantity = new ToolbarText();
+	var oPrice = new ToolbarText();
+	var oExpirationDate = new ToolbarDate();
 	var oEventDelegator = new EventDelegator();
 	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
-	var oToolbar = new Toolbar();
 	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
 	var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, oEventDelegator);
 	{literal}
@@ -91,13 +95,13 @@
 		  	<div id="product_tb" class="large_tb">
 		  		<div>
 			  		<label for="quantity">Cantidad:</label>
-			  		<input name="form_widget" id="quantity" type="text" maxlength="11" />
+			  		<input name="form_widget" id="quantity" type="text" class="tb_input" maxlength="11" />
 			  		<span id="quantity-failed" class="hidden">*</span>
 			  		<label for="price">Precio:</label>
-			  		<input name="form_widget" id="price" type="text" maxlength="13" />
+			  		<input name="form_widget" id="price" type="text" class="tb_input" maxlength="13" />
 			  		<span id="price-failed" class="hidden">*</span>
 			  		<label for="expiration_date">Vence:</label>
-			  		<input name="form_widget" id="expiration_date" type="text" maxlength="10" />
+			  		<input name="form_widget" id="expiration_date" type="text" class="tb_input" maxlength="10" />
 			  		<span id="expiration_date-failed" class="hidden">*</span>
 			  		<label for="bar_code">Barra:</label>
 			  		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
@@ -127,7 +131,10 @@
 	</div>
 </div>
 <script type="text/javascript">
-oToolbar.init('product_tb');
+Toolbar.checkResolution('product_tb');
+oQuantity.init('quantity', 'price');
+oPrice.init('price', 'expiration_date');
+oExpirationDate.init('expiration_date', 'bar_code');
 oEventDelegator.init();
 StateMachine.setFocus('organization_id');
 oSearchDetails.init('product_name', 'oSearchDetails', 'bar_code');

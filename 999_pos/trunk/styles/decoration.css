@@ -75,8 +75,16 @@ a:hover {
 	visibility: hidden;
 }
 
+.input_focus {
+	background-color: #FFFDC0;
+}
+
 .disabled th {
 	color: gray;
+}
+
+.tb_input:focus {
+	background-color: #FFFDC0;
 }
 
 #wrapper {
