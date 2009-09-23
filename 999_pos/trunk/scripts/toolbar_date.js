@@ -19,6 +19,8 @@ ToolbarDate.prototype = new ToolbarText();
 
 /**
  * Sets the text input widget and the next one too.
+ * @param string sWidget
+ * @param string sNextWidget
  */
 ToolbarDate.prototype.init = function(sWidget, sNextWidget){
 	// Call parents init method first.

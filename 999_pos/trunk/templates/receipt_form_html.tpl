@@ -22,6 +22,7 @@
 <script type="text/javascript" src="../scripts/toolbar.js"></script>
 <script type="text/javascript" src="../scripts/toolbar_text.js"></script>
 <script type="text/javascript" src="../scripts/toolbar_date.js"></script>
+<script type="text/javascript" src="../scripts/toolbar_barcode.js"></script>
 <script type="text/javascript" src="../scripts/search_product.js"></script>
 <script type="text/javascript" src="../scripts/search_product_details.js"></script>
 <script type="text/javascript" src="../scripts/search_product_toolbar.js"></script>
@@ -35,6 +36,7 @@
 	var oQuantity = new ToolbarText();
 	var oPrice = new ToolbarText();
 	var oExpirationDate = new ToolbarDate();
+	var oBarCode = new ToolbarBarCode();
 	var oEventDelegator = new EventDelegator();
 	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
@@ -135,6 +137,7 @@ Toolbar.checkResolution('product_tb');
 oQuantity.init('quantity', 'price');
 oPrice.init('price', 'expiration_date');
 oExpirationDate.init('expiration_date', 'bar_code');
+oBarCode.init('bar_code', 'add_product');
 oEventDelegator.init();
 StateMachine.setFocus('organization_id');
 oSearchDetails.init('product_name', 'oSearchDetails', 'bar_code');

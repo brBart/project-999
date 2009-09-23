@@ -23,6 +23,8 @@ function ToolbarText(){
 
 /**
  * Sets the text input widget and the next one too.
+ * @param string sWidget
+ * @param string sNextWidget
  */
 ToolbarText.prototype.init = function(sWidget, sNextWidget){
 	this._mWidget = document.getElementById(sWidget);

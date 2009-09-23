@@ -79,6 +79,10 @@ a:hover {
 	background-color: #FFFDC0;
 }
 
+.button_focus {
+	color: #FFFDC0;
+}
+
 .disabled th {
 	color: gray;
 }
