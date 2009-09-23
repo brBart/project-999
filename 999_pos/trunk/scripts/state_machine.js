@@ -18,10 +18,14 @@ function StateMachine(iStatus){
 
 /**
  * Set the focus on the element with the provided id.
- * @param string sElementId
+ * @param variant xValue
  */
-StateMachine.setFocus = function(sElementId){
-	var oElement = document.getElementById(sElementId);
+StateMachine.setFocus = function(xValue){
+	var oElement = ((typeof xValue) == 'string') ? document.getElementById(xValue) : xValue;
+	
+	if(oElement.tagName == 'INPUT' && oElement.value != '')
+		TextRange.selectRange(oElement, 0, oElement.value.length);
+	
 	oElement.focus();
 }
 

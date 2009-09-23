@@ -76,10 +76,10 @@ AddProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mDetails.getLastPage();
 	
 	// Clear elements.
-	this._mQuantity.value = '';
+	this._mQuantity.value = '1';
 	this._mBarCode.value = '';
 	this._mProductName.value = '';
-	this._mQuantity.focus();
+	StateMachine.setFocus(this._mQuantity);
 }
 
 /**

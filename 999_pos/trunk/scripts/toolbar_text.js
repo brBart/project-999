@@ -57,7 +57,7 @@ ToolbarText.prototype.handleKeyDown = function(oEvent){
  			((oEvent.which) ? oEvent.which : 0);
  	
  	if(code == 13)
- 		this._mNextWidget.focus();
+ 		StateMachine.setFocus(this._mNextWidget);
 }
   
 /**

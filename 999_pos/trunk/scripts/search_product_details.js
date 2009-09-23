@@ -275,7 +275,7 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 		// if we had results we apply the type ahead for the current sKeyword
 		if(resultsArray.length > 0){
 			this.moveFirst();
-			this.autocompleteKeyword(sKeyword.length, this._mTxtWidget.value.length);
+			TextRange.selectRange(this._mTxtWidget, sKeyword.length, this._mTxtWidget.value.length);
 		}
 	}
 }
@@ -332,29 +332,6 @@ SearchProductDetails.prototype.selectRow = function(iPos){
 	}
 	
 	this._mSelectedRow = parseInt(iPos);
-}
-
-/**
-* Method that selects a range in the text object passed as parameter.
-* @param integer start
-* @param integer length
-*/
-SearchProductDetails.prototype.autocompleteKeyword = function(start, length){
-	// check to see if in IE or FF
-	if (this._mTxtWidget.createTextRange)
-	{
-		//IE
-		var oRange = this._mTxtWidget.createTextRange(); 
-		oRange.moveStart('character', start); 
-		oRange.moveEnd('character', length - this._mTxtWidget.value.length); 
-		oRange.select();
-	}
-	else 
-		// FF
-		if (this._mTxtWidget.setSelectionRange) 
-		{
-			this._mTxtWidget.setSelectionRange(start, length);
-		}
 }
 
 /**

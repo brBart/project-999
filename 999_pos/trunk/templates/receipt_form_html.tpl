@@ -8,6 +8,7 @@
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/sync.js"></script>
 <script type="text/javascript" src="../scripts/save.js"></script>
+<script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>
 <script type="text/javascript" src="../scripts/remove_session_object.js"></script>
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>

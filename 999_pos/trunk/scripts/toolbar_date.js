@@ -59,9 +59,9 @@ ToolbarDate.prototype.handleKeyUp = function(oEvent){
  	 			
  			case 10:
  				// Codes order: tab, shift, end, home, arrows left, up, right, down.
- 				if(code != 9 && code != 16 && code != 35 && code != 36 && code != 37 && code != 38
- 						 && code != 39 && code != 40)
- 					this._mNextWidget.focus();
+ 				if(code != 9 && code != 13 && code != 16 && code != 35 && code != 36 && code != 37 &&
+ 						code != 38 && code != 39 && code != 40)
+ 					StateMachine.setFocus(this._mNextWidget);
  				
  			default:
  		}

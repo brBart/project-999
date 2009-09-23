@@ -55,6 +55,6 @@ SearchProductToolbar.prototype.doAction = function(oTr){
 	 var crtBarCode = oTr.getElementsByTagName('TD')[1].id;
 	 this._mBarCode.value = crtBarCode;
 	 
-	 this._mBarCode.focus();
+	 StateMachine.setFocus(this._mBarCode);
 	 this.stopListening();
 }

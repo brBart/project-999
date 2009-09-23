@@ -2,6 +2,7 @@
 <script type="text/javascript" src="../scripts/console.js"></script>
 <script type="text/javascript" src="../scripts/url.js"></script>
 <script type="text/javascript" src="../scripts/http_request.js"></script>
+<script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript" src="../scripts/command.js"></script>
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/search_product.js"></script>
