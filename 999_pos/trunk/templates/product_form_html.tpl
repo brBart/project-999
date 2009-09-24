@@ -1,5 +1,5 @@
 {* Smarty *}
-{* status = 0 Edit, status = 1 Consult *}
+{* status = 0 Edit, status = 1 Idle *}
 <script type="text/javascript" src="../scripts/console.js"></script>
 <script type="text/javascript" src="../scripts/url.js"></script>
 <script type="text/javascript" src="../scripts/http_request.js"></script>
