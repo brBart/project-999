@@ -713,7 +713,7 @@ class ReceiptDAM{
 						(float)$detail['price']);
 			}
 			
-			$receipt->setData($supplier, $result['shipment_number'], (float)$result['total'], $details);
+			$receipt->setData($supplier, $result['shipment_number'], $result['total'], $details);
 			return $receipt;
 		}
 		else
