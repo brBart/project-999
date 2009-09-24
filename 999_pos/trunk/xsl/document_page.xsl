@@ -7,7 +7,7 @@
 	<xsl:template match="/">  
 		<table>
 			<xsl:if test="$status > 0">
-				<xsl:attribute name="class">closed</xsl:attribute>
+				<xsl:attribute name="class">read_only</xsl:attribute>
            	</xsl:if>
 	     	<caption>
 	     		<xsl:call-template name="menu" />
@@ -115,8 +115,10 @@
 		           		<xsl:value-of select="$details_obj" />.clickRow(this);
 		           	</xsl:attribute>
 	           	</xsl:if>
-	           	<xsl:if test="position() mod 2 = 0">
-	           		<xsl:attribute name="class">even</xsl:attribute>
+	           	<xsl:if test="$status = 0">
+		           	<xsl:if test="position() mod 2 = 0">
+		           		<xsl:attribute name="class">even</xsl:attribute>
+		           	</xsl:if>
 	           	</xsl:if>
 	       		<td>
 	       			<xsl:attribute name="id">

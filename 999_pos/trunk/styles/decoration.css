@@ -180,3 +180,13 @@ a:hover {
 	border-color: #AED9FF;
 	border-width: 2px;
 }
+
+#details .read_only tr {
+	background-color: #EEEEEE;
+}
+
+#details .read_only tbody td {
+	border-bottom-style: solid;
+	border-color: #00067F;
+	border-width: 1px;
+}

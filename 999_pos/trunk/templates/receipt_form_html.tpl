@@ -151,6 +151,9 @@
 			  		<span id="receipt_product-failed" class="hidden">*</span>
 		  		</div>
 		  	</div>
+		  	{else}
+		  		{* Because Firefox css rule margin-top on table rule bug. *}
+		  		<p>&nbsp;</p>
 		  	{/if}
 		  	<div id="details"></div>
 		</fieldset>
@@ -180,10 +183,9 @@ oExpirationDate.init('expiration_date', 'bar_code');
 oBarCode.init('bar_code', 'add_product');
 oSearchDetails.init('product_name', 'oSearchDetails', 'bar_code');
 oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
-oDetails.init('../xsl/document_page.xsl', 'details', 'add_product', 'save', 'oDetails', 'oDeleteProductReceipt', 'delete_product_receipt');
+oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductReceipt', 'delete_product_receipt');
 {else}
-// The details div act as the prev and next widget because there nothing to hook it on.
-oDetails.init('../xsl/document_page.xsl', 'details', 'details', 'details', 'oDetails', 'none', 'none');
+oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
 {/if}
 oDetails.getLastPage();
 </script>

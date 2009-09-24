@@ -136,19 +136,32 @@ Details.prototype = new SyncCommand();
  * @param string sDeleteObj
  * @param string sDeleteCmd
  */
-Details.prototype.init = function(sUrlXsltFile, sDiv, sPrevWidget, sNextWidget, sDetailsObj, sDeleteObj,
+Details.prototype.init = function(sUrlXsltFile, sDiv, sDetailsObj, sPrevWidget, sNextWidget, sDeleteObj,
 		sDeleteCmd){
 	// Register with the event delegator.
 	this._mEventDelegator.registerObject(this);
 	
 	this._mDiv = document.getElementById(sDiv);
-	this._mPrevWidget = document.getElementById(sPrevWidget);
-	this._mNextWidget = document.getElementById(sNextWidget);
+	// Set only if the arguments are passed.
+	if(sPrevWidget != null && sNextWidget != null){
+		this._mPrevWidget = document.getElementById(sPrevWidget);
+		this._mNextWidget = document.getElementById(sNextWidget);
+		
+		// Set the previous and next widgets from the table element for controlling the tab sequence.
+		var oTemp = this;
+		this._mPrevWidget.onkeydown = function(oEvent){
+			oTemp.handlePrevTabKey(oEvent);
+		}
+		this._mNextWidget.onkeydown = function(oEvent){
+			oTemp.handleNextTabKey(oEvent);
+		}
+	}
 	
 	// Set for use in the xslt processor.
 	this._mDetailsObj = sDetailsObj;
-	this._mDeleteObj = sDeleteObj;
-	this._mDeleteCmd = sDeleteCmd;
+	// Set only if the arguments are passed.
+	this._mDeleteObj = (sDeleteObj == null) ? '' : sDeleteObj;
+	this._mDeleteCmd = (sDeleteCmd == null) ? '' : sDeleteCmd;
 	
 	// load the file from the server
 	this._mRequest.open("GET", sUrlXsltFile, false);        
@@ -171,15 +184,6 @@ Details.prototype.init = function(sUrlXsltFile, sDiv, sPrevWidget, sNextWidget, 
 	catch(e){
 		// if browser functionality failed, alert the user
 		this._mConsole.displayError('Interno: Navegador no soporta funcionalidad XSLT.');
-	}
-	
-	// Set the previous and next widgets from the table element for controlling the tab sequence.
-	var oTemp = this;
-	this._mPrevWidget.onkeydown = function(oEvent){
-		oTemp.handlePrevTabKey(oEvent);
-	}
-	this._mNextWidget.onkeydown = function(oEvent){
-		oTemp.handleNextTabKey(oEvent);
 	}
 }
 
