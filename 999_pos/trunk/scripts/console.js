@@ -70,8 +70,8 @@ Console.prototype.cleanFailure = function(sElementId){
  */
 Console.prototype.reset = function(){
 	var arrElements = this._mElementDiv.getElementsByTagName('*');
-	for (var i = 0; i < arrElements.length; i++){
-		var sId = arrElements[i].getAttribute('id'); 
+	while(arrElements.length > 0){
+		var sId = arrElements[0].getAttribute('id'); 
 		if(sId != 'error')
 			this.cleanFailure(sId.substring(sId.indexOf('-') + 1));
 	}
