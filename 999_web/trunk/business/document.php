@@ -301,7 +301,7 @@ abstract class Document extends PersistDocument implements Itemized{
 	 */
 	protected function validateMainProperties(){
 		if(empty($this->_mDetails))
-			throw new Exception('No hay ningun detalle.');
+			throw new ValidateException('No hay ningun detalle.', 'bar_code');
 	}
 	
 	/**
@@ -2347,12 +2347,14 @@ class Receipt extends Document{
 		parent::validateMainProperties();
 		
 		if(is_null($this->_mSupplier))
-			throw new Exception('Proveedor inv&aacute;lido.');
+			throw new ValidateException('Proveedor inv&aacute;lido.', 'organization_id');
 			
-		String::validateString($this->_mShipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.');
+		String::validateString($this->_mShipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.',
+				'shipment_number');
 		
 		if(bccomp($this->_mShipmentTotal, $this->getTotal(), 2) != 0)
-			throw new Exception('El total del envio no coincide con el del recibo.');
+			throw new ValidateException('El total del envio no coincide con el del recibo.',
+					'shipment_total');
 	}
 	
 	/**
