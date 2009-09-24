@@ -162,7 +162,7 @@ abstract class Document extends PersistDocument implements Itemized{
 	 */
 	public function setData($total, $details){
 		try{
-			Number::validatePositiveFloat($total, 'Total inv&aacute;lido.');
+			Number::validatePositiveNumber($total, 'Total inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
 		} catch(Exception $e){
