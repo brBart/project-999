@@ -160,7 +160,7 @@
 		<fieldset id="controls">
 			{if $status eq 0}
 		  	<input name="form_widget" id="save" type="button" value="Guardar"
-		  			onclick="oSave.execute('{$foward_link}');" />
+		  			onclick="if(confirm('Una vez guardado el documento no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$foward_link}');" />
 		  	<input name="form_widget" id="undo" type="button" value="Cancelar"
 		  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link}{/if}');" />
 		  	{else}
