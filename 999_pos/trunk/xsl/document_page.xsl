@@ -6,17 +6,19 @@
 	<xsl:param name="delete_cmd" />
 	<xsl:template match="/">  
 		<table>
-			<xsl:if test="$status = 1">
-				<xsl:attribute name="class">disabled</xsl:attribute>
+			<xsl:if test="$status > 0">
+				<xsl:attribute name="class">closed</xsl:attribute>
            	</xsl:if>
 	     	<caption>
 	     		<xsl:call-template name="menu" />
 	     	</caption>
 	      	<thead>
 	      		<xsl:element name="tr">
-	      			<xsl:attribute name="onclick">
-	      				<xsl:value-of select="$details_obj" />.setFocus();
-	      			</xsl:attribute>
+	      			<xsl:if test="$status = 0">
+		      			<xsl:attribute name="onclick">
+		      				<xsl:value-of select="$details_obj" />.setFocus();
+		      			</xsl:attribute>
+	      			</xsl:if>
 	        		<th>Barra</th> 
 	         		<th>Casa</th>
 	         		<th>Nombre</th>
@@ -27,16 +29,18 @@
 	         		<th>Sub Total</th>
 	         		<th>Vence</th>
 	         		<th id="btn_col">
-	         			<xsl:element name="input">
-		                	<xsl:attribute name="id">remove_detail</xsl:attribute>
-		                  	<xsl:attribute name="type">button</xsl:attribute>
-		                  	<xsl:attribute name="value">Quitar</xsl:attribute>
-		                  	<xsl:attribute name="onclick">
-		                  		<xsl:value-of select="$delete_obj" />.execute('<xsl:value-of select="$delete_cmd" />');
-		                  	</xsl:attribute>
-		                  	<xsl:attribute name="onfocus">this.blur();</xsl:attribute>
-		                  	<xsl:attribute name="disabled">disabled</xsl:attribute>
-		                </xsl:element>
+	         			<xsl:if test="$status = 0">
+		         			<xsl:element name="input">
+			                	<xsl:attribute name="id">remove_detail</xsl:attribute>
+			                  	<xsl:attribute name="type">button</xsl:attribute>
+			                  	<xsl:attribute name="value">Quitar</xsl:attribute>
+			                  	<xsl:attribute name="onclick">
+			                  		<xsl:value-of select="$delete_obj" />.execute('<xsl:value-of select="$delete_cmd" />');
+			                  	</xsl:attribute>
+			                  	<xsl:attribute name="onfocus">this.blur();</xsl:attribute>
+			                  	<xsl:attribute name="disabled">disabled</xsl:attribute>
+			                </xsl:element>
+		                </xsl:if>
 	         		</th>
 	         	</xsl:element>
 	       	</thead>
@@ -106,9 +110,11 @@
 	           	<xsl:attribute name="id">
 	             	<xsl:value-of select="concat('tr', position())" />
 	           	</xsl:attribute>
-	           	<xsl:attribute name="onclick">
-	           		<xsl:value-of select="$details_obj" />.clickRow(this);
-	           	</xsl:attribute>
+	           	<xsl:if test="$status = 0">
+		           	<xsl:attribute name="onclick">
+		           		<xsl:value-of select="$details_obj" />.clickRow(this);
+		           	</xsl:attribute>
+	           	</xsl:if>
 	           	<xsl:if test="position() mod 2 = 0">
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
