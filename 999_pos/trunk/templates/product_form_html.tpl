@@ -178,7 +178,7 @@
 		  		{else}
 		  			disabled="disabled"
 		  		{/if} />
-		  	<input name="form_widget" id="cancel" type="button" value="Cancelar"
+		  	<input name="form_widget" id="undo" type="button" value="Cancelar"
 		  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link}{/if}');"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		</fieldset>
