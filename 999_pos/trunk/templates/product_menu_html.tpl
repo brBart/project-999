@@ -9,7 +9,7 @@
 <script type="text/javascript" src="../scripts/search_product_details.js"></script>
 <script type="text/javascript" src="../scripts/search_product_menu.js"></script>
 <script type="text/javascript">
-	var oConsole = new Console();
+	var oConsole = new Console('console');
 	var oEventDelegator = new EventDelegator();
 	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
 	var oSearchDetails = new SearchProductMenu(oSession, oSearchProduct, oEventDelegator);

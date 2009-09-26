@@ -22,7 +22,7 @@
 <script type="text/javascript" src="../scripts/delete.js"></script>
 {/if}
 <script type="text/javascript">
-	var oConsole = new Console();
+	var oConsole = new Console('console');
 	var oMachine = new StateMachine({$status});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
