@@ -6,9 +6,10 @@
 
 /**
  * Constructor function.
+ * @param string sConsole
  */
-function Console(){
-	this._mElementDiv = document.getElementById('console');
+function Console(sConsole){
+	this._mElementDiv = document.getElementById(sConsole);
 }
 
 /**
@@ -74,7 +75,7 @@ Console.prototype.reset = function(){
 		var sId = arrElements[0].getAttribute('id'); 
 		if(sId != 'error')
 			this.cleanFailure(sId.substring(sId.indexOf('-') + 1));
+		else
+			this._mElementDiv.removeChild(arrElements[0]);
 	}
-	
-	this._mElementDiv.innerHTML = '';
 }
