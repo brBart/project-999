@@ -31,7 +31,6 @@ abstract class ChangePasswordCommand extends Command{
 		$username = $user->getUserName();
 		$back_trace = array('Inicio', 'Constrase&ntilde;a');
 		
-		// If the submit button was pressed.
 		if(is_null($request->getProperty('change_password'))){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
@@ -39,6 +38,7 @@ abstract class ChangePasswordCommand extends Command{
 			return;
 		}
 		
+		// If the submit button was pressed.
 		$password = $request->getProperty('password');
 		$new_password = $request->getProperty('new_password');
 		$confirm_password = $request->getProperty('confirm_password');
