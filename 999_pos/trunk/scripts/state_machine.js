@@ -30,7 +30,7 @@ StateMachine.setFocus = function(xValue){
 }
 
 /**
- * Set the form the edit state. Receive the name of the element which receives the focus.
+ * Set the form to edit state. Receive the name of the element which receives the focus.
  * @param string sElementId
  */
 StateMachine.prototype.changeToEditState = function(sElementId){
@@ -66,6 +66,18 @@ StateMachine.prototype.changeToEditState = function(sElementId){
 	StateMachine.setFocus(sElementId);
 	
 	this._mStatus = 0;
+}
+ 
+/**
+  * Set the form to cancel state..
+  */
+StateMachine.prototype.changeToCancelState = function(){
+	var oButton = document.getElementById('cancel');
+	oButton.disabled = true;
+	
+	var oStatus = document.getElementById('status_label');
+	oStatus.className = 'cancel_status';
+	oStatus.innerHTML = 'Anulado';
 }
  
 /**
