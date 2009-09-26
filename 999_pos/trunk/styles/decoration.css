@@ -91,6 +91,13 @@ a:hover {
 	background-color: #FFFDC0;
 }
 
+.authenticate_form .error {
+	color: red;
+	border-style: none;
+	background-image: none;
+	background-color: #EEEEEE;
+}
+
 #wrapper {
 	background-color: #EEEEEE;
 	border-bottom-style: dashed;
