@@ -431,9 +431,6 @@ class UserAccountUtility{
 	 * @return boolean
 	 */
 	static public function isValid($userName, $password){
-		String::validateString($userName, 'Usuario inv&aacute;lido.');
-		String::validateString($password, 'Contrase&ntilde;a inv&aacute;lida.');
-		
 		if(self::isRoot($userName))
 			return UserAccountUtilityDAM::isValidRoot(self::encrypt($password));
 		else
@@ -463,10 +460,6 @@ class UserAccountUtility{
 	 * @throws Exception
 	 */
 	static public function changePassword(UserAccount $account, $password, $newPassword){
-		Persist::validateObjectFromDatabase($account);
-		String::validateString($password, 'Contrase&ntilde;a actual inv&aacute;lida.');
-		String::validateString($newPassword, 'Nueva contrase&ntilde;a inv&aacute;lida.');
-		
 		$account_name = $account->getUserName();
 		if(!self::isValid($account_name, $password))
 			throw new ValidateException('Contrase&ntilde;a actual incorrecta.');
