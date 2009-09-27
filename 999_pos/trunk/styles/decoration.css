@@ -71,6 +71,14 @@ a:hover {
 	color: gray;
 }
 
+.cancel_status {
+	color: red;
+}
+
+.authenticate_form {
+	background-color: white;
+}
+
 .invisible {
 	visibility: hidden;
 }
@@ -95,6 +103,10 @@ a:hover {
 	color: red;
 	border-style: none;
 	background-image: none;
+	background-color: #EEEEEE;
+}
+
+.authenticate_form fieldset {
 	background-color: #EEEEEE;
 }
 
