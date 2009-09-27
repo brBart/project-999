@@ -65,7 +65,7 @@
 		<fieldset id="status_bar">
 			<p>
 				<label>Status:</label>
-				<span id="status_label">
+				<span id="status_label" {if $status eq 2}class="cancel_status"{/if}>
 					{if $status eq 0}
 						Creando...
 					{elseif $status eq 1}
@@ -162,44 +162,43 @@
 		<fieldset id="controls">
 			{if $status eq 0}
 		  	<input name="form_widget" id="save" type="button" value="Guardar"
-		  			onclick="if(confirm('Una vez guardado el documento no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$foward_link}');"
-		  			{if $status eq 2}disabled="disabled"{/if}/>
+		  			onclick="if(confirm('Una vez guardado el documento no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$foward_link}');" />
 		  	<input name="form_widget" id="undo" type="button" value="Cancelar"
 		  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link}{/if}');" />
 		  	{else}
 		  	<input name="form_widget" id="cancel" type="button" value="Anular"
-		  			onclick="oCancel.showForm();" />
+		  			onclick="oCancel.showForm();" {if $status eq 2}disabled="disabled"{/if} />
 		  	<input name="form_widget" id="print" type="button" value="Imprimir"
 		  			onclick="oSession.loadHref('');" />
 		  	{/if}
 		</fieldset>
+		{if $status eq 1}
+		<div id="authenticate_form" class="hidden">
+			<fieldset>
+				<legend>Autorizaci&oacute;n</legend>
+			  	<p>
+					<label for="username">Usuario:</label>
+					<input name="username" id="username" type="text" maxlength="20" />
+			  	</p>
+			  	<p>
+					<label for="password">Contrase&ntilde;a:</label>
+					<input name="password" id="password" type="password" maxlength="20" />
+			  	</p>
+			  	<div id="mini_console"></div>
+			  	<p>
+					<input id="authenticate" type="button" value="Aceptar" onclick="oCancel.execute('cancel_receipt');" />
+					<input id="return" type="button" value="Cancelar" onclick="oCancel.hideForm();" />
+			  	</p>
+			 </fieldset>
+		</div>
+		<script type="text/javascript">
+		var miniConsole = new Console('mini_console');
+		var oCancel = new CancelDocumentCommand(oSession, miniConsole, createXmlHttpRequestObject(), {$key}, oMachine);
+		oCancel.init('authenticate_form', 'username', 'password');
+		</script>
+{/if}
 	</div>
 </div>
-{if $status eq 1}
-<div id="authenticate_form" class="hidden">
-	<fieldset>
-		<legend>Autoizaci&oacute;n</legend>
-	  	<p>
-			<label for="username">Usuario:</label>
-			<input name="username" id="username" type="text" maxlength="20" />
-	  	</p>
-	  	<p>
-			<label for="password">Contrase&ntilde;a:</label>
-			<input name="password" id="password" type="password" maxlength="20" />
-	  	</p>
-	  	<div id="mini_console"></div>
-	  	<p>
-			<input id="authenticate" type="button" value="Aceptar" onclick="oCancel.execute('cancel_receipt');" />
-			<input id="return" type="button" value="Cancelar" onclick="oCancel.hideForm();" />
-	  	</p>
-	 </fieldset>
-</div>
-<script type="text/javascript">
-var miniConsole = new Console('mini_console');
-var oCancel = new CancelDocumentCommand(oSession, miniConsole, createXmlHttpRequestObject(), {$key}, oMachine);
-oCancel.init('authenticate_form', 'username', 'password');
-</script>
-{/if}
 <script type="text/javascript">
 oEventDelegator.init();
 {if $status eq 0}
