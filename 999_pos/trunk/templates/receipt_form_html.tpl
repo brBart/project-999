@@ -174,22 +174,24 @@
 		</fieldset>
 		{if $status eq 1}
 		<div id="authenticate_form" class="hidden">
-			<fieldset>
-				<legend>Autorizaci&oacute;n</legend>
-			  	<p>
-					<label for="username">Usuario:</label>
-					<input name="username" id="username" type="text" maxlength="20" />
-			  	</p>
-			  	<p>
-					<label for="password">Contrase&ntilde;a:</label>
-					<input name="password" id="password" type="password" maxlength="20" />
-			  	</p>
-			  	<div id="mini_console"></div>
-			  	<p>
-					<input id="authenticate" type="button" value="Aceptar" onclick="oCancel.execute('cancel_receipt');" />
-					<input id="return" type="button" value="Cancelar" onclick="oCancel.hideForm();" />
-			  	</p>
-			 </fieldset>
+			<div>
+				<fieldset>
+					<legend>Autorizaci&oacute;n</legend>
+				  	<p>
+						<label for="username">Usuario:</label>
+						<input name="username" id="username" type="text" maxlength="20" />
+				  	</p>
+				  	<p>
+						<label for="password">Contrase&ntilde;a:</label>
+						<input name="password" id="password" type="password" maxlength="20" />
+				  	</p>
+				  	<div id="mini_console"></div>
+				  	<p>
+						<input id="authenticate" type="button" value="Aceptar" onclick="oCancel.execute('cancel_receipt');" />
+						<input id="return" type="button" value="Cancelar" onclick="oCancel.hideForm();" />
+				  	</p>
+				 </fieldset>
+			 </div>
 		</div>
 		<script type="text/javascript">
 		var miniConsole = new Console('mini_console');

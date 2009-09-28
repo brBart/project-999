@@ -79,9 +79,12 @@ input[type="text"], input[type="password"] {
 	height: 100%;
 }
 
-.authenticate_form fieldset {
-	width: 25%;
-	margin: 15% auto;
+.authenticate_form > div {
+	position: relative;
+	padding: 10px;
+	width: 35%;
+	top: 35%;
+	left: 35%;
 }
 
 .content_medium div {

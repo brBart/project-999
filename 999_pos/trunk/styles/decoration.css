@@ -76,7 +76,7 @@ a:hover {
 }
 
 .authenticate_form {
-	background-color: white;
+	background-image: url(../images/translucent_bg.png);
 }
 
 .invisible {
@@ -106,7 +106,7 @@ a:hover {
 	background-color: #EEEEEE;
 }
 
-.authenticate_form fieldset {
+.authenticate_form div {
 	background-color: #EEEEEE;
 }
 
