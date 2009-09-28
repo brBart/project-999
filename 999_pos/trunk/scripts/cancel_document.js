@@ -44,6 +44,18 @@ function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine
 	 * @var object
 	 */
 	this._mPassword = null;
+	
+	/**
+	 * Will store the initial value of the wrapper div height.
+	 * @var integer
+	 */
+	this._mInitHeight = 0;
+	
+	/**
+	 * Will store the initial value of the body width.
+	 * @var integer
+	 */
+	this._mInitWidth = 0;
 }
 
 /**
@@ -61,12 +73,23 @@ CancelDocumentCommand.prototype.init = function(sForm, sUser, sPassword){
 	this._mForm = document.getElementById(sForm);
 	this._mUser = document.getElementById(sUser);
 	this._mPassword = document.getElementById(sPassword);
+	
+	// Store the original wrapper div height and body width values.
+	this._mInitHeight = document.getElementById('wrapper').scrollHeight;
+	this._mInitWidth = document.body.scrollWidth;
 }
 
 /**
  * Shows the authentication form.
  */
 CancelDocumentCommand.prototype.showForm = function(){
+	// Because height changes dynamically.
+	if(this._mInitHeight < document.getElementById('wrapper').scrollHeight){
+		// The window changed its size.
+		this._mForm.style.height = document.getElementById('wrapper').scrollHeight + 'px';
+		this._mForm.style.width = document.body.scrollWidth + 'px';
+	}
+	
 	this._mForm.className = 'authenticate_form';
 	this._mUser.focus();
 }

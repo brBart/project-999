@@ -193,12 +193,7 @@
 				 </fieldset>
 			 </div>
 		</div>
-		<script type="text/javascript">
-		var miniConsole = new Console('mini_console');
-		var oCancel = new CancelDocumentCommand(oSession, miniConsole, createXmlHttpRequestObject(), {$key}, oMachine);
-		oCancel.init('authenticate_form', 'username', 'password');
-		</script>
-{/if}
+		{/if}
 	</div>
 </div>
 <script type="text/javascript">
@@ -217,4 +212,9 @@ oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
 {/if}
 oDetails.getLastPage();
+{if $status eq 1}
+var miniConsole = new Console('mini_console');
+var oCancel = new CancelDocumentCommand(oSession, miniConsole, createXmlHttpRequestObject(), {$key}, oMachine);
+oCancel.init('authenticate_form', 'username', 'password');
+{/if}
 </script>
