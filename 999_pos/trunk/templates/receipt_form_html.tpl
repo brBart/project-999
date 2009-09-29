@@ -169,7 +169,7 @@
 		  	<input name="form_widget" id="cancel" type="button" value="Anular"
 		  			onclick="oCancel.showForm();" {if $status eq 2}disabled="disabled"{/if} />
 		  	<input name="form_widget" id="print" type="button" value="Imprimir"
-		  			onclick="window.open('index.php?cmd=print_receipt&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 200) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+		  			onclick="window.open('index.php?cmd=print_receipt&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
 		  	{/if}
 		</fieldset>
 		{if $status eq 1}

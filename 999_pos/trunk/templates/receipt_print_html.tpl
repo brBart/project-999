@@ -3,9 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Imprimiendo...</title>
+<link href="../styles/print.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body onload="print();">
 	<div id="wrapper">
+		<fieldset id="main_data">
+			<p>
+		  		<label for="organization_id">Proveedor:</label>
+		  		<span>{$supplier}</span>
+		  	</p>
+		  	<p>
+		  		<label for="shipment_number">Env&iacute;o No:</label>
+		  		<span>{$shipment_number}</span>
+		  	</p>
+		  	<p>
+		  		<label for="shipment_total">Total env&iacute;o:</label>
+		  		<span>{$shipment_total}</span>
+		  	</p>
+		</fieldset>
 		<fieldset id="status_bar">
 			<p>
 				<label>Status:</label>
@@ -29,20 +44,7 @@
 				<label>Usuario:</label><span>{$username}</span>
 			</p>
 		</fieldset>
-		<fieldset id="main_data">
-			<p>
-		  		<label for="organization_id">Proveedor:</label>
-		  		<span>{$supplier}</span>
-		  	</p>
-		  	<p>
-		  		<label for="shipment_number">Env&iacute;o No:</label>
-		  		<span>{$shipment_number}</span>
-		  	</p>
-		  	<p>
-		  		<label for="shipment_total">Total env&iacute;o:</label>
-		  		<span>{$shipment_total}</span>
-		  	</p>
-		</fieldset>
+		<p id="separator">&nbsp;</p>
 		<table>
 	     	<caption>{$total_items} de {$total_items}</caption>
 	      	<thead>
@@ -68,7 +70,7 @@
 					<td>{$details[i].um}</td>
 					<td>{$details[i].quantity}</td>
 					<td>{$details[i].price|nf:2}</td>
-					<td>{$details[i].total|nf:2}</td>
+					<td class="total_col">{$details[i].total|nf:2}</td>
 					<td>
 					{if $details[i].expiration_date neq ''}{$details[i].expiration_date}{else}N/A{/if}
 					</td>

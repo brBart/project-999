@@ -1,0 +1,65 @@
+body {
+	font-size: 12px;
+}
+
+fieldset {
+	width: 25em;
+}
+
+label {
+	float: left;
+	width: 10em;
+	font-weight: bold;
+}
+
+table {
+	margin: 0 auto;
+	width: 95%;
+}
+
+th {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: black;
+}
+
+td {
+	padding: 0.2em 1em;
+}
+
+fieldset p {
+	margin: 0.5em;
+}
+
+.total_col {
+	text-align: right;
+}
+
+tfoot .total_col {
+	font-weight: bold;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: black;
+}
+
+#wrapper {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 900px;
+}
+
+#status_bar, #header_data {
+	float: right;
+}
+
+#header_data {
+	clear: right;
+}
+
+#main_data {
+	float: left;
+}
+
+#separator {
+	clear: both;
+}
