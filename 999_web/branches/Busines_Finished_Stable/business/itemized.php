@@ -49,12 +49,13 @@ class DetailsPrinter{
 			return $details;
 		}
 		
+		$totalItems = count($obj_details);
+		
 		if($page == 0)
 			// Return all the details available.
 			foreach($obj_details as $detail)
 				$details[] = $detail->show();
 		else{
-			$totalItems = count($obj_details);
 			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 			
 			if($page <= $totalPages){
