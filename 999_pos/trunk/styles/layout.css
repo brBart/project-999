@@ -16,16 +16,16 @@ textarea, select {
 }
 
 textarea {
-	height: 60px;
+	height: 6em;
 }
 
 fieldset {
-	padding: 10px;
+	padding: 1em;
 	margin: 0;
 }
 
 fieldset p {
-	margin: 5px;
+	margin: 0.5em;
 }
 
 caption span {
@@ -79,7 +79,7 @@ input[type="text"], input[type="password"] {
 
 .authenticate_form > div {
 	position: relative;
-	padding: 10px;
+	padding: 1em;
 	width: 35%;
 	top: 35%;
 	left: 35%;
@@ -104,16 +104,15 @@ input[type="text"], input[type="password"] {
 }
 
 #header {
-	padding: 1px;
-	padding: 15px 0;
+	padding: 1em 0;
 }
 
 #main_menu {
-	height: 30px;
+	height: 3em;
 }
 
 #console {
-	height: 50px;
+	height: 5em;
 	padding: 0;
 	overflow: auto;
 }
@@ -126,12 +125,12 @@ input[type="text"], input[type="password"] {
 #third_menu {
 	float: right;
 	width: 70%;
-	margin-bottom: 20px;
+	margin-bottom: 2em;
 }
 
 #content {
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 2em;
 }
 
 #search_product {
@@ -152,7 +151,7 @@ input[type="text"], input[type="password"] {
 }
 
 #btn_col {
-	width: 1px;
+	width: 1em;
 }
 
 #product_tb {
@@ -162,7 +161,7 @@ input[type="text"], input[type="password"] {
 
 #product_tb > div {
 	float: left;
-	padding: 5px 5px 0 5px;
+	padding: 0.5em 0.5em 0 0.5em;
 }
 
 #content > div, table {
@@ -170,12 +169,12 @@ input[type="text"], input[type="password"] {
 }
 
 #list th, td {
-	padding: 10px 20px;
+	padding: 1em 2em;
 }
 
 #header p, h1 {
 	display: inline;
-	margin: 0 10px;
+	margin: 0 1em;
 }
 
 #main_menu li {
@@ -184,13 +183,13 @@ input[type="text"], input[type="password"] {
 
 #main_menu a {
 	display: block;
-	padding: 0 10px;
-	line-height: 30px;
+	padding: 0 1em;
+	line-height: 2.7em;
 }
 
 #second_menu a {
 	display: block;
-	padding: 10px 10px;
+	padding: 1em;
 }
 
 #third_menu ul {
@@ -199,13 +198,13 @@ input[type="text"], input[type="password"] {
 }
 
 #third_menu li{
-	padding: 20px 10px;
+	padding: 2em 1em;
 }
 
 #console p {
 	width: 60%;
-	margin: 10px auto;
-	padding: 5px 5px 5px 20px;
+	margin: 1em auto;
+	padding: 0.5em 0.5em 0.5em 2em;
 }
 
 #frm label {
@@ -218,11 +217,12 @@ input[type="text"], input[type="password"] {
 }
 
 #details th {
-	padding: 5px 10px;
+	padding: 0.5em 1em;
 }
 
 #details td {
-	padding: 5px 10px;
+	/* Leave this because of anomaly */
+	padding: 0.5em 1em;
 }
 
 #prod_supp_tb label {
@@ -259,7 +259,7 @@ input[type="text"], input[type="password"] {
 }
 
 #scroll td {
-	padding: 2px 2px;
+	padding: 0.2em 0.2em;
 }
 
 #product_tb label {
