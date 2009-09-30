@@ -46,7 +46,7 @@ class GetReceiptCommand extends GetObjectCommand{
 				throw new Exception('Recibo no existe.');
 		}
 		else
-			throw new Exception('C&oacute;digo inv&aacute;lido. Valor debe ser n&uacute;merico.');
+			throw new Exception('N&uacute;mero inv&aacute;lido. Valor debe ser n&uacute;merico.');
 	}
 	
 	/**
@@ -55,10 +55,13 @@ class GetReceiptCommand extends GetObjectCommand{
 	 */
 	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Movimientos', 'Recibos');
+		
+		$id = $this->_mRequest->getProperty('id');
+		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
-				'content' => 'receipt_menu_html.tpl', 'notify' => '1', 'type' => 'error', 'message' => $msg),
-				'site_html.tpl');
+				'content' => 'receipt_menu_html.tpl', 'notify' => '1', 'type' => 'error', 'message' => $msg,
+				'id' => $id), 'site_html.tpl');
 	}
 	
 	/**
