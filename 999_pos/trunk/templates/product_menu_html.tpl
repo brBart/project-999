@@ -25,7 +25,7 @@
 	    	<div id="search_product">
 		    	<label for="name">Buscar:</label>
 		    	<div>
-		    		<input name="name" id="name" type="text"/>
+		    		<input name="name" id="name" type="text" maxlength="100" />
 		    		<div>
 		    			<div id="scroll"></div>
 		    		</div>
@@ -34,13 +34,15 @@
 	    </li>
 	    <li>
 	    	<form method="post" action="index.php?cmd=get_product_by_id" onsubmit="return oSession.setIsLink(true);">
-	    		<label for="product_id">C&oacute;digo:</label><input name="id" id="product_id" type="text" value="{$id}" />
+	    		<label for="product_id">C&oacute;digo:</label>
+	    		<input name="id" id="product_id" type="text" value="{$id}" maxlength="11" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>
 	    <li>
 	    	<form method="post" action="index.php?cmd=get_product_by_bar_code" onsubmit="return oSession.setIsLink(true);">
-	    		<label for="bar_code">C&oacute;digo barra:</label><input name="bar_code" id="bar_code" type="text" value="{$bar_code}" />
+	    		<label for="bar_code">C&oacute;digo barra:</label>
+	    		<input name="bar_code" id="bar_code" type="text" value="{$bar_code}" maxlength="100" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>
@@ -56,7 +58,7 @@
 	    			{/section}
 	    		</select>
 	    		<label for="product_sku">C&oacute;digo:</label>
-	    		<input name="product_sku" id="product_sku" type="text" value="{$product_sku}" />
+	    		<input name="product_sku" id="product_sku" type="text" value="{$product_sku}" maxlength="50" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>

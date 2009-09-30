@@ -142,7 +142,7 @@
 			  		<div id="search_product">
 				    	<label for="product_name">Buscar:</label>
 				    	<div>
-				    		<input name="product_name" id="product_name" type="text"/>
+				    		<input name="product_name" id="product_name" type="text" maxlength="100" />
 				    		<div>
 				    			<div id="scroll"></div>
 				    		</div>
