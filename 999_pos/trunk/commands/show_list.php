@@ -44,7 +44,7 @@ abstract class ShowListCommand extends Command{
 					$next_link, $actual_cmd);
 		}
 		else
-			$this->displayFailure();
+			$this->displayEmpty();
 	}
 	
 	/**
@@ -59,7 +59,7 @@ abstract class ShowListCommand extends Command{
 	/**
 	 * Displays an empty list.
 	 */
-	abstract protected function displayFailure();
+	abstract protected function displayEmpty();
 	
 	/**
 	 * Displays the list.

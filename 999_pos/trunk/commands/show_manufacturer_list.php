@@ -34,7 +34,7 @@ class ShowManufacturerListCommand extends ShowListCommand{
 	/**
 	 * Displays an empty list.
 	 */
-	protected function displayFailure(){
+	protected function displayEmpty(){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		$msg = 'No hay casas en la base de datos.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
