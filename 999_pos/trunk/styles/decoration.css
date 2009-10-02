@@ -91,6 +91,10 @@ a:hover {
 	color: #FFFDC0;
 }
 
+.date_help {
+	color: gray;
+}
+
 .disabled th {
 	color: gray;
 }

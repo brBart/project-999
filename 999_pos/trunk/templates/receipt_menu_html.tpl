@@ -13,8 +13,10 @@
 	    	<form method="post" action="index.php?cmd=search_receipt&page=1" onsubmit="return oSession.setIsLink(true);">
 	    		<label for="start_date">Fecha inicial:</label>
 	    		<input name="start_date" id="start_date" type="text" value="{$start_date}" maxlength="10" />
+	    		<span class="date_help"><span>dd/mm/aaaa</span></span>
 	    		<label for="end_date">Fecha final:</label>
 	    		<input name="end_date" id="end_date" type="text" value="{$end_date}" maxlength="10" />
+	    		<span class="date_help"><span>dd/mm/aaaa</span></span>
 	    		<input type="submit" value="Buscar" />
 	    	</form>
 	    </li>
