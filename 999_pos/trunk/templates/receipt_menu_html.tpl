@@ -10,7 +10,7 @@
 	    	</form>
 	    </li>
 	    <li id="li_last">
-	    	<form method="post" action="index.php?cmd=search_receipt" onsubmit="return oSession.setIsLink(true);">
+	    	<form method="post" action="index.php?cmd=search_receipt&page=1" onsubmit="return oSession.setIsLink(true);">
 	    		<label for="start_date">Fecha inicial:</label>
 	    		<input name="start_date" id="start_date" type="text" value="{$start_date}" maxlength="10" />
 	    		<label for="end_date">Fecha final:</label>

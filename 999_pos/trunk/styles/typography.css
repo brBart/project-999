@@ -23,6 +23,11 @@ table th{
 	text-align: right;
 }
 
+.date_title {
+	font-weight: bold;
+	text-align: center;
+}
+
 tfoot .total_col {
 	font-weight: bold;
 	font-size: 1.1em;

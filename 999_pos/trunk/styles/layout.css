@@ -77,6 +77,10 @@ input[type="text"], input[type="password"] {
 	left: 0;
 }
 
+.date_title {
+	margin-bottom: 3em;
+}
+
 .authenticate_form > div {
 	position: relative;
 	padding: 1em;

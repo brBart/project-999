@@ -75,7 +75,9 @@ class GetReceiptCommand extends GetObjectCommand{
 		
 		// Build the back link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_receipt_menu' :
-				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
+				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'] . '&start_date=' .
+				$this->_mRequest->getProperty('start_date') . '&end_date=' .
+				$this->_mRequest->getProperty('end_date');
 		
 		$user = $obj->getUser();
 		$supplier = $obj->getSupplier();
