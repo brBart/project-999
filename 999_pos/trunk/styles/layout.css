@@ -81,16 +81,6 @@ input[type="text"], input[type="password"] {
 	margin-bottom: 3em;
 }
 
-.date_help {
-	position: relative;
-}
-
-.date_help span {
-	position: absolute;
-	top: -2em;
-	left: -15em;
-}
-
 .authenticate_form > div {
 	position: relative;
 	padding: 1em;
@@ -171,6 +161,15 @@ input[type="text"], input[type="password"] {
 #product_tb {
 	margin: 2em auto;
 	height: 2.5em;
+}
+
+#dates_range {
+	height: 1.5em;
+}
+
+#dates_range div {
+	float: left;
+	position: relative;
 }
 
 #product_tb > div {
@@ -286,6 +285,12 @@ input[type="text"], input[type="password"] {
 
 #product_tb > div > * {
 	float: left;
+}
+
+#dates_range div span {
+	position: absolute;
+	top: -1.2em;
+	left: 12em;
 }
 
 #search_product input[type="text"] {

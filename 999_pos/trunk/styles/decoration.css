@@ -91,10 +91,6 @@ a:hover {
 	color: #FFFDC0;
 }
 
-.date_help {
-	color: gray;
-}
-
 .disabled th {
 	color: gray;
 }
@@ -172,6 +168,10 @@ a:hover {
 	border-style: solid;
 	border-color: white;
 	border-width: 1px;
+}
+
+#dates_range div span {
+	color: gray;
 }
 
 #main_menu a:hover {
