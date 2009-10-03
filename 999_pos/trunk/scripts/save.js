@@ -28,7 +28,7 @@ function SaveCommand(oSession, oConsole, oRequest, sKey){
 	this._mCmd = 'save_object';
 	
 	/**
-	 * Holds the name of the command to execute on the server in case of success.
+	 * Holds the link to redirect the page in case of success.
 	 * @var string
 	 */
 	this._mLinkSuccess = '';
