@@ -28,6 +28,7 @@
 <script type="text/javascript" src="../scripts/search_product.js"></script>
 <script type="text/javascript" src="../scripts/search_product_details.js"></script>
 <script type="text/javascript" src="../scripts/search_product_toolbar.js"></script>
+<script type="text/javascript" src="../scripts/discard_document.js"></script>
 {elseif $status eq 1}
 <script type="text/javascript" src="../scripts/cancel_document.js"></script>
 {/if}
@@ -49,6 +50,7 @@
 	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
 	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
 	var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, oEventDelegator);
+	var oDiscard = new DiscardDocumentCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
 	{literal}
 	// For the delete key pressed.
 	oDetails.mDeleteFunction = function(sCmd){oDeleteProductReceipt.execute(sCmd);}
@@ -164,7 +166,7 @@
 		  	<input name="form_widget" id="save" type="button" value="Guardar"
 		  			onclick="if(confirm('Una vez guardado el documento no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$foward_link}');" />
 		  	<input name="form_widget" id="undo" type="button" value="Cancelar"
-		  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link}{/if}');" />
+		  			onclick="oDiscard.execute('{$back_link}');" />
 		  	{else}
 		  	<input name="form_widget" id="cancel" type="button" value="Anular"
 		  			onclick="oCancel.showForm();" {if $status eq 2}disabled="disabled"{/if} />
