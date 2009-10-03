@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowManufacturerList class command.
+ * Library containing the SearchReceipt class command.
  * @package Command
  * @author Roberto Oliveros
  */

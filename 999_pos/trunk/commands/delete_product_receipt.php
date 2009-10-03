@@ -15,7 +15,7 @@ require_once('commands/delete_detail_object.php');
 require_once('business/event.php');
 
 /**
- * Defines functionality for deleting a supplier from a product.
+ * Defines functionality for deleting a product from a receipt.
  * @package Command
  * @author Roberto Oliveros
  */

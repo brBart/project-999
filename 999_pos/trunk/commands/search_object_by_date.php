@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Defines common functionality for the show list derived classes.
+ * Defines common functionality for the search by date derived classes.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -58,7 +58,7 @@ abstract class CancelDocumentCommand extends Command{
 	}
 
 	/**
-	 * Tests if the user has the right to login.
+	 * Tests if the user has the right to cancel the document.
 	 * @param UserAccount $user
 	 * @return boolean
 	 */
