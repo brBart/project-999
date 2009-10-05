@@ -1,31 +1,31 @@
 /**
- * Library with the add product entry command class.
- * @package Client
+ * @fileOverview Library with the AddProductEntryCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
- * @param ObjectPage oDetails
- * @param GetAmountCommand oTotal
+ * @class Adds a product to an entry type document on the server.
+ * @extends AddProductObjectCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
+ * @param {ObjectPage} oDetails
  */
-function AddProductEntryCommand(oSession, oConsole, oRequest, sKey, oDetails, oTotal){
+function AddProductEntryCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	// Call the parent constructor.
-	AddProductObjectCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails, oTotal);
+	AddProductObjectCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails);
 	
 	/**
-	 * Holds a reference to the price element.
-	 * @var object
+	 * Holds a reference to the price input element.
+	 * @type HtmlElement
 	 */
 	this._mPrice = null;
 	
 	/**
-	 * Holds a reference to the expiration date element.
-	 * @var object
+	 * Holds a reference to the expiration date input element.
+	 * @type HtmlElement
 	 */
 	this._mExpirationDate = null;
 }
@@ -36,12 +36,12 @@ function AddProductEntryCommand(oSession, oConsole, oRequest, sKey, oDetails, oT
 AddProductEntryCommand.prototype = new AddProductObjectCommand();
 
 /**
- * Set the input elements from where the values will be read.
- * @param string sBarCode
- * @param string sQuantity
- * @param string sProductName
- * @param string sPrice
- * @param string sExpirationDate
+ * Sets the input elements from where the values will be read.
+ * @param {String} sBarCode
+ * @param {String} sQuantity
+ * @param {String} sProductName
+ * @param {String} sPrice The id of the price input element.
+ * @param {String} sExpirationDate The id of the expiration date input element.
  */
 AddProductEntryCommand.prototype.init = function(sBarCode, sQuantity, sProductName, sPrice, sExpirationDate){
 	// Call parent's init function first.
@@ -52,7 +52,8 @@ AddProductEntryCommand.prototype.init = function(sBarCode, sQuantity, sProductNa
 }
 
 /**
- * Executes the command. Retreives the quantity, price, expiration_date and bar_code.
+ * Executes the command. Sends the quantity, price, expiration_date and bar_code.
+ * @param {String} sCmd The name of the command on the server.
  */
 AddProductEntryCommand.prototype.execute = function(sCmd){
 	 if(sCmd == '')
@@ -69,9 +70,9 @@ AddProductEntryCommand.prototype.execute = function(sCmd){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Method for displaying success.
+ * @param {DocumentElement} xmlDoc
+ */
 AddProductEntryCommand.prototype.displaySuccess = function(xmlDoc){
 	// Clear 2 possibilities.
 	this._mConsole.cleanFailure('price');
@@ -86,10 +87,10 @@ AddProductEntryCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
-* Method for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
-*/
+ * Method for displaying failure.
+ * @param {DocumentElement} xmlDoc
+ * @param {String} strMsg
+ */
 AddProductEntryCommand.prototype.displayFailure = function(xmlDoc, strMsg){	
 	// Must clean the 2 possibilities in case a failure has been already been display.
 	this._mConsole.cleanFailure('price');

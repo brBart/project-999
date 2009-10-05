@@ -1,5 +1,5 @@
 /**
- * @fileOverview Library with the add product object command base class.
+ * @fileOverview Library with the AddProductObjectCommand base class.
  * @author Roberto Oliveros
  */
 
