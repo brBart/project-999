@@ -1,16 +1,17 @@
 /**
- * Library with the add product object command base class.
- * @package Client
+ * @fileOverview Library with the add product object command base class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
- * @param ObjectPage oDetails
+ * @class Adds a product to an object on the server.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
+ * @param {ObjectPage} oDetails
  */
 function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	// Call the parent constructor.
@@ -18,31 +19,31 @@ function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
 	 * Holds a reference to the object which handles the details table element.
-	 * @var ObjectPage
+	 * @type ObjectPage
 	 */
 	this._mDetails = oDetails;
 	
 	/**
-	 * Holds a reference to the bar code element.
-	 * @var object
+	 * Holds a reference to the bar code input element.
+	 * @type HtmlElement
 	 */
 	this._mBarCode = null;
 	
 	/**
-	 * Holds a reference to the quantity element.
-	 * @var object
+	 * Holds a reference to the quantity input element.
+	 * @type HtmlElement
 	 */
 	this._mQuantity = null;
 	
 	/**
-	 * Holds a reference to the product name element.
-	 * @var object
+	 * Holds a reference to the product name input element.
+	 * @type HtmlElement
 	 */
 	this._mProductName = null;
 }
@@ -53,10 +54,10 @@ function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
 AddProductObjectCommand.prototype = new SyncCommand();
 
 /**
- * Set the input elements from where the values will be read.
- * @param string sBarCode
- * @param string sQuantity
- * @param string sProductName
+ * Sets the input elements from where the values will be read.
+ * @param {String} sBarCode The id of the bar code input element.
+ * @param {String} sQuantity The id of the quantity input element.
+ * @param {String} sProductName The id of the product name input element.
  */
 AddProductObjectCommand.prototype.init = function(sBarCode, sQuantity, sProductName){
 	this._mBarCode = document.getElementById(sBarCode);
@@ -65,9 +66,9 @@ AddProductObjectCommand.prototype.init = function(sBarCode, sQuantity, sProductN
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Method for displaying success.
+ * @param {DocumentElement} xmlDoc
+ */
 AddProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	// Clear all 2 possibilities.
 	this._mConsole.cleanFailure('quantity');
@@ -83,10 +84,10 @@ AddProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
-* Method for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
-*/
+ * Method for displaying failure.
+ * @param {DocumentElement} xmlDoc
+ * @param {String} strMsg
+ */
 AddProductObjectCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	

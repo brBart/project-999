@@ -237,7 +237,7 @@ Command.prototype.handleRequestStateChange = function(){
 
 /**
 * Abstract function for displaying success.
-* @param {DocumentElement} xmlDoc
+* @param {DocumentElement} xmlDoc The xml document with the information received from the server.
 */
 Command.prototype.displaySuccess = function(xmlDoc){
 	return 0;
@@ -245,8 +245,8 @@ Command.prototype.displaySuccess = function(xmlDoc){
 
 /**
 * Abstract function for displaying failure.
-* @param {DocumentElement} xmlDoc
-* @param {String} strMsg
+* @param {DocumentElement} xmlDoc The xml document with the information received from the server.
+* @param {String} strMsg The message to display.
 */
 Command.prototype.displayFailure = function(xmlDoc, strMsg){
 	return 0;
