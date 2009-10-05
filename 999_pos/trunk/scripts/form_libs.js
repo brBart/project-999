@@ -1,15 +1,15 @@
 /**
- * Library with the basic classes for controlling a form. AsyncCommand, SyncCommand, StateMachine,
- * RemoveSessionObjectCommand.
- * @package Client
+ * @fileOverview Library with the basic classes for controlling a form. AsyncCommand, SyncCommand, StateMachine, RemoveSessionObjectCommand.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
+ * @class Represents a command on the server. Communicates asyncronously.
+ * @extends Command
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
  */
 function AsyncCommand(oSession, oConsole, oRequest){
 	// Call the parent constructor.
@@ -17,7 +17,7 @@ function AsyncCommand(oSession, oConsole, oRequest){
 	
 	/**
 	 * Holds the settimeout id.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mTimeoutId = 0;
 }
@@ -29,7 +29,7 @@ AsyncCommand.prototype = new Command();
 
 /**
  * Send the request to the server.
- * @param string sUrlParams
+ * @param {String} sUrlParams The query string with the params to send.
  */
 AsyncCommand.prototype.sendRequest = function(sUrlParams){
 	// Clear any timeout that was already waiting.
@@ -59,11 +59,13 @@ AsyncCommand.prototype.sendRequest = function(sUrlParams){
 
 
 /**
-* Constructor function.
-* @param Session oSession
-* @param Console oConsole
-* @param Request oRequest
-*/
+ * @class Represents a command on the server. Communicates syncronously.
+ * @extends Command
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ */
 function SyncCommand(oSession, oConsole, oRequest){
 	// Call the parent constructor.
 	Command.call(this, oSession, oConsole, oRequest);
@@ -76,7 +78,7 @@ SyncCommand.prototype = new Command();
 
 /**
 * Send the request to the server.
-* @param string sUrlParams
+* @param {String} sUrlParams The query string with the params to send.
 */
 SyncCommand.prototype.sendRequest = function(sUrlParams){
 	sUrlParams = Url.addUrlParam(sUrlParams, 'type', 'xml');
@@ -87,21 +89,23 @@ SyncCommand.prototype.sendRequest = function(sUrlParams){
 
 
 /**
-* Constructor. Receives the actual status of the form.
-* @param integer iStatus
-*/
+ * @class Controls the how the form should behave regarding its actual state.
+ * @constructor
+ * @param {Integer} iStatus
+ */
 function StateMachine(iStatus){
 	/**
 	 * Holds the actual status of the form. 0 = edit, 1 = idle.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mStatus = iStatus;
 }
 
-/**
-* Set the focus on the element with the provided id.
-* @param variant xValue
-*/
+/** 
+ * Set the focus on the element with the provided id.
+ * @static
+ * @param {Variant} xValue Can be the element id as string or the HtmlElement object.
+ */
 StateMachine.setFocus = function(xValue){
 	var oElement = ((typeof xValue) == 'string') ? document.getElementById(xValue) : xValue;
 	
@@ -111,10 +115,10 @@ StateMachine.setFocus = function(xValue){
 	oElement.focus();
 }
 
-/**
-* Set the form to edit state. Receive the name of the element which receives the focus.
-* @param string sElementId
-*/
+/** 
+ * Set the form to edit state.
+ * @param {String} sElementId The id of the element which receives the focus.
+ */
 StateMachine.prototype.changeToEditState = function(sElementId){
 	// Disabled and enabled the required widgets in the form.
 	var arrElements = document.getElementsByName('form_widget');
@@ -151,7 +155,7 @@ StateMachine.prototype.changeToEditState = function(sElementId){
 }
 
 /**
- * Set the form to cancel state..
+ * Set the form to cancel state.
  */
 StateMachine.prototype.changeToCancelState = function(){
 	var oButton = document.getElementById('cancel');
@@ -163,32 +167,35 @@ StateMachine.prototype.changeToCancelState = function(){
 }
 
 /**
-* Returns the actual value of the status property.
-*/
+ * Returns the actual value of the status property.
+ * @returns {Integer}
+ */
 StateMachine.prototype.getStatus = function(){
 	return this._mStatus;
 }
 
 
 /**
-* Constructor function.
-* @param Session oSession
-* @param Console oConsole
-* @param Request oRequest
-*/
+ * @class Removes the object in use from the session on the server.
+ * @extends AsyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ */
 function RemoveSessionObjectCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
 	AsyncCommand.call(this, oSession, oConsole, oRequest);
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
 	 * Holds the command name on the server.
-	 * @var string
+	 * @type String
 	 */
 	this._mCmd = 'remove_session_object';
 }
