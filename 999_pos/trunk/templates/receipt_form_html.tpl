@@ -1,9 +1,6 @@
 {* Smarty *}
 {* status = 0 Edit, status = 1 Idle, status = 2 Cancelled *}
-<script type="text/javascript" src="../scripts/console.js"></script>
-<script type="text/javascript" src="../scripts/url.js"></script>
-<script type="text/javascript" src="../scripts/http_request.js"></script>
-<script type="text/javascript" src="../scripts/command.js"></script>
+<script type="text/javascript" src="../scripts/core_libs.js"></script>
 <script type="text/javascript" src="../scripts/async.js"></script>
 <script type="text/javascript" src="../scripts/sync.js"></script>
 <script type="text/javascript" src="../scripts/state_machine.js"></script>

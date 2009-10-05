@@ -1,16 +1,13 @@
 {* Smarty *}
 {* status = 0 Edit, status = 1 Idle *}
-<script type="text/javascript" src="../scripts/console.js"></script>
-<script type="text/javascript" src="../scripts/url.js"></script>
-<script type="text/javascript" src="../scripts/http_request.js"></script>
-<script type="text/javascript" src="../scripts/command.js"></script>
-<script type="text/javascript" src="../scripts/set_property.js"></script>
+<script type="text/javascript" src="../scripts/core_libs.js"></script>
+<script type="text/javascript" src="../scripts/async.js"></script>
 <script type="text/javascript" src="../scripts/sync.js"></script>
+<script type="text/javascript" src="../scripts/state_machine.js"></script>
+<script type="text/javascript" src="../scripts/remove_session_object.js"></script>
+<script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/save.js"></script>
 <script type="text/javascript" src="../scripts/text_range.js"></script>
-<script type="text/javascript" src="../scripts/state_machine.js"></script>
-<script type="text/javascript" src="../scripts/async.js"></script>
-<script type="text/javascript" src="../scripts/remove_session_object.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
 <script type="text/javascript" src="../scripts/delete.js"></script>
