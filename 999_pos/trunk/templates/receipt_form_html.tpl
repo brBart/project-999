@@ -1,10 +1,7 @@
 {* Smarty *}
 {* status = 0 Edit, status = 1 Idle, status = 2 Cancelled *}
 <script type="text/javascript" src="../scripts/core_libs.js"></script>
-<script type="text/javascript" src="../scripts/async.js"></script>
-<script type="text/javascript" src="../scripts/sync.js"></script>
-<script type="text/javascript" src="../scripts/state_machine.js"></script>
-<script type="text/javascript" src="../scripts/remove_session_object.js"></script>
+<script type="text/javascript" src="../scripts/form_libs.js"></script>
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
