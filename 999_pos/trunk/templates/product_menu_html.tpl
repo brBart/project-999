@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oEventDelegator = new EventDelegator();
-	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
+	var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
 	var oSearchDetails = new SearchProductMenu(oSession, oSearchProduct, oEventDelegator);
 </script>
 <div id="third_menu">

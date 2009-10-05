@@ -29,22 +29,22 @@
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oMachine = new StateMachine({$status});
-	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
-	var oDetails = new DocumentPage(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
+	var oDetails = new DocumentPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	{if $status eq 0}
-	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+	var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oQuantity = new ToolbarText();
 	var oPrice = new ToolbarText();
 	var oExpirationDate = new ToolbarDate();
 	var oBarCode = new ToolbarBarCode();
-	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
-	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key}, oDetails);
-	var oSearchProduct = new SearchProduct(oSession, oConsole, createXmlHttpRequestObject());
+	var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails);
+	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails);
+	var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
 	var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, oEventDelegator);
-	var oDiscard = new DiscardDocumentCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	{literal}
 	// For the delete key pressed.
 	oDetails.mDeleteFunction = function(sCmd){oDeleteProductReceipt.execute(sCmd);}
@@ -210,7 +210,7 @@ oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
 oDetails.getLastPage();
 {if $status eq 1}
 var miniConsole = new Console('mini_console');
-var oCancel = new CancelDocumentCommand(oSession, miniConsole, createXmlHttpRequestObject(), {$key}, oMachine);
+var oCancel = new CancelDocumentCommand(oSession, miniConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine);
 oCancel.init('authenticate_form', 'username', 'password');
 {/if}
 </script>

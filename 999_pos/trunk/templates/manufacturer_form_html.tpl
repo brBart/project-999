@@ -12,12 +12,12 @@
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oMachine = new StateMachine({$status});
-	var oSetProperty = new SetPropertyCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oSave = new SaveCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
-	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+	var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	{if $status eq 1}
-	var oEdit = new EditCommand(oSession, oConsole, createXmlHttpRequestObject(), oMachine);
-	var oDelete = new DeleteCommand(oSession, oConsole, createXmlHttpRequestObject(), {$key});
+	var oEdit = new EditCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), oMachine);
+	var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	{/if}
 	{literal}
 	window.onunload = function(){
