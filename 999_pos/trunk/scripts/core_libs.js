@@ -1,20 +1,24 @@
 /**
- * Library with the main class for displaying and communicate information with the server. Console, Url,
- * createXmlHttpRequestObject, Command.
- * @package Client
+ * @fileOverview Library with the main class for display and communicate information with the server. Console, Url, createXmlHttpRequestObject, Command.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function for the Console class.
- * @param string sConsole
+ * @class Controls how the messages are displayed to the user.
+ * @constructor
+ * @param {String} sConsole The name of the div element where the messages are displayed.
  */
 function Console(sConsole){
+	/**
+	 * Holds the element div.
+	 * @type HtmlElement
+	 */
 	this._mElementDiv = document.getElementById(sConsole);
 }
 
 /**
  * Displays the message in the div element.
+ * @param {String} sMsg
  */
 Console.prototype.displayMessage = function(sMsg){
 	this._mElementDiv.innerHTML += sMsg;
@@ -23,8 +27,8 @@ Console.prototype.displayMessage = function(sMsg){
 
 /**
  * For displaying any kind of failure on the console div and right next to the element.
- * @param string sMsg
- * @param string sElementId
+ * @param {String} sMsg
+ * @param {String} sElementId The id of the element.
  */
 Console.prototype.displayFailure = function(sMsg, sElementId){
 	var newP = '<p id="failed-' + sElementId + '" class="failure">' + sMsg + '</p>';
@@ -36,8 +40,8 @@ Console.prototype.displayFailure = function(sMsg, sElementId){
 }
 
 /**
-* For displaying the errors.
-* @param string sMsg
+* Method for displaying the errors.
+* @param {String} sMsg
 */
 Console.prototype.displayError = function(sMsg){
 	var elementP = document.getElementById('error');
@@ -52,7 +56,7 @@ Console.prototype.displayError = function(sMsg){
 
 /**
  * Removes the failure message from the console and from the element that provoked.
- * @param string sElementId
+ * @param {String} sElementId The id of the element.
  */
 Console.prototype.cleanFailure = function(sElementId){
 	var elementP = document.getElementById('failed-' + sElementId);
@@ -83,35 +87,46 @@ Console.prototype.reset = function(){
  
  
 /**
-  * Constructor for the Url class. Does nothing because methods are static.
-  */
+ * @class Contains the url to the server. Also helps for creating the queries strings. 
+ */
 function Url(){}
 
-/**
-  * Method for returning the site url.
-  */
+/** 
+ * Method for returning the site url.
+ * @static
+ * @returns {String}
+ */
 Url.getUrl = function(){
  	return 'index.php';
 }
 
 /**
-  * Concatenates the params the provided url.
-  * @param string sUrl
-  * @param string sParam
-  * @param string sValue
-  */
+ * Concatenates the params to the provided url.
+ * @static
+ * @param {String} sUrl
+ * @param {String} sParam
+ * @param {String} sValue
+ * @returns {String}
+ */
 Url.addUrlParam = function(sUrl, sParam, sValue){
  	sUrl += (sUrl.indexOf('?') == -1) ? '?' : '&';
  	sUrl += encodeURIComponent(sParam) + '=' + encodeURIComponent(sValue);
  	return sUrl;
 }
 
+ 
+/**
+ * @class Responsible for creating the Http Requests objects.
+ */
+function Request(){}
 
 /**
-* Function that creates the adequate object depending on the browser.
-* @return XmlHttpRequest 
-*/
-function createXmlHttpRequestObject(){
+ * 
+ * Method for creating the browser's XmlHttpRequest object.
+ * @static
+ * @returns {XmlHttpRequest} 
+ */
+Request.createXmlHttpRequestObject = function(){
 	// will store the reference to the XMLHttpRequest object
 	var xmlHttp;
 	// this should work for all browsers except IE6 and older
@@ -131,27 +146,28 @@ function createXmlHttpRequestObject(){
 
 
 /**
-* Constructor function for obtaining the request object and setting the console for displaying the results.
-* @param Session oSession
-* @param Console oConsole
-* @param Request oRequest
-*/
+ * @class Represents a command to execute on the server. 
+ * @constructor Obtains the Request, Console objects and sets the Console for displaying the results.
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ */
 function Command(oSession, oConsole, oRequest){
 	/**
 	 * Holds the session tracker.
-	 * @var Session
+	 * @type Session
 	 */
 	this._mSession = oSession;
 	
 	/**
 	  * Holds the console where to display the results.
-	  * @var Console
+	  * @type Console
 	  */
 	 this._mConsole = oConsole;
 	
 	/**
 	 * Holds the request object.
-	 * @var XmlHttpRequest
+	 * @type XmlHttpRequest
 	 */
 	 this._mRequest = oRequest;
 }
@@ -221,7 +237,7 @@ Command.prototype.handleRequestStateChange = function(){
 
 /**
 * Abstract function for displaying success.
-* @param DocumentElement xmlDoc
+* @param {DocumentElement} xmlDoc
 */
 Command.prototype.displaySuccess = function(xmlDoc){
 	return 0;
@@ -229,8 +245,8 @@ Command.prototype.displaySuccess = function(xmlDoc){
 
 /**
 * Abstract function for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
+* @param {DocumentElement} xmlDoc
+* @param {String} strMsg
 */
 Command.prototype.displayFailure = function(xmlDoc, strMsg){
 	return 0;
