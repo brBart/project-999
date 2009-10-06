@@ -1,17 +1,18 @@
 /**
- * Library with the object page class.
- * @package Client
+ * @fileOverview Library with the ObjectPage class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
- * @param StateMachine oMachine
- * @param EventDelegator oEventDelegator
+ * @class Manages an object's details page.
+ * @extends Details
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
+ * @param {StateMachine} oMachine
+ * @param {EventDelegator} oEventDelegator
  */
 function ObjectPage(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
 	// Call the parent constructor.
@@ -19,20 +20,20 @@ function ObjectPage(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegato
 	
 	/**
 	 * Holds the total number of pages.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mTotalPages = 0;
 }
 
 /**
-* Inherit the Details class methods.
-*/
+ * Inherit the Details class methods.
+ */
 ObjectPage.prototype = new Details();
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Call its parent method first, then updates the total pages property.
+ * @param {DocumentElement} xmlDoc
+ */
 ObjectPage.prototype.displaySuccess = function(xmlDoc){
 	// Call parent method first.
 	Details.prototype.displaySuccess.call(this, xmlDoc);
@@ -50,9 +51,9 @@ ObjectPage.prototype.getLastPage = function(){
 }
 
 /**
-* Sends the request to the server for fetching the desired page.
-* @param integer iPage
-*/
+ * Sends the request to the server for fetching the desired page.
+ * @param {Integer} iPage
+ */
 ObjectPage.prototype.getPage = function(iPage){
 	if(iPage < 0)
 		this._mConsole.displayError('Interno: Argumento iPage inv&aacute;lido.');
@@ -81,8 +82,8 @@ ObjectPage.prototype.moveToPreviousPage = function(){
 }
 
 /** 
-* Move to the next page and set focus on the first row.
-*/
+ * Move to the next page and set focus on the first row.
+ */
 ObjectPage.prototype.moveToNextPage = function(){
 	this.getPage(this._mPage + 1);
 	this.setFocus();
@@ -90,8 +91,8 @@ ObjectPage.prototype.moveToNextPage = function(){
 }
  
 /**
-  * Selects the previous row.
-  */
+ * Selects the previous row.
+ */
 ObjectPage.prototype.movePrevious = function(){
  	if(this._mPageItems > 0 && this._mSelectedRow > 1)
  		this.selectRow(this._mSelectedRow - 1);
@@ -100,8 +101,8 @@ ObjectPage.prototype.movePrevious = function(){
 }
 
 /**
-  * Selects the next row.
-  */
+ * Selects the next row.
+ */
 ObjectPage.prototype.moveNext = function(){
  	if(this._mPageItems > 0 && this._mSelectedRow < this._mPageItems)
  		this.selectRow(this._mSelectedRow + 1);
@@ -111,17 +112,17 @@ ObjectPage.prototype.moveNext = function(){
  
 
 /**
- * Returns the name of the last page command on the server.
- * @return string
+ * Abstract method.
+ * @returns {String}
  */
 ObjectPage.prototype.getLastPageCmd = function(){
 	return 0;
 }
 
 /**
-* Returns the name of the page command on the server.
-* @return string
-*/
+ * Abstract method.
+ * @returns {String}
+ */
 ObjectPage.prototype.getPageCmd = function(){
 	return 0;
 }
