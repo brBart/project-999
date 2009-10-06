@@ -1,15 +1,16 @@
 /**
- * Library with the save command class.
- * @package Client
+ * @fileOverview Library with the SaveCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
+ * @class Saves a new or altered object on the server.
+ * @extends SaveCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
  */
 function SaveCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
@@ -17,26 +18,26 @@ function SaveCommand(oSession, oConsole, oRequest, sKey){
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
 	 * Holds the command name on the server.
-	 * @var string
+	 * @type String
 	 */
 	this._mCmd = 'save_object';
 	
 	/**
-	 * Holds the link to redirect the page in case of success.
-	 * @var string
+	 * Holds the link to redirect to in case of success.
+	 * @type String
 	 */
 	this._mLinkSuccess = '';
 }
 
 /**
-* Inherit the Sync command class methods.
-*/
+ * Inherit the Sync command class methods.
+ */
 SaveCommand.prototype = new SyncCommand();
 
 /**
