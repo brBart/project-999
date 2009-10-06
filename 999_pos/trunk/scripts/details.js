@@ -1,140 +1,140 @@
 /**
- * Library with the details base class for all table elements.
- * @package Client
+ * @fileOverview Library with the Details base class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
- * @param StateMachine oMachine
- * @param EventDelegator oEventDelegator
+ * @class Manages how to display and control an object's details.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
+ * @param {StateMachine} oMachine
+ * @param {EventDelegator} oEventDelegator
  */
 function Details(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
 	/**
-	 * Flag that indicates if the widget was clicked.
-	 * @var boolean
+	 * Flag that indicates if a row on the details element was clicked.
+	 * @type Boolean
 	 */
 	this.mWasClicked = false;
 	
 	/**
-	 * Holds the delete function to be executed.
-	 * @var object
+	 * Holds the delete function to executed in case of deletion.
+	 * @type Object
 	 */
 	this.mDeleteFunction = null;
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
-	 * Holds the form state machine.
-	 * @var StateMachine
+	 * Holds the form's state machine.
+	 * @type StateMachine
 	 */
 	this._mMachine = oMachine;
 	
 	/**
 	 * Holds the object in charge of handling the click events.
-	 * @var EventDelegator
+	 * @type EventDelegator
 	 */
 	this._mEventDelegator = oEventDelegator;
 	
 	/**
-	 * Holds the object div which holds the dynamic data.
-	 * @var string
+	 * Holds a reference to the div element which holds the details data.
+	 * @type HtmlElement
 	 */
 	this._mDiv = null;
 	
 	/**
 	 * Holds the XSLT document.
-	 * @var object
+	 * @type XsltDocument
 	 */
 	this._mStylesheetDoc = null;
 	
 	/**
-	 * Holds the total received in the table.
-	 * @var integer
+	 * Holds the total items received.
+	 * @type Integer
 	 */
 	this._mPageItems = 0;
 	
 	/**
 	 * Keeps track of the selected row.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mSelectedRow = 0;
 	
 	/**
-	 * Holds the element widget before the table.
-	 * @var object
+	 * Holds the input element which stands previous to the details element.
+	 * @type HtmlElement
 	 */
 	this._mPrevWidget = null;
 	
 	/**
-	 * Holds the element widget next to the table.
-	 * @var object
+	 * Holds the input element next to the table element.
+	 * @type HtmlElement
 	 */
 	this._mNextWidget = null;
 	
 	/**
 	 * Flag that indicates if the object is listening.
-	 * @var boolean
+	 * @type Boolean
 	 */
 	this._mHasFocus = false;
 	
 	/**
-	 * Holds the id of the actual selected detail (row).
-	 * @var string
+	 * Holds the id of the actual selected detail (row) element.
+	 * @type String
 	 */
 	this._mDetailId = '';
 	
 	/**
-	 * Holds the name of the variable which holds this command.
-	 * @var string
+	 * Holds the name of the variable which holds the instance of this class on the html document.
+	 * @type String
 	 */
 	this._mDetailsObj = '';
 	
 	/**
 	 * Holds the name of the variable which holds the object in charge of the deleting a detail.
-	 * @var string
+	 * @type String
 	 */
 	this._mDeleteObj = '';
 	
 	/**
 	 * Holds the name of the command to use on the server for deleting a detail.
-	 * @var string
+	 * @type String
 	 */
 	this._mDeleteCmd = '';
 	
 	/**
 	 * Holds the actual page number.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mPage = 0;
 }
 
 /**
-* Inherit the Sync command class methods.
-*/
+ * Inherit the Sync command class methods.
+ */
 Details.prototype = new SyncCommand();
 
 /**
- * Set necessary variables and test if the browser supports XSLT functionality. The between the two widgets
- * is where the div element with the details table reside (necessary for the tab key order).
- * @param string sUrlXsltFile
- * @param string sDiv
- * @param string sPrevWidget
- * @param string sNextWidget
- * @param string sDetailsObj
- * @param string sDeleteObj
- * @param string sDeleteCmd
+ * Sets the necessary variables and test if the browser supports XSLT functionality.
+ * @param {String} sUrlXsltFile Path to the xslt file on the server.
+ * @param {String} sDiv The id of the div element which holds the details data.
+ * @param {String} sPrevWidget The id of the input element previous to the details div element.
+ * @param {String} sNextWidget The id of the input element next to the details div element.
+ * @param {String} sDetailsObj Name of the variable on the html document which holds the instance of this class.
+ * @param {String} sDeleteObj Name of the variable which holds the object in charge of the deleting a detail.
+ * @param {String} sDeleteCmd Name of the command to use on the server for deleting a detail.
  */
 Details.prototype.init = function(sUrlXsltFile, sDiv, sDetailsObj, sPrevWidget, sNextWidget, sDeleteObj,
 		sDeleteCmd){
@@ -189,7 +189,7 @@ Details.prototype.init = function(sUrlXsltFile, sDiv, sDetailsObj, sPrevWidget, 
 
 /**
  * IE specific routine to create the MSXML DOMDocument object.
- * @return MSXML
+ * @returns {MSXMLDOMDocument}
  */
 Details.prototype.createMsxml2DOMDocumentObject = function(){
 	var msxml2DOM; 
@@ -218,7 +218,7 @@ Details.prototype.createMsxml2DOMDocumentObject = function(){
  
 /**
  * IE specific routine to create the MSXML FreeThreadedDOMDocument object.
- * @return MSXML
+ * @returns {MSXMLFreeThreadedDOMDocument}
  */
 Details.prototype.createMsxml2FreeThreadedDOMDocument = function(){
 	var msxml2FreeDOM; 
@@ -246,9 +246,9 @@ Details.prototype.createMsxml2FreeThreadedDOMDocument = function(){
 }
 
 /**
-* IE specific routine to create the MSXML XSLTemplate object.
-* @return MSXML
-*/
+ * IE specific routine to create the MSXML XSLTemplate object.
+ * @returns {MSXMLTemplate}
+ */
 Details.prototype.createMsxml2XSLTemplate = function(){
 	var msxml2XSL; 
 	
@@ -275,9 +275,9 @@ Details.prototype.createMsxml2XSLTemplate = function(){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Method for displaying success.
+ * @param {DocumentElement} xmlDoc
+ */
 Details.prototype.displaySuccess = function(xmlDoc){
 	// Obtain the page number.
 	this._mPage = parseInt(xmlDoc.getElementsByTagName('page')[0].firstChild.data);
@@ -337,8 +337,8 @@ Details.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
- * Controls if the tab key was pressed on the widget to set focus on the table.
- * @param Event oEvent
+ * Controls if the tab key was pressed on the previous input element to set focus on the details element.
+ * @param {Event} oEvent
  */
 Details.prototype.handlePrevTabKey = function(oEvent){
 	oEvent = (!oEvent) ? window.event : oEvent;
@@ -364,9 +364,9 @@ Details.prototype.handlePrevTabKey = function(oEvent){
 }
 
 /**
-* Controls if the shift + tab keys were pressed on the which to set focus on the table.
-* @param Event oEvent
-*/
+ * Controls if the shift + tab keys were pressed on the next element to set focus on the details element.
+ * @param {Event} oEvent
+ */
 Details.prototype.handleNextTabKey = function(oEvent){
 	oEvent = (!oEvent) ? window.event : oEvent;
 	code = (oEvent.keyCode) ? oEvent.keyCode :
@@ -391,8 +391,8 @@ Details.prototype.handleNextTabKey = function(oEvent){
 }
 
 /**
- * Handles the key down press event.
- * @param Event oEvent
+ * Handles the key down press event on the details element.
+ * @param {Event} oEvent
  */
 Details.prototype.handleKeyDown = function(oEvent){
 	oEvent = (!oEvent) ? window.event : oEvent;
@@ -432,15 +432,15 @@ Details.prototype.handleKeyDown = function(oEvent){
 }
  
 /**
- * Handles click on all the table area.
- * @param Event oEvent
+ * Handles click on all the details element area.
+ * @param {Event} oEvent
  */
 Details.prototype.detailsHandleClick = function(oEvent){
 	this.mWasClicked = true;
 }
  
 /**
- * If anything but the table area was click, remove focus.
+ * If anything but the details element area was click, remove focus.
  */
 Details.prototype.blur = function(){
 	if(this._mHasFocus){ 
@@ -450,7 +450,7 @@ Details.prototype.blur = function(){
 }
 
 /**
- * Method that controls the key down for the table element.
+ * Set focus on the details element.
  */
 Details.prototype.setFocus = function(){
 	// Check if already has focus and state machine status equal edit.
@@ -473,7 +473,7 @@ Details.prototype.setFocus = function(){
 }
  
 /**
- * Method that removed the event handlers for the table.
+ * Removes the focus from the details element. Removes the event handlers from the element.
  */
 Details.prototype.loseFocus = function(){
  	document.onkeydown = null;
@@ -487,7 +487,7 @@ Details.prototype.loseFocus = function(){
  
 /**
  * Select the row in the iPos position.
- * @param integer iPos
+ * @param {Integer} iPos
  */
 Details.prototype.selectRow = function(iPos){
 	var newTr = document.getElementById('tr' + iPos);
@@ -546,16 +546,16 @@ Details.prototype.moveNext = function(){
 }
  
 /**
-  * Selects the last row.
-  */
+ * Selects the last row.
+ */
 Details.prototype.moveLast = function(){
 	this.selectRow(this._mPageItems);
 }
  
 /**
  * Select the row in the provided position, if it does not exists, move to the last position.
- * @param integer iPos
- * @param integer iPage
+ * @param {Integer} iPos Position to move to.
+ * @param {Integer} iPage Use to compare if the position stills in the same page.
  */
 Details.prototype.moveTo = function(iPos, iPage){
 	if(this._mPageItems > 0)
@@ -567,7 +567,7 @@ Details.prototype.moveTo = function(iPos, iPage){
  
 /**
  * Select row when click on it.
- * @param object oRow
+ * @param {HtmlElement} oRow
  */
 Details.prototype.clickRow = function(oRow){
 	// State machine status has to be on edit mode.
@@ -578,8 +578,8 @@ Details.prototype.clickRow = function(oRow){
 }
 
 /**
- * Get the id of the detail.
- * @param object oRow
+ * Sets the id of the detail.
+ * @param {HtmlElement} oRow
  */
 Details.prototype.setDetailId = function(oRow){
 	oTd = oRow.getElementsByTagName('td')[0];
@@ -588,7 +588,7 @@ Details.prototype.setDetailId = function(oRow){
  
 /**
  * Returns the detail id.
- * @return integer
+ * @returns {Integer}
  */
 Details.prototype.getDetailId = function(){
 	return this._mDetailId;
@@ -596,16 +596,16 @@ Details.prototype.getDetailId = function(){
 
 /**
  * Returns the selected row position.
- * @return integer
+ * @returns {Integer}
  */
 Details.prototype.getPosition = function(){
 	return this._mSelectedRow;
 }
  
 /**
-  * Returns the actual page number.
-  * @return integer
-  */
+ * Returns the actual page number.
+ * @returns {Integer}
+ */
 Details.prototype.getPageNumber = function(){
  	return this._mPage;
 }
