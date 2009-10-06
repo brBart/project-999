@@ -108,7 +108,7 @@ CancelDocumentCommand.prototype.execute = function(sCmd){
 }
 
 /**
- * Method for displaying success.
+ * Change the document form state to cancel state, clean previous failures and the input elements, and hides the form.
  * @param {DocumentElement} xmlDoc
  */
 CancelDocumentCommand.prototype.displaySuccess = function(xmlDoc){
@@ -120,7 +120,7 @@ CancelDocumentCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
- * Method for displaying failure.
+ * Displays the failure on the console and sets the focus on the user input element.
  * @param {DocumentElement} xmlDoc
  * @param {String} strMsg
  */

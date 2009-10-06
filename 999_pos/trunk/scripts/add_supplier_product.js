@@ -75,7 +75,7 @@ AddSupplierProductCommand.prototype.execute = function(){
 }
 
 /**
- * Method for displaying success.
+ * Clean the input elements and updates the suppliers object.
  * @param {DocumentElement} xmlDoc
  */
 AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
@@ -93,7 +93,7 @@ AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
- * Method for displaying failure.
+ * Clean the input elements from previous failures and display the actual failure.
  * @param {DocumentElement} xmlDoc
  * @param {String} strMsg
  */
