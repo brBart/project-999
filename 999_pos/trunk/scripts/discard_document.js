@@ -57,7 +57,7 @@ DiscardDocumentCommand.prototype.execute = function(sLinkSuccess){
 
 /**
  * Redirects the html document to the success link.
- * @param DocumentElement xmlDoc
+ * @param {DocumentElement} xmlDoc
  */
 DiscardDocumentCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mSession.loadHref(this._mLinkSuccess);

@@ -1,42 +1,43 @@
 /**
- * Library with the edit command class.
- * @package Client
+ * @fileOverview Library with the EditCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param StateMachine oMachine
+ * @class Checks if the actual user has the rights to edit the session object.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {StateMachine} oMachine
  */
 function EditCommand(oSession, oConsole, oRequest, oMachine){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
 	/**
-	 * Holds the form state machine.
-	 * @var StateMachine
+	 * Holds the form's state machine.
+	 * @type StateMachine
 	 */
 	this._mMachine = oMachine;
 	
 	/**
-	 * Holds the id of the element to receive focus in case on success.
-	 * @var string
+	 * Holds the id of the input element to receive focus in case of success.
+	 * @type String
 	 */
 	this._mElementId = '';
 }
 
 /**
-* Inherit the Sync command class methods.
-*/
+ * Inherit the Sync command class methods.
+ */
 EditCommand.prototype = new SyncCommand();
 
 /**
- * Executes the command. Receives the name of the command to execute on the server.
- * @param string sCmd
- * @param string sElementId
+ * Executes the command.
+ * @param {String} sCmd The name of the command on the server.
+ * @param {String} sElementId The id of the input element to receive focus.
  */
 EditCommand.prototype.execute = function(sCmd, sElementId){
 	if(sCmd == '' || sElementId == '')
@@ -49,9 +50,9 @@ EditCommand.prototype.execute = function(sCmd, sElementId){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Change the form's state to edit state and set focus on the input element.
+ * @param {DocumentElement} xmlDoc
+ */
 EditCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mMachine.changeToEditState(this._mElementId);
 }
