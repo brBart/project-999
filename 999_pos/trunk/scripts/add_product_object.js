@@ -66,7 +66,7 @@ AddProductObjectCommand.prototype.init = function(sBarCode, sQuantity, sProductN
 }
 
 /**
- * Method for displaying success.
+ * Clean the input elements and refresh the details object with the last page.
  * @param {DocumentElement} xmlDoc
  */
 AddProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
@@ -84,7 +84,7 @@ AddProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
- * Method for displaying failure.
+ * Clean the input elements from previous failures and display the actual failure.
  * @param {DocumentElement} xmlDoc
  * @param {String} strMsg
  */

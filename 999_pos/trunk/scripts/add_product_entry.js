@@ -70,7 +70,7 @@ AddProductEntryCommand.prototype.execute = function(sCmd){
 }
 
 /**
- * Method for displaying success.
+ * Clean the price and expiration date input elements and invokes the parent's method.
  * @param {DocumentElement} xmlDoc
  */
 AddProductEntryCommand.prototype.displaySuccess = function(xmlDoc){
@@ -87,7 +87,7 @@ AddProductEntryCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
- * Method for displaying failure.
+ * Clean the price and expiration date input elements and invokes the parent's method.
  * @param {DocumentElement} xmlDoc
  * @param {String} strMsg
  */
