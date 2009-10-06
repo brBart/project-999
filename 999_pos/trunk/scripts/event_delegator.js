@@ -1,16 +1,16 @@
 /**
- * Library with the EventDelegator class.
- * @package Client
+ * @fileOverview Library with the EventDelegator class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
+ * @class Handles the click events on the html document.
+ * @constructor
  */
 function EventDelegator(){
 	/**
-	 * Holds the array of event objects.
-	 * @var Array
+	 * Holds the array of registered objects that needs control on the click events.
+	 * @type Array
 	 */
 	 this._mObjects = null; 
 }
@@ -29,7 +29,7 @@ EventDelegator.prototype.init = function(){
  
 /**
  * Handles the click event and maps from which of the registered objects the event was created.
- * @param Event oEvent
+ * @param {Event} oEvent
  */
 EventDelegator.prototype.documentHandleClick = function(oEvent){
 	for(var i = 0; i < this._mObjects.length; i++){
@@ -43,7 +43,7 @@ EventDelegator.prototype.documentHandleClick = function(oEvent){
 
 /**
  * Adds the object to the array of registered objects.
- * @param Object oObject
+ * @param {HtmlElement} oObject
  */
 EventDelegator.prototype.registerObject = function(oObject){
 	this._mObjects.push(oObject);
