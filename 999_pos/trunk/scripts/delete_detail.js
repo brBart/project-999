@@ -1,16 +1,17 @@
 /**
- * Library with the delete detail command class.
- * @package Client
+ * @fileOverview Library with the DeleteDetailCommand base class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
- * @param Details oDetails
+ * @class Deletes a detail from an object on the server.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
+ * @param {Details} oDetails
  */
 function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	// Call the parent constructor.
@@ -18,25 +19,25 @@ function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
-	 * Holds a reference to the details table element.
-	 * @var ProductSuppliers
+	 * Holds a reference to the details object.
+	 * @type ProductSuppliers
 	 */
 	this._mDetails = oDetails;
 	
 	/**
 	 * Holds the row position before the deletion.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mRowPos = 0;
 	
 	/**
 	 * Holds the page number before the deletion.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mPage = 0;
 }
@@ -48,7 +49,7 @@ DeleteDetailCommand.prototype = new SyncCommand();
 
 /**
  * Executes the command.
- * @param string sCmd
+ * @param {String} sCmd The name of the command to execute on the server.
  */
 DeleteDetailCommand.prototype.execute = function(sCmd){
 	if(sCmd == '')
