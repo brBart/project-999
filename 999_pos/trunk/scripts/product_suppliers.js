@@ -1,17 +1,18 @@
 /**
- * Library with the product suppliers class.
- * @package Client
+ * @fileOverview Library with the ProductSuppliers class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
- * @param StateMachine oMachine
- * @param EventDelegator oEventDelegator
+ * @class Manages a product's list of suppliers.
+ * @extends Details
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
+ * @param {StateMachine} oMachine
+ * @param {EventDelegator} oEventDelegator
  */
 function ProductSuppliers(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
 	// Call the parent constructor.
@@ -19,14 +20,14 @@ function ProductSuppliers(oSession, oConsole, oRequest, sKey, oMachine, oEventDe
 	
 	/**
 	 * Holds the command name on the server.
-	 * @var string
+	 * @type String
 	 */
 	this._mCmd = 'get_product_suppliers';
 }
 
 /**
-* Inherit the Details class methods.
-*/
+ * Inherit the Details class methods.
+ */
 ProductSuppliers.prototype = new Details();
 
 /**
