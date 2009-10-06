@@ -1,15 +1,17 @@
 /**
- * Library with the cancel document command base class.
- * @package Client
+ * @fileOverview Library with the CancelDocumentCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
+ * @class Cancels a document on the server.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
+ * @param {StateMachine} oStateMachine
  */
 function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine){
 	// Call the parent constructor.
@@ -17,31 +19,31 @@ function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
-	 * Holds the form state machine.
-	 * @var StateMachine
+	 * Holds the form's state machine.
+	 * @type StateMachine
 	 */
 	this._mMachine = oMachine;
 	
 	/**
 	 * Holds a reference to the div form element.
-	 * @var object
+	 * @type HtmlElement
 	 */
 	this._mForm = null;
 	
 	/**
 	 * Holds a reference to the user input element.
-	 * @var object
+	 * @type HtmlElement
 	 */
 	this._mUser = null;
 	
 	/**
 	 * Holds a reference to the password input element.
-	 * @var object
+	 * @type HtmlElement
 	 */
 	this._mPassword = null;
 }
@@ -52,10 +54,10 @@ function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine
 CancelDocumentCommand.prototype = new SyncCommand();
 
 /**
- * Set the input elements from where the values will be read.
- * @param string sForm
- * @param string sUser
- * @param string sPassword
+ * Gets the form div element and sets the input elements from where the values will be read.
+ * @param {String} sForm The id of the div element.
+ * @param {String} sUser The id of the user input element.
+ * @param {String} sPassword The id of the password input element.
  */
 CancelDocumentCommand.prototype.init = function(sForm, sUser, sPassword){
 	this._mForm = document.getElementById(sForm);
@@ -64,7 +66,7 @@ CancelDocumentCommand.prototype.init = function(sForm, sUser, sPassword){
 }
 
 /**
- * Shows the authentication form.
+ * Shows the authentication form div element.
  */
 CancelDocumentCommand.prototype.showForm = function(){
 	// Keep the largest height.
@@ -80,7 +82,7 @@ CancelDocumentCommand.prototype.showForm = function(){
 }
 
 /**
- * Hides the authentication form.
+ * Hides the authentication form div element.
  */
 CancelDocumentCommand.prototype.hideForm = function(){
 	this._mConsole.reset();
@@ -90,8 +92,9 @@ CancelDocumentCommand.prototype.hideForm = function(){
 }
  
 /**
-  * Executes the command. Retreives the username and password.
-  */
+ * Executes the command. Sends the username and password.
+ * @param {String} sCmd The name of the command to execute on the server.
+ */
 CancelDocumentCommand.prototype.execute = function(sCmd){
  	 if(sCmd == '')
  			this._mConsole.displayError('Interno: Argumento sCmd inv&aacute;lido.');
@@ -105,9 +108,9 @@ CancelDocumentCommand.prototype.execute = function(sCmd){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Method for displaying success.
+ * @param {DocumentElement} xmlDoc
+ */
 CancelDocumentCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mMachine.changeToCancelState();
 	this._mConsole.reset();
@@ -117,10 +120,10 @@ CancelDocumentCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
-* Method for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
-*/
+ * Method for displaying failure.
+ * @param {DocumentElement} xmlDoc
+ * @param {String} strMsg
+ */
 CancelDocumentCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	// Must clean it in case a failure has been already display for the same element.
 	this._mConsole.displayError(strMsg);
