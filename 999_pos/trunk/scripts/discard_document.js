@@ -1,15 +1,16 @@
 /**
- * Library with the discard document command class.
- * @package Client
+ * @fileOverview Library with the DiscardDocumentCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
+ * @class Discards an unsaved document on the server.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
  */
 function DiscardDocumentCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
@@ -17,31 +18,31 @@ function DiscardDocumentCommand(oSession, oConsole, oRequest, sKey){
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
 	 * Holds the command name on the server.
-	 * @var string
+	 * @type String
 	 */
 	this._mCmd = 'discard_document';
 	
 	/**
-	 * Holds the link to redirect the page in case of success.
-	 * @var string
+	 * Holds the link to redirect to in case of success.
+	 * @type String
 	 */
 	this._mLinkSuccess = '';
 }
 
 /**
-* Inherit the Sync command class methods.
-*/
+ * Inherit the Sync command class methods.
+ */
 DiscardDocumentCommand.prototype = new SyncCommand();
  
 /**
   * Executes the command.
-  * @param string sLinkSuccess
+  * @param {String} sLinkSuccess
   */
 DiscardDocumentCommand.prototype.execute = function(sLinkSuccess){
  	 if(sLinkSuccess == '')
@@ -55,9 +56,9 @@ DiscardDocumentCommand.prototype.execute = function(sLinkSuccess){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Redirects the html document to the success link.
+ * @param DocumentElement xmlDoc
+ */
 DiscardDocumentCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mSession.loadHref(this._mLinkSuccess);
 }
