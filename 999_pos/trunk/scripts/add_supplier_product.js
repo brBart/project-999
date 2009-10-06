@@ -1,16 +1,17 @@
 /**
- * Library with the add supplier product command class.
- * @package Client
+ * @fileOverview Library with the AddSupplierProductCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
- * @param ProductSuppliers oProductSuppliers
+ * @class Adds a supplier to a product on the server.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHtttpRequest} oRequest
+ * @param {String} sKey
+ * @param {ProductSuppliers} oProductSuppliers
  */
 function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductSuppliers){
 	// Call the parent constructor.
@@ -18,44 +19,44 @@ function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductS
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
 	 * Holds a reference to the product suppliers object.
-	 * @var ProductSuppliers
+	 * @type ProductSuppliers
 	 */
 	this._mProductSuppliers = oProductSuppliers;
 	
 	/**
 	 * Holds the command name on the server.
-	 * @var string
+	 * @type String
 	 */
 	this._mCmd = 'add_supplier_product';
 	
 	/**
-	 * Holds a reference to the supplier_id element.
-	 * @var object
+	 * Holds a reference to the supplier id input element.
+	 * @type HtmlElement
 	 */
 	this._mSupplierId = null;
 	
 	/**
-	 * Holds a reference to the product_sku element.
-	 * @var object
+	 * Holds a reference to the product sku input element.
+	 * @type HtmlElement
 	 */
 	this._mProductSku = null;
 }
 
 /**
-* Inherit the Sync command class methods.
-*/
+ * Inherit the Sync command class methods.
+ */
 AddSupplierProductCommand.prototype = new SyncCommand();
 
 /**
- * Set the input elements from where the values will be read.
- * @param string sSupplierId
- * @param string sProductSku
+ * Sets the input elements from where the values will be read.
+ * @param {String} sSupplierId The id of the supplier id input element.
+ * @param {String} sProductSku The id of the product sku input element.
  */
 AddSupplierProductCommand.prototype.init = function(sSupplierId, sProductSku){
 	this._mSupplierId = document.getElementById(sSupplierId);
@@ -63,7 +64,7 @@ AddSupplierProductCommand.prototype.init = function(sSupplierId, sProductSku){
 }
 
 /**
- * Executes the command. Retreives the supplier id and the product sku.
+ * Executes the command. Sends the supplier id and the product sku.
  */
 AddSupplierProductCommand.prototype.execute = function(){
 	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
@@ -74,9 +75,9 @@ AddSupplierProductCommand.prototype.execute = function(){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Method for displaying success.
+ * @param {DocumentElement} xmlDoc
+ */
 AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
 	// Clear all 3 possibilities.
 	this._mConsole.cleanFailure('supplier_id');
@@ -92,10 +93,10 @@ AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
-* Method for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
-*/
+ * Method for displaying failure.
+ * @param {DocumentElement} xmlDoc
+ * @param {String} strMsg
+ */
 AddSupplierProductCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	

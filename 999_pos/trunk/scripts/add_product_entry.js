@@ -52,7 +52,7 @@ AddProductEntryCommand.prototype.init = function(sBarCode, sQuantity, sProductNa
 }
 
 /**
- * Executes the command. Sends the quantity, price, expiration_date and bar_code.
+ * Executes the command. Sends the quantity, price, expiration date and bar code.
  * @param {String} sCmd The name of the command on the server.
  */
 AddProductEntryCommand.prototype.execute = function(sCmd){
