@@ -51,7 +51,7 @@ DeleteCommand.prototype.execute = function(sCmd, sLinkSuccess){
 }
 
 /**
- * Method for displaying success.
+ * Redirects the html document to the success link.
  * @param {DocumentElement} xmlDoc
  */
 DeleteCommand.prototype.displaySuccess = function(xmlDoc){

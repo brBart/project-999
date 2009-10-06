@@ -24,7 +24,7 @@ function DeleteProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails
 DeleteProductObjectCommand.prototype = new DeleteDetailCommand();
 
 /**
- * Method for displaying success.
+ * Updates the page, sets the focus on the details element on the last selected row position.
  * @param {DocumentElement} xmlDoc
  */
 DeleteProductObjectCommand.prototype.displaySuccess = function(xmlDoc){

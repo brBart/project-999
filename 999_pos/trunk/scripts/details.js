@@ -275,7 +275,7 @@ Details.prototype.createMsxml2XSLTemplate = function(){
 }
 
 /**
- * Method for displaying success.
+ * Updates the details information with the document received from the server.
  * @param {DocumentElement} xmlDoc
  */
 Details.prototype.displaySuccess = function(xmlDoc){

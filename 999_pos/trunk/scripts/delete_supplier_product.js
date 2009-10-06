@@ -24,7 +24,7 @@ function DeleteSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProdu
 DeleteSupplierProductCommand.prototype = new DeleteDetailCommand();
 
 /**
- * Method for displaying success.
+ * Updates the suppliers object, sets the focus on the details element on the last selected row position.
  * @param {DocumentElement} xmlDoc
  */
 DeleteSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
