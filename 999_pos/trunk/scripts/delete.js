@@ -1,15 +1,16 @@
 /**
- * Library with the save command class.
- * @package Client
+ * @fileOverview Library with the DeleteCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
+ * @class Deletes an object (from the database) on the server.
+ * @extends SyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
  */
 function DeleteCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
@@ -17,26 +18,26 @@ function DeleteCommand(oSession, oConsole, oRequest, sKey){
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
-	 * Holds the name of the command to execute on the server in case of success.
-	 * @var string
+	 * Holds the link to redirect to in case of success.
+	 * @type String
 	 */
 	this._mLinkSuccess = '';
 }
 
 /**
-* Inherit the Sync command class methods.
-*/
+ * Inherit the Sync command class methods.
+ */
 DeleteCommand.prototype = new SyncCommand();
 
 /**
- * Executes the command. Receives the name of the command to execute on the server and on success.
- * @param string sCmd
- * @param string sCmdSuccess
+ * Executes the command.
+ * @param {String} sCmd The name of the command to execute on the server.
+ * @param {String} sCmdSuccess The link to redirect to in case of success.
  */
 DeleteCommand.prototype.execute = function(sCmd, sLinkSuccess){
 	if(sCmd == '' || sLinkSuccess == '')
@@ -50,9 +51,9 @@ DeleteCommand.prototype.execute = function(sCmd, sLinkSuccess){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Method for displaying success.
+ * @param {DocumentElement} xmlDoc
+ */
 DeleteCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mSession.loadHref(this._mLinkSuccess);
 }
