@@ -1,30 +1,31 @@
 /**
- * Library with the toolbar text class.
- * @package Client
+ * @fileOverview Library with the ToolbarText class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
+ * @class Represents a text input element in the toolbar.
+ * @constructor
  */
 function ToolbarText(){
 	/**
-	 * Holds the toolbar text input widget.
-	 * @var object
+	 * Holds the toolbar text input element.
+	 * @type HtmlElement
 	 */
 	this._mWidget = null;
 	
 	/**
-	 * Holds the next input widget in the toolbar.
-	 * @var object
+	 * Holds the next input element in the toolbar.
+	 * @type HtmlElement
 	 */
 	this._mNextWidget = null;
 }
 
 /**
- * Sets the text input widget and the next one too.
- * @param string sWidget
- * @param string sNextWidget
+ * Sets the text input element and the next one too. Also attach the focus and blur event handlers to the
+ * object's handleFocus and handleBlur methods respectively, only for the IE7 browser. 
+ * @param {String} sWidget The id of the input element.
+ * @param {String} sNextWidget The id of the next input element.
  */
 ToolbarText.prototype.init = function(sWidget, sNextWidget){
 	this._mWidget = document.getElementById(sWidget);
@@ -48,9 +49,9 @@ ToolbarText.prototype.init = function(sWidget, sNextWidget){
 }
  
 /**
-  * Handles the key down press event.
-  * @param Event oEvent
-  */
+ * Handles the key down press event.
+ * @param {Event} oEvent
+ */
 ToolbarText.prototype.handleKeyDown = function(oEvent){
  	oEvent = (!oEvent) ? window.event : oEvent;
  	var code = (oEvent.keyCode) ? oEvent.keyCode :
@@ -61,17 +62,15 @@ ToolbarText.prototype.handleKeyDown = function(oEvent){
 }
   
 /**
-  * Handles the key down press event.
-  * @param Event oEvent
-  */
+ * Changes the background color of the input element.
+ */
 ToolbarText.prototype.handleFocus = function(){
 	this._mWidget.className = 'input_focus';
 }
 
 /**
-* Handles the key down press event.
-* @param Event oEvent
-*/
+ * Restores the background color of the input element to its original color.
+ */
 ToolbarText.prototype.handleBlur = function(){
 	this._mWidget.className = 'tb_input';
 }
