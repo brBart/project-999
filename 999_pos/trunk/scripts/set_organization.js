@@ -1,14 +1,16 @@
 /**
- * Library with the set organization command class.
- * @package Client
+ * @fileOverview Library with the SetOrganizationCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
+ * @class Sets a organization to an object on the server.
+ * @extends AsyncCommand
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
  */
 function SetOrganizationCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
@@ -16,7 +18,7 @@ function SetOrganizationCommand(oSession, oConsole, oRequest, sKey){
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 }
@@ -28,9 +30,9 @@ SetOrganizationCommand.prototype = new AsyncCommand();
 
 /**
  * Executes the command.
- * @param string sCmd
- * @param string sValue
- * @param string sElementId
+ * @param {String} sCmd The name of the command to execute on the server.
+ * @param {String} sOrganizationId
+ * @param {String} sElementId The id of the organization input element.
  */
 SetOrganizationCommand.prototype.execute = function(sCmd, sOrganizationId, sElementId){
 	if(sCmd == '' || sElementId == '')
@@ -45,19 +47,19 @@ SetOrganizationCommand.prototype.execute = function(sCmd, sOrganizationId, sElem
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Cleans any previous failures.
+ * @param {DocumentElement} xmlDoc
+ */
 SetOrganizationCommand.prototype.displaySuccess = function(xmlDoc){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	this._mConsole.cleanFailure(elementId);
 }
 
 /**
-* Method for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
-*/
+ * Displays the message on the console and points out the input element.
+ * @param {DocumentElement} xmlDoc
+ * @param {String} strMsg
+ */
 SetOrganizationCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	
