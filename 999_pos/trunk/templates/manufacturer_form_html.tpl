@@ -26,7 +26,12 @@
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  	<span id="name-failed" class="hidden">*</span></p>
 		</fieldset>
-		{include file='controls_html.tpl' edit_cmd='edit_manufacturer' focus_on_edit='name' delete_cmd='delete_manufacturer'}
+		{if $status eq 1}
+			{assign var='edit_cmd' value='edit_manufacturer'}
+			{assign var='focus_on_edit' value='name'}
+			{assign var='delete_cmd' value='delete_manufacturer'}
+		{/if}
+		{include file='controls_html.tpl'}
 	</div>
 </div>
 {if $status eq 0}
