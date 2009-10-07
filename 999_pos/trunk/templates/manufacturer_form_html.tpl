@@ -17,18 +17,7 @@
 </script>
 <div id="content">
 	<div id="frm" class="content_small">
-		<fieldset id="status_bar">
-			<p>
-				<label>Status:</label>
-				<span id="status_label">
-					{if $status eq 0}
-						Creando...
-					{else}
-						Consulta
-					{/if}
-				</span>
-			</p>
-		</fieldset>
+		{include file='status_bar_html.tpl'}
 		<fieldset id="main_data">
 			<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 		  	<p><label for="name">Nombre:*</label><input name="form_widget" id="name" type="text"

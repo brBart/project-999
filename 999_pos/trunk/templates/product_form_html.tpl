@@ -29,18 +29,7 @@
 </script>
 <div id="content">
 	<div id="frm" class="content_medium">
-		<fieldset id="status_bar">
-			<p>
-				<label>Status:</label>
-				<span id="status_label">
-					{if $status eq 0}
-						Creando...
-					{else}
-						Consulta
-					{/if}
-				</span>
-			</p>
-		</fieldset>
+		{include file='status_bar_html.tpl'}
 		<fieldset id="sub_menu">
 			<p {if $status eq 0}class="invisible"{/if}>
 				<a name="form_widget" href="#">Kardex</a>
