@@ -73,6 +73,7 @@ class SearchReceiptCommand extends SearchObjectByDateCommand{
 	 * @param integer $lastItem
 	 * @param string $previousLink
 	 * @param string $nextLink
+	 * @param string $actualCmd
 	 */
 	protected function displayList($list, $startDate, $endDate, $totalPages, $totalItems, $page, $firstItem,
 			$lastItem, $previousLink, $nextLink, $actualCmd){

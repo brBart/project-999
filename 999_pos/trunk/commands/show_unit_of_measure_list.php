@@ -53,6 +53,7 @@ class ShowUnitOfMeasureListCommand extends ShowListCommand{
 	 * @param integer $lastItem
 	 * @param string $previousLink
 	 * @param string $nextLink
+	 * @param string $actualCmd
 	 */
 	protected function displayList($list, $totalPages, $totalItems, $page, $firstItem, $lastItem, $previousLink,
 			$nextLink, $actualCmd){
