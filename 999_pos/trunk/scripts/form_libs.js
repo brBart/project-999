@@ -103,7 +103,6 @@ function StateMachine(iStatus){
 
 /** 
  * Set the focus on the element with the provided id.
- * @static
  * @param {Variant} xValue Can be the element id as string or the HtmlElement object.
  */
 StateMachine.setFocus = function(xValue){

@@ -93,7 +93,6 @@ function Url(){}
 
 /** 
  * Method for returning the site url.
- * @static
  * @returns {String}
  */
 Url.getUrl = function(){
@@ -102,7 +101,6 @@ Url.getUrl = function(){
 
 /**
  * Concatenates the params to the provided url.
- * @static
  * @param {String} sUrl
  * @param {String} sParam
  * @param {String} sValue
