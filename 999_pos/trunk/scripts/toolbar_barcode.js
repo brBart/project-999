@@ -1,30 +1,30 @@
 /**
- * Library with the toolbar bar code class.
- * @package Client
+ * @fileOverview Library with the ToolbarBarCode class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
+ * @class Represents a bar code input element in a toolbar.
+ * @constructor
  */
 function ToolbarBarCode(){
 	/**
-	 * Holds the toolbar text input widget.
-	 * @var object
+	 * Holds the bar code text input element.
+	 * @type HtmlElement
 	 */
 	this._mWidget = null;
 	
 	/**
 	 * Holds the input button in the toolbar.
-	 * @var object
+	 * @type HtmlElement
 	 */
 	this._mButton = null;
 }
 
 /**
- * Sets the text input widget and the button too.
- * @param string sWidget
- * @param string sButton
+ * Sets the text input element and the button too.
+ * @param {String} sWidget The id of the input element.
+ * @param {String} sButton The id of the input button element.
  */
 ToolbarBarCode.prototype.init = function(sWidget, sButton){
 	this._mWidget = document.getElementById(sWidget);
@@ -46,7 +46,7 @@ ToolbarBarCode.prototype.init = function(sWidget, sButton){
 }
  
 /**
- * Checks the actual content inside the input widget.
+ * Checks the actual content inside the bar code input element.
  */
 ToolbarBarCode.prototype.checkContent = function(){
 	var oWidget = this._mWidget;
@@ -58,8 +58,8 @@ ToolbarBarCode.prototype.checkContent = function(){
 }
  
 /**
- * Sets the widgets styles rules to indicate that are ready.
- * @param boolean bValue
+ * Sets the input elements' styles rules to indicate that are ready.
+ * @param {Boolean} bValue
  */
 ToolbarBarCode.prototype.setIsReady = function(bValue){
 	if(bValue){
@@ -73,9 +73,9 @@ ToolbarBarCode.prototype.setIsReady = function(bValue){
 }
  
 /**
-  * Handles the key down press event.
-  * @param Event oEvent
-  */
+ * Handles the key down press event.
+ * @param {Event} oEvent
+ */
 ToolbarBarCode.prototype.handleKeyDown = function(oEvent){
  	oEvent = (!oEvent) ? window.event : oEvent;
  	var code = (oEvent.keyCode) ? oEvent.keyCode :
