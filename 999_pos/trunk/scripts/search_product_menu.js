@@ -1,15 +1,15 @@
 /**
- * Library with the SearchProductMenu class, is the SearchProductDetails but with functionality to be use
- * on the menu template.
- * @package Client
+ * @fileOverview Library with the SearchProductMenu class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param SearchProduct oSearchProduct
- * @param EventDelegator oEventDelegator
+ * @class SearchProductDetails derived class adapted with functionality for the menu template.
+ * @extends SearchProductDetails
+ * @constructor
+ * @param {Session} oSession
+ * @param {SearchProduct} oSearchProduct
+ * @param {EventDelegator} oEventDelegator
  */
 function SearchProductMenu(oSession, oSearchProduct, oEventDelegator){
 	// Call the parent constructor.
@@ -17,13 +17,13 @@ function SearchProductMenu(oSession, oSearchProduct, oEventDelegator){
 }
 
 /**
-* Inherit the Command class methods.
-*/
+ * Inherit the Command class methods.
+ */
 SearchProductMenu.prototype = new SearchProductDetails();
 
-/*
- * Took the respective action.
- * @param Object oTr
+/**
+ * Redirects the html document to the product's form page.
+ * @param {HtmlElement} oTr
  */
 SearchProductMenu.prototype.doAction = function(oTr){
 	var crtBarCode = oTr.getElementsByTagName('TD')[1].id;

@@ -1,124 +1,124 @@
 /**
- * Library with the SearchProductDetails base class.
- * @package Client
+ * @fileOverview Library with the SearchProductDetails base class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param SearchProduct oSearchProduct
- * @param EventDelegator oEventDelegator
+ * @class Manages how to display the details that results from a product search.
+ * @constructor
+ * @param {Session} oSession
+ * @param {SearchProduct} oSearchProduct
+ * @param {EventDelegator} oEventDelegator
  */
 function SearchProductDetails(oSession, oSearchProduct, oEventDelegator){
 	/**
-	 * Flag that indicates if the widget was clicked.
-	 * @var boolean
+	 * Flag that indicates if the div element was clicked.
+	 * @type Boolean
 	 */
 	this.mWasClicked = false;
 	
 	/**
 	 * Holds the session tracker.
-	 * @var Session
+	 * @type Session
 	 */
 	this._mSession = oSession;
 	
 	/**
 	 * Holds the object in charge for making the search queries to the server.
-	 * @var SearchProduct
+	 * @type SearchProduct
 	 */
 	this._mSearchProduct = oSearchProduct;
 	
 	/**
 	 * Holds the object in charge of handling the click events.
-	 * @var EventDelegator
+	 * @type EventDelegator
 	 */
 	this._mEventDelegator = oEventDelegator;
 	
 	/**
-	 * Holds the text input.
-	 * @var object
+	 * Holds the text input element.
+	 * @type HtmlElement
 	 */
 	this._mTxtWidget = null;
 	
 	/**
-	 * Holds the name of the variable which holds this object.
-	 * @var string
+	 * Holds the name of the variable which holds the instance of this class on the html document.
+	 * @type String
 	 */
 	this._mDetailsObj = '';
 	
 	/**
-	 * Holds the div containing the suggest table.
-	 * @var object
+	 * Holds the div element containing the suggest table.
+	 * @type HtmlElement
 	 */
 	this._mScrollDiv = null;
 	
 	/**
 	 * Holds the setinterval id.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mIntervalId = 0;
 	
 	/**
 	 * Holds the last keyword for which suggests have been requested.
-	 * @var string
+	 * @type String
 	 */
 	this._mUserKeyword = '';
 	
 	/**
 	 * Number of suggestions received as results for the keyword.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mTotalItems = 0;
 	
 	/**
-	 * The currently selected suggestion (by arrow keys or mouse).
-	 * @var integer
+	 * The currently selected suggestion.
+	 * @type Integer
 	 */
 	this._mSelectedRow = 0;
 	
 	/**
 	 * The maximum number of characters to be displayed for a suggestion.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mSuggestionMaxLength = 30;
 	
 	/**
 	 * The minimum position of the visible suggestions.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mMinVisiblePosition = 1;
 	
 	/**
 	 * The maximum position of the visible suggestions.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mMaxVisiblePosition = 10;
 	
 	/**
 	 * Holds the actual minimum position of the visible suggestions.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mActualMinVisiblePosition = 0;
 	
 	/**
 	 * Holds the actual maximum position of the visible suggestions.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mActualMaxVisiblePosition = 0;
 	
 	/**
 	 * Flag that indicates if the listening cycle has started.
-	 * @var boolean
+	 * @type Boolean
 	 */
 	this._mIsListening = false;
 }
 
 /**
-* Sets the text input widget from where the user will input the search query.
-* @param string sTxtWidget
-* @param string sDetailsObj
-*/
+ * Sets the text input element where the user will enter the search query.
+ * @param {String} sTxtWidget The id of the input element.
+ * @param {String} sDetailsObj The name of the variable which holds the instance of this class.
+ */
 SearchProductDetails.prototype.init = function(sTxtWidget, sDetailsObj){
 	// Register with the event delegator.
 	this._mEventDelegator.registerObject(this);
@@ -142,8 +142,8 @@ SearchProductDetails.prototype.init = function(sTxtWidget, sDetailsObj){
 }
 
 /**
-* Start the timeout cycle for the checkForChanges method.
-*/
+ * Start the timeout cycle for the checkForChanges method.
+ */
 SearchProductDetails.prototype.startListening = function(){
 	if(!this._mIsListening){
 		oDiv = document.getElementById('search_product');
@@ -160,8 +160,8 @@ SearchProductDetails.prototype.startListening = function(){
 }
 
 /**
-* Clears the timeout cycle.
-*/
+ * Clears the timeout cycle.
+ */
 SearchProductDetails.prototype.stopListening = function(){
 	oDiv = document.getElementById('search_product');
 	oDiv.onclick = null;
@@ -172,16 +172,16 @@ SearchProductDetails.prototype.stopListening = function(){
 }
 
 /**
-* Hide the div containing the suggestions.
-*/
+ * Hides the div element containing the suggestions.
+ */
 SearchProductDetails.prototype.hideSuggestions = function(){
 	this._mScrollDiv.innerHTML = '';
 	this._mScrollDiv.style.visibility = 'hidden';
 }
 
 /**
-* Check if the user has change the text in the input text widget.
-*/
+ * Check if the user has change the text in the input element.
+ */
 SearchProductDetails.prototype.checkForChanges  = function(){
 	// retrieve the keyword object 
 	var keyword = this._mTxtWidget.value;
@@ -203,10 +203,10 @@ SearchProductDetails.prototype.checkForChanges  = function(){
 }
 
 /**
-* Populates the list with the current suggestions.
-* @param string sKeyword
-* @param array resultsArray
-*/
+ * Populates the div element with the resulting suggestions.
+ * @param {String} sKeyword The actual search keyword.
+ * @param {Array} resultsArray
+ */
 SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray){
 	if(this._mUserKeyword == sKeyword){
 		// start building the HTML table containing the results
@@ -281,8 +281,8 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 }
 
 /**
-* Selects the first row.
-*/
+ * Selects the first row.
+ */
 SearchProductDetails.prototype.moveFirst = function(){
 	if(this._mTotalItems > 0){
 		this.selectRow(1);
@@ -292,8 +292,8 @@ SearchProductDetails.prototype.moveFirst = function(){
 }
 
 /**
-* Selects the previous row.
-*/
+ * Selects the previous row.
+ */
 SearchProductDetails.prototype.movePrevious = function(){
 	if(this._mTotalItems > 0 && this._mSelectedRow > 1){
 		this.selectRow(this._mSelectedRow - 1);
@@ -308,8 +308,8 @@ SearchProductDetails.prototype.movePrevious = function(){
 }
 
 /**
-* Selects the next row.
-*/
+ * Selects the next row.
+ */
 SearchProductDetails.prototype.moveNext = function(){
 	if(this._mTotalItems > 0 && this._mSelectedRow < this._mTotalItems){
 		this.selectRow(this._mSelectedRow + 1);
@@ -319,9 +319,9 @@ SearchProductDetails.prototype.moveNext = function(){
 }
 
 /**
-* Select the row in the iPos position.
-* @param integer iPos
-*/
+ * Select the row in the iPos position.
+ * @param {Integer} iPos
+ */
 SearchProductDetails.prototype.selectRow = function(iPos){
 	var newTr = document.getElementById('tr' + iPos);
 	newTr.className = 'highlightrow';
@@ -335,9 +335,9 @@ SearchProductDetails.prototype.selectRow = function(iPos){
 }
 
 /**
-* Method that updates the keyword value with the value of the currently selected suggestion.
-* @param integer iPos
-*/
+ * Method that updates the keyword value in the input element with the value of the desired suggestion.
+ * @param {Integer} iPos The row position.
+ */
 SearchProductDetails.prototype.updateKeywordValue = function(iPos){
 	var oTr = document.getElementById('tr' + iPos);
 	// retrieve the name for the current product
@@ -349,9 +349,9 @@ SearchProductDetails.prototype.updateKeywordValue = function(iPos){
 }
 
 /**
-* Method that handles the keys that are pressed.
-* @param object oEvent
-*/
+ * Method that handles the keys that are pressed.
+ * @param {Event} oEvent
+ */
 SearchProductDetails.prototype.handleKeyDown = function(oEvent){
 	// get the event
 	oEvent = (!oEvent) ? window.event : oEvent;
@@ -386,18 +386,17 @@ SearchProductDetails.prototype.handleKeyDown = function(oEvent){
 }
 
 /**
-* Method that handles the mouse entering over a suggestion's area event.
-* @param object oTr
-*/
+ * Method that handles the mouse entering over a suggestion's area.
+ * @param {HtmlElement} oTr
+ */
 SearchProductDetails.prototype.handleOnMouseOver = function(oTr)
 {
 	this.selectRow(oTr.id.substring(2));
 }
 
 /**
-* Method that handles the mouse exiting a suggestion's area event.
-* @param object oTr
-*/
+ * Method that handles the mouse exiting the div element area.
+ */
 SearchProductDetails.prototype.handleOnMouseOut = function()
 {
 	var oTr = document.getElementById('tr' + this._mSelectedRow);
@@ -409,16 +408,16 @@ SearchProductDetails.prototype.handleOnMouseOut = function()
 }
 
 /**
-* Handles click on all the div area.
-* @param Event oEvent
-*/
+ * Handles click on all the div element area.
+ * @param {Event} oEvent
+ */
 SearchProductDetails.prototype.divHandleClick = function(oEvent){
 	this.mWasClicked = true;
 }
  
 /**
-* If anything but the div area was click, stop listening.
-*/
+ * If anything but the div element area was click, stop listening.
+ */
 SearchProductDetails.prototype.blur = function(){
 	if(this._mIsListening)
 		this.stopListening();
@@ -426,7 +425,7 @@ SearchProductDetails.prototype.blur = function(){
 
 /**
  * Abstract method.
- * @param Object oTr
+ * @param {HtmlElement} oTr
  */
 SearchProductDetails.prototype.doAction = function(oTr){
 	return 0;
