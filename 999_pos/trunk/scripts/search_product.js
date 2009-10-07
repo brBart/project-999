@@ -1,14 +1,14 @@
 /**
- * Library with the SearchProduct command class.
- * @package Client
+ * @fileOverview Library with the SearchProduct class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
+ * @class Class in charge for making product searches on the server.
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
  */
 function SearchProduct(oSession, oConsole, oRequest){
 	// Call the parent constructor.
@@ -16,37 +16,37 @@ function SearchProduct(oSession, oConsole, oRequest){
 	
 	/**
 	 * Holds the name of the command on the server.
-	 * @var string
+	 * @type String
 	 */
 	this._mCmd = 'search_product';
 	
 	/**
 	 * Holds the settimeout id.
-	 * @var integer
+	 * @type Integer
 	 */
 	this._mTimeoutId = 0;
 	
 	/**
 	 * Cache containing the retrieved suggestions for different keywords.
-	 * @var object
+	 * @type Array
 	 */
 	this._mCache = null;
 	
 	/**
-	 * Holds a reference to the object which display the result details.
-	 * @var SearchProductDetails
+	 * Holds a reference to the object which handles displaying the result details.
+	 * @type SearchProductDetails
 	 */
 	this._mSearchProductDetails = null;
 }
 
 /**
-* Inherit the Command class methods.
-*/
+ * Inherit the Command class methods.
+ */
 SearchProduct.prototype = new Command();
 
 /**
- * Initialize object variables.
- * @param SearchProductDetails oSearchProductDetails
+ * Initialize the object properties.
+ * @param {SearchProductDetails} oSearchProductDetails
  */
 SearchProduct.prototype.init = function(oSearchProductDetails){
 	this._mCache = new Array();
@@ -56,7 +56,7 @@ SearchProduct.prototype.init = function(oSearchProductDetails){
 /**
  * Method that checks to see if the keyword specified as parameter is in the cache or tries to find the
  * longest matching prefixes in the cache and adds them in the cache for the current keyword parameter.
- * @param string sKeyword
+ * @param {String} sKeyword
  */
 SearchProduct.prototype.checkCache = function(sKeyword){
 	// check to see if the sKeyword is already in the cache
@@ -91,9 +91,9 @@ SearchProduct.prototype.checkCache = function(sKeyword){
 }
 
 /**
- * Method that adds to a keyword an array of values.
- * @param string sKeyword
- * @param array values
+ * Method that adds to a keyword in the cache an array of values.
+ * @param {String} sKeyword
+ * @param {Array} values
  */
 SearchProduct.prototype.addToCache = function(sKeyword, values){
 	// create a new array entry in the cache
@@ -104,8 +104,9 @@ SearchProduct.prototype.addToCache = function(sKeyword, values){
 }
 
 /**
- * Returns a list of results from the keyword suggestions.
- * @param string sKeyword
+ * Returns a list of results from the keyword suggestions if there is a match in the cache or sends a
+ * request to the server.
+ * @param {String} sKeyword
  */
 SearchProduct.prototype.getSuggestions = function(sKeyword){
 	// check to see if the sKeyword is in the cache
@@ -123,9 +124,9 @@ SearchProduct.prototype.getSuggestions = function(sKeyword){
 }
 
 /**
-* Send the request to the server.
-* @param string sUrlParams
-*/
+ * Send the request to the server.
+ * @param {String} sKeyword
+ */
 SearchProduct.prototype.sendRequest = function(sKeyword){
 	/* if the XMLHttpRequest object isn't busy with a previous
 	request... */
@@ -158,9 +159,9 @@ SearchProduct.prototype.sendRequest = function(sKeyword){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Adds the results to the object's cache and display the results.
+ * @param {DocumentElement} xmlDoc
+ */
 SearchProduct.prototype.displaySuccess = function(xmlDoc){
 	// Get the original keyword.
 	var keyword = xmlDoc.getElementsByTagName('keyword')[0].firstChild.data;
@@ -182,7 +183,7 @@ SearchProduct.prototype.displaySuccess = function(xmlDoc){
  
 /**
  * Transforms all the children of an xml node into an array.
- * @param Xml resultsXml
+ * @param {DocumentElement} resultsXml
  */
 SearchProduct.prototype.xmlToArray = function(resultsXml){
  	// initiate the resultsArray
