@@ -1,3 +1,4 @@
+{* Smarty *}
 <caption>
 	<span>{$first_item} - {$last_item} de {$total_items}</span>
 	<span>P&aacute;gina {$page} de {$total_pages}</span>

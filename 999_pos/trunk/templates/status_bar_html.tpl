@@ -1,3 +1,4 @@
+{* Smarty *}
 <fieldset id="status_bar">
 	<p>
 		<label>Status:</label>

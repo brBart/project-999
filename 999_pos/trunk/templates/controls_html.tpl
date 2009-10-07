@@ -1,3 +1,4 @@
+{* Smarty *}
 <script type="text/javascript" src="../scripts/save.js"></script>
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
