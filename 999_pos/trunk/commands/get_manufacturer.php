@@ -40,8 +40,9 @@ class GetManufacturerCommand extends GetObjectCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
-				'content' => 'manufacturer_menu_html.tpl', 'notify' => '1', 'type' => 'error',
-				'message' => $msg), 'site_html.tpl');
+				'content' => 'object_menu_html.tpl', 'notify' => '1', 'type' => 'error',
+				'message' => $msg, 'create_link' => 'index.php?cmd=create_manufacturer',
+				'show_list_link' => 'index.php?cmd=show_manufacturer_list&page=1'), 'site_html.tpl');
 	}
 	
 	/**
@@ -64,8 +65,9 @@ class GetManufacturerCommand extends GetObjectCommand{
 		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'manufacturer_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
-				'name' => $obj->getName(), 'foward_link' => $foward_link, 'notify' => '0'), 'site_html.tpl');
+				'content' => 'identifier_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
+				'name' => $obj->getName(), 'foward_link' => $foward_link, 'edit_cmd' => 'edit_manufacturer',
+				'delete_cmd' => 'delete_manufacturer'), 'site_html.tpl');
 		
 	}
 }

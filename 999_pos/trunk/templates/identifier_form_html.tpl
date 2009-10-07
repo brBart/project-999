@@ -27,9 +27,9 @@
 		  	<span id="name-failed" class="hidden">*</span></p>
 		</fieldset>
 		{if $status eq 1}
-			{assign var='edit_cmd' value='edit_manufacturer'}
+			{assign var='edit_cmd' value=$edit_cmd}
 			{assign var='focus_on_edit' value='name'}
-			{assign var='delete_cmd' value='delete_manufacturer'}
+			{assign var='delete_cmd' value=$delete_cmd}
 		{/if}
 		{include file='controls_html.tpl'}
 	</div>

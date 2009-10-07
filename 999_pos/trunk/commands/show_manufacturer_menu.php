@@ -29,8 +29,7 @@ class ShowManufacturerMenuCommand extends Command{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
-				'content' => 'object_menu_html.tpl', 'notify' => '0',
-				'create_link' => 'index.php?cmd=create_manufacturer',
+				'content' => 'object_menu_html.tpl', 'create_link' => 'index.php?cmd=create_manufacturer',
 				'show_list_link' => 'index.php?cmd=show_manufacturer_list&page=1'), 'site_html.tpl');
 	}
 }
