@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowManufacturerList class command.
+ * Library containing the ShowUnitOfMeasureList class command.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,11 +15,11 @@ require_once('commands/show_list.php');
 require_once('business/list.php');
 
 /**
- * Implements functionality for showing the manufacturer list.
+ * Implements functionality for showing the unit of measure list.
  * @package Command
  * @author Roberto Oliveros
  */
-class ShowManufacturerListCommand extends ShowListCommand{
+class ShowUnitOfMeasureListCommand extends ShowListCommand{
 	/**
 	 * Returns a list with information.
 	 * @param integer &$totalPages
@@ -28,17 +28,17 @@ class ShowManufacturerListCommand extends ShowListCommand{
 	 * @return array
 	 */
 	protected function getList(&$totalPages, &$totalItems, $page){
-		return ManufacturerList::getList($totalPages, $totalItems, $page);
+		return UnitOfMeasureList::getList($totalPages, $totalItems, $page);
 	}
 	
 	/**
 	 * Displays an empty list.
 	 */
 	protected function displayEmpty(){
-		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
-		$msg = 'No hay casas en la base de datos.';
+		$back_trace = array('Inicio', 'Mantenimiento', 'Unidades de Medida');
+		$msg = 'No hay unidades de medida en la base de datos.';
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
-				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
+				'back_link' => 'index.php?cmd=show_unit_of_measure_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'info',
 				'message' => $msg), 'site_html.tpl');
 	}
@@ -56,13 +56,13 @@ class ShowManufacturerListCommand extends ShowListCommand{
 	 */
 	protected function displayList($list, $totalPages, $totalItems, $page, $firstItem, $lastItem, $previousLink,
 			$nextLink, $actualCmd){
-		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
+		$back_trace = array('Inicio', 'Mantenimiento', 'Unidades de Medida');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
-				'back_link' => 'index.php?cmd=show_manufacturer_menu', 'back_trace' => $back_trace,
+				'back_link' => 'index.php?cmd=show_unit_of_measure_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'identifier_list_html.tpl', 'list' => $list,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
 				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,
-				'next_link' => $nextLink, 'item_link' => 'index.php?cmd=get_manufacturer&id=',
+				'next_link' => $nextLink, 'item_link' => 'index.php?cmd=get_unit_of_measure&id=',
 				'actual_cmd' => $actualCmd), 'site_html.tpl');
 	}
 }
