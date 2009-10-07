@@ -68,7 +68,6 @@ class GetManufacturerCommand extends GetObjectCommand{
 				'content' => 'identifier_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
 				'name' => $obj->getName(), 'foward_link' => $foward_link, 'edit_cmd' => 'edit_manufacturer',
 				'delete_cmd' => 'delete_manufacturer'), 'site_html.tpl');
-		
 	}
 }
 ?>
