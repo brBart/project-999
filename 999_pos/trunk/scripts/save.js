@@ -5,7 +5,7 @@
 
 /**
  * @class Saves a new or altered object on the server.
- * @extends SaveCommand
+ * @extends SyncCommand
  * @constructor
  * @param {Session} oSession
  * @param {Console} oConsole
@@ -41,8 +41,8 @@ function SaveCommand(oSession, oConsole, oRequest, sKey){
 SaveCommand.prototype = new SyncCommand();
 
 /**
- * Executes the command. Receives the name of the command to execute on success.
- * @param string sLinkSuccess
+ * Executes the command.
+ * @param {String} sLinkSuccess The link to redirect to in case of success.
  */
 SaveCommand.prototype.execute = function(sLinkSuccess){
 	if(sLinkSuccess == '')
@@ -56,9 +56,9 @@ SaveCommand.prototype.execute = function(sLinkSuccess){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Retrieves the new id parameter from the document and redirects the html document to the success link.
+ * @param {DocumentElement} xmlDoc
+ */
 SaveCommand.prototype.displaySuccess = function(xmlDoc){
 	var iId = xmlDoc.getElementsByTagName('id')[0].firstChild.data;
 	str = Url.addUrlParam(this._mLinkSuccess, 'id', iId);
@@ -66,10 +66,10 @@ SaveCommand.prototype.displaySuccess = function(xmlDoc){
 }
 
 /**
-* Method for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
-*/
+ * Displays the failure and sets the focus on the provoking input element.
+ * @param {DocumentElement} xmlDoc
+ * @param {String} strMsg
+ */
 SaveCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	
