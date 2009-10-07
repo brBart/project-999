@@ -49,7 +49,8 @@ ToolbarText.prototype.init = function(sWidget, sNextWidget){
 }
  
 /**
- * Handles the key down press event.
+ * Handles the key down press event. In case the enter key was pressed, it moves the focus to the next input
+ * element.
  * @param {Event} oEvent
  */
 ToolbarText.prototype.handleKeyDown = function(oEvent){

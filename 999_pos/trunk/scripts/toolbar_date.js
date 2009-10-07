@@ -1,11 +1,12 @@
 /**
- * Library with the toolbar date class.
- * @package Client
+ * @fileOverview Library with the ToolbarDate class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
+ * @class Represents a date input element in the toolbar.
+ * @extends ToolbarText
+ * @constructor
  */
 function ToolbarDate(){
 	// Call parents constructor.
@@ -13,14 +14,14 @@ function ToolbarDate(){
 }
 
 /**
-* Inherit the parent's class methods.
-*/
+ * Inherit the parent's class methods.
+ */
 ToolbarDate.prototype = new ToolbarText();
 
 /**
  * Sets the text input widget and the next one too.
- * @param string sWidget
- * @param string sNextWidget
+ * @param {String} sWidget The id of the input element.
+ * @param {String} sNextWidget The id of the next input element.
  */
 ToolbarDate.prototype.init = function(sWidget, sNextWidget){
 	// Call parents init method first.
@@ -33,9 +34,9 @@ ToolbarDate.prototype.init = function(sWidget, sNextWidget){
 }
 
 /**
-  * Handles the key up press event.
-  * @param Event oEvent
-  */
+ * Handles the key up press event. If all the input spaces are filled, it moves the focus to the next input.
+ * @param {Event} oEvent
+ */
 ToolbarDate.prototype.handleKeyUp = function(oEvent){
  	oEvent = (!oEvent) ? window.event : oEvent;
  	var code = (oEvent.keyCode) ? oEvent.keyCode :
