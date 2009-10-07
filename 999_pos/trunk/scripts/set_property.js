@@ -1,15 +1,16 @@
 /**
- * Library with the SetProperty command class.
- * @package Client
+ * @fileOverview Library with the SetPropertyCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * Constructor function.
- * @param Session oSession
- * @param Console oConsole
- * @param Request oRequest
- * @param string sKey
+ * @class Sets the desired property on an object on the server.
+ * @extends Command
+ * @constructor
+ * @param {Session} oSession
+ * @param {Console} oConsole
+ * @param {XmlHttpRequest} oRequest
+ * @param {String} sKey
  */
 function SetPropertyCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
@@ -17,13 +18,13 @@ function SetPropertyCommand(oSession, oConsole, oRequest, sKey){
 	
 	/**
 	 * Holds the key of the session object.
-	 * @var string
+	 * @type String
 	 */
 	this._mKey = sKey;
 	
 	/**
 	 * Queue for storing the future requests in case the request object is busy.
-	 * @var Array
+	 * @type Array
 	 */
 	this._mRequestQueue = new Array();
 }
@@ -35,9 +36,9 @@ SetPropertyCommand.prototype = new Command();
 
 /**
  * Executes the command.
- * @param string sCmd
- * @param string sValue
- * @param string sElementId
+ * @param {String} sCmd The name of the command to execute on the server.
+ * @param {String} sValue The value of the property.
+ * @param {String} sElementId The id of the input element.
  */
 SetPropertyCommand.prototype.execute = function(sCmd, sValue, sElementId){
 	if(sCmd == '' || sElementId == '')
@@ -81,19 +82,19 @@ SetPropertyCommand.prototype.readResponse = function(){
 }
 
 /**
-* Method for displaying success.
-* @param DocumentElement xmlDoc
-*/
+ * Cleans any previous failures.
+ * @param {DocumentElement} xmlDoc
+ */
 SetPropertyCommand.prototype.displaySuccess = function(xmlDoc){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	this._mConsole.cleanFailure(elementId);
 }
 
 /**
-* Method for displaying failure.
-* @param DocumentElement xmlDoc
-* @param string msg
-*/
+ * Displays the message on the console and points out the input element.
+ * @param {DocumentElement} xmlDoc
+ * @param {String} strMsg
+ */
 SetPropertyCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	var elementId = xmlDoc.getElementsByTagName('element_id')[0].firstChild.data;
 	
