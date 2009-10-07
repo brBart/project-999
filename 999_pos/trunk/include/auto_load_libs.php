@@ -45,6 +45,10 @@ function __autoload($className){
 			require_once('business/transaction.php');
 			break;
 			
+		case 'UnitOfMeasure':
+			require_once('business/product.php');
+			break;
+			
 		default:
 	}
 }
