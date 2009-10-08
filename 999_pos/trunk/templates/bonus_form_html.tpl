@@ -1,8 +1,14 @@
 {* Smarty *}
 <script type="text/javascript" src="../scripts/core_libs.js"></script>
 <script type="text/javascript" src="../scripts/form_libs.js"></script>
+<script type="text/javascript" src="../scripts/event_delegator.js"></script>
+<script type="text/javascript" src="../scripts/details.js"></script>
+<script type="text/javascript" src="../scripts/object_details.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console('console');
+	var oMachine = new StateMachine(0);
+	var oEventDelegator = new EventDelegator();
+	var oProductBonus = new ObjectDetails(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_bonus');
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	{literal}
 	window.onunload = function(){
@@ -43,4 +49,7 @@
 </div>
 <script type="text/javascript">
 StateMachine.setFocus('quantity');
+oEventDelegator.init();
+oProductBonus.init('../xsl/product_bonus.xsl', 'details', 'oProductBonus');
+oProductBonus.update();
 </script>
