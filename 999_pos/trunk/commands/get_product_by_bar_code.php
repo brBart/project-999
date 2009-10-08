@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetProductByBarCode command.
+ * Library containing the GetProductByBarCodeCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

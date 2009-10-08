@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteManufacturer command.
+ * Library containing the DeleteManufacturerCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetPackagingProduct class command.
+ * Library containing the SetPackagingProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

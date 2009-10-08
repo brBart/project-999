@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowHomeOperations command.
+ * Library containing the ShowHomeOperationsCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

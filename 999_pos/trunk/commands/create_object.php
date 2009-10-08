@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the CreateObject command.
+ * Library containing the CreateObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

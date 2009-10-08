@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteProduct command.
+ * Library containing the DeleteProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

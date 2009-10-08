@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetUnitOfMeasureProduct class command.
+ * Library containing the SetUnitOfMeasureProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the AddProductReceipt class command.
+ * Library containing the AddProductReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeactivateObject class command.
+ * Library containing the DeactivateObjectCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

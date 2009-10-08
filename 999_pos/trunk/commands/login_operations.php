@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the LoginOperations command.
+ * Library containing the LoginOperationsCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

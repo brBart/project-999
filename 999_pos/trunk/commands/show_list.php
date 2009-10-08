@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowList base class command.
+ * Library containing the ShowListCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

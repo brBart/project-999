@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetProductSuppliers class command.
+ * Library containing the GetProductSuppliersCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

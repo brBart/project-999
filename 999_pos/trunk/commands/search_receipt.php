@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SearchReceipt class command.
+ * Library containing the SearchReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

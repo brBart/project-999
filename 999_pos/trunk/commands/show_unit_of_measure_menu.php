@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowUnitOfMeasureMenu command.
+ * Library containing the ShowUnitOfMeasureMenuCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

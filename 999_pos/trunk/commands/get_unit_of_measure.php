@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetUnitOfMeasure command.
+ * Library containing the GetUnitOfMeasureCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

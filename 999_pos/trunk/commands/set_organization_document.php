@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetOrganizationDocument base class command.
+ * Library containing the SetOrganizationDocumentCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

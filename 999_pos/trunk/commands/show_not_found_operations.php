@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowNotFoundOperations command.
+ * Library containing the ShowNotFoundOperationsCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

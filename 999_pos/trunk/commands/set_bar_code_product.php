@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetBarCodeProduct class command.
+ * Library containing the SetBarCodeProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

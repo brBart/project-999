@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetShipmentTotalReceipt class command.
+ * Library containing the SetShipmentTotalReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

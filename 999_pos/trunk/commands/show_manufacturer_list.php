@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowManufacturerList class command.
+ * Library containing the ShowManufacturerListCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

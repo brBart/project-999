@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DiscardDocument command.
+ * Library containing the DiscardDocumentCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

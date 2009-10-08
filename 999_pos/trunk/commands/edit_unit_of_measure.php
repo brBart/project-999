@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the EditOfMeasure command.
+ * Library containing the EditOfMeasureCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SaveObject command.
+ * Library containing the SaveObjectCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowMovementsMenu command.
+ * Library containing the ShowMovementsMenuCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

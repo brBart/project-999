@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SearchObjectByDate base class command.
+ * Library containing the SearchObjectByDateCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

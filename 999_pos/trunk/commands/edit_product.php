@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the EditProduct command.
+ * Library containing the EditProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

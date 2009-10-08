@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetDescriptionProduct class command.
+ * Library containing the SetDescriptionProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

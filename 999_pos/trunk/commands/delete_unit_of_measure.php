@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteUnitOfMeasure command.
+ * Library containing the DeleteUnitOfMeasureCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

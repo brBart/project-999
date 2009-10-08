@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetPropertyObject base class command.
+ * Library containing the SetPropertyObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

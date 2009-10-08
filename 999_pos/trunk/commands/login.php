@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the Login command.
+ * Library containing the LoginCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

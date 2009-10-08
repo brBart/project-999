@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetObjectLastPage base class command.
+ * Library containing the GetObjectLastPageCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

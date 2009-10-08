@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the AddProductObject base class command.
+ * Library containing the AddProductObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

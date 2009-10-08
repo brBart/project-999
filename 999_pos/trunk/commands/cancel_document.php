@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the CancelDocument command.
+ * Library containing the CancelDocumentCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

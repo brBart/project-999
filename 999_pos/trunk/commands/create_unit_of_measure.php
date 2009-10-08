@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the CreateUnitOfMeasure command.
+ * Library containing the CreateUnitOfMeasureCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

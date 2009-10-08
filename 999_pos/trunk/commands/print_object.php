@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the PrintObject base class command.
+ * Library containing the PrintObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

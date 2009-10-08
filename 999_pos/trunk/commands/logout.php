@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the Logout command.
+ * Library containing the LogoutCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

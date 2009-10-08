@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ChangePassword command.
+ * Library containing the ChangePasswordCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

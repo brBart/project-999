@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetDocumentLastPage class command.
+ * Library containing the GetDocumentLastPageCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

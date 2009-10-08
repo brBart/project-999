@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the CreateProduct command.
+ * Library containing the CreateProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

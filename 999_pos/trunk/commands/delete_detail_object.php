@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteDetailObject base class command.
+ * Library containing the DeleteDetailObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

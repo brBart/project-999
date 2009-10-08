@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the CreateManufacturer command.
+ * Library containing the CreateManufacturerCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

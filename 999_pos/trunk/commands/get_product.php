@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetProduct command.
+ * Library containing the GetProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

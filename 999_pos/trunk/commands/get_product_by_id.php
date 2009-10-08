@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetProductById command.
+ * Library containing the GetProductByIdCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

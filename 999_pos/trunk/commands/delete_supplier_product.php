@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteSupplierProduct command.
+ * Library containing the DeleteSupplierProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

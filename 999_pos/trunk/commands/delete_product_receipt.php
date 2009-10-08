@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteProductReceipt command.
+ * Library containing the DeleteProductReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

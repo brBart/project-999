@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetNameObject class command.
+ * Library containing the SetNameObjectCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

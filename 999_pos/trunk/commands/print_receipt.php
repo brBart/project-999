@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the PrintReceipt command.
+ * Library containing the PrintReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

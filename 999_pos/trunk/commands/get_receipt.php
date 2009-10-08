@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetReceipt command.
+ * Library containing the GetReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

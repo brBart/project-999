@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetObjectPage base class command.
+ * Library containing the GetObjectPageCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ChangePasswordOperations command.
+ * Library containing the ChangePasswordOperationsCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

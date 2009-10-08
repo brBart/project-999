@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowReceiptsMenu command.
+ * Library containing the ShowReceiptsMenuCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

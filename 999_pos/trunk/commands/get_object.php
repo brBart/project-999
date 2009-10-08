@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetObject base class command.
+ * Library containing the GetObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

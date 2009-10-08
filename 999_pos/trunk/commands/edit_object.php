@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the EditObject command.
+ * Library containing the EditObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowMaintenanceMenuOperations command.
+ * Library containing the ShowMaintenanceMenuOperationsCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the EditManufacturer command.
+ * Library containing the EditManufacturerCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

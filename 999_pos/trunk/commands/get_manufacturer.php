@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetManufacturer command.
+ * Library containing the GetManufacturerCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetShipmentNumberReceipt class command.
+ * Library containing the SetShipmentNumberReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

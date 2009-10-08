@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetDocumentPage class command.
+ * Library containing the GetDocumentPageCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

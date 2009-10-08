@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteObject command.
+ * Library containing the DeleteObjectCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the AddSupplierProduct command.
+ * Library containing the AddSupplierProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetPriceProduct class command.
+ * Library containing the SetPriceProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

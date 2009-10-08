@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the RemoveSessionObject command.
+ * Library containing the RemoveSessionObjectCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

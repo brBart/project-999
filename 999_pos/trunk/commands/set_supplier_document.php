@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetSupplierDocument class command.
+ * Library containing the SetSupplierDocumentCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

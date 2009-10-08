@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the CancelReceipt command.
+ * Library containing the CancelReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */

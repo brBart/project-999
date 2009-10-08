@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetManufacturerProduct class command.
+ * Library containing the SetManufacturerProductCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
