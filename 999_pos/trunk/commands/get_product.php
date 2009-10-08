@@ -19,7 +19,7 @@ require_once('business/product.php');
 require_once('business/list.php');
 
 /**
- * Defines common functionality for the get product derived classes. Displays the produc form in idle mode.
+ * Defines common functionality for the get product derived classes. Displays the product form in idle mode.
  * @package Command
  * @author Roberto Oliveros
  */
