@@ -74,8 +74,8 @@
 			  			onblur="oSetProperty.execute('set_manufacturer_product', this.value, this.id);"
 			  			{if $status eq 1}disabled="disabled"{/if}>
 		    			{section name=i loop=$manufacturer_list}
-		    				<option value="{$manufacturer_list[i].manufacturer_id}" 
-		    					{if $manufacturer_list[i].manufacturer_id eq $manufacturer_id}selected="selected"{/if}>
+		    				<option value="{$manufacturer_list[i].id}" 
+		    					{if $manufacturer_list[i].id eq $manufacturer_id}selected="selected"{/if}>
 		    					{$manufacturer_list[i].name}
 		    				</option>
 		    			{/section}
@@ -88,8 +88,8 @@
 			  			onblur="oSetProperty.execute('set_unit_of_measure_product', this.value, this.id);"
 			  			{if $status eq 1}disabled="disabled"{/if}>
 		    			{section name=i loop=$um_list}
-		    				<option value="{$um_list[i].unit_of_measure_id}"
-		    					{if $um_list[i].unit_of_measure_id eq $um_id}selected="selected"{/if}>
+		    				<option value="{$um_list[i].id}"
+		    					{if $um_list[i].id eq $um_id}selected="selected"{/if}>
 		    					{$um_list[i].name}
 		    				</option>
 		    			{/section}
