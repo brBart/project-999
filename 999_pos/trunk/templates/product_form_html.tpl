@@ -6,7 +6,7 @@
 <script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
-<script type="text/javascript" src="../scripts/product_suppliers.js"></script>
+<script type="text/javascript" src="../scripts/object_details.js"></script>
 <script type="text/javascript" src="../scripts/add_supplier_product.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript" src="../scripts/delete_supplier_product.js"></script>
@@ -16,7 +16,7 @@
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
-	var oProductSuppliers = new ProductSuppliers(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
+	var oProductSuppliers = new ObjectDetails(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_suppliers');
 	var oAddSupplierProduct = new AddSupplierProductCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oProductSuppliers);
 	var oDeleteSupplierProduct = new DeleteSupplierProductCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oProductSuppliers);
 	{literal}
