@@ -1073,18 +1073,19 @@ class Bonus extends Persist{
 		if(!is_null($id))
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		self::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.', 'quantity');
 		$this->validatePercentage($percentage);
-		Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.');
+		Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.', 'expiration_date');
 		
 		if(!is_null($createdDate)){
 			Date::validateDate($createdDate, 'Fecha de creaci&oacute;n inv&aacute;lida.');
-			if(!Date::compareDates($createdDate, $expirationDate))
-				throw new Exception('Dia creado es mayor que el de vencimiento.');
 			$this->_mCreatedDate = $createdDate;
 		}
 		else
 			$this->_mCreatedDate = date('d/m/Y');
+			
+		if(!Date::compareDates($this->_mCreatedDate, $expirationDate))
+			throw new ValidateException('Dia creado es mas reciente que el de vencimiento.', 'bonus');
 		
 		$this->_mId = $id;
 		$this->_mProduct = $product;
@@ -1156,7 +1157,7 @@ class Bonus extends Persist{
 	public function save(){
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			if(BonusDAM::exists($this->_mProduct, $this->_mQuantity))
-				throw new Exception('Oferta ya existe.');
+				throw new ValidateException('Oferta ya existe.', 'bonus');
 				
 			$this->_mId = BonusDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
@@ -1209,8 +1210,9 @@ class Bonus extends Persist{
 	 * @throws Exception
 	 */
 	private function validatePercentage($percentage){
-		if(!is_float($percentage) || ($percentage < 1 || $percentage > 100))
-			throw new Exception('Porcentaje inv&accute;lido. No menor que 1 ni mayor que 100.');
+		if(!is_numeric($percentage) || ($percentage < 1 || $percentage > 100))
+			throw new ValidateException('Porcentaje inv&accute;lido. No menor que 1 ni mayor que 100.',
+					'percentage');
 	}
 }
 
