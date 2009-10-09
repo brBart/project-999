@@ -11,9 +11,9 @@
  * @param {Console} oConsole
  * @param {XmlHtttpRequest} oRequest
  * @param {String} sKey
- * @param {ProductSuppliers} oProductSuppliers
+ * @param {ObjectDetails} oObjectDetails
  */
-function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductSuppliers){
+function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oObjectDetails){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -24,10 +24,10 @@ function AddSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductS
 	this._mKey = sKey;
 	
 	/**
-	 * Holds a reference to the product suppliers object.
-	 * @type ProductSuppliers
+	 * Holds a reference to the object in charge of the list suppliers.
+	 * @type ObjectDetails
 	 */
-	this._mProductSuppliers = oProductSuppliers;
+	this._mObjectDetails = oObjectDetails;
 	
 	/**
 	 * Holds the command name on the server.
@@ -75,7 +75,7 @@ AddSupplierProductCommand.prototype.execute = function(){
 }
 
 /**
- * Clean the input elements and updates the suppliers object.
+ * Clean the input elements and updates the details object.
  * @param {DocumentElement} xmlDoc
  */
 AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
@@ -84,7 +84,7 @@ AddSupplierProductCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mConsole.cleanFailure('product_sku');
 	this._mConsole.cleanFailure('product_suppliers');
 	
-	this._mProductSuppliers.update();
+	this._mObjectDetails.update();
 	
 	// Clear elements.
 	this._mSupplierId.selectedIndex = 0;
