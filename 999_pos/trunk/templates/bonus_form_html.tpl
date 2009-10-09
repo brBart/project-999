@@ -4,12 +4,14 @@
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_details.js"></script>
+<script type="text/javascript" src="../scripts/create_bonus.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oMachine = new StateMachine(0);
+	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
 	var oProductBonus = new ObjectDetails(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_bonus');
-	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+	var oCreateBonus = new CreateBonusCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oProductBonus);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -41,6 +43,7 @@
 			  		<span id="expiration_date-failed" class="hidden">*</span>
 			  		<input name="form_widget" id="add_bonus" type="button" value="Crear Oferta"
 			  			onclick="oCreateBonus.execute();" />
+			  		<span id="bonus-failed" class="hidden">*</span>
 			  	</p>
 			  	<div id="details"></div>
 			</div>
@@ -49,6 +52,7 @@
 </div>
 <script type="text/javascript">
 StateMachine.setFocus('quantity');
+oCreateBonus.init('quantity', 'percentage', 'expiration_date');
 oEventDelegator.init();
 oProductBonus.init('../xsl/product_bonus.xsl', 'details', 'oProductBonus');
 oProductBonus.update();
