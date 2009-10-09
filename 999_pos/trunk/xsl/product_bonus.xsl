@@ -42,7 +42,7 @@
 						<xsl:attribute name="type">button</xsl:attribute>
 			           	<xsl:attribute name="value">Eliminar</xsl:attribute>
 			           	<xsl:attribute name="onclick">
-			           		<xsl:value-of select="$delete_obj" />.execute(<xsl:value-of select="bonus_id" />);
+			           		if(confirm('Esta seguro que desea eliminar?'))<xsl:value-of select="$delete_obj" />.execute('<xsl:value-of select="bonus_id" />');
 			           	</xsl:attribute>
 					</xsl:element>
 				</td>
