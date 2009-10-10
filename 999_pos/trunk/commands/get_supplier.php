@@ -59,7 +59,7 @@ class GetSupplierCommand extends GetObjectCommand{
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_supplier_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
 		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_supplier&id=' . $id;
+		$foward_link = 'index.php?cmd=get_supplier';
 		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 		

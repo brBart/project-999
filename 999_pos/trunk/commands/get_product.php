@@ -38,7 +38,7 @@ abstract class GetProductCommand extends GetObjectCommand{
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_product_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
 		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_product_by_id&id=' . $id;
+		$foward_link = 'index.php?cmd=get_product_by_id';
 		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 
