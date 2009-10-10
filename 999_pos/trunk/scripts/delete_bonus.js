@@ -5,7 +5,7 @@
 
 /**
  * @class Deletes a bonus on the server.
- * @extends SyncCommand
+ * @extends AlterObjectCommand
  * @constructor
  * @param {Session} oSession
  * @param {Console} oConsole
