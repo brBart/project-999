@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the AlterObjectCommand class.
+ * Library containing the AlterObjectCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */
