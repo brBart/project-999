@@ -38,7 +38,7 @@
 			</p>
 		</fieldset>
 		<fieldset id="main_data">
-			<div>
+			<div id="product_details">
 				<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 			  	<p>
 			  		<label for="name">Nombre:*</label>
@@ -114,7 +114,7 @@
 			  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 			  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
 			</div>
-			<div>
+			<div id="product_suppliers">
 			  	<p id="prod_supp_tb">
 			  		<label for="supplier_id">Proveedor:</label>
 			  		<select name="form_widget" id="supplier_id" {if $status eq 1}disabled="disabled"{/if}>

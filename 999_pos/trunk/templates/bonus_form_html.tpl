@@ -24,7 +24,7 @@
 <div id="content">
 	<div id="frm" class="content_medium">
 		<fieldset id="main_data">
-			<div>
+			<div id="product_info">
 				<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 			  	<p><label>Nombre:</label><span>{$name}</span></p>
 			  	<p><label>C&oacute;digo barra:</label><span>{$bar_code}</span></p>
@@ -33,7 +33,7 @@
 			  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 			  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
 			</div>
-			<div>
+			<div id="bonus">
 			  	<p id="bonus_tb">
 			  		<label for="quantity">Cantidad:</label>
 			  		<input name="form_widget" id="quantity" type="text" maxlength="11" />
