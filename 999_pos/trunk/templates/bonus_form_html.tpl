@@ -34,7 +34,7 @@
 			  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
 			</div>
 			<div id="bonus">
-			  	<p id="bonus_tb">
+			  	<div id="bonus_tb">
 			  		<label for="quantity">Cantidad:</label>
 			  		<input name="form_widget" id="quantity" type="text" maxlength="11" />
 			  		<span id="quantity-failed" class="hidden">*</span>
@@ -42,12 +42,15 @@
 			  		<input name="form_widget" id="percentage" type="text" maxlength="8" />
 			  		<span id="percentage-failed" class="hidden">*</span>
 			  		<label for="expiration_date">Vence:</label>
-			  		<input name="form_widget" id="expiration_date" type="text" maxlength="10" />
+			  		<div>
+			  			<input name="form_widget" id="expiration_date" type="text" maxlength="10" />
+			  			<span class="hint">dd/mm/aaaa</span>
+			  		</div>
 			  		<span id="expiration_date-failed" class="hidden">*</span>
 			  		<input name="form_widget" id="add_bonus" type="button" value="Crear Oferta"
 			  			onclick="oCreateBonus.execute();" />
 			  		<span id="bonus-failed" class="hidden">*</span>
-			  	</p>
+			  	</div>
 			  	<div id="details"></div>
 			</div>
 		</fieldset>

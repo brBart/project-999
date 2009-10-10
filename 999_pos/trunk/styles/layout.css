@@ -177,6 +177,12 @@ input[type="text"], input[type="password"] {
 	width: 65%;
 }
 
+#bonus_tb {
+	height: 1.5em;
+	width: 46em;
+	margin: 1em auto;
+}
+
 #dates_range div {
 	float: left;
 	position: relative;
@@ -285,12 +291,16 @@ input[type="text"], input[type="password"] {
 	padding: 0.2em 0.2em;
 }
 
-#product_tb label {
+#product_tb label, #bonus_tb label {
 	width: auto;
 }
 
-#bonus_tb label {
-	float: none;
+#bonus_tb > * {
+	float: left;
+}
+
+#bonus_tb div {
+	position: relative;
 }
 
 #search_product > * {
@@ -299,6 +309,12 @@ input[type="text"], input[type="password"] {
 
 #product_tb > div > * {
 	float: left;
+}
+
+#bonus_tb div span {
+	position: absolute;
+	top: -1.2em;
+	left: 0;
 }
 
 #dates_range div span {

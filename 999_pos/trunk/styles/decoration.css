@@ -170,7 +170,7 @@ a:hover {
 	border-width: 1px;
 }
 
-#dates_range div span {
+.hint {
 	color: gray;
 }
 
