@@ -27,6 +27,6 @@ var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequest
   			disabled="disabled"
   		{/if} />
   	<input name="form_widget" id="undo" type="button" value="Cancelar"
-  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link}{/if}');"
+  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link|cat:'&id='|cat:$id}{/if}');"
   			{if $status eq 1}disabled="disabled"{/if} />
 </fieldset>
