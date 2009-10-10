@@ -4,12 +4,12 @@
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/search_product.js"></script>
 <script type="text/javascript" src="../scripts/search_product_details.js"></script>
-<script type="text/javascript" src="../scripts/search_product_menu.js"></script>
+<script type="text/javascript" src="../scripts/search_product_bonus.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oEventDelegator = new EventDelegator();
 	var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
-	var oSearchDetails = new SearchProductMenu(oSession, oSearchProduct, oEventDelegator);
+	var oSearchDetails = new SearchProductBonus(oSession, oSearchProduct, oEventDelegator);
 </script>
 <div id="third_menu">
 	<ul>
