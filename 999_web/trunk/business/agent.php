@@ -315,8 +315,8 @@ abstract class Organization extends Identifier{
 	 * @param string $nit
 	 */
 	public function setNit($nit){
-		String::validateNit($nit, 'Nit inv&aacute;lido.');			
 		$this->_mNit = $nit;
+		String::validateNit($nit, 'Nit inv&aacute;lido.');
 	}
 	
 	/**
@@ -325,8 +325,8 @@ abstract class Organization extends Identifier{
 	 * @param string $telephone
 	 */
 	public function setTelephone($telephone){
-		String::validateString($telephone, 'Telefono inv&aacute;lido.');			
 		$this->_mTelephone = $telephone;
+		String::validateString($telephone, 'Telefono inv&aacute;lido.');
 	}
 	
 	/**
@@ -335,8 +335,8 @@ abstract class Organization extends Identifier{
 	 * @param string $address
 	 */
 	public function setAddress($address){
-		String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');			
 		$this->_mAddress = $address;
+		String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
 	}
 	
 	/**
@@ -345,10 +345,9 @@ abstract class Organization extends Identifier{
 	 * @param string $email
 	 */
 	public function setEmail($email){
+		$this->_mEmail = $email;
 		if($email != '')
 			$this->validateEmail($email);
-		
-		$this->_mEmail = $email;
 	}
 	
 	/**
@@ -416,6 +415,8 @@ abstract class Organization extends Identifier{
 		String::validateNit($this->_mNit, 'Nit inv&aacute;lido.', 'nit');
 		String::validateString($this->_mTelephone, 'Telefono inv&aacute;lido.', 'telephone');
 		String::validateString($this->_mAddress, 'Direcci&oacute;n inv&aacute;lida.', 'address');
+		if(!is_null($this->_mEmail) && $this->_mEmail != '')
+			$this->validateEmail($this->_mEmail);
 	}
 	
 	/**
@@ -429,7 +430,7 @@ abstract class Organization extends Identifier{
 	private function validateEmail($email){
 		$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/';
 		if(!preg_match($pattern, $email))
-			throw new ValidateException('Email inv&aacute;lido. Ejemplo: fulano@dominio.com');
+			throw new ValidateException('Email inv&aacute;lido. Ejemplo: fulano@dominio.com', 'email');
 	}
 }
 
