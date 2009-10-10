@@ -90,7 +90,7 @@
 		  		<select name="form_widget" id="organization_id"
 		  			onblur="oSetOrganization.execute('set_supplier_document', this.value, this.id);">
 	    			{section name=i loop=$supplier_list}
-	    				<option value="{$supplier_list[i].supplier_id}">
+	    				<option value="{$supplier_list[i].id}">
 	    					{$supplier_list[i].name}
 	    				</option>
 	    			{/section}

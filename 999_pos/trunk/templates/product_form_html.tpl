@@ -119,7 +119,7 @@
 			  		<label for="supplier_id">Proveedor:</label>
 			  		<select name="form_widget" id="supplier_id" {if $status eq 1}disabled="disabled"{/if}>
 		    			{section name=i loop=$supplier_list}
-		    				<option value="{$supplier_list[i].supplier_id}">
+		    				<option value="{$supplier_list[i].id}">
 		    					{$supplier_list[i].name}
 		    				</option>
 		    			{/section}

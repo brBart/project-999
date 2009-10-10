@@ -48,8 +48,8 @@
 	    		<label for="supplier_id">Proveedor:</label>
 	    		<select name="supplier_id" id="supplier_id">
 	    			{section name=i loop=$supplier_list}
-	    				<option value="{$supplier_list[i].supplier_id}"
-	    					{if $supplier_list[i].supplier_id eq $supplier_id}selected="selected"{/if}>
+	    				<option value="{$supplier_list[i].id}"
+	    					{if $supplier_list[i].id eq $supplier_id}selected="selected"{/if}>
 	    					{$supplier_list[i].name}
 	    				</option>
 	    			{/section}
