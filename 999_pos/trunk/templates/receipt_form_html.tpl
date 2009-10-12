@@ -43,20 +43,7 @@
 </script>
 <div id="content">
 	<div id="frm" class="content_large">
-		<fieldset id="status_bar">
-			<p>
-				<label>Status:</label>
-				<span id="status_label" {if $status eq 2}class="cancel_status"{/if}>
-					{if $status eq 0}
-						Creando...
-					{elseif $status eq 1}
-						Cerrado
-					{else}
-						Anulado
-					{/if}
-				</span>
-			</p>
-		</fieldset>
+		{include file='status_bar_doc_html.tpl'}
 		<fieldset id="header_data">
 			<p>
 				<label>Recibo No:</label><span>{$id}&nbsp;</span>
