@@ -44,17 +44,7 @@
 <div id="content">
 	<div id="frm" class="content_large">
 		{include file='status_bar_doc_html.tpl'}
-		<fieldset id="header_data">
-			<p>
-				<label>Recibo No:</label><span>{$id}&nbsp;</span>
-			</p>
-			<p>
-				<label>Fecha:</label><span>{$date_time}</span>
-			</p>
-			<p>
-				<label>Usuario:</label><span>{$username}</span>
-			</p>
-		</fieldset>
+		{include file='header_data_html.tpl' document_name='Recibo'}
 		<fieldset id="main_data">
 			<p>
 		  		<label for="organization_id">Proveedor:{if $status eq 0}*{/if}</label>
