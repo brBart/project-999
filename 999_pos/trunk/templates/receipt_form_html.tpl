@@ -27,9 +27,7 @@
 	{if $status eq 0}
 	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
-	var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails);
-	var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	{literal}
 	// For the delete key pressed.
 	oDetails.mDeleteFunction = function(sCmd){oDeleteProductReceipt.execute(sCmd);}
@@ -90,41 +88,7 @@
 		  	{/if}
 		  	<div id="details"></div>
 		</fieldset>
-		<fieldset id="controls">
-			{if $status eq 0}
-		  	<input name="form_widget" id="save" type="button" value="Guardar"
-		  			onclick="if(confirm('Una vez guardado el documento no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$foward_link}');" />
-		  	<input name="form_widget" id="undo" type="button" value="Cancelar"
-		  			onclick="oDiscard.execute('{$back_link}');" />
-		  	{else}
-		  	<input name="form_widget" id="cancel" type="button" value="Anular"
-		  			onclick="oCancel.showForm();" {if $status eq 2}disabled="disabled"{/if} />
-		  	<input name="form_widget" id="print" type="button" value="Imprimir"
-		  			onclick="window.open('index.php?cmd=print_receipt&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
-		  	{/if}
-		</fieldset>
-		{if $status eq 1}
-		<div id="authenticate_form" class="hidden">
-			<div>
-				<fieldset>
-					<legend>Autorizaci&oacute;n</legend>
-				  	<p>
-						<label for="username">Usuario:</label>
-						<input name="username" id="username" type="text" maxlength="20" />
-				  	</p>
-				  	<p>
-						<label for="password">Contrase&ntilde;a:</label>
-						<input name="password" id="password" type="password" maxlength="20" />
-				  	</p>
-				  	<div id="mini_console"></div>
-				  	<p>
-						<input id="authenticate" type="button" value="Aceptar" onclick="oCancel.execute('cancel_receipt');" />
-						<input id="return" type="button" value="Cancelar" onclick="oCancel.hideForm();" />
-				  	</p>
-				 </fieldset>
-			 </div>
-		</div>
-		{/if}
+		{include file='controls_doc_html.tpl'}
 	</div>
 </div>
 <script type="text/javascript">
@@ -135,9 +99,4 @@ oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
 {/if}
 oDetails.getLastPage();
-{if $status eq 1}
-var miniConsole = new Console('mini_console');
-var oCancel = new CancelDocumentCommand(oSession, miniConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine);
-oCancel.init('authenticate_form', 'username', 'password');
-{/if}
 </script>
