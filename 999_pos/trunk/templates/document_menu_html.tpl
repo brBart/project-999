@@ -1,17 +1,17 @@
 {* Smarty * }
 <div id="third_menu">
 	<ul>
-	    <li><a href="index.php?cmd=create_receipt" onclick="return oSession.setIsLink(true);">Crear</a></li>
+	    <li><a href="{$create_link}" onclick="return oSession.setIsLink(true);">Crear</a></li>
 	    <li>
-	    	<form method="post" action="index.php?cmd=get_receipt" onsubmit="return oSession.setIsLink(true);">
-	    		<label for="receipt_id">Recibo No:</label>
+	    	<form method="post" action="{$get_link}" onsubmit="return oSession.setIsLink(true);">
+	    		<label for="receipt_id">Documento No:</label>
 	    		<input name="id" id="receipt_id" type="text" value="{$id}" maxlength="11" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>
 	    <li id="li_last">
 	    	<div id="dates_range">
-		    	<form method="post" action="index.php?cmd=search_receipt&page=1"
+		    	<form method="post" action="{$search_link}"
 		    			onsubmit="return oSession.setIsLink(true);">
 		    		<div>
 			    		<label for="start_date">Fecha inicial:</label>
