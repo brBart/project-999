@@ -29,7 +29,8 @@ class ShowEntryAdjustmentMenuCommand extends Command{
 		$back_trace = array('Inicio', 'Movimientos', 'Vales de Entrada');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
-				'content' => 'document_menu_html.tpl', 'create_link' => 'index.php?cmd=create_entry_adjustment',
+				'content' => 'document_menu_html.tpl', 'document_name' => 'Vale de Entrada',
+				'create_link' => 'index.php?cmd=create_entry_adjustment',
 				'get_link' => 'index.php?cmd=get_entry_adjustment',
 				'search_link' => 'index.php?cmd=search_entry_adjustment&page=1'), 'site_html.tpl');
 	}
