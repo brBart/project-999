@@ -228,7 +228,7 @@ class Inventory{
 	 */
 	static public function getNegativeLots(Product $product, $reqUnitsQuantity){
 		Persist::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($reqUnitsQuantity, 'Cantidad inv&aacute;lida.');
+		Number::validatePositiveNumber($reqUnitsQuantity, 'Cantidad inv&aacute;lida.', 'quantity');
 		
 		// Get the negative lots from the database.
 		$negative_lots = InventoryDAM::getNegativeLots($product);
@@ -1406,7 +1406,7 @@ class Lot extends Persist{
 	 * @param float $price
 	 */
 	public function setPrice($price){
-		Number::validateUnsignedFloat($price, 'Precio inv&aacute;lido.');
+		Number::validateUnsignedNumber($price, 'Precio inv&aacute;lido.', 'price');
 		
 		if($this->_mStatus == Persist::CREATED){
 			LotDAM::setPrice($this, $price);
@@ -1425,7 +1425,7 @@ class Lot extends Persist{
 	 */
 	public function setExpirationDate($date){
 		if($date != '')
-			Date::validateDate($date, 'Fecha de vencimiento inv&aacute;lida.');
+			Date::validateDate($date, 'Fecha de vencimiento inv&aacute;lida.', 'expiration_date');
 		
 		if($this->_mStatus == Persist::CREATED){
 			LotDAM::setExpirationDate($this, $date);
