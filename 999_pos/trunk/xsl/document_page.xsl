@@ -3,7 +3,6 @@
 	<xsl:param name="status" />
 	<xsl:param name="details_obj" />
 	<xsl:param name="delete_obj" />
-	<xsl:param name="delete_cmd" />
 	<xsl:template match="/">  
 		<table>
 			<xsl:if test="$status > 0">
@@ -35,7 +34,7 @@
 			                  	<xsl:attribute name="type">button</xsl:attribute>
 			                  	<xsl:attribute name="value">Quitar</xsl:attribute>
 			                  	<xsl:attribute name="onclick">
-			                  		<xsl:value-of select="$delete_obj" />.execute('<xsl:value-of select="$delete_cmd" />');
+			                  		<xsl:value-of select="$delete_obj" />.execute();
 			                  	</xsl:attribute>
 			                  	<xsl:attribute name="onfocus">this.blur();</xsl:attribute>
 			                  	<xsl:attribute name="disabled">disabled</xsl:attribute>

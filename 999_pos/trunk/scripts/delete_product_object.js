@@ -12,10 +12,11 @@
  * @param {XmlHttpRequest} oRequest
  * @param {String} sKey
  * @param {DocumentPage} oDetails
+ * @param {String} sCmd
  */
-function DeleteProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
+function DeleteProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails, sCmd){
 	// Call the parent constructor.
-	DeleteDetailCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails);
+	DeleteDetailCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails, sCmd);
 }
 
 /**

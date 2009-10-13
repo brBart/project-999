@@ -3,7 +3,6 @@
 	<xsl:param name="status" />
 	<xsl:param name="details_obj" />
 	<xsl:param name="delete_obj" />
-	<xsl:param name="delete_cmd" />
 	<xsl:template match="/">  
 		<table class="read_only">
 	     	<caption>

@@ -23,10 +23,10 @@
 	{if $status eq 0}
 	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
-	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails);
+	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_receipt');
 	{literal}
 	// For the delete key pressed.
-	oDetails.mDeleteFunction = function(sCmd){oDeleteProductObj.execute(sCmd);}
+	oDetails.mDeleteFunction = function(){oDeleteProductObj.execute();}
 	{/literal}
 	{/if}
 	{literal}
@@ -90,7 +90,7 @@
 <script type="text/javascript">
 {if $status eq 0}
 StateMachine.setFocus('organization_id');
-oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj', 'delete_product_receipt');
+oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
 {else}
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
 {/if}

@@ -109,12 +109,6 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
 	this._mDeleteObj = '';
 	
 	/**
-	 * Holds the name of the command to use on the server for deleting a detail.
-	 * @type String
-	 */
-	this._mDeleteCmd = '';
-	
-	/**
 	 * Holds the actual page number.
 	 * @type Integer
 	 */
@@ -134,10 +128,8 @@ Details.prototype = new SyncCommand();
  * @param {String} sNextWidget The id of the input element next to the details div element.
  * @param {String} sDetailsObj Name of the variable on the html document which holds the instance of this class.
  * @param {String} sDeleteObj Name of the variable which holds the object in charge of the deleting a detail.
- * @param {String} sDeleteCmd Name of the command to use on the server for deleting a detail.
  */
-Details.prototype.init = function(sUrlXsltFile, sDiv, sDetailsObj, sPrevWidget, sNextWidget, sDeleteObj,
-		sDeleteCmd){
+Details.prototype.init = function(sUrlXsltFile, sDiv, sDetailsObj, sPrevWidget, sNextWidget, sDeleteObj){
 	// Register with the event delegator.
 	this._mEventDelegator.registerObject(this);
 	
@@ -159,9 +151,8 @@ Details.prototype.init = function(sUrlXsltFile, sDiv, sDetailsObj, sPrevWidget, 
 	
 	// Set for use in the xslt processor.
 	this._mDetailsObj = sDetailsObj;
-	// Set only if the arguments are passed.
+	// Set only if the argument is passed.
 	this._mDeleteObj = (sDeleteObj == null) ? '' : sDeleteObj;
-	this._mDeleteCmd = (sDeleteCmd == null) ? '' : sDeleteCmd;
 	
 	// load the file from the server
 	this._mRequest.open("GET", sUrlXsltFile, false);        
@@ -300,7 +291,6 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	xsltProcessor.setParameter(null, 'status', this._mMachine.getStatus());
     	xsltProcessor.setParameter(null, 'details_obj', this._mDetailsObj);
     	xsltProcessor.setParameter(null, 'delete_obj', this._mDeleteObj);
-    	xsltProcessor.setParameter(null, 'delete_cmd', this._mDeleteCmd);
     	
     	// generate the HTML code for the new page of products
     	page = xsltProcessor.transformToFragment(xmlResponse, document);
@@ -328,7 +318,6 @@ Details.prototype.displaySuccess = function(xmlDoc){
     	xsltProcessor.addParameter('status', this._mMachine.getStatus());
     	xsltProcessor.addParameter('details_obj', this._mDetailsObj);
     	xsltProcessor.addParameter('delete_obj', this._mDeleteObj);
-    	xsltProcessor.addParameter('delete_cmd', this._mDeleteCmd);
     	
     	xsltProcessor.transform();
     	// display the page of products
@@ -614,5 +603,5 @@ Details.prototype.getPageNumber = function(){
  * Abstract method.
  */
 Details.prototype.deleteDetail = function(){
-	 this.mDeleteFunction(this._mDeleteCmd);
+	 this.mDeleteFunction();
 }

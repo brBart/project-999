@@ -18,13 +18,13 @@
 	var oEventDelegator = new EventDelegator();
 	var oProductSuppliers = new ObjectDetails(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_suppliers');
 	var oAddSupplierProduct = new AddSupplierProductCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oProductSuppliers);
-	var oDeleteSupplierProduct = new DeleteSupplierProductCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oProductSuppliers);
+	var oDeleteSupplierProduct = new DeleteSupplierProductCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oProductSuppliers, 'delete_supplier_product');
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
 	}
 	// For the delete key pressed. 
-	oProductSuppliers.mDeleteFunction = function(sCmd){oDeleteSupplierProduct.execute(sCmd);}
+	oProductSuppliers.mDeleteFunction = function(){oDeleteSupplierProduct.execute();}
 	{/literal}
 </script>
 <div id="content">
@@ -145,6 +145,6 @@ StateMachine.setFocus('name');
 {/if}
 oAddSupplierProduct.init('supplier_id', 'product_sku');
 oEventDelegator.init();
-oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'oProductSuppliers', 'add_supplier', 'save', 'oDeleteSupplierProduct', 'delete_supplier_product');
+oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'oProductSuppliers', 'add_supplier', 'save', 'oDeleteSupplierProduct');
 oProductSuppliers.update();
 </script>

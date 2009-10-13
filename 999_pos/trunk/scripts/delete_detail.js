@@ -12,8 +12,9 @@
  * @param {XmlHttpRequest} oRequest
  * @param {String} sKey
  * @param {Details} oDetails
+ * @param {String} sCmd
  */
-function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails){
+function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails, sCmd){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -28,6 +29,12 @@ function DeleteDetailCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	 * @type ProductSuppliers
 	 */
 	this._mDetails = oDetails;
+	
+	/**
+	 * Holds the command name on the server.
+	 * @type String
+	 */
+	this._mCmd = sCmd;
 	
 	/**
 	 * Holds the row position before the deletion.
@@ -49,20 +56,15 @@ DeleteDetailCommand.prototype = new SyncCommand();
 
 /**
  * Executes the command.
- * @param {String} sCmd The name of the command to execute on the server.
  */
-DeleteDetailCommand.prototype.execute = function(sCmd){
-	if(sCmd == '')
-		this._mConsole.displayError('Interno: Argumentos sCmd inv&aacute;lido.');
-	else{
-		sDetailId = this._mDetails.getDetailId();
-		if(sDetailId != ''){
-			this._mRowPos = this._mDetails.getPosition();
-			this._mPage = this._mDetails.getPageNumber();
-			var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
-			str = Url.addUrlParam(str, 'key', this._mKey);
-			str = Url.addUrlParam(str, 'detail_id', sDetailId);
-			this.sendRequest(str);
-		}
+DeleteDetailCommand.prototype.execute = function(){
+	sDetailId = this._mDetails.getDetailId();
+	if(sDetailId != ''){
+		this._mRowPos = this._mDetails.getPosition();
+		this._mPage = this._mDetails.getPageNumber();
+		var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
+		str = Url.addUrlParam(str, 'key', this._mKey);
+		str = Url.addUrlParam(str, 'detail_id', sDetailId);
+		this.sendRequest(str);
 	}
 }

@@ -55,18 +55,14 @@ AddProductEntryCommand.prototype.init = function(sBarCode, sQuantity, sProductNa
 /**
  * Executes the command. Sends the quantity, price, expiration date and bar code.
  */
-AddProductEntryCommand.prototype.execute = function(sCmd){
-	 if(sCmd == '')
-			this._mConsole.displayError('Interno: Argumento sCmd inv&aacute;lido.');
-	 else{
-		 var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
-		 str = Url.addUrlParam(str, 'key', this._mKey);
-		 str = Url.addUrlParam(str, 'quantity', this._mQuantity.value);
-		 str = Url.addUrlParam(str, 'price', this._mPrice.value);
-		 str = Url.addUrlParam(str, 'expiration_date', this._mExpirationDate.value);
-		 str = Url.addUrlParam(str, 'bar_code', this._mBarCode.value);
-		 this.sendRequest(str);
-	 }
+AddProductEntryCommand.prototype.execute = function(){
+	 var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
+	 str = Url.addUrlParam(str, 'key', this._mKey);
+	 str = Url.addUrlParam(str, 'quantity', this._mQuantity.value);
+	 str = Url.addUrlParam(str, 'price', this._mPrice.value);
+	 str = Url.addUrlParam(str, 'expiration_date', this._mExpirationDate.value);
+	 str = Url.addUrlParam(str, 'bar_code', this._mBarCode.value);
+	 this.sendRequest(str);
 }
 
 /**

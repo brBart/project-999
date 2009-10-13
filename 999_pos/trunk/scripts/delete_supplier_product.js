@@ -12,10 +12,11 @@
  * @param {XmlHttpRequest} oRequest
  * @param {String} sKey
  * @param {ProductSuppliers} oProductSuppliers
+ * @param {String} sCmd
  */
-function DeleteSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductSuppliers){
+function DeleteSupplierProductCommand(oSession, oConsole, oRequest, sKey, oProductSuppliers, sCmd){
 	// Call the parent constructor.
-	DeleteDetailCommand.call(this, oSession, oConsole, oRequest, sKey, oProductSuppliers);
+	DeleteDetailCommand.call(this, oSession, oConsole, oRequest, sKey, oProductSuppliers, sCmd);
 }
 
 /**
