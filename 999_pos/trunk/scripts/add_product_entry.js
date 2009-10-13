@@ -12,10 +12,11 @@
  * @param {XmlHttpRequest} oRequest
  * @param {String} sKey
  * @param {ObjectPage} oDetails
+ * @param {String} sCmd
  */
-function AddProductEntryCommand(oSession, oConsole, oRequest, sKey, oDetails){
+function AddProductEntryCommand(oSession, oConsole, oRequest, sKey, oDetails, sCmd){
 	// Call the parent constructor.
-	AddProductObjectCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails);
+	AddProductObjectCommand.call(this, oSession, oConsole, oRequest, sKey, oDetails, sCmd);
 	
 	/**
 	 * Holds a reference to the price input element.
@@ -53,13 +54,12 @@ AddProductEntryCommand.prototype.init = function(sBarCode, sQuantity, sProductNa
 
 /**
  * Executes the command. Sends the quantity, price, expiration date and bar code.
- * @param {String} sCmd The name of the command on the server.
  */
 AddProductEntryCommand.prototype.execute = function(sCmd){
 	 if(sCmd == '')
 			this._mConsole.displayError('Interno: Argumento sCmd inv&aacute;lido.');
 	 else{
-		 var str = Url.addUrlParam(Url.getUrl(), 'cmd', sCmd);
+		 var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
 		 str = Url.addUrlParam(str, 'key', this._mKey);
 		 str = Url.addUrlParam(str, 'quantity', this._mQuantity.value);
 		 str = Url.addUrlParam(str, 'price', this._mPrice.value);

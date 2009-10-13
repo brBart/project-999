@@ -50,7 +50,7 @@
 		  		{/if}
 		  	</p>
 		  	{if $status eq 0}
-		  		{include file='entry_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}
+		  		{include file='entry_toolbar_html.tpl' details_obj='oDetails' add_cmd='add_product_entry_adjustment' event_delegator_obj='oEventDelegator'}
 		  	{else}
 		  		{* Because Firefox css rule margin-top on table rule bug. *}
 		  		<p>&nbsp;</p>

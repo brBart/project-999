@@ -13,7 +13,7 @@ var oQuantity = new ToolbarText();
 var oPrice = new ToolbarText();
 var oExpirationDate = new ToolbarDate();
 var oBarCode = new ToolbarBarCode();
-var oAddProductObj = new AddProductEntryCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj});
+var oAddProductObj = new AddProductEntryCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj}, '{$add_cmd}');
 var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
 var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_delegator_obj});
 </script>
@@ -41,7 +41,7 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
 	    	</div>
     	</div>
   		<input name="form_widget" id="add_product" type="button" value="Agregar"
-  			onclick="oAddProductReceipt.execute('add_product_receipt');" />
+  			onclick="oAddProductObj.execute();" />
 		<span id="receipt_product-failed" class="hidden">*</span>
 	</div>
 </div>

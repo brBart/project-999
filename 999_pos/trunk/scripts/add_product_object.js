@@ -12,8 +12,9 @@
  * @param {XmlHttpRequest} oRequest
  * @param {String} sKey
  * @param {ObjectPage} oDetails
+ * @param {String} sCmd
  */
-function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
+function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails, sCmd){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -28,6 +29,12 @@ function AddProductObjectCommand(oSession, oConsole, oRequest, sKey, oDetails){
 	 * @type ObjectPage
 	 */
 	this._mDetails = oDetails;
+	
+	/**
+	 * Holds the name of the command on the server.
+	 * @type String
+	 */
+	this._mCmd = sCmd;
 	
 	/**
 	 * Holds a reference to the bar code input element.

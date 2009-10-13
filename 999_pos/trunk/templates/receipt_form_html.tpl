@@ -23,10 +23,10 @@
 	{if $status eq 0}
 	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
-	var oDeleteProductReceipt = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails);
+	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails);
 	{literal}
 	// For the delete key pressed.
-	oDetails.mDeleteFunction = function(sCmd){oDeleteProductReceipt.execute(sCmd);}
+	oDetails.mDeleteFunction = function(sCmd){oDeleteProductObj.execute(sCmd);}
 	{/literal}
 	{/if}
 	{literal}
@@ -77,7 +77,7 @@
 		  		{/if}
 		  	</p>
 		  	{if $status eq 0}
-		  		{include file='entry_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}
+		  		{include file='entry_toolbar_html.tpl' details_obj='oDetails' add_cmd='add_product_receipt' event_delegator_obj='oEventDelegator'}
 		  	{else}
 		  		{* Because Firefox css rule margin-top on table rule bug. *}
 		  		<p>&nbsp;</p>
@@ -90,7 +90,7 @@
 <script type="text/javascript">
 {if $status eq 0}
 StateMachine.setFocus('organization_id');
-oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductReceipt', 'delete_product_receipt');
+oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj', 'delete_product_receipt');
 {else}
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
 {/if}
