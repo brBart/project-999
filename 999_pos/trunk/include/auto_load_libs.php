@@ -49,6 +49,10 @@ function __autoload($className){
 			require_once('business/product.php');
 			break;
 			
+		case 'EntryIA':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
