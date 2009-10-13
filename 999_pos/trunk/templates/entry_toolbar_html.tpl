@@ -13,7 +13,7 @@ var oQuantity = new ToolbarText();
 var oPrice = new ToolbarText();
 var oExpirationDate = new ToolbarDate();
 var oBarCode = new ToolbarBarCode();
-var oAddProductReceipt = new AddProductEntryCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj});
+var oAddProductObj = new AddProductEntryCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj});
 var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
 var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_delegator_obj});
 </script>
@@ -52,5 +52,5 @@ oPrice.init('price', 'expiration_date');
 oExpirationDate.init('expiration_date', 'bar_code');
 oBarCode.init('bar_code', 'add_product');
 oSearchDetails.init('product_name', 'oSearchDetails', 'bar_code');
-oAddProductReceipt.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
+oAddProductObj.init('bar_code', 'quantity', 'product_name', 'price', 'expiration_date');
 </script>
