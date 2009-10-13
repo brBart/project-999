@@ -25,7 +25,7 @@
 	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails);
 	{literal}
 	// For the delete key pressed.
-	oDetails.mDeleteFunction = function(sCmd){oDeleteProductReceipt.execute(sCmd);}
+	oDetails.mDeleteFunction = function(sCmd){oDeleteProductObj.execute(sCmd);}
 	{/literal}
 	{/if}
 	{literal}
