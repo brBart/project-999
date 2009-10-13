@@ -25,10 +25,10 @@ function Details(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
 	this.mWasClicked = false;
 	
 	/**
-	 * Holds the delete function to executed in case of deletion.
+	 * Holds the delete object to execute in case of deletion.
 	 * @type Object
 	 */
-	this.mDeleteFunction = null;
+	this.mDeleteObj = null;
 	
 	/**
 	 * Holds the key of the session object.
@@ -600,8 +600,8 @@ Details.prototype.getPageNumber = function(){
 }
 
 /**
- * Abstract method.
+ * Executes the delete object.
  */
 Details.prototype.deleteDetail = function(){
-	 this.mDeleteFunction();
+	 this.mDeleteObj.execute();
 }

@@ -23,10 +23,8 @@
 	{if $status eq 0}
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_entry_adjustment');
-	{literal}
 	// For the delete key pressed.
-	oDetails.mDeleteFunction = function(){oDeleteProductObj.execute();}
-	{/literal}
+	oDetails.mDeleteObj = oDeleteProductObj;
 	{/if}
 	{literal}
 	window.onunload = function(){
