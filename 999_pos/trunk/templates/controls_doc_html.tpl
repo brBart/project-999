@@ -1,11 +1,12 @@
 {* Smarty *}
-<script type="text/javascript">
 {if $status eq 0}
+<script type="text/javascript" src="../scripts/save.js"></script>
+<script type="text/javascript" src="../scripts/discard_document.js"></script>
+<script type="text/javascript">
 var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
-{else}
-{/if}
 </script>
+{/if}
 <fieldset id="controls">
 	{if $status eq 0}
   	<input name="form_widget" id="save" type="button" value="Guardar"
@@ -20,6 +21,7 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
   	{/if}
 </fieldset>
 {if $status eq 1}
+<script type="text/javascript" src="../scripts/cancel_document.js"></script>
 <div id="authenticate_form" class="hidden">
 	<div>
 		<fieldset>

@@ -9,13 +9,9 @@
 {if $status eq 0}
 <script type="text/javascript" src="../scripts/set_organization.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
-<script type="text/javascript" src="../scripts/save.js"></script>
 <script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript" src="../scripts/delete_product_object.js"></script>
-<script type="text/javascript" src="../scripts/discard_document.js"></script>
-{elseif $status eq 1}
-<script type="text/javascript" src="../scripts/cancel_document.js"></script>
 {/if}
 <script type="text/javascript">
 	var oConsole = new Console('console');
