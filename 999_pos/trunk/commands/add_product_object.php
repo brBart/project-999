@@ -53,7 +53,13 @@ abstract class AddProductObjectCommand extends Command{
 						'quantity');
 			
 			$obj = $helper->getObject((int)$this->_mRequest->getProperty('key'));
-			$this->addProduct($obj, $product, $quantity);
+			$this->addProduct($obj, $product, $quantity, $msg);
+			
+			if($msg != ''){
+				// If there is a message to inform to the user.
+				Page::display(array('message' => $msg), 'info_xml.tpl');
+				return;
+			}
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			$element_id = $e->getProperty();
@@ -75,7 +81,8 @@ abstract class AddProductObjectCommand extends Command{
 	 * @param variant $obj
 	 * @param Product $product
 	 * @param integer $quantity
+	 * @param string &$msg
 	 */
-	abstract protected function addProduct($obj, Product $product, $quantity);
+	abstract protected function addProduct($obj, Product $product, $quantity, &$msg);
 }
 ?>

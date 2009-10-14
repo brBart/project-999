@@ -30,8 +30,9 @@ class AddProductReceiptCommand extends AddProductObjectCommand{
 	 * @param variant $obj
 	 * @param Product $product
 	 * @param integer $quantity
+	 * @param string &$msg
 	 */
-	protected function addProduct($obj, Product $product, $quantity){
+	protected function addProduct($obj, Product $product, $quantity, &$msg){
 		$price = $this->_mRequest->getProperty('price');
 		$expiration_date = $this->_mRequest->getProperty('expiration_date');
 		EntryEvent::apply($product, $obj, $quantity, $price, $expiration_date);
