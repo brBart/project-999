@@ -85,8 +85,8 @@ class EntryAdjustmentEvent extends EntryEvent{
 					$lot->setNegativeQuantity(-1 * $lot_quantity);
 				}
 				
-				$msg = 'Lote ' . $lot->getId() . ' del producto agregado contiene un saldo negativo. No se ha ' .
-						'creado un nuevo lote para poder este ser ajustado.';
+				$msg = 'Lote ' . $lot->getId() . ' del producto ' . $product->getName() . ', contiene un ' .
+						'saldo negativo. No se ha creado un nuevo lote para poder este ser ajustado.';
 			}
 			else{
 				// Lot is not a NegativeLot.
