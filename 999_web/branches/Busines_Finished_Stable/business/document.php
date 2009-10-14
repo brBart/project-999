@@ -1976,7 +1976,7 @@ class PurchaseReturn extends Document{
 	public function discard(){
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			foreach($this->_mDetails as &$detail)
-				StrictWithdrawEvent::cancel($this, $detail);
+				WithdrawEvent::cancel($this, $detail);
 	}
 	
 	/**
