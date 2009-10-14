@@ -215,8 +215,6 @@ abstract class Document extends PersistDocument implements Itemized{
 	/**
 	 * Removes the detail from the document.
 	 *
-	 * If the detail has a negative lot, this will be modified to its original state meaning that its quantity
-	 * will be returned to its negative value before it was modified by the EntryAdjustmentEvent class. Sorry.
 	 * @param DocumentDetail $purgeDetail
 	 */
 	public function deleteDetail(DocumentDetail $purgeDetail){
@@ -2448,7 +2446,7 @@ class EntryIA extends AdjustmentDocument{
 	public function discard(){
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			foreach($this->_mDetails as &$detail)
-				EntryAdjustmentEvent::cancel($this, $detail);
+				EntryEvent::cancel($this, $detail);
 	}
 	
 	/**
