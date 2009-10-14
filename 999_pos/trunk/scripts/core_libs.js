@@ -14,6 +14,12 @@ function Console(sConsole){
 	 * @type HtmlElement
 	 */
 	this._mElementDiv = document.getElementById(sConsole);
+	 
+	/**
+	 * Holds the info timeout id.
+	 * @type Integer
+	 */
+	this._mInfoTimeoutId = 0;
 }
 
 /**
@@ -52,6 +58,38 @@ Console.prototype.displayError = function(sMsg){
 	var newP = '<p id="error" class="error">' + sMsg + '</p>';
 	// Display the error message.
 	this.displayMessage(newP);
+}
+
+/**
+ * Displays an info message for a short period of time.
+ * @param {String} sMsg
+ */
+Console.prototype.displayInfo = function(sMsg){
+	// Clear any timeout that was already waiting.
+	if(this._mInfoTimeoutId != 0)
+		clearTimeout(this._mTimeoutId);
+	
+	var elementP = document.getElementById('info');
+	// If there was a message.
+	if(elementP)
+		this._mElementDiv.removeChild(elementP);
+	
+	var newP = '<p id="info" class="info">' + sMsg + '</p>';
+	// Display the error message.
+	this.displayMessage(newP);
+	
+	// Clean the info message in 12 seconds.
+	oTemp1 = this;
+	this._mInfoTimeoutId = setTimeout('oTemp1.cleanInfo()', 12000);
+}
+
+/**
+ * Cleans an info message from the console.
+ */
+Console.prototype.cleanInfo = function(){
+	var elementP = document.getElementById('info');
+	this._mElementDiv.removeChild(elementP);
+	this._mInfoTimeoutId = 0;
 }
 
 /**
