@@ -53,6 +53,10 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'NegativeLot':
+			require_once('business/product.php');
+			break;
+			
 		default:
 	}
 }
