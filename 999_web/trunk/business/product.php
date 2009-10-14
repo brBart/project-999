@@ -218,52 +218,6 @@ class Inventory{
 	}
 	
 	/**
-	 * Returns the necessary existing lots with negative quantity.
-	 *
-	 * Returns an array including lots with negative quantities. If the requested quantity cannot be fulfilled
-	 * new lots are created and included.
-	 * @param Product $product
-	 * @param integer $reqUnitsQuantity
-	 * @return array<Lot>
-	 */
-	static public function getNegativeLots(Product $product, $reqUnitsQuantity){
-		Persist::validateObjectFromDatabase($product);
-		Number::validatePositiveNumber($reqUnitsQuantity, 'Cantidad inv&aacute;lida.', 'quantity');
-		
-		// Get the negative lots from the database.
-		$negative_lots = InventoryDAM::getNegativeLots($product);
-		// The returned array with the negative lots.
-		$lots = array();
-		
-		$lot = current($negative_lots);
-		do{
-			// Verify the negative quantity of the lot.
-			if(!$lot)
-				$negative = 0;
-			else
-				$negative = abs($lot->getQuantity());
-
-			// If it has a negative quantity but doesn't fulfill the requested quantity.
-			if($negative > 0 && $negative < $reqUnitsQuantity){
-				$lots[] = $lot;
-				$reqUnitsQuantity = $reqUnitsQuantity - $negative;
-			// If it does fulfill the requested quantity.
-			}elseif($negative > 0 && $negative >= $reqUnitsQuantity){
-				$lots[] = $lot;
-				$reqUnitsQuantity = 0;
-			// Otherwise create a new lot.
-			}else {
-				$lots[] = new Lot($product);
-				$reqUnitsQuantity = 0;
-			}
-			
-			$lot = next($negative_lots);
-		} while($reqUnitsQuantity > 0);
-		
-		return $lots;
-	}
-	
-	/**
 	 * Returns an array with the details of the lots.
 	 * 
 	 * The passed parameters are returned with the sum quantity and the sum quantity available of all the
@@ -1521,41 +1475,6 @@ class Lot extends Persist{
 	static public function getInstance($id, Product $product = NULL){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return LotDAM::getInstance($id, $product);
-	}
-}
-
-
-/**
- * Represents a lot with a negative quantity.
- * @package Product
- * @author Roberto Oliveros
- */
-class NegativeLot extends Lot{
-	/**
-	 * Returns the lot's negative quantity.
-	 *
-	 * @return integer
-	 */
-	public function getNegativeQuantity(){
-		if($this->_mStatus == Persist::CREATED)
-			return LotDAM::getNegativeQuantity($this);
-		else
-			return 0;
-	}
-	
-	/**
-	 * Sets the negative quantity.
-	 *
-	 * @param integer $quantity
-	 * @throws Exception
-	 */
-	public function setNegativeQuantity($quantity){
-		if($this->_mStatus == Persist::CREATED){
-			if(!is_int($quantity) || $quantity > 0)
-				throw new Exception('Interno: Cantidad negativa inv&aacute;lida!');
-			
-			LotDAM::UpdateNegativeQuantity($this, $quantity);
-		}
 	}
 }
 
