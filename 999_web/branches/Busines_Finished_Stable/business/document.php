@@ -225,19 +225,8 @@ abstract class Document extends PersistDocument implements Itemized{
 		foreach($this->_mDetails as &$detail)
 			if($detail->getId() != $purgeDetail->getId())
 				$temp_details[] = $detail;
-			else{
+			else
 				$this->_mTotal -= $purgeDetail->getTotal();
-				if($purgeDetail instanceof DocProductDetail){
-					$lot = $purgeDetail->getLot();
-					if($lot instanceof NegativeLot){
-						$negative = $lot->getNegativeQuantity();
-						$lot->decrease(abs($negative));
-						$lot->setNegativeQuantity(0);
-						$lot->setPrice(0.00);
-						$lot->setExpirationDate(NULL);
-					}
-				}
-			}
 				
 		$this->_mDetails = $temp_details;
 	}
@@ -573,7 +562,7 @@ class DocProductDetail extends DocumentDetail{
 	 *
 	 * Warning! if the method is not called from the database layer take note of the following instructions
 	 * please: Note that if the transaction is an instance of Entry class the detail must only receive a
-	 * Persist::IN_PROGRESS Lot or NegativeLot. If it is an instance of Withdraw class, it needs a Reserve
+	 * Persist::IN_PROGRESS Lot. If it is an instance of Withdraw class, it needs a Reserve
 	 * to work. Sorry.
 	 * @param Lot $lot
 	 * @param Transaction $transaction
