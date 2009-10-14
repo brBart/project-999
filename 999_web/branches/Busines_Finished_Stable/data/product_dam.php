@@ -1084,7 +1084,7 @@ class LotDAM{
 				break;
 				
 			case 4320:
-				$lot = new NegativeLot($product, 0, 0.00, NULL, NULL, 4320, Persist::CREATED);
+				$lot = new Lot($product, 0, 0.00, NULL, NULL, 4320, Persist::CREATED);
 				return $lot;
 				break; 
 
