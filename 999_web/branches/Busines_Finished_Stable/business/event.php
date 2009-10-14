@@ -60,6 +60,9 @@ class WithdrawEvent{
 	static public function apply(Product $product, Document $document, $quantity){
 		Persist::validateNewObject($document);
 		
+		if(Inventory::getAvailable($product) < $quantity)
+			throw new Exception('No hay suficiente cantidad disponible.');
+		
 		$lots = Inventory::getLots($product, $quantity);
 		$price = $product->getPrice();
 		
@@ -93,35 +96,6 @@ class WithdrawEvent{
 		$reserve = $detail->getReserve();
 		Reserve::delete($reserve);
 		$document->deleteDetail($detail);
-	}
-}
-
-
-/**
- * Event class for creating withdraw type documents, it verifies the inventory stock.
- * @package Event
- * @author Roberto Oliveros
- */
-class StrictWithdrawEvent extends WithdrawEvent{
-	/**
-	 * Adds detail(s) to the provided document with the provided quantity.
-	 *
-	 * It creates a reserve on each necessary lot until it fulfills the requested quantity. It also verifies
-	 * the inventory stock before taking action, if there is sufficient stock it proceeds.
-	 * @param Product $product
-	 * @param Document $document
-	 * @param integer $quantity
-	 * @throws Exception
-	 */
-	static public function apply(Product $product, Document $document, $quantity){
-		// Validation of the document will be taken by the parent.
-		Persist::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
-		
-		if(Inventory::getAvailable($product) < $quantity)
-			throw new Exception('No hay suficiente cantidad disponible.');
-			
-		parent::apply($product, $document, $quantity);
 	}
 }
 
