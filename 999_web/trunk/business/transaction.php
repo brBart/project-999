@@ -120,32 +120,21 @@ class Entry extends Transaction{
 		$lot = $detail->getLot();
 		$product = $lot->getProduct();
 		
-		if($lot instanceof NegativeLot){
-			$negative = $lot->getNegativeQuantity();
-			Inventory::decrease($product, abs($negative));
-			$lot->decrease(abs($negative));
-			$lot->setNegativeQuantity(0);
-			$lot->setPrice(0.00);
-			$lot->setExpirationDate(NULL);
-		}
-		else{
-			Inventory::decrease($product, $lot->getQuantity());
-			$lot->deactivate();
-		}
+		Inventory::decrease($product, $lot->getQuantity());
+		$lot->deactivate();
 	}
 	
 	/**
 	 * Returns true if this transaction can be cancel.
 	 *
-	 * The transaction can be cancel when the detail's lot is an instance of a NegativeLot or its quantity is
-	 * equal to the detail's quantity.
+	 * The transaction can be cancel when the detail's lot quantity is equal to the detail's quantity.
 	 * @param DocProductDetail $detail
 	 * @return boolean
 	 */
 	public function isCancellable(DocProductDetail $detail){
 		$lot = $detail->getLot();
 		
-		if($lot instanceof NegativeLot || $detail->getQuantity() == $lot->getQuantity())
+		if($detail->getQuantity() == $lot->getQuantity())
 			return true;
 		else
 			return false;
