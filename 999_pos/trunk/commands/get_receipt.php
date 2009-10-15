@@ -60,7 +60,7 @@ class GetReceiptCommand extends GetObjectCommand{
 		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
-				'content' => 'document_menu_html.tpl','document_name' => 'Recibo',
+				'content' => 'document_menu_html.tpl', 'document_name' => 'Recibo',
 				'create_link' => 'index.php?cmd=create_receipt', 'get_link' => 'index.php?cmd=get_receipt',
 				'search_link' => 'index.php?cmd=search_receipt&page=1', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'id' => $id), 'site_html.tpl');
