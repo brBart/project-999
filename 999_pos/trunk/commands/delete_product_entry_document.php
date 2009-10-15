@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the DeleteProductReceiptCommand class.
+ * Library containing the DeleteProductEntryDocumentCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,11 +15,11 @@ require_once('commands/delete_detail_object.php');
 require_once('business/event.php');
 
 /**
- * Defines functionality for deleting a product from a receipt.
+ * Defines functionality for deleting a product from a entry document.
  * @package Command
  * @author Roberto Oliveros
  */
-class DeleteProductReceiptCommand extends DeleteDetailObjectCommand{
+class DeleteProductEntryDocumentCommand extends DeleteDetailObjectCommand{
 	/**
 	 * Returns the detail of the object.
 	 * 

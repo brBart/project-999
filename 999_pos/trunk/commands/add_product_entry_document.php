@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the AddProductReceiptCommand class.
+ * Library containing the AddProductEntryDocumentCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -10,7 +10,7 @@
  */
 require_once('commands/add_product_object.php');
 /**
- * For adding the product to the receipt.
+ * For adding the product to the document.
  */
 require_once('business/event.php');
 /**
@@ -19,7 +19,7 @@ require_once('business/event.php');
 require_once('business/transaction.php');
 
 /**
- * Defines functionality for adding a product to a receipt.
+ * Defines functionality for adding a product to a entry document.
  * @package Command
  * @author Roberto Oliveros
  */
