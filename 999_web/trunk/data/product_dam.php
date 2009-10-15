@@ -212,25 +212,6 @@ class InventoryDAM{
 	}
 	
 	/**
-	 * Returns the lots of the provided product with negative quantities.
-	 *
-	 * Returns an array with all the lots that contains negative quantities.
-	 * @param Product $obj
-	 * @return array<Lot>
-	 */
-	static public function getNegativeLots(Product $obj){
-		$sql = 'CALL product_negative_lot_get(:product_id)';
-		$params = array(':product_id' => $obj->getId());
-		$result = DatabaseHandler::getAll($sql, $params);
-		
-		$lots = array();
-		foreach($result as $lot)
-			$lots[] = Lot::getInstance((int)$lot['lot_id'], $obj);
-			
-		return $lots;
-	}
-	
-	/**
 	 * Increases the product's quantity in the database.
 	 *
 	 * @param Product $product
@@ -611,18 +592,6 @@ class LotDAM{
 	}
 	
 	/**
-	 * Returns the negative quantity of a negative lot.
-	 *
-	 * @param NegativeLot $obj
-	 * @return integer
-	 */
-	static public function getNegativeQuantity(NegativeLot $obj){
-		$sql = 'CALL lot_negative_quantity_get(:lot_id)';
-		$params = array(':lot_id' => $obj->getId());
-		return (int)DatabaseHandler::getOne($sql, $params);
-	}
-	
-	/**
 	 * Deactivates the lot in the database.
 	 *
 	 * Sets the quantity and reserved quantity of the lot to 0.
@@ -708,18 +677,6 @@ class LotDAM{
 	}
 	
 	/**
-	 * Updates the negative quantity of a negative lot.
-	 *
-	 * @param NegativeLot $lot
-	 * @param integer $quantity
-	 */
-	static public function updateNegativeQuantity(NegativeLot $lot, $quantity){
-		$sql = 'CALL lot_negative_quantity_update(:lot_id, :quantity)';
-		$params = array(':lot_id' => $lot->getId(), ':quantity' => $quantity);
-		DatabaseHandler::execute($sql, $params);
-	}
-	
-	/**
 	 * Returns an instance of a lot.
 	 *
 	 * Returns NULL if there was no match for the provided id in the database. The optional argument is the
@@ -736,14 +693,8 @@ class LotDAM{
 			if(is_null($product) || $product->getId() != $result['product_id'])
 				$product = Product::getInstance((int)$result['product_id']);
 			
-			$quantity = (int)$result['quantity'];
-			$negative = (int)$result['negative_quantity'];
-			if($quantity < 0 || $negative < 0)
-				$lot = new NegativeLot($product, $quantity, (float)$result['price'], $result['expiration_date'],
-						$result['entry_date'], $id, Persist::CREATED);
-			else
-				$lot = new Lot($product, $quantity, (float)$result['price'], $result['expiration_date'],
-						$result['entry_date'], $id, Persist::CREATED);
+			$lot = new Lot($product, 0, (float)$result['price'], $result['expiration_date'],
+					$result['entry_date'], $id, Persist::CREATED);
 			
 			return $lot;
 		}
