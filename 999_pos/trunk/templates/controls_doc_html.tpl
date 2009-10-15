@@ -17,7 +17,7 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
   	<input name="form_widget" id="cancel" type="button" value="Anular"
   			{if $status eq 1}onclick="oCancel.showForm();"{else}disabled="disabled"{/if} />
   	<input name="form_widget" id="print" type="button" value="Imprimir"
-  			onclick="window.open('index.php?cmd=print_receipt&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+  			onclick="window.open('index.php?cmd={$print_cmd}&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
   	{/if}
 </fieldset>
 {if $status eq 1}
@@ -36,7 +36,7 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
 		  	</p>
 		  	<div id="mini_console"></div>
 		  	<p>
-				<input id="authenticate" type="button" value="Aceptar" onclick="oCancel.execute('cancel_receipt');" />
+				<input id="authenticate" type="button" value="Aceptar" onclick="oCancel.execute('{$cancel_cmd}');" />
 				<input id="return" type="button" value="Cancelar" onclick="oCancel.hideForm();" />
 		  	</p>
 		 </fieldset>

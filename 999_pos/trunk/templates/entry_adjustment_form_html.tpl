@@ -55,7 +55,7 @@
 		  	{/if}
 		  	<div id="details"></div>
 		</fieldset>
-		{include file='controls_doc_html.tpl'}
+		{include file='controls_doc_html.tpl' print_cmd='print_entry_adjustment' cancel_cmd='cancel_entry_adjustment'}
 	</div>
 </div>
 <script type="text/javascript">

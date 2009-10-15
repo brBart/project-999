@@ -82,7 +82,7 @@
 		  	{/if}
 		  	<div id="details"></div>
 		</fieldset>
-		{include file='controls_doc_html.tpl'}
+		{include file='controls_doc_html.tpl' print_cmd='print_receipt' cancel_cmd='cancel_receipt'}
 	</div>
 </div>
 <script type="text/javascript">
