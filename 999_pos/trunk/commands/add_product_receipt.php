@@ -23,16 +23,15 @@ require_once('business/transaction.php');
  * @package Command
  * @author Roberto Oliveros
  */
-class AddProductReceiptCommand extends AddProductObjectCommand{
+class AddProductEntryDocumentCommand extends AddProductObjectCommand{
 	/**
 	 * Adds the product to the desired object.
 	 * 
 	 * @param variant $obj
 	 * @param Product $product
 	 * @param integer $quantity
-	 * @param string &$msg
 	 */
-	protected function addProduct($obj, Product $product, $quantity, &$msg){
+	protected function addProduct($obj, Product $product, $quantity){
 		$price = $this->_mRequest->getProperty('price');
 		$expiration_date = $this->_mRequest->getProperty('expiration_date');
 		EntryEvent::apply($product, $obj, $quantity, $price, $expiration_date);
