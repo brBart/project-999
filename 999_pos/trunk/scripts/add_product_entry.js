@@ -70,14 +70,6 @@ AddProductEntryCommand.prototype.execute = function(){
  * @param {DocumentElement} xmlDoc
  */
 AddProductEntryCommand.prototype.displaySuccess = function(xmlDoc){
-	// Look there is an info message.
-	var info = xmlDoc.getElementsByTagName('info');
-	if(info.length > 0){
-		// Notify the user.
-		var msg = xmlDoc.getElementsByTagName('message')[0].firstChild.data;
-		this._mConsole.displayInfo(msg);
-	}
-	
 	// Clear 2 possibilities.
 	this._mConsole.cleanFailure('price');
 	this._mConsole.cleanFailure('expiration_date');
