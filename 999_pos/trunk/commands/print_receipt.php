@@ -29,11 +29,12 @@ class PrintReceiptCommand extends PrintObjectCommand{
 		$user = $obj->getUser();
 		$supplier = $obj->getSupplier();
 		
-		Page::display(array('status' => $obj->getStatus(),'id' => $obj->getId(),
-				'username' => $user->getUserName(), 'date_time' => $obj->getDateTime(),
-				'supplier' => $supplier->getName(), 'shipment_number' => $obj->getShipmentNumber(),
-				'shipment_total' => $obj->getShipmentTotal(), 'total' => $obj->getTotal(),
-				'total_items' => count($details), 'details' => $details), 'receipt_print_html.tpl');
+		Page::display(array('main_data' => 'receipt_main_data_html.tpl', 'document_name' => 'Recibo',
+				'status' => $obj->getStatus(),'id' => $obj->getId(), 'username' => $user->getUserName(),
+				'date_time' => $obj->getDateTime(), 'supplier' => $supplier->getName(),
+				'shipment_number' => $obj->getShipmentNumber(), 'shipment_total' => $obj->getShipmentTotal(),
+				'total' => $obj->getTotal(), 'total_items' => count($details), 'details' => $details),
+				'document_print_html.tpl');
 	}
 }
 ?>
