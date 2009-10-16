@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the entry adjustment documents menu.
+ * Command to display the entry adjustment document menu.
  * @package Command
  * @author Roberto Oliveros
  */
