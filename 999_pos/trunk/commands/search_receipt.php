@@ -82,11 +82,12 @@ class SearchReceiptCommand extends SearchObjectByDateCommand{
 		$back_trace = array('Inicio', 'Movimientos', 'Recibos');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_receipt_menu', 'back_trace' => $back_trace,
-				'second_menu' => 'none', 'content' => 'receipt_list_html.tpl', 'list' => $list,
-				'start_date' => $startDate, 'end_date' => $endDate, 'total_items' => $totalItems,
-				'total_pages' => $totalPages, 'page' => $page, 'first_item' => $firstItem,
-				'last_item' => $lastItem, 'previous_link' => $previousLink, 'next_link' => $nextLink,
-				'item_link' => 'index.php?cmd=get_receipt&id=', 'actual_cmd' => $actualCmd), 'site_html.tpl');
+				'second_menu' => 'none', 'content' => 'document_list_html.tpl', 'document_name' => 'Recibo',
+				'list' => $list, 'start_date' => $startDate, 'end_date' => $endDate,
+				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
+				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,
+				'next_link' => $nextLink, 'item_link' => 'index.php?cmd=get_receipt&id=',
+				'actual_cmd' => $actualCmd), 'site_html.tpl');
 	}
 }
 ?>

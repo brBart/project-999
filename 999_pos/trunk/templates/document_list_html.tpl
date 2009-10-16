@@ -6,7 +6,7 @@
 		<thead>
 			<tr>
 				<th>Fecha</th>
-				<th>Recibo No.</th>
+				<th>{$document_name} No.</th>
 			</tr>
 		</thead>
 		<tbody>
