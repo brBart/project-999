@@ -22,29 +22,8 @@
 		  		<span>{$shipment_total}</span>
 		  	</p>
 		</fieldset>
-		<fieldset id="status_bar">
-			<p>
-				<label>Status:</label>
-				<span id="status_label">
-					{if $status eq 1}
-						Cerrado
-					{else}
-						Anulado
-					{/if}
-				</span>
-			</p>
-		</fieldset>
-		<fieldset id="header_data">
-			<p>
-				<label>Recibo No:</label><span>{$id}&nbsp;</span>
-			</p>
-			<p>
-				<label>Fecha:</label><span>{$date_time}</span>
-			</p>
-			<p>
-				<label>Usuario:</label><span>{$username}</span>
-			</p>
-		</fieldset>
+		{include file='status_bar_doc_html.tpl'}
+		{include file='header_data_html.tpl' document_name='Recibo'}
 		<p id="separator">&nbsp;</p>
 		<table>
 	     	<caption>{$total_items} de {$total_items}</caption>
