@@ -60,8 +60,6 @@ class WithdrawEvent{
 	static public function apply(Product $product, Document $document, $quantity){
 		Persist::validateNewObject($document);
 		
-		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
-		
 		if(Inventory::getAvailable($product) < $quantity)
 			throw new Exception('No hay suficiente cantidad disponible.');
 		
