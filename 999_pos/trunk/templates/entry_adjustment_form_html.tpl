@@ -7,7 +7,6 @@
 <script type="text/javascript" src="../scripts/object_page.js"></script>
 <script type="text/javascript" src="../scripts/document_page.js"></script>
 {if $status eq 0}
-<script type="text/javascript" src="../scripts/set_organization.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
