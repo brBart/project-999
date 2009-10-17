@@ -179,7 +179,7 @@ class Inventory{
 	 */
 	static public function getLots(Product $product, $reqUnitsQuantity){
 		Persist::validateObjectFromDatabase($product);
-		Number::validatePositiveInteger($reqUnitsQuantity, 'Cantidad inv&aacute;lida.');
+		Number::validatePositiveNumber($reqUnitsQuantity, 'Cantidad inv&aacute;lida.');
 		
 		// Get the lots from the database with available stock.
 		$in_stock_lots = InventoryDAM::getLots($product);
