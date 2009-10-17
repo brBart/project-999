@@ -57,6 +57,10 @@ function __autoload($className){
 			require_once('business/product.php');
 			break;
 			
+		case 'WithdrawIA':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
