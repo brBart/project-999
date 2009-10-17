@@ -61,7 +61,7 @@ class WithdrawEvent{
 		Persist::validateNewObject($document);
 		
 		if(Inventory::getAvailable($product) < $quantity)
-			throw new Exception('No hay suficiente cantidad disponible.');
+			throw new ValidateException('No hay suficiente cantidad disponible.', 'quantity');
 		
 		$lots = Inventory::getLots($product, $quantity);
 		$price = $product->getPrice();
