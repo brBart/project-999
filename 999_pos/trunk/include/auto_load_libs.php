@@ -61,6 +61,10 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'Withdraw':
+			require_once('business/transaction.php');
+			break;
+			
 		default:
 	}
 }
