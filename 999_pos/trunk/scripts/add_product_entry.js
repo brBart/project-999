@@ -80,6 +80,8 @@ AddProductEntryCommand.prototype.displaySuccess = function(xmlDoc){
 	
 	// Call parent's method.
 	AddProductObjectCommand.prototype.displaySuccess.call(this, xmlDoc);
+	
+	StateMachine.setFocus(this._mQuantity);
 }
 
 /**

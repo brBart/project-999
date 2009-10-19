@@ -1,5 +1,6 @@
 {* Smarty *}
 <script type="text/javascript" src="../scripts/add_product_object.js"></script>
+<script type="text/javascript" src="../scripts/add_product_withdraw.js"></script>
 <script type="text/javascript" src="../scripts/toolbar_text.js"></script>
 <script type="text/javascript" src="../scripts/toolbar_barcode.js"></script>
 <script type="text/javascript" src="../scripts/search_product.js"></script>
@@ -8,7 +9,7 @@
 <script type="text/javascript">
 var oQuantity = new ToolbarText();
 var oBarCode = new ToolbarBarCode();
-var oAddProductObj = new AddProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj}, '{$add_cmd}');
+var oAddProductObj = new AddProductWithdrawCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj}, '{$add_cmd}');
 var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
 var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_delegator_obj});
 </script>
@@ -18,7 +19,7 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
   		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
   		<span id="bar_code-failed" class="hidden">*</span>
   		<label for="quantity">Cantidad:</label>
-  		<input name="form_widget" id="quantity" type="text" class="tb_input" maxlength="11" />
+  		<input name="form_widget" id="quantity" type="text" class="tb_input" value="1" maxlength="11" />
   		<span id="quantity-failed" class="hidden">*</span>
   		<div id="search_product">
 	    	<label for="product_name">Buscar:</label>

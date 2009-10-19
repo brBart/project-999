@@ -73,17 +73,6 @@ AddProductObjectCommand.prototype.init = function(sBarCode, sQuantity, sProductN
 }
 
 /**
- * Executes the command. Sends the quantity and bar code.
- */
-AddProductObjectCommand.prototype.execute = function(){
-	 var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
-	 str = Url.addUrlParam(str, 'key', this._mKey);
-	 str = Url.addUrlParam(str, 'quantity', this._mQuantity.value);
-	 str = Url.addUrlParam(str, 'bar_code', this._mBarCode.value);
-	 this.sendRequest(str);
-}
-
-/**
  * Clean the input elements and refresh the details object with the last page.
  * @param {DocumentElement} xmlDoc
  */
@@ -98,7 +87,6 @@ AddProductObjectCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mQuantity.value = '1';
 	this._mBarCode.value = '';
 	this._mProductName.value = '';
-	StateMachine.setFocus(this._mQuantity);
 }
 
 /**
