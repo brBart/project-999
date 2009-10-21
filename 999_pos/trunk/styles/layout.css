@@ -69,6 +69,10 @@ input[type="text"], input[type="password"] {
 	width: 92.5%;
 }
 
+.small_tb {
+	width: 83%;
+}
+
 .authenticate_form {
 	display: block;
 	position: absolute;

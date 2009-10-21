@@ -13,7 +13,7 @@ var oAddProductObj = new AddProductWithdrawCommand(oSession, oConsole, Request.c
 var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
 var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_delegator_obj});
 </script>
-<div id="product_tb" class="large_tb">
+<div id="product_tb" class="small_tb">
  	<div>
  		<label for="quantity">Cantidad:</label>
   		<input name="form_widget" id="quantity" type="text" class="tb_input" value="1" maxlength="11" />
