@@ -15,12 +15,12 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
 </script>
 <div id="product_tb" class="large_tb">
  	<div>
+ 		<label for="quantity">Cantidad:</label>
+  		<input name="form_widget" id="quantity" type="text" class="tb_input" value="1" maxlength="11" />
+  		<span id="quantity-failed" class="hidden">*</span>
  		<label for="bar_code">Barra:</label>
   		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
   		<span id="bar_code-failed" class="hidden">*</span>
-  		<label for="quantity">Cantidad:</label>
-  		<input name="form_widget" id="quantity" type="text" class="tb_input" value="1" maxlength="11" />
-  		<span id="quantity-failed" class="hidden">*</span>
   		<div id="search_product">
 	    	<label for="product_name">Buscar:</label>
 	    	<div>
@@ -36,7 +36,7 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
 	</div>
 </div>
 <script type="text/javascript">
-oQuantity.init('quantity', 'add_product');
+oQuantity.init('quantity', 'bar_code');
 oBarCode.init('bar_code', 'add_product');
 oSearchDetails.init('product_name', 'oSearchDetails', 'bar_code');
 oAddProductObj.init('bar_code', 'quantity', 'product_name');
