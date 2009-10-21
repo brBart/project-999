@@ -5,7 +5,7 @@
 
 /**
  * @class Adds a product to an object on the server.
- * @extends SyncCommand
+ * @extends AddProductObjectCommand
  * @constructor
  * @param {Session} oSession
  * @param {Console} oConsole
