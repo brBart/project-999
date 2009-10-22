@@ -36,7 +36,7 @@
 <div id="content">
 	<div id="frm" class="content_large">
 		{include file='status_bar_doc_html.tpl'}
-		{include file='header_data_html.tpl' document_name='Recibo'}
+		{include file='header_data_html.tpl' document_name='Envio'}
 		<fieldset id="main_data">
 			<p>
 		  		<label for="branch_id">Sucursal:{if $status eq 0}*{/if}</label>
@@ -61,7 +61,7 @@
 		  			onblur="oSetProperty.execute('set_contact_object', this.value, this.id);" />
 		  		<span id="contact-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$contact}</span>
+		  		<span>{$contact}&nbsp;</span>
 		  		{/if}
 		  	</p>
 		  	{if $status eq 0}
