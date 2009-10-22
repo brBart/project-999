@@ -39,55 +39,45 @@
 		{include file='header_data_html.tpl' document_name='Recibo'}
 		<fieldset id="main_data">
 			<p>
-		  		<label for="organization_id">Proveedor:{if $status eq 0}*{/if}</label>
+		  		<label for="branch_id">Sucursal:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<select name="form_widget" id="organization_id"
-		  			onblur="oSetOrganization.execute('set_supplier_document', this.value, this.id);">
-	    			{section name=i loop=$supplier_list}
-	    				<option value="{$supplier_list[i].id}">
-	    					{$supplier_list[i].name}
+		  		<select name="form_widget" id="branch_id"
+		  			onchange="oSetOrganization.execute('set_branch_shipment', this.value, this.id);">
+	    			{section name=i loop=$branch_list}
+	    				<option value="{$branch_list[i].id}">
+	    					{$branch_list[i].name}
 	    				</option>
 	    			{/section}
 	    		</select>
-		  		<span id="organization_id-failed" class="hidden">*</span>
+		  		<span id="branch_id-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$supplier}</span>
+		  		<span>{$branch}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
-		  		<label for="shipment_number">Env&iacute;o No:{if $status eq 0}*{/if}</label>
+		  		<label for="contact">Contacto:</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="shipment_number" type="text" maxlength="50"
-		  			onblur="oSetProperty.execute('set_shipment_number_receipt', this.value, this.id);" />
-		  		<span id="shipment_number-failed" class="hidden">*</span>
+		  		<input name="form_widget" id="contact" type="text" maxlength="100"
+		  			onblur="oSetProperty.execute('set_contact_document', this.value, this.id);" />
+		  		<span id="contact-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$shipment_number}</span>
-		  		{/if}
-		  	</p>
-		  	<p>
-		  		<label for="shipment_total">Total env&iacute;o:{if $status eq 0}*{/if}</label>
-		  		{if $status eq 0}
-		  		<input name="form_widget" id="shipment_total" type="text" maxlength="13"
-		  			onblur="oSetProperty.execute('set_shipment_total_receipt', this.value, this.id);" />
-		  		<span id="shipment_total-failed" class="hidden">*</span>
-		  		{else}
-		  		<span>{$shipment_total}</span>
+		  		<span>{$contact}</span>
 		  		{/if}
 		  	</p>
 		  	{if $status eq 0}
-		  		{include file='entry_toolbar_html.tpl' details_obj='oDetails' add_cmd='add_product_entry_document' event_delegator_obj='oEventDelegator'}
+		  		{include file='withdraw_toolbar_html.tpl' details_obj='oDetails' add_cmd='add_product_withdraw_document' event_delegator_obj='oEventDelegator'}
 		  	{else}
 		  		{* Because Firefox css rule margin-top on table rule bug. *}
 		  		<p>&nbsp;</p>
 		  	{/if}
 		  	<div id="details"></div>
 		</fieldset>
-		{include file='controls_doc_html.tpl' print_cmd='print_receipt' cancel_cmd='cancel_receipt'}
+		{include file='controls_doc_html.tpl' print_cmd='print_shipment' cancel_cmd='cancel_shipment'}
 	</div>
 </div>
 <script type="text/javascript">
 {if $status eq 0}
-StateMachine.setFocus('organization_id');
+StateMachine.setFocus('branch_id');
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
 {else}
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
