@@ -23,7 +23,7 @@
 	{if $status eq 0}
 	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, 'set_branch_shipment');
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
-	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_entry_document');
+	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_withdraw_document');
 	// For the delete key pressed.
 	oDetails.mDeleteObj = oDeleteProductObj;
 	{/if}
@@ -58,7 +58,7 @@
 		  		<label for="contact">Contacto:</label>
 		  		{if $status eq 0}
 		  		<input name="form_widget" id="contact" type="text" maxlength="100"
-		  			onblur="oSetProperty.execute('set_contact_document', this.value, this.id);" />
+		  			onblur="oSetProperty.execute('set_contact_object', this.value, this.id);" />
 		  		<span id="contact-failed" class="hidden">*</span>
 		  		{else}
 		  		<span>{$contact}</span>
