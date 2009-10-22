@@ -7,7 +7,6 @@
 <script type="text/javascript" src="../scripts/object_page.js"></script>
 <script type="text/javascript" src="../scripts/document_page.js"></script>
 {if $status eq 0}
-<script type="text/javascript" src="../scripts/set_organization.js"></script>
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
@@ -21,7 +20,6 @@
 	oEventDelegator.init();
 	var oDetails = new DocumentPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	{if $status eq 0}
-	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_entry_document');
 	// For the delete key pressed.
@@ -42,7 +40,7 @@
 		  		<label for="organization_id">Proveedor:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
 		  		<select name="form_widget" id="organization_id"
-		  			onblur="oSetOrganization.execute('set_supplier_document', this.value, this.id);">
+		  			onblur="oSetProperty.execute('set_supplier_document', this.value, this.id);">
 	    			{section name=i loop=$supplier_list}
 	    				<option value="{$supplier_list[i].id}">
 	    					{$supplier_list[i].name}
