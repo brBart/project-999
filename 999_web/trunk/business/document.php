@@ -2075,10 +2075,12 @@ class Shipment extends Document{
 	 *
 	 * @param Branch $obj
 	 */
-	public function setBranch(Branch $obj){
-		self::validateObjectFromDatabase($obj);
+	public function setBranch(Branch $obj = NULL){
 		$this->_mBranch = $obj;
-		$this->_mContact = $obj->getContact();
+		if(is_null($obj))
+			throw new ValidateException('Seleccione una sucursal.');
+		else
+			$this->_mContact = $obj->getContact();
 	}
 	
 	/**
@@ -2157,7 +2159,7 @@ class Shipment extends Document{
 		parent::validateMainProperties();
 		
 		if(is_null($this->_mBranch))
-			throw new Exception('Sucursal inv&aacute;lida.');
+			throw new ValidateException('Sucursal inv&aacute;lida.', 'branch_id');
 	}
 	
 	/**
@@ -2334,7 +2336,7 @@ class Receipt extends Document{
 		parent::validateMainProperties();
 		
 		if(is_null($this->_mSupplier))
-			throw new ValidateException('Proveedor inv&aacute;lido.', 'organization_id');
+			throw new ValidateException('Proveedor inv&aacute;lido.', 'supplier_id');
 			
 		String::validateString($this->_mShipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.',
 				'shipment_number');
