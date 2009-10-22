@@ -21,7 +21,7 @@
 	oEventDelegator.init();
 	var oDetails = new DocumentPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	{if $status eq 0}
-	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+	var oSetOrganization = new SetOrganizationCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, 'set_branch_shipment');
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_entry_document');
 	// For the delete key pressed.
@@ -42,7 +42,7 @@
 		  		<label for="branch_id">Sucursal:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
 		  		<select name="form_widget" id="branch_id"
-		  			onchange="oSetOrganization.execute('set_branch_shipment', this.value, this.id);">
+		  			onchange="oSetOrganization.execute(this.value, this.id);">
 	    			{section name=i loop=$branch_list}
 	    				<option value="{$branch_list[i].id}">
 	    					{$branch_list[i].name}
@@ -78,6 +78,7 @@
 <script type="text/javascript">
 {if $status eq 0}
 StateMachine.setFocus('branch_id');
+oSetOrganization.init('contact');
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
 {else}
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');

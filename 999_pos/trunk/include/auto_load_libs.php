@@ -65,6 +65,10 @@ function __autoload($className){
 			require_once('business/transaction.php');
 			break;
 			
+		case 'Shipment':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
