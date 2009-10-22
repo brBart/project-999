@@ -501,7 +501,6 @@ class Branch extends Organization{
 	 * @return Branch
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return BranchDAM::getInstance($id);
 	}
 		
