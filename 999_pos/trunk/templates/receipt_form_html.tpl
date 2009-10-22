@@ -37,17 +37,17 @@
 		{include file='header_data_html.tpl' document_name='Recibo'}
 		<fieldset id="main_data">
 			<p>
-		  		<label for="organization_id">Proveedor:{if $status eq 0}*{/if}</label>
+		  		<label for="supplier_id">Proveedor:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<select name="form_widget" id="organization_id"
-		  			onblur="oSetProperty.execute('set_supplier_document', this.value, this.id);">
+		  		<select name="form_widget" id="supplier_id"
+		  			onblur="oSetProperty.execute('set_supplier_receipt', this.value, this.id);">
 	    			{section name=i loop=$supplier_list}
 	    				<option value="{$supplier_list[i].id}">
 	    					{$supplier_list[i].name}
 	    				</option>
 	    			{/section}
 	    		</select>
-		  		<span id="organization_id-failed" class="hidden">*</span>
+		  		<span id="supplier_id-failed" class="hidden">*</span>
 		  		{else}
 		  		<span>{$supplier}</span>
 		  		{/if}
@@ -85,7 +85,7 @@
 </div>
 <script type="text/javascript">
 {if $status eq 0}
-StateMachine.setFocus('organization_id');
+StateMachine.setFocus('supplier_id');
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
 {else}
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');

@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the SetSupplierDocumentCommand class.
+ * Library containing the SetSupplierReceiptCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,11 +15,11 @@ require_once('commands/set_property_object.php');
 require_once('business/agent.php');
 
 /**
- * Defines functionality for setting the document's supplier.
+ * Defines functionality for setting the receipt's supplier.
  * @package Command
  * @author Roberto Oliveros
  */
-class SetSupplierDocumentCommand extends SetPropertyObjectCommand{
+class SetSupplierReceiptCommand extends SetPropertyObjectCommand{
 	/**
 	 * Set the desired property on the object.
 	 * @param variant $value
