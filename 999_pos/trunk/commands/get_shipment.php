@@ -21,6 +21,10 @@ require_once('business/product.php');
  * Library with the withdraw transaction class.
  */
 require_once('business/transaction.php');
+/**
+ * Library with the branch class.
+ */
+require_once('business/agent.php');
 
 /**
  * Displays the shipment form in idle mode.
