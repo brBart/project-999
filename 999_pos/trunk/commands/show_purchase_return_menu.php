@@ -30,7 +30,7 @@ class ShowPurchaseReturnMenuCommand extends Command{
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Devoluci&oacute;n',
-				'create_link' => 'index.php?cmd=create_purchse_return',
+				'create_link' => 'index.php?cmd=create_purchase_return',
 				'get_link' => 'index.php?cmd=get_purchase_return',
 				'search_link' => 'index.php?cmd=search_purchase_return&page=1'), 'site_html.tpl');
 	}
