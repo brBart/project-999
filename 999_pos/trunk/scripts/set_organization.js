@@ -68,7 +68,7 @@ SetOrganizationCommand.prototype.execute = function(sOrganizationId, sElementId)
 }
 
 /**
- * Cleans any previous failures.
+ * Cleans any previous failures and the displays the name of the contact.
  * @param {DocumentElement} xmlDoc
  */
 SetOrganizationCommand.prototype.displaySuccess = function(xmlDoc){
