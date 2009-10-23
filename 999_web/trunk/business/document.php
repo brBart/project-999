@@ -1914,10 +1914,12 @@ class PurchaseReturn extends Document{
 	 *
 	 * @param Supplier $obj
 	 */
-	public function setSupplier(Supplier $obj){
-		self::validateObjectFromDatabase($obj);
+	public function setSupplier(Supplier $obj = NULL){
 		$this->_mSupplier = $obj;
-		$this->_mContact = $obj->getContact();
+		if(is_null($obj))
+			throw new ValidateException('Seleccione un proveedor.');
+		else
+			$this->_mContact = $obj->getContact();
 	}
 	
 	/**
@@ -2009,7 +2011,8 @@ class PurchaseReturn extends Document{
 		parent::validateMainProperties();
 		
 		if(is_null($this->_mSupplier))
-			throw new Exception('Proveedor inv&aacute;lido.');
+			throw new ValidateException('Proveedor inv&aacute;lido.', 'supplier_id');
+			
 		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
 	}
 	
