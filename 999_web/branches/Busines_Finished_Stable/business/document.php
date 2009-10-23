@@ -2013,7 +2013,7 @@ class PurchaseReturn extends Document{
 		if(is_null($this->_mSupplier))
 			throw new ValidateException('Proveedor inv&aacute;lido.', 'supplier_id');
 			
-		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
+		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.', 'reason');
 	}
 	
 	/**
@@ -2432,7 +2432,7 @@ abstract class AdjustmentDocument extends Document{
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
 			
-		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
+		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.', 'reason');
 	}
 }
 
