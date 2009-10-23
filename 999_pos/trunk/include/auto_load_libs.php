@@ -69,6 +69,10 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'PurchaseReturn':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
