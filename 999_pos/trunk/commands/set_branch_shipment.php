@@ -15,7 +15,7 @@ require_once('commands/set_organization_document.php');
 require_once('business/agent.php');
 
 /**
- * Defines functionality for setting the document's organization.
+ * Defines functionality for setting the shipment's branch.
  * @package Command
  * @author Roberto Oliveros
  */
