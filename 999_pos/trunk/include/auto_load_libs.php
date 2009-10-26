@@ -73,6 +73,10 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'Branch':
+			require_once('business/agent.php');
+			break;
+			
 		default:
 	}
 }
