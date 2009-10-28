@@ -75,7 +75,7 @@ a:hover {
 	color: red;
 }
 
-.authenticate_form {
+.modal_form {
 	background-image: url(../images/translucent_bg.png);
 }
 
@@ -99,14 +99,14 @@ a:hover {
 	background-color: #FFFDC0;
 }
 
-.authenticate_form .error {
+#authenticate_form .error {
 	color: red;
 	border-style: none;
 	background-image: none;
 	background-color: #EEEEEE;
 }
 
-.authenticate_form div {
+.modal_form div {
 	background-color: #EEEEEE;
 }
 

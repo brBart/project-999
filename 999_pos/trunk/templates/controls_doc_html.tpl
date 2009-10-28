@@ -21,9 +21,10 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
   	{/if}
 </fieldset>
 {if $status eq 1}
+<script type="text/javascript" src="../scripts/modal_form.js"></script>
 <script type="text/javascript" src="../scripts/cancel_document.js"></script>
-<div id="authenticate_form" class="hidden">
-	<div>
+<div id="authenticate_container" class="hidden">
+	<div id="authenticate_form">
 		<fieldset>
 			<legend>Autorizaci&oacute;n</legend>
 		  	<p>
@@ -43,8 +44,9 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
 	 </div>
 </div>
 <script type="text/javascript">
+var oModalFrm = new ModalForm('authenticate_container');
 var miniConsole = new Console('mini_console');
-var oCancel = new CancelDocumentCommand(oSession, miniConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine);
-oCancel.init('authenticate_form', 'username', 'password');
+var oCancel = new CancelDocumentCommand(oSession, miniConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oModalFrm);
+oCancel.init('username', 'password');
 </script>
 {/if}

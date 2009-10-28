@@ -73,7 +73,7 @@ input[type="text"], input[type="password"] {
 	width: 83%;
 }
 
-.authenticate_form {
+.modal_form {
 	display: block;
 	position: absolute;
 	z-index: 1;
@@ -85,7 +85,7 @@ input[type="text"], input[type="password"] {
 	margin-bottom: 3em;
 }
 
-.authenticate_form > div {
+#authenticate_form {
 	position: relative;
 	padding: 1em;
 	width: 35%;

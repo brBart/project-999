@@ -12,8 +12,9 @@
  * @param {XmlHttpRequest} oRequest
  * @param {String} sKey
  * @param {StateMachine} oStateMachine
+ * @param {ModalForm} oForm
  */
-function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine){
+function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine, oForm){
 	// Call the parent constructor.
 	SyncCommand.call(this, oSession, oConsole, oRequest);
 	
@@ -30,10 +31,10 @@ function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine
 	this._mMachine = oMachine;
 	
 	/**
-	 * Holds a reference to the div form element.
-	 * @type HtmlElement
+	 * Holds a reference to the modal form object.
+	 * @type ModalForm
 	 */
-	this._mForm = null;
+	this._mForm = oForm;
 	
 	/**
 	 * Holds a reference to the user input element.
@@ -54,13 +55,11 @@ function CancelDocumentCommand(oSession, oConsole, oRequest, sKey, oStateMachine
 CancelDocumentCommand.prototype = new SyncCommand();
 
 /**
- * Gets the form div element and sets the input elements from where the values will be read.
- * @param {String} sForm The id of the div element.
+ * Sets the input elements from where the values will be read.
  * @param {String} sUser The id of the user input element.
  * @param {String} sPassword The id of the password input element.
  */
-CancelDocumentCommand.prototype.init = function(sForm, sUser, sPassword){
-	this._mForm = document.getElementById(sForm);
+CancelDocumentCommand.prototype.init = function(sUser, sPassword){
 	this._mUser = document.getElementById(sUser);
 	this._mPassword = document.getElementById(sPassword);
 }
@@ -69,15 +68,7 @@ CancelDocumentCommand.prototype.init = function(sForm, sUser, sPassword){
  * Shows the authentication form div element.
  */
 CancelDocumentCommand.prototype.showForm = function(){
-	// Keep the largest height.
-	if(document.getElementById('wrapper').scrollHeight > document.body.scrollHeight)
-		this._mForm.style.height = document.getElementById('wrapper').scrollHeight + 'px';
-	else
-		this._mForm.style.height = document.body.scrollHeight + 'px';
-	
-	this._mForm.style.width = document.body.scrollWidth + 'px';
-
-	this._mForm.className = 'authenticate_form';
+	this._mForm.show();
 	this._mUser.focus();
 }
 
@@ -88,7 +79,7 @@ CancelDocumentCommand.prototype.hideForm = function(){
 	this._mConsole.reset();
 	this._mUser.value = '';
 	this._mPassword.value = '';
-	this._mForm.className = 'hidden';
+	this._mForm.hide();
 }
  
 /**
@@ -116,7 +107,7 @@ CancelDocumentCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mConsole.reset();
 	this._mUser.value = '';
 	this._mPassword.value = '';
-	this._mForm.className = 'hidden';
+	this._mForm.hide();
 }
 
 /**
