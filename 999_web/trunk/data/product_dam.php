@@ -212,6 +212,29 @@ class InventoryDAM{
 	}
 	
 	/**
+	 * Returns the lots information of the provided product.
+	 *
+	 * Returns an array with data of all the lots which quantity is over cero.
+	 * @param Product $obj
+	 * @param integer &$quantity
+	 * @param integer &$available
+	 * @return array
+	 */
+	static public function getLotsList(Product $obj, &$quantity, &$available){
+		$sql = 'CALL product_lot_total_quantity_get(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		$quantity = (int)DatabaseHandler::getOne($sql, $params);
+		
+		$sql = 'CALL product_lot_total_available_get(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		$available = (int)DatabaseHandler::getOne($sql, $params);
+		
+		$sql = 'CALL product_lot_get(:product_id)';
+		$params = array(':product_id' => $obj->getId());
+		return DatabaseHandler::getAll($sql, $params);
+	}
+	
+	/**
 	 * Increases the product's quantity in the database.
 	 *
 	 * @param Product $product
