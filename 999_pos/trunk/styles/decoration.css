@@ -91,23 +91,49 @@ a:hover {
 	color: #FFFDC0;
 }
 
+.hint {
+	color: gray;
+}
+
 .disabled th {
 	color: gray;
+}
+
+.modal_form div {
+	background-color: #EEEEEE;
+}
+
+.items tr {
+	background-color: white;
 }
 
 .tb_input:focus {
 	background-color: #FFFDC0;
 }
 
-#authenticate_form .error {
-	color: red;
-	border-style: none;
-	background-image: none;
+.items .even {
+	background-color: #EFFEFE;
+}
+
+.items .hightlightrow {
+	background-color: blue;
+	color: white;
+}
+
+.items .has_focus {
+	border-style: solid;
+	border-color: #AED9FF;
+	border-width: 2px;
+}
+
+.items .read_only tr {
 	background-color: #EEEEEE;
 }
 
-.modal_form div {
-	background-color: #EEEEEE;
+.items .read_only tbody td {
+	border-bottom-style: solid;
+	border-color: #00067F;
+	border-width: 1px;
 }
 
 #wrapper {
@@ -160,18 +186,10 @@ a:hover {
 	border-width: 1px;
 }
 
-.items tr {
-	background-color: white;
-}
-
 #product_tb > div {
 	border-style: solid;
 	border-color: white;
 	border-width: 1px;
-}
-
-.hint {
-	color: gray;
 }
 
 #main_menu a:hover {
@@ -184,32 +202,14 @@ a:hover {
 	text-decoration: none;
 }
 
-.items .even {
-	background-color: #EFFEFE;
-}
-
-.items .hightlightrow {
-	background-color: blue;
-	color: white;
-}
-
 #scroll .highlightrow {
 	background-color: blue;
 	color: white;
 }
 
-.items .has_focus {
-	border-style: solid;
-	border-color: #AED9FF;
-	border-width: 2px;
-}
-
-.items .read_only tr {
+#authenticate_form .error {
+	color: red;
+	border-style: none;
+	background-image: none;
 	background-color: #EEEEEE;
-}
-
-.items .read_only tbody td {
-	border-bottom-style: solid;
-	border-color: #00067F;
-	border-width: 1px;
 }

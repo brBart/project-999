@@ -85,6 +85,19 @@ input[type="text"], input[type="password"] {
 	margin-bottom: 3em;
 }
 
+.items table {
+	margin: 0 auto;
+}
+
+.items th {
+	padding: 0.5em 1em;
+}
+
+.items td {
+	/* Leave this because of anomaly */
+	padding: 0.5em 1em;
+}
+
 #authenticate_form {
 	position: relative;
 	padding: 1em;
@@ -243,19 +256,6 @@ input[type="text"], input[type="password"] {
 #frm label {
 	float: left;
 	width: 12em;
-}
-
-.items table {
-	margin: 0 auto;
-}
-
-.items th {
-	padding: 0.5em 1em;
-}
-
-.items td {
-	/* Leave this because of anomaly */
-	padding: 0.5em 1em;
 }
 
 #prod_supp_tb label {
