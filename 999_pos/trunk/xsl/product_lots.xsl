@@ -14,7 +14,7 @@
 	         		<th>Ingreso</th>
 	         		<th>Vence</th>
 	         		<th>Precio</th>
-	         		<th>Quantity</th>
+	         		<th>Cantidad</th>
 	         		<th>Disponible</th>
 	      		</tr>
 	       	</thead>
