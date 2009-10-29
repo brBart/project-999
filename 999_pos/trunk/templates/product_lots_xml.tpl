@@ -16,8 +16,10 @@ header('Content-Type: text/xml');
 		<row>
 			<lot_id>{$lots[i].id}</lot_id>
 			<entry_date>{$lots[i].entry_date}</entry_date>
-			<expiration_date>{$lots[i].expiration_date}</expiration_date>
-			<price>{$lots[i].price}</price>
+			<expiration_date>
+				{if $lots[i].expiration_date neq ''}{$lots[i].expiration_date}{else}N/A{/if}
+			</expiration_date>
+			<price>{$lots[i].price|nf:2}</price>
 			<quantity>{$lots[i].quantity}</quantity>
 			<available>{$lots[i].available}</available>
 		</row>
