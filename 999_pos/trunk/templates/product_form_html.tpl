@@ -33,7 +33,7 @@
 		<fieldset id="sub_menu">
 			<p {if $status eq 0}class="invisible"{/if}>
 				<a name="form_widget" href="#">Kardex</a>
-				<a name="form_widget" href="#">Lotes</a>
+				<a name="form_widget" href="#" onclick="oLotsList.showForm();">Lotes</a>
 				<a name="form_widget" href="#">Reservados</a>
 			</p>
 		</fieldset>
@@ -148,3 +148,21 @@ oEventDelegator.init();
 oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'oProductSuppliers', 'add_supplier', 'save', 'oDeleteSupplierProduct');
 oProductSuppliers.update();
 </script>
+{if $status eq 1}
+<script type="text/javascript" src="../scripts/modal_form.js"></script>
+<script type="text/javascript" src="../scripts/modal_list.js"></script>
+<div id="lots_container" class="hidden">
+	<div id="lots_form">
+		<a href="#" onclick="oLotsList.hideForm();">Cerrar[X]</a>
+		<div id="lots_console"></div>
+		<div id="lots"></div>
+	 </div>
+</div>
+<script type="text/javascript">
+var oLotsFrm = new ModalForm('lots_container');
+var oLotsConsole = new Console('lots_console');
+var oProductLots = new ObjectDetails(oSession, oLotsConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_lots');
+oProductLots.init('../xsl/product_lots.xsl', 'lots', 'oProductLots');
+var oLotsList = new ModalList(oProductLots, oLotsFrm);
+</script>
+{/if}
