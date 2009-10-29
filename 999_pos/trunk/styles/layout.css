@@ -85,12 +85,28 @@ input[type="text"], input[type="password"] {
 	position: relative;
 	padding: 1em;
 	width: 50%;
-	top: 25%;
+	top: 15%;
 	left: 25%;
 }
 
 .date_title {
 	margin-bottom: 3em;
+}
+
+.close_window {
+	float: right;
+}
+
+.console_display {
+	height: 5em;
+	padding: 0;
+	overflow: auto;
+}
+
+.console_display p {
+	width: 60%;
+	margin: 1em auto;
+	padding: 0.5em 0.5em 0.5em 2em;
 }
 
 .items table {
@@ -128,12 +144,6 @@ input[type="text"], input[type="password"] {
 
 #main_menu {
 	height: 3em;
-}
-
-#console {
-	height: 5em;
-	padding: 0;
-	overflow: auto;
 }
 
 #second_menu {
@@ -253,12 +263,6 @@ input[type="text"], input[type="password"] {
 
 #third_menu li{
 	padding: 2em 1em;
-}
-
-#console p {
-	width: 60%;
-	margin: 1em auto;
-	padding: 0.5em 0.5em 0.5em 2em;
 }
 
 #frm label {

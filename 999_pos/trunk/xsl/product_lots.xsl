@@ -26,9 +26,9 @@
 	       	<tfoot>
 	       		<tr>
 	       			<td colspan="3"></td>
-	       			<td>Totales:</td>
-	       			<td><xsl:value-of select="response/params/quantity" /></td>
-	       			<td><xsl:value-of select="response/params/available" /></td>
+	       			<td class="total_col">Totales:</td>
+	       			<td class="total_col"><xsl:value-of select="response/params/quantity" /></td>
+	       			<td class="total_col"><xsl:value-of select="response/params/available" /></td>
 	       		</tr>
 	       	</tfoot>
 		</table>
@@ -45,8 +45,8 @@
 				<td><xsl:value-of select="entry_date" /></td>
 				<td><xsl:value-of select="expiration_date" /></td>
 				<td><xsl:value-of select="price" /></td>
-				<td><xsl:value-of select="quantity" /></td>
-				<td><xsl:value-of select="available" /></td>
+				<td class="total_col"><xsl:value-of select="quantity" /></td>
+				<td class="total_col"><xsl:value-of select="available" /></td>
 			</tr>
         </xsl:for-each>
 	</xsl:template>

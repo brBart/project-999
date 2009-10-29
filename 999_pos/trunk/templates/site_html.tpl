@@ -45,7 +45,7 @@
 		<div id="main_menu">
 			{include file=$main_menu}
 		</div>
-		<div id="console">
+		<div id="console" class="console_display">
 		{if $notify eq 1}
 			<p class="{$type}">{$message}</p>
 		{/if}
