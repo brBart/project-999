@@ -133,7 +133,7 @@
 			  			onclick="oAddSupplierProduct.execute();" {if $status eq 1}disabled="disabled"{/if}  />
 			  		<span id="product_suppliers-failed" class="hidden">*</span>
 			  	</p>
-			  	<div id="details"></div>
+			  	<div id="details" class="items"></div>
 			</div>
 		</fieldset>
 		{include file='controls_html.tpl' edit_cmd='edit_product' focus_on_edit='name' delete_cmd='delete_product'}
@@ -155,7 +155,7 @@ oProductSuppliers.update();
 	<div id="lots_form">
 		<a href="#" onclick="oLotsList.hideForm();">Cerrar[X]</a>
 		<div id="lots_console"></div>
-		<div id="lots"></div>
+		<div id="lots" class="items"></div>
 	 </div>
 </div>
 <script type="text/javascript">

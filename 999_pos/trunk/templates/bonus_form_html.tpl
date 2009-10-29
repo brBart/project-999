@@ -51,7 +51,7 @@
 			  			onclick="oCreateBonus.execute();" />
 			  		<span id="bonus-failed" class="hidden">*</span>
 			  	</div>
-			  	<div id="details"></div>
+			  	<div id="details" class="items"></div>
 			</div>
 		</fieldset>
 	</div>

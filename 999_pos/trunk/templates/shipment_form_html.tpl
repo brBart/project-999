@@ -70,7 +70,7 @@
 		  		{* Because Firefox css rule margin-top on table rule bug. *}
 		  		<p>&nbsp;</p>
 		  	{/if}
-		  	<div id="details"></div>
+		  	<div id="details" class="items"></div>
 		</fieldset>
 		{include file='controls_doc_html.tpl' print_cmd='print_shipment' cancel_cmd='cancel_shipment'}
 	</div>

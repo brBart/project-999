@@ -245,15 +245,15 @@ input[type="text"], input[type="password"] {
 	width: 12em;
 }
 
-#details table {
+.items table {
 	margin: 0 auto;
 }
 
-#details th {
+.items th {
 	padding: 0.5em 1em;
 }
 
-#details td {
+.items td {
 	/* Leave this because of anomaly */
 	padding: 0.5em 1em;
 }
