@@ -81,6 +81,14 @@ input[type="text"], input[type="password"] {
 	left: 0;
 }
 
+.list_form {
+	position: relative;
+	padding: 1em;
+	width: 50%;
+	top: 25%;
+	left: 25%;
+}
+
 .date_title {
 	margin-bottom: 3em;
 }

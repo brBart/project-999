@@ -152,7 +152,7 @@ oProductSuppliers.update();
 <script type="text/javascript" src="../scripts/modal_form.js"></script>
 <script type="text/javascript" src="../scripts/modal_list.js"></script>
 <div id="lots_container" class="hidden">
-	<div id="lots_form">
+	<div class="list_form">
 		<a href="#" onclick="oLotsList.hideForm();">Cerrar[X]</a>
 		<div id="lots_console"></div>
 		<div id="lots" class="items"></div>
