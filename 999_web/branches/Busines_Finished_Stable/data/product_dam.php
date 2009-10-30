@@ -246,6 +246,35 @@ class InventoryDAM{
 	}
 	
 	/**
+	 * Returns the list of lots information.
+	 *
+	 * Returns an array with all the lots information which quantity is over cero.
+	 * @param Product $obj
+	 * @param integer &$quantity
+	 * @param integer &$available
+	 * @return array
+	 */
+	static public function getLotsList(Product $obj, &$quantity, &$available){
+		switch($obj->getId()){
+			case 123:
+				$lots = array(array('id' => '4321', 'entry_date' => '10/10/2009',
+						'expiration_date' => '', 'price' => '10.00', 'quantity' => '10',
+						'available' => '10'),
+						array('id' => '4322', 'entry_date' => '10/10/2009',
+						'expiration_date' => '', 'price' => '10.00', 'quantity' => '10',
+						'available' => '2'));
+				
+				$quantity = 20;
+				$available = 12;
+				
+				return $lots;
+				break;
+				
+			default:
+		}
+	}
+	
+	/**
 	 * Returns the lots of the provided product with negative quantities.
 	 *
 	 * Returns an array with all the lots that contains negative quantities.

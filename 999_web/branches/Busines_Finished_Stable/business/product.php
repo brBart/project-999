@@ -229,16 +229,7 @@ class Inventory{
 	 */
 	static public function showLots(Product $product, &$quantity, &$available){
 		Persist::validateObjectFromDatabase($product);
-		
-		$lots = InventoryDAM::getLots($product);
-		
-		foreach($lots as $lot){
-			$lot_details[] = $lot->show();
-			$quantity += $lot->getQuantity();
-			$available += $lot->getAvailable();
-		}
-		
-		return $lot_details;
+		return InventoryDAM::getLotsList($product, $quantity, $available);
 	}
 	
 	/**
