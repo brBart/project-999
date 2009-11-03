@@ -242,18 +242,18 @@ class CountingTemplateDAM{
 	 *
 	 * The array's fields are product_id, bar_code, manufacturer, name and packaging.
 	 * @param boolean $general
-	 * @param Manufacturer $first
-	 * @param Manufacturer $last
+	 * @param string $first
+	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByManufacturer($general, Manufacturer $first = NULL, Manufacturer $last = NULL){
+	static public function getDataByManufacturer($general, $first, $last){
 		if($general){
 			$sql = 'CALL manufacturer_counting_template_general_get()';
 			return DatabaseHandler::getAll($sql);
 		}
 		else{
-			$sql = 'CALL manufacturer_counting_template_get(:first_id, :last_id)';
-			$params = array(':first_id' => $first->getName(), ':last_id' => $last->getName());
+			$sql = 'CALL manufacturer_counting_template_get(:first, :last)';
+			$params = array(':first' => $first, ':last' => $last);
 			return DatabaseHandler::getAll($sql, $params);
 		}
 	}
