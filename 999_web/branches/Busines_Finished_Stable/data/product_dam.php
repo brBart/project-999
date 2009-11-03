@@ -1398,4 +1398,22 @@ class ProductDistinctListDAM{
 		return array(array('name' => 'Aqua'), array('name' => 'Barco'), array('name' => 'Carro'));
 	}
 }
+
+
+/**
+ * Utility class for obtaining a list of manufacturers' name.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ManufacturerDistinctListDAM{
+	/**
+	 * Returns an array containing the names of all the manufacturers.
+	 *
+	 * The array's field is name.
+	 * @return array
+	 */
+	static public function getList(){
+		return array(array('name' => 'Aqua'), array('name' => 'Barco'), array('name' => 'Carro'));
+	}
+}
 ?>

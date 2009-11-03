@@ -1685,6 +1685,7 @@ class ReserveList{
 	}
 }
 
+
 /**
  * Utility class for obtaining a list of products' names.
  * @package Product
@@ -1699,6 +1700,24 @@ class ProductDistinctList{
 	 */
 	static public function getList(){
 		return ProductDistinctListDAM::getList();
+	}
+}
+
+
+/**
+ * Utility class for obtaining a list of manufacturers' names.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class ManufacturerDistinctList{
+	/**
+	 * Returns an array containing the names of all the manufacturers.
+	 *
+	 * The array's field is name.
+	 * @return array
+	 */
+	static public function getList(){
+		return ManufacturerDistinctListDAM::getList();
 	}
 }
 ?>
