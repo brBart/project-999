@@ -883,19 +883,15 @@ class CountingTemplate{
 	 *
 	 * The array's fields are id, bar_code, manufacturer, name and packaging.
 	 * @param boolean $general
-	 * @param Product $first
-	 * @param Product $last
+	 * @param string $first
+	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByProduct($general, Product $first = NULL, Product $last = NULL){
-		if(!$general && (is_null($first) || is_null($last)))
-			throw new Exception('Ingrese los campos requeridos.');
-		
-		if(!is_null($first))
-			Persist::validateObjectFromDatabase($first);
-			
-		if(!is_null($last))
-			Persist::validateObjectFromDatabase($last);
+	static public function getDataByProduct($general, $first, $last){
+		if(!$general){
+			String::validateString($first, 'Seleccione el primer producto.');
+			String::validateString($last, 'Seleccione el segundo producto.');
+		}
 		
 		return CountingTemplateDAM::getDataByProduct($general, $first, $last);
 	}
