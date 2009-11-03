@@ -1684,4 +1684,21 @@ class ReserveList{
 		return ReserveListDAM::getList($product);
 	}
 }
+
+/**
+ * Utility class for obtaining a list of products' names.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class ProductDistinctList{
+	/**
+	 * Returns an array containing the names of all the products.
+	 *
+	 * The array's field is name.
+	 * @return array
+	 */
+	static public function getList(){
+		return ProductDistinctListDAM::getList();
+	}
+}
 ?>
