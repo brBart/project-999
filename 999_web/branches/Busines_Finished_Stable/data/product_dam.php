@@ -1380,4 +1380,22 @@ class ReserveListDAM{
 				'id' => '4329', 'quantity' => 1));
 	}
 }
+
+
+/**
+ * Utility class for obtaining a list of products' name.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ProductDistinctListDAM{
+	/**
+	 * Returns an array containing the names of all the products.
+	 *
+	 * The array's field is name.
+	 * @return array
+	 */
+	static public function getList(){
+		return array(array('name' => 'Aqua'), array('name' => 'Barco'), array('name' => 'Carro'));
+	}
+}
 ?>
