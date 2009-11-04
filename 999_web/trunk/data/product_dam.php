@@ -1023,4 +1023,42 @@ class ReserveListDAM{
 		return DatabaseHandler::getAll($sql, $params);
 	}
 }
+
+
+/**
+ * Utility class for obtaining a list of products' name.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ProductDistinctListDAM{
+	/**
+	 * Returns an array containing the names of all the products.
+	 *
+	 * The array's field is name.
+	 * @return array
+	 */
+	static public function getList(){
+		$sql = 'CALL product_distinct_list_get()';
+		return DatabaseHandler::getAll($sql);
+	}
+}
+
+
+/**
+ * Utility class for obtaining a list of manufacturers' name.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class ManufacturerDistinctListDAM{
+	/**
+	 * Returns an array containing the names of all the manufacturers.
+	 *
+	 * The array's field is name.
+	 * @return array
+	 */
+	static public function getList(){
+		$sql = 'CALL manufacturer_distinct_list_get()';
+		return DatabaseHandler::getAll($sql);
+	}
+}
 ?>
