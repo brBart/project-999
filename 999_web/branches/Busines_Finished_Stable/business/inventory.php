@@ -887,7 +887,7 @@ class CountingTemplate{
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByProduct($general, $first, $last){
+	static public function getDataByProduct($general, $first = NULL, $last = NULL){
 		if(!$general){
 			String::validateString($first, 'Seleccione el primer producto.');
 			String::validateString($last, 'Seleccione el segundo producto.');
@@ -905,7 +905,7 @@ class CountingTemplate{
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByManufacturer($general, $first, $last){
+	static public function getDataByManufacturer($general, $first = NULL, $last = NULL){
 		if(!$general){
 			String::validateString($first, 'Seleccione la primera casa.');
 			String::validateString($last, 'Seleccione la segunda casa.');
