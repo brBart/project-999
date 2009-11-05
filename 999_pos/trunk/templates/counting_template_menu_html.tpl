@@ -3,8 +3,8 @@
 <script type="text/javascript">
 function openWindow(sForm) 
 { 
-    window.open("","myNewWin", 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1'); 
-    var a = window.setTimeout(sForm + ".submit();", 500); 
+    window.open('', 'myNewWin', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1'); 
+    var a = window.setTimeout(sForm + '.submit();', 500); 
 }
 </script>
 {/literal}
