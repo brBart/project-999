@@ -11,7 +11,7 @@ function openWindow(sForm)
 <div id="third_menu">
 	<ul>
 	    <li>
-	    	<form method="post" action="index.php?cmd=print_counting_template_by_product" onsubmit="return oSession.setIsLink(true);" target="myNewWin">
+	    	<form method="post" action="index.php?cmd=print_counting_template_by_product" target="myNewWin">
 	    		<label for="product_first">De Producto:</label>
 	    		<select name="product_first" id="product_first">
 	    			{section name=i loop=$product_list}
@@ -36,7 +36,7 @@ function openWindow(sForm)
 	    	</form>
 	    </li>
 	    <li id="li_last">
-	    	<form method="post" action="index.php?cmd=print_counting_template_by_manufacturer" onsubmit="return oSession.setIsLink(true);" target="myNewWin">
+	    	<form method="post" action="index.php?cmd=print_counting_template_by_manufacturer" target="myNewWin">
 	    		<label for="manufacturer_first">De Casa:</label>
 	    		<select name="manufacturer_first" id="manufacturer_first">
 	    			{section name=i loop=$manufacturer_list}
