@@ -38,13 +38,14 @@ abstract class PrintCountingTemplateCommand extends Command{
 				$details = $this->getRangeResults($first, $last);
 			} catch(Exception $e){
 				$msg = $e->getMessage();
-				$this->displayFailure($msg, $first, $last);
+				Page::display(array('date' => date('d/m/Y'), 'notify' => '1', 'type' => 'error',
+						'message' => $msg, 'total_items' => '0'), 'counting_template_print_html.tpl');
 				return;
 			}
 		}
 		
-		Page::display(array('report_name' => 'Selectivo', 'date' => date('d/m/Y'),
-				'order_by' => $this->getOrderByType(), 'details' => $details), 'counting_template_html.tpl');
+		Page::display(array('date' => date('d/m/Y'), 'order_by' => $this->getOrderByType(),
+				'details' => $details, 'total_items' => count($details)), 'counting_template_print_html.tpl');
 	}
 	
 	/**
@@ -60,14 +61,6 @@ abstract class PrintCountingTemplateCommand extends Command{
 	 * @return array
 	 */
 	abstract protected function getRangeResults($first, $last);
-	
-	/**
-	 * Display a failure message in case the arguments are invalid.
-	 * @param string $msg
-	 * @param string $first
-	 * @param string $last
-	 */
-	abstract protected function displayFailure($msg, $first, $last);
 	
 	/**
 	 * Returns the name of the type of order that was used on the details.

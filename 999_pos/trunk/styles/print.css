@@ -35,6 +35,28 @@ fieldset p {
 	text-align: right;
 }
 
+.error {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	background-color: #FFB5B5;
+	background-image: url(../images/error.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.console_display {
+	height: 5em;
+	padding: 0;
+	overflow: auto;
+}
+
+.console_display p {
+	width: 60%;
+	margin: 1em auto;
+	padding: 0.5em 0.5em 0.5em 2em;
+}
+
 tfoot .total_col {
 	font-weight: bold;
 	border-top-style: solid;

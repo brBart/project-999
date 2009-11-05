@@ -8,7 +8,7 @@
 /**
  * Base class.
  */
-require_once('presentation/command.php');
+require_once('commands/print_counting_template.php');
 /**
  * For displaying the results.
  */
@@ -29,7 +29,7 @@ class PrintCountingTemplateByProductCommand extends PrintCountingTemplateCommand
 	 * @return array
 	 */
 	protected function getGeneralResults(){
-		
+		return CountingTemplate::getDataByProduct(true);
 	}
 	
 	/**
@@ -39,17 +39,7 @@ class PrintCountingTemplateByProductCommand extends PrintCountingTemplateCommand
 	 * @return array
 	 */
 	protected function getRangeResults($first, $last){
-		
-	}
-	
-	/**
-	 * Display a failure message in case the arguments are invalid.
-	 * @param string $msg
-	 * @param string $first
-	 * @param string $last
-	 */
-	protected function displayFailure($msg, $first, $last){
-		
+		return CountingTemplate::getDataByProduct(false, $first, $last);
 	}
 	
 	/**
@@ -57,7 +47,7 @@ class PrintCountingTemplateByProductCommand extends PrintCountingTemplateCommand
 	 * @return string
 	 */
 	protected function getOrderByType(){
-		
+		return 'Nombre';
 	}
 }
 ?>
