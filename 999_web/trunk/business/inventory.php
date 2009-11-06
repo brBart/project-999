@@ -491,7 +491,7 @@ class Count extends PersistObject implements Itemized{
 			try{
 				Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 			} catch(Exception $e){
-				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
+				$et = new Exception('Interno: Llamando al metodo construct en Count con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
