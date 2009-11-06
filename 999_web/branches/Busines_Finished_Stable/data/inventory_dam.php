@@ -96,14 +96,14 @@ class CountDAM{
 	static public function getInstance($id){
 		switch($id){
 			case 123:
-				$count = new Count($id, '01/04/2009', UserAccount::getInstance('roboli'), Persist::CREATED);
+				$count = new Count($id, '01/04/2009 12:00:00', UserAccount::getInstance('roboli'), Persist::CREATED);
 				$details[] = new CountDetail(Product::getInstance(125), 21, Persist::CREATED);
 				$count->setData('Los hay pues.', 21, $details);
 				return $count;
 				break;
 				
 			case 124:
-				$count = new Count($id, '11/05/2009', UserAccount::getInstance('roboli'), Persist::CREATED);
+				$count = new Count($id, '11/05/2009 12:00:00', UserAccount::getInstance('roboli'), Persist::CREATED);
 				$details[] = new CountDetail(Product::getInstance(125), 21, Persist::CREATED);
 				$details[] = new CountDetail(Product::getInstance(123), 21, Persist::CREATED);
 				$details[] = new CountDetail(Product::getInstance(124), 21, Persist::CREATED);
