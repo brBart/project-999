@@ -178,8 +178,9 @@ class CountDAM{
 	static public function insert(Count $obj){
 		$sql = 'CALL count_insert(:username, :date, :reason, :total)';
 		$user = $obj->getUser();
-		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($obj->getDate()),
-				':reason' => $obj->getReason(), ':total' => $obj->getTotal());
+		$params = array(':username' => $user->getUserName(),
+				':date' => Date::dbDateTimeFormat($obj->getDateTime()), ':reason' => $obj->getReason(),
+				':total' => $obj->getTotal());
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
