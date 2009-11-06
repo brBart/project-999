@@ -77,6 +77,10 @@ function __autoload($className){
 			require_once('business/agent.php');
 			break;
 			
+		case 'Count':
+			require_once('business/inventory.php');
+			break;
+			
 		default:
 	}
 }
