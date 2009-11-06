@@ -433,10 +433,10 @@ class Count extends PersistObject implements Itemized{
 	/**
 	 * Holds the count's creation date.
 	 *
-	 * Date format: 'dd/mm/yyyy'.
+	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
 	 * @var string
 	 */
-	private $_mDate;
+	private $_mDateTime;
 	
 	/**
 	 * Holds the user who created the count.
@@ -471,11 +471,11 @@ class Count extends PersistObject implements Itemized{
 	 *
 	 * Arguments must be passed only when called from the database layer correponding class.
 	 * @param integer $id
-	 * @param string $date
+	 * @param string $dateTime
 	 * @param UserAccount $user
 	 * @param integer $status
 	 */
-	public function __construct($id = NULL, $date = NULL, $user = NULL, $status = Persist::IN_PROGRESS){
+	public function __construct($id = NULL, $dateTime = NULL, $user = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if(!is_null($id))
@@ -487,18 +487,18 @@ class Count extends PersistObject implements Itemized{
 				throw $et;
 			}
 		
-		if(!is_null($date)){
+		if(!is_null($dateTime)){
 			try{
-				Date::validateDate($date, 'Fecha inv&aacute;lida.');
+				Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
-			$this->_mDate = $date;
+			$this->_mDateTime = $dateTime;
 		}
 		else
-			$this->_mDate = date('d/m/Y');
+			$this->_mDateTime = date('d/m/Y H:i:s');
 		
 		if(!is_null($user)){
 			try{
@@ -526,12 +526,12 @@ class Count extends PersistObject implements Itemized{
 	}
 	
 	/**
-	 * Returns the count's creation date.
+	 * Returns the count's creation date and time.
 	 *
 	 * @return string
 	 */
-	public function getDate(){
-		return $this->_mDate;
+	public function getDateTime(){
+		return $this->_mDateTime;
 	}
 	
 	/**
