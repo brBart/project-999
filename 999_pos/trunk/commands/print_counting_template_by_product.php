@@ -19,7 +19,7 @@ require_once('presentation/page.php');
 require_once('business/inventory.php');
 
 /**
- * Command to display counting template ordered by product.
+ * Command to display a counting template ordered by product.
  * @package Command
  * @author Roberto Oliveros
  */
