@@ -19,6 +19,7 @@ header('Content-Type: text/xml');
 	<grid>
 		{section name=i loop=$details}
 		<row>
+			<detail_id>{$details[i].id}</detail_id>
 			<bar_code><![CDATA[{$details[i].bar_code}]]></bar_code>
 			<manufacturer><![CDATA[{$details[i].manufacturer}]]></manufacturer>
 			<product><![CDATA[{$details[i].product}]]></product>
