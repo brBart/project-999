@@ -386,7 +386,7 @@ class CountDetail extends Persist{
 	 * @param integer $quantity
 	 */
 	public function increase($quantity){
-		Number::validatePositiveInteger($quantity, 'Cantidad inv&aacute;lida.');
+		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 		$this->_mQuantity += $quantity;
 	}
 	
