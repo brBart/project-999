@@ -339,6 +339,15 @@ class CountDetail extends Persist{
 	}
 	
 	/**
+	 * Returns the detail's id.
+	 *
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mProduct->getId();
+	}
+	
+	/**
 	 * Returns the detail's product.
 	 *
 	 * @return Product
@@ -375,9 +384,10 @@ class CountDetail extends Persist{
 		$manufacturer = $this->_mProduct->getManufacturer();
 		$um = $this->_mProduct->getUnitOfMeasure();
 		
-		return array('bar_code' => $this->_mProduct->getBarCode(), 'manufacturer' => $manufacturer->getName(),
-				'product' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
-				'um' => $um->getName(), 'quantity' => $this->_mQuantity);
+		return array('id' => $this->getId(), 'bar_code' => $this->_mProduct->getBarCode(),
+				'manufacturer' => $manufacturer->getName(), 'product' => $this->_mProduct->getName(),
+				'packaging' => $this->_mProduct->getPackaging(), 'um' => $um->getName(),
+				'quantity' => $this->_mQuantity);
 	}
 	
 	/**
@@ -562,7 +572,7 @@ class Count extends PersistObject implements Itemized{
 	public function getDetail($id){
 		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		foreach($this->_mDetails as &$detail)
-			if($detail->getProduct()->getId() == $id)
+			if($detail->getId() == $id)
 				return $detail;
 				
 		return NULL;
@@ -644,7 +654,7 @@ class Count extends PersistObject implements Itemized{
 		// For moving the modified detail to the last place.
 		$temp_details = array();
 		foreach($this->_mDetails as &$detail)
-			if($detail->getProduct()->getId() != $newDetail->getProduct()->getId())
+			if($detail->getId() != $newDetail->getId())
 				$temp_details[] = $detail;
 			elseif($detail->_mStatus == Persist::CREATED){
 				$newDetail->increase($detail->getQuantity());
@@ -667,7 +677,7 @@ class Count extends PersistObject implements Itemized{
 		$temp_details = array();
 		
 		foreach($this->_mDetails as &$detail)
-			if($detail->getProduct()->getId() != $purgeDetail->getProduct()->getId())
+			if($detail->getId() != $purgeDetail->getId())
 				$temp_details[] = $detail;
 			elseif($detail->getStatus() == Persist::CREATED){
 				// In case it was already deleted.
