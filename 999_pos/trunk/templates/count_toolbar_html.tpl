@@ -1,6 +1,7 @@
 {* Smarty *}
 <script type="text/javascript" src="../scripts/add_product_object.js"></script>
 <script type="text/javascript" src="../scripts/add_product_withdraw.js"></script>
+<script type="text/javascript" src="../scripts/toolbar.js"></script>
 <script type="text/javascript" src="../scripts/toolbar_text.js"></script>
 <script type="text/javascript" src="../scripts/toolbar_barcode.js"></script>
 <script type="text/javascript" src="../scripts/search_product.js"></script>
@@ -33,9 +34,11 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
   		<input name="form_widget" id="add_product" type="button" value="Agregar"
   			onclick="oAddProductObj.execute();" />
 		<span id="receipt_product-failed" class="hidden">*</span>
+		<input name="form_widget" id="upload_file" type="button" value="Subir archivo..." />
 	</div>
 </div>
 <script type="text/javascript">
+Toolbar.checkResolution('product_tb');
 oQuantity.init('quantity', 'bar_code');
 oBarCode.init('bar_code', 'add_product');
 oSearchDetails.init('product_name', 'oSearchDetails', 'bar_code');
