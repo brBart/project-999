@@ -376,7 +376,7 @@ class CountDetail extends Persist{
 		$um = $this->_mProduct->getUnitOfMeasure();
 		
 		return array('bar_code' => $this->_mProduct->getBarCode(), 'manufacturer' => $manufacturer->getName(),
-				'name' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
+				'product' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
 				'um' => $um->getName(), 'quantity' => $this->_mQuantity);
 	}
 	
