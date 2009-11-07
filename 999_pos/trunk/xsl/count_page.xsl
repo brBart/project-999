@@ -5,8 +5,8 @@
 	<xsl:param name="delete_obj" />
 	<xsl:template match="/">  
 		<table>
-			<xsl:if test="$status > 0">
-				<xsl:attribute name="class">read_only</xsl:attribute>
+			<xsl:if test="$status = 1">
+				<xsl:attribute name="class">disabled</xsl:attribute>
            	</xsl:if>
 	     	<caption>
 	     		<xsl:call-template name="menu" />
@@ -47,7 +47,7 @@
 		  			</xsl:when>
 		  			<xsl:otherwise>
 		  				<tr>
-			       			<td colspan="10"></td>
+			       			<td colspan="7"></td>
 			       		</tr>
 		  			</xsl:otherwise>
 		  		</xsl:choose>
@@ -126,10 +126,8 @@
 	       		<td><xsl:value-of select="product" /></td>
 	       		<td><xsl:value-of select="packaging" /></td>
 	       		<td><xsl:value-of select="um" /></td>
-	       		<td><xsl:value-of select="quantity" /></td>
-	       		<td><xsl:value-of select="price" /></td>
-	       		<td class="total_col"><xsl:value-of select="total" /></td>
-	       		<td colspan="2"><xsl:value-of select="expiration_date" /></td>
+	       		<td class="total_col"><xsl:value-of select="quantity" /></td>
+	       		<td></td>
 			</xsl:element>
         </xsl:for-each>
 	</xsl:template>

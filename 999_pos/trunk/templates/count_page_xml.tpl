@@ -14,7 +14,7 @@ header('Content-Type: text/xml');
 		<last_item>{$last_item}</last_item>
 		<previous_page>{$previous_page}</previous_page>
 		<next_page>{$next_page}</next_page>
-		<total>{$total|nf:2}</total>
+		<total>{$total}</total>
 	</params>
 	<grid>
 		{section name=i loop=$details}

@@ -5,7 +5,7 @@
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
-<script type="text/javascript" src="../scripts/document_page.js"></script>
+<script type="text/javascript" src="../scripts/count_page.js"></script>
 {if $status eq 0}
 <script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/text_range.js"></script>
@@ -18,7 +18,7 @@
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
 	oEventDelegator.init();
-	var oDetails = new DocumentPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
+	var oDetails = new CountPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	{if $status eq 0}
 	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_withdraw_document');
@@ -60,9 +60,9 @@
 <script type="text/javascript">
 {if $status eq 0}
 StateMachine.setFocus('reason');
-oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
+oDetails.init('../xsl/count_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
 {else}
-oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
+oDetails.init('../xsl/count_page.xsl', 'details', 'oDetails');
 {/if}
 oDetails.getLastPage();
 </script>
