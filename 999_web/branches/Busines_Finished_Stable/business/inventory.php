@@ -491,7 +491,7 @@ class Count extends PersistObject implements Itemized{
 			try{
 				Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 			} catch(Exception $e){
-				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
+				$et = new Exception('Interno: Llamando al metodo construct en Count con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
@@ -602,9 +602,9 @@ class Count extends PersistObject implements Itemized{
 	public function setReason($reason){
 		if($this->_mStatus == Persist::CREATED)
 			throw new Exception('No se puede editar el motivo.');
-			
-		String::validateString($reason, 'Motivo inv&aacute;lido.');
+		
 		$this->_mReason = $reason;
+		String::validateString($reason, 'Motivo inv&aacute;lido.');
 	}
 	
 	/**
@@ -728,9 +728,9 @@ class Count extends PersistObject implements Itemized{
 	 * Reason must not be NULL and details must not be empty.
 	 */
 	protected function validateMainProperties(){
-		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.');
+		String::validateString($this->_mReason, 'Motivo inv&aacute;lido.', 'reason');
 		if(!$this->hasDetails())
-			throw new Exception('No hay ningun detalle.');
+			throw new ValidateException('No hay ningun detalle.', 'bar_code');
 	}
 	
 	/**
