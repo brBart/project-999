@@ -47,7 +47,7 @@
 		  		{/if}
 		  	</p>
 		  	{if $status eq 0}
-		  		{include file='count_toolbar_html.tpl' details_obj='oDetails' add_cmd='add_product_withdraw_document' event_delegator_obj='oEventDelegator'}
+		  		{include file='count_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}
 		  	{else}
 		  		{* Because Firefox css rule margin-top on table rule bug. *}
 		  		<p>&nbsp;</p>

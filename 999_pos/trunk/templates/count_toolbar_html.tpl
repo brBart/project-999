@@ -9,7 +9,7 @@
 <script type="text/javascript">
 var oQuantity = new ToolbarText();
 var oBarCode = new ToolbarBarCode();
-var oAddProductObj = new AddProductWithdrawCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj}, '{$add_cmd}');
+var oAddProductObj = new AddProductWithdrawCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, {$details_obj}, 'add_product_count');
 var oSearchProduct = new SearchProduct(oSession, oConsole, Request.createXmlHttpRequestObject());
 var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_delegator_obj});
 </script>
