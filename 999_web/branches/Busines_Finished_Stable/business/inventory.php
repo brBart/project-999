@@ -332,7 +332,7 @@ class CountDetail extends Persist{
 		parent::__construct($status);
 		
 		self::validateObjectFromDatabase($product);
-		Number::validateUnsignedInteger($quantity, 'Cantidad inv&aacute;lida.');
+		Number::validateUnsignedNumber($quantity, 'Cantidad inv&aacute;lida.');
 		
 		$this->_mProduct = $product;
 		$this->_mQuantity = $quantity;
