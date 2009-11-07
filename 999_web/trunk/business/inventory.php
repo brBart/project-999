@@ -570,7 +570,7 @@ class Count extends PersistObject implements Itemized{
 	 * @return CountDetail
 	 */
 	public function getDetail($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 		foreach($this->_mDetails as &$detail)
 			if($detail->getId() == $id)
 				return $detail;
