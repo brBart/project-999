@@ -29,6 +29,9 @@
 	window.onunload = function(){
 		oRemoveObject.execute();
 	}
+	function reloadDetails(){
+		oDetails.getLastPage();
+	}
 	{/literal}
 </script>
 <div id="content">

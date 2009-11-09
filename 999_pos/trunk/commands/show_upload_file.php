@@ -26,7 +26,7 @@ class ShowUploadFileCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		Page::display(array(), 'upload_file_html.tpl');
+		Page::display(array('key' => $request->getProperty('key')), 'upload_file_html.tpl');
 	}
 }
 ?>
