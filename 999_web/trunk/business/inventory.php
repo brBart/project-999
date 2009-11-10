@@ -826,6 +826,8 @@ class Parser{
 	 * @throws Exception
 	 */
 	static public function parseFile(Count $count, $url){
+		String::validateString($url, 'Ruta inv&aacute;lida.');
+		
 		if(!file_exists($url))
 			throw new Exception('Archivo no encontrado en: ' . $url);
 			
