@@ -6,6 +6,10 @@
 <title>Insert title here</title>
 {literal}
 <style type="text/css">
+.close_window {
+	float: right;
+}
+
 .error {
 	color: red;
 	border-style: none;
@@ -17,20 +21,28 @@
 		this.opener.reloadDetails();
 	    this.close();
 	}
+	function closeWindow(){
+		this.close();
+	}
 </script>
 {/literal}
 </head>
 <body {if $uploaded eq 1}onload="confirmSuccess();"{/if}>
 	<div id="wrapper">
 		{if $uploaded eq 1}
+			<a class="close_window" href="#" onclick="closeWindow();">Cerrar[X]</a>
+			<p>&nbsp;</p>
 			<h6>Detalles agregados satisfactoriamente.</h6>
 		{else}
+			<a class="close_window" href="#" onclick="closeWindow();">Cerrar[X]</a>
+			<p>&nbsp;</p>
 			<div id="console" class="console_display">
 			{if $notify eq 1}
 				<p class="{$type}">{$message}</p>
 			{/if}
 			</div>
-			<form method="post" action="index.php?cmd=parse_file&key={$key}">
+			<form method="post" enctype="multipart/form-data" action="index.php?cmd=parse_file&key={$key}">
+				<input name="MAX_FILE_SIZE" type="hidden" value="1000000" />
 				<label for="count_file">Ruta:</label>
 				<input id="count_file" name="count_file" type="file" />
 				<input type="submit" value="Subir archivo" />

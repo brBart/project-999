@@ -37,8 +37,8 @@ class ParseFileCommand extends Command{
 			Parser::parseFile($count, $url);
 		} catch(Exception $e){
 			$msg = $e->getMessage();
-			Page::display(array('notify' => '1', 'type' => 'error', 'message' => $msg),
-					'upload_file_html.tpl');
+			Page::display(array('key' => $request->getProperty('key'), 'notify' => '1', 'type' => 'error',
+					'message' => $msg), 'upload_file_html.tpl');
 			return;
 		}
 		
