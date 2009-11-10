@@ -708,6 +708,8 @@ class Count extends PersistObject implements Itemized{
 		
 		foreach($this->_mDetails as &$detail)
 			$detail->commit($this);
+			
+		return $this->_mId;
 	}
 	
 	/**
