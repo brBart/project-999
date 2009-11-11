@@ -36,7 +36,7 @@
 </script>
 <div id="content">
 	<div id="frm" class="content_large">
-		{include file='status_bar_doc_html.tpl'}
+		{include file='status_bar_html.tpl'}
 		{include file='header_data_html.tpl' document_name='Conteo'}
 		<fieldset id="main_data">
 		  	<p>
