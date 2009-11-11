@@ -134,7 +134,7 @@ StateMachine.prototype.changeToEditState = function(sElementId){
 	}
 	
 	// If there is a details table.
-	oDetails = document.getElementById('details');
+	var oDetails = document.getElementById('details');
 	if(oDetails){
 		oTable = oDetails.getElementsByTagName('table')[0];
 		oTable.className = '';
