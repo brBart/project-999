@@ -42,12 +42,15 @@ class GetCountCommand extends GetObjectCommand{
 	 */
 	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Inventariados', 'Conteos');
+		
+		$id = $this->_mRequest->getProperty('id');
+		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Conteo',
 				'create_link' => 'index.php?cmd=create_count', 'get_link' => 'index.php?cmd=get_count',
 				'search_link' => 'index.php?cmd=search_count&page=1', 'notify' => '1', 'type' => 'error',
-				'message' => $msg), 'site_html.tpl');
+				'message' => $msg, 'id' => $id), 'site_html.tpl');
 	}
 	
 	/**
