@@ -3,9 +3,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Subir archivo</title>
 {literal}
 <style type="text/css">
+body {
+	font-size: 12px;
+}
+
 .close_window {
 	float: right;
 }

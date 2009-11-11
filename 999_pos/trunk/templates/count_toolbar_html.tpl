@@ -38,7 +38,7 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
   			onclick="oAddProductObj.execute();" {if $status eq 1}disabled="disabled"{/if} />
 		<span id="receipt_product-failed" class="hidden">*</span>
 		<input name="form_widget" id="upload_file" type="button" value="Subir archivo..."
-			onclick="window.open('index.php?cmd=show_upload_file&key={$key}','','left=20,top=20,width=500,height=150,toolbar=0,resizable=0');"
+			onclick="window.open('index.php?cmd=show_upload_file&key={$key}','','left=20,top=20,width=500,height=130,toolbar=0,resizable=0');"
 			{if $status eq 1}disabled="disabled"{/if}/>
 	</div>
 </div>
