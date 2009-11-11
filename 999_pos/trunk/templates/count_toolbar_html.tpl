@@ -17,24 +17,29 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
 <div id="product_tb" class="small_tb">
  	<div>
  		<label for="quantity">Cantidad:</label>
-  		<input name="form_widget" id="quantity" type="text" class="tb_input" value="1" maxlength="11" />
+  		<input name="form_widget" id="quantity" type="text" class="tb_input" value="1" maxlength="11"
+  			{if $status eq 1}disabled="disabled"{/if} />
   		<span id="quantity-failed" class="hidden">*</span>
  		<label for="bar_code">Barra:</label>
-  		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
+  		<input name="form_widget" id="bar_code" type="text" maxlength="100"
+  			{if $status eq 1}disabled="disabled"{/if} />
   		<span id="bar_code-failed" class="hidden">*</span>
   		<div id="search_product">
 	    	<label for="product_name">Buscar:</label>
 	    	<div>
-	    		<input name="product_name" id="product_name" type="text" maxlength="100" />
+	    		<input name="product_name" id="product_name" type="text" maxlength="100"
+	    			{if $status eq 1}disabled="disabled"{/if} />
 	    		<div>
 	    			<div id="scroll"></div>
 	    		</div>
 	    	</div>
     	</div>
   		<input name="form_widget" id="add_product" type="button" value="Agregar"
-  			onclick="oAddProductObj.execute();" />
+  			onclick="oAddProductObj.execute();" {if $status eq 1}disabled="disabled"{/if} />
 		<span id="receipt_product-failed" class="hidden">*</span>
-		<input name="form_widget" id="upload_file" type="button" value="Subir archivo..." onclick="window.open('index.php?cmd=show_upload_file&key={$key}','','left=20,top=20,width=500,height=150,toolbar=0,resizable=0');" />
+		<input name="form_widget" id="upload_file" type="button" value="Subir archivo..."
+			onclick="window.open('index.php?cmd=show_upload_file&key={$key}','','left=20,top=20,width=500,height=150,toolbar=0,resizable=0');"
+			{if $status eq 1}disabled="disabled"{/if}/>
 	</div>
 </div>
 <script type="text/javascript">

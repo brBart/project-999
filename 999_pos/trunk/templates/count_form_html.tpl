@@ -49,23 +49,16 @@
 		  		<span>{$reason}</span>
 		  		{/if}
 		  	</p>
-		  	{if $status eq 0}
-		  		{include file='count_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}
-		  	{else}
-		  		{* Because Firefox css rule margin-top on table rule bug. *}
-		  		<p>&nbsp;</p>
-		  	{/if}
+		  	{include file='count_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}
 		  	<div id="details" class="items"></div>
 		</fieldset>
-		{include file='count_controls_html.tpl'}
+		{include file='count_controls_html.tpl' edit_cmd='edit_count' focus_on_edit='reason' delete_cmd='delete_count'}
 	</div>
 </div>
 <script type="text/javascript">
 {if $status eq 0}
 StateMachine.setFocus('reason');
-oDetails.init('../xsl/count_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
-{else}
-oDetails.init('../xsl/count_page.xsl', 'details', 'oDetails');
 {/if}
+oDetails.init('../xsl/count_page.xsl', 'details', 'oDetails', 'upload_file', 'save', 'oDeleteProductObj');
 oDetails.getLastPage();
 </script>
