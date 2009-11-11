@@ -6,11 +6,11 @@
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
 <script type="text/javascript" src="../scripts/count_page.js"></script>
-{if $status eq 0}
-<script type="text/javascript" src="../scripts/set_property.js"></script>
 <script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript" src="../scripts/delete_detail.js"></script>
 <script type="text/javascript" src="../scripts/delete_product_object.js"></script>
+{if $status eq 0}
+<script type="text/javascript" src="../scripts/set_property.js"></script>
 {/if}
 <script type="text/javascript">
 	var oConsole = new Console('console');
@@ -19,11 +19,11 @@
 	var oEventDelegator = new EventDelegator();
 	oEventDelegator.init();
 	var oDetails = new CountPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
-	{if $status eq 0}
-	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oDeleteProductObj = new DeleteProductObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oDetails, 'delete_product_count');
 	// For the delete key pressed.
 	oDetails.mDeleteObj = oDeleteProductObj;
+	{if $status eq 0}
+	var oSetProperty = new SetPropertyCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	{/if}
 	{literal}
 	window.onunload = function(){
@@ -52,7 +52,7 @@
 		  	{include file='count_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}
 		  	<div id="details" class="items"></div>
 		</fieldset>
-		{include file='count_controls_html.tpl' edit_cmd='edit_count' focus_on_edit='reason' delete_cmd='delete_count'}
+		{include file='count_controls_html.tpl' edit_cmd='edit_count' focus_on_edit='quantity' delete_cmd='delete_count'}
 	</div>
 </div>
 <script type="text/javascript">
