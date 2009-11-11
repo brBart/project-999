@@ -52,7 +52,7 @@
 		  	{include file='count_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}
 		  	<div id="details" class="items"></div>
 		</fieldset>
-		{include file='count_controls_html.tpl' edit_cmd='edit_count' focus_on_edit='quantity' delete_cmd='delete_count'}
+		{include file='count_controls_html.tpl' edit_cmd='edit_count' focus_on_edit='quantity' delete_cmd='delete_count' print_cmd='print_count'}
 	</div>
 </div>
 <script type="text/javascript">
