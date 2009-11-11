@@ -34,6 +34,8 @@ class ParseFileCommand extends Command{
 		$url = $_FILES['count_file']['tmp_name'];
 		
 		try{
+			if(is_null($count))
+				throw new Exception('Conteo ya no esta disponible.');
 			Parser::parseFile($count, $url);
 		} catch(Exception $e){
 			$msg = $e->getMessage();
