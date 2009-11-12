@@ -27,7 +27,7 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
   		<div id="search_product">
 	    	<label for="product_name">Buscar:</label>
 	    	<div>
-	    		<input name="product_name" id="product_name" type="text" maxlength="100"
+	    		<input name="form_widget" id="product_name" type="text" maxlength="100"
 	    			{if $status eq 1}disabled="disabled"{/if} />
 	    		<div>
 	    			<div id="scroll"></div>
