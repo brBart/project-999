@@ -42,13 +42,12 @@ class ShowCreateComparisonFormCommand extends Command{
 		}
 		else{
 			$back_trace = array('Inicio', 'Inventariados', 'Comparaciones');
-			$user = $obj->getUser();
 			Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'content' => 'comparison_form_html.tpl', 'status' => '0', 'key' => $key,
 					'back_link' => 'index.php?cmd=show_comparison_menu',
-					'foward_link' => 'index.php?cmd=get_comparison', 'username' => $user->getUserName(),
-					'date_time' => $obj->getDateTime()), 'site_html.tpl');
+					'foward_link' => 'index.php?cmd=get_comparison', 'username' => $user->getUserName()),
+					'site_html.tpl');
 		}
 	}
 }

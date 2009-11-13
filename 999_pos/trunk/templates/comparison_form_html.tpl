@@ -2,7 +2,9 @@
 {* status = 0 Edit, status = 1 Idle, status = 2 Cancelled *}
 <script type="text/javascript" src="../scripts/core_libs.js"></script>
 <script type="text/javascript" src="../scripts/form_libs.js"></script>
-{if $status eq 1}
+{if $status eq 0}
+<script type="text/javascript" src="../scripts/create_comparison.js"></script>
+{else}
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
@@ -10,77 +12,74 @@
 {/if}
 <script type="text/javascript">
 	var oConsole = new Console('console');
+	{if $status eq 0}
+	var oCreateComparison = new CreateComparisonCommand(oSession, oConsole, Request.createXmlHttpRequestObject());
+	{else}
 	var oMachine = new StateMachine({$status});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
-	{if $status eq 1}
 	var oEventDelegator = new EventDelegator();
 	oEventDelegator.init();
 	var oDetails = new DocumentPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
-	{/if}
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
 	}
 	{/literal}
+	{/if}
 </script>
 <div id="content">
 	<div id="frm" class="content_large">
 		{include file='status_bar_doc_html.tpl'}
-		{include file='header_data_html.tpl' document_name='Recibo'}
+		{include file='header_data_html.tpl' document_name='Comparaci&oacute;n'}
 		<fieldset id="main_data">
 			<p>
-		  		<label for="supplier_id">Proveedor:{if $status eq 0}*{/if}</label>
+		  		<label for="reason">Motivo:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<select name="form_widget" id="supplier_id"
-		  			onblur="oSetProperty.execute('set_supplier_receipt', this.value, this.id);">
-	    			{section name=i loop=$supplier_list}
-	    				<option value="{$supplier_list[i].id}">
-	    					{$supplier_list[i].name}
-	    				</option>
-	    			{/section}
-	    		</select>
-		  		<span id="supplier_id-failed" class="hidden">*</span>
+		  		<input name="form_widget" id="reason" type="text" maxlength="150" />
+		  		<span id="reason-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$supplier}</span>
-		  		{/if}
-		  	</p>
-		  	<p>
-		  		<label for="shipment_number">Env&iacute;o No:{if $status eq 0}*{/if}</label>
-		  		{if $status eq 0}
-		  		<input name="form_widget" id="shipment_number" type="text" maxlength="50"
-		  			onblur="oSetProperty.execute('set_shipment_number_receipt', this.value, this.id);" />
-		  		<span id="shipment_number-failed" class="hidden">*</span>
-		  		{else}
-		  		<span>{$shipment_number}</span>
-		  		{/if}
-		  	</p>
-		  	<p>
-		  		<label for="shipment_total">Total env&iacute;o:{if $status eq 0}*{/if}</label>
-		  		{if $status eq 0}
-		  		<input name="form_widget" id="shipment_total" type="text" maxlength="13"
-		  			onblur="oSetProperty.execute('set_shipment_total_receipt', this.value, this.id);" />
-		  		<span id="shipment_total-failed" class="hidden">*</span>
-		  		{else}
-		  		<span>{$shipment_total}</span>
+		  		<span>{$reason}</span>
 		  		{/if}
 		  	</p>
 		  	{if $status eq 0}
-		  		{include file='entry_toolbar_html.tpl' details_obj='oDetails' add_cmd='add_product_entry_document' event_delegator_obj='oEventDelegator'}
-		  	{else}
-		  		{* Because Firefox css rule margin-top on table rule bug. *}
-		  		<p>&nbsp;</p>
+		  	<p>
+		  		<label for="count_id">Conteo No:*</label>
+		  		<input name="form_widget" id="count_id" type="text" maxlength="11" />
+		  		<span id="count_id-failed" class="hidden">*</span>
+		  	</p>
 		  	{/if}
-		  	<div id="details" class="items"></div>
+		  	<p>
+		  		<label for="general">General:</label>
+		  		<input name="form_widget" id="general" type="checkbox"
+		  			{if $status eq 1}
+		  				{if $general eq 1}checked="checked"{/if}
+		  				disabled="disabled"
+		  			{/if} />
+		  		<span id="general-failed" class="hidden">*</span>
+		  	</p>
+		  	{if $status eq 1}
+		  		<div id="details" class="items"></div>
+		  	{/if}
 		</fieldset>
-		{include file='controls_doc_html.tpl' print_cmd='print_receipt' cancel_cmd='cancel_receipt'}
+		<fieldset id="controls">
+			{if $status eq 0}
+		  	<input name="form_widget" id="save" type="button" value="Guardar"
+		  		onclick="oCreateComparison.execute('{$foward_link}');" />
+		  	<input name="form_widget" id="undo" type="button" value="Cancelar"
+		  		onclick="oSession.loadHref('{$back_link}');" />
+		  	{else}
+		  	<input name="form_widget" id="print" type="button" value="Imprimir"
+  				onclick="window.open('index.php?cmd=print_comparison&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+		  	{/if}
+		</fieldset>
 	</div>
 </div>
 <script type="text/javascript">
 {if $status eq 0}
-StateMachine.setFocus('supplier_id');
-oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails', 'add_product', 'save', 'oDeleteProductObj');
+StateMachine.setFocus('reason');
+oCreateComparison.init('reason', 'count_id', 'general');
 {else}
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
-{/if}
 oDetails.getLastPage();
+{/if}
 </script>
