@@ -29,16 +29,11 @@ class GetCountCommand extends GetObjectCommand{
 	 * @return variant
 	 */
 	protected function getObject(){
-		$id = $this->_mRequest->getProperty('id');
-		if(is_numeric($id)){
-			$count = Count::getInstance((int)$id);
-			if(!is_null($count))
-				return $count;
-			else
-				throw new Exception('Conteo no existe.');
-		}
+		$count = Count::getInstance($this->_mRequest->getProperty('id'));
+		if(!is_null($count))
+			return $count;
 		else
-			throw new Exception('N&uacute;mero inv&aacute;lido. Valor debe ser n&uacute;merico.');
+			throw new Exception('Conteo no existe.');
 	}
 	
 	/**
