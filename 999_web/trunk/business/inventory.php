@@ -490,7 +490,7 @@ class Count extends PersistObject implements Itemized{
 		
 		if(!is_null($id))
 			try{
-				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+				Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Count con datos erroneos! ' .
 						$e->getMessage());
@@ -720,7 +720,7 @@ class Count extends PersistObject implements Itemized{
 	 * @return Count
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		Number::validatePositiveNumber($id, 'N&uacute;mero inv&aacute;lido.');
 		return CountDAM::getInstance($id);
 	}
 	
