@@ -13,7 +13,7 @@ var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequest
 </script>
 <fieldset id="controls">
   	<input name="form_widget" id="save" type="button" value="Guardar"
-  		onclick="oSave.execute('{$foward_link}');" {if $status eq 1}disabled="disabled"{/if}  />
+  		onclick="oSave.execute('{$foward_link}');" {if $status eq 1}disabled="disabled"{/if} />
   	<input name="form_widget" id="edit" type="button" value="Editar"
   		{if $status eq 1}
   			onclick="oEdit.execute('{$edit_cmd}', '{$focus_on_edit}');"
