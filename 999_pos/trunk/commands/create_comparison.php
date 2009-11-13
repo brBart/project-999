@@ -13,6 +13,10 @@ require_once('presentation/command.php');
  * For displaying the results.
  */
 require_once('presentation/page.php');
+/**
+ * For creating the comparison.
+ */
+require_once('business/inventory.php');
 
 /**
  * Defines functionality for creating a comparison.
@@ -26,7 +30,13 @@ class CreateComparisonCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		
+		try{
+			 
+		} catch(ValidateException $e){
+			
+		} catch(Exception $e){
+			
+		}
 	}
 }
 ?>
