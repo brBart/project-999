@@ -4,6 +4,7 @@
 <script type="text/javascript" src="../scripts/form_libs.js"></script>
 {if $status eq 0}
 <script type="text/javascript" src="../scripts/create_comparison.js"></script>
+<script type="text/javascript" src="../scripts/text_range.js"></script>
 {else}
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
@@ -32,6 +33,13 @@
 		{include file='status_bar_doc_html.tpl'}
 		{include file='header_data_html.tpl' document_name='Comparaci&oacute;n'}
 		<fieldset id="main_data">
+			{if $status eq 0}
+		  	<p>
+		  		<label for="count_id">Conteo No:*</label>
+		  		<input name="form_widget" id="count_id" type="text" maxlength="11" />
+		  		<span id="count_id-failed" class="hidden">*</span>
+		  	</p>
+		  	{/if}
 			<p>
 		  		<label for="reason">Motivo:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
@@ -41,13 +49,6 @@
 		  		<span>{$reason}</span>
 		  		{/if}
 		  	</p>
-		  	{if $status eq 0}
-		  	<p>
-		  		<label for="count_id">Conteo No:*</label>
-		  		<input name="form_widget" id="count_id" type="text" maxlength="11" />
-		  		<span id="count_id-failed" class="hidden">*</span>
-		  	</p>
-		  	{/if}
 		  	<p>
 		  		<label for="general">General:</label>
 		  		<input name="form_widget" id="general" type="checkbox"
@@ -76,7 +77,7 @@
 </div>
 <script type="text/javascript">
 {if $status eq 0}
-StateMachine.setFocus('reason');
+StateMachine.setFocus('count_id');
 oCreateComparison.init('reason', 'count_id', 'general');
 {else}
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');

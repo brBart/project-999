@@ -31,12 +31,26 @@ class CreateComparisonCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		try{
+			 $count = Count::getInstance($request->getProperty('count_id'));
+			 if(is_null($count))
+			 	throw new ValidateException('Conteo no existe', 'count_id');
 			 
+			 $reason = $request->getProperty('reason');
+			 $general = (boolean)$request->getProperty('general');
+			 $comparison_id = ComparisonEvent::apply($count, $reason, $general);
 		} catch(ValidateException $e){
-			
+			$msg = $e->getMessage();
+			$element_id = $e->getProperty();
+			Page::display(array('success' => '0', 'element_id' => $element_id, 'message' => $msg),
+					'validate_xml.tpl');
+			return;
 		} catch(Exception $e){
-			
+			$msg = $e->getMessage();
+			Page::display(array('message' => $msg), 'error_xml.tpl');
+			return;
 		}
+		
+		Page::display(array('id' => $comparison_id), 'save_object_xml.tpl');
 	}
 }
 ?>

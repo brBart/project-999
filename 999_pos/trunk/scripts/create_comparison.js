@@ -58,7 +58,7 @@ CreateComparisonCommand.prototype.execute = function(sLinkSuccess){
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
 		str = Url.addUrlParam(str, 'reason', this._mReason.value);
 		str = Url.addUrlParam(str, 'count_id', this._mCountId.value);
-		str = Url.addUrlParam(str, 'general', this._mGeneral.value);
+		str = Url.addUrlParam(str, 'general', this._mGeneral.checked ? '1' : '0');
 		this.sendRequest(str);
 	}
 }
