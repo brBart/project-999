@@ -26,7 +26,7 @@ class ComparisonDAM{
 		switch($id){
 			case 123:
 				$details[] = new ComparisonDetail(Product::getInstance(125), 10, 10);
-				$comparison = new Comparison($id, '01/05/2009', UserAccount::getInstance('roboli'), 'Los hay.',
+				$comparison = new Comparison($id, '01/05/2009 12:00:00', UserAccount::getInstance('roboli'), 'Los hay.',
 						false, $details, 10, 10);
 				return $comparison;
 				break;

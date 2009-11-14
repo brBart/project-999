@@ -104,10 +104,10 @@ class Comparison implements Itemized{
 	/**
 	 * Holds the comparison's creation date.
 	 *
-	 * Date format: 'dd/mm/yyyy'.
+	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
 	 * @var string
 	 */
-	private $_mDate;
+	private $_mDateTime;
 	
 	/**
 	 * Holds the user who created the comparison.
@@ -156,7 +156,7 @@ class Comparison implements Itemized{
 	 *
 	 * Call only from the database layer please.
 	 * @param integer $id
-	 * @param string $date
+	 * @param string $dateTime
 	 * @param UserAccount $user
 	 * @param string $reason
 	 * @param boolean $general
@@ -165,10 +165,10 @@ class Comparison implements Itemized{
 	 * @param integer $system
 	 * @throws Exception
 	 */
-	public function __construct($id, $date, UserAccount $user, $reason, $general, $details, $physical, $system){
+	public function __construct($id, $dateTime, UserAccount $user, $reason, $general, $details, $physical, $system){
 		try{
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-			Date::validateDate($date, 'Fecha inv&aacute;lida.');
+			Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 			Persist::validateObjectFromDatabase($user);
 			String::validateString($reason, 'Motivo inv&aacute;lido.');
 			if(empty($details))
@@ -182,7 +182,7 @@ class Comparison implements Itemized{
 		}
 		
 		$this->_mId = $id;
-		$this->_mDate = $date;
+		$this->_mDateTime = $dateTime;
 		$this->_mUser = $user;
 		$this->_mReason = $reason;
 		$this->_mGeneral = (boolean)$general;
@@ -201,12 +201,12 @@ class Comparison implements Itemized{
 	}
 	
 	/**
-	 * Returns the comparison's date.
+	 * Returns the comparison's date and time.
 	 *
 	 * @return string
 	 */
-	public function getDate(){
-		return $this->_mDate;
+	public function getDateTime(){
+		return $this->_mDateTime;
 	}
 	
 	/**
