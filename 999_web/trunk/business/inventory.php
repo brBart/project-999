@@ -720,7 +720,7 @@ class Count extends PersistObject implements Itemized{
 	 * @return Count
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveNumber($id, 'N&uacute;mero inv&aacute;lido.');
+		Number::validatePositiveNumber($id, 'N&uacute;mero inv&aacute;lido.', 'count_id');
 		return CountDAM::getInstance($id);
 	}
 	
