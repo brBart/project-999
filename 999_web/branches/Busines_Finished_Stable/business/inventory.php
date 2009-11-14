@@ -804,9 +804,9 @@ class ComparisonEvent{
 	 */
 	static public function apply(Count $count, $reason, $general = false){
 		Persist::validateObjectFromDatabase($count);
-		String::validateString($reason, 'Motivo inv&aacute;lido.');
+		String::validateString($reason, 'Motivo inv&aacute;lido.', 'reason');
 		
-		$date = date('d/m/Y');
+		$date = date('d/m/Y H:i:s');
 		$user = SessionHelper::getInstance()->getUser();
 		
 		return ComparisonDAM::insert($date, $user, $count, $reason, $general);
