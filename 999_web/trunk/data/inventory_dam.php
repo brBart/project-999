@@ -75,8 +75,9 @@ class ComparisonDAM{
 	 */
 	static public function insert($date, UserAccount $user, Count $count, $reason, $general){
 		$sql = 'CALL comparison_insert(:username, :date, :reason, :general, :physical_total)';
-		$params = array(':username' => $user->getUserName(), ':date' => Date::dbFormat($date),
-				':reason' => $reason, ':general' => (int)$general, ':physical_total' => $count->getTotal());
+		$params = array(':username' => $user->getUserName(),
+				':date' => Date::dbDateTimeFormat($date), ':reason' => $reason,
+				':general' => (int)$general, ':physical_total' => $count->getTotal());
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
