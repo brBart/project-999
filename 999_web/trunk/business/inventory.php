@@ -279,17 +279,11 @@ class Comparison implements Itemized{
 	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return Comparison
 	 */
-	static public function getInstance($id, &$total_pages = 0, &$total_items = 0, $page = 0){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-		if($page !== 0)
-			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
-			
-		return ComparisonDAM::getInstance($id, $total_pages, $total_items, $page);
+	static public function getInstance($id){
+		Number::validatePositiveNumber($id, 'N&uacute;mero inv&aacute;lido.');
+		return ComparisonDAM::getInstance($id);
 	}
 }
 
