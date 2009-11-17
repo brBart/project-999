@@ -22,7 +22,7 @@ class ComparisonDAM{
 	 * @param integer $page
 	 * @return Comparison
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id){
 		switch($id){
 			case 123:
 				$details[] = new ComparisonDetail(Product::getInstance(125), 10, 10);
