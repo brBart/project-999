@@ -22,29 +22,15 @@ class ComparisonDAM{
 	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database. 
 	 * @param integer $id
-	 * @param integer &$totalPages
-	 * @param integer &$totalItems
-	 * @param integer $page
 	 * @return Comparison
 	 */
-	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+	static public function getInstance($id){
 		$sql = 'CALL comparison_get(:comparison_id)';
 		$params = array(':comparison_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$sql = 'CALL comparison_product_count(:comparison_id)';
-			$totalItems = DatabaseHandler::getOne($sql, $params);
-			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-			
-			if($page > 0)
-				$params = array('comparison_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
-						'items_per_page' => ITEMS_PER_PAGE);
-			else
-				$params = array('comparison_id' => $id, ':start_item' => 0,
-						':items_per_page' => $totalItems);
-			
-			$sql = 'CALL comparison_product_get(:comparison_id, :start_item, :items_per_page)';
+			$sql = 'CALL comparison_product_get(:comparison_id)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			$details = array();
