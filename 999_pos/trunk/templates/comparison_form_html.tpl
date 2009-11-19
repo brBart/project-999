@@ -9,7 +9,7 @@
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
-<script type="text/javascript" src="../scripts/document_page.js"></script>
+<script type="text/javascript" src="../scripts/comparison_page.js"></script>
 {/if}
 <script type="text/javascript">
 	var oConsole = new Console('console');
@@ -20,7 +20,7 @@
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
 	oEventDelegator.init();
-	var oDetails = new DocumentPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
+	var oDetails = new ComparisonPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -59,6 +59,7 @@
 		  		<span id="general-failed" class="hidden">*</span>
 		  	</p>
 		  	{if $status eq 1}
+		  		<p>&nbsp;</p>
 		  		<div id="details" class="items"></div>
 		  	{/if}
 		</fieldset>
@@ -80,7 +81,7 @@
 StateMachine.setFocus('count_id');
 oCreateComparison.init('reason', 'count_id', 'general');
 {else}
-oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
+oDetails.init('../xsl/comparison_page.xsl', 'details', 'oDetails');
 oDetails.getLastPage();
 {/if}
 </script>

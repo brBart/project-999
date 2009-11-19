@@ -81,6 +81,10 @@ function __autoload($className){
 			require_once('business/inventory.php');
 			break;
 			
+		case 'Comparison':
+			require_once('business/inventory.php');
+			break;
+			
 		default:
 	}
 }
