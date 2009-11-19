@@ -81,7 +81,7 @@ class ComparisonDetail{
 		$um = $this->_mProduct->getUnitOfMeasure();
 		
 		return array('bar_code' => $this->_mProduct->getBarCode(), 'manufacturer' => $manufacturer->getName(),
-				'name' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
+				'product' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
 				'um' => $um->getName(), 'physical' => $this->_mPhysical, 'system' => $this->_mSystem,
 				'diference' => sprintf('%+d', ($this->_mPhysical - $this->_mSystem)));
 	}
