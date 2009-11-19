@@ -167,7 +167,7 @@ class Comparison implements Itemized{
 	 */
 	public function __construct($id, $dateTime, UserAccount $user, $reason, $general, $details, $physical, $system){
 		try{
-			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+			Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 			Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 			Persist::validateObjectFromDatabase($user);
 			String::validateString($reason, 'Motivo inv&aacute;lido.');
