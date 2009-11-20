@@ -208,42 +208,28 @@ class CountingTemplateDAM{
 	 * Returns an array with the necessary data for printing the template ordered by product name.
 	 *
 	 * The array's fields are product_id, bar_code, manufacturer, name and packaging.
-	 * @param boolean $general
 	 * @param string $first
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByProduct($general, $first, $last){
-		if($general){
-			$sql = 'CALL product_counting_template_general_get()';
-			return DatabaseHandler::getAll($sql);
-		}
-		else{
-			$sql = 'CALL product_counting_template_get(:first, :last)';
-			$params = array(':first' => $first, ':last' => $last);
-			return DatabaseHandler::getAll($sql, $params);
-		}
+	static public function getDataByProduct($first, $last){
+		$sql = 'CALL product_counting_template_get(:first, :last)';
+		$params = array(':first' => $first, ':last' => $last);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 	
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
 	 *
 	 * The array's fields are product_id, bar_code, manufacturer, name and packaging.
-	 * @param boolean $general
 	 * @param string $first
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByManufacturer($general, $first, $last){
-		if($general){
-			$sql = 'CALL manufacturer_counting_template_general_get()';
-			return DatabaseHandler::getAll($sql);
-		}
-		else{
-			$sql = 'CALL manufacturer_counting_template_get(:first, :last)';
-			$params = array(':first' => $first, ':last' => $last);
-			return DatabaseHandler::getAll($sql, $params);
-		}
+	static public function getDataByManufacturer($first, $last){
+		$sql = 'CALL manufacturer_counting_template_get(:first, :last)';
+		$params = array(':first' => $first, ':last' => $last);
+		return DatabaseHandler::getAll($sql, $params);
 	}
 }
 ?>
