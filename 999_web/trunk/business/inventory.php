@@ -79,11 +79,12 @@ class ComparisonDetail{
 	public function show(){
 		$manufacturer = $this->_mProduct->getManufacturer();
 		$um = $this->_mProduct->getUnitOfMeasure();
+		$diference = $this->_mPhysical - $this->_mSystem;
 		
 		return array('bar_code' => $this->_mProduct->getBarCode(), 'manufacturer' => $manufacturer->getName(),
 				'product' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
 				'um' => $um->getName(), 'physical' => $this->_mPhysical, 'system' => $this->_mSystem,
-				'diference' => sprintf('%+d', ($this->_mPhysical - $this->_mSystem)));
+				'diference' => ($diference == 0) ? '0' : sprintf('%+d', ($diference)));
 	}
 }
 
@@ -270,7 +271,8 @@ class Comparison implements Itemized{
 	 * @return string
 	 */
 	public function getTotalDiference(){
-		return sprintf('%+d', $this->_mPhysicalTotal - $this->_mSystemTotal);
+		$diference = $this->_mPhysicalTotal - $this->_mSystemTotal;
+		return ($diference == 0) ? '0' : sprintf('%+d', $diference);
 	}
 	
 	/**
