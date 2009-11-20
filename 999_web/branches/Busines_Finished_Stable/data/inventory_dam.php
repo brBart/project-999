@@ -168,12 +168,11 @@ class CountingTemplateDAM{
 	 * Returns an array with the necessary data for printing the template ordered by product name.
 	 *
 	 * The array's fields are id, bar_code, manufacturer, name and packaging.
-	 * @param boolean $general
 	 * @param string $first
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByProduct($general, $first, $last){
+	static public function getDataByProduct($first, $last){
 		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
 				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
 				'name' => 'Racomin', 'packaging' => 'caja'));
@@ -183,12 +182,11 @@ class CountingTemplateDAM{
 	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
 	 *
 	 * The array's fields are id, bar_code, manufacturer, name and packaging.
-	 * @param boolean $general
 	 * @param string $first
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByManufacturer($general, $first, $last){
+	static public function getDataByManufacturer($first, $last){
 		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
 				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
 				'name' => 'Racomin', 'packaging' => 'caja'));

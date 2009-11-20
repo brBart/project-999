@@ -892,36 +892,30 @@ class CountingTemplate{
 	 * Returns an array with the necessary data for printing the template ordered by product name.
 	 *
 	 * The array's fields are id, bar_code, manufacturer, name and packaging.
-	 * @param boolean $general
 	 * @param string $first
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByProduct($general, $first = NULL, $last = NULL){
-		if(!$general){
-			String::validateString($first, 'Seleccione el primer producto.');
-			String::validateString($last, 'Seleccione el segundo producto.');
-		}
+	static public function getDataByProduct($first = NULL, $last = NULL){
+		String::validateString($first, 'Seleccione el primer producto.');
+		String::validateString($last, 'Seleccione el segundo producto.');
 		
-		return CountingTemplateDAM::getDataByProduct($general, $first, $last);
+		return CountingTemplateDAM::getDataByProduct($first, $last);
 	}
 	
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
 	 *
 	 * The array's fields are id, bar_code, manufacturer, name and packaging.
-	 * @param boolean $general
 	 * @param string $first
 	 * @param string $last
 	 * @return array
 	 */
-	static public function getDataByManufacturer($general, $first = NULL, $last = NULL){
-		if(!$general){
-			String::validateString($first, 'Seleccione la primera casa.');
-			String::validateString($last, 'Seleccione la segunda casa.');
-		}	
+	static public function getDataByManufacturer($first = NULL, $last = NULL){
+		String::validateString($first, 'Seleccione la primera casa.');
+		String::validateString($last, 'Seleccione la segunda casa.');
 
-		return CountingTemplateDAM::getDataByManufacturer($general, $first, $last);
+		return CountingTemplateDAM::getDataByManufacturer($first, $last);
 	}
 }
 ?>
