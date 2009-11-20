@@ -900,7 +900,7 @@ class CountingTemplate{
 		String::validateString($first, 'Seleccione el primer producto.');
 		String::validateString($last, 'Seleccione el segundo producto.');
 		
-		return CountingTemplateDAM::getDataByProduct($general, $first, $last);
+		return CountingTemplateDAM::getDataByProduct($first, $last);
 	}
 	
 	/**
@@ -915,7 +915,7 @@ class CountingTemplate{
 		String::validateString($first, 'Seleccione la primera casa.');
 		String::validateString($last, 'Seleccione la segunda casa.');
 
-		return CountingTemplateDAM::getDataByManufacturer($general, $first, $last);
+		return CountingTemplateDAM::getDataByManufacturer($first, $last);
 	}
 }
 ?>
