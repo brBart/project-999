@@ -30,8 +30,6 @@ function openWindow(sForm)
 	    				</option>
 	    			{/section}
 	    		</select>
-	    		<label for="product_all">Todos</label>
-	    		<input name="product_all" id="product_all" type="checkbox" />
 	    		<input type="submit" value="Imprimir" onclick="openWindow('document.forms[0]');" />
 	    	</form>
 	    </li>
@@ -55,8 +53,6 @@ function openWindow(sForm)
 	    				</option>
 	    			{/section}
 	    		</select>
-	    		<label for="manufacturer_all">Todos</label>
-	    		<input name="manufacturer_all" id="manufacturer_all" type="checkbox" />
 	    		<input type="submit" value="Imprimir" onclick="openWindow('document.forms[1]');" />
 	    	</form>
 	    </li>

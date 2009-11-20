@@ -26,22 +26,16 @@ abstract class PrintCountingTemplateCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$general = (boolean)$request->getProperty('general');
+		$first = $request->getProperty('first');
+		$last = $request->getProperty('last');
 		
-		if($general)
-			$details = $this->getGeneralResults();
-		else{
-			$first = $request->getProperty('first');
-			$last = $request->getProperty('last');
-			
-			try{
-				$details = $this->getRangeResults($first, $last);
-			} catch(Exception $e){
-				$msg = $e->getMessage();
-				Page::display(array('date' => date('d/m/Y'), 'notify' => '1', 'type' => 'error',
-						'message' => $msg, 'total_items' => '0'), 'counting_template_print_html.tpl');
-				return;
-			}
+		try{
+			$details = $this->getRangeResults($first, $last);
+		} catch(Exception $e){
+			$msg = $e->getMessage();
+			Page::display(array('date' => date('d/m/Y'), 'notify' => '1', 'type' => 'error',
+					'message' => $msg, 'total_items' => '0'), 'counting_template_print_html.tpl');
+			return;
 		}
 		
 		Page::display(array('date' => date('d/m/Y'), 'order_by' => $this->getOrderByType(),
