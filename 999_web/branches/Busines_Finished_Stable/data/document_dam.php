@@ -353,12 +353,9 @@ class InvoiceDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return Invoice
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id){
 		switch($id){
 			case 123:
 				$invoice = new Invoice(CashRegister::getInstance(123), '25/04/2009 09:09:09',
@@ -412,12 +409,9 @@ class PurchaseReturnDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return PurchaseReturn
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id){
 		switch($id){
 			case 123:
 				$return = new PurchaseReturn('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
@@ -471,12 +465,9 @@ class ShipmentDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return Shipment
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id){
 		switch($id){
 			case 123:
 				$shipment = new Shipment('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
@@ -530,12 +521,9 @@ class ReceiptDAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return Receipt
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id){
 		switch($id){
 			case 123:
 				$receipt = new Receipt('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
@@ -609,12 +597,9 @@ class EntryIADAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return EntryIA
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id){
 		switch($id){
 			case 123:
 				$entry = new EntryIA('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
@@ -669,12 +654,9 @@ class WithdrawIADAM{
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return WithdrawIA
 	 */
-	static public function getInstance($id, &$total_pages, &$total_items, $page){
+	static public function getInstance($id){
 		switch($id){
 			case 123:
 				$withdraw = new WithdrawIA('25/04/2009 09:09:09', UserAccount::getInstance('roboli'), $id,
