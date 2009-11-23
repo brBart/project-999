@@ -46,7 +46,7 @@
 					<td>{$details[i].id}</td>
 					<td>{$details[i].bar_code}</td>
 					<td>{$details[i].manufacturer}</td>
-					<td>{$details[i].name}</td>
+					<td>{$details[i].product}</td>
 					<td>{$details[i].packaging}</td>
 					<td>__________</td>
 				</tr>
