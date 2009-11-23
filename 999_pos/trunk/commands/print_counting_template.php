@@ -43,12 +43,6 @@ abstract class PrintCountingTemplateCommand extends Command{
 	}
 	
 	/**
-	 * Return an array with all the products' data for displaying on the template as details.
-	 * @return array
-	 */
-	abstract protected function getGeneralResults();
-	
-	/**
 	 * Return an array consisting on a range of products' data for displaying on the template as details.
 	 * @param string $first
 	 * @param string $last

@@ -25,21 +25,13 @@ require_once('business/inventory.php');
  */
 class PrintCountingTemplateByProductCommand extends PrintCountingTemplateCommand{
 	/**
-	 * Return an array with all the products' data for displaying on the template as details.
-	 * @return array
-	 */
-	protected function getGeneralResults(){
-		return CountingTemplate::getDataByProduct(true);
-	}
-	
-	/**
 	 * Return an array consisting on a range of products' data for displaying on the template as details.
 	 * @param string $first
 	 * @param string $last
 	 * @return array
 	 */
 	protected function getRangeResults($first, $last){
-		return CountingTemplate::getDataByProduct(false, $first, $last);
+		return CountingTemplate::getDataByProduct($first, $last);
 	}
 	
 	/**
