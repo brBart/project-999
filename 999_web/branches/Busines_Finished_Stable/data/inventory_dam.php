@@ -173,7 +173,7 @@ class CountingTemplateDAM{
 	 * @return array
 	 */
 	static public function getDataByProduct($first, $last){
-		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
+		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'product' => 'Aspirina',
 				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
 				'name' => 'Racomin', 'packaging' => 'caja'));
 	}
@@ -187,7 +187,7 @@ class CountingTemplateDAM{
 	 * @return array
 	 */
 	static public function getDataByManufacturer($first, $last){
-		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'name' => 'Aspirina',
+		return array(array('id' => 123, 'bar_code' => '32535', 'manufacturer' => 'Bayer', 'product' => 'Aspirina',
 				'packaging' => 'caja'), array('id' => 124, 'bar_code' => '92238', 'manufacturer' => 'Bayer',
 				'name' => 'Racomin', 'packaging' => 'caja'));
 	}
