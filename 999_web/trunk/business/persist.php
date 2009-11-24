@@ -278,7 +278,7 @@ abstract class PersistDocument extends Persist{
 		
 		if(!is_null($id))
 			try{
-				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+				Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 			} catch(ValidateException $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
 						$e->getMessage());
