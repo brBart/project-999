@@ -491,12 +491,9 @@ class PurchaseReturnDAM{
 	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$totalPages
-	 * @param integer &$totalItems
-	 * @param integer $page
 	 * @return PurchaseReturn
 	 */
-	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+	static public function getInstance($id){
 		$sql = 'CALL purchase_return_get(:purchase_return_id)';
 		$params = array(':purchase_return_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
@@ -506,18 +503,7 @@ class PurchaseReturnDAM{
 			$purchase_return = new PurchaseReturn($result['created_date'], $user, $id, (int)$result['status']);
 			$supplier = Supplier::getInstance((int)$result['supplier_id']);
 			
-			$sql = 'CALL purchase_return_lot_count(:purchase_return_id)';
-			$totalItems = DatabaseHandler::getOne($sql, $params);
-			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-			
-			if($page > 0)
-				$params = array('purchase_return_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
-						'items_per_page' => ITEMS_PER_PAGE);
-			else
-				$params = array('purchase_return_id' => $id, ':start_item' => 0,
-						':items_per_page' => $totalItems);
-			
-			$sql = 'CALL purchase_return_lot_get(:purchase_return_id, :start_item, :items_per_page)';
+			$sql = 'CALL purchase_return_lot_get(:purchase_return_id)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			$details = array();
