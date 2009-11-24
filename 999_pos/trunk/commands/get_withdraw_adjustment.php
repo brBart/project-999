@@ -37,7 +37,7 @@ class GetWithdrawAdjustmentCommand extends GetObjectCommand{
 		if(!is_null($withdraw))
 			return $withdraw;
 		else
-			throw new Exception('Vale de Entrada no existe.');
+			throw new Exception('Vale de Salida no existe.');
 	}
 	
 	/**
