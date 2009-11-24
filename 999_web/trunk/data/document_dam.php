@@ -833,12 +833,9 @@ class WithdrawIADAM{
 	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$totalPages
-	 * @param integer &$totalItems
-	 * @param integer $page
 	 * @return WithdrawIA
 	 */
-	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+	static public function getInstance($id){
 		$sql = 'CALL withdraw_adjustment_get(:withdraw_adjustment_id)';
 		$params = array(':withdraw_adjustment_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
@@ -847,18 +844,7 @@ class WithdrawIADAM{
 			$user = UserAccount::getInstance($result['user_account_username']);
 			$withdraw = new WithdrawIA($result['created_date'], $user, $id, (int)$result['status']);
 			
-			$sql = 'CALL withdraw_adjustment_lot_count(:withdraw_adjustment_id)';
-			$totalItems = DatabaseHandler::getOne($sql, $params);
-			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-			
-			if($page > 0)
-				$params = array('withdraw_adjustment_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
-						'items_per_page' => ITEMS_PER_PAGE);
-			else
-				$params = array('withdraw_adjustment_id' => $id, ':start_item' => 0,
-						':items_per_page' => $totalItems);
-			
-			$sql = 'CALL withdraw_adjustment_lot_get(:withdraw_adjustment_id, :start_item, :items_per_page)';
+			$sql = 'CALL withdraw_adjustment_lot_get(:withdraw_adjustment_id)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			$details = array();
