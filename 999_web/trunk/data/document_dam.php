@@ -585,12 +585,9 @@ class ShipmentDAM{
 	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
 	 * if there was no match for the provided id in the database.
 	 * @param integer $id
-	 * @param integer &$totalPages
-	 * @param integer &$totalItems
-	 * @param integer $page
 	 * @return Shipment
 	 */
-	static public function getInstance($id, &$totalPages, &$totalItems, $page){
+	static public function getInstance($id){
 		$sql = 'CALL shipment_get(:shipment_id)';
 		$params = array(':shipment_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
@@ -600,18 +597,7 @@ class ShipmentDAM{
 			$shipment = new Shipment($result['created_date'], $user, $id, (int)$result['status']);
 			$branch = Branch::getInstance((int)$result['branch_id']);
 			
-			$sql = 'CALL shipment_lot_count(:shipment_id)';
-			$totalItems = DatabaseHandler::getOne($sql, $params);
-			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-			
-			if($page > 0)
-				$params = array('shipment_id' => $id, ':start_item' => ($page - 1) * ITEMS_PER_PAGE,
-						'items_per_page' => ITEMS_PER_PAGE);
-			else
-				$params = array('shipment_id' => $id, ':start_item' => 0,
-						':items_per_page' => $totalItems);
-			
-			$sql = 'CALL shipment_lot_get(:shipment_id, :start_item, :items_per_page)';
+			$sql = 'CALL shipment_lot_get(:shipment_id)';
 			$items_result = DatabaseHandler::getAll($sql, $params);
 			
 			$details = array();
