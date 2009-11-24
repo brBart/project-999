@@ -37,16 +37,11 @@ class GetShipmentCommand extends GetObjectCommand{
 	 * @return variant
 	 */
 	protected function getObject(){
-		$id = $this->_mRequest->getProperty('id');
-		if(is_numeric($id)){
-			$shipment = Shipment::getInstance((int)$id);
-			if(!is_null($shipment))
-				return $shipment;
-			else
-				throw new Exception('Envio no existe.');
-		}
+		$shipment = Shipment::getInstance($this->_mRequest->getProperty('id'));
+		if(!is_null($shipment))
+			return $shipment;
 		else
-			throw new Exception('N&uacute;mero inv&aacute;lido. Valor debe ser n&uacute;merico.');
+			throw new Exception('Envio no existe.');
 	}
 	
 	/**
