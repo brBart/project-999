@@ -33,16 +33,11 @@ class GetEntryAdjustmentCommand extends GetObjectCommand{
 	 * @return variant
 	 */
 	protected function getObject(){
-		$id = $this->_mRequest->getProperty('id');
-		if(is_numeric($id)){
-			$entry = EntryIA::getInstance((int)$id);
-			if(!is_null($entry))
-				return $entry;
-			else
-				throw new Exception('Vale de Entrada no existe.');
-		}
+		$entry = EntryIA::getInstance($this->_mRequest->getProperty('id'));
+		if(!is_null($entry))
+			return $entry;
 		else
-			throw new Exception('N&uacute;mero inv&aacute;lido. Valor debe ser n&uacute;merico.');
+			throw new Exception('Vale de Entrada no existe.');
 	}
 	
 	/**
