@@ -37,16 +37,11 @@ class GetReceiptCommand extends GetObjectCommand{
 	 * @return variant
 	 */
 	protected function getObject(){
-		$id = $this->_mRequest->getProperty('id');
-		if(is_numeric($id)){
-			$receipt = Receipt::getInstance((int)$id);
-			if(!is_null($receipt))
-				return $receipt;
-			else
-				throw new Exception('Recibo no existe.');
-		}
+		$receipt = Receipt::getInstance($this->_mRequest->getProperty('id'));
+		if(!is_null($receipt))
+			return $receipt;
 		else
-			throw new Exception('N&uacute;mero inv&aacute;lido. Valor debe ser n&uacute;merico.');
+			throw new Exception('Recibo no existe.');
 	}
 	
 	/**
