@@ -45,6 +45,8 @@ StateMachine.setFocus('name');
 </script>
 {else}
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
+<script type="text/javascript" src="../scripts/details.js"></script>
+<script type="text/javascript" src="../scripts/object_details.js"></script>
 <script type="text/javascript" src="../scripts/modal_form.js"></script>
 <script type="text/javascript" src="../scripts/modal_list.js"></script>
 <div id="products_container" class="hidden">
@@ -56,6 +58,7 @@ StateMachine.setFocus('name');
 </div>
 <script type="text/javascript">
 var oEventDelegator = new EventDelegator();
+oEventDelegator.init();
 var oProductsFrm = new ModalForm('products_container');
 var oProductsConsole = new Console('products_console');
 var oManufacturerProducts = new ObjectDetails(oSession, oProductsConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_manufacturer_products');

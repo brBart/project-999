@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetProductLotsCommand class.
+ * Library containing the GetManufacturerProductsCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,11 +15,11 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Defines functionality for obtaining the product's lots.
+ * Defines functionality for obtaining the manufacturer's products.
  * @package Command
  * @author Roberto Oliveros
  */
-class GetProductLotsCommand extends Command{
+class GetManufacturerProductsCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
@@ -27,13 +27,12 @@ class GetProductLotsCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$product = $helper->getObject((int)$request->getProperty('key'));
-		$product_lots = Inventory::showLots($product, $quantity, $available);
-		$page_items = count($product_lots);
+		$products = ManufacturerProductList::getList($product);
+		$page_items = count($products);
 		$page = ($page_items > 0) ? 1 : 0;
 		
-		Page::display(array('lots' => $product_lots, 'page_items' => $page_items,
-				'page' => $page, 'quantity' => $quantity, 'available' => $available),
-				'product_lots_xml.tpl');
+		Page::display(array('products' => $products, 'page_items' => $page_items, 'page' => $page),
+				'product_list_xml.tpl');
 	}
 }
 ?>
