@@ -355,7 +355,7 @@ input[type="text"], input[type="password"] {
 
 .content_small_menu #status_bar {
 	float: left;
-	width: 60%;
+	width: 50%;
 }
 
 .content_medium #status_bar {
