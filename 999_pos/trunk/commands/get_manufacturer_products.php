@@ -26,8 +26,8 @@ class GetManufacturerProductsCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$product = $helper->getObject((int)$request->getProperty('key'));
-		$products = ManufacturerProductList::getList($product);
+		$manufacturer = $helper->getObject((int)$request->getProperty('key'));
+		$products = ManufacturerProductList::getList($manufacturer);
 		$page_items = count($products);
 		$page = ($page_items > 0) ? 1 : 0;
 		
