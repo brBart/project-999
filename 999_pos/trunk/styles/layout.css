@@ -52,7 +52,7 @@ input[type="text"], input[type="password"] {
 	display: inline;
 }
 	
-.content_small {
+.content_small, .content_small_menu {
 	width: 40%;
 }
 
@@ -351,6 +351,11 @@ input[type="text"], input[type="password"] {
 
 #bonus_tb input[type="text"] {
 	width: 3.5em;
+}
+
+.content_small_menu #status_bar {
+	float: left;
+	width: 60%;
 }
 
 .content_medium #status_bar {

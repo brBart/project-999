@@ -65,7 +65,7 @@ class GetManufacturerCommand extends GetObjectCommand{
 		
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'identifier_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
+				'content' => 'manufacturer_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
 				'name' => $obj->getName(), 'foward_link' => $foward_link, 'edit_cmd' => 'edit_manufacturer',
 				'delete_cmd' => 'delete_manufacturer'), 'site_html.tpl');
 	}
