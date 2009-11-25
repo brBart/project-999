@@ -88,7 +88,6 @@ class Customer extends PersistObject{
 	 * Sets the customer's name.
 	 *
 	 * @param string $name
-	 * @return void
 	 */
 	public function setName($name){
 		if($this->_mNit != self::CF)
@@ -103,7 +102,6 @@ class Customer extends PersistObject{
 	 * Must be call only from the database layer corresponding class. The object's status must be set to
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $name
-	 * @return void
 	 * @throws Exception
 	 */
 	public function setData($name){
@@ -123,7 +121,6 @@ class Customer extends PersistObject{
 	 * 
 	 * If the object's status set to Persist::IN_PROGRESS the method insert()
 	 * is called, if it's set to Persist::CREATED the method update() is called.
-	 * @return void
 	 * @throws Exception
 	 */
 	public function save(){

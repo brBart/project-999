@@ -269,11 +269,10 @@ abstract class Document extends PersistDocument implements Itemized{
 	
 	
 	/**
-	 * Returns a document with the details corresponding to the requested page.
+	 * Returns a document with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. If no page
-	 * argument is passed, all the details are returned.
 	 * @param integer $id
+	 * @return Document
 	 */
 	abstract static public function getInstance($id);
 	
@@ -1632,11 +1631,9 @@ class Invoice extends Document{
 	}
 	
 	/**
-	 * Returns an invoice with the details corresponding to the requested page.
+	 * Returns an invoice with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
-	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided
-	 * id in the database. 
+	 * Returns NULL if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @return Invoice
 	 */
@@ -1973,11 +1970,9 @@ class PurchaseReturn extends Document{
 	}
 	
 	/**
-	 * Returns a purchase return with the details corresponding to the requested page.
+	 * Returns a purchase return with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
-	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
-	 * in the database. 
+	 * Returns NULL if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @return PurchaseReturn
 	 */
@@ -2118,11 +2113,9 @@ class Shipment extends Document{
 	}
 	
 	/**
-	 * Returns a shipment with the details corresponding to the requested page.
+	 * Returns a shipment with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
-	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
-	 * in the database. 
+	 * Returns NULL if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @return Shipment
 	 */
@@ -2289,11 +2282,9 @@ class Receipt extends Document{
 	}
 	
 	/**
-	 * Returns a receipt with the details corresponding to the requested page.
+	 * Returns a receipt with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
-	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
-	 * in the database. 
+	 * Returns NULL if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @return Receipt
 	 */
@@ -2428,11 +2419,9 @@ class EntryIA extends AdjustmentDocument{
 	}
 	
 	/**
-	 * Returns an entry inventory adjustment document with the details corresponding to the requested page.
+	 * Returns an entry inventory adjustment document with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
-	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
-	 * in the database. 
+	 * Returns NULL if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @return EntryIA
 	 */
@@ -2478,11 +2467,9 @@ class WithdrawIA extends AdjustmentDocument{
 	}
 	
 	/**
-	 * Returns a withdraw inventory adjustment document with the details corresponding to the requested page.
+	 * Returns a withdraw inventory adjustment document with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values.  If no page
-	 * argument is passed, all the details are returned. Returns NULL if there was no match for the provided id
-	 * in the database. 
+	 * Returns NULL if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @return WithdrawIA
 	 */

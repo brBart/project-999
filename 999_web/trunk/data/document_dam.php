@@ -381,10 +381,9 @@ class InvoiceDAM{
 	}
 	
 	/**
-	 * Returns an invoice with the details corresponding to the requested page.
+	 * Returns an invoice with the details.
 	 *
-	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @return Invoice
 	 */
@@ -472,10 +471,9 @@ class PurchaseReturnDAM{
 	}
 	
 	/**
-	 * Returns a purchase return with the details corresponding to the requested page.
+	 * Returns a purchase return with the details.
 	 *
-	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @return PurchaseReturn
 	 */
@@ -552,10 +550,9 @@ class ShipmentDAM{
 	}
 	
 	/**
-	 * Returns a shipment with the details corresponding to the requested page.
+	 * Returns a shipment with the details.
 	 *
-	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @return Shipment
 	 */
@@ -630,10 +627,9 @@ class ReceiptDAM{
 	}
 	
 	/**
-	 * Returns a receipt with the details corresponding to the requested page.
+	 * Returns a receipt with the details.
 	 *
-	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @return Receipt
 	 */
@@ -709,10 +705,9 @@ class EntryIADAM{
 	}
 	
 	/**
-	 * Returns an entry inventory adjustment document with the details corresponding to the requested page.
+	 * Returns an entry inventory adjustment document with the details.
 	 *
-	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @return EntryIA
 	 */
@@ -786,10 +781,9 @@ class WithdrawIADAM{
 	}
 	
 	/**
-	 * Returns a withdraw inventory adjustment document with the details corresponding to the requested page.
+	 * Returns a withdraw inventory adjustment document with the details.
 	 *
-	 * The totalPages and totalItems parameters are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database.
+	 * Returns NULL if there was no match for the provided id in the database.
 	 * @param integer $id
 	 * @return WithdrawIA
 	 */
