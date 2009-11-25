@@ -1217,12 +1217,9 @@ class ManufacturerProductListDAM{
 	 * Returns an array with the products' id and name that belongs to the provided manufacturer.
 	 *
 	 * @param Manufacturer $obj
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Manufacturer $obj, &$total_pages, &$total_items, $page){
+	static public function getList(Manufacturer $obj){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('id' => 123, 'name' => 'Pepto'), array('id' => 124, 'name' => 'Aspirina'));
