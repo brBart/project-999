@@ -962,29 +962,15 @@ class InactiveProductListDAM{
  */
 class SupplierProductListDAM{
 	/**
-	 * Returns an array with the fields product_id and name of all the products that belongs to the provided
-	 * supplier.
+	 * Returns an array with the fields product_id, name and packaging of all the products that belongs to
+	 * the provided supplier.
 	 *
 	 * @param Supplier $obj
-	 * @param integer &$totalPages
-	 * @param integer &$totalItems
-	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Supplier $obj, &$totalPages, &$totalItems, $page){
-		$sql = 'CALL supplier_product_list_count(:supplier_id)';
+	static public function getList(Supplier $obj){
+		$sql = 'CALL supplier_product_list_get(:supplier_id)';
 		$params = array(':supplier_id' => $obj->getId());
-		$totalItems = DatabaseHandler::getOne($sql, $params);
-		
-		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
-		
-		if($page > 0)
-			$params = array_merge($params, 
-					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
-		else
-			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
-		
-		$sql = 'CALL supplier_product_list_get(:supplier_id, :start_item, :items_per_page)';
 		return DatabaseHandler::getAll($sql, $params);
 	}
 }
