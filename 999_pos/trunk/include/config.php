@@ -74,4 +74,8 @@ define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
  * Title of the operations module.
  */
 define('OPERATIONS_TITLE', 'Operaciones');
+/**
+ * Title of the admin module.
+ */
+define('ADMIN_TITLE', 'Administraci&oacute;n');
 ?>
