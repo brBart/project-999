@@ -1643,19 +1643,13 @@ class InactiveProductList{
  */
 class SupplierProductList{
 	/**
-	 * Returns an array with the products' id and name that belongs to the provided supplier.
+	 * Returns an array with the products' id, name and packaging that belongs to the provided supplier.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Supplier $obj
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
-	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Supplier $obj, &$total_pages = 0, &$total_items = 0, $page = 1){
-		Persist::validateObjectFromDatabase($obj);
-		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
-		return SupplierProductListDAM::getList($obj, $total_pages, $total_items, $page);
+	static public function getList(Supplier $obj){
+		return SupplierProductListDAM::getList($obj);
 	}
 }
 
