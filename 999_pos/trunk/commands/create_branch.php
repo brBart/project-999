@@ -59,7 +59,7 @@ class CreateBranchCommand extends CreateObjectCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Sucursales');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'organization_form_html.tpl', 'status' => '0', 'key' => $key,
+				'content' => 'branch_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_branch_menu',
 				'foward_link' => 'index.php?cmd=get_branch'), 'site_html.tpl');
 	}
