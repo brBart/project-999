@@ -132,12 +132,7 @@ abstract class SessionHelper{
 	 *
 	 * @return SessionHelper
 	 */
-	static public function getInstance(){
-		if(is_null(self::$_mInstance))
-			self::$_mInstance = new SessionHelper();
-			
-		return self::$_mInstance;
-	}
+	abstract static public function getInstance();
 	
 	/**
 	 * Validates if the value of the provided key is correct.
@@ -163,6 +158,18 @@ class OperationsSession extends SessionHelper{
 	 * @var string
 	 */
 	protected $_mModuleName = 'Operations';
+	
+	/**
+	 * Returns the instance of the session helper.
+	 *
+	 * @return SessionHelper
+	 */
+	static public function getInstance(){
+		if(is_null(self::$_mInstance))
+			self::$_mInstance = new OperationsSession();
+			
+		return self::$_mInstance;
+	}
 }
 
 
