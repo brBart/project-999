@@ -11,19 +11,24 @@
  * @package Session
  * @author Roberto Oliveros
  */
-class SessionHelper{
+abstract class SessionHelper{
+	/**
+	 * Name of the module in use.
+	 * @var string
+	 */
+	protected $_mModuleName;
+	
 	/**
 	 * Instance of the helper.
-	 *
 	 * @var SessionHelper
 	 */
-	static private $_mInstance;
+	static protected $_mInstance;
 	
 	/**
 	 * Starts the session.
 	 *
 	 */
-	private function __construct(){
+	protected function __construct(){
 		//session_start();
 	}
 	
@@ -33,7 +38,7 @@ class SessionHelper{
 	 * @return UserAccount
 	 */
 	public function getUser(){
-		return $_SESSION['user'];
+		return $_SESSION[$this->_mModuleName]['user'];
 	}
 	
 	/**
@@ -44,7 +49,7 @@ class SessionHelper{
 	 */
 	public function getObject($key){
 		$this->validateKey($key);
-		return $_SESSION['objects'][$key];
+		return $_SESSION[$this->_mModuleName]['objects'][$key];
 	}
 	
 	/**
@@ -53,7 +58,7 @@ class SessionHelper{
 	 * @return array
 	 */
 	public function getSubjects(){
-		return $_SESSION['subjects'];
+		return $_SESSION[$this->_mModuleName]['subjects'];
 	}
 	
 	/**
@@ -62,7 +67,7 @@ class SessionHelper{
 	 * @return array
 	 */
 	public function getActions(){
-		return $_SESSION['actions'];
+		return $_SESSION[$this->_mModuleName]['actions'];
 	}
 	
 	/**
@@ -72,7 +77,7 @@ class SessionHelper{
 	 */
 	public function setUser(UserAccount $user){
 		Persist::validateObjectFromDatabase($user, 'UserAccount');
-		$_SESSION['user'] = $user;
+		$_SESSION[$this->_mModuleName]['user'] = $user;
 	}
 	
 	/**
@@ -83,7 +88,7 @@ class SessionHelper{
 	 */
 	public function setObject($key, $obj){
 		$this->validateKey($key);
-		$_SESSION['objects'][$key] = $obj;
+		$_SESSION[$this->_mModuleName]['objects'][$key] = $obj;
 	}
 	
 	/**
@@ -92,7 +97,7 @@ class SessionHelper{
 	 * @param array $subjectsArray
 	 */
 	public function setSubjects($subjectsArray){
-		$_SESSION['subjects'] = $subjectsArray;
+		$_SESSION[$this->_mModuleName]['subjects'] = $subjectsArray;
 	}
 	
 	/**
@@ -101,7 +106,7 @@ class SessionHelper{
 	 * @param array $actionsArray
 	 */
 	public function setActions($actionsArray){
-		$_SESSION['actions'] = $actionsArray;
+		$_SESSION[$this->_mModuleName]['actions'] = $actionsArray;
 	}
 	
 	/**
@@ -109,7 +114,7 @@ class SessionHelper{
 	 *
 	 */
 	public function removeUser(){
-		$_SESSION['user'] = NULL;
+		$_SESSION[$this->_mModuleName]['user'] = NULL;
 	}
 	
 	/**
@@ -119,7 +124,7 @@ class SessionHelper{
 	 */
 	public function removeObject($key){
 		$this->validateKey($key);
-		$_SESSION['objects'][$key] = NULL;
+		$_SESSION[$this->_mModuleName]['objects'][$key] = NULL;
 	}
 	
 	/**
@@ -127,12 +132,7 @@ class SessionHelper{
 	 *
 	 * @return SessionHelper
 	 */
-	static public function getInstance(){
-		if(is_null(self::$_mInstance))
-			self::$_mInstance = new SessionHelper();
-			
-		return self::$_mInstance;
-	}
+	abstract static public function getInstance();
 	
 	/**
 	 * Validates if the value of the provided key is correct.
@@ -141,9 +141,34 @@ class SessionHelper{
 	 * @param integer $key
 	 * @throws Exception
 	 */
-	private function validateKey($key){
+	protected function validateKey($key){
 		if(!is_int($key) || $key < 1)
 			throw new Exception('Internal error, invalid key value!');
+	}
+}
+
+/**
+ * Utility class for keeping session data on the operations side of the system.
+ * @package Session
+ * @author Roberto Oliveros
+ */
+class OperationsSession extends SessionHelper{
+	/**
+	 * Name of the module in use.
+	 * @var string
+	 */
+	protected $_mModuleName = 'Operations';
+	
+	/**
+	 * Returns the instance of the session helper.
+	 *
+	 * @return SessionHelper
+	 */
+	static public function getInstance(){
+		if(is_null(self::$_mInstance))
+			self::$_mInstance = new OperationsSession();
+			
+		return self::$_mInstance;
 	}
 }
 
