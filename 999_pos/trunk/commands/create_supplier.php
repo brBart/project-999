@@ -59,7 +59,7 @@ class CreateSupplierCommand extends CreateObjectCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Proveedores');
 		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'organization_form_html.tpl', 'status' => '0', 'key' => $key,
+				'content' => 'supplier_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_supplier_menu',
 				'foward_link' => 'index.php?cmd=get_supplier'), 'site_html.tpl');
 	}
