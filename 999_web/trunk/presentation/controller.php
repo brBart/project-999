@@ -184,6 +184,49 @@ class OperationsController extends Controller{
 
 
 /**
+ * Executes the administration side of the system.
+ * @package Controller
+ * @author Roberto Oliveros
+ */
+class AdminController extends Controller{
+	/**
+	 * It starts to run the system.
+	 * 
+	 * It obtains and executes the command in the cmd argument provided by the user.
+	 */
+	static public function run(){
+		$instance = new AdminController();
+		$instance->init();
+		$instance->handleRequest();	
+	}
+	
+	/**
+	 * Returns the default command for the controller.
+	 * @return Command
+	 */
+	protected function getDefaultCommand(){
+		return CommandResolver::getCommand('show_home_admin');
+	}
+	
+	/**
+	 * Returns the default NotFoundCommand for the controller.
+	 * @return Command
+	 */
+	protected function getNotFoundCommand(){
+		return CommandResolver::getCommand('show_not_found_admin');
+	}
+	
+	/**
+ 	 * Returns the default NotLoginCommand for the controller.
+	 * @return Command
+ 	 */
+	protected function getNotLoginCommand(){
+		return CommandResolver::getCommand('login_admin');
+	}
+}
+
+
+/**
  * Class in charge of obtaining the requested command.
  * @package Controller
  * @author Roberto Oliveros
