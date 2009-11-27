@@ -49,12 +49,6 @@ abstract class SessionHelper{
 	protected $_mModuleName;
 	
 	/**
-	 * Instance of the helper.
-	 * @var SessionHelper
-	 */
-	static protected $_mInstance;
-	
-	/**
 	 * Starts the session.
 	 *
 	 */
@@ -190,6 +184,12 @@ class OperationsSession extends SessionHelper{
 	protected $_mModuleName = 'Operations';
 	
 	/**
+	 * Instance of the helper.
+	 * @var SessionHelper
+	 */
+	static protected $_mInstance;
+	
+	/**
 	 * Returns the instance of the session helper.
 	 *
 	 * @return SessionHelper
@@ -214,6 +214,12 @@ class AdminSession extends SessionHelper{
 	 * @var string
 	 */
 	protected $_mModuleName = 'Admin';
+	
+	/**
+	 * Instance of the helper.
+	 * @var SessionHelper
+	 */
+	static protected $_mInstance;
 	
 	/**
 	 * Returns the instance of the session helper.
