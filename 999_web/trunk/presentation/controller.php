@@ -69,7 +69,7 @@ abstract class Controller{
 	 * Holds the session helper.
 	 * @var SessionHelper
 	 */
-	private $_mHelper;
+	protected $_mHelper;
 	
 	/**
 	 * Private constructor to make the run method the only way.
@@ -82,13 +82,6 @@ abstract class Controller{
 	 * It obtains and executes the command in the cmd argument provided by the user.
 	 */
 	abstract static public function run();
-	
-	/**
-	 * Obtains and sets the session helper.
-	 */
-	protected function init(){
-		$this->_mHelper = SessionHelper::getInstance();
-	}
 	
 	/**
 	 * Handles the request from the user.
@@ -119,6 +112,11 @@ abstract class Controller{
 			$command->execute($request, $this->_mHelper);
 		}
 	}
+	
+	/**
+	 * Obtains and sets the session helper.
+	 */
+	abstract protected function init();
 	
 	/**
 	 * Returns the default command for the controller.
@@ -155,6 +153,13 @@ class OperationsController extends Controller{
 		$instance = new OperationsController();
 		$instance->init();
 		$instance->handleRequest();	
+	}
+	
+	/**
+	 * Obtains and sets the session helper.
+	 */
+	protected function init(){
+		$this->_mHelper = OperationsSession::getInstance();
 	}
 	
 	/**
@@ -198,6 +203,13 @@ class AdminController extends Controller{
 		$instance = new AdminController();
 		$instance->init();
 		$instance->handleRequest();	
+	}
+	
+	/**
+	 * Obtains and sets the session helper.
+	 */
+	protected function init(){
+		$this->_mHelper = AdminSession::getInstance();
 	}
 	
 	/**

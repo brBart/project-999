@@ -174,6 +174,32 @@ class OperationsSession extends SessionHelper{
 
 
 /**
+ * Utility class for keeping session data on the administration side of the system.
+ * @package Session
+ * @author Roberto Oliveros
+ */
+class AdminSession extends SessionHelper{
+	/**
+	 * Name of the module in use.
+	 * @var string
+	 */
+	protected $_mModuleName = 'Admin';
+	
+	/**
+	 * Returns the instance of the session helper.
+	 *
+	 * @return SessionHelper
+	 */
+	static public function getInstance(){
+		if(is_null(self::$_mInstance))
+			self::$_mInstance = new AdminSession();
+			
+		return self::$_mInstance;
+	}
+}
+
+
+/**
  * Class for generating keys to identify objects in the session object.
  * @package Session
  * @author Roberto Oliveros
