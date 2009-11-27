@@ -7,6 +7,36 @@
 
 
 /**
+ * Helper class to pass the session helper object between other objects.
+ * @package Session
+ * @author Roberto Oliveros
+ */
+class ActiveSession{
+	/**
+	 * Holds the session helper object.
+	 * @var SessionHelper
+	 */
+	static private $_mHelper;
+	
+	/**
+	 * Sets the session helper object.
+	 * @param SessionHelper $helper
+	 */
+	static public function setHelper(SessionHelper $helper){
+		self::$_mHelper = $helper;
+	}
+	
+	/**
+	 * Returns the session helper object.
+	 * @return SessionHelper
+	 */
+	static public function getHelper(){
+		return self::$_mHelper;
+	}
+}
+
+
+/**
  * Utility class for keeping session data.
  * @package Session
  * @author Roberto Oliveros
@@ -167,6 +197,32 @@ class OperationsSession extends SessionHelper{
 	static public function getInstance(){
 		if(is_null(self::$_mInstance))
 			self::$_mInstance = new OperationsSession();
+			
+		return self::$_mInstance;
+	}
+}
+
+
+/**
+ * Utility class for keeping session data on the administration side of the system.
+ * @package Session
+ * @author Roberto Oliveros
+ */
+class AdminSession extends SessionHelper{
+	/**
+	 * Name of the module in use.
+	 * @var string
+	 */
+	protected $_mModuleName = 'Admin';
+	
+	/**
+	 * Returns the instance of the session helper.
+	 *
+	 * @return SessionHelper
+	 */
+	static public function getInstance(){
+		if(is_null(self::$_mInstance))
+			self::$_mInstance = new AdminSession();
 			
 		return self::$_mInstance;
 	}
