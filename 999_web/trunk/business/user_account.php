@@ -556,7 +556,8 @@ class Subject{
 	 * @return array
 	 */
 	static private function getSubjects(){
-		$array = SessionHelper::getInstance()->getSubjects();
+		$helper = ActiveSession::getHelper();
+		$array = $helper->getSubjects();
 		// If there was no array, return an new one.
 		(empty($array)) ? $subjects_array = array() : $subjects_array = $array;
 		return $subjects_array;
@@ -568,7 +569,8 @@ class Subject{
 	 * @param array $subjectsArray
 	 */
 	static private function setSubjects($subjectsArray){
-		SessionHelper::getInstance()->setSubjects($subjectsArray);
+		$helper = ActiveSession::getHelper();
+		$helper->setSubjects($subjectsArray);
 	}
 }
 
@@ -610,7 +612,8 @@ class Action{
 	 * @return array
 	 */
 	static private function getActions(){
-		$array = SessionHelper::getInstance()->getActions();
+		$helper = ActiveSession::getHelper();
+		$array = $helper->getActions();
 		// If there was no array, return an new one.
 		(empty($array)) ? $actions_array = array() : $actions_array = $array;
 		return $actions_array;
@@ -622,7 +625,8 @@ class Action{
 	 * @param array $actionsArray
 	 */
 	static private function setActions($actionsArray){
-		SessionHelper::getInstance()->setActions($actionsArray);
+		$helper = ActiveSession::getHelper();
+		$helper->setActions($actionsArray);
 	}
 }
 ?>
