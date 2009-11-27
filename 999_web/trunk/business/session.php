@@ -7,6 +7,36 @@
 
 
 /**
+ * Helper class to pass the session helper object between other objects.
+ * @package Session
+ * @author Roberto Oliveros
+ */
+class ActiveSession{
+	/**
+	 * Holds the session helper object.
+	 * @var SessionHelper
+	 */
+	static private $_mHelper;
+	
+	/**
+	 * Sets the session helper object.
+	 * @param SessionHelper $helper
+	 */
+	static public function setHelper(SessionHelper $helper){
+		self::$_mHelper = $helper;
+	}
+	
+	/**
+	 * Returns the session helper object.
+	 * @return SessionHelper
+	 */
+	static public function getHelper(){
+		return self::$_mHelper;
+	}
+}
+
+
+/**
  * Utility class for keeping session data.
  * @package Session
  * @author Roberto Oliveros
