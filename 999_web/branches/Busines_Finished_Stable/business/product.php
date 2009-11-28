@@ -1489,7 +1489,7 @@ class ChangePriceLog{
 		Number::validateUnsignedNumber($newPrice, 'Nuevo precio inv&aacute;lido.');
 		
 		$date = date('d/m/Y');
-		$helper = SessionHelper::getInstance();
+		$helper = ActiveSession::getHelper();
 		ChangePriceLogDAM::insert($date, $helper->getUser(), $product, $lastPrice, $newPrice);
 	}
 }
