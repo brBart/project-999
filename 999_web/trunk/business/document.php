@@ -94,8 +94,10 @@ abstract class Document extends PersistDocument implements Itemized{
 			}
 			$this->_mUser = $user;
 		}
-		else
-			$this->_mUser = SessionHelper::getUser();
+		else{
+			$helper = ActiveSession::getHelper();
+			$this->_mUser = $helper->getUser();
+		}
 	}
 	
 	/**
@@ -814,7 +816,7 @@ class Reserve extends Persist{
 		$product = $lot->getProduct();
 		Inventory::reserve($product, $quantity);
 		
-		$helper = SessionHelper::getInstance();
+		$helper = ActiveSession::getHelper();
 		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y'));
 	}
 	
