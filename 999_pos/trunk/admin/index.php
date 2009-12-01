@@ -18,9 +18,10 @@ require_once('include/auto_load_libs.php');
  */
 require_once('presentation/controller.php');
 
+// Activate the right session object. 
+$helper = AdminSession::getInstance();
+ActiveSession::setHelper($helper);
 
-/**
- * Execute the admin system.
- */
+// Execute the admin system.
 AdminController::run();
 ?>
