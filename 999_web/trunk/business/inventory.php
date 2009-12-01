@@ -516,8 +516,10 @@ class Count extends PersistObject implements Itemized{
 			}
 			$this->_mUser = $user;
 		}
-		else
-			$this->_mUser = SessionHelper::getUser();
+		else{
+			$helper = ActiveSession::getHelper();
+			$this->_mUser = $helper->getUser();
+		}
 			
 		$this->_mId = $id;
 	}
@@ -803,7 +805,8 @@ class ComparisonEvent{
 		String::validateString($reason, 'Motivo inv&aacute;lido.', 'reason');
 		
 		$date = date('d/m/Y H:i:s');
-		$user = SessionHelper::getInstance()->getUser();
+		$helper = ActiveSession::getHelper();
+		$user = $helper->getUser();
 		
 		return ComparisonDAM::insert($date, $user, $count, $reason, $general);
 	}
