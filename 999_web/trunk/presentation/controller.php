@@ -84,6 +84,13 @@ abstract class Controller{
 	abstract static public function run();
 	
 	/**
+	 * Obtains and sets the session helper.
+	 */
+	protected function init(){
+		$this->_mHelper = ActiveSession::getHelper();
+	}
+	
+	/**
 	 * Handles the request from the user.
 	 */
 	protected function handleRequest(){
@@ -112,11 +119,6 @@ abstract class Controller{
 			$command->execute($request, $this->_mHelper);
 		}
 	}
-	
-	/**
-	 * Obtains and sets the session helper.
-	 */
-	abstract protected function init();
 	
 	/**
 	 * Returns the default command for the controller.
@@ -153,13 +155,6 @@ class OperationsController extends Controller{
 		$instance = new OperationsController();
 		$instance->init();
 		$instance->handleRequest();	
-	}
-	
-	/**
-	 * Obtains and sets the session helper.
-	 */
-	protected function init(){
-		$this->_mHelper = OperationsSession::getInstance();
 	}
 	
 	/**
@@ -203,13 +198,6 @@ class AdminController extends Controller{
 		$instance = new AdminController();
 		$instance->init();
 		$instance->handleRequest();	
-	}
-	
-	/**
-	 * Obtains and sets the session helper.
-	 */
-	protected function init(){
-		$this->_mHelper = AdminSession::getInstance();
 	}
 	
 	/**
