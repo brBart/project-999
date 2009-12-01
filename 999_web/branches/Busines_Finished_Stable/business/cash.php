@@ -186,8 +186,10 @@ class Deposit extends PersistDocument implements Itemized{
 			}
 			$this->_mUser = $user;
 		}
-		else
-			$this->_mUser = SessionHelper::getUser();
+		else{
+			$helper = ActiveSession::getHelper();
+			$this->_mUser = $helper->getUser();
+		}
 				
 		$this->_mCashRegister = $cashRegister;
 	}
