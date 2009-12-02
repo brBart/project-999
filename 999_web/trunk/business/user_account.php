@@ -234,8 +234,8 @@ class UserAccount extends PersistObject{
 	 * @param string $firstName
 	 */
 	public function setFirstName($firstName){
-		String::validateString($firstName, 'Nombre inv&aacute;lido.');
 		$this->_mFirstName = $firstName;
+		String::validateString($firstName, 'Nombre inv&aacute;lido.');
 	}
 	
 	/**
@@ -244,8 +244,8 @@ class UserAccount extends PersistObject{
 	 * @param string $lastName
 	 */
 	public function setLastName($lastName){
-		String::validateString($lastName, 'Nombre inv&aacute;lido.');
 		$this->_mLastName = $lastName;
+		String::validateString($lastName, 'Nombre inv&aacute;lido.');
 	}
 	
 	/**
