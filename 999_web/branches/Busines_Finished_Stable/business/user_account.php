@@ -255,8 +255,11 @@ class UserAccount extends PersistObject{
 	 * @param string $password
 	 */
 	public function setPassword($password){
+		if($password != '')
+			$this->_mPassword = UserAccountUtility::encrypt($password);
+		else
+			$this->_mPassword = $password;
 		String::validateString($password, 'Contrase&ntilde;a inv&aacute;lida.');
-		$this->_mPassword = UserAccountUtility::encrypt($password);
 	}
 	
 	/**
