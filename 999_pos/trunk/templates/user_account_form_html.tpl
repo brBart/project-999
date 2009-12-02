@@ -59,36 +59,31 @@
 		  	</p>
 		  	<p>
 		  		<label for="password">Contrase&ntilde;a:*</label>
-		  		<input name="form_widget" id="password" type="text" value="{$telephone}" maxlength="50"
-		  			onblur="oSetProperty.execute('set_telephone_organization', this.value, this.id);"
+		  		<input name="form_widget" id="password" type="text" maxlength="20"
+		  			onblur="oSetProperty.execute('set_password_user_account', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
-		  		<span id="telephone-failed" class="hidden">*</span>
+		  		<span id="password-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
-		  		<label for="address">Direcci&oacute;n:*</label>
-		  		<input name="form_widget" id="address" type="text" value="{$address}" maxlength="150"
-		  			onblur="oSetProperty.execute('set_address_organization', this.value, this.id);"
+		  		<label for="confirm_password">Confirmar:*</label>
+		  		<input name="form_widget" id="confirm_password" type="text" maxlength="20"
 		  			{if $status eq 1}disabled="disabled"{/if} />
-		  		<span id="address-failed" class="hidden">*</span>
+		  		<span id="confirm_password-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
-		  		<label for="email">Email:</label>
-		  		<input name="form_widget" id="email" type="text" value="{$email}" maxlength="100"
-		  			onblur="oSetProperty.execute('set_email_organization', this.value, this.id);"
-		  			{if $status eq 1}disabled="disabled"{/if} />
-		  		<span id="email-failed" class="hidden">*</span>
-		  	</p>
-		  	<p>
-		  		<label for="contact">Contacto:</label>
-		  		<input name="form_widget" id="contact" type="text" value="{$contact}" maxlength="100"
-		  			onblur="oSetProperty.execute('set_contact_object', this.value, this.id);"
-		  			{if $status eq 1}disabled="disabled"{/if} />
-		  		<span id="contact-failed" class="hidden">*</span>
+		  		<label for="deactivated">Desactivado:</label>
+		  		<input name="form_widget" id="deactivated" type="checkbox"
+		  			onblur="oSetProperty.execute('deactivate_object', (this.checked ? 1 : 0), this.id);"
+		  			{if $status eq 1}
+		  				{if $deactivated eq 1}checked="checked"{/if}
+		  				disabled="disabled"
+		  			{/if} />
+		  		<span id="deactivated-failed" class="hidden">*</span>
 		  	</p>
 		</fieldset>
 		{if $status eq 1}
 			{assign var='edit_cmd' value=$edit_cmd}
-			{assign var='focus_on_edit' value='name'}
+			{assign var='focus_on_edit' value='role_id'}
 			{assign var='delete_cmd' value=$delete_cmd}
 		{/if}
 		{include file='controls_html.tpl'}
@@ -96,6 +91,6 @@
 </div>
 {if $status eq 0}
 <script type="text/javascript">
-StateMachine.setFocus('name');
+StateMachine.setFocus('username');
 </script>
 {/if}
