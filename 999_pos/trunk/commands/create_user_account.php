@@ -13,6 +13,10 @@ require_once('commands/create_object.php');
  * Library with the user account class.
  */
 require_once('business/user_account.php');
+/**
+ * For creating the select options.
+ */
+require_once('business/list.php');
 
 /**
  * Displays the user account form in edit mode.
@@ -57,11 +61,17 @@ class CreateUserAccountCommand extends CreateObjectCommand{
 	 */
 	protected function displayObject($key, $obj){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Cuentas de Usuario');
+		
+		// Get the lists for the select options.
+		$empty_item = array(array());
+		$role_list = array_merge($empty_item, RoleList::getList($pages, $items, 0));
+		
 		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'user_account_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_user_account_menu',
-				'foward_link' => 'index.php?cmd=get_user_account'), 'site_html.tpl');
+				'foward_link' => 'index.php?cmd=get_user_account', 'role_list' => $role_list),
+				'site_html.tpl');
 	}
 }
 ?>
