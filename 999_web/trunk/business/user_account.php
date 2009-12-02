@@ -224,9 +224,9 @@ class UserAccount extends PersistObject{
 		if($this->_mStatus == self::CREATED)
 			throw new Exception('No se puede editar el nombre de la cuenta.');
 		
+		$this->_mUserName = $userName;
 		String::validateString($userName, 'Usuario inv&aacute;lido.');
 		$this->verifyUserName($userName);
-		$this->_mUserName = $userName;
 	}
 	
 	/**
@@ -365,13 +365,13 @@ class UserAccount extends PersistObject{
 	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
-		String::validateString($this->_mUserName, 'Usuario inv&aacute;lido.');
-		String::validateString($this->_mFirstName, 'Nombre inv&aacute;lido.');
-		String::validateString($this->_mLastName, 'Apellido inv&aacute;lido.');
-		String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.');
+		String::validateString($this->_mUserName, 'Usuario inv&aacute;lido.', 'username');
+		String::validateString($this->_mFirstName, 'Nombre inv&aacute;lido.', 'first_name');
+		String::validateString($this->_mLastName, 'Apellido inv&aacute;lido.', 'last_name');
+		String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.', 'password');
 		
 		if(is_null($this->_mRole))
-			throw new Exception('Rol inv&accute;lido.');
+			throw new ValidateException('Seleccione un rol.', 'role_id');
 	}
 	
 	/**
@@ -399,7 +399,7 @@ class UserAccount extends PersistObject{
 	 */
 	private function verifyUserName($userName){
 		if(UserAccountDAM::exists($userName))
-			throw new Exception('Nombre de cuenta ya existe.');
+			throw new ValidateException('Nombre de cuenta ya existe.', 'username');
 	}
 }
 
