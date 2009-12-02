@@ -82,7 +82,6 @@ class Role{
 	 * @return Role
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return RoleDAM::getInstance($id);
 	}
 }
@@ -265,8 +264,10 @@ class UserAccount extends PersistObject{
 	 *
 	 * @param Role $obj
 	 */
-	public function setRole(Role $obj){
+	public function setRole(Role $obj = NULL){
 		$this->_mRole = $obj;
+		if(is_null($obj))
+			throw new ValidateException('Seleccione un rol.');
 	}
 	
 	/**
