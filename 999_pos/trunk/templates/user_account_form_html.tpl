@@ -23,7 +23,7 @@
 		  		<label for="username">Cuenta:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
 		  		<input name="form_widget" id="username" type="text" maxlength="50"
-		  			onblur="oSetProperty.execute('set_username', this.value, this.id);" />
+		  			onblur="oSetProperty.execute('set_username_user_account', this.value, this.id);" />
 		  		<span id="username-failed" class="hidden">*</span>
 		  		{else}
 		  		<span>{$username}</span>
