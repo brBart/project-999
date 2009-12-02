@@ -44,8 +44,8 @@
 		  		<span id="role_id-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
-		  		<label for="name">Nombre:*</label>
-		  		<input name="form_widget" id="name" type="text" value="{$name}" maxlength="50"
+		  		<label for="first_name">Nombre:*</label>
+		  		<input name="form_widget" id="first_name" type="text" value="{$first_name}" maxlength="50"
 		  			onblur="oSetProperty.execute('set_name_object', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="name-failed" class="hidden">*</span>
