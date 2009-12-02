@@ -59,14 +59,14 @@
 		  	</p>
 		  	<p>
 		  		<label for="password">Contrase&ntilde;a:*</label>
-		  		<input name="form_widget" id="password" type="text" maxlength="20"
+		  		<input name="form_widget" id="password" type="password" maxlength="20"
 		  			onblur="oSetProperty.execute('set_password_user_account', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="password-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label for="confirm_password">Confirmar:*</label>
-		  		<input name="form_widget" id="confirm_password" type="text" maxlength="20"
+		  		<input name="form_widget" id="confirm_password" type="password" maxlength="20"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="confirm_password-failed" class="hidden">*</span>
 		  	</p>
