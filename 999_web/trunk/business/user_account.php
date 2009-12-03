@@ -224,7 +224,7 @@ class UserAccount extends PersistObject{
 			throw new Exception('No se puede editar el nombre de la cuenta.');
 		
 		$this->_mUserName = $userName;
-		String::validateString($userName, 'Usuario inv&aacute;lido.');
+		String::validateString($userName, 'Cuenta inv&aacute;lida.');
 		$this->verifyUserName($userName);
 	}
 	
