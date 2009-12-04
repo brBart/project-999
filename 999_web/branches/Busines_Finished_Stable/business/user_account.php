@@ -224,7 +224,7 @@ class UserAccount extends PersistObject{
 			throw new Exception('No se puede editar el nombre de la cuenta.');
 		
 		$this->_mUserName = $userName;
-		String::validateString($userName, 'Usuario inv&aacute;lido.');
+		String::validateString($userName, 'Cuenta inv&aacute;lida.');
 		$this->verifyUserName($userName);
 	}
 	
@@ -314,7 +314,7 @@ class UserAccount extends PersistObject{
 	 * 
 	 * If the object's status is set to Persist::IN_PROGRESS the method insert()
 	 * is called, if it's set to Persist::CREATED the method update() is called.
-	 * @return void
+	 * @return string
 	 * @throws Exception
 	 */
 	public function save(){
@@ -330,6 +330,9 @@ class UserAccount extends PersistObject{
 		}
 		else
 			$this->update();
+			
+		// Needed by the presentation layer.
+		return $this->_mUserName;
 	}
 	
 	/**
@@ -369,13 +372,12 @@ class UserAccount extends PersistObject{
 	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
-		String::validateString($this->_mUserName, 'Usuario inv&aacute;lido.', 'username');
+		String::validateString($this->_mUserName, 'Cuenta inv&aacute;lida.', 'username');
+		if(is_null($this->_mRole))
+			throw new ValidateException('Seleccione un rol.', 'role_id');
 		String::validateString($this->_mFirstName, 'Nombre inv&aacute;lido.', 'first_name');
 		String::validateString($this->_mLastName, 'Apellido inv&aacute;lido.', 'last_name');
 		String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.', 'password');
-		
-		if(is_null($this->_mRole))
-			throw new ValidateException('Seleccione un rol.', 'role_id');
 	}
 	
 	/**
