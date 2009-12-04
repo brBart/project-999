@@ -369,13 +369,12 @@ class UserAccount extends PersistObject{
 	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
-		String::validateString($this->_mUserName, 'Usuario inv&aacute;lido.', 'username');
+		String::validateString($this->_mUserName, 'Cuenta inv&aacute;lida.', 'username');
+		if(is_null($this->_mRole))
+			throw new ValidateException('Seleccione un rol.', 'role_id');
 		String::validateString($this->_mFirstName, 'Nombre inv&aacute;lido.', 'first_name');
 		String::validateString($this->_mLastName, 'Apellido inv&aacute;lido.', 'last_name');
 		String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.', 'password');
-		
-		if(is_null($this->_mRole))
-			throw new ValidateException('Seleccione un rol.', 'role_id');
 	}
 	
 	/**
