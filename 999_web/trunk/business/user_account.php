@@ -314,7 +314,7 @@ class UserAccount extends PersistObject{
 	 * 
 	 * If the object's status is set to Persist::IN_PROGRESS the method insert()
 	 * is called, if it's set to Persist::CREATED the method update() is called.
-	 * @return void
+	 * @return string
 	 * @throws Exception
 	 */
 	public function save(){
@@ -330,6 +330,9 @@ class UserAccount extends PersistObject{
 		}
 		else
 			$this->update();
+			
+		// Needed by the presentation layer.
+		return $this->_mUserName;
 	}
 	
 	/**
