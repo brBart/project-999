@@ -86,7 +86,7 @@
 			{assign var='focus_on_edit' value='role_id'}
 			{assign var='delete_cmd' value=$delete_cmd}
 		{/if}
-		{include file='controls_html.tpl'}
+		{include file='user_account_controls_html.tpl' password_id='password' confirm_id='confirm_password'}
 	</div>
 </div>
 {if $status eq 0}
