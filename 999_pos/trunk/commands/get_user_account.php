@@ -29,7 +29,11 @@ class GetUserAccountCommand extends GetObjectCommand{
 	 * @return variant
 	 */
 	protected function getObject(){
-		$user = UserAccount::getInstance($this->_mRequest->getProperty('id'));
+		$username = $this->_mRequest->getProperty('id');
+		if(strtoupper($username) == UserAccountUtility::ROOT)
+			throw new Exception('Cuenta ROOT no se puede editar.');
+		
+		$user = UserAccount::getInstance($username);
 		if(!is_null($user))
 			return $user;
 		else
