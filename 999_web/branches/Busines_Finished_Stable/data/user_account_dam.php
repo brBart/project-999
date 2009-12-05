@@ -103,6 +103,15 @@ class UserAccountDAM{
 	}
 	
 	/**
+	 * Updates the user account's data in the database except the password.
+	 *
+	 * @param UserAccount $obj
+	 */
+	static public function updateNoPassword(UserAccount $obj){
+		// Code here...
+	}
+	
+	/**
 	 * Deletes the user account from the database.
 	 *
 	 * Returns true on success, otherwise false due dependencies.
