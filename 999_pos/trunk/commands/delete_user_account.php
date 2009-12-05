@@ -30,6 +30,8 @@ class DeleteUserAccountCommand extends DeleteObjectCommand{
 	 * @param variant $obj
 	 */
 	protected function deleteObject($obj){
+		if(ActiveSession::getHelper()->getUser()->getUserName() == $obj->getUserName())
+			throw new Exception('Cuenta esta en uso, no se puede eliminar.');
 		UserAccount::delete($obj);
 	}
 }
