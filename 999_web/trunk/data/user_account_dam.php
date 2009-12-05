@@ -105,6 +105,21 @@ class UserAccountDAM{
 	}
 	
 	/**
+	 * Updates the user account's data in the database except the password.
+	 *
+	 * @param UserAccount $obj
+	 */
+	static public function updateNoPassword(UserAccount $obj){
+		$sql = 'CALL user_account_no_password_update(:username, :role_id, :first_name, :last_name, ' .
+				':deactivated)';
+		$role = $obj->getRole();
+		$params = array(':username' => $obj->getUserName(), ':role_id' => $role->getId(),
+				':first_name' => $obj->getFirstName(), ':last_name' => $obj->getLastName(),
+				':deactivated' => (int)$obj->isDeactivated());
+		DatabaseHandler::execute($sql, $params);
+	}
+	
+	/**
 	 * Deletes the user account from the database.
 	 *
 	 * Returns true on success, otherwise false due dependencies.
