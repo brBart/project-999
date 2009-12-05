@@ -259,7 +259,9 @@ class UserAccount extends PersistObject{
 			$this->_mPassword = UserAccountUtility::encrypt($password);
 		else
 			$this->_mPassword = $password;
-		String::validateString($password, 'Contrase&ntilde;a inv&aacute;lida.');
+			
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			String::validateString($password, 'Contrase&ntilde;a inv&aacute;lida.');
 	}
 	
 	/**
@@ -306,6 +308,7 @@ class UserAccount extends PersistObject{
 		$this->_mFirstName = $firstName;
 		$this->_mLastName = $lastName;
 		$this->_mRole = $role;
+		$this->_mPassword = '';
 		$this->_mDeactivated = (boolean)$deactivated;
 	}
 	
@@ -377,7 +380,8 @@ class UserAccount extends PersistObject{
 			throw new ValidateException('Seleccione un rol.', 'role_id');
 		String::validateString($this->_mFirstName, 'Nombre inv&aacute;lido.', 'first_name');
 		String::validateString($this->_mLastName, 'Apellido inv&aacute;lido.', 'last_name');
-		String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.', 'password');
+		if($this->_mStatus == Persist::IN_PROGRESS)
+			String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.', 'password');
 	}
 	
 	/**
@@ -393,7 +397,10 @@ class UserAccount extends PersistObject{
 	 *
 	 */
 	protected function update(){
-		UserAccountDAM::update($this);
+		if($this->_mPassword != '')
+			UserAccountDAM::update($this);
+		else
+			UserAccountDAM::updateNoPassword($this);
 	}
 	
 	/**
