@@ -15,7 +15,7 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the branch menu.
+ * Command to display the user account menu.
  * @package Command
  * @author Roberto Oliveros
  */
