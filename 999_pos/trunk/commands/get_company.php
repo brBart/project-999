@@ -8,7 +8,7 @@
 /**
  * Base class.
  */
-require_once('commands/get_object.php');
+require_once('commands/get_unique_object.php');
 /**
  * Library with the company class.
  */
@@ -19,7 +19,7 @@ require_once('business/various.php');
  * @package Command
  * @author Roberto Oliveros
  */
-class GetCompanyCommand extends GetObjectCommand{
+class GetCompanyCommand extends GetUniqueObjectCommand{
 	/**
 	 * Gets the desired object.
 	 * @return variant
@@ -44,9 +44,8 @@ class GetCompanyCommand extends GetObjectCommand{
 	 * Display the form for the object.
 	 * @param string $key
 	 * @param variant $obj
-	 * @param array $backQuery
 	 */
-	protected function displayObject($key, $obj, $backQuery){
+	protected function displayObject($key, $obj){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Empresa');
 		$back_link = 'index.php?cmd=show_maintenance_menu_admin';
 		$foward_link = 'index.php?cmd=get_company';

@@ -46,7 +46,7 @@ abstract class GetUniqueObjectCommand extends Command{
 	abstract protected function getObject();
 	
 	/**
-	 * Display failure in case the object does not exists or an error occurs.
+	 * Display failure in case an error occurs.
 	 * @param string $msg
 	 */
 	abstract protected function displayFailure($msg);
