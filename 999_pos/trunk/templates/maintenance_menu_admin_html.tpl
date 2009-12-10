@@ -1,7 +1,7 @@
 {* Smarty * }
 <ul>
     <li><a href="index.php?cmd=show_user_account_menu" onclick="return oSession.setIsLink(true);">Cuentas de Usuario</a></li>
-    <li><a href="index.php?cmd=show_company_form" onclick="return oSession.setIsLink(true);">Empresa</a></li>
+    <li><a href="index.php?cmd=get_company" onclick="return oSession.setIsLink(true);">Empresa</a></li>
     <li><a href="index.php?cmd=show_vat_form" onclick="return oSession.setIsLink(true);">I.V.A.</a></li>
     <li><a href="index.php?cmd=show_shift_menu" onclick="return oSession.setIsLink(true);">Turnos de Caja</a></li>
     <li><a href="index.php?cmd=show_correlative_menu" onclick="return oSession.setIsLink(true);">Correlativos para Facturas</a></li>
