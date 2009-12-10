@@ -30,7 +30,7 @@ function SaveUserAccountCommand(oSession, oConsole, oRequest, sKey){
 }
 
 /**
- * Inherit the Sync command class methods.
+ * Inherit the Save command class methods.
  */
 SaveUserAccountCommand.prototype = new SaveCommand();
  
