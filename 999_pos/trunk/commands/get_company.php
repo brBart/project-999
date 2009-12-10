@@ -29,7 +29,7 @@ class GetCompanyCommand extends GetUniqueObjectCommand{
 	}
 	
 	/**
-	 * Display failure in case the object does not exists or an error occurs.
+	 * Display failure in case an error occurs.
 	 * @param string $msg
 	 */
 	protected function displayFailure($msg){
