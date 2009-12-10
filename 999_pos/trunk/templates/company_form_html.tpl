@@ -34,6 +34,6 @@
 		  		<span id="nit-failed" class="hidden">*</span>
 		  	</p>
 		</fieldset>
-		{include file='unique_controls_html.tpl' edit_cmd=$edit_cmd focus_on_edit='name'}
+		{include file='unique_object_controls_html.tpl' edit_cmd=$edit_cmd focus_on_edit='name'}
 	</div>
 </div>
