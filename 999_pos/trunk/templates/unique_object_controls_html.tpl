@@ -1,8 +1,9 @@
 {* Smarty *}
 <script type="text/javascript" src="../scripts/save.js"></script>
+<script type="text/javascript" src="../scripts/save_unique_object.js"></script>
 <script type="text/javascript" src="../scripts/edit.js"></script>
 <script type="text/javascript">
-var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+var oSave = new SaveUniqueObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 var oEdit = new EditCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), oMachine);
 </script>
 <fieldset id="controls">
