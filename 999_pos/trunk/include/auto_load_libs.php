@@ -85,6 +85,10 @@ function __autoload($className){
 			require_once('business/inventory.php');
 			break;
 			
+		case 'Company':
+			require_once('business/various.php');
+			break;
+			
 		default:
 	}
 }
