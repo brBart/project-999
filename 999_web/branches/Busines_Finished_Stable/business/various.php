@@ -100,8 +100,8 @@ class Company{
 	 * @param string $nit
 	 */
 	public function setNit($nit){
-		String::validateNit($nit, 'Nit inv&aacute;lido.');
 		$this->_mNit = $nit;
+		String::validateNit($nit, 'Nit inv&aacute;lido.');
 	}
 	
 	/**
@@ -110,8 +110,8 @@ class Company{
 	 * @param string $name
 	 */
 	public function setName($name){
-		String::validateString($name, 'Nombre inv&aacute;lido.');
 		$this->_mName = $name;
+		String::validateString($name, 'Nombre inv&aacute;lido.');
 	}
 	
 	/**
@@ -119,6 +119,7 @@ class Company{
 	 *
 	 */
 	public function save(){
+		$this->validateMainProperties();
 		CompanyDAM::update($this);
 	}
 	
@@ -129,6 +130,16 @@ class Company{
 	 */
 	static public function getInstance(){
 		return CompanyDAM::getInstance();
+	}
+	
+	/**
+	 * Validates the object's main properties.
+	 * 
+	 * Verifies that the company's nit and name are set correctly. Otherwise it throws an exception.
+	 */
+	protected function validateMainProperties(){
+		String::validateNit($this->_mNit, 'Nit inv&aacute;lido.', 'nit');
+		String::validateString($this->_mName, 'Nombre inv&aacute;lido.', 'name');
 	}
 }
 
