@@ -53,9 +53,9 @@ class GetCompanyCommand extends GetObjectCommand{
 		
 		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'company_form_html.tpl', 'status' => '1', 'key' => $key,
-				'name' => $obj->getName(), 'nit' => $obj->getNit(),
-				'foward_link' => $foward_link, 'edit_cmd' => 'edit_company'), 'site_html.tpl');
+				'content' => 'company_form_html.tpl', 'key' => $key, 'name' => $obj->getName(),
+				'nit' => $obj->getNit(), 'foward_link' => $foward_link, 'edit_cmd' => 'edit_company'),
+				'site_html.tpl');
 	}
 }
 ?>

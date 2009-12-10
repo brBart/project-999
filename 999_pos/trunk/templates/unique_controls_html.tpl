@@ -1,25 +1,15 @@
 {* Smarty *}
 <script type="text/javascript" src="../scripts/save.js"></script>
-{if $status eq 1}
 <script type="text/javascript" src="../scripts/edit.js"></script>
-<script type="text/javascript" src="../scripts/delete.js"></script>
-{/if}
 <script type="text/javascript">
 var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
-{if $status eq 1}
 var oEdit = new EditCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), oMachine);
-{/if}
 </script>
 <fieldset id="controls">
   	<input name="form_widget" id="save" type="button" value="Guardar"
-  		onclick="oSave.execute('{$foward_link}');" {if $status eq 1}disabled="disabled"{/if} />
+  		onclick="oSave.execute('{$foward_link}');" disabled="disabled" />
   	<input name="form_widget" id="edit" type="button" value="Editar"
-  		{if $status eq 1}
-  			onclick="oEdit.execute('{$edit_cmd}', '{$focus_on_edit}');"
-  		{else}
-  			disabled="disabled"
-  		{/if} />
+  		onclick="oEdit.execute('{$edit_cmd}', '{$focus_on_edit}');" />
   	<input name="form_widget" id="undo" type="button" value="Cancelar"
-  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link}{/if}');"
-  			{if $status eq 1}disabled="disabled"{/if} />
+  			onclick="oSession.loadHref('{$foward_link}');" disabled="disabled" />
 </fieldset>
