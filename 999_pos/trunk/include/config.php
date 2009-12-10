@@ -39,6 +39,10 @@ define('COMPILE_DIR', SITE_ROOT . '/templates_c/');
  */
 define('CONFIG_DIR', SITE_ROOT . '/include/configs');
 /**
+ * Smarty paths.
+ */
+define('PLUGINS_DIR', SITE_ROOT . '/smarty_plugins');
+/**
  * Indicate where all the system libraries reside.
  */
 set_include_path(get_include_path() . ';' . LIBS_999 . ';' . SITE_ROOT);

@@ -41,6 +41,9 @@
 				{if not $smarty.foreach.back_trace_loop.last} <img src="../images/trace.png"> {/if}
 			{/foreach}
 			</p>
+			<p id="actual_username">
+				Usuario: {get_username}
+			</p>
 		</div>
 		<div id="main_menu">
 			{include file=$main_menu}
