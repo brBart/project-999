@@ -137,7 +137,7 @@ class Company{
 	 * 
 	 * Verifies that the company's nit and name are set correctly. Otherwise it throws an exception.
 	 */
-	protected function validateMainProperties(){
+	private function validateMainProperties(){
 		String::validateNit($this->_mNit, 'Nit inv&aacute;lido.', 'nit');
 		String::validateString($this->_mName, 'Nombre inv&aacute;lido.', 'name');
 	}
