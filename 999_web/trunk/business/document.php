@@ -1292,7 +1292,7 @@ class Vat{
 	 * Verifies that the V.A.T. percentage is set correctly. Otherwise it throws an exception.
 	 */
 	private function validateMainProperties(){
-		Number::validatePositiveNumber($value, 'Porcentaje inv&aacute;lido.', 'percentage');
+		Number::validatePositiveNumber($this->_mPercentage, 'Porcentaje inv&aacute;lido.', 'percentage');
 	}
 }
 
