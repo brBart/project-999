@@ -1264,8 +1264,8 @@ class Vat{
 	 * @param float $value
 	 */
 	public function setPercentage($value){
-		Number::validatePositiveFloat($value, 'Porcentaje inv&aacute;lido.');
 		$this->_mPercentage = $value;
+		Number::validatePositiveNumber($value, 'Porcentaje inv&aacute;lido.');
 	}
 	
 	/**
@@ -1273,6 +1273,7 @@ class Vat{
 	 *
 	 */
 	public function save(){
+		$this->validateMainProperties();
 		VatDAM::update($this);
 	}
 	
@@ -1283,6 +1284,15 @@ class Vat{
 	 */
 	static public function getInstance(){
 		return VatDAM::getInstance();
+	}
+	
+	/**
+	 * Validates the object's percentage property.
+	 * 
+	 * Verifies that the V.A.T. percentage is set correctly. Otherwise it throws an exception.
+	 */
+	private function validateMainProperties(){
+		Number::validatePositiveNumber($value, 'Porcentaje inv&aacute;lido.', 'percentage');
 	}
 }
 
