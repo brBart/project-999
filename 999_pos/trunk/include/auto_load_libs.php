@@ -89,6 +89,10 @@ function __autoload($className){
 			require_once('business/various.php');
 			break;
 			
+		case 'Vat':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
