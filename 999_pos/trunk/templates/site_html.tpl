@@ -36,13 +36,13 @@
 		<div id="header">
 			<h1>Sistema 999 - {$module_title}</h1>
 			<p>
+				Usuario: {get_username}
+			</p>
+			<p>
 			{foreach from=$back_trace item=trace name=back_trace_loop}
 				<strong>{$trace}</strong>
 				{if not $smarty.foreach.back_trace_loop.last} <img src="../images/trace.png"> {/if}
 			{/foreach}
-			</p>
-			<p id="actual_username">
-				Usuario: {get_username}
 			</p>
 		</div>
 		<div id="main_menu">
