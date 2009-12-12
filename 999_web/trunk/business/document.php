@@ -1029,9 +1029,9 @@ class Correlative extends Persist{
 	 */
 	public function setSerialNumber($serialNumber){
 		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->_mSerialNumber = $serialNumber;
 			String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
 			$this->verifySerialNumber($serialNumber);
-			$this->_mSerialNumber = $serialNumber;
 		}
 	}
 	
@@ -1041,8 +1041,8 @@ class Correlative extends Persist{
 	 * @param string $number
 	 */
 	public function setResolutionNumber($number){
-		String::validateString($number, 'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
 		$this->_mResolutionNumber = $number;
+		String::validateString($number, 'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
 	}
 	
 	/**
@@ -1051,8 +1051,8 @@ class Correlative extends Persist{
 	 * @param string $date
 	 */
 	public function setResolutionDate($date){
-		Date::validateDate($date, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
 		$this->_mResolutionDate = $date;
+		Date::validateDate($date, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
 	}
 	
 	/**
@@ -1061,8 +1061,8 @@ class Correlative extends Persist{
 	 * @param integer $number
 	 */
 	public function setInitialNumber($number){
-		Number::validatePositiveInteger($number, 'N&uacute;mero inv&aacute;lido.');
 		$this->_mInitialNumber = $number;
+		Number::validatePositiveNumber($number, 'N&uacute;mero inv&aacute;lido.');
 	}
 	
 	/**
@@ -1071,8 +1071,8 @@ class Correlative extends Persist{
 	 * @param integer $number
 	 */
 	public function setFinalNumber($number){
-		Number::validatePositiveInteger($number, 'N&uacute;mero inv&aacute;lido.');
 		$this->_mFinalNumber = $number;
+		Number::validatePositiveNumber($number, 'N&uacute;mero inv&aacute;lido.');
 	}
 	
 	/**
@@ -1183,12 +1183,16 @@ class Correlative extends Persist{
 	 * and final numbers must be greater than cero.
 	 */
 	private function validateMainProperties(){
-		String::validateString($this->_mSerialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
+		String::validateString($this->_mSerialNumber, 'N&uacute;mero de serie inv&aacute;lido.',
+				'serial_number');
 		String::validateString($this->_mResolutionNumber,
-				'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
-		Date::validateDate($this->_mResolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
-		Number::validatePositiveInteger($this->_mInitialNumber, 'N&uacute;mero inicial inv&aacute;lido.');
-		Number::validatePositiveInteger($this->_mFinalNumber, 'N&uacute;mero final inv&aacute;lido.');
+				'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.', 'resolution_number');
+		Date::validateDate($this->_mResolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.',
+				'resolution_date');
+		Number::validatePositiveNumber($this->_mInitialNumber, 'N&uacute;mero inicial inv&aacute;lido.',
+				'initial_number');
+		Number::validatePositiveNumber($this->_mFinalNumber, 'N&uacute;mero final inv&aacute;lido.',
+				'final_number');
 	}
 	
 	/**
@@ -1200,7 +1204,8 @@ class Correlative extends Persist{
 	 */
 	private function validateRangeNumbers($initial, $final){
 		if($initial >= $final)
-			throw new Exception('N&uacute;mero inicial debe ser menor al n&uacute;mero final.');
+			throw new ValidateException('N&uacute;mero inicial debe ser menor al n&uacute;mero final.',
+					'initial_number');
 	}
 	
 	/**
@@ -1212,7 +1217,7 @@ class Correlative extends Persist{
 	 */
 	private function verifySerialNumber($serialNumber){
 		if(CorrelativeDAM::exists($serialNumber))
-			throw new Exception('N&uacute;mero de serie ya existe.');
+			throw new ValidateException('N&uacute;mero de serie ya existe.', 'serial_number');
 	}
 }
 
