@@ -93,6 +93,10 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'Correlative':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
