@@ -49,6 +49,7 @@
 		  		<input name="form_widget" id="resolution_date" type="text" maxlength="10"
 		  			onblur="oSetProperty.execute('set_resolution_date_correlative', this.value, this.id);" />
 		  		<span id="resolution_date-failed" class="hidden">*</span>
+		  		<span class="hint">dd/mm/aaaa</span>
 		  		{else}
 		  		<span>{$resolution_date}</span>
 		  		{/if}
