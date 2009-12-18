@@ -1108,6 +1108,7 @@ class Correlative extends Persist{
 	 * Saves the correlative's data in the database.
 	 *
 	 * Only applies if the object's status property is set to Persist::IN_PROGRESS.
+	 * @return string
 	 */
 	public function save(){
 		if($this->_mStatus == Persist::IN_PROGRESS){
@@ -1125,6 +1126,9 @@ class Correlative extends Persist{
 			// If there were no records, make this one the default.
 			if($no_records)
 				self::makeDefault($this);
+			
+			// For presentation purposes.
+			return $this->_mSerialNumber;
 		}
 	}
 	
