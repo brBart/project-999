@@ -12,7 +12,7 @@ var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObje
   	<input name="form_widget" id="undo" type="button" value="Cancelar"
   		onclick="oSession.loadHref('{$back_link}');" />
   	{else}
-  	<input name="form_widget" id="default" type="button" value="Default"
+  	<input name="form_widget" id="default" type="button" value="Predeterminado"
   		{if $is_default eq 0}onclick="oMakeDefault.execute();"{else}disabled="disabled"{/if} />
   	<input name="form_widget" id="delete" type="button" value="Eliminar"
   		onclick="if(confirm('&iquest;Esta seguro que desea eliminar?')) oDelete.execute('{$delete_cmd}', '{$back_link}');" />
