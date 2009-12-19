@@ -30,7 +30,7 @@
 		  			onblur="oSetProperty.execute('set_serial_number_correlative', this.value, this.id);" />
 		  		<span id="serial_number-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$serial_number}{if $is_default eq 1} (Predeterminado){/if}</span>
+		  		<span id="serial_number">{$serial_number}{if $is_default eq 1} (Predeterminado){/if}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
@@ -79,7 +79,7 @@
 		  		<span>{$actual_number}</span>
 		  	</p>
 		</fieldset>
-		{include file='correlative_controls_html.tpl'}
+		{include file='correlative_controls_html.tpl' serial_number_span='serial_number'}
 	</div>
 </div>
 {if $status eq 0}
