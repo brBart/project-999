@@ -6,8 +6,10 @@ var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObje
 </script>
 {else}
 <script type="text/javascript" src="../scripts/make_default_correlative.js"></script>
+<script type="text/javascript" src="../scripts/delete.js"></script>
 <script type="text/javascript">
 var oMakeDefault = new MakeDefaultCorrelativeCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 </script>
 {/if}
 <fieldset id="controls">
