@@ -11,8 +11,6 @@
  * @param {Console} oConsole
  * @param {XmlHttpRequest} oRequest
  * @param {String} sKey
- * @param {StateMachine} oStateMachine
- * @param {ModalForm} oForm
  */
 function MakeDefaultCorrelativeCommand(oSession, oConsole, oRequest, sKey){
 	// Call the parent constructor.
@@ -49,7 +47,7 @@ function MakeDefaultCorrelativeCommand(oSession, oConsole, oRequest, sKey){
 MakeDefaultCorrelativeCommand.prototype = new SyncCommand();
 
 /**
- * Sets the serial number span element.
+ * Sets the serial number span and default input elements.
  * @param {String} sSerialNumber The id of the serial number span element.
  * @param {String} sDefault The id of the default input element.
  */
