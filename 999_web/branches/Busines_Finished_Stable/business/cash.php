@@ -736,8 +736,8 @@ class Shift extends Identifier{
 	 * @param string $timeTable
 	 */
 	public function setTimeTable($timeTable){
-		String::validateString($timeTable, 'Horario inv&aacute;lido.');
 		$this->_mTimeTable = $timeTable;
+		String::validateString($timeTable, 'Horario inv&aacute;lido.');
 	}
 	
 	/**
@@ -815,7 +815,7 @@ class Shift extends Identifier{
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
-		String::validateString($this->_mTimeTable, 'Horario inv&aacute;lido.');
+		String::validateString($this->_mTimeTable, 'Horario inv&aacute;lido.', 'time_table');
 	}
 }
 
