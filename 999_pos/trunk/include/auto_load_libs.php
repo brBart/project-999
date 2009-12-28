@@ -97,6 +97,10 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'Shift':
+			require_once('business/cash.php');
+			break;
+			
 		default:
 	}
 }
