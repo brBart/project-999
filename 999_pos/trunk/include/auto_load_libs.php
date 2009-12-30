@@ -105,6 +105,10 @@ function __autoload($className){
 			require_once('business/cash.php');
 			break;
 			
+		case 'BankAccount':
+			require_once('business/cash.php');
+			break;
+			
 		default:
 	}
 }
