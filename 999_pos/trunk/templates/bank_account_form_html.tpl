@@ -30,6 +30,13 @@
 		  		{/if}
 		  	</p>
 		  	<p>
+		  		<label for="holder_name">Titular:*</label>
+		  		<input name="form_widget" id="holder_name" type="text" value="{$holder_name}" maxlength="100"
+		  			onblur="oSetProperty.execute('set_holder_name_bank_account', this.value, this.id);"
+		  			{if $status eq 1}disabled="disabled"{/if} />
+		  		<span id="holder_name-failed" class="hidden">*</span>
+		  	</p>
+		  	<p>
 		  		<label for="bank_id">Banco:*</label>
 		  		<select name="form_widget" id="bank_id"
 		  			onblur="oSetProperty.execute('set_bank_bank_account', this.value, this.id);"
