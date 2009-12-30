@@ -15,7 +15,7 @@ require_once('commands/get_object.php');
 require_once('business/cash.php');
 
 /**
- * Displays the unit of measure form in idle mode.
+ * Displays the bank form in idle mode.
  * @package Command
  * @author Roberto Oliveros
  */
