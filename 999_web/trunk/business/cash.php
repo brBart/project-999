@@ -43,7 +43,6 @@ class Bank extends Identifier{
 	 * @return Bank
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return BankDAM::getInstance($id);
 	}
 	
