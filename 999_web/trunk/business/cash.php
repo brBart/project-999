@@ -556,20 +556,20 @@ class BankAccount extends PersistObject{
 		if($this->_mStatus == self::CREATED)
 			throw new Exception('No se puede editar n&uacute;mero de cuenta.');
 		
+		$this->_mNumber = $number;
 		String::validateString($number, 'N&uacute;mero de cuenta inv&aacute;lido.');
 		$this->verifyNumber($number);
-		$this->_mNumber = $number;
 	}
 	
 	/**
 	 * Sets the account's bank;
 	 *
 	 * @param Bank $obj
-	 * @return void
 	 */
-	public function setBank(Bank $obj){
-		self::validateObjectFromDatabase($obj);
+	public function setBank(Bank $obj = NULL){
 		$this->_mBank = $obj;
+		if(is_null($obj))
+			throw new ValidateException('Seleccione un banco.');
 	}
 	
 	/**
@@ -579,8 +579,8 @@ class BankAccount extends PersistObject{
 	 * @return void
 	 */
 	public function setHolderName($holderName){
-		String::validateString($holderName, 'Nombre inv&aacute;lido.');
 		$this->_mHolderName = $holderName;
+		String::validateString($holderName, 'Nombre inv&aacute;lido.');
 	}
 	
 	/**
@@ -676,11 +676,10 @@ class BankAccount extends PersistObject{
 	 * @throws Exception
 	 */
 	protected function validateMainProperties(){
-		String::validateString($this->_mNumber, 'N&uacute;mero de cuenta inv&aacute;lido.');
-		String::validateString($this->_mHolderName, 'Nombre inv&aacute;lido.');
-		
+		String::validateString($this->_mNumber, 'N&uacute;mero de cuenta inv&aacute;lido.', 'number');
+		String::validateString($this->_mHolderName, 'Nombre inv&aacute;lido.', 'holder_name');
 		if(is_null($this->_mBank))
-			throw new Exception('Banco inv&aacute;lido.');
+			throw new ValidateException('Seleccione un banco.', 'bank_id');
 	}
 	
 	/**
@@ -692,7 +691,7 @@ class BankAccount extends PersistObject{
 	 */
 	private function verifyNumber($number){
 		if(BankAccountDAM::exists($number))
-			throw new Exception('Cuenta Bancaria ya existe.');
+			throw new ValidateException('Cuenta Bancaria ya existe.', 'number');
 	}
 }
 
