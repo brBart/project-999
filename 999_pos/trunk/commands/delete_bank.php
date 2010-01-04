@@ -22,7 +22,7 @@ class DeleteBankCommand extends DeleteObjectCommand{
 	 * @return boolean
 	 */
 	protected function testRights(UserAccount $user){
-		return AccessManager::isAllowed($user, 'shift', 'write');
+		return AccessManager::isAllowed($user, 'bank', 'write');
 	}
 	
 	/**
