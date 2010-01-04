@@ -690,7 +690,7 @@ class BankAccount extends PersistObject{
 	 */
 	private function verifyNumber($number){
 		if(BankAccountDAM::exists($number))
-			throw new ValidateException('Cuenta Bancaria ya existe.', 'number');
+			throw new ValidateException('N&uacute;mero de cuenta ya existe.', 'number');
 	}
 }
 
