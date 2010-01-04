@@ -53,7 +53,7 @@
 		</fieldset>
 		{if $status eq 1}
 			{assign var='edit_cmd' value=$edit_cmd}
-			{assign var='focus_on_edit' value='bank_id'}
+			{assign var='focus_on_edit' value='holder_name'}
 			{assign var='delete_cmd' value=$delete_cmd}
 		{/if}
 		{include file='controls_html.tpl'}
