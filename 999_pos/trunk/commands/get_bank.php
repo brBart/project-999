@@ -41,8 +41,8 @@ class GetBankCommand extends GetObjectCommand{
 		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'main_menu_admin_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_admin_html.tpl',
 				'content' => 'object_menu_html.tpl', 'notify' => '1', 'type' => 'error',
-				'message' => $msg, 'create_link' => 'index.php?cmd=create_admin',
-				'show_list_link' => 'index.php?cmd=show_admin_list&page=1'), 'site_html.tpl');
+				'message' => $msg, 'create_link' => 'index.php?cmd=create_bank',
+				'show_list_link' => 'index.php?cmd=show_bank_list&page=1'), 'site_html.tpl');
 	}
 	
 	/**
