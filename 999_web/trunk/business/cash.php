@@ -622,6 +622,9 @@ class BankAccount extends PersistObject{
 		}
 		else
 			$this->update();
+			
+		// Needed by the presentation layer.
+		return $this->getNumber();
 	}
 	
 	/**
