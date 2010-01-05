@@ -13,6 +13,10 @@ require_once('presentation/command.php');
  * For displaying the results.
  */
 require_once('presentation/page.php');
+/**
+ * For obtaining the list of products.
+ */
+require_once('business/product.php');
 
 /**
  * Defines functionality for obtaining the supplier's products.
