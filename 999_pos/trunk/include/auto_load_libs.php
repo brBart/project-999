@@ -109,6 +109,10 @@ function __autoload($className){
 			require_once('business/cash.php');
 			break;
 			
+		case 'PaymentCardType':
+			require_once('business/cash.php');
+			break;
+			
 		default:
 	}
 }
