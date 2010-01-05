@@ -167,4 +167,18 @@ var oProductLots = new ObjectDetails(oSession, oLotsConsole, Request.createXmlHt
 oProductLots.init('../xsl/product_lots.xsl', 'lots', 'oProductLots');
 var oLotsList = new ModalList(oProductLots, oLotsFrm);
 </script>
+<div id="reserves_container" class="hidden">
+	<div class="list_form">
+		<a class="close_window" href="#" onclick="oReservesList.hideForm();">Cerrar[X]</a>
+		<div id="reserves_console" class="console_display"></div>
+		<div id="reserves" class="items"></div>
+	 </div>
+</div>
+<script type="text/javascript">
+var oReservesFrm = new ModalForm('reserves_container');
+var oReservesConsole = new Console('reserves_console');
+var oProductReserves = new ObjectDetails(oSession, oLotsConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_reserves');
+oProductReserves.init('../xsl/product_reserves.xsl', 'reserves', 'oProductReserves');
+var oReservesList = new ModalList(oProductReserves, oReservesFrm);
+</script>
 {/if}
