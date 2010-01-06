@@ -71,7 +71,7 @@ class ReserveDAM{
 		if($id == 123){
 			$lot = Lot::getInstance(123);
 			$user = UserAccount::getInstance('roboli');
-			$reserve = new Reserve($id, $lot, 5, $user, '15/04/2009', Persist::CREATED);
+			$reserve = new Reserve($id, $lot, 5, $user, '15/04/2009 00:00:00', Persist::CREATED);
 			return $reserve;
 		}
 		else
