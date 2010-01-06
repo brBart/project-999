@@ -15,6 +15,7 @@
 	         		<th>Usuario</th>
 	         		<th>Lote</th>
 	         		<th>Cantidad</th>
+	         		<xsl:if test="$status = 0"><th></th></xsl:if>
 	      		</tr>
 	       	</thead>
 	       	<tbody>
@@ -37,6 +38,17 @@
 				<td><xsl:value-of select="username" /></td>
 				<td><xsl:value-of select="lot_id" /></td>
 				<td><xsl:value-of select="quantity" /></td>
+				<xsl:if test="$status = 0">
+					<td>
+						<xsl:element name="input">
+							<xsl:attribute name="type">button</xsl:attribute>
+				           	<xsl:attribute name="value">Eliminar</xsl:attribute>
+				           	<xsl:attribute name="onclick">
+				           		if(confirm('Esta seguro que desea eliminar?'))<xsl:value-of select="$delete_obj" />.execute('<xsl:value-of select="reserve_id" />');
+				           	</xsl:attribute>
+						</xsl:element>
+					</td>
+				</xsl:if>
 			</tr>
         </xsl:for-each>
 	</xsl:template>
