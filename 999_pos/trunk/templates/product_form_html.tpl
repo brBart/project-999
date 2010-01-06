@@ -34,7 +34,7 @@
 			<p {if $status eq 0}class="invisible"{/if}>
 				<a name="form_widget" href="#">Kardex</a>
 				<a name="form_widget" href="#" onclick="oLotsList.showForm();">Lotes</a>
-				<a name="form_widget" href="#">Reservados</a>
+				<a name="form_widget" href="#" onclick="oReservesList.showForm();">Reservados</a>
 			</p>
 		</fieldset>
 		<fieldset id="main_data">
