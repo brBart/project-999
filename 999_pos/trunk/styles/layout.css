@@ -209,7 +209,7 @@ input[type="text"], input[type="password"] {
 	width: 35%;
 }
 
-#bonus, #reserves {
+#bonus, #reserve_items {
 	float: right;
 	width: 65%;
 }

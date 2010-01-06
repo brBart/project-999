@@ -28,7 +28,7 @@
 			  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 			  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
 			</div>
-			<div id="reserves">
+			<div id="reserve_items">
 			  	<div id="details" class="items"></div>
 			</div>
 		</fieldset>
