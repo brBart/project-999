@@ -717,12 +717,12 @@ class Reserve extends Persist{
 	private $_mUser;
 	
 	/**
-	 * Holds the date in which the reserve was created.
+	 * Holds the date and time in which the reserve was created.
 	 *
-	 * Date format: 'dd/mm/yyyy'.
+	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
 	 * @var string
 	 */
-	private $_mDate;
+	private $_mDateTime;
 	
 	/**
 	 * Constructs the reserve with the provided data.
@@ -736,7 +736,7 @@ class Reserve extends Persist{
 	 * @param string $date
 	 * @throws Exception
 	 */
-	public function __construct($id, Lot $lot, $quantity, UserAccount $user, $date,
+	public function __construct($id, Lot $lot, $quantity, UserAccount $user, $dateTime,
 			$status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 				
@@ -745,7 +745,7 @@ class Reserve extends Persist{
 			Persist::validateObjectFromDatabase($lot);
 			Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 			Persist::validateObjectFromDatabase($user);
-			Date::validateDate($date, 'Fecha inv&aacute;lida.');
+			Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en Reserve con datos erroneos! ' .
 					$e->getMessage());
@@ -756,7 +756,7 @@ class Reserve extends Persist{
 		$this->_mLot = $lot;
 		$this->_mQuantity = $quantity;
 		$this->_mUser = $user;
-		$this->_mDate = $date;
+		$this->_mDateTime = $dateTime;
 	}
 	
 	/**
@@ -817,7 +817,7 @@ class Reserve extends Persist{
 		Inventory::reserve($product, $quantity);
 		
 		$helper = ActiveSession::getHelper();
-		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y'));
+		return ReserveDAM::insert($lot, $quantity, $helper->getUser(), date('d/m/Y H:i:s'));
 	}
 	
 	/**
