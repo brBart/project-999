@@ -24,6 +24,13 @@
 		    	</div>
 	    	</div>
 	    </li>
+	    <li>
+	    	<form method="post" action="index.php?cmd=get_bonus_product_by_id" onsubmit="return oSession.setIsLink(true);">
+	    		<label for="product_id">C&oacute;digo:</label>
+	    		<input name="id" id="product_id" type="text" value="{$id}" maxlength="11" />
+	    		<input type="submit" value="Consultar" />
+	    	</form>
+	    </li>
 	    <li id="li_last">
 	    	<form method="post" action="index.php?cmd=get_bonus_product_by_bar_code" onsubmit="return oSession.setIsLink(true);">
 	    		<label for="bar_code">C&oacute;digo barra:</label>
