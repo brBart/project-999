@@ -120,16 +120,16 @@ class ReserveDAM{
 	 * @param string $date
 	 * @return Reserve
 	 */
-	static public function insert(Lot $lot, $quantity, UserAccount $user, $date){
+	static public function insert(Lot $lot, $quantity, UserAccount $user, $dateTime){
 		$sql = 'CALL reserve_insert(:username, :lot_id, :date, :quantity)';
 		$params = array(':username' => $user->getUserName(), ':lot_id' => $lot->getId(), 
-				':date' => Date::dbFormat($date), ':quantity' => $quantity);
+				':date' => Date::dbDateTimeFormat($dateTime), ':quantity' => $quantity);
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
 		$id = (int)DatabaseHandler::getOne($sql, $params);
 		
-		return new Reserve($id, $lot, $quantity, $user, $date, Persist::CREATED);
+		return new Reserve($id, $lot, $quantity, $user, $dateTime, Persist::CREATED);
 	}
 	
 	/**
