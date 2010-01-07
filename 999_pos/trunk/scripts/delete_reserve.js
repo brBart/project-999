@@ -19,7 +19,7 @@ function DeleteReserveCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails
 	AlterObjectCommand.call(this, oSession, oConsole, oRequest, sKey, sCmd);
 	
 	/**
-	 * Holds the object that manage the list of bonus.
+	 * Holds the object that manage the list of reserves.
 	 * @type ObjectDetails
 	 */
 	this._mDetails = oDetails;
@@ -37,7 +37,7 @@ function DeleteReserveCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails
 DeleteReserveCommand.prototype = new AlterObjectCommand();
 
 /**
- * Updates the bonus list.
+ * Updates the reserves list.
  * @param {DocumentElement} xmlDoc
  */
 DeleteReserveCommand.prototype.displaySuccess = function(xmlDoc){

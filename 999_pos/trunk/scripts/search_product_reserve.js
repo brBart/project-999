@@ -22,7 +22,7 @@ function SearchProductReserve(oSession, oSearchProduct, oEventDelegator){
 SearchProductReserve.prototype = new SearchProductDetails();
 
 /**
- * Redirects the html document to the product's bonus form page.
+ * Redirects the html document to the product's reserve form page.
  * @param {HtmlElement} oTr
  */
 SearchProductReserve.prototype.doAction = function(oTr){
