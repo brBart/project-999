@@ -6,7 +6,7 @@
 <script type="text/javascript" src="../scripts/object_details.js"></script>
 <script type="text/javascript" src="../scripts/create_bonus.js"></script>
 <script type="text/javascript" src="../scripts/alter_object.js"></script>
-<script type="text/javascript" src="../scripts/delete_bonus.js"></script>
+<script type="text/javascript" src="../scripts/delete_item.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oMachine = new StateMachine(0);
@@ -14,7 +14,7 @@
 	var oEventDelegator = new EventDelegator();
 	var oProductBonus = new ObjectDetails(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_bonus');
 	var oCreateBonus = new CreateBonusCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oProductBonus);
-	var oDeleteBonus = new DeleteBonusCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, 'delete_bonus', oProductBonus);
+	var oDeleteBonus = new DeleteItemCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, 'delete_bonus', oProductBonus);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
