@@ -1,5 +1,5 @@
 /**
- * @fileOverview Library with the DeleteItemCommand class.
+ * @fileOverview Library with the DeleteBonusCommand class.
  * @author Roberto Oliveros
  */
 
@@ -14,7 +14,7 @@
  * @param {String} sCmd
  * @param {ObjectDetails} oDetails
  */
-function DeleteItemCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails){
+function DeleteBonusCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails){
 	// Call the parent constructor.
 	AlterObjectCommand.call(this, oSession, oConsole, oRequest, sKey, sCmd);
 	
@@ -28,12 +28,12 @@ function DeleteItemCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails){
 /**
  * Inherit the Sync command class methods.
  */
-DeleteItemCommand.prototype = new AlterObjectCommand();
+DeleteBonusCommand.prototype = new AlterObjectCommand();
 
 /**
  * Updates the bonus list.
  * @param {DocumentElement} xmlDoc
  */
-DeleteItemCommand.prototype.displaySuccess = function(xmlDoc){
+DeleteBonusCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mDetails.update();
 }
