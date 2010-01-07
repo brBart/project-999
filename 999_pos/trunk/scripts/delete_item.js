@@ -1,10 +1,10 @@
 /**
- * @fileOverview Library with the DeleteBonusCommand class.
+ * @fileOverview Library with the DeleteItemCommand class.
  * @author Roberto Oliveros
  */
 
 /**
- * @class Deletes a bonus on the server.
+ * @class Deletes an object on the server and refresh the items list.
  * @extends AlterObjectCommand
  * @constructor
  * @param {Session} oSession
@@ -14,7 +14,7 @@
  * @param {String} sCmd
  * @param {ObjectDetails} oDetails
  */
-function DeleteBonusCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails){
+function DeleteItemCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails){
 	// Call the parent constructor.
 	AlterObjectCommand.call(this, oSession, oConsole, oRequest, sKey, sCmd);
 	
@@ -28,12 +28,12 @@ function DeleteBonusCommand(oSession, oConsole, oRequest, sKey, sCmd, oDetails){
 /**
  * Inherit the Sync command class methods.
  */
-DeleteBonusCommand.prototype = new AlterObjectCommand();
+DeleteItemCommand.prototype = new AlterObjectCommand();
 
 /**
  * Updates the bonus list.
  * @param {DocumentElement} xmlDoc
  */
-DeleteBonusCommand.prototype.displaySuccess = function(xmlDoc){
+DeleteItemCommand.prototype.displaySuccess = function(xmlDoc){
 	this._mDetails.update();
 }
