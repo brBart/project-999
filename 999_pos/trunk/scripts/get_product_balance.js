@@ -48,8 +48,8 @@ GetProductBalanceCommand.prototype = new SyncCommand();
  
 /** 
  * Sets the quantity and available span elements.
- * @param {String} sQuantity
- * @param {String} sAvailable
+ * @param {String} sQuantity The id of the quantity span element.
+ * @param {String} sAvailable The id of the available span element.
  */
 GetProductBalanceCommand.prototype.init = function(sQuantity, sAvailable){
 	this._mQuantity = document.getElementById(sQuantity);
@@ -58,7 +58,6 @@ GetProductBalanceCommand.prototype.init = function(sQuantity, sAvailable){
  
 /**
  * Executes the command.
- * @param {String} sLinkSuccess
  */
 GetProductBalanceCommand.prototype.execute = function(){
 	 var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
