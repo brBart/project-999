@@ -113,8 +113,8 @@
 			  			{/if} />
 			  		<span id="deactivated-failed" class="hidden">*</span>
 			  	</p>
-			  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
-			  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>
+			  	<p><label>Cantidad:</label><span id="quantity">{$quantity}&nbsp;</span></p>
+			  	<p><label>Disponible:</label><span id="available">{$available}&nbsp;</span></p>
 			</div>
 			<div id="product_suppliers">
 			  	<p id="prod_supp_tb">
@@ -153,6 +153,11 @@ oProductSuppliers.update();
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/modal_form.js"></script>
 <script type="text/javascript" src="../scripts/modal_list.js"></script>
+<script type="text/javascript" src="../scripts/get_product_balance.js"></script>
+<script type="text/javascript">
+var oProductBalance = new GetProductBalanceCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
+oProductBalance.init('quantity', 'available');
+</script>
 <div id="lots_container" class="hidden">
 	<div class="list_form">
 		<a class="close_window" href="#" onclick="oLotsList.hideForm();">Cerrar[X]</a>
@@ -165,7 +170,7 @@ var oLotsFrm = new ModalForm('lots_container');
 var oLotsConsole = new Console('lots_console');
 var oProductLots = new ObjectDetails(oSession, oLotsConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_lots');
 oProductLots.init('../xsl/product_lots.xsl', 'lots', 'oProductLots');
-var oLotsList = new ModalList(oProductLots, oLotsFrm);
+var oLotsList = new ModalList(oProductLots, oLotsFrm, oProductBalance);
 </script>
 <div id="reserves_container" class="hidden">
 	<div class="list_form">
@@ -179,6 +184,6 @@ var oReservesFrm = new ModalForm('reserves_container');
 var oReservesConsole = new Console('reserves_console');
 var oProductReserves = new ObjectDetails(oSession, oLotsConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_product_reserves');
 oProductReserves.init('../xsl/product_reserves.xsl', 'reserves', 'oProductReserves');
-var oReservesList = new ModalList(oProductReserves, oReservesFrm);
+var oReservesList = new ModalList(oProductReserves, oReservesFrm, oProductBalance);
 </script>
 {/if}

@@ -8,8 +8,9 @@
  * @constructor
  * @param {ObjectDetails} oStateMachine
  * @param {ModalForm} oForm
+ * @param {Command} oCommand
  */
-function ModalList(oDetails, oForm){
+function ModalList(oDetails, oForm, oCommand){
 	/**
 	 * Holds a reference to the details object.
 	 * @type ObjectDetails
@@ -21,6 +22,12 @@ function ModalList(oDetails, oForm){
 	 * @type ModalForm
 	 */
 	this._mForm = oForm;
+	
+	/**
+	 * Holds the command object to execute after the form is hidden.
+	 * @type Command
+	 */
+	this._mCommand = oCommand;
 }
 
 /**
@@ -32,8 +39,10 @@ ModalList.prototype.showForm = function(){
 }
 
 /**
- * Hides the list form.
+ * Hides the list form and executes the command object.
  */
 ModalList.prototype.hideForm = function(){
 	this._mForm.hide();
+	if(this._mCommand != null)
+		this._mCommand.execute();
 }
