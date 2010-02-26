@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-01-2010 a las 16:31:05
+-- Tiempo de generación: 07-01-2010 a las 18:17:26
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcar la base de datos para la tabla `bonus`
@@ -822,12 +822,12 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   `reserve_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
   `lot_id` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `quantity` int(11) NOT NULL,
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
 
 --
 -- Volcar la base de datos para la tabla `reserve`
@@ -901,7 +901,8 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 21, 2, 1),
 (1, 22, 2, 1),
 (1, 23, 2, 1),
-(1, 24, 2, 1);
+(1, 24, 2, 1),
+(1, 25, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1011,7 +1012,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1041,7 +1042,8 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (21, 'bank'),
 (22, 'bank_account'),
 (23, 'payment_card_type'),
-(24, 'payment_card_brand');
+(24, 'payment_card_brand'),
+(25, 'reserve');
 
 -- --------------------------------------------------------
 
@@ -4617,7 +4619,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_get`(IN inReserveId INT)
 BEGIN
 
-  SELECT user_account_username, lot_id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date, quantity FROM reserve
+  SELECT user_account_username, lot_id, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, quantity FROM reserve
 
     WHERE reserve_id = inReserveId;
 
@@ -4634,7 +4636,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_insert`(IN inUserName VARCHAR(50), IN inLotId INT, IN inDate DATE, IN inQuantity INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_insert`(IN inUserName VARCHAR(50), IN inLotId INT, IN inDate DATETIME, IN inQuantity INT)
 BEGIN
 
   INSERT INTO reserve (user_account_username, lot_id, date, quantity)
@@ -4646,7 +4648,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_list_get`(IN inProductId INT)
 BEGIN
 
-  SELECT res.reserve_id, DATE_FORMAT(res.date, '%d/%m/%Y') AS created_date, res.user_account_username, lot.lot_id,
+  SELECT res.reserve_id AS id, DATE_FORMAT(res.date, '%d/%m/%Y %H:%i:%s') AS created_date, res.user_account_username AS username, lot.lot_id,
 
       res.quantity FROM reserve res INNER JOIN lot ON res.lot_id = lot.lot_id
 
