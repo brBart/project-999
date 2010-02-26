@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2009 a las 13:39:40
+-- Tiempo de generación: 24-11-2009 a las 14:17:50
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -5855,41 +5855,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_count`(IN inWithdrawAdjustmentId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_get`(IN inWithdrawAdjustmentId INT)
 BEGIN
 
-  SELECT COUNT(*) FROM withdraw_adjustment_lot
+  SELECT lot_id, quantity, price FROM withdraw_adjustment_lot
 
-    WHERE withdraw_adjustment_id = inWithdrawAdjustmentId;
+      WHERE withdraw_adjustment_id = inWithdrawAdjustmentId
 
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_get`(IN inWithdrawAdjustmentId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "SELECT lot_id, quantity, price FROM withdraw_adjustment_lot
-
-      WHERE withdraw_adjustment_id = ?
-
-      ORDER BY number
-
-      LIMIT ?, ?";
-
-
-
-  SET @p1 = inWithdrawAdjustmentId;
-
-  SET @p2 = inStartItem;
-
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+      ORDER BY number;
 
 END$$
 
