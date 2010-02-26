@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-11-2009 a las 18:29:03
+-- Tiempo de generación: 23-11-2009 a las 15:26:56
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -1967,7 +1967,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT comparison_id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM comparison
+    "SELECT comparison_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM comparison
 
       WHERE date BETWEEN ? AND ?
 
@@ -3621,25 +3621,12 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_counting_template_general_get`()
-BEGIN
-
-  SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging FROM product pro
-
-      INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
-
-    WHERE pro.deactivated = 0
-
-    ORDER BY man.name, pro.name;
-
-END$$
-
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_counting_template_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
 BEGIN
 
   SELECT * FROM
 
-    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging FROM product pro
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
 
       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
@@ -4046,31 +4033,18 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_counting_template_general_get`()
-BEGIN
-
-  SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging FROM product pro
-
-      INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
-
-    WHERE pro.deactivated = 0
-
-    ORDER BY pro.name, man.name;
-
-END$$
-
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_counting_template_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
 BEGIN
 
   SELECT * FROM
 
-    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging FROM product pro
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
 
       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
      WHERE pro.deactivated = 0 ORDER BY pro.name, man.name) AS counting_template
 
-  WHERE name BETWEEN inFirst AND inLast;
+  WHERE product BETWEEN inFirst AND inLast;
 
 END$$
 
