@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-11-2009 a las 20:17:51
+-- Tiempo de generación: 17-11-2009 a las 18:29:03
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -1870,15 +1870,6 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_count`(IN inComparisonId INT)
-BEGIN
-
-  SELECT COUNT(*) FROM comparison_product
-
-    WHERE comparison_id = inComparisonId;
-
-END$$
-
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_general_insert`(IN inComparisonId INT, IN inCountId INT)
 BEGIN
 
@@ -1914,32 +1905,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_get`(IN inComparisonId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_get`(IN inComparisonId INT)
 BEGIN
 
-  PREPARE statement FROM
+  SELECT product_id, physical, system FROM comparison_product
 
-    "SELECT product_id, physical, system FROM comparison_product
+      WHERE comparison_id = inComparisonId
 
-      WHERE comparison_id = ?
-
-      ORDER BY comparison_product_id
-
-      LIMIT ?, ?";
-
-
-
-  SET @p1 = inComparisonId;
-
-  SET @p2 = inStartItem;
-
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+      ORDER BY comparison_product_id;
 
 END$$
 
