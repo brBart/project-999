@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2009 a las 17:27:06
+-- Tiempo de generación: 25-11-2009 a las 17:08:17
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -3015,79 +3015,20 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_items_count`(IN inInvoiceId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_items_get`(IN inInvoiceId INT)
 BEGIN
 
-  DECLARE lotRowsCount INT;
+  (SELECT invoice_id, lot_id, NULL AS bonus_id, number, quantity, price FROM invoice_lot
 
-  DECLARE bonusRowsCount INT;
-
-  DECLARE totalCount INT DEFAULT 0;
-
-
-
-  SELECT COUNT(*) FROM invoice_lot
-
-    WHERE invoice_id = inInvoiceId
-
-    INTO lotRowsCount;
-
-
-
-  SET totalCount = totalCount + lotRowsCount;
-
-
-
-  SELECT COUNT(*) FROM invoice_bonus
-
-    WHERE invoice_id = inInvoiceId
-
-    INTO bonusRowsCount;
-
-
-
-  SET totalCount = totalCount + bonusRowsCount;
-
-
-
-  SELECT totalCount;
-
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_items_get`(IN inInvoiceId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "(SELECT invoice_id, lot_id, NULL AS bonus_id, number, quantity, price FROM invoice_lot
-
-        WHERE invoice_id = ?)
+        WHERE invoice_id = inInvoiceId)
 
       UNION
 
      (SELECT invoice_id, NULL AS lot_id , bonus_id, number, 1 AS quantity, price FROM invoice_bonus
 
-        WHERE invoice_id =?)
+        WHERE invoice_id = inInvoiceId)
 
-      ORDER BY number
-
-      LIMIT ?, ?";
-
-
-
-  SET @p1 = inInvoiceId;
-
-  SET @p2 = inInvoiceId;
-
-  SET @p3 = inStartItem;
-
-  SET @p4 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3, @p4;
+      ORDER BY number;
 
 END$$
 
@@ -3724,7 +3665,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT product_id, name FROM product
+    "SELECT product_id AS id, name, packaging FROM product
 
       WHERE manufacturer_id = ?
 
