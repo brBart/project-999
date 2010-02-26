@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2009 a las 14:17:50
+-- Tiempo de generación: 24-11-2009 a las 17:03:07
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -5033,41 +5033,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_count`(IN inShipmentId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_get`(IN inShipmentId INT)
 BEGIN
 
-  SELECT COUNT(*) FROM shipment_lot
+  SELECT lot_id, quantity, price FROM shipment_lot
 
-    WHERE shipment_id = inShipmentId;
+      WHERE shipment_id = inShipmentId
 
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_get`(IN inShipmentId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "SELECT lot_id, quantity, price FROM shipment_lot
-
-      WHERE shipment_id = ?
-
-      ORDER BY number
-
-      LIMIT ?, ?";
-
-
-
-  SET @p1 = inShipmentId;
-
-  SET @p2 = inStartItem;
-
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+      ORDER BY number;
 
 END$$
 
