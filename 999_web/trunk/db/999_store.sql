@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-11-2009 a las 15:26:56
+-- Tiempo de generación: 23-11-2009 a las 17:14:28
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -4665,41 +4665,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_count`(IN inReceiptId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_get`(IN inReceiptId INT)
 BEGIN
 
-  SELECT COUNT(*) FROM receipt_lot
+  SELECT lot_id, quantity, price FROM receipt_lot
 
-    WHERE receipt_id = inReceiptId;
+      WHERE receipt_id = inReceiptId
 
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_get`(IN inReceiptId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "SELECT lot_id, quantity, price FROM receipt_lot
-
-      WHERE receipt_id = ?
-
-      ORDER BY number
-
-      LIMIT ?, ?";
-
-
-
-  SET @p1 = inReceiptId;
-
-  SET @p2 = inStartItem;
-
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+      ORDER BY number;
 
 END$$
 
