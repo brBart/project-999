@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2009 a las 17:03:07
+-- Tiempo de generación: 24-11-2009 a las 17:27:06
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -4510,41 +4510,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_count`(IN inPurchaseReturnId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_get`(IN inPurchaseReturnId INT)
 BEGIN
 
-  SELECT COUNT(*) FROM purchase_return_lot
+  SELECT lot_id, quantity, price FROM purchase_return_lot
 
-    WHERE purchase_return_id = inPurchaseReturnId;
+      WHERE purchase_return_id = inPurchaseReturnId
 
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_get`(IN inPurchaseReturnId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "SELECT lot_id, quantity, price FROM purchase_return_lot
-
-      WHERE purchase_return_id = ?
-
-      ORDER BY number
-
-      LIMIT ?, ?";
-
-
-
-  SET @p1 = inPurchaseReturnId;
-
-  SET @p2 = inStartItem;
-
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+      ORDER BY number;
 
 END$$
 
