@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-11-2009 a las 17:08:17
+-- Tiempo de generación: 25-11-2009 a las 18:27:24
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -3649,41 +3649,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_product_list_count`(IN inManufacturerId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_product_list_get`(IN inManufacturerId INT)
 BEGIN
 
-  SELECT COUNT(*) FROM product
+  SELECT product_id AS id, name, packaging FROM product
 
-    WHERE manufacturer_id = inManufacturerId;
+      WHERE manufacturer_id = inManufacturerId
 
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_product_list_get`(IN inManufacturerId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "SELECT product_id AS id, name, packaging FROM product
-
-      WHERE manufacturer_id = ?
-
-      ORDER BY name
-
-      LIMIT ?, ?";
-
-
-
-  SET @p1 = inManufacturerId;
-
-  SET @p2 = inStartItem;
-
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+      ORDER BY name;
 
 END$$
 
