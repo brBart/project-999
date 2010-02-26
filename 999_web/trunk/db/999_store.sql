@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-11-2009 a las 18:27:24
+-- Tiempo de generación: 05-01-2010 a las 16:31:05
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `company` (
 --
 
 INSERT INTO `company` (`nit`, `name`) VALUES
-('', '999');
+('350682-7', '999');
 
 -- --------------------------------------------------------
 
@@ -891,7 +891,17 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 11, 3, 1),
 (1, 12, 2, 1),
 (1, 13, 2, 1),
-(1, 14, 2, 1);
+(1, 14, 2, 1),
+(1, 15, 1, 1),
+(1, 16, 2, 1),
+(1, 17, 2, 1),
+(1, 18, 2, 1),
+(1, 19, 2, 1),
+(1, 20, 2, 1),
+(1, 21, 2, 1),
+(1, 22, 2, 1),
+(1, 23, 2, 1),
+(1, 24, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1001,7 +1011,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1021,7 +1031,17 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (11, 'purchase_return'),
 (12, 'bonus'),
 (13, 'count'),
-(14, 'comparison');
+(14, 'comparison'),
+(15, 'admin'),
+(16, 'user_account'),
+(17, 'company'),
+(18, 'vat'),
+(19, 'correlative'),
+(20, 'shift'),
+(21, 'bank'),
+(22, 'bank_account'),
+(23, 'payment_card_type'),
+(24, 'payment_card_brand');
 
 -- --------------------------------------------------------
 
@@ -1309,9 +1329,9 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT bank_account_number, name FROM bank_account
+    "SELECT bank_account_number AS id, name FROM bank_account
 
-      ORDER BY bank_account_number
+      ORDER BY name
 
       LIMIT ?, ?";
 
@@ -1410,7 +1430,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT bank_id, name FROM bank
+    "SELECT bank_id AS id, name FROM bank
 
       ORDER BY name
 
@@ -2110,7 +2130,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT serial_number, is_default FROM correlative
+    "SELECT serial_number AS id, is_default FROM correlative
 
       ORDER BY serial_number
 
@@ -3743,7 +3763,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT payment_card_brand_id, name FROM payment_card_brand
+    "SELECT payment_card_brand_id AS id, name FROM payment_card_brand
 
       ORDER BY name
 
@@ -3844,7 +3864,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT payment_card_type_id, name FROM payment_card_type
+    "SELECT payment_card_type_id AS id, name FROM payment_card_type
 
       ORDER BY name
 
@@ -4655,7 +4675,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT role_id, name FROM role
+    "SELECT role_id AS id, name FROM role
 
       ORDER BY name
 
@@ -4850,7 +4870,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT shift_id, name FROM shift
+    "SELECT shift_id AS id, name FROM shift
 
       ORDER BY name
 
@@ -5102,43 +5122,16 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_product_list_count`(IN inSupplierId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_product_list_get`(IN inSupplierId INT)
 BEGIN
 
-  SELECT COUNT(*) FROM (SELECT product_id FROM product_supplier WHERE supplier_id = inSupplierId)
-
-      AS supplier_products;
-
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_product_list_get`(IN inSupplierId INT, IN inStartItem INT,
-
-  IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "SELECT pro_sup.product_id, pro.name FROM product_supplier pro_sup INNER JOIN product pro
+  SELECT DISTINCT pro_sup.product_id AS id, pro.name, pro.packaging FROM product_supplier pro_sup INNER JOIN product pro
 
          ON pro_sup.product_id = pro.product_id
 
-     WHERE pro_sup.supplier_id = ?
+     WHERE pro_sup.supplier_id = inSupplierId
 
-     ORDER BY pro.name
-
-     LIMIT ?, ?";
-
-
-
-  SET @p1 = inSupplierId;
-
-  SET @p2 = inStartItem;
-
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+     ORDER BY pro.name;
 
 END$$
 
@@ -5597,9 +5590,9 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT user_account_username AS username, first_name, last_name FROM user_account
+    "SELECT user_account_username AS id, first_name, last_name FROM user_account
 
-      ORDER BY user_account_username
+      ORDER BY first_name, last_name
 
       LIMIT ?, ?";
 
@@ -5612,6 +5605,19 @@ BEGIN
 
 
   EXECUTE statement USING @p1, @p2;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_no_password_update`(IN inUserName VARCHAR(50), IN inRoleId INT, IN inFirstName VARCHAR(50),
+
+  IN inLastName VARCHAR(50), IN inDeactivated TINYINT)
+BEGIN
+
+  UPDATE user_account
+
+    SET role_id = inRoleId, first_name = inFirstName, last_name = inLastName, deactivated = inDeactivated
+
+    WHERE user_account_username = inUserName;
 
 END$$
 
