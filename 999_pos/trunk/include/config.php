@@ -13,7 +13,7 @@ define('SITE_ROOT', dirname(dirname(__FILE__)));
 /**
  * 999 libraries path.
  */
-define('LIBS_999', 'C:\\xampp\\htdocs\\sistema999\\999_project\\999_web\\');
+define('LIBS_999', 'C:\\Users\\pc\\999_project\\999_middle\\');
 /**
  * Backup directory path.
  */ 
@@ -57,7 +57,7 @@ define('DB_PERSISTENCY', 'true');
 /**
  * Database configuration.
  */
-define('DB_SERVER', 'localhost');
+define('DB_SERVER', '127.0.0.1');
 /**
  * @ignore
  */
