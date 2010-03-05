@@ -30,6 +30,12 @@ abstract class ShowListCommand extends Command{
 		$list = $this->getList($total_pages, $total_items, $page);
 		
 		if($total_items > 0){
+			// In case last item was deleted on the last page.
+			if($page > $total_pages){
+				$page = $page - 1;
+				$list = $this->getList($total_pages, $total_items, $page);
+			}
+			
 			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
 			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 			
