@@ -27,6 +27,7 @@ abstract class SetPropertyObjectCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$value = $request->getProperty('value');
+		$value = trim($value);
 		$element_id = $request->getProperty('element_id');
 		$obj = $helper->getObject((int)$request->getProperty('key'));
 		
