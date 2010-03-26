@@ -26,7 +26,7 @@
 		<fieldset id="main_data">
 			<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 		  	<p><label for="name">Nombre:*</label><input name="form_widget" id="name" type="text"
-		  			value="{$name}" maxlength="100"
+		  			value="{$name|htmlchars}" maxlength="100"
 		  			onblur="oSetProperty.execute('set_name_object', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  	<span id="name-failed" class="hidden">*</span></p>
