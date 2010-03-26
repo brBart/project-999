@@ -39,7 +39,7 @@
 	    <li>
 	    	<form method="post" action="index.php?cmd=get_product_by_bar_code" onsubmit="return oSession.setIsLink(true);">
 	    		<label for="bar_code">C&oacute;digo barra:</label>
-	    		<input name="bar_code" id="bar_code" type="text" value="{$bar_code}" maxlength="100" />
+	    		<input name="bar_code" id="bar_code" type="text" value="{$bar_code|htmlchars}" maxlength="100" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>
@@ -50,12 +50,12 @@
 	    			{section name=i loop=$supplier_list}
 	    				<option value="{$supplier_list[i].id}"
 	    					{if $supplier_list[i].id eq $supplier_id}selected="selected"{/if}>
-	    					{$supplier_list[i].name}
+	    					{$supplier_list[i].name|htmlchars}
 	    				</option>
 	    			{/section}
 	    		</select>
 	    		<label for="product_sku">C&oacute;digo:</label>
-	    		<input name="product_sku" id="product_sku" type="text" value="{$product_sku}" maxlength="50" />
+	    		<input name="product_sku" id="product_sku" type="text" value="{$product_sku|htmlchars}" maxlength="50" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>
