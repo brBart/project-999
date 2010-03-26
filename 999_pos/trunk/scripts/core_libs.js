@@ -287,3 +287,11 @@ Command.prototype.displaySuccess = function(xmlDoc){
 Command.prototype.displayFailure = function(xmlDoc, strMsg){
 	return 0;
 }
+
+
+/**
+* Appending function to String class for replacing characters with html entitties.
+*/
+String.prototype.htmlEntities = function () {
+   return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}

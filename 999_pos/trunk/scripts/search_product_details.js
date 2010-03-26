@@ -233,14 +233,14 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 				// retrieve the name of the product
 				crtProductName = resultsArray[i]['name'];
 				div += '<tr id="tr' + (i + 1) + '" onclick="'+ this._mDetailsObj + '.doAction(this);" ' + 
-						'onmouseover="' + this._mDetailsObj + '.handleOnMouseOver(this);">' + '<td id="' + (i + 1) + '-' + crtProductName + '">';
+						'onmouseover="' + this._mDetailsObj + '.handleOnMouseOver(this);">' + '<td id="' + (i + 1) + '-' + crtProductName.htmlEntities() + '">';
 				// check to see if the current product name length exceeds the maximum 
 				// number of characters that can be displayed for a product name
 				if(crtProductName.length < this._mSuggestionMaxLength)
 				{
 					// bold the matching prefix of the product name and of the sKeyword
-					div += '<b>' + crtProductName.substring(0, sKeyword.length) + '</b>' +
-							crtProductName.substring(sKeyword.length, crtProductName.length) + '</td>';
+					div += '<b>' + crtProductName.substring(0, sKeyword.length).htmlEntities() + '</b>' +
+							crtProductName.substring(sKeyword.length, crtProductName.length).htmlEntities() + '</td>';
 				}
 				else
 				{
@@ -250,19 +250,19 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 					{
 						/* bold the matching prefix of the product name and that of the 
 	            		sKeyword */
-						div += '<b>' + crtProductName.substring(0, sKeyword.length) + '</b>' +
-								crtProductName.substring(sKeyword.length, this._mSuggestionMaxLength) + 
+						div += '<b>' + crtProductName.substring(0, sKeyword.length).htmlEntities() + '</b>' +
+								crtProductName.substring(sKeyword.length, this._mSuggestionMaxLength).htmlEntities() + 
 								'</td>';
 					}
 					else
 					{
 						// bold the entire product name
-						div += '<b>' + crtProductName.substring(0, this._mSuggestionMaxLength) + '</b></td>';          
+						div += '<b>' + crtProductName.substring(0, this._mSuggestionMaxLength).htmlEntities() + '</b></td>';          
 					}
 				}
 				
 				// retrieve the packaging of the product
-				div += '<td id="' + crtProductBarCode + '">' + resultsArray[i]['packaging'] + '</td></tr>';
+				div += '<td id="' + crtProductBarCode.htmlEntities() + '">' + resultsArray[i]['packaging'].htmlEntities() + '</td></tr>';
 			}
 		}
 		// end building the HTML table
