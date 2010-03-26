@@ -1156,7 +1156,7 @@ class Bonus extends Persist{
 	 */
 	private function validatePercentage($percentage){
 		if(!is_numeric($percentage) || ($percentage < 1 || $percentage > 100))
-			throw new ValidateException('Porcentaje inv&accute;lido. No menor que 1 ni mayor que 100.',
+			throw new ValidateException('Porcentaje inv&aacute;lido. No menor que 1 ni mayor que 100.',
 					'percentage');
 	}
 }
