@@ -11,7 +11,7 @@
 		<fieldset id="main_data">
 			<p>
 		  		<label>Motivo:</label>
-		  		<span>{$reason}</span>
+		  		<span>{$reason|htmlchars}</span>
 		  	</p>
 		</fieldset>
 		{include file='header_data_html.tpl' document_name='Conteo'}
@@ -31,11 +31,11 @@
 	       	<tbody>
        			{section name=i loop=$details}
 				<tr>
-					<td>{$details[i].bar_code}</td>
-					<td>{$details[i].manufacturer}</td>
-					<td>{$details[i].product}</td>
-					<td>{$details[i].packaging}</td>
-					<td>{$details[i].um}</td>
+					<td>{$details[i].bar_code|htmlchars}</td>
+					<td>{$details[i].manufacturer|htmlchars}</td>
+					<td>{$details[i].product|htmlchars}</td>
+					<td>{$details[i].packaging|htmlchars}</td>
+					<td>{$details[i].um|htmlchars}</td>
 					<td class="total_col">{$details[i].quantity}</td>
 				</tr>
 				{/section}

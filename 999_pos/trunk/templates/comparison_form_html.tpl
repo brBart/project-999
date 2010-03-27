@@ -46,7 +46,7 @@
 		  		<input name="form_widget" id="reason" type="text" maxlength="150" />
 		  		<span id="reason-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$reason}</span>
+		  		<span>{$reason|htmlchars}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
