@@ -321,6 +321,20 @@ class String{
 	}
 	
 	/**
+	 * Validates if string is composed by only alphanumeric characters.
+	 *
+	 * The msg parameter is for displaying the desire message.
+	 * @param string $string
+	 * @param string $msg
+	 * @param string $property
+	 * @throws ValidateException
+	 */
+	static public function validateAlphanum($string, $msg, $property = NULL){
+		if(!ctype_alnum($string))
+			throw new ValidateException($msg . ' Valor solo puede ser alfanum&eacute;rico.', $property);
+	}
+	
+	/**
 	 * Validates the provided nit.
 	 * 
 	 * Verifies that the nit is set correctly, e.g. 1725045-5. Otherwise it throws a validate exception. The msg
