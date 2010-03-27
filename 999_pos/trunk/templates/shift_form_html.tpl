@@ -22,14 +22,14 @@
 			<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 		  	<p>
 		  		<label for="name">Nombre:*</label>
-		  		<input name="form_widget" id="name" type="text" value="{$name}" maxlength="50"
+		  		<input name="form_widget" id="name" type="text" value="{$name|htmlchars}" maxlength="50"
 		  			onblur="oSetProperty.execute('set_name_object', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="name-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label for="time_table">Horario:*</label>
-		  		<input name="form_widget" id="time_table" type="text" value="{$time_table}" maxlength="100"
+		  		<input name="form_widget" id="time_table" type="text" value="{$time_table|htmlchars}" maxlength="100"
 		  			onblur="oSetProperty.execute('set_time_table_shift', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="time_table-failed" class="hidden">*</span>

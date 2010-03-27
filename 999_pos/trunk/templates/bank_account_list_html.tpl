@@ -10,11 +10,12 @@
 		</thead>
 		<tbody>
 		{section name=i loop=$list}
+			{assign var=id value=$list[i].id|htmlchars}
 			<tr>
-				<td>{$list[i].name}</td>
+				<td>{$list[i].name|htmlchars}</td>
 				<td>
-					<a href="{$item_link|cat:$list[i].id|cat:'&last_cmd='|cat:$actual_cmd|cat:'&page='|cat:$page}"
-						onclick="oSession.setIsLink(true);">{$list[i].id}</a>
+					<a href="{$item_link|cat:$id|cat:'&last_cmd='|cat:$actual_cmd|cat:'&page='|cat:$page}"
+						onclick="oSession.setIsLink(true);">{$id}</a>
 				</td>
 			</tr>
 		{/section}
