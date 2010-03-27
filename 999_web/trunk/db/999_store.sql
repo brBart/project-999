@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.7
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-01-2010 a las 18:17:26
--- Versión del servidor: 5.0.51
--- Versión de PHP: 5.2.6
+-- Tiempo de generación: 27-03-2010 a las 09:59:42
+-- Versión del servidor: 5.1.41
+-- Versión de PHP: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS `access_management` (
 --
 
 CREATE TABLE IF NOT EXISTS `action` (
-  `action_id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`action_id`)
+  `action_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`action_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
@@ -52,9 +52,9 @@ INSERT INTO `action` (`action_id`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `bank` (
-  `bank_id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`bank_id`)
+  `bank_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`bank_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -69,10 +69,10 @@ CREATE TABLE IF NOT EXISTS `bank` (
 --
 
 CREATE TABLE IF NOT EXISTS `bank_account` (
-  `bank_account_number` varchar(100) collate utf8_unicode_ci NOT NULL,
+  `bank_account_number` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `bank_id` int(11) NOT NULL,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`bank_account_number`),
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`bank_account_number`),
   KEY `idx_bank_account_bank_id` (`bank_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -88,13 +88,13 @@ CREATE TABLE IF NOT EXISTS `bank_account` (
 --
 
 CREATE TABLE IF NOT EXISTS `bonus` (
-  `bonus_id` int(11) NOT NULL auto_increment,
+  `bonus_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `percentage` decimal(5,2) NOT NULL,
   `created_date` date NOT NULL,
   `expiration_date` date NOT NULL,
-  PRIMARY KEY  (`bonus_id`),
+  PRIMARY KEY (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
@@ -110,14 +110,14 @@ CREATE TABLE IF NOT EXISTS `bonus` (
 --
 
 CREATE TABLE IF NOT EXISTS `branch` (
-  `branch_id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  `nit` varchar(15) collate utf8_unicode_ci NOT NULL,
-  `telephone` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `address` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `email` varchar(100) collate utf8_unicode_ci default NULL,
-  `contact` varchar(100) collate utf8_unicode_ci default NULL,
-  PRIMARY KEY  (`branch_id`)
+  `branch_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `nit` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `telephone` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`branch_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -136,9 +136,9 @@ CREATE TABLE IF NOT EXISTS `cash_receipt` (
   `change_amount` decimal(10,2) NOT NULL,
   `cash` decimal(10,2) NOT NULL,
   `total_vouchers` decimal(10,2) NOT NULL,
-  `reserved` decimal(10,2) NOT NULL default '0.00',
-  `deposited` decimal(10,2) NOT NULL default '0.00',
-  PRIMARY KEY  (`cash_receipt_id`)
+  `reserved` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `deposited` decimal(10,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`cash_receipt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -153,11 +153,11 @@ CREATE TABLE IF NOT EXISTS `cash_receipt` (
 --
 
 CREATE TABLE IF NOT EXISTS `cash_register` (
-  `cash_register_id` int(11) NOT NULL auto_increment,
+  `cash_register_id` int(11) NOT NULL AUTO_INCREMENT,
   `working_day` date NOT NULL,
   `shift_id` int(11) NOT NULL,
-  `open` tinyint(1) NOT NULL default '1',
-  PRIMARY KEY  (`cash_register_id`),
+  `open` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -173,13 +173,13 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
 --
 
 CREATE TABLE IF NOT EXISTS `change_price_log` (
-  `entry_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `entry_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `product_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `last_price` decimal(10,2) NOT NULL,
   `new_price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`entry_id`),
+  PRIMARY KEY (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -196,8 +196,8 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
 --
 
 CREATE TABLE IF NOT EXISTS `company` (
-  `nit` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL
+  `nit` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -214,14 +214,14 @@ INSERT INTO `company` (`nit`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `comparison` (
-  `comparison_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `comparison_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
+  `reason` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `general` tinyint(1) NOT NULL,
   `physical_total` int(11) NOT NULL,
-  `system_total` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`comparison_id`),
+  `system_total` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`comparison_id`),
   KEY `idx_comparison_user_account_username` (`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -237,12 +237,12 @@ CREATE TABLE IF NOT EXISTS `comparison` (
 --
 
 CREATE TABLE IF NOT EXISTS `comparison_product` (
-  `comparison_product_id` int(11) NOT NULL auto_increment,
+  `comparison_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `comparison_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `physical` int(11) NOT NULL,
   `system` int(11) NOT NULL,
-  PRIMARY KEY  (`comparison_product_id`),
+  PRIMARY KEY (`comparison_product_id`),
   UNIQUE KEY `unique_comparison_id_product_id` (`comparison_id`,`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -258,14 +258,14 @@ CREATE TABLE IF NOT EXISTS `comparison_product` (
 --
 
 CREATE TABLE IF NOT EXISTS `correlative` (
-  `serial_number` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `resolution_number` varchar(100) collate utf8_unicode_ci NOT NULL,
+  `serial_number` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `resolution_number` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `resolution_date` date NOT NULL,
   `initial_number` bigint(20) NOT NULL,
   `final_number` bigint(20) NOT NULL,
-  `current` bigint(20) NOT NULL default '0',
-  `is_default` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`serial_number`)
+  `current` bigint(20) NOT NULL DEFAULT '0',
+  `is_default` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`serial_number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -280,12 +280,12 @@ CREATE TABLE IF NOT EXISTS `correlative` (
 --
 
 CREATE TABLE IF NOT EXISTS `count` (
-  `count_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `count_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
+  `reason` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `total` int(11) NOT NULL,
-  PRIMARY KEY  (`count_id`),
+  PRIMARY KEY (`count_id`),
   KEY `idx_count_user_account_username` (`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -301,11 +301,11 @@ CREATE TABLE IF NOT EXISTS `count` (
 --
 
 CREATE TABLE IF NOT EXISTS `count_product` (
-  `count_product_id` int(11) NOT NULL auto_increment,
+  `count_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `count_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  PRIMARY KEY  (`count_product_id`),
+  PRIMARY KEY (`count_product_id`),
   UNIQUE KEY `unique_count_id_product_id` (`count_id`,`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -321,9 +321,9 @@ CREATE TABLE IF NOT EXISTS `count_product` (
 --
 
 CREATE TABLE IF NOT EXISTS `customer` (
-  `nit` varchar(15) collate utf8_unicode_ci NOT NULL,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`nit`)
+  `nit` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`nit`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -338,15 +338,15 @@ CREATE TABLE IF NOT EXISTS `customer` (
 --
 
 CREATE TABLE IF NOT EXISTS `deposit` (
-  `deposit_id` int(11) NOT NULL auto_increment,
-  `bank_account_number` varchar(100) collate utf8_unicode_ci NOT NULL,
+  `deposit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bank_account_number` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `cash_register_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  `number` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `number` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`deposit_id`),
+  PRIMARY KEY (`deposit_id`),
   KEY `idx_deposit_bank_account_number` (`bank_account_number`),
   KEY `idx_deposit_cash_register_id` (`cash_register_id`),
   KEY `idx_deposit_user_account_username` (`user_account_username`),
@@ -366,9 +366,9 @@ CREATE TABLE IF NOT EXISTS `deposit` (
 
 CREATE TABLE IF NOT EXISTS `deposit_cancelled` (
   `deposit_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  PRIMARY KEY  (`deposit_id`,`user_account_username`)
+  PRIMARY KEY (`deposit_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -383,11 +383,11 @@ CREATE TABLE IF NOT EXISTS `deposit_cancelled` (
 --
 
 CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
-  `deposit_cash_receipt_id` int(11) NOT NULL auto_increment,
+  `deposit_cash_receipt_id` int(11) NOT NULL AUTO_INCREMENT,
   `deposit_id` int(11) NOT NULL,
   `cash_receipt_id` int(11) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`deposit_cash_receipt_id`),
+  PRIMARY KEY (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -404,9 +404,9 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
 
 CREATE TABLE IF NOT EXISTS `discount` (
   `invoice_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `percentage` decimal(5,2) NOT NULL,
-  PRIMARY KEY  (`invoice_id`,`user_account_username`)
+  PRIMARY KEY (`invoice_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -421,13 +421,13 @@ CREATE TABLE IF NOT EXISTS `discount` (
 --
 
 CREATE TABLE IF NOT EXISTS `entry_adjustment` (
-  `entry_adjustment_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `entry_adjustment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
+  `reason` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`entry_adjustment_id`),
+  PRIMARY KEY (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -444,9 +444,9 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
 
 CREATE TABLE IF NOT EXISTS `entry_adjustment_cancelled` (
   `entry_adjustment_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  PRIMARY KEY  (`entry_adjustment_id`,`user_account_username`)
+  PRIMARY KEY (`entry_adjustment_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -466,7 +466,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment_lot` (
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`entry_adjustment_id`,`lot_id`),
+  PRIMARY KEY (`entry_adjustment_id`,`lot_id`),
   UNIQUE KEY `unique_entry_adjustment_id_number` (`entry_adjustment_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -482,18 +482,18 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment_lot` (
 --
 
 CREATE TABLE IF NOT EXISTS `invoice` (
-  `invoice_id` int(11) NOT NULL auto_increment,
-  `serial_number` varchar(10) collate utf8_unicode_ci NOT NULL,
+  `invoice_id` int(11) NOT NULL AUTO_INCREMENT,
+  `serial_number` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `number` bigint(20) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `nit` varchar(15) collate utf8_unicode_ci NOT NULL,
-  `name` varchar(100) collate utf8_unicode_ci default NULL,
+  `nit` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `total` decimal(10,2) NOT NULL,
   `vat` decimal(10,2) NOT NULL,
   `cash_register_id` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`invoice_id`),
+  PRIMARY KEY (`invoice_id`),
   UNIQUE KEY `unique_serial_number_number` (`serial_number`,`number`),
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`)
@@ -515,7 +515,7 @@ CREATE TABLE IF NOT EXISTS `invoice_bonus` (
   `bonus_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`invoice_id`,`bonus_id`,`number`)
+  PRIMARY KEY (`invoice_id`,`bonus_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -531,9 +531,9 @@ CREATE TABLE IF NOT EXISTS `invoice_bonus` (
 
 CREATE TABLE IF NOT EXISTS `invoice_cancelled` (
   `invoice_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  PRIMARY KEY  (`invoice_id`,`user_account_username`)
+  PRIMARY KEY (`invoice_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -553,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `invoice_lot` (
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`invoice_id`,`lot_id`),
+  PRIMARY KEY (`invoice_id`,`lot_id`),
   UNIQUE KEY `unique_invoice_id_number` (`invoice_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -569,14 +569,14 @@ CREATE TABLE IF NOT EXISTS `invoice_lot` (
 --
 
 CREATE TABLE IF NOT EXISTS `lot` (
-  `lot_id` int(11) NOT NULL auto_increment,
+  `lot_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `entry_date` date NOT NULL,
-  `expiration_date` date default NULL,
+  `expiration_date` date DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `reserved` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`lot_id`),
+  `reserved` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -592,9 +592,9 @@ CREATE TABLE IF NOT EXISTS `lot` (
 --
 
 CREATE TABLE IF NOT EXISTS `manufacturer` (
-  `manufacturer_id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`manufacturer_id`)
+  `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`manufacturer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -609,9 +609,9 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
 --
 
 CREATE TABLE IF NOT EXISTS `payment_card_brand` (
-  `payment_card_brand_id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`payment_card_brand_id`)
+  `payment_card_brand_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`payment_card_brand_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -626,9 +626,9 @@ CREATE TABLE IF NOT EXISTS `payment_card_brand` (
 --
 
 CREATE TABLE IF NOT EXISTS `payment_card_type` (
-  `payment_card_type_id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`payment_card_type_id`)
+  `payment_card_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`payment_card_type_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -643,19 +643,19 @@ CREATE TABLE IF NOT EXISTS `payment_card_type` (
 --
 
 CREATE TABLE IF NOT EXISTS `product` (
-  `product_id` int(11) NOT NULL auto_increment,
-  `bar_code` varchar(100) collate utf8_unicode_ci default NULL,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  `packaging` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `description` text collate utf8_unicode_ci,
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bar_code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `packaging` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
   `unit_of_measure_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `deactivated` tinyint(1) NOT NULL,
-  `quantity` int(11) NOT NULL default '0',
-  `reserved` int(11) NOT NULL default '0',
-  `balance_foward` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`product_id`),
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `reserved` int(11) NOT NULL DEFAULT '0',
+  `balance_foward` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`),
   UNIQUE KEY `unique_bar_code` (`bar_code`),
   KEY `idx_product_unit_of_measure_id` (`unit_of_measure_id`),
   KEY `idx_product_manufacturer_id` (`manufacturer_id`),
@@ -676,8 +676,8 @@ CREATE TABLE IF NOT EXISTS `product` (
 CREATE TABLE IF NOT EXISTS `product_supplier` (
   `product_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
-  `sku` varchar(50) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`product_id`,`supplier_id`,`sku`)
+  `sku` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`product_id`,`supplier_id`,`sku`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -692,15 +692,15 @@ CREATE TABLE IF NOT EXISTS `product_supplier` (
 --
 
 CREATE TABLE IF NOT EXISTS `purchase_return` (
-  `purchase_return_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `purchase_return_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `contact` varchar(100) collate utf8_unicode_ci default NULL,
+  `reason` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `contact` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `total` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`purchase_return_id`),
+  PRIMARY KEY (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
   KEY `idx_purchase_return_supplier_id` (`supplier_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -718,9 +718,9 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
 
 CREATE TABLE IF NOT EXISTS `purchase_return_cancelled` (
   `purchase_return_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  PRIMARY KEY  (`purchase_return_id`,`user_account_username`)
+  PRIMARY KEY (`purchase_return_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -740,7 +740,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return_lot` (
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`purchase_return_id`,`lot_id`),
+  PRIMARY KEY (`purchase_return_id`,`lot_id`),
   UNIQUE KEY `unique_purchase_return_id_number` (`purchase_return_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -756,14 +756,14 @@ CREATE TABLE IF NOT EXISTS `purchase_return_lot` (
 --
 
 CREATE TABLE IF NOT EXISTS `receipt` (
-  `receipt_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `receipt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `shipment_number` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `shipment_number` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`receipt_id`),
+  PRIMARY KEY (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -781,9 +781,9 @@ CREATE TABLE IF NOT EXISTS `receipt` (
 
 CREATE TABLE IF NOT EXISTS `receipt_cancelled` (
   `receipt_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  PRIMARY KEY  (`receipt_id`,`user_account_username`)
+  PRIMARY KEY (`receipt_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -803,7 +803,7 @@ CREATE TABLE IF NOT EXISTS `receipt_lot` (
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`receipt_id`,`lot_id`),
+  PRIMARY KEY (`receipt_id`,`lot_id`),
   UNIQUE KEY `unique_receipt_id_number` (`receipt_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -819,15 +819,15 @@ CREATE TABLE IF NOT EXISTS `receipt_lot` (
 --
 
 CREATE TABLE IF NOT EXISTS `reserve` (
-  `reserve_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `reserve_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lot_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `quantity` int(11) NOT NULL,
-  PRIMARY KEY  (`reserve_id`),
+  PRIMARY KEY (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=44 ;
 
 --
 -- Volcar la base de datos para la tabla `reserve`
@@ -841,9 +841,9 @@ CREATE TABLE IF NOT EXISTS `reserve` (
 --
 
 CREATE TABLE IF NOT EXISTS `role` (
-  `role_id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`role_id`)
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`role_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
@@ -865,7 +865,7 @@ CREATE TABLE IF NOT EXISTS `role_subject_action` (
   `subject_id` int(11) NOT NULL,
   `action_id` int(11) NOT NULL,
   `value` tinyint(1) NOT NULL,
-  PRIMARY KEY  (`role_id`,`subject_id`,`action_id`)
+  PRIMARY KEY (`role_id`,`subject_id`,`action_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -911,7 +911,7 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 --
 
 CREATE TABLE IF NOT EXISTS `root` (
-  `password` varchar(50) collate utf8_unicode_ci NOT NULL
+  `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -928,10 +928,10 @@ INSERT INTO `root` (`password`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `shift` (
-  `shift_id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `time_table` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`shift_id`)
+  `shift_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `time_table` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`shift_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -946,14 +946,14 @@ CREATE TABLE IF NOT EXISTS `shift` (
 --
 
 CREATE TABLE IF NOT EXISTS `shipment` (
-  `shipment_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `shipment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `branch_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `contact` varchar(100) collate utf8_unicode_ci default NULL,
+  `contact` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `total` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`shipment_id`),
+  PRIMARY KEY (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
   KEY `idx_shipment_branch_id` (`branch_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -971,9 +971,9 @@ CREATE TABLE IF NOT EXISTS `shipment` (
 
 CREATE TABLE IF NOT EXISTS `shipment_cancelled` (
   `shipment_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  PRIMARY KEY  (`shipment_id`,`user_account_username`)
+  PRIMARY KEY (`shipment_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -993,7 +993,7 @@ CREATE TABLE IF NOT EXISTS `shipment_lot` (
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`shipment_id`,`lot_id`),
+  PRIMARY KEY (`shipment_id`,`lot_id`),
   UNIQUE KEY `unique_shipment_id_number` (`shipment_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1009,9 +1009,9 @@ CREATE TABLE IF NOT EXISTS `shipment_lot` (
 --
 
 CREATE TABLE IF NOT EXISTS `subject` (
-  `subject_id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`subject_id`)
+  `subject_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`subject_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
 
 --
@@ -1052,14 +1052,14 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `supplier` (
-  `supplier_id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  `nit` varchar(15) collate utf8_unicode_ci NOT NULL,
-  `telephone` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `address` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `email` varchar(100) collate utf8_unicode_ci default NULL,
-  `contact` varchar(100) collate utf8_unicode_ci default NULL,
-  PRIMARY KEY  (`supplier_id`)
+  `supplier_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `nit` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `telephone` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`supplier_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -1074,10 +1074,10 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 --
 
 CREATE TABLE IF NOT EXISTS `unit_of_measure` (
-  `unit_of_measure_id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`unit_of_measure_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  `unit_of_measure_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`unit_of_measure_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 --
 -- Volcar la base de datos para la tabla `unit_of_measure`
@@ -1093,13 +1093,13 @@ INSERT INTO `unit_of_measure` (`unit_of_measure_id`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `user_account` (
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `role_id` int(11) NOT NULL,
-  `first_name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `last_name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `password` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `first_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `deactivated` tinyint(1) NOT NULL,
-  PRIMARY KEY  (`user_account_username`),
+  PRIMARY KEY (`user_account_username`),
   KEY `idx_user_account_role_id` (`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1125,7 +1125,7 @@ CREATE TABLE IF NOT EXISTS `vat` (
 --
 
 INSERT INTO `vat` (`percentage`) VALUES
-(12.00);
+('12.00');
 
 -- --------------------------------------------------------
 
@@ -1134,16 +1134,16 @@ INSERT INTO `vat` (`percentage`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `voucher` (
-  `voucher_id` int(11) NOT NULL auto_increment,
+  `voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `cash_receipt_id` int(11) NOT NULL,
-  `transaction` varchar(100) collate utf8_unicode_ci NOT NULL,
+  `transaction` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `payment_card_number` int(11) NOT NULL,
   `payment_card_type_id` int(11) NOT NULL,
   `payment_card_brand_id` int(11) NOT NULL,
-  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `expiration_date` date NOT NULL,
-  PRIMARY KEY  (`voucher_id`),
+  PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `unique_cash_receipt_id_transaction` (`cash_receipt_id`,`transaction`),
   KEY `idx_voucher_payment_card_type_id` (`payment_card_type_id`),
   KEY `idx_voucher_payment_card_brand_id` (`payment_card_brand_id`)
@@ -1161,13 +1161,13 @@ CREATE TABLE IF NOT EXISTS `voucher` (
 --
 
 CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
-  `withdraw_adjustment_id` int(11) NOT NULL auto_increment,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `withdraw_adjustment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
+  `reason` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`withdraw_adjustment_id`)
+  PRIMARY KEY (`withdraw_adjustment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -1183,9 +1183,9 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
 
 CREATE TABLE IF NOT EXISTS `withdraw_adjustment_cancelled` (
   `withdraw_adjustment_id` int(11) NOT NULL,
-  `user_account_username` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `user_account_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  PRIMARY KEY  (`withdraw_adjustment_id`,`user_account_username`)
+  PRIMARY KEY (`withdraw_adjustment_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1205,7 +1205,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment_lot` (
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY  (`withdraw_adjustment_id`,`lot_id`),
+  PRIMARY KEY (`withdraw_adjustment_id`,`lot_id`),
   UNIQUE KEY `unique_withdraw_adjustment_id_number` (`withdraw_adjustment_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1222,8 +1222,8 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment_lot` (
 
 CREATE TABLE IF NOT EXISTS `working_day` (
   `working_day` date NOT NULL,
-  `open` tinyint(1) NOT NULL default '1',
-  PRIMARY KEY  (`working_day`)
+  `open` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`working_day`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1238,7 +1238,7 @@ CREATE TABLE IF NOT EXISTS `working_day` (
 --
 DROP TABLE IF EXISTS `access_management`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`999_user`@`localhost` SQL SECURITY DEFINER VIEW `999_store`.`access_management` AS select `rol`.`name` AS `role`,`sub`.`name` AS `subject`,`act`.`name` AS `action`,`rsa`.`value` AS `value` from (((`999_store`.`role_subject_action` `rsa` join `999_store`.`role` `rol` on((`rsa`.`role_id` = `rol`.`role_id`))) join `999_store`.`subject` `sub` on((`rsa`.`subject_id` = `sub`.`subject_id`))) join `999_store`.`action` `act` on((`rsa`.`action_id` = `act`.`action_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`999_user`@`localhost` SQL SECURITY DEFINER VIEW `access_management` AS select `rol`.`name` AS `role`,`sub`.`name` AS `subject`,`act`.`name` AS `action`,`rsa`.`value` AS `value` from (((`role_subject_action` `rsa` join `role` `rol` on((`rsa`.`role_id` = `rol`.`role_id`))) join `subject` `sub` on((`rsa`.`subject_id` = `sub`.`subject_id`))) join `action` `act` on((`rsa`.`action_id` = `act`.`action_id`)));
 
 DELIMITER $$
 --
@@ -1980,7 +1980,7 @@ BEGIN
 
   SELECT COUNT(*) FROM comparison
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -1991,7 +1991,7 @@ BEGIN
 
     "SELECT comparison_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM comparison
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -2279,7 +2279,7 @@ BEGIN
 
   SELECT COUNT(*) FROM count
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2290,7 +2290,7 @@ BEGIN
 
     "SELECT count_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM count
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -2851,7 +2851,7 @@ BEGIN
 
   SELECT COUNT(*) FROM entry_adjustment
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2862,7 +2862,7 @@ BEGIN
 
     "SELECT entry_adjustment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM entry_adjustment
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -3079,7 +3079,7 @@ BEGIN
 
   SELECT COUNT(*) FROM invoice
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -3090,7 +3090,7 @@ BEGIN
 
     "SELECT invoice_id, serial_number, number, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM invoice
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -4473,7 +4473,7 @@ BEGIN
 
   SELECT COUNT(*) FROM purchase_return
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -4484,7 +4484,7 @@ BEGIN
 
     "SELECT purchase_return_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM purchase_return
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -4574,7 +4574,7 @@ BEGIN
 
   SELECT COUNT(*) FROM receipt
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -4585,7 +4585,7 @@ BEGIN
 
     "SELECT receipt_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM receipt
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -4969,7 +4969,7 @@ BEGIN
 
   SELECT COUNT(*) FROM shipment
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -4980,7 +4980,7 @@ BEGIN
 
     "SELECT shipment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM shipment
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -5750,7 +5750,7 @@ BEGIN
 
   SELECT COUNT(*) FROM withdraw_adjustment
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -5761,7 +5761,7 @@ BEGIN
 
     "SELECT withdraw_adjustment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM withdraw_adjustment
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
