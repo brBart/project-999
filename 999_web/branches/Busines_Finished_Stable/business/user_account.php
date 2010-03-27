@@ -149,7 +149,7 @@ class UserAccount extends PersistObject{
 		
 		if(!is_null($userName))
 			try{
-				String::validateString($userName, 'Usuario inv&aacute;lido.');
+				String::validateAlphanum($userName, 'Usuario inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en UserAccount con datos erroneos! ' .
 						$e->getMessage());
@@ -224,7 +224,7 @@ class UserAccount extends PersistObject{
 			throw new Exception('No se puede editar el nombre de la cuenta.');
 		
 		$this->_mUserName = $userName;
-		String::validateString($userName, 'Cuenta inv&aacute;lida.');
+		String::validateAlphanum($userName, 'Cuenta inv&aacute;lida.');
 		$this->verifyUserName($userName);
 	}
 	
