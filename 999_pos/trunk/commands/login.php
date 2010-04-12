@@ -47,8 +47,6 @@ abstract class LoginCommand extends Command{
 				$notify = 1;
 				$msg = 'La sesi&oacute;n ha terminado. Ingrese de nuevo.';
 			}
-			else
-				$notify = 0;
 			
 			Page::display(array('module_title' => $module_title, 'notify' => $notify, 'message' => $msg),
 					'login_form_html.tpl');
