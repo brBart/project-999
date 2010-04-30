@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>html_error/not_found.html</file>
+    </qresource>
+</RCC>

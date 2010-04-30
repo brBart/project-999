@@ -1,0 +1,29 @@
+TEMPLATE = app
+TARGET = _99_exe
+QT += core \
+    gui \
+    xml \
+    xmlpatterns \
+    network \
+    webkit
+HEADERS += registry.h \
+	section/section.h \
+    section/main_section.h \
+    xml_transformer/map_string_xml_transformer.h \
+    xml_transformer/xml_transformer.h \
+    console/console.h \
+    xml_response_handler/xml_response_handler.h \
+    http_request/http_request.h \
+    mainwindow.h
+SOURCES += registry.cpp \
+	section/section.cpp \
+    section/main_section.cpp \
+    xml_transformer/map_string_xml_transformer.cpp \
+    console/console.cpp \
+    xml_response_handler/xml_response_handler.cpp \
+    http_request/http_request.cpp \
+    main.cpp \
+    mainwindow.cpp
+FORMS += section/section.ui \
+    mainwindow.ui
+RESOURCES += resources.qrc
