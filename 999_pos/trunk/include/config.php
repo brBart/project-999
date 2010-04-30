@@ -82,4 +82,8 @@ define('OPERATIONS_TITLE', 'Operaciones');
  * Title of the admin module.
  */
 define('ADMIN_TITLE', 'Administraci&oacute;n');
+/**
+ * Title of the POS module.
+ */
+define('POS_TITLE', 'POS');
 ?>
