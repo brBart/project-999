@@ -39,7 +39,7 @@ void Section::loadFinished(bool ok)
 
 		frame->addToJavaScriptWindowObject("mainWindow", parent());
 	} else {
-		QFile file(":/html_error/not_found.html");
+		QFile file(":/resources/html_error/not_found.html");
 		file.open(QIODevice::ReadOnly);
 		QTextStream stream(&file);
 
