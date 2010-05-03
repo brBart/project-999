@@ -63,7 +63,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
  */
 void MainWindow::setSection(Section *section)
 {
-	connect(section, SIGNAL(sessionStatusUpdated(bool)), this,
+	connect(section, SIGNAL(sessionStatusChanged(bool)), this,
 				SLOT(setIsSessionActive(bool)));
 
 	setCentralWidget(section);
