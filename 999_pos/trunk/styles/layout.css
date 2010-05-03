@@ -148,6 +148,10 @@ input[type="text"], input[type="password"] {
 	height: 3em;
 }
 
+#deco_div {
+	height: 0.5em;
+}
+
 #second_menu {
 	float: left;
 	width: 25%;

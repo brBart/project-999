@@ -52,8 +52,8 @@ class LoginPosCommand extends Command{
 				$msg = 'La sesi&oacute;n ha terminado. Ingrese de nuevo.';
 			}
 			
-			Page::display(array('module_title' => $module_title, 'notify' => $notify, 'message' => $msg),
-					'login_pos_form_html.tpl');
+			Page::display(array('module_title' => $module_title, 'notify' => $notify,
+					'message' => $msg, 'date' => date('d/m/Y')), 'login_pos_form_html.tpl');
 			return;
 		}
 		

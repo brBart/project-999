@@ -39,7 +39,7 @@
 			{/foreach}
 			</p>
 		</div>
-		<div id="main_menu"></div>
+		<div id="deco_div"></div>
 		<div id="console" class="console_display">
 		{if $notify eq 1}
 			<p class="{$type}">{$message}</p>

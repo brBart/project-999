@@ -28,8 +28,12 @@ input[type="text"], input[type="password"]{
 	width: 200px;
 }
 
+.hint {
+	color: gray;
+}
+
 #wrapper {
-	width: 350px;
+	width: 410px;
 	margin: 0 auto;
 }
 
@@ -63,6 +67,7 @@ input[type="text"], input[type="password"]{
 			  	<p>
 					<label for="date">Fecha:</label>
 					<input name="date" id="date" type="text" value="{$date}" maxlength="10" />
+					<span class="hint">dd/mm/aaaa</span>
 			  	</p>
 			  	<div id="console">
 			  	{if $notify eq 1}
