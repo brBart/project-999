@@ -40,7 +40,7 @@ Registry::Registry()
 		file.close();
 	}
 
-	m_Url = new QUrl("http://" + url + "/");
+	m_Url = new QUrl("http://" + url + "/index.php");
 }
 
 /**
