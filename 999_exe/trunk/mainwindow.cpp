@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui.setupUi(this);
 
-	QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
+	QWebSettings::globalSettings()->
+			setAttribute(QWebSettings::PluginsEnabled, true);
 
 	m_IsSessionActive = false;
 	m_ServerUrl = Registry::instance()->serverUrl();
@@ -40,7 +41,7 @@ void MainWindow::setIsSessionActive(bool isActive)
  */
 void MainWindow::loadMainSection()
 {
-	setSection(new MainSection(&m_Manager, m_ServerUrl, this));
+	setSection(new MainSection(&m_Manager, &m_PluginFactory, m_ServerUrl, this));
 }
 
 /**

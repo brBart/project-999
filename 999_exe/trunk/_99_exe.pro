@@ -6,8 +6,9 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += registry.h \
-	section/section.h \
+HEADERS += plugin_factory/plugin_factory.h \
+    registry.h \
+    section/section.h \
     section/main_section.h \
     xml_transformer/map_string_xml_transformer.h \
     xml_transformer/xml_transformer.h \
@@ -15,8 +16,9 @@ HEADERS += registry.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += registry.cpp \
-	section/section.cpp \
+SOURCES += plugin_factory/plugin_factory.cpp \
+    registry.cpp \
+    section/section.cpp \
     section/main_section.cpp \
     xml_transformer/map_string_xml_transformer.cpp \
     console/console.cpp \

@@ -13,8 +13,8 @@
 class MainSection: public Section
 {
 public:
-	MainSection(QNetworkAccessManager *manager, QUrl *serverUrl,
-			QWidget *parent = 0);
+	MainSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
+			QUrl *serverUrl, QWidget *parent = 0);
 	virtual ~MainSection() {};
 };
 

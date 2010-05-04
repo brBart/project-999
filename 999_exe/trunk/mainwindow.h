@@ -6,6 +6,7 @@
 
 #include <QNetworkAccessManager>
 #include "section/section.h"
+#include "plugin_factory/plugin_factory.h"
 
 class MainWindow : public QMainWindow
 {
@@ -28,6 +29,7 @@ private:
     bool m_IsSessionActive;
     QNetworkAccessManager m_Manager;
     QUrl *m_ServerUrl;
+    PluginFactory m_PluginFactory;
 
     void setSection(Section *section);
 };

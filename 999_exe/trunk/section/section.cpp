@@ -13,12 +13,13 @@
 /**
  * Constructs a Section with a QNetworkAccessManager and a parent.
  */
-Section::Section(QNetworkAccessManager *manager, QUrl *serverUrl, QWidget *parent)
-    : QWidget(parent), m_ServerUrl(serverUrl)
+Section::Section(QNetworkAccessManager *manager, QWebPluginFactory *factory,
+		QUrl *serverUrl, QWidget *parent) : QWidget(parent), m_ServerUrl(serverUrl)
 {
 	ui.setupUi(this);
 
 	ui.webView->page()->setNetworkAccessManager(manager);
+	ui.webView->page()->setPluginFactory(factory);
 	ui.webView->setContextMenuPolicy(Qt::PreventContextMenu);
 
 	connect(ui.webView, SIGNAL(loadFinished(bool)), this,

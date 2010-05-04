@@ -15,8 +15,9 @@
 /**
  *	Constructs the MainSection and contacts the server.
  */
-MainSection::MainSection(QNetworkAccessManager *manager, QUrl *serverUrl,
-		QWidget *parent) : Section(manager, serverUrl, parent)
+MainSection::MainSection(QNetworkAccessManager *manager,
+		QWebPluginFactory *factory, QUrl *serverUrl, QWidget *parent)
+		: Section(manager, factory, serverUrl, parent)
 {
 	ui.webView->load(*m_ServerUrl);
 }
