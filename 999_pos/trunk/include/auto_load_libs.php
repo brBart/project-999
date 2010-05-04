@@ -117,6 +117,10 @@ function __autoload($className){
 			require_once('business/cash.php');
 			break;
 			
+		case 'WorkingDay':
+			require_once('business/cash.php');
+			break;
+			
 		default:
 	}
 }

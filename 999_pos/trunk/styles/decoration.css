@@ -202,6 +202,19 @@ a:hover {
 	text-decoration: none;
 }
 
+#pos_menu a:hover, a:focus {
+	color: white;
+	text-decoration: none;
+}
+
+#pos_menu a:hover {
+	background-color: #B2B2B2;
+}
+
+#pos_menu a:focus {
+	background-color: #CDCDCD;
+}
+
 #scroll .highlightrow {
 	background-color: blue;
 	color: white;

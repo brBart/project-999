@@ -27,8 +27,12 @@ class ShowHomePosCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio');
+		
+		$working_day = $helper->getObject((int)$request->getProperty("wday_key"));
+		
 		Page::display(array('module_title' => POS_TITLE, 'back_trace' => $back_trace,
-				'content' => 'main_menu_pos_html.tpl', 'notify' => '0'), 'site_pos_html.tpl');
+				'content' => 'main_menu_pos_html.tpl', 'date' => $working_day->getDate(),
+				'status' => (int)$working_day->isOpen()), 'site_pos_html.tpl');
 	}
 }
 ?>
