@@ -19,7 +19,7 @@ public:
 public slots:
 	void setIsSessionActive(bool isActive);
 	void loadMainSection();
-	//void loadSalesSection();
+	void loadSalesSection();
 
 protected:
 	void closeEvent(QCloseEvent *event);

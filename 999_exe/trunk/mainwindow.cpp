@@ -5,6 +5,7 @@
 #include <QCloseEvent>
 #include "registry.h"
 #include "section/main_section.h"
+#include "cash_register_dialog/cash_register_dialog.h"
 
 /**
  * @class MainWindow
@@ -42,6 +43,15 @@ void MainWindow::setIsSessionActive(bool isActive)
 void MainWindow::loadMainSection()
 {
 	setSection(new MainSection(&m_Manager, &m_PluginFactory, m_ServerUrl, this));
+}
+
+/**
+ * Loads the SalesSection.
+ */
+void MainWindow::loadSalesSection()
+{
+	CashRegisterDialog dialog(&m_Manager, m_ServerUrl, this);
+	dialog.exec();
 }
 
 /**
