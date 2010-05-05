@@ -1,7 +1,6 @@
 #include "cash_register_dialog.h"
 
 #include "../xml_transformer/map_string_xml_transformer.h"
-#include <QMessageBox>
 
 CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
 		QWidget *parent) : QDialog(parent), m_ServerUrl(url)
