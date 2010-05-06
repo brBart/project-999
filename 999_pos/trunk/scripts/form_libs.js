@@ -83,7 +83,11 @@ SyncCommand.prototype = new Command();
 SyncCommand.prototype.sendRequest = function(sUrlParams){
 	sUrlParams = Url.addUrlParam(sUrlParams, 'type', 'xml');
 	this._mRequest.open('GET', sUrlParams, false);
-	this._mRequest.send(null);
+	try{
+		this._mRequest.send(null);
+	} catch(e){
+		this._mConsole.displayError("FATAL ERROR: Connection lost. " + e.toString());
+	}
 	this.handleRequestStateChange();
 }
 

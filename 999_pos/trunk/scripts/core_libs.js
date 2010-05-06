@@ -267,7 +267,7 @@ Command.prototype.handleRequestStateChange = function(){
 			}
 		}
 		else
-			this._mConsole.displayError(this._mRequest.statusText);
+			this._mConsole.displayError("FATAL ERROR: Connection lost. ");
 	}
 }
 
