@@ -33,29 +33,31 @@ XmlResponseHandler::ResponseType XmlResponseHandler::handle(QString content,
 	QDomDocument document;
 
 	QString msg;
-	int line, column;
-	if (!document.setContent(content, &msg, &line, &column)) {
-		errorMsg = &QString("Interno: " + msg + ", Line: %1, Column: %2")
-				.arg(line).arg(column);
+	if (!document.setContent(content)) {
+		if (errorMsg != 0)
+			*errorMsg = "FATAL ERROR: Parse error or connection lost.";
 		emit sessionStatusChanged(false);
 		return Error;
 	}
 
 	QDomNodeList elements = document.elementsByTagName("logout");
 	if (!elements.isEmpty()) {
-		errorMsg = new QString("La sesión ha terminado.");
+		if (errorMsg != 0)
+			*errorMsg = "La sesión ha terminado.";
 		emit sessionStatusChanged(false);
 		return Error;
 	}
 
 	if (!validateResponse(&document, msg)) {
-		errorMsg = &msg;
+		if (errorMsg != 0)
+			*errorMsg = msg;
 		emit sessionStatusChanged(true);
 		return Failure;
 	}
 
 	if (!transformer->transform(&document, &msg)) {
-		errorMsg = &msg;
+		if (errorMsg != 0)
+			*errorMsg = msg;
 		emit sessionStatusChanged(true);
 		return Error;
 	}

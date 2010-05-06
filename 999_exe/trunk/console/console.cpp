@@ -42,5 +42,4 @@ void Console::displayError(QString msg)
 void Console::displayMessage(QString msg)
 {
 	m_Div->appendInside(msg);
-	m_Div->evaluateJavaScript("scrollTop = scrollHeight");
 }

@@ -7,7 +7,8 @@ CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url
 {
 	ui.setupUi(this);
 
-	ui.webView->setHtml("<div id=\"console\" style=\"color: red;\"></div>");
+	ui.webView->setHtml("<div id=\"console\" style=\"font-size: 10px; color: red;\">"
+			"</div>");
 	m_Console = new Console(ui.webView->page()->mainFrame());
 
 	m_Request = new HttpRequest(manager, this);
@@ -46,4 +47,6 @@ void CashRegisterDialog::loadShifts()
 	} else {
 		m_Console->displayError(errorMsg);
 	}
+
+	delete transformer;
 }
