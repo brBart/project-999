@@ -1,9 +1,20 @@
 #include "cash_register_dialog.h"
 
 #include "../xml_transformer/map_string_xml_transformer.h"
+#include "../xml_transformer/object_key_xml_transformer.h"
 
+/**
+ * @class CashRegisterDialog
+ * Dialog used to obtain a cash register object key from the server for future
+ * transactions.
+ */
+
+/**
+ * Constructs the dialog.
+ */
 CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
-		QWidget *parent) : QDialog(parent), m_ServerUrl(url)
+		QString wdayKey, QWidget *parent) : QDialog(parent), m_ServerUrl(url),
+		m_WdayKey(wdayKey)
 {
 	ui.setupUi(this);
 
@@ -17,13 +28,20 @@ CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url
 
 	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)));
+	connect(ui.okPushButton, SIGNAL(clicked()), this, SLOT(fetchKey()));
 }
 
+/**
+ * Destroys the dialog.
+ */
 CashRegisterDialog::~CashRegisterDialog()
 {
 	delete m_Console;
 }
 
+/**
+ * Populates the combo box with a list of all the shifts available.
+ */
 void CashRegisterDialog::init()
 {
 	QUrl url(*m_ServerUrl);
@@ -50,4 +68,40 @@ void CashRegisterDialog::init()
 	}
 
 	delete transformer;
+}
+
+/**
+ * Fetchs for the cash register object key on the server.
+ */
+void CashRegisterDialog::fetchKey()
+{
+	QVariant id = ui.shiftsComboBox->itemData(ui.shiftsComboBox->currentIndex());
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "get_cash_register");
+	url.addQueryItem("shift_id", id.toString());
+	url.addQueryItem("wday_key", m_WdayKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	QString errorMsg;
+	ObjectKeyXmlTransformer *transformer = new ObjectKeyXmlTransformer();
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		m_Key = transformer->key();
+		accept();
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
+ * Returns the cash register object key.
+ */
+QString CashRegisterDialog::key()
+{
+	return m_Key;
 }

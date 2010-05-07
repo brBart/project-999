@@ -15,10 +15,14 @@ class CashRegisterDialog : public QDialog
     Q_OBJECT
 
 public:
-    CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
+    CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url, QString wdayKey,
     		QWidget *parent = 0);
     ~CashRegisterDialog();
     void init();
+    QString key();
+
+public slots:
+	void fetchKey();
 
 signals:
 	void sessionStatusChanged(bool isActive);
@@ -29,6 +33,8 @@ private:
     Console *m_Console;
     HttpRequest *m_Request;
     XmlResponseHandler *m_Handler;
+    QString m_WdayKey;
+    QString m_Key;
 };
 
 #endif // CASH_REGISTER_DIALOG_H
