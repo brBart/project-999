@@ -18,6 +18,10 @@ public:
     CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
     		QWidget *parent = 0);
     ~CashRegisterDialog();
+    void init();
+
+signals:
+	void sessionStatusChanged(bool isActive);
 
 private:
     Ui::CashRegisterDialogClass ui;
@@ -25,8 +29,6 @@ private:
     Console *m_Console;
     HttpRequest *m_Request;
     XmlResponseHandler *m_Handler;
-
-    void loadShifts();
 };
 
 #endif // CASH_REGISTER_DIALOG_H

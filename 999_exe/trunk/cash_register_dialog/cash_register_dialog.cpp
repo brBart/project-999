@@ -15,7 +15,8 @@ CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url
 
 	m_Handler = new XmlResponseHandler(this);
 
-	loadShifts();
+	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)));
 }
 
 CashRegisterDialog::~CashRegisterDialog()
@@ -23,7 +24,7 @@ CashRegisterDialog::~CashRegisterDialog()
 	delete m_Console;
 }
 
-void CashRegisterDialog::loadShifts()
+void CashRegisterDialog::init()
 {
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_shift_list");
