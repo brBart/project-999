@@ -9,11 +9,10 @@
 <link href="../styles/typography.css" rel="stylesheet" type="text/css" />
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../scripts/session.js"></script>
-{literal}
 <script type="text/javascript">
 	var isSessionActive = true;
+	var wdayKey = {$wday_key};
 </script>
-{/literal}
 </head>
 <body>
 	{literal}
