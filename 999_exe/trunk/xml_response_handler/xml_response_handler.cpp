@@ -40,6 +40,13 @@ XmlResponseHandler::ResponseType XmlResponseHandler::handle(QString content,
 		return Error;
 	}
 
+	if (checkForError(&document, msg)) {
+		if (errorMsg != 0)
+			*errorMsg = msg;
+		emit sessionStatusChanged(true);
+		return Error;
+	}
+
 	QDomNodeList elements = document.elementsByTagName("logout");
 	if (!elements.isEmpty()) {
 		if (errorMsg != 0)
@@ -64,6 +71,22 @@ XmlResponseHandler::ResponseType XmlResponseHandler::handle(QString content,
 
 	emit sessionStatusChanged(true);
 	return Success;
+}
+
+/**
+ * Checks if the content contains a generated error from the server.
+ */
+bool XmlResponseHandler::checkForError(QDomDocument *document, QString &errorMsg)
+{
+	QDomNodeList elements = document->elementsByTagName("error");
+
+	if (!elements.isEmpty()) {
+		elements = document->elementsByTagName("message");
+		errorMsg = elements.at(0).toElement().text();
+		return true;
+	}
+
+	return false;
 }
 
 /**

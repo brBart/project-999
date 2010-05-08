@@ -27,6 +27,7 @@ signals:
 	void sessionStatusChanged(bool isActive);
 
 private:
+	bool checkForError(QDomDocument *document, QString &errorMsg);
 	bool validateResponse(QDomDocument *document, QString &failMsg);
 };
 
