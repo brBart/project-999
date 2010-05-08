@@ -6,7 +6,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += cash_register_dialog/cash_register_dialog.h \
+HEADERS += xml_transformer/object_key_xml_transformer.h \
+    cash_register_dialog/cash_register_dialog.h \
     plugin_factory/plugin_factory.h \
     registry.h \
     section/section.h \
@@ -17,7 +18,8 @@ HEADERS += cash_register_dialog/cash_register_dialog.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += cash_register_dialog/cash_register_dialog.cpp \
+SOURCES += xml_transformer/object_key_xml_transformer.cpp \
+    cash_register_dialog/cash_register_dialog.cpp \
     plugin_factory/plugin_factory.cpp \
     registry.cpp \
     section/section.cpp \
