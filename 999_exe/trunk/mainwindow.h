@@ -18,6 +18,7 @@ public:
 
 public slots:
 	void setIsSessionActive(bool isActive);
+	void setWorkingDayKey(QString wdayKey);
 	void loadMainSection();
 	void loadSalesSection();
 
@@ -30,6 +31,7 @@ private:
     QNetworkAccessManager m_Manager;
     QUrl *m_ServerUrl;
     PluginFactory m_PluginFactory;
+    QString m_WdayKey;
 
     void setSection(Section *section);
 };
