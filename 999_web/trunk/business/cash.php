@@ -772,7 +772,6 @@ class Shift extends Identifier{
 	 * @return Shift
 	 */
 	static public function getInstance($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
 		return ShiftDAM::getInstance($id);
 	}
 	
