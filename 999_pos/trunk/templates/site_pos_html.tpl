@@ -11,7 +11,6 @@
 <script type="text/javascript" src="../scripts/session.js"></script>
 <script type="text/javascript">
 	var isSessionActive = true;
-	var wdayKey = {$wday_key};
 </script>
 </head>
 <body>

@@ -73,11 +73,10 @@ class LoginPosCommand extends Command{
 				
 				if(AccessManager::isAllowed($user, 'pos', 'access')){
 					$working_day = WorkingDay::getInstance($date);
-					$key = KeyGenerator::generateKey();
-					
 					$helper->setUser($user);
-					$helper->setObject($key, $working_day);
-					header('Location: index.php?wday_key=' . $key);
+					// Sorry, bad practice necessary.
+					$helper->setWorkingDay($working_day);
+					header('Location: index.php');
 				}
 				else{
 					$msg = 'Acceso denegado.';

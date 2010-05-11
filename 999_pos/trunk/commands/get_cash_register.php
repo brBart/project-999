@@ -43,8 +43,8 @@ class GetCashRegisterCommand extends Command{
 			Page::display(array('message' => $msg), 'error_xml.tpl');
 		}
 		else{
-			$wday_key = $request->getProperty("wday_key");
-			$working_day = $helper->getObject((int)$wday_key);
+			// Sorry, bad practice necessary.
+			$working_day = $helper->getWorkingDay();
 		
 			try{
 				$cash_register = $working_day->getCashRegister($shift);
