@@ -7,8 +7,6 @@
 
 #include "sales_section.h"
 
-#include <QMessageBox>
-
 SalesSection::SalesSection(QNetworkAccessManager *manager,
 		QWebPluginFactory *factory, QUrl *serverUrl, QString cRegisterKey,
 		QWidget *parent) : Section(manager, factory, serverUrl, parent),
@@ -17,6 +15,11 @@ SalesSection::SalesSection(QNetworkAccessManager *manager,
 	m_Window = dynamic_cast<MainWindow*>(parentWidget());
 	setActions();
 	setMenu();
+}
+
+SalesSection::~SalesSection()
+{
+	m_Window->menuBar()->clear();
 }
 
 void SalesSection::setActions()

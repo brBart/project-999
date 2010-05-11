@@ -18,7 +18,7 @@ class SalesSection: public Section
 public:
 	SalesSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cRegisterKey, QWidget *parent = 0);
-	virtual ~SalesSection() {};
+	virtual ~SalesSection();
 
 private:
 	QString m_CRegisterKey;
