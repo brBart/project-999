@@ -13,8 +13,7 @@
  * Constructs the dialog.
  */
 CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
-		QString wdayKey, QWidget *parent) : QDialog(parent), m_ServerUrl(url),
-		m_WdayKey(wdayKey)
+		QWidget *parent) : QDialog(parent), m_ServerUrl(url)
 {
 	ui.setupUi(this);
 
@@ -80,7 +79,6 @@ void CashRegisterDialog::fetchKey()
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_cash_register");
 	url.addQueryItem("shift_id", id.toString());
-	url.addQueryItem("wday_key", m_WdayKey);
 	url.addQueryItem("type", "xml");
 
 	QString content = m_Request->get(url);

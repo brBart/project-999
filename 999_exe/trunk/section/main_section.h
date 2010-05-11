@@ -18,12 +18,6 @@ public:
 	MainSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
 			QUrl *serverUrl, QWidget *parent = 0);
 	virtual ~MainSection() {};
-
-public slots:
-	void loadFinished(bool ok);
-
-signals:
-	void workingDayKeyReceived(QString wdayKey);
 };
 
 #endif /* MAIN_SECTION_H_ */

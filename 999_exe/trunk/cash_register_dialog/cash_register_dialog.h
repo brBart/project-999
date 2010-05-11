@@ -15,7 +15,7 @@ class CashRegisterDialog : public QDialog
     Q_OBJECT
 
 public:
-    CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url, QString wdayKey,
+    CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
     		QWidget *parent = 0);
     ~CashRegisterDialog();
     void init();
@@ -33,7 +33,6 @@ private:
     Console *m_Console;
     HttpRequest *m_Request;
     XmlResponseHandler *m_Handler;
-    QString m_WdayKey;
     QString m_Key;
 };
 

@@ -39,14 +39,6 @@ void MainWindow::setIsSessionActive(bool isActive)
 }
 
 /**
- * Sets the working day object key value from the server.
- */
-void MainWindow::setWorkingDayKey(QString wdayKey)
-{
-	m_WdayKey = wdayKey;
-}
-
-/**
  * Loads the MainSection.
  */
 void MainWindow::loadMainSection()
@@ -65,7 +57,7 @@ void MainWindow::loadMainSection()
  */
 void MainWindow::loadSalesSection()
 {
-	CashRegisterDialog dialog(&m_Manager, m_ServerUrl, m_WdayKey, this);
+	CashRegisterDialog dialog(&m_Manager, m_ServerUrl, this);
 
 	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
 			SLOT(setIsSessionActive(bool)), Qt::QueuedConnection);
