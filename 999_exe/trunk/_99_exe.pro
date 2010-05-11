@@ -6,7 +6,9 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/object_key_xml_transformer.h \
+HEADERS += recordset/recordset.h \
+    section/sales_section.h \
+    xml_transformer/object_key_xml_transformer.h \
     cash_register_dialog/cash_register_dialog.h \
     plugin_factory/plugin_factory.h \
     registry.h \
@@ -18,7 +20,9 @@ HEADERS += xml_transformer/object_key_xml_transformer.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/object_key_xml_transformer.cpp \
+SOURCES += recordset/recordset.cpp \
+    section/sales_section.cpp \
+    xml_transformer/object_key_xml_transformer.cpp \
     cash_register_dialog/cash_register_dialog.cpp \
     plugin_factory/plugin_factory.cpp \
     registry.cpp \
@@ -30,7 +34,9 @@ SOURCES += xml_transformer/object_key_xml_transformer.cpp \
     http_request/http_request.cpp \
     main.cpp \
     mainwindow.cpp
-FORMS += cash_register_dialog/cash_register_dialog.ui \
+FORMS += recordset/recordset.ui \
+    cash_register_dialog/cash_register_dialog.ui \
     section/section.ui \
     mainwindow.ui
 RESOURCES += resources.qrc
+TRANSLATIONS = qt_es.ts

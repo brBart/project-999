@@ -6,6 +6,7 @@
 #include "registry.h"
 #include "section/main_section.h"
 #include "cash_register_dialog/cash_register_dialog.h"
+#include "section/sales_section.h"
 
 /**
  * @class MainWindow
@@ -70,8 +71,10 @@ void MainWindow::loadSalesSection()
 			SLOT(setIsSessionActive(bool)), Qt::QueuedConnection);
 
 	dialog.init();
-	if (dialog.exec() == QDialog::Accepted)
-		QMessageBox::information(this, "Key", dialog.key());
+	if (dialog.exec() == QDialog::Accepted) {
+		setSection(new SalesSection(&m_Manager, &m_PluginFactory, m_ServerUrl,
+				dialog.key(), this));
+	}
 }
 
 /**
