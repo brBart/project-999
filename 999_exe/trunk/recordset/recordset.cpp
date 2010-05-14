@@ -64,6 +64,16 @@ void Recordset::moveLast()
 	updateLabel();
 }
 
+bool Recordset::isFirst()
+{
+	return !m_Iterator->hasPrevious();
+}
+
+bool Recordset::isLast()
+{
+	return !m_Iterator->hasNext();
+}
+
 void Recordset::updateLabel()
 {
 	ui.label->setText(QString("%1 de %2").arg(m_Index).arg(m_List.size()));

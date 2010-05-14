@@ -16,6 +16,8 @@ public:
     ~Recordset();
     void setList(QList<QMap<QString, QString>*> list);
     int size();
+    bool isFirst();
+    bool isLast();
 
 public slots:
 	void moveFirst();
