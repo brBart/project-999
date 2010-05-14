@@ -13,7 +13,7 @@ class Recordset : public QWidget
 
 public:
     Recordset(QWidget *parent = 0);
-    ~Recordset();
+    ~Recordset() {};
     void setList(QList<QMap<QString, QString>*> list);
     int size();
     bool isFirst();

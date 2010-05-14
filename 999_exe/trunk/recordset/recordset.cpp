@@ -6,11 +6,6 @@ Recordset::Recordset(QWidget *parent)
 	ui.setupUi(this);
 }
 
-Recordset::~Recordset()
-{
-	delete m_Iterator;
-}
-
 void Recordset::setList(QList<QMap<QString, QString>*> list)
 {
 	m_List = list;
