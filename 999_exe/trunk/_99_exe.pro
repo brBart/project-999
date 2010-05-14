@@ -6,7 +6,9 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += recordset/recordset.h \
+HEADERS += actions_manager/actions_manager.h \
+    xml_transformer/invoice_list_xml_transformer.h \
+    recordset/recordset.h \
     section/sales_section.h \
     xml_transformer/object_key_xml_transformer.h \
     cash_register_dialog/cash_register_dialog.h \
@@ -20,7 +22,9 @@ HEADERS += recordset/recordset.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += recordset/recordset.cpp \
+SOURCES += actions_manager/actions_manager.cpp \
+    xml_transformer/invoice_list_xml_transformer.cpp \
+    recordset/recordset.cpp \
     section/sales_section.cpp \
     xml_transformer/object_key_xml_transformer.cpp \
     cash_register_dialog/cash_register_dialog.cpp \

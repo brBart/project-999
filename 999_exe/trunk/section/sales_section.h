@@ -12,18 +12,38 @@
 
 #include <QAction>
 #include "../mainwindow.h"
+#include "../console/console.h"
+#include "../http_request/http_request.h"
+#include "../xml_response_handler/xml_response_handler.h"
+#include "../recordset/recordset.h"
+#include "../actions_manager/actions_manager.h"
 
 class SalesSection: public Section
 {
+	Q_OBJECT
+
 public:
+	enum CRegisterStatus {Closed, Open, Error};
+	enum DocumentStatus {Edit, Idle, Cancelled};
 	SalesSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cRegisterKey, QWidget *parent = 0);
 	virtual ~SalesSection();
 
+public slots:
+	void loadFinished(bool ok);
+	void fetchInvoice(QString id);
+
 private:
+	Console m_Console;
+	HttpRequest *m_Request;
+	XmlResponseHandler *m_Handler;
 	QString m_CRegisterKey;
-	//Recordset m_Recordset;
+	Recordset m_Recordset;
 	MainWindow *m_Window;
+	ActionsManager m_ActionsManager;
+
+	CRegisterStatus m_CRegisterStatus;
+	DocumentStatus m_DocumentStatus;
 
 	// File actions.
 	QAction *m_NewAction;
@@ -49,6 +69,11 @@ private:
 
 	void setActions();
 	void setMenu();
+	void setActionsManager();
+	void refreshRecordset();
+	void fetchEmptyInvoiceList();
+	void updateActions();
+	QString viewValues();
 };
 
 #endif /* SALES_SECTION_H_ */
