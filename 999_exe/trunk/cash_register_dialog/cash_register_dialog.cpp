@@ -19,23 +19,13 @@ CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url
 
 	ui.webView->setHtml("<div id=\"console\" style=\"font-size: 10px; color: red;\">"
 			"</div>");
-	m_Console = new Console(ui.webView->page()->mainFrame());
-
+	m_Console.setFrame(ui.webView->page()->mainFrame());
 	m_Request = new HttpRequest(manager, this);
-
 	m_Handler = new XmlResponseHandler(this);
 
 	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)));
 	connect(ui.okPushButton, SIGNAL(clicked()), this, SLOT(fetchKey()));
-}
-
-/**
- * Destroys the dialog.
- */
-CashRegisterDialog::~CashRegisterDialog()
-{
-	delete m_Console;
 }
 
 /**
@@ -63,7 +53,7 @@ void CashRegisterDialog::init()
 					shift->value("shift_id"));
 		}
 	} else {
-		m_Console->displayError(errorMsg);
+		m_Console.displayError(errorMsg);
 	}
 
 	delete transformer;
@@ -90,7 +80,7 @@ void CashRegisterDialog::fetchKey()
 		m_Key = transformer->key();
 		accept();
 	} else {
-		m_Console->displayError(errorMsg);
+		m_Console.displayError(errorMsg);
 	}
 
 	delete transformer;

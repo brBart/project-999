@@ -17,7 +17,7 @@ class CashRegisterDialog : public QDialog
 public:
     CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
     		QWidget *parent = 0);
-    ~CashRegisterDialog();
+    ~CashRegisterDialog() {};
     void init();
     QString key();
 
@@ -30,7 +30,7 @@ signals:
 private:
     Ui::CashRegisterDialogClass ui;
     QUrl *m_ServerUrl;
-    Console *m_Console;
+    Console m_Console;
     HttpRequest *m_Request;
     XmlResponseHandler *m_Handler;
     QString m_Key;
