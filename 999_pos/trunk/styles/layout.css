@@ -308,6 +308,16 @@ input[type="text"], input[type="password"] {
 	margin-right: 1em;
 }
 
+#cash_register p {
+	float: left;
+	padding: 0 7em;
+}
+
+#cash_register label {
+	width: auto;
+	margin-right: 1em;
+}
+
 #scroll table {
 	float: left;
 	width: 20em;
