@@ -7,19 +7,17 @@
 
 #include "console.h"
 
-#include <QWebElement>
-
 /**
  * @class Console
  * Use to display messages to the user.
  */
 
 /**
- * Constructs a Console using a QWebFrame.
+ * Sets the console QWebFrame for displaying messages.
  */
-Console::Console(QWebFrame *frame) : m_Frame(frame)
+void Console::setFrame(QWebFrame *frame)
 {
-	*m_Div = m_Frame->findFirstElement("#console");
+	m_Div = frame->findFirstElement("#console");
 }
 
 /**
@@ -27,7 +25,7 @@ Console::Console(QWebFrame *frame) : m_Frame(frame)
  */
 void Console::displayError(QString msg)
 {
-	QWebElement elementP = m_Div->findFirst("#error");
+	QWebElement elementP = m_Div.findFirst("#error");
 	// If there was a message.
 	if (!elementP.isNull())
 		elementP.removeFromDocument();
@@ -41,5 +39,5 @@ void Console::displayError(QString msg)
  */
 void Console::displayMessage(QString msg)
 {
-	m_Div->appendInside(msg);
+	m_Div.appendInside(msg);
 }

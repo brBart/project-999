@@ -9,18 +9,19 @@
 #define CONSOLE_H_
 
 #include <QWebFrame>
+#include <QWebElement>
 #include <QString>
 
 class Console
 {
 public:
-	Console(QWebFrame *frame);
+	Console() {};
 	virtual ~Console() {};
+	void setFrame(QWebFrame *frame);
 	void displayError(QString msg);
 
 private:
-	QWebFrame *m_Frame;
-	QWebElement *m_Div;
+	QWebElement m_Div;
 
 	void displayMessage(QString msg);
 };
