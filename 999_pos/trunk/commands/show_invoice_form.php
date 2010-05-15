@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowEmptyInvoiceListCommand class.
+ * Library containing the ShowInvoiceFormCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,11 +15,12 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the cash register status form indicating an empty invoice list.
+ * Command to display the cash register status, an invoice form and indicate an empty
+ * list.
  * @package Command
  * @author Roberto Oliveros
  */
-class ShowEmptyInvoiceListCommand extends Command{
+class ShowInvoiceFormCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
@@ -35,8 +36,8 @@ class ShowEmptyInvoiceListCommand extends Command{
 		$msg = 'No hay facturas en esta caja.';
 		
 		Page::display(array('module_title' => POS_TITLE, 'back_trace' => $back_trace,
-				'content' => 'cash_register_empty_doc_html.tpl',
-				'cash_register_id' => $cash_register->getId(), 'date' => $working_day->getDate(),
+				'content' => 'invoice_form_html.tpl', 'cash_register_id' => $cash_register->getId(),
+				'date' => $working_day->getDate(),
 				'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
 				'cash_register_status' => (int)$cash_register->isOpen(), 'notify' => '1',
 				'type' => 'info', 'message' => $msg,), 'site_pos_html.tpl');
