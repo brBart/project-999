@@ -198,7 +198,7 @@ input[type="text"], input[type="password"] {
 	height: 2.5em;
 }
 
-#dates_range {
+#dates_range, #recordset {
 	height: 1.5em;
 }
 
@@ -215,6 +215,11 @@ input[type="text"], input[type="password"] {
 #product_info {
 	float: left;
 	width: 35%;
+}
+
+#bar_code_input {
+	height: 1.5em;
+	float: right;
 }
 
 #bonus, #reserve_items {
@@ -310,7 +315,7 @@ input[type="text"], input[type="password"] {
 
 #cash_register p {
 	float: left;
-	padding: 0 7em;
+	padding: 0 5.5em;
 }
 
 #cash_register label {
@@ -388,6 +393,10 @@ input[type="text"], input[type="password"] {
 
 .content_large #details table {
 	width: 95%;
+}
+
+#frm .pos {
+	height: 25em;
 }
 
 #frm #details {

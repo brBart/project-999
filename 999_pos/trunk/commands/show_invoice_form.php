@@ -37,7 +37,7 @@ class ShowInvoiceFormCommand extends Command{
 		
 		Page::display(array('module_title' => POS_TITLE, 'back_trace' => $back_trace,
 				'content' => 'invoice_form_html.tpl', 'cash_register_id' => $cash_register->getId(),
-				'date' => $working_day->getDate(),
+				'date' => $working_day->getDate(), 'status' => '1',
 				'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
 				'cash_register_status' => (int)$cash_register->isOpen(), 'notify' => '1',
 				'type' => 'info', 'message' => $msg,), 'site_pos_html.tpl');

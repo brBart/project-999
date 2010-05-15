@@ -1,7 +1,7 @@
 {* Smarty * }
 <script type="text/javascript">
 var cashRegisterStatus = {$cash_register_status};
-var documentStatus = 1;
+var documentStatus = {$status};
 </script>
 <div id="content">
 	<div id="frm" class="content_large">
@@ -11,7 +11,7 @@ var documentStatus = 1;
 			<p><label>Turno:</label><span>{$shift}</span></p>
 			<p><label>Status:</label><span>{if $cash_register_status eq 1}Abierto{else}Cerrado{/if}</span></p>
 		</fieldset>
-		{include file='status_bar_doc_html.tpl' status='1'}
+		{include file='status_bar_doc_html.tpl'}
 		<fieldset id="header_data">
 			<p>
 				<label>Factura Serie:</label><span>{$serial_number}</span>
@@ -26,14 +26,14 @@ var documentStatus = 1;
 				<label>Usuario:</label><span>{$username}</span>
 			</p>
 		</fieldset>
-		<fieldset id="main_data" class="pos">
+		<fieldset id="main_data" class="pos disabled">
 			<p>
 		  		<label>Nit:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
 		  		<span id="nit">&nbsp;</span>
 		  		<span id="nit-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$nit|htmlchars}</span>
+		  		<span>{$nit|htmlchars}&nbsp;</span>
 		  		{/if}
 		  	</p>
 		  	<p>
@@ -42,9 +42,14 @@ var documentStatus = 1;
 		  		<span id="customer">&nbsp;</span>
 		  		<span id="customer-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$customer|htmlchars}</span>
+		  		<span>{$customer|htmlchars}&nbsp;</span>
 		  		{/if}
 		  	</p>
+		  	<object id="bar_code_input"></object>
+		  	<div id="details" class="items"></div>
+	  	</fieldset>
+	  	<fieldset id="data_footer">
+	  		<object id="recordset"></object>
 	  	</fieldset>
 	</div>
 </div>
