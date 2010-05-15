@@ -34,7 +34,7 @@ SalesSection::SalesSection(QNetworkAccessManager *manager,
 	if (m_Recordset.size() > 0) {
 		m_Recordset.moveFirst();
 	} else {
-		fetchEmptyInvoiceList();
+		fetchInvoiceForm();
 	}
 }
 
@@ -194,10 +194,10 @@ void SalesSection::refreshRecordset()
 	delete transformer;
 }
 
-void SalesSection::fetchEmptyInvoiceList()
+void SalesSection::fetchInvoiceForm()
 {
 	QUrl url(*m_ServerUrl);
-	url.addQueryItem("cmd", "show_empty_invoice_list");
+	url.addQueryItem("cmd", "show_invoice_form");
 	url.addQueryItem("register_key", m_CRegisterKey);
 	ui.webView->load(url);
 }

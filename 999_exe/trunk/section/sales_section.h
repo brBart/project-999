@@ -71,7 +71,7 @@ private:
 	void setMenu();
 	void setActionsManager();
 	void refreshRecordset();
-	void fetchEmptyInvoiceList();
+	void fetchInvoiceForm();
 	void updateActions();
 	QString viewValues();
 };
