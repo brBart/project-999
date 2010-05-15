@@ -226,3 +226,7 @@ a:hover {
 	background-image: none;
 	background-color: #EEEEEE;
 }
+
+#frm .pos {
+	background-color: white;
+}

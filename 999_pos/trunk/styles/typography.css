@@ -46,3 +46,7 @@ tfoot .total_col {
 #frm label {
 	font-weight: bold;
 }
+
+#frm .pos {
+	font-size: 1.6em;
+}
