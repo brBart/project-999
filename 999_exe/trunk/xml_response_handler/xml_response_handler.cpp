@@ -35,7 +35,8 @@ XmlResponseHandler::ResponseType XmlResponseHandler::handle(QString content,
 	QString msg;
 	if (!document.setContent(content)) {
 		if (errorMsg != 0)
-			*errorMsg = "FATAL ERROR: Parse error or connection lost.";
+			*errorMsg = "FATAL ERROR: Parse error or connection lost. "
+					+ content;
 		emit sessionStatusChanged(false);
 		return Error;
 	}
@@ -62,12 +63,7 @@ XmlResponseHandler::ResponseType XmlResponseHandler::handle(QString content,
 		return Failure;
 	}
 
-	if (!transformer->transform(&document, &msg)) {
-		if (errorMsg != 0)
-			*errorMsg = msg;
-		emit sessionStatusChanged(true);
-		return Error;
-	}
+	transformer->transform(&document);
 
 	emit sessionStatusChanged(true);
 	return Success;
