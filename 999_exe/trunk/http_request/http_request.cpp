@@ -24,9 +24,9 @@ HttpRequest::HttpRequest(QNetworkAccessManager *manager, QObject *parent)
 /**
  * Gets the information from the server.
  */
-QString HttpRequest::get(QUrl url, ConnectionType type)
+QString HttpRequest::get(QUrl url, bool isAsync)
 {
-	if (type == Sync) {
+	if (!isAsync) {
 		QEventLoop loop;
 
 		QNetworkReply *reply = m_Manager->get(QNetworkRequest(url));
@@ -35,12 +35,14 @@ QString HttpRequest::get(QUrl url, ConnectionType type)
 
 		loop.exec();
 		return reply->readAll();
-	} else {
-		connect(m_Manager, SIGNAL(finished(QNetworkReply*)), this,
-				SLOT(loadFinished(QNetworkReply*)));
-
-		m_Manager->get(QNetworkRequest(url));
 	}
+
+	connect(m_Manager, SIGNAL(finished(QNetworkReply*)), this,
+			SLOT(loadFinished(QNetworkReply*)));
+
+	m_Manager->get(QNetworkRequest(url));
+
+	return NULL;
 }
 
 /**

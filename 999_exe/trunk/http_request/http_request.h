@@ -18,9 +18,8 @@ class HttpRequest : public QObject
 	Q_OBJECT
 
 public:
-	enum ConnectionType {Sync, Async};
 	HttpRequest(QNetworkAccessManager *manager, QObject *parent = 0);
-	QString get(QUrl url, ConnectionType type = Sync);
+	QString get(QUrl url, bool isAsync = false);
 	virtual ~HttpRequest() {};
 
 private slots:
