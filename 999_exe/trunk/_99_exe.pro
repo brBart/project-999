@@ -6,7 +6,10 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += actions_manager/actions_manager.h \
+HEADERS += xml_transformer/shift_list_xml_transformer.h \
+    xml_transformer/cash_register_status_xml_transformer.h \
+    xml_transformer/invoice_xml_transformer.h \
+    actions_manager/actions_manager.h \
     xml_transformer/invoice_list_xml_transformer.h \
     recordset/recordset.h \
     section/sales_section.h \
@@ -16,13 +19,16 @@ HEADERS += actions_manager/actions_manager.h \
     registry.h \
     section/section.h \
     section/main_section.h \
-    xml_transformer/map_string_xml_transformer.h \
     xml_transformer/xml_transformer.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += actions_manager/actions_manager.cpp \
+SOURCES += xml_transformer/shift_list_xml_transformer.cpp \
+    xml_transformer/cash_register_status_xml_transformer.cpp \
+    xml_transformer/invoice_xml_transformer.cpp \
+    xml_transformer/xml_transformer.cpp \
+    actions_manager/actions_manager.cpp \
     xml_transformer/invoice_list_xml_transformer.cpp \
     recordset/recordset.cpp \
     section/sales_section.cpp \
@@ -32,7 +38,6 @@ SOURCES += actions_manager/actions_manager.cpp \
     registry.cpp \
     section/section.cpp \
     section/main_section.cpp \
-    xml_transformer/map_string_xml_transformer.cpp \
     console/console.cpp \
     xml_response_handler/xml_response_handler.cpp \
     http_request/http_request.cpp \
