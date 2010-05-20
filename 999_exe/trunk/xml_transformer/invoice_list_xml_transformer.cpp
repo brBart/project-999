@@ -10,7 +10,7 @@
 /**
  * Transforms the xml document.
  */
-bool InvoiceListXmlTransformer::transform(QDomDocument *document, QString *errorMsg)
+void InvoiceListXmlTransformer::transform(QDomDocument *document)
 {
 	QDomNodeList ids = document->elementsByTagName("invoice_id");
 	QDomNodeList serials = document->elementsByTagName("serial_number");
@@ -21,16 +21,6 @@ bool InvoiceListXmlTransformer::transform(QDomDocument *document, QString *error
 		map->insert("invoice_id", ids.at(i).toElement().text());
 		map->insert("serial_number", serials.at(i).toElement().text());
 		map->insert("number", numbers.at(i).toElement().text());
-		m_List << map;
+		m_Content << map;
 	}
-
-	return true;
-}
-
-/**
- * Returns the transformed list.
- */
-QList<QMap<QString, QString>*> InvoiceListXmlTransformer::list()
-{
-	return m_List;
 }

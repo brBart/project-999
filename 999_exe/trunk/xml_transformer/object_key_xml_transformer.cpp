@@ -7,6 +7,8 @@
 
 #include "object_key_xml_transformer.h"
 
+#include <QMap>
+
 /**
  * @class ObjectKeyXmlTransformer
  * Transform a xml document with a key value into a QString.
@@ -15,18 +17,10 @@
 /**
  * Transforms the key value into a QString.
  */
-bool ObjectKeyXmlTransformer::transform(QDomDocument *document, QString *errorMsg)
+void ObjectKeyXmlTransformer::transform(QDomDocument *document)
 {
 	QDomNodeList keys = document->elementsByTagName("key");
-	m_Key = keys.at(0).toElement().text();
-
-	return true;
-}
-
-/**
- * Returns the key value.
- */
-QString ObjectKeyXmlTransformer::key()
-{
-	return m_Key;
+	QMap<QString, QString> *map = new QMap<QString, QString>();
+	map->insert("key", keys.at(0).toElement().text());
+	m_Content << map;
 }

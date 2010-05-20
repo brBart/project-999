@@ -10,15 +10,12 @@
 
 #include "xml_transformer.h"
 
-class ObjectKeyXmlTransformer: public XmlTransformer {
+class ObjectKeyXmlTransformer: public XmlTransformer
+{
 public:
 	ObjectKeyXmlTransformer() {};
 	virtual ~ObjectKeyXmlTransformer() {};
-	virtual bool transform(QDomDocument *document, QString *errorMsg = 0);
-	QString key();
-
-private:
-	QString m_Key;
+	virtual void transform(QDomDocument *document);
 };
 
 #endif /* OBJECT_KEY_XML_TRANSFORMER_H_ */

@@ -9,11 +9,16 @@
 #define XML_TRANSFORMER_H_
 
 #include <QDomDocument>
+#include <QMap>
 
 class XmlTransformer
 {
 public:
-	virtual bool transform(QDomDocument *document, QString *errorMsg = 0) = 0;
+	virtual void transform(QDomDocument *document) = 0;
+	QList<QMap<QString, QString>*> content();
+
+protected:
+	QList<QMap<QString, QString>*> m_Content;
 };
 
 #endif /* XML_TRANSFORMER_H_ */

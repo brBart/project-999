@@ -12,15 +12,12 @@
 
 #include <QMap>
 
-class InvoiceListXmlTransformer: public XmlTransformer {
+class InvoiceListXmlTransformer: public XmlTransformer
+{
 public:
 	InvoiceListXmlTransformer() {};
 	virtual ~InvoiceListXmlTransformer() {};
-	virtual bool transform(QDomDocument *document, QString *errorMsg = 0);
-	QList<QMap<QString, QString>*> list();
-
-private:
-	QList<QMap<QString, QString>*> m_List;
+	virtual void transform(QDomDocument *document);
 };
 
 #endif /* INVOICE_LIST_XML_TRANSFORMER_H_ */
