@@ -1,6 +1,6 @@
 #include "cash_register_dialog.h"
 
-#include "../xml_transformer/map_string_xml_transformer.h"
+#include "../xml_transformer/shift_list_xml_transformer.h"
 #include "../xml_transformer/object_key_xml_transformer.h"
 
 /**
@@ -40,10 +40,10 @@ void CashRegisterDialog::init()
 	QString content = m_Request->get(url);
 
 	QString errorMsg;
-	MapStringXmlTransformer *transformer = new MapStringXmlTransformer();
+	ShiftListXmlTransformer *transformer = new ShiftListXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
-		QList<QMap<QString, QString>*> list = transformer->list();
+		QList<QMap<QString, QString>*> list = transformer->content();
 
 		ui.shiftsComboBox->addItem("", "");
 		QMap<QString, QString> *shift;
@@ -77,7 +77,9 @@ void CashRegisterDialog::fetchKey()
 	ObjectKeyXmlTransformer *transformer = new ObjectKeyXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
-		m_Key = transformer->key();
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *params = list[0];
+		m_Key = params->value("key");
 		accept();
 	} else {
 		m_Console.displayError(errorMsg);
