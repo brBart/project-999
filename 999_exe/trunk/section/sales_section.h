@@ -32,15 +32,19 @@ public:
 public slots:
 	void loadFinished(bool ok);
 	void fetchInvoice(QString id);
+	void createInvoice();
+	void updateCashRegisterStatus(QString content);
 
 private:
 	Console m_Console;
 	HttpRequest *m_Request;
 	XmlResponseHandler *m_Handler;
-	QString m_CRegisterKey;
 	Recordset m_Recordset;
 	MainWindow *m_Window;
 	ActionsManager m_ActionsManager;
+
+	QString m_CRegisterKey;
+	QString m_NewInvoiceKey;
 
 	CRegisterStatus m_CRegisterStatus;
 	DocumentStatus m_DocumentStatus;
@@ -74,6 +78,8 @@ private:
 	void fetchInvoiceForm();
 	void updateActions();
 	QString viewValues();
+	void prepareInvoiceForm(QString dateTime, QString username);
+	void fetchCashRegisterStatus();
 };
 
 #endif /* SALES_SECTION_H_ */

@@ -9,6 +9,8 @@
 
 #include <QList>
 #include "../xml_transformer/invoice_list_xml_transformer.h"
+#include "../xml_transformer/invoice_xml_transformer.h"
+#include "../xml_transformer/cash_register_status_xml_transformer.h"
 
 SalesSection::SalesSection(QNetworkAccessManager *manager,
 		QWebPluginFactory *factory, QUrl *serverUrl, QString cRegisterKey,
@@ -62,6 +64,63 @@ void SalesSection::loadFinished(bool ok)
 	updateActions();
 }
 
+void SalesSection::createInvoice()
+{
+	m_Console.reset();
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "create_invoice");
+	url.addQueryItem("register_key", m_CRegisterKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	QString errorMsg;
+	InvoiceXmlTransformer *transformer = new InvoiceXmlTransformer();
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *params = list[0];
+		m_NewInvoiceKey = params->value("key");
+
+		prepareInvoiceForm(params->value("date_time"), params->value("username"));
+		//fetchInvoiceDetails();
+
+		m_DocumentStatus = Edit;
+		updateActions();
+	} else {
+		m_Console.displayError(errorMsg);
+		fetchCashRegisterStatus();
+	}
+
+	delete transformer;
+}
+
+void SalesSection::updateCashRegisterStatus(QString content)
+{
+	// TODO: Test this if a closed cash register.
+	QString errorMsg;
+	CashRegisterStatusXmlTransformer *transformer =
+			new CashRegisterStatusXmlTransformer();
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *params = list[0];
+
+		if (params->value("status") == "0") {
+			QWebElement element = ui.webView->page()->mainFrame()
+							->findFirstElement("#cash_register_status");
+			element.setInnerXml("Cerrado");
+			m_CRegisterStatus = Closed;
+			updateActions();
+		}
+	}
+
+	delete transformer;
+
+	m_Handler->disconnect(SIGNAL(finished(QString)));
+}
+
 void SalesSection::fetchInvoice(QString id)
 {
 
@@ -71,6 +130,7 @@ void SalesSection::setActions()
 {
 	m_NewAction = new QAction("Crear", this);
 	m_NewAction->setShortcut(Qt::Key_Insert);
+	connect(m_NewAction, SIGNAL(triggered()), this, SLOT(createInvoice()));
 
 	m_SaveAction = new QAction("Guardar", this);
 	m_SaveAction->setShortcut(tr("Ctrl+S"));
@@ -187,7 +247,7 @@ void SalesSection::refreshRecordset()
 	InvoiceListXmlTransformer *transformer = new InvoiceListXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
-		QList<QMap<QString, QString>*> list = transformer->list();
+		QList<QMap<QString, QString>*> list = transformer->content();
 		m_Recordset.setList(list);
 	}
 
@@ -245,4 +305,58 @@ QString SalesSection::viewValues()
 	} else {
 		return "000001";
 	}
+}
+
+void SalesSection::prepareInvoiceForm(QString dateTime, QString username)
+{
+	QWebFrame *frame = ui.webView->page()->mainFrame();
+	QWebElement element;
+
+	element = frame->findFirstElement("#status_label");
+	element.setInnerXml("Creando...");
+
+	element = frame->findFirstElement("#serial_number");
+	element.setInnerXml("");
+
+	element = frame->findFirstElement("#number");
+	element.setInnerXml("");
+
+	element = frame->findFirstElement("#date_time");
+	element.setInnerXml(dateTime);
+
+	element = frame->findFirstElement("#username");
+	element.setInnerXml(username);
+
+	// Change div css style from disabled to enabled.
+	element = frame->findFirstElement("#main_data");
+	QString attribute = element.attribute("class");
+	QStringList styles = attribute.split(" ");
+	styles.replaceInStrings("disabled", "enabled");
+	attribute = styles.join(" ");
+	element.setAttribute("class", attribute);
+
+	element = frame->findFirstElement("#nit_label");
+	element.setInnerXml(element.toPlainText() + "*");
+
+	element = frame->findFirstElement("#nit");
+	element.setInnerXml("&nbsp;");
+
+	element = frame->findFirstElement("#customer_label");
+	element.setInnerXml(element.toPlainText() + "*");
+
+	element = frame->findFirstElement("#customer");
+	element.setInnerXml("&nbsp;");
+}
+
+void SalesSection::fetchCashRegisterStatus()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "get_is_open_cash_register");
+	url.addQueryItem("key", m_CRegisterKey);
+	url.addQueryItem("type", "xml");
+
+	connect(m_Request, SIGNAL(finished(QString)), this,
+			SLOT(updateCashRegisterStatus(QString)));
+
+	m_Request->get(url, true);
 }
