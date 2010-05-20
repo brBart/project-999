@@ -19,6 +19,7 @@ public:
 	virtual ~Console() {};
 	void setFrame(QWebFrame *frame);
 	void displayError(QString msg);
+	void reset();
 
 private:
 	QWebElement m_Div;

@@ -41,3 +41,8 @@ void Console::displayMessage(QString msg)
 {
 	m_Div.appendInside(msg);
 }
+
+void Console::reset()
+{
+	m_Div.setInnerXml("");
+}
