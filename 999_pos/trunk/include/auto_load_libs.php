@@ -121,6 +121,10 @@ function __autoload($className){
 			require_once('business/cash.php');
 			break;
 			
+		case 'Invoice':
+			require_once('business/document.php');
+			break;
+			
 		default:
 	}
 }
