@@ -69,6 +69,13 @@ bool Recordset::isLast()
 	return !m_Iterator->hasNext();
 }
 
+void Recordset::refresh()
+{
+	QMap<QString, QString> *record = m_List.at(m_Index);
+
+	emit recordChanged(record->value("id"));
+}
+
 void Recordset::updateLabel()
 {
 	ui.label->setText(QString("%1 de %2").arg(m_Index).arg(m_List.size()));

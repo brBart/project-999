@@ -18,6 +18,7 @@ public:
     int size();
     bool isFirst();
     bool isLast();
+    void refresh();
 
 public slots:
 	void moveFirst();
