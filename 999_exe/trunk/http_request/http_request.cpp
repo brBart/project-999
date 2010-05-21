@@ -52,4 +52,6 @@ QString HttpRequest::get(QUrl url, bool isAsync)
 void HttpRequest::loadFinished(QNetworkReply *reply)
 {
 	emit finished(reply->readAll());
+
+	m_Manager->disconnect(this);
 }
