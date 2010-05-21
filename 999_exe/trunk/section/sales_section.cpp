@@ -11,6 +11,8 @@
 #include "../xml_transformer/invoice_list_xml_transformer.h"
 #include "../xml_transformer/invoice_xml_transformer.h"
 #include "../xml_transformer/cash_register_status_xml_transformer.h"
+#include "../xml_transformer/stub_xml_transformer.h"
+#include <QMessageBox>
 
 SalesSection::SalesSection(QNetworkAccessManager *manager,
 		QWebPluginFactory *factory, QUrl *serverUrl, QString cRegisterKey,
@@ -118,7 +120,43 @@ void SalesSection::updateCashRegisterStatus(QString content)
 
 	delete transformer;
 
-	m_Handler->disconnect(SIGNAL(finished(QString)));
+	m_Request->disconnect(this);
+}
+
+void SalesSection::discardInvoice()
+{
+	if (QMessageBox::question(this, "Cancelar", "¿Esta seguro que desea salir sin "
+			"guardar?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		return;
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "discard_document");
+	url.addQueryItem("key", m_NewInvoiceKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	QString errorMsg;
+	StubXmlTransformer *transformer = new StubXmlTransformer();
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		url = *m_ServerUrl;
+		url.addQueryItem("cmd", "remove_session_object");
+		url.addQueryItem("key", m_NewInvoiceKey);
+		url.addQueryItem("type", "xml");
+
+		m_Request->get(url, true);
+
+		if (m_Recordset.size() > 0) {
+			m_Recordset.refresh();
+		} else {
+			fetchInvoiceForm();
+		}
+	} else {
+		m_Console.displayError(errorMsg);
+	}
+
+	delete transformer;
 }
 
 void SalesSection::fetchInvoice(QString id)
@@ -137,6 +175,7 @@ void SalesSection::setActions()
 
 	m_DiscardAction = new QAction("Cancelar", this);
 	m_DiscardAction->setShortcut(tr("Ctrl+W"));
+	connect(m_DiscardAction, SIGNAL(triggered()), this, SLOT(discardInvoice()));
 
 	m_CancelAction = new QAction("Anular", this);
 	m_CancelAction->setShortcut(Qt::Key_F10);

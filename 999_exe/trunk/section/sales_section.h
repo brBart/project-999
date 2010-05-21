@@ -34,6 +34,7 @@ public slots:
 	void fetchInvoice(QString id);
 	void createInvoice();
 	void updateCashRegisterStatus(QString content);
+	void discardInvoice();
 
 private:
 	Console m_Console;

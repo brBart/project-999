@@ -6,7 +6,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/shift_list_xml_transformer.h \
+HEADERS += xml_transformer/stub_xml_transformer.h \
+    xml_transformer/shift_list_xml_transformer.h \
     xml_transformer/cash_register_status_xml_transformer.h \
     xml_transformer/invoice_xml_transformer.h \
     actions_manager/actions_manager.h \
@@ -24,7 +25,8 @@ HEADERS += xml_transformer/shift_list_xml_transformer.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/shift_list_xml_transformer.cpp \
+SOURCES += xml_transformer/stub_xml_transformer.cpp \
+    xml_transformer/shift_list_xml_transformer.cpp \
     xml_transformer/cash_register_status_xml_transformer.cpp \
     xml_transformer/invoice_xml_transformer.cpp \
     xml_transformer/xml_transformer.cpp \
