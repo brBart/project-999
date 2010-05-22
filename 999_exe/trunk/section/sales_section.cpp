@@ -7,6 +7,11 @@
 
 #include "sales_section.h"
 
+/**
+ * @class SalesSection
+ * Section in charge of managing the invoice documents.
+ */
+
 #include <QList>
 #include "../xml_transformer/invoice_list_xml_transformer.h"
 #include "../xml_transformer/invoice_xml_transformer.h"
@@ -14,6 +19,9 @@
 #include "../xml_transformer/stub_xml_transformer.h"
 #include <QMessageBox>
 
+/**
+ * Constructs the section.
+ */
 SalesSection::SalesSection(QNetworkAccessManager *manager,
 		QWebPluginFactory *factory, QUrl *serverUrl, QString cRegisterKey,
 		QWidget *parent) : Section(manager, factory, serverUrl, parent),
@@ -42,11 +50,17 @@ SalesSection::SalesSection(QNetworkAccessManager *manager,
 	}
 }
 
+/**
+ * Clears the window's menu bar.
+ */
 SalesSection::~SalesSection()
 {
 	m_Window->menuBar()->clear();
 }
 
+/**
+ * Updates the status of the section depending on the page received.
+ */
 void SalesSection::loadFinished(bool ok)
 {
 	Section::loadFinished(ok);
@@ -66,6 +80,9 @@ void SalesSection::loadFinished(bool ok)
 	updateActions();
 }
 
+/**
+ * Creates an invoice on the server.
+ */
 void SalesSection::createInvoice()
 {
 	m_Console.reset();
@@ -98,6 +115,9 @@ void SalesSection::createInvoice()
 	delete transformer;
 }
 
+/**
+ * Updates the cash register status received from the server.
+ */
 void SalesSection::updateCashRegisterStatus(QString content)
 {
 	// TODO: Test this if a closed cash register.
@@ -123,6 +143,9 @@ void SalesSection::updateCashRegisterStatus(QString content)
 	m_Request->disconnect(this);
 }
 
+/**
+ * Discards a new invoice.
+ */
 void SalesSection::discardInvoice()
 {
 	if (QMessageBox::question(this, "Cancelar", "¿Esta seguro que desea salir sin "
@@ -159,11 +182,17 @@ void SalesSection::discardInvoice()
 	delete transformer;
 }
 
+/**
+ * Fetchs an invoice from the server.
+ */
 void SalesSection::fetchInvoice(QString id)
 {
 
 }
 
+/**
+ * Creates the QActions for the menu bar.
+ */
 void SalesSection::setActions()
 {
 	m_NewAction = new QAction("Crear", this);
@@ -218,6 +247,9 @@ void SalesSection::setActions()
 	m_ConsultProductAction->setShortcut(Qt::Key_F6);
 }
 
+/**
+ * Sets the window's menu bar.
+ */
 void SalesSection::setMenu()
 {
 	QMenu *menu;
@@ -247,6 +279,9 @@ void SalesSection::setMenu()
 	menu->addAction(m_ConsultProductAction);
 }
 
+/**
+ * Sets the ActionsManager with the already created QActions.
+ */
 void SalesSection::setActionsManager()
 {
 	QList<QAction*> *actions = new QList<QAction*>();
@@ -273,6 +308,9 @@ void SalesSection::setActionsManager()
 	m_ActionsManager.setActions(actions);
 }
 
+/**
+ * Sets the recordset.
+ */
 void SalesSection::refreshRecordset()
 {
 	QUrl url(*m_ServerUrl);
@@ -293,6 +331,9 @@ void SalesSection::refreshRecordset()
 	delete transformer;
 }
 
+/**
+ * Fetchs an empty invoice form from the server.
+ */
 void SalesSection::fetchInvoiceForm()
 {
 	QUrl url(*m_ServerUrl);
@@ -301,6 +342,9 @@ void SalesSection::fetchInvoiceForm()
 	ui.webView->load(url);
 }
 
+/**
+ * Updates the QActions depending on the actual section status.
+ */
 void SalesSection::updateActions()
 {
 	QString values;
@@ -331,6 +375,9 @@ void SalesSection::updateActions()
 	m_ActionsManager.updateActions(values);
 }
 
+/**
+ * Auxialiry method for updating the QActions related to the recordset.
+ */
 QString SalesSection::viewValues()
 {
 	if (m_Recordset.size() > 0) {
@@ -346,6 +393,9 @@ QString SalesSection::viewValues()
 	}
 }
 
+/**
+ * Prepare the invoice form for creating a new invoice.
+ */
 void SalesSection::prepareInvoiceForm(QString dateTime, QString username)
 {
 	QWebFrame *frame = ui.webView->page()->mainFrame();
@@ -387,6 +437,9 @@ void SalesSection::prepareInvoiceForm(QString dateTime, QString username)
 	element.setInnerXml("&nbsp;");
 }
 
+/**
+ * Fetchs the cash register status from the server.
+ */
 void SalesSection::fetchCashRegisterStatus()
 {
 	QUrl url(*m_ServerUrl);

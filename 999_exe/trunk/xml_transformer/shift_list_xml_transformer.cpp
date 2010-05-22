@@ -8,7 +8,12 @@
 #include "shift_list_xml_transformer.h"
 
 /**
- * Transforms the xml document.
+ * @class ShiftListXmlTransformer
+ * Transforms an xml document into a list of shifts.
+ */
+
+/**
+ * Stores the list into the QList for future retrieval.
  */
 void ShiftListXmlTransformer::transform(QDomDocument *document)
 {

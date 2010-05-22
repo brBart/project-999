@@ -8,7 +8,12 @@
 #include "stub_xml_transformer.h"
 
 /**
- * Transforms the xml document.
+ * @class StubXmlTransformer
+ * Class for convenience purposes.
+ */
+
+/**
+ * Does nothing.
  */
 void StubXmlTransformer::transform(QDomDocument *document)
 {

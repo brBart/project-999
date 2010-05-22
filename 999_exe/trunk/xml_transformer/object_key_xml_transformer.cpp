@@ -15,7 +15,7 @@
  */
 
 /**
- * Transforms the key value into a QString.
+ * Stores the fetched key into the QList for future retrieval.
  */
 void ObjectKeyXmlTransformer::transform(QDomDocument *document)
 {

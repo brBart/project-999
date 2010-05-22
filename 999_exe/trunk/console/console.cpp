@@ -42,6 +42,9 @@ void Console::displayMessage(QString msg)
 	m_Div.appendInside(msg);
 }
 
+/**
+ * Deletes all previously displayed messages.
+ */
 void Console::reset()
 {
 	m_Div.setInnerXml("");

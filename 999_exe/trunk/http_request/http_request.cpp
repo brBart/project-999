@@ -23,6 +23,7 @@ HttpRequest::HttpRequest(QNetworkAccessManager *manager, QObject *parent)
 
 /**
  * Gets the information from the server.
+ * If isAsync is true the finished signal is emitted sending the data received.
  */
 QString HttpRequest::get(QUrl url, bool isAsync)
 {

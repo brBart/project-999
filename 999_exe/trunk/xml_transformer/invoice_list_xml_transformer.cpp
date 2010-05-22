@@ -8,7 +8,12 @@
 #include "invoice_list_xml_transformer.h"
 
 /**
- * Transforms the xml document.
+ * @InvoiceListXmlTransformer
+ * Transforms an xml document into a invoice list.
+ */
+
+/**
+ * Stores the invoice list into the QList for future retrieval.
  */
 void InvoiceListXmlTransformer::transform(QDomDocument *document)
 {
