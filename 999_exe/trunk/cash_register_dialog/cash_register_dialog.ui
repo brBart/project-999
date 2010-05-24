@@ -33,6 +33,9 @@
        <property name="text">
         <string>Turno:</string>
        </property>
+       <property name="buddy">
+        <cstring>shiftsComboBox</cstring>
+       </property>
       </widget>
      </item>
      <item>
@@ -104,6 +107,9 @@
        </disabled>
       </palette>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="url">
       <url>
        <string>about:blank</string>
@@ -129,14 +135,14 @@
      <item>
       <widget class="QPushButton" name="okPushButton">
        <property name="text">
-        <string>Aceptar</string>
+        <string>&amp;Aceptar</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="cancelPushButton">
        <property name="text">
-        <string>Cancelar</string>
+        <string>&amp;Cancelar</string>
        </property>
       </widget>
      </item>
@@ -152,6 +158,12 @@
    <header>QtWebKit/QWebView</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>shiftsComboBox</tabstop>
+  <tabstop>okPushButton</tabstop>
+  <tabstop>cancelPushButton</tabstop>
+  <tabstop>webView</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
