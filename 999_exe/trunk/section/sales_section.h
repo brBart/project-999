@@ -27,7 +27,7 @@ public:
 	enum DocumentStatus {Edit, Idle, Cancelled};
 	SalesSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cRegisterKey, QWidget *parent = 0);
-	virtual ~SalesSection();
+	virtual ~SalesSection() {};
 
 public slots:
 	void loadFinished(bool ok);

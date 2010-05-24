@@ -43,6 +43,8 @@ void MainWindow::setIsSessionActive(bool isActive)
  */
 void MainWindow::loadMainSection()
 {
+	menuBar()->clear();
+
 	MainSection *section =
 			new MainSection(&m_Manager, &m_PluginFactory, m_ServerUrl, this);
 

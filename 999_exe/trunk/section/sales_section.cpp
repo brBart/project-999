@@ -13,11 +13,11 @@
  */
 
 #include <QList>
+#include <QMessageBox>
 #include "../xml_transformer/invoice_list_xml_transformer.h"
 #include "../xml_transformer/invoice_xml_transformer.h"
 #include "../xml_transformer/cash_register_status_xml_transformer.h"
 #include "../xml_transformer/stub_xml_transformer.h"
-#include <QMessageBox>
 
 /**
  * Constructs the section.
@@ -48,14 +48,6 @@ SalesSection::SalesSection(QNetworkAccessManager *manager,
 	} else {
 		fetchInvoiceForm();
 	}
-}
-
-/**
- * Clears the window's menu bar.
- */
-SalesSection::~SalesSection()
-{
-	m_Window->menuBar()->clear();
 }
 
 /**
