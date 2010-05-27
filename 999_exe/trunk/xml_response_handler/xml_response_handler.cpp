@@ -28,7 +28,7 @@ XmlResponseHandler::XmlResponseHandler(QObject *parent) : QObject(parent)
  * session.
  */
 XmlResponseHandler::ResponseType XmlResponseHandler::handle(QString content,
-		XmlTransformer *transformer, QString *errorMsg)
+		XmlTransformer *transformer, QString *errorMsg, QString *elementId)
 {
 	QDomDocument document;
 
@@ -56,9 +56,12 @@ XmlResponseHandler::ResponseType XmlResponseHandler::handle(QString content,
 		return Error;
 	}
 
-	if (!validateResponse(&document, msg)) {
+	QString id;
+	if (!validateResponse(&document, msg, id)) {
 		if (errorMsg != 0)
 			*errorMsg = msg;
+		if (elementId != 0)
+			*elementId = id;
 		emit sessionStatusChanged(true);
 		return Failure;
 	}
@@ -89,7 +92,7 @@ bool XmlResponseHandler::checkForError(QDomDocument *document, QString &errorMsg
  * Validate the response, success or failure.
  */
 bool XmlResponseHandler::validateResponse(QDomDocument *document,
-		QString &failMsg)
+		QString &failMsg, QString &elementId)
 {
 	QDomNodeList elements = document->elementsByTagName("success");
 	QDomElement result = elements.at(0).toElement();

@@ -21,14 +21,15 @@ public:
 	XmlResponseHandler(QObject *parent = 0);
 	virtual ~XmlResponseHandler() {};
 	ResponseType handle(QString content, XmlTransformer *transformer,
-			QString *errorMsg = 0);
+			QString *errorMsg = 0, QString *elementId = 0);
 
 signals:
 	void sessionStatusChanged(bool isActive);
 
 private:
 	bool checkForError(QDomDocument *document, QString &errorMsg);
-	bool validateResponse(QDomDocument *document, QString &failMsg);
+	bool validateResponse(QDomDocument *document, QString &failMsg,
+			QString &elementId);
 };
 
 #endif /* XML_RESPONSE_HANDLER_H_ */
