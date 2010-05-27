@@ -5,16 +5,14 @@
 #include "not_fetched_customer_state.h"
 #include "fetched_customer_state.h"
 
-CustomerDialog::CustomerDialog(QNetworkAccessManager *manager, QUrl *url,
-		bool enableCancelButton, QWidget *parent, Qt::WindowFlags f)
-		: QDialog(parent, f), m_ServerUrl(url)
+CustomerDialog::CustomerDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent,
+		Qt::WindowFlags f) : QDialog(parent, f), m_ServerUrl(url)
 {
 	ui.setupUi(this);
-	ui.cancelPushButton->setEnabled(enableCancelButton);
 
 	setConsole();
 
-	m_Request = new HttpRequest(manager, this);
+	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
 
 	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,

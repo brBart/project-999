@@ -25,7 +25,7 @@ class SalesSection: public Section
 public:
 	enum CRegisterStatus {Closed, Open, Error};
 	enum DocumentStatus {Edit, Idle, Cancelled};
-	SalesSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
+	SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cRegisterKey, QWidget *parent = 0);
 	virtual ~SalesSection();
 
@@ -34,8 +34,7 @@ public slots:
 	void createInvoice();
 	void updateCashRegisterStatus(QString content);
 	void discardInvoice();
-	void setCustomer(bool isChanging = true);
-	void updateCustomerData(QString content);
+	void setCustomer();
 	void fetchInvoice(QString id);
 
 private:
@@ -83,6 +82,7 @@ private:
 	QString viewValues();
 	void prepareInvoiceForm(QString dateTime, QString username);
 	void fetchCashRegisterStatus();
+	void updateCustomerData(QString nit, QString name);
 };
 
 #endif /* SALES_SECTION_H_ */

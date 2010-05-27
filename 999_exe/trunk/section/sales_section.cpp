@@ -25,10 +25,9 @@
 /**
  * Constructs the section.
  */
-SalesSection::SalesSection(QNetworkAccessManager *manager,
-		QWebPluginFactory *factory, QUrl *serverUrl, QString cRegisterKey,
-		QWidget *parent) : Section(manager, factory, serverUrl, parent),
-		m_CRegisterKey(cRegisterKey)
+SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
+		QUrl *serverUrl, QString cRegisterKey, QWidget *parent)
+		: Section(jar, factory, serverUrl, parent), m_CRegisterKey(cRegisterKey)
 {
 	m_Window = dynamic_cast<MainWindow*>(parentWidget());
 	setActions();
@@ -36,7 +35,7 @@ SalesSection::SalesSection(QNetworkAccessManager *manager,
 	setActionsManager();
 
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
-	m_Request = new HttpRequest(manager, this);
+	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
 
 	connect(ui.webView, SIGNAL(loadFinished(bool)), this,
@@ -109,7 +108,7 @@ void SalesSection::createInvoice()
 		m_DocumentStatus = Edit;
 		updateActions();
 
-		setCustomer(false);
+		setCustomer();
 	} else {
 		m_Console->displayError(errorMsg);
 		fetchCashRegisterStatus();
@@ -185,10 +184,10 @@ void SalesSection::discardInvoice()
 	delete transformer;
 }
 
-void SalesSection::setCustomer(bool isChanging)
+void SalesSection::setCustomer()
 {
-	CustomerDialog dialog(ui.webView->page()->networkAccessManager(), m_ServerUrl,
-			isChanging, this, Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+	CustomerDialog dialog(m_Request->cookieJar(), m_ServerUrl, this,
+			Qt::WindowTitleHint);
 
 	if (dialog.exec() == QDialog::Accepted) {
 		QUrl url(*m_ServerUrl);
@@ -197,37 +196,21 @@ void SalesSection::setCustomer(bool isChanging)
 		url.addQueryItem("customer_key", dialog.customerKey());
 		url.addQueryItem("type", "xml");
 
-		connect(m_Request, SIGNAL(finished(QString)), this,
-				SLOT(updateCustomerData(QString)));
+		QString content = m_Request->get(url);
 
-		QString content = m_Request->get(url, true);
+		QString errorMsg;
+		InvoiceCustomerXmlTransformer *transformer =
+				new InvoiceCustomerXmlTransformer();
+		if (m_Handler->handle(content, transformer, &errorMsg) ==
+				XmlResponseHandler::Success) {
+			QList<QMap<QString, QString>*> list = transformer->content();
+			updateCustomerData(list[0]->value("nit"), list[0]->value("name"));
+		} else {
+			m_Console->displayError(errorMsg);
+		}
+
+		delete transformer;
 	}
-}
-
-void SalesSection::updateCustomerData(QString content)
-{
-	QString errorMsg;
-	InvoiceCustomerXmlTransformer *transformer =
-			new InvoiceCustomerXmlTransformer();
-	if (m_Handler->handle(content, transformer, &errorMsg) ==
-			XmlResponseHandler::Success) {
-		QList<QMap<QString, QString>*> list = transformer->content();
-
-		QWebFrame *frame = ui.webView->page()->mainFrame();
-		QWebElement element;
-
-		element = frame->findFirstElement("#nit");
-		element.setInnerXml(list[0]->value("nit"));
-
-		element = frame->findFirstElement("#customer");
-		element.setInnerXml(list[0]->value("name"));
-	} else {
-		m_Console->displayError(errorMsg);
-	}
-
-	delete transformer;
-
-	m_Request->disconnect(this);
 }
 
 /**
@@ -497,4 +480,16 @@ void SalesSection::fetchCashRegisterStatus()
 			SLOT(updateCashRegisterStatus(QString)));
 
 	m_Request->get(url, true);
+}
+
+void SalesSection::updateCustomerData(QString nit, QString name)
+{
+	QWebFrame *frame = ui.webView->page()->mainFrame();
+	QWebElement element;
+
+	element = frame->findFirstElement("#nit");
+	element.setInnerXml(nit);
+
+	element = frame->findFirstElement("#customer");
+	element.setInnerXml(name);
 }

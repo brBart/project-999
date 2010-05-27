@@ -19,16 +19,19 @@ FetchedCustomerState::FetchedCustomerState(CustomerDialog *dialog, QObject *pare
 
 void FetchedCustomerState::setName(QString name)
 {
+	HttpRequest *request =
+			new HttpRequest(m_Dialog->httpRequest()->cookieJar(), this);
+
 	QUrl url = m_Dialog->url();
 	url.addQueryItem("cmd", "set_name_object");
 	url.addQueryItem("value", name);
 	url.addQueryItem("key", m_Dialog->customerKey());
 	url.addQueryItem("type", "xml");
 
-	connect(m_Dialog->httpRequest(), SIGNAL(finished(QString)), this,
+	connect(request, SIGNAL(finished(QString)), this,
 			SLOT(nameSetted(QString)));
 
-	m_Dialog->httpRequest()->get(url, true);
+	request->get(url, true);
 }
 
 void FetchedCustomerState::save()
@@ -72,6 +75,4 @@ void FetchedCustomerState::nameSetted(QString content)
 	}
 
 	delete transformer;
-
-	m_Dialog->httpRequest()->disconnect(this);
 }

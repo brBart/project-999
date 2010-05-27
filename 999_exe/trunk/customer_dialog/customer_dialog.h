@@ -15,8 +15,8 @@ class CustomerDialog : public QDialog
     Q_OBJECT
 
 public:
-    CustomerDialog(QNetworkAccessManager *manager, QUrl *url,
-    		bool enableCancelButton, QWidget *parent = 0, Qt::WindowFlags f = 0);
+    CustomerDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent = 0,
+    		Qt::WindowFlags f = 0);
     ~CustomerDialog();
     void setState(CustomerState *state);
     CustomerState* notFetchedState();
