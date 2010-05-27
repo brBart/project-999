@@ -125,6 +125,10 @@ function __autoload($className){
 			require_once('business/document.php');
 			break;
 			
+		case 'Customer':
+			require_once('business/agent.php');
+			break;
+			
 		default:
 	}
 }
