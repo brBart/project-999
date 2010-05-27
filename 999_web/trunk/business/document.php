@@ -1525,7 +1525,6 @@ class Invoice extends Document{
 	 * @param Customer $obj
 	 */
 	public function setCustomer(Customer $obj){
-		self::validateObjectFromDatabase($obj);
 		$this->_mCustomerNit = $obj->getNit();
 		$this->_mCustomerName = $obj->getName();
 	}
