@@ -2,6 +2,7 @@
 
 #include "../xml_transformer/shift_list_xml_transformer.h"
 #include "../xml_transformer/object_key_xml_transformer.h"
+#include "../console/console_factory.h"
 
 /**
  * @class CashRegisterDialog
@@ -13,19 +14,23 @@
  * Constructs the dialog.
  */
 CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
-		QWidget *parent) : QDialog(parent), m_ServerUrl(url)
+		QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f), m_ServerUrl(url)
 {
 	ui.setupUi(this);
 
-	ui.webView->setHtml("<div id=\"console\" style=\"font-size: 10px; color: red;\">"
-			"</div>");
-	m_Console.setFrame(ui.webView->page()->mainFrame());
+	m_Console = ConsoleFactory::instance()
+			->createWidgetConsole(QMap<QString, QLabel*>());
 	m_Request = new HttpRequest(manager, this);
 	m_Handler = new XmlResponseHandler(this);
 
 	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)));
 	connect(ui.okPushButton, SIGNAL(clicked()), this, SLOT(fetchKey()));
+}
+
+CashRegisterDialog::~CashRegisterDialog()
+{
+	delete m_Console;
 }
 
 /**
@@ -53,7 +58,7 @@ void CashRegisterDialog::init()
 					shift->value("shift_id"));
 		}
 	} else {
-		m_Console.displayError(errorMsg);
+		m_Console->displayError(errorMsg);
 	}
 
 	delete transformer;
@@ -82,7 +87,7 @@ void CashRegisterDialog::fetchKey()
 		m_Key = params->value("key");
 		accept();
 	} else {
-		m_Console.displayError(errorMsg);
+		m_Console->displayError(errorMsg);
 	}
 
 	delete transformer;
