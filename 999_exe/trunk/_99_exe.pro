@@ -6,7 +6,17 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/stub_xml_transformer.h \
+HEADERS += xml_transformer/invoice_customer_xml_transformer.h \
+    xml_transformer/customer_xml_transformer.h \
+    line_edit/line_edit.h \
+    customer_dialog/customer_state.h \
+    customer_dialog/fetched_customer_state.h \
+    customer_dialog/not_fetched_customer_state.h \
+    customer_dialog/customer_dialog.h \
+    console/console_factory.h \
+    console/widget_console.h \
+    console/html_console.h \
+    xml_transformer/stub_xml_transformer.h \
     xml_transformer/shift_list_xml_transformer.h \
     xml_transformer/cash_register_status_xml_transformer.h \
     xml_transformer/invoice_xml_transformer.h \
@@ -25,7 +35,17 @@ HEADERS += xml_transformer/stub_xml_transformer.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/stub_xml_transformer.cpp \
+SOURCES += xml_transformer/invoice_customer_xml_transformer.cpp \
+    xml_transformer/customer_xml_transformer.cpp \
+    line_edit/line_edit.cpp \
+    customer_dialog/customer_state.cpp \
+    customer_dialog/fetched_customer_state.cpp \
+    customer_dialog/not_fetched_customer_state.cpp \
+    customer_dialog/customer_dialog.cpp \
+    console/console_factory.cpp \
+    console/widget_console.cpp \
+    console/html_console.cpp \
+    xml_transformer/stub_xml_transformer.cpp \
     xml_transformer/shift_list_xml_transformer.cpp \
     xml_transformer/cash_register_status_xml_transformer.cpp \
     xml_transformer/invoice_xml_transformer.cpp \
@@ -45,7 +65,8 @@ SOURCES += xml_transformer/stub_xml_transformer.cpp \
     http_request/http_request.cpp \
     main.cpp \
     mainwindow.cpp
-FORMS += recordset/recordset.ui \
+FORMS += customer_dialog/customer_dialog.ui \
+    recordset/recordset.ui \
     cash_register_dialog/cash_register_dialog.ui \
     section/section.ui \
     mainwindow.ui
