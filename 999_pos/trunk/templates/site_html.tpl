@@ -50,7 +50,7 @@
 		</div>
 		<div id="console" class="console_display">
 		{if $notify eq 1}
-			<p class="{$type}">{$message}</p>
+			<p id="{$type}" class="{$type}">{$message}</p>
 		{/if}
 		</div>
 		{if $second_menu neq 'none'}
