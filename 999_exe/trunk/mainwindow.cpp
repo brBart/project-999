@@ -59,7 +59,7 @@ void MainWindow::loadMainSection()
  */
 void MainWindow::loadSalesSection()
 {
-	CashRegisterDialog dialog(&m_Manager, m_ServerUrl, this);
+	CashRegisterDialog dialog(&m_Manager, m_ServerUrl, this, Qt::WindowTitleHint);
 
 	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
 			SLOT(setIsSessionActive(bool)), Qt::QueuedConnection);
