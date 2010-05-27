@@ -100,6 +100,10 @@ bool XmlResponseHandler::validateResponse(QDomDocument *document,
 	if (result.text() == "0") {
 		elements = document->elementsByTagName("message");
 		failMsg = elements.at(0).toElement().text();
+
+		elements = document->elementsByTagName("element_id");
+		elementId = elements.at(0).toElement().text();
+
 		return false;
 	}
 
