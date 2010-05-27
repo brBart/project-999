@@ -152,7 +152,7 @@ class Customer extends PersistObject{
 			return new Customer(self::CF);   
 		}
 		else{
-			String::validateNit($nit, 'Nit inv&accute;lido.');
+			String::validateNit($nit, 'Nit inv&aacute;lido.');
 			$customer = CustomerDAM::getInstance($nit);
 			if(!$customer)
 				return new Customer($nit);
