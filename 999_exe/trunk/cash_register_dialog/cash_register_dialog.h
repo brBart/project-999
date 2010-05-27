@@ -4,7 +4,7 @@
 #include <QtGui/QDialog>
 #include "ui_cash_register_dialog.h"
 
-#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 #include <QUrl>
 #include "../console/console.h"
 #include "../http_request/http_request.h"
@@ -15,8 +15,8 @@ class CashRegisterDialog : public QDialog
     Q_OBJECT
 
 public:
-    CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
-    		QWidget *parent = 0, Qt::WindowFlags f = 0);
+    CashRegisterDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent = 0,
+    		Qt::WindowFlags f = 0);
     ~CashRegisterDialog();
     void init();
     QString key();

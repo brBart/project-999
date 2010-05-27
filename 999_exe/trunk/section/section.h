@@ -9,7 +9,7 @@ class Section : public QWidget
     Q_OBJECT
 
 public:
-    Section(QNetworkAccessManager *manager, QWebPluginFactory *factory,
+    Section(QNetworkCookieJar *jar, QWebPluginFactory *factory,
     		QUrl *serverUrl, QWidget *parent = 0);
     ~Section() {};
 

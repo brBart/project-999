@@ -1,6 +1,6 @@
 #include "section.h"
 
-#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 #include <QWebFrame>
 #include <QFile>
 #include <QTextStream>
@@ -13,12 +13,13 @@
 /**
  * Constructs a Section with a QNetworkAccessManager and a parent.
  */
-Section::Section(QNetworkAccessManager *manager, QWebPluginFactory *factory,
+Section::Section(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 		QUrl *serverUrl, QWidget *parent) : QWidget(parent), m_ServerUrl(serverUrl)
 {
 	ui.setupUi(this);
 
-	ui.webView->page()->setNetworkAccessManager(manager);
+	ui.webView->page()->networkAccessManager()->setCookieJar(jar);
+	jar->setParent(0);
 	ui.webView->page()->setPluginFactory(factory);
 	ui.webView->setContextMenuPolicy(Qt::PreventContextMenu);
 

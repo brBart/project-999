@@ -15,7 +15,7 @@ class MainSection: public Section
 	Q_OBJECT
 
 public:
-	MainSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
+	MainSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 			QUrl *serverUrl, QWidget *parent = 0);
 	virtual ~MainSection() {};
 };

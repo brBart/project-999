@@ -4,7 +4,7 @@
 #include <QtGui/QMainWindow>
 #include "ui_mainwindow.h"
 
-#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 #include "section/section.h"
 #include "plugin_factory/plugin_factory.h"
 
@@ -27,7 +27,7 @@ protected:
 private:
     Ui::MainWindowClass ui;
     bool m_IsSessionActive;
-    QNetworkAccessManager m_Manager;
+    QNetworkCookieJar m_CookieJar;
     QUrl *m_ServerUrl;
     PluginFactory m_PluginFactory;
 

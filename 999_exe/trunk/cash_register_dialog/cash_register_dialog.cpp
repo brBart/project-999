@@ -13,14 +13,14 @@
 /**
  * Constructs the dialog.
  */
-CashRegisterDialog::CashRegisterDialog(QNetworkAccessManager *manager, QUrl *url,
+CashRegisterDialog::CashRegisterDialog(QNetworkCookieJar *jar, QUrl *url,
 		QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f), m_ServerUrl(url)
 {
 	ui.setupUi(this);
 
 	m_Console = ConsoleFactory::instance()
 			->createWidgetConsole(QMap<QString, QLabel*>());
-	m_Request = new HttpRequest(manager, this);
+	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
 
 	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,

@@ -6,6 +6,7 @@
  */
 
 #include "http_request.h"
+
 #include <QEventLoop>
 
 /**
@@ -16,9 +17,11 @@
 /**
  * Constructs a HtttpRequest with the QNetworkAccessManager and parent.
  */
-HttpRequest::HttpRequest(QNetworkAccessManager *manager, QObject *parent)
-		: QObject(parent), m_Manager(manager)
+HttpRequest::HttpRequest(QNetworkCookieJar *jar, QObject *parent)
+		: QObject(parent)
 {
+	m_Manager.setCookieJar(jar);
+	jar->setParent(0);
 }
 
 /**
@@ -30,7 +33,7 @@ QString HttpRequest::get(QUrl url, bool isAsync)
 	if (!isAsync) {
 		QEventLoop loop;
 
-		QNetworkReply *reply = m_Manager->get(QNetworkRequest(url));
+		QNetworkReply *reply = m_Manager.get(QNetworkRequest(url));
 
 		connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
 
@@ -38,12 +41,17 @@ QString HttpRequest::get(QUrl url, bool isAsync)
 		return reply->readAll();
 	}
 
-	connect(m_Manager, SIGNAL(finished(QNetworkReply*)), this,
+	connect(&m_Manager, SIGNAL(finished(QNetworkReply*)), this,
 			SLOT(loadFinished(QNetworkReply*)));
 
-	m_Manager->get(QNetworkRequest(url));
+	m_Manager.get(QNetworkRequest(url));
 
 	return NULL;
+}
+
+QNetworkCookieJar* HttpRequest::cookieJar()
+{
+	return m_Manager.cookieJar();
 }
 
 /**
@@ -54,5 +62,5 @@ void HttpRequest::loadFinished(QNetworkReply *reply)
 {
 	emit finished(reply->readAll());
 
-	m_Manager->disconnect(this);
+	m_Manager.disconnect(this);
 }
