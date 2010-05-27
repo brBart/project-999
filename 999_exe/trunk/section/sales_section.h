@@ -27,17 +27,19 @@ public:
 	enum DocumentStatus {Edit, Idle, Cancelled};
 	SalesSection(QNetworkAccessManager *manager, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cRegisterKey, QWidget *parent = 0);
-	virtual ~SalesSection() {};
+	virtual ~SalesSection();
 
 public slots:
 	void loadFinished(bool ok);
-	void fetchInvoice(QString id);
 	void createInvoice();
 	void updateCashRegisterStatus(QString content);
 	void discardInvoice();
+	void setCustomer(bool isChanging = true);
+	void updateCustomerData(QString content);
+	void fetchInvoice(QString id);
 
 private:
-	Console m_Console;
+	Console *m_Console;
 	HttpRequest *m_Request;
 	XmlResponseHandler *m_Handler;
 	Recordset m_Recordset;

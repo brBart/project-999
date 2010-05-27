@@ -18,6 +18,9 @@
 #include "../xml_transformer/invoice_xml_transformer.h"
 #include "../xml_transformer/cash_register_status_xml_transformer.h"
 #include "../xml_transformer/stub_xml_transformer.h"
+#include "../console/console_factory.h"
+#include "../customer_dialog/customer_dialog.h"
+#include "../xml_transformer/invoice_customer_xml_transformer.h"
 
 /**
  * Constructs the section.
@@ -32,6 +35,7 @@ SalesSection::SalesSection(QNetworkAccessManager *manager,
 	setMenu();
 	setActionsManager();
 
+	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 	m_Request = new HttpRequest(manager, this);
 	m_Handler = new XmlResponseHandler(this);
 
@@ -50,13 +54,18 @@ SalesSection::SalesSection(QNetworkAccessManager *manager,
 	}
 }
 
+SalesSection::~SalesSection()
+{
+	delete m_Console;
+}
+
 /**
  * Updates the status of the section depending on the page received.
  */
 void SalesSection::loadFinished(bool ok)
 {
 	Section::loadFinished(ok);
-	m_Console.setFrame(ui.webView->page()->mainFrame());
+	m_Console->setFrame(ui.webView->page()->mainFrame());
 
 	if (ok) {
 		QWebFrame *frame = ui.webView->page()->mainFrame();
@@ -77,7 +86,7 @@ void SalesSection::loadFinished(bool ok)
  */
 void SalesSection::createInvoice()
 {
-	m_Console.reset();
+	m_Console->reset();
 
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "create_invoice");
@@ -99,8 +108,10 @@ void SalesSection::createInvoice()
 
 		m_DocumentStatus = Edit;
 		updateActions();
+
+		setCustomer(false);
 	} else {
-		m_Console.displayError(errorMsg);
+		m_Console->displayError(errorMsg);
 		fetchCashRegisterStatus();
 	}
 
@@ -168,10 +179,55 @@ void SalesSection::discardInvoice()
 			fetchInvoiceForm();
 		}
 	} else {
-		m_Console.displayError(errorMsg);
+		m_Console->displayError(errorMsg);
 	}
 
 	delete transformer;
+}
+
+void SalesSection::setCustomer(bool isChanging)
+{
+	CustomerDialog dialog(ui.webView->page()->networkAccessManager(), m_ServerUrl,
+			isChanging, this, Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+
+	if (dialog.exec() == QDialog::Accepted) {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd", "set_customer_invoice");
+		url.addQueryItem("key", m_NewInvoiceKey);
+		url.addQueryItem("customer_key", dialog.customerKey());
+		url.addQueryItem("type", "xml");
+
+		connect(m_Request, SIGNAL(finished(QString)), this,
+				SLOT(updateCustomerData(QString)));
+
+		QString content = m_Request->get(url, true);
+	}
+}
+
+void SalesSection::updateCustomerData(QString content)
+{
+	QString errorMsg;
+	InvoiceCustomerXmlTransformer *transformer =
+			new InvoiceCustomerXmlTransformer();
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		QList<QMap<QString, QString>*> list = transformer->content();
+
+		QWebFrame *frame = ui.webView->page()->mainFrame();
+		QWebElement element;
+
+		element = frame->findFirstElement("#nit");
+		element.setInnerXml(list[0]->value("nit"));
+
+		element = frame->findFirstElement("#customer");
+		element.setInnerXml(list[0]->value("name"));
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
+
+	m_Request->disconnect(this);
 }
 
 /**
@@ -207,6 +263,7 @@ void SalesSection::setActions()
 
 	m_ClientAction = new QAction("Cliente", this);
 	m_ClientAction->setShortcut(tr("Ctrl+E"));
+	connect(m_ClientAction, SIGNAL(triggered()), this, SLOT(setCustomer()));
 
 	m_DiscountAction = new QAction("Descuento", this);
 	m_DiscountAction->setShortcut(Qt::Key_F7);
@@ -410,11 +467,8 @@ void SalesSection::prepareInvoiceForm(QString dateTime, QString username)
 
 	// Change div css style from disabled to enabled.
 	element = frame->findFirstElement("#main_data");
-	QString attribute = element.attribute("class");
-	QStringList styles = attribute.split(" ");
-	styles.replaceInStrings("disabled", "enabled");
-	attribute = styles.join(" ");
-	element.setAttribute("class", attribute);
+	element.removeClass("disabled");
+	element.addClass("enabled");
 
 	element = frame->findFirstElement("#nit_label");
 	element.setInnerXml(element.toPlainText() + "*");
