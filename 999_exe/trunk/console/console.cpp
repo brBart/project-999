@@ -20,6 +20,30 @@ void Console::setFrame(QWebFrame *frame)
 	m_Div = frame->findFirstElement("#console");
 }
 
+void Console::displayFailure(QString msg, QString elementId)
+{
+	QString newP = "<p id=\"failed-" + elementId + "\" class=\"failure\">"
+			+ msg + "</p>";
+
+	showElementIndicator(elementId);
+
+	displayMessage(newP);
+}
+
+void Console::cleanFailure(QString elementId)
+{
+	QWebElement elementP = m_Div.findFirst("#failed-" + elementId);
+
+	// If there was a message.
+	if (!elementP.isNull()) {
+		elementP.removeFromDocument();
+		m_Div.evaluateJavaScript("scrollTop = "
+				+ m_Div.evaluateJavaScript("scrollHeight").toString() + ";");
+
+		hideElementIndicator(elementId);
+	}
+}
+
 /**
  * Displays an error message on the div.
  */
@@ -34,18 +58,26 @@ void Console::displayError(QString msg)
 	displayMessage(newP);
 }
 
+void Console::reset()
+{
+	QWebElementCollection collection = m_Div.findAll("p");
+
+	foreach (QWebElement element, collection) {
+		QString id = element.attribute("id");
+		if (id != "error" && id != "info") {
+			cleanFailure(id.mid(id.indexOf("-") + 1));
+		} else {
+			element.removeFromDocument();
+		}
+	}
+}
+
 /**
  * Displays the message on the div.
  */
 void Console::displayMessage(QString msg)
 {
 	m_Div.appendInside(msg);
-}
-
-/**
- * Deletes all previously displayed messages.
- */
-void Console::reset()
-{
-	m_Div.setInnerXml("");
+	m_Div.evaluateJavaScript("scrollTop = "
+			+ m_Div.evaluateJavaScript("scrollHeight").toString() + ";");
 }

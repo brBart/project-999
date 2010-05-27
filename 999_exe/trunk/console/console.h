@@ -15,16 +15,18 @@
 class Console
 {
 public:
-	Console() {};
-	virtual ~Console() {};
-	void setFrame(QWebFrame *frame);
-	void displayError(QString msg);
-	void reset();
+	virtual void setFrame(QWebFrame *frame);
+	virtual void displayFailure(QString msg, QString elementId);
+	virtual void cleanFailure(QString elementId);
+	virtual void displayError(QString msg);
+	virtual void reset();
 
-private:
+protected:
 	QWebElement m_Div;
 
 	void displayMessage(QString msg);
+	virtual void hideElementIndicator(QString elementId) = 0;
+	virtual void showElementIndicator(QString elementId) = 0;
 };
 
 #endif /* CONSOLE_H_ */
