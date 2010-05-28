@@ -36,6 +36,8 @@ void FetchedCustomerState::setName(QString name)
 
 void FetchedCustomerState::save()
 {
+	m_Dialog->console()->reset();
+
 	QUrl url = m_Dialog->url();
 	url.addQueryItem("cmd", "save_object");
 	url.addQueryItem("key", m_Dialog->customerKey());

@@ -20,10 +20,13 @@ public:
 	virtual ~LineEdit() {};
 
 signals:
-	void blur(QString text);
+	void blurAndChanged(QString text);
 
 protected:
 	void focusOutEvent(QFocusEvent *e);
+
+private:
+	QString m_LastText;
 };
 
 #endif /* LINE_EDIT_H_ */

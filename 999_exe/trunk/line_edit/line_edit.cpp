@@ -14,7 +14,14 @@ LineEdit::LineEdit(QWidget *parent) : QLineEdit(parent)
 
 void LineEdit::focusOutEvent(QFocusEvent *e)
 {
-	emit blur(text());
+	QString value = text();
+
+	// If is empty, continue. But if is not, must be with different value.
+	if (value == "" || (value != "" && value != m_LastText)) {
+		m_LastText = value;
+
+		emit blurAndChanged(value);
+	}
 
 	QLineEdit::focusOutEvent(e);
 }

@@ -26,9 +26,10 @@ CustomerDialog::CustomerDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *paren
 	m_FetchedState = new FetchedCustomerState(this, this);
 	m_State = m_NotFetchedState;
 
-	connect(ui.nitLineEdit, SIGNAL(blur(QString)), this,
+	connect(ui.nitLineEdit, SIGNAL(blurAndChanged(QString)), this,
 			SLOT(fetchCustomer(QString)));
-	connect(ui.nameLineEdit, SIGNAL(blur(QString)), this, SLOT(setName(QString)));
+	connect(ui.nameLineEdit, SIGNAL(blurAndChanged(QString)), this,
+			SLOT(setName(QString)));
 	connect(ui.okPushButton, SIGNAL(clicked()), this, SLOT(save()));
 }
 
