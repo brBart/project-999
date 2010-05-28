@@ -90,10 +90,10 @@ class Customer extends PersistObject{
 	 * @param string $name
 	 */
 	public function setName($name){
+		$this->_mName = $name;
+		
 		if($this->_mNit != self::CF)
 			String::validateString($name, 'Nombre inv&aacute;lido.');
-		
-		$this->_mName = $name;
 	}
 	
 	/**
