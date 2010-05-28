@@ -38,7 +38,7 @@ QString HttpRequest::get(QUrl url, bool isAsync)
 		connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
 
 		loop.exec();
-		return reply->readAll();
+		return QString::fromUtf8(reply->readAll());
 	}
 
 	connect(&m_Manager, SIGNAL(finished(QNetworkReply*)), this,
@@ -60,7 +60,7 @@ QNetworkCookieJar* HttpRequest::cookieJar()
  */
 void HttpRequest::loadFinished(QNetworkReply *reply)
 {
-	emit finished(reply->readAll());
+	emit finished(QString::fromUtf8(reply->readAll()));
 
 	m_Manager.disconnect(this);
 }
