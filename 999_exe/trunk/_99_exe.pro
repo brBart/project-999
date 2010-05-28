@@ -6,7 +6,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/invoice_customer_xml_transformer.h \
+HEADERS += enter_key_event_filter/enter_key_event_filter.h \
+    xml_transformer/invoice_customer_xml_transformer.h \
     xml_transformer/customer_xml_transformer.h \
     line_edit/line_edit.h \
     customer_dialog/customer_state.h \
@@ -35,7 +36,8 @@ HEADERS += xml_transformer/invoice_customer_xml_transformer.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/invoice_customer_xml_transformer.cpp \
+SOURCES += enter_key_event_filter/enter_key_event_filter.cpp \
+    xml_transformer/invoice_customer_xml_transformer.cpp \
     xml_transformer/customer_xml_transformer.cpp \
     line_edit/line_edit.cpp \
     customer_dialog/customer_state.cpp \

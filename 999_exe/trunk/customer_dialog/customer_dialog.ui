@@ -219,12 +219,18 @@
        <property name="text">
         <string>&amp;Aceptar</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="cancelPushButton">
        <property name="text">
         <string>&amp;Cancelar</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

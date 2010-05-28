@@ -4,11 +4,15 @@
 #include "../console/console_factory.h"
 #include "not_fetched_customer_state.h"
 #include "fetched_customer_state.h"
+#include "../enter_key_event_filter/enter_key_event_filter.h"
 
 CustomerDialog::CustomerDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent,
 		Qt::WindowFlags f) : QDialog(parent, f), m_ServerUrl(url)
 {
 	ui.setupUi(this);
+	EnterKeyEventFilter *filter = new EnterKeyEventFilter(this);
+	ui.okPushButton->installEventFilter(filter);
+	ui.cancelPushButton->installEventFilter(filter);
 
 	setConsole();
 
