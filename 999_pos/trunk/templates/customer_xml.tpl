@@ -6,5 +6,5 @@ header('Content-Type: text/xml');
 <response>
 	<success>1</success>
 	<key>{$key}</key>
-	<name>{$name}</name>
+	<name><![CDATA[{$name}]]></name>
 </response>
