@@ -16,10 +16,10 @@ class Console
 {
 public:
 	virtual void setFrame(QWebFrame *frame);
-	virtual void displayFailure(QString msg, QString elementId);
-	virtual void cleanFailure(QString elementId);
-	virtual void displayError(QString msg);
-	virtual void reset();
+	void displayFailure(QString msg, QString elementId);
+	void cleanFailure(QString elementId);
+	void displayError(QString msg);
+	void reset();
 
 protected:
 	QWebElement m_Div;
