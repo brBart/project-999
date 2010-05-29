@@ -19,6 +19,8 @@ CashRegisterDialog::CashRegisterDialog(QNetworkCookieJar *jar, QUrl *url,
 
 	m_Console = ConsoleFactory::instance()
 			->createWidgetConsole(QMap<QString, QLabel*>());
+	m_Console->setFrame(ui.webView->page()->mainFrame());
+
 	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
 
