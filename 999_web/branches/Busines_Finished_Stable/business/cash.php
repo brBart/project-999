@@ -2227,13 +2227,13 @@ class WorkingDay extends Persist{
 			
 		$workingDay = WorkingDayDAM::getInstance($date);
 		
-		if(!is_null($workingDay)){
-			if(Date::compareDates($date, date('d/m/Y')) && $workingDay->isOpen())
-				$workingDay->close();
-			return $workingDay;
-		}
+		if(is_null($workingDay))
+			$workingDay = WorkingDayDAM::insert($date); 
 		
-		return WorkingDayDAM::insert($date);
+		if(Date::compareDates($date, date('d/m/Y')) && $workingDay->isOpen())
+			$workingDay->close();
+		
+		return $workingDay;
 	}
 }
 
