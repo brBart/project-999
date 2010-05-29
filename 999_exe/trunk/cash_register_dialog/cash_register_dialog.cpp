@@ -1,7 +1,6 @@
 #include "cash_register_dialog.h"
 
-#include "../xml_transformer/shift_list_xml_transformer.h"
-#include "../xml_transformer/object_key_xml_transformer.h"
+#include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 
 /**
@@ -44,8 +43,10 @@ void CashRegisterDialog::init()
 
 	QString content = m_Request->get(url);
 
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("shift_list");
+
 	QString errorMsg;
-	ShiftListXmlTransformer *transformer = new ShiftListXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
@@ -78,8 +79,10 @@ void CashRegisterDialog::fetchKey()
 
 	QString content = m_Request->get(url);
 
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("object_key");
+
 	QString errorMsg;
-	ObjectKeyXmlTransformer *transformer = new ObjectKeyXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();

@@ -14,13 +14,9 @@
 
 #include <QList>
 #include <QMessageBox>
-#include "../xml_transformer/invoice_list_xml_transformer.h"
-#include "../xml_transformer/invoice_xml_transformer.h"
-#include "../xml_transformer/cash_register_status_xml_transformer.h"
-#include "../xml_transformer/stub_xml_transformer.h"
+#include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
-#include "../xml_transformer/invoice_customer_xml_transformer.h"
 
 /**
  * Constructs the section.
@@ -94,8 +90,10 @@ void SalesSection::createInvoice()
 
 	QString content = m_Request->get(url);
 
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("invoice");
+
 	QString errorMsg;
-	InvoiceXmlTransformer *transformer = new InvoiceXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
@@ -123,9 +121,10 @@ void SalesSection::createInvoice()
 void SalesSection::updateCashRegisterStatus(QString content)
 {
 	// TODO: Test this if a closed cash register.
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("cash_register_status");
+
 	QString errorMsg;
-	CashRegisterStatusXmlTransformer *transformer =
-			new CashRegisterStatusXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
@@ -161,8 +160,10 @@ void SalesSection::discardInvoice()
 
 	QString content = m_Request->get(url);
 
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("stub");
+
 	QString errorMsg;
-	StubXmlTransformer *transformer = new StubXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
 		url = *m_ServerUrl;
@@ -198,9 +199,10 @@ void SalesSection::setCustomer()
 
 		QString content = m_Request->get(url);
 
+		XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->createXmlTransformer("invoice_customer");
+
 		QString errorMsg;
-		InvoiceCustomerXmlTransformer *transformer =
-				new InvoiceCustomerXmlTransformer();
 		if (m_Handler->handle(content, transformer, &errorMsg) ==
 				XmlResponseHandler::Success) {
 			QList<QMap<QString, QString>*> list = transformer->content();
@@ -352,8 +354,10 @@ void SalesSection::refreshRecordset()
 
 	QString content = m_Request->get(url);
 
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("invoice_list");
+
 	QString errorMsg;
-	InvoiceListXmlTransformer *transformer = new InvoiceListXmlTransformer();
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();

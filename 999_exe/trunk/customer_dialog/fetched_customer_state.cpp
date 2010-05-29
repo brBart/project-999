@@ -8,8 +8,7 @@
 #include "fetched_customer_state.h"
 
 #include <QUrl>
-#include "../xml_transformer/stub_xml_transformer.h"
-#include "../xml_response_handler/xml_response_handler.h"
+#include "../xml_transformer/xml_transformer_factory.h"
 
 FetchedCustomerState::FetchedCustomerState(CustomerDialog *dialog, QObject *parent)
 		: CustomerState(dialog, parent)
@@ -45,8 +44,10 @@ void FetchedCustomerState::save()
 
 	QString content = m_Dialog->httpRequest()->get(url);
 
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("stub");
+
 	QString errorMsg, elementId;
-	StubXmlTransformer *transformer = new StubXmlTransformer();
 	XmlResponseHandler::ResponseType response =
 			m_Dialog->xmlResponseHandler()
 			->handle(content, transformer, &errorMsg, &elementId);
@@ -63,8 +64,10 @@ void FetchedCustomerState::save()
 
 void FetchedCustomerState::nameSetted(QString content)
 {
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("stub");
+
 	QString errorMsg;
-	StubXmlTransformer *transformer = new StubXmlTransformer();
 	XmlResponseHandler::ResponseType response =
 			m_Dialog->xmlResponseHandler()
 			->handle(content, transformer, &errorMsg);

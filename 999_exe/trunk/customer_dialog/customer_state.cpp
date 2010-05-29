@@ -7,7 +7,7 @@
 
 #include "customer_state.h"
 
-#include "../xml_transformer/customer_xml_transformer.h"
+#include "../xml_transformer/xml_transformer_factory.h"
 
 CustomerState::CustomerState(CustomerDialog *dialog, QObject *parent)
 		: QObject(parent), m_Dialog(dialog)
@@ -24,8 +24,10 @@ void CustomerState::fetchCustomer(QString nit)
 
 	QString content = m_Dialog->httpRequest()->get(url);
 
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->createXmlTransformer("customer");
+
 	QString errorMsg;
-	CustomerXmlTransformer *transformer = new CustomerXmlTransformer();
 	if (m_Dialog->xmlResponseHandler()
 			->handle(content, transformer, &errorMsg) ==
 					XmlResponseHandler::Success) {
