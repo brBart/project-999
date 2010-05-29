@@ -10,6 +10,7 @@
 
 #include <QWebPluginFactory>
 #include <QMap>
+#include "plugin_widget.h"
 
 class PluginFactory : public QWebPluginFactory
 {
@@ -20,11 +21,11 @@ public:
 			const QStringList &argumentNames,
 			const QStringList &argumentValues) const;
 	QList<QWebPluginFactory::Plugin> plugins() const;
-	void install(QString mimeType, QWidget *widget);
+	void install(QString mimeType, PluginWidget *widget);
 	void remove(QString mimeType);
 
 private:
-	QMap<QString, QWidget*> m_Plugins;
+	QMap<QString, PluginWidget*> m_Plugins;
 };
 
 #endif /* PLUGIN_FACTORY_H_ */

@@ -76,6 +76,7 @@ private:
 	void setActions();
 	void setMenu();
 	void setActionsManager();
+	void setPlugins();
 	void refreshRecordset();
 	void fetchInvoiceForm();
 	void updateActions();

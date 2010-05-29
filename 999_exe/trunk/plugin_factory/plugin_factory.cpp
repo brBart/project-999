@@ -28,7 +28,9 @@ QObject* PluginFactory::create(const QString &mimeType, const QUrl &url,
 		const QStringList &argumentNames,
 		const QStringList &argumentValues) const
 {
-	return m_Plugins[mimeType];
+	PluginWidget *widget = m_Plugins[mimeType];
+	widget->init(argumentNames, argumentValues);
+	return dynamic_cast<QObject*>(widget);
 }
 
 /**
@@ -43,7 +45,7 @@ QList<QWebPluginFactory::Plugin> PluginFactory::plugins() const
 /**
  * Installs a plugin in the factory.
  */
-void PluginFactory::install(QString mimeType, QWidget *widget)
+void PluginFactory::install(QString mimeType, PluginWidget *widget)
 {
 	m_Plugins[mimeType] = widget;
 }

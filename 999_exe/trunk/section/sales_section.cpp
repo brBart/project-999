@@ -17,6 +17,7 @@
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
+#include "../plugin_factory/bar_code_line_edit.h"
 
 /**
  * Constructs the section.
@@ -29,6 +30,7 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 	setActions();
 	setMenu();
 	setActionsManager();
+	setPlugins();
 
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 	m_Request = new HttpRequest(jar, this);
@@ -340,6 +342,17 @@ void SalesSection::setActionsManager()
 	*actions << m_ConsultProductAction;
 
 	m_ActionsManager.setActions(actions);
+}
+
+/**
+ * Installs the necessary plugins widgets in the plugin factory of the web view.
+ */
+void SalesSection::setPlugins()
+{
+	BarCodeLineEdit *lineEdit = new BarCodeLineEdit(this);
+	PluginFactory *factory =
+			static_cast<PluginFactory*>(ui.webView->page()->pluginFactory());
+	factory->install("application/x-bar_code_line_edit", lineEdit);
 }
 
 /**
