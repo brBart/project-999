@@ -37,7 +37,7 @@ var documentStatus = {$status};
 		  		<span id="customer">{$customer|htmlchars}&nbsp;</span>
 		  		<span id="customer-failed" class="hidden">*</span>
 		  	</p>
-		  	<object id="bar_code_input"></object>
+		  	<object id="bar_code_input" type="application/x-bar_code_line_edit"></object>
 		  	<div id="details" class="items"></div>
 	  	</fieldset>
 	  	<fieldset id="data_footer">
