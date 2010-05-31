@@ -6,7 +6,7 @@
 
 #include <QNetworkCookieJar>
 #include "section/section.h"
-#include "plugins/plugin_factory.h"
+#include "plugins/web_plugin_factory.h"
 
 class MainWindow : public QMainWindow
 {
@@ -29,7 +29,7 @@ private:
     bool m_IsSessionActive;
     QNetworkCookieJar m_CookieJar;
     QUrl *m_ServerUrl;
-    PluginFactory m_PluginFactory;
+    WebPluginFactory m_PluginFactory;
 
     void setSection(Section *section);
 };

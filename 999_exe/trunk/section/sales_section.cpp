@@ -18,7 +18,7 @@
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
 #include "../plugins/bar_code_line_edit.h"
-#include "../plugins/plugin_factory.h"
+#include "../plugins/web_plugin_factory.h"
 
 /**
  * Constructs the section.
@@ -351,8 +351,8 @@ void SalesSection::setActionsManager()
 void SalesSection::setPlugins()
 {
 	BarCodeLineEdit *lineEdit = new BarCodeLineEdit(this);
-	PluginFactory *factory =
-			static_cast<PluginFactory*>(ui.webView->page()->pluginFactory());
+	WebPluginFactory *factory =
+			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
 	factory->install("application/x-bar_code_line_edit", lineEdit);
 }
 

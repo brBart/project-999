@@ -1,22 +1,22 @@
 /*
- * plugin_factory.h
+ * web_plugin_factory.h
  *
- *  Created on: 03/05/2010
+ *  Created on: 31/05/2010
  *      Author: pc
  */
 
-#ifndef PLUGIN_FACTORY_H_
-#define PLUGIN_FACTORY_H_
+#ifndef WEB_PLUGIN_FACTORY_H_
+#define WEB_PLUGIN_FACTORY_H_
 
 #include <QWebPluginFactory>
 #include <QMap>
 #include "plugin_widget.h"
 
-class PluginFactory : public QWebPluginFactory
+class WebPluginFactory : public QWebPluginFactory
 {
 public:
-	PluginFactory(QObject *parent = 0);
-	virtual ~PluginFactory() {};
+	WebPluginFactory(QObject *parent = 0);
+	virtual ~WebPluginFactory() {};
 	QObject* create(const QString &mimeType, const QUrl &url,
 			const QStringList &argumentNames,
 			const QStringList &argumentValues) const;
@@ -28,4 +28,4 @@ private:
 	QMap<QString, PluginWidget*> m_Plugins;
 };
 
-#endif /* PLUGIN_FACTORY_H_ */
+#endif /* WEB_PLUGIN_FACTORY_H_ */
