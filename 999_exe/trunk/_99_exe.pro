@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = _99_exe
+CONFIG += console
 QT += core \
     gui \
     xml \
