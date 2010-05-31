@@ -48,9 +48,6 @@ void MainWindow::loadMainSection()
 	MainSection *section =
 			new MainSection(&m_CookieJar, &m_PluginFactory, m_ServerUrl, this);
 
-	connect(section, SIGNAL(workingDayKeyReceived(QString)), this,
-			SLOT(setWorkingDayKey(QString)));
-
 	setSection(section);
 }
 
