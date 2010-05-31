@@ -7,8 +7,6 @@
 
 #include "web_plugin_factory.h"
 
-#include <QWidget>
-
 /**
  * @class PluginFactory
  * Class in charge of creating or passing widgets to the QWebPage for display.
@@ -28,9 +26,13 @@ QObject* WebPluginFactory::create(const QString &mimeType, const QUrl &url,
 		const QStringList &argumentNames,
 		const QStringList &argumentValues) const
 {
-	PluginWidget *widget = m_Plugins[mimeType];
-	widget->init(argumentNames, argumentValues);
-	return dynamic_cast<QObject*>(widget);
+	if (m_Plugins.contains(mimeType)) {
+		PluginWidget *widget = m_Plugins[mimeType];
+		widget->init(argumentNames, argumentValues);
+		return dynamic_cast<QObject*>(widget);
+	} else {
+		return NULL;
+	}
 }
 
 /**

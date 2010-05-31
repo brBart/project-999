@@ -44,6 +44,7 @@ private:
 	Recordset m_Recordset;
 	MainWindow *m_Window;
 	ActionsManager m_ActionsManager;
+	QWidget *m_BarCodeLineEdit;
 
 	QString m_CRegisterKey;
 	QString m_NewInvoiceKey;
@@ -73,10 +74,10 @@ private:
 	QAction *m_SearchAction;
 	QAction *m_ConsultProductAction;
 
+	void setPlugins();
 	void setActions();
 	void setMenu();
 	void setActionsManager();
-	void setPlugins();
 	void refreshRecordset();
 	void fetchInvoiceForm();
 	void updateActions();

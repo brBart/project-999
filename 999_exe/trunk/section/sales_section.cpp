@@ -17,8 +17,7 @@
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
-#include "../plugins/bar_code_line_edit.h"
-#include "../plugins/web_plugin_factory.h"
+#include "../plugins/plugin_widget_factory.h"
 
 /**
  * Constructs the section.
@@ -28,10 +27,10 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 		: Section(jar, factory, serverUrl, parent), m_CRegisterKey(cRegisterKey)
 {
 	m_Window = dynamic_cast<MainWindow*>(parentWidget());
+	setPlugins();
 	setActions();
 	setMenu();
 	setActionsManager();
-	setPlugins();
 
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 	m_Request = new HttpRequest(jar, this);
@@ -77,6 +76,7 @@ void SalesSection::loadFinished(bool ok)
 	}
 
 	updateActions();
+	setPlugins();
 }
 
 /**
@@ -227,6 +227,20 @@ void SalesSection::fetchInvoice(QString id)
 }
 
 /**
+ * Installs the necessary plugins widgets in the plugin factory of the web view.
+ */
+void SalesSection::setPlugins()
+{
+	PluginWidget *lineEdit = PluginWidgetFactory::instance()->create("bar_code");
+
+	WebPluginFactory *factory =
+			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
+	factory->install("application/x-bar_code_line_edit", lineEdit);
+
+	m_BarCodeLineEdit = dynamic_cast<QWidget*>(lineEdit);
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -343,17 +357,6 @@ void SalesSection::setActionsManager()
 	*actions << m_ConsultProductAction;
 
 	m_ActionsManager.setActions(actions);
-}
-
-/**
- * Installs the necessary plugins widgets in the plugin factory of the web view.
- */
-void SalesSection::setPlugins()
-{
-	BarCodeLineEdit *lineEdit = new BarCodeLineEdit(this);
-	WebPluginFactory *factory =
-			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
-	factory->install("application/x-bar_code_line_edit", lineEdit);
 }
 
 /**
