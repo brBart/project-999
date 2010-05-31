@@ -46,7 +46,7 @@ void CashRegisterDialog::init()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("shift_list");
+			->create("shift_list");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
@@ -82,7 +82,7 @@ void CashRegisterDialog::fetchKey()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("object_key");
+			->create("object_key");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==

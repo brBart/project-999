@@ -6,7 +6,7 @@
 
 #include <QNetworkCookieJar>
 #include "section/section.h"
-#include "plugin_factory/plugin_factory.h"
+#include "plugins/plugin_factory.h"
 
 class MainWindow : public QMainWindow
 {

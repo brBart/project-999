@@ -29,7 +29,7 @@ XmlTransformerFactory* XmlTransformerFactory::instance()
 	return m_Instance;
 }
 
-XmlTransformer* XmlTransformerFactory::createXmlTransformer(QString name)
+XmlTransformer* XmlTransformerFactory::create(QString name)
 {
 	if (name == "shift_list") {
 		return new ShiftListXmlTransformer();

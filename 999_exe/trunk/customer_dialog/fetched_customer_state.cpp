@@ -45,7 +45,7 @@ void FetchedCustomerState::save()
 	QString content = m_Dialog->httpRequest()->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("stub");
+			->create("stub");
 
 	QString errorMsg, elementId;
 	XmlResponseHandler::ResponseType response =
@@ -65,7 +65,7 @@ void FetchedCustomerState::save()
 void FetchedCustomerState::nameSetted(QString content)
 {
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("stub");
+			->create("stub");
 
 	QString errorMsg;
 	XmlResponseHandler::ResponseType response =

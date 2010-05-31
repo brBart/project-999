@@ -39,7 +39,9 @@ HEADERS += plugins/bar_code_line_edit.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/xml_transformer_factory.cpp \
+SOURCES += plugins/bar_code_line_edit.cpp \
+    plugins/plugin_factory.cpp \
+	xml_transformer/xml_transformer_factory.cpp \
     enter_key_event_filter/enter_key_event_filter.cpp \
     xml_transformer/invoice_customer_xml_transformer.cpp \
     xml_transformer/customer_xml_transformer.cpp \

@@ -25,7 +25,7 @@ void CustomerState::fetchCustomer(QString nit)
 	QString content = m_Dialog->httpRequest()->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("customer");
+			->create("customer");
 
 	QString errorMsg;
 	if (m_Dialog->xmlResponseHandler()

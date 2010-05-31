@@ -14,7 +14,7 @@ class XmlTransformerFactory
 {
 public:
 	virtual ~XmlTransformerFactory() {};
-	XmlTransformer* createXmlTransformer(QString name);
+	XmlTransformer* create(QString name);
 	static XmlTransformerFactory* instance();
 
 private:

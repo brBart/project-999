@@ -18,6 +18,7 @@
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
 #include "../plugins/bar_code_line_edit.h"
+#include "../plugins/plugin_factory.h"
 
 /**
  * Constructs the section.
@@ -93,7 +94,7 @@ void SalesSection::createInvoice()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("invoice");
+			->create("invoice");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
@@ -124,7 +125,7 @@ void SalesSection::updateCashRegisterStatus(QString content)
 {
 	// TODO: Test this if a closed cash register.
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("cash_register_status");
+			->create("cash_register_status");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
@@ -163,7 +164,7 @@ void SalesSection::discardInvoice()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("stub");
+			->create("stub");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
@@ -202,7 +203,7 @@ void SalesSection::setCustomer()
 		QString content = m_Request->get(url);
 
 		XmlTransformer *transformer = XmlTransformerFactory::instance()
-				->createXmlTransformer("invoice_customer");
+				->create("invoice_customer");
 
 		QString errorMsg;
 		if (m_Handler->handle(content, transformer, &errorMsg) ==
@@ -368,7 +369,7 @@ void SalesSection::refreshRecordset()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->createXmlTransformer("invoice_list");
+			->create("invoice_list");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
