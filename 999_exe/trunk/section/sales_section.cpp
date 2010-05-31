@@ -17,7 +17,7 @@
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
-#include "../plugin_factory/bar_code_line_edit.h"
+#include "../plugins/bar_code_line_edit.h"
 
 /**
  * Constructs the section.

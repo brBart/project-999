@@ -6,8 +6,9 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += plugin_factory/bar_code_line_edit.h \
-    plugin_factory/plugin_widget.h \
+HEADERS += plugins/bar_code_line_edit.h \
+    plugins/plugin_factory.h \
+    plugins/plugin_widget.h \
     xml_transformer/xml_transformer_factory.h \
     enter_key_event_filter/enter_key_event_filter.h \
     xml_transformer/invoice_customer_xml_transformer.h \
@@ -30,7 +31,6 @@ HEADERS += plugin_factory/bar_code_line_edit.h \
     section/sales_section.h \
     xml_transformer/object_key_xml_transformer.h \
     cash_register_dialog/cash_register_dialog.h \
-    plugin_factory/plugin_factory.h \
     registry.h \
     section/section.h \
     section/main_section.h \
@@ -39,8 +39,7 @@ HEADERS += plugin_factory/bar_code_line_edit.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += plugin_factory/bar_code_line_edit.cpp \
-    xml_transformer/xml_transformer_factory.cpp \
+SOURCES += xml_transformer/xml_transformer_factory.cpp \
     enter_key_event_filter/enter_key_event_filter.cpp \
     xml_transformer/invoice_customer_xml_transformer.cpp \
     xml_transformer/customer_xml_transformer.cpp \
@@ -63,7 +62,6 @@ SOURCES += plugin_factory/bar_code_line_edit.cpp \
     section/sales_section.cpp \
     xml_transformer/object_key_xml_transformer.cpp \
     cash_register_dialog/cash_register_dialog.cpp \
-    plugin_factory/plugin_factory.cpp \
     registry.cpp \
     section/section.cpp \
     section/main_section.cpp \
