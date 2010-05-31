@@ -6,7 +6,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += plugins/web_plugin_factory.h \
+HEADERS += plugins/plugin_widget_factory.h \
+    plugins/web_plugin_factory.h \
     plugins/bar_code_line_edit.h \
     plugins/plugin_widget.h \
     xml_transformer/xml_transformer_factory.h \
@@ -39,8 +40,9 @@ HEADERS += plugins/web_plugin_factory.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += plugins/web_plugin_factory.cpp \
-	plugins/bar_code_line_edit.cpp \
+SOURCES += plugins/plugin_widget_factory.cpp \
+    plugins/web_plugin_factory.cpp \
+    plugins/bar_code_line_edit.cpp \
     xml_transformer/xml_transformer_factory.cpp \
     enter_key_event_filter/enter_key_event_filter.cpp \
     xml_transformer/invoice_customer_xml_transformer.cpp \
