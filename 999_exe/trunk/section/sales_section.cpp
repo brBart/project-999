@@ -27,7 +27,7 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 		: Section(jar, factory, serverUrl, parent), m_CRegisterKey(cRegisterKey)
 {
 	m_Window = dynamic_cast<MainWindow*>(parentWidget());
-	setPlugins();
+	ui.webView->setFocusPolicy(Qt::NoFocus);
 	setActions();
 	setMenu();
 	setActionsManager();
@@ -76,7 +76,6 @@ void SalesSection::loadFinished(bool ok)
 	}
 
 	updateActions();
-	setPlugins();
 }
 
 /**
@@ -389,6 +388,9 @@ void SalesSection::refreshRecordset()
  */
 void SalesSection::fetchInvoiceForm()
 {
+	// Reinstall plugins because they will be lost on the page load.
+	setPlugins();
+
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "show_invoice_form");
 	url.addQueryItem("register_key", m_CRegisterKey);
@@ -406,16 +408,19 @@ void SalesSection::updateActions()
 		case Open:
 			if (m_DocumentStatus == Edit) {
 				values = "0110011111000001";
+				m_BarCodeLineEdit->setEnabled(true);
 			} else {
 				QString cancel =
 						(m_DocumentStatus == Idle
 								&& m_Recordset.size() > 0) ? "1" : "0";
 				values = "100" + cancel + "100000" + viewValues();
+				m_BarCodeLineEdit->setEnabled(false);
 			}
 			break;
 
 		case Closed:
 			values = "0000100000" + viewValues();
+			m_BarCodeLineEdit->setEnabled(false);
 			break;
 
 		case Error:

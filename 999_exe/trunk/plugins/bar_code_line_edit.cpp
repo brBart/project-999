@@ -15,5 +15,5 @@ BarCodeLineEdit::BarCodeLineEdit(QWidget *parent) : QLineEdit(parent)
 void BarCodeLineEdit::init(const QStringList &argumentNames,
 		const QStringList &argumentValues)
 {
-
+	setFrame(false);
 }
