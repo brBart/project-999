@@ -103,7 +103,7 @@ void SalesSection::createInvoice()
 		m_NewInvoiceKey = params->value("key");
 
 		prepareInvoiceForm(params->value("date_time"), params->value("username"));
-		//fetchInvoiceDetails();
+		fetchInvoiceDetails();
 
 		m_DocumentStatus = Edit;
 		updateActions();
@@ -223,20 +223,6 @@ void SalesSection::setCustomer()
 void SalesSection::fetchInvoice(QString id)
 {
 
-}
-
-/**
- * Installs the necessary plugins widgets in the plugin factory of the web view.
- */
-void SalesSection::setPlugins()
-{
-	PluginWidget *lineEdit = PluginWidgetFactory::instance()->create("bar_code");
-
-	WebPluginFactory *factory =
-			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
-	factory->install("application/x-bar_code_line_edit", lineEdit);
-
-	m_BarCodeLineEdit = dynamic_cast<QWidget*>(lineEdit);
 }
 
 /**
@@ -518,4 +504,26 @@ void SalesSection::updateCustomerData(QString nit, QString name)
 
 	element = frame->findFirstElement("#customer");
 	element.setInnerXml(name);
+}
+
+/**
+ * Installs the necessary plugins widgets in the plugin factory of the web view.
+ */
+void SalesSection::setPlugins()
+{
+	PluginWidget *lineEdit = PluginWidgetFactory::instance()->create("bar_code");
+
+	WebPluginFactory *factory =
+			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
+	factory->install("application/x-bar_code_line_edit", lineEdit);
+
+	m_BarCodeLineEdit = dynamic_cast<QWidget*>(lineEdit);
+}
+
+/**
+ * Fetch the invoice details from the server.
+ */
+void SalesSection::fetchInvoiceDetails()
+{
+
 }

@@ -74,7 +74,6 @@ private:
 	QAction *m_SearchAction;
 	QAction *m_ConsultProductAction;
 
-	void setPlugins();
 	void setActions();
 	void setMenu();
 	void setActionsManager();
@@ -85,6 +84,8 @@ private:
 	void prepareInvoiceForm(QString dateTime, QString username);
 	void fetchCashRegisterStatus();
 	void updateCustomerData(QString nit, QString name);
+	void setPlugins();
+	void fetchInvoiceDetails();
 };
 
 #endif /* SALES_SECTION_H_ */
