@@ -18,6 +18,7 @@
 #include "../xml_response_handler/xml_response_handler.h"
 #include "../recordset/recordset.h"
 #include "../actions_manager/actions_manager.h"
+#include "../plugins/bar_code_line_edit.h"
 
 class SalesSection: public Section
 {
@@ -45,7 +46,7 @@ private:
 	Recordset m_Recordset;
 	MainWindow *m_Window;
 	ActionsManager m_ActionsManager;
-	QWidget *m_BarCodeLineEdit;
+	BarCodeLineEdit *m_BarCodeLineEdit;
 	QXmlQuery *m_Query;
 	QString m_StyleSheet;
 

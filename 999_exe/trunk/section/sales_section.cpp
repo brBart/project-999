@@ -12,7 +12,6 @@
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
-#include "../plugins/plugin_widget_factory.h"
 #include "../registry.h"
 
 /**
@@ -536,13 +535,11 @@ void SalesSection::updateCustomerData(QString nit, QString name)
  */
 void SalesSection::setPlugins()
 {
-	PluginWidget *lineEdit = PluginWidgetFactory::instance()->create("bar_code");
+	m_BarCodeLineEdit = new BarCodeLineEdit();
 
 	WebPluginFactory *factory =
 			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
-	factory->install("application/x-bar_code_line_edit", lineEdit);
-
-	m_BarCodeLineEdit = dynamic_cast<QWidget*>(lineEdit);
+	factory->install("application/x-bar_code_line_edit", m_BarCodeLineEdit);
 }
 
 /**
