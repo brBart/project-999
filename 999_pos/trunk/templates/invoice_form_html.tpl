@@ -38,7 +38,18 @@ var documentStatus = {$status};
 		  		<span id="customer-failed" class="hidden">*</span>
 		  	</p>
 		  	<object id="bar_code_input" type="application/x-bar_code_line_edit"></object>
-		  	<div id="details" class="items"></div>
+		  	<div id="details" class="items register"></div>
+		  	<div id="receipt_info">
+		  		<p >
+			  		<label>Efectivo:</label><span id="cash">&nbsp;</span>
+		  		</p>
+		  		<p>
+			  		<label>Tarjetas:</label><span id="vouchers">&nbsp;</span>
+			  	</p>
+			  	<p>
+			  		<label>Cambio:</label><span id="change">&nbsp;</span>
+			  	</p>
+		  	</div>
 	  	</fieldset>
 	  	<fieldset id="data_footer">
 	  		<object id="recordset"></object>

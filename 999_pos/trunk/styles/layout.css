@@ -109,6 +109,10 @@ input[type="text"], input[type="password"] {
 	overflow: auto;
 }
 
+.register {
+	height: 18em;
+}
+
 .console_display p {
 	width: 60%;
 	margin: 1em auto;
@@ -309,6 +313,16 @@ input[type="text"], input[type="password"] {
 }
 
 #header_data label {
+	width: auto;
+	margin-right: 1em;
+}
+
+#receipt_info p {
+	float: left;
+	padding: 0 5em;
+}
+
+#receipt_info label {
 	width: auto;
 	margin-right: 1em;
 }
