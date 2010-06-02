@@ -18,6 +18,7 @@
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
 #include "../plugins/plugin_widget_factory.h"
+#include "../registry.h"
 
 /**
  * Constructs the section.
@@ -43,7 +44,11 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 	connect(&m_Recordset, SIGNAL(recordChanged(QString)), this,
 			SLOT(fetchInvoice(QString)));
 
+	m_Query = new QXmlQuery(QXmlQuery::XSLT20);
+
+	fetchStyleSheet();
 	refreshRecordset();
+
 	if (m_Recordset.size() > 0) {
 		m_Recordset.moveFirst();
 	} else {
@@ -345,6 +350,17 @@ void SalesSection::setActionsManager()
 }
 
 /**
+ * Fetch the xslt style sheet from the server.
+ */
+void SalesSection::fetchStyleSheet()
+{
+	QUrl url = *(Registry::instance()->xslUrl());
+	url.setPath(url.path() + "invoice_details.xsl");
+
+	m_StyleSheet = m_Request->get(url);
+}
+
+/**
  * Sets the recordset.
  */
 void SalesSection::refreshRecordset()
@@ -525,5 +541,21 @@ void SalesSection::setPlugins()
  */
 void SalesSection::fetchInvoiceDetails()
 {
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "get_invoice_details");
+	url.addQueryItem("key", m_NewInvoiceKey);
+	url.addQueryItem("type", "xml");
 
+	QString content = m_Request->get(url);
+
+	m_Query->setFocus(content);
+	m_Query->setQuery(m_StyleSheet);
+
+	QString result;
+	m_Query->evaluateTo(&result);
+	QMessageBox::information(this, "hey", m_StyleSheet);
+	QMessageBox::information(this, "hey", content);
+	QMessageBox::information(this, "hey", result);
+	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
+	div.setInnerXml(result);
 }

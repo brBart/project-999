@@ -11,6 +11,7 @@
 #include "section.h"
 
 #include <QAction>
+#include <QXmlQuery>
 #include "../mainwindow.h"
 #include "../console/console.h"
 #include "../http_request/http_request.h"
@@ -45,6 +46,8 @@ private:
 	MainWindow *m_Window;
 	ActionsManager m_ActionsManager;
 	QWidget *m_BarCodeLineEdit;
+	QXmlQuery *m_Query;
+	QString m_StyleSheet;
 
 	QString m_CRegisterKey;
 	QString m_NewInvoiceKey;
@@ -77,6 +80,7 @@ private:
 	void setActions();
 	void setMenu();
 	void setActionsManager();
+	void fetchStyleSheet();
 	void refreshRecordset();
 	void fetchInvoiceForm();
 	void updateActions();
