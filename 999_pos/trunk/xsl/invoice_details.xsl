@@ -39,10 +39,8 @@
 	           	<xsl:attribute name="id">
 	             	<xsl:value-of select="concat('tr', position())" />
 	           	</xsl:attribute>
-	           	<xsl:if test="$status = 0">
-		           	<xsl:if test="position() mod 2 = 0">
-		           		<xsl:attribute name="class">even</xsl:attribute>
-		           	</xsl:if>
+	           	<xsl:if test="position() mod 2 = 0">
+	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
 	       		<td>
 	       			<xsl:attribute name="id">
