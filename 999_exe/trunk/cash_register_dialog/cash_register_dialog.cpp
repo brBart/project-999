@@ -29,6 +29,9 @@ CashRegisterDialog::CashRegisterDialog(QNetworkCookieJar *jar, QUrl *url,
 	connect(ui.okPushButton, SIGNAL(clicked()), this, SLOT(fetchKey()));
 }
 
+/**
+ * Destroys the console object.
+ */
 CashRegisterDialog::~CashRegisterDialog()
 {
 	delete m_Console;

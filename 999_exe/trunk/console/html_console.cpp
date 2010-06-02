@@ -12,6 +12,9 @@
  * Use to display messages to the user using a html page.
  */
 
+/**
+ * Changes the element's style class from "failed" to "hidden".
+ */
 void HtmlConsole::hideElementIndicator(QString elementId)
 {
 	QWebElement element = m_Div.findFirst("#" + elementId + "-failed");
@@ -19,6 +22,9 @@ void HtmlConsole::hideElementIndicator(QString elementId)
 	element.addClass("hidden");
 }
 
+/**
+ * Changes the element's style class form "hidden" to "failed".
+ */
 void HtmlConsole::showElementIndicator(QString elementId)
 {
 	QWebElement element = m_Div.findFirst("#" + elementId + "-failed");

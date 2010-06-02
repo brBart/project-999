@@ -7,6 +7,14 @@
 
 #include "invoice_customer_xml_transformer.h"
 
+/**
+ * @class InvoiceCustomerXmlTransformer
+ * Transforms an xml document into an invoice's customer data.
+ */
+
+/**
+ * Stores the customer data into the QList for future retrieval.
+ */
 void InvoiceCustomerXmlTransformer::transform(QDomDocument *document)
 {
 	QDomNodeList nits = document->elementsByTagName("nit");

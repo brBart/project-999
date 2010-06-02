@@ -10,6 +10,14 @@
 #include <QMapIterator>
 #include <QWebElementCollection>
 
+/**
+ * @class WidgetConsole
+ * Use to display messages using widgets.
+ */
+
+/**
+ * Sets all the widget elements's visible property to false to hide them.
+ */
 WidgetConsole::WidgetConsole(QMap<QString, QLabel*> elements)
 {
 	QMapIterator<QString, QLabel*> i(elements);
@@ -21,6 +29,9 @@ WidgetConsole::WidgetConsole(QMap<QString, QLabel*> elements)
 	m_Elements = elements;
 }
 
+/**
+ * Creates the console div element first then calls the parents setFrame method.
+ */
 void WidgetConsole::setFrame(QWebFrame *frame)
 {
 	frame->setHtml("<div id=\"console\" style=\"font-size: 10px; color: red;\">"
@@ -28,11 +39,17 @@ void WidgetConsole::setFrame(QWebFrame *frame)
 	Console::setFrame(frame);
 }
 
+/**
+ * Sets the widget element visible property to false.
+ */
 void WidgetConsole::hideElementIndicator(QString elementId)
 {
 	m_Elements.value(elementId)->setVisible(false);
 }
 
+/**
+ * Sets the widget element visible property to true.
+ */
 void WidgetConsole::showElementIndicator(QString elementId)
 {
 	m_Elements.value(elementId)->setVisible(true);

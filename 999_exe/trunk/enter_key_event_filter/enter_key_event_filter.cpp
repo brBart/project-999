@@ -10,11 +10,21 @@
 #include <QKeyEvent>
 #include <QPushButton>
 
+/**
+ * @class EnterKeyEventFilter
+ * Gives the enter key functionality to the QPushButton objects.
+ */
+
 EnterKeyEventFilter::EnterKeyEventFilter(QObject *parent) : QObject(parent)
 {
 
 }
 
+/**
+ * Handles the enter key event.
+ * If it is the enter key that was pressed, the animatedClick slot is calle on the
+ * QPushButton object.
+ */
 bool EnterKeyEventFilter::eventFilter(QObject *obj, QEvent *event)
 {
 	if (event->type() == QEvent::KeyRelease) {

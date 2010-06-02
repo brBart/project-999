@@ -7,11 +7,23 @@
 
 #include "line_edit.h"
 
+/**
+ * @class LineEdit
+ * Subclass the QLineEdit and gives functionality like the blur event on the html
+ * input elements.
+ */
+
+/**
+ * Constructs the widget.
+ */
 LineEdit::LineEdit(QWidget *parent) : QLineEdit(parent)
 {
 
 }
 
+/**
+ * Emits the blurAndChanged signal with the actual text.
+ */
 void LineEdit::focusOutEvent(QFocusEvent *e)
 {
 	QString value = text();

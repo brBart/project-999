@@ -7,11 +7,6 @@
 
 #include "sales_section.h"
 
-/**
- * @class SalesSection
- * Section in charge of managing the invoice documents.
- */
-
 #include <QList>
 #include <QMessageBox>
 #include "../xml_transformer/xml_transformer_factory.h"
@@ -19,6 +14,11 @@
 #include "../customer_dialog/customer_dialog.h"
 #include "../plugins/plugin_widget_factory.h"
 #include "../registry.h"
+
+/**
+ * @class SalesSection
+ * Section in charge of managing the invoice documents.
+ */
 
 /**
  * Constructs the section.
@@ -56,6 +56,9 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 	}
 }
 
+/**
+ * Destroys the console object.
+ */
 SalesSection::~SalesSection()
 {
 	delete m_Console;
@@ -192,6 +195,9 @@ void SalesSection::discardInvoice()
 	delete transformer;
 }
 
+/**
+ * Sets a customer to the invoice in the server.
+ */
 void SalesSection::setCustomer()
 {
 	CustomerDialog dialog(m_Request->cookieJar(), m_ServerUrl, this,
@@ -510,6 +516,9 @@ void SalesSection::fetchCashRegisterStatus()
 	m_Request->get(url, true);
 }
 
+/**
+ * Updates the customer data on the webView object.
+ */
 void SalesSection::updateCustomerData(QString nit, QString name)
 {
 	QWebFrame *frame = ui.webView->page()->mainFrame();
@@ -553,9 +562,7 @@ void SalesSection::fetchInvoiceDetails()
 
 	QString result;
 	m_Query->evaluateTo(&result);
-	QMessageBox::information(this, "hey", m_StyleSheet);
-	QMessageBox::information(this, "hey", content);
-	QMessageBox::information(this, "hey", result);
+
 	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
 	div.setInnerXml(result);
 }

@@ -20,6 +20,9 @@ void Console::setFrame(QWebFrame *frame)
 	m_Div = frame->findFirstElement("#console");
 }
 
+/**
+ * Displays a validation failure in the console.
+ */
 void Console::displayFailure(QString msg, QString elementId)
 {
 	QString newP = "<p id=\"failed-" + elementId + "\" class=\"failure\">"
@@ -30,6 +33,9 @@ void Console::displayFailure(QString msg, QString elementId)
 	displayMessage(newP);
 }
 
+/**
+ * Removes a validation failure from the console.
+ */
 void Console::cleanFailure(QString elementId)
 {
 	QWebElement elementP = m_Div.findFirst("#failed-" + elementId);
@@ -58,6 +64,9 @@ void Console::displayError(QString msg)
 	displayMessage(newP);
 }
 
+/**
+ * Cleans the console and hides all the element indicators.
+ */
 void Console::reset()
 {
 	QWebElementCollection collection = m_Div.findAll("p");

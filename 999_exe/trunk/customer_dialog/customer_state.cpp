@@ -9,12 +9,25 @@
 
 #include "../xml_transformer/xml_transformer_factory.h"
 
+/**
+ * @class CustomerState
+ * Defines common functionality for the derived classes.
+ */
+
+/**
+ * Constructs an CustomerState object.
+ */
 CustomerState::CustomerState(CustomerDialog *dialog, QObject *parent)
 		: QObject(parent), m_Dialog(dialog)
 {
 
 }
 
+/**
+ * Fetchs a customer from the server.
+ * If it succeeds it changes to FetchedState as the actual state on the dialog. If
+ * it fails it changes to NotFetchedState as the actual state on the dialog.
+ */
 void CustomerState::fetchCustomer(QString nit)
 {
 	QUrl url = m_Dialog->url();

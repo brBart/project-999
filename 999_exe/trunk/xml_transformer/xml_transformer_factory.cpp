@@ -16,6 +16,11 @@
 #include "customer_xml_transformer.h"
 #include "invoice_customer_xml_transformer.h"
 
+/**
+ * @class XmlTransformerFactory
+ * Class responsible for creating all the transformers.
+ */
+
 XmlTransformerFactory* XmlTransformerFactory::m_Instance = 0;
 
 /**
@@ -29,6 +34,9 @@ XmlTransformerFactory* XmlTransformerFactory::instance()
 	return m_Instance;
 }
 
+/**
+ * Creates and returns the corresponding XmlTransformer object.
+ */
 XmlTransformer* XmlTransformerFactory::create(QString name)
 {
 	if (name == "shift_list") {

@@ -49,6 +49,9 @@ QString HttpRequest::get(QUrl url, bool isAsync)
 	return NULL;
 }
 
+/**
+ * Returns the CookieJar object use by this request.
+ */
 QNetworkCookieJar* HttpRequest::cookieJar()
 {
 	return m_Manager.cookieJar();

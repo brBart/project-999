@@ -7,6 +7,14 @@
 
 #include "customer_xml_transformer.h"
 
+/**
+ * @class CustomerXmlTransformer
+ * Transforms an xml document into customer data.
+ */
+
+/**
+ * Stores the customer data into the QList for future retrieval.
+ */
 void CustomerXmlTransformer::transform(QDomDocument *document)
 {
 	QDomNodeList keys = document->elementsByTagName("key");

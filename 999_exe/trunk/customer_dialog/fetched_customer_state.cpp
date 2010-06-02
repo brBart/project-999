@@ -10,12 +10,23 @@
 #include <QUrl>
 #include "../xml_transformer/xml_transformer_factory.h"
 
+/**
+ * @class FetchedCustomerState
+ * Class which methods response according to its state.
+ */
+
+/**
+ * Constructs the object.
+ */
 FetchedCustomerState::FetchedCustomerState(CustomerDialog *dialog, QObject *parent)
 		: CustomerState(dialog, parent)
 {
 
 }
 
+/**
+ * Sets the customer name on the server.
+ */
 void FetchedCustomerState::setName(QString name)
 {
 	HttpRequest *request =
@@ -33,6 +44,9 @@ void FetchedCustomerState::setName(QString name)
 	request->get(url, true);
 }
 
+/**
+ * Saves the customer data on the server.
+ */
 void FetchedCustomerState::save()
 {
 	m_Dialog->console()->reset();
@@ -62,6 +76,10 @@ void FetchedCustomerState::save()
 	delete transformer;
 }
 
+/**
+ * Handles the setName query response.
+ * If it fails it displays the failure message on the console.
+ */
 void FetchedCustomerState::nameSetted(QString content)
 {
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
