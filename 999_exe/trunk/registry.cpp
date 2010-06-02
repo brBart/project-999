@@ -25,7 +25,9 @@ Registry* Registry::m_Instance = 0;
  */
 Registry::Registry()
 {
-	QString url = "127.0.0.1/999_project/pos";
+	QString serverUrl = "127.0.0.1/999_project/pos/";
+	QString xslUrl = "127.0.0.1/999_project/xsl/";
+
 	QFile file("preferences.txt");
 
 	if (file.exists()) {
@@ -34,13 +36,14 @@ Registry::Registry()
 
 		QString line = stream.readLine();
 		QStringList address = line.split(" ");
-		url = ((address[1] == "localhost" || address[1] == "") ?
+		serverUrl = ((address[1] == "localhost" || address[1] == "") ?
 				"127.0.0.1" : address[1]);
 
 		file.close();
 	}
 
-	m_Url = new QUrl("http://" + url + "/index.php");
+	m_ServerUrl = new QUrl("http://" + serverUrl);
+	m_XslUrl = new QUrl("http://" + xslUrl);
 }
 
 /**
@@ -59,5 +62,13 @@ Registry* Registry::instance()
  */
 QUrl* Registry::serverUrl()
 {
-	return m_Url;
+	return m_ServerUrl;
+}
+
+/**
+ * Returns the QUrl with the xsl directory address.
+ */
+QUrl* Registry::xslUrl()
+{
+	return m_XslUrl;
 }

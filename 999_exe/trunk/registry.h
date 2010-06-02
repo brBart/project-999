@@ -15,10 +15,12 @@ class Registry
 public:
 	virtual ~Registry() {};
 	QUrl* serverUrl();
+	QUrl* xslUrl();
 	static Registry* instance();
 
 private:
-	QUrl *m_Url;
+	QUrl *m_ServerUrl;
+	QUrl *m_XslUrl;
 	static Registry *m_Instance;
 
 	Registry();
