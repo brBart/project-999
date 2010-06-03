@@ -87,6 +87,5 @@ void Console::reset()
 void Console::displayMessage(QString msg)
 {
 	m_Div.appendInside(msg);
-	m_Div.evaluateJavaScript("scrollTop = "
-			+ m_Div.evaluateJavaScript("scrollHeight").toString() + ";");
+	m_Div.evaluateJavaScript("this.scrollTop = this.scrollHeight;");
 }

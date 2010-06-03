@@ -34,8 +34,8 @@ WidgetConsole::WidgetConsole(QMap<QString, QLabel*> elements)
  */
 void WidgetConsole::setFrame(QWebFrame *frame)
 {
-	frame->setHtml("<div id=\"console\" style=\"font-size: 10px; color: red;\">"
-			"</div>");
+	frame->setHtml("<div id=\"console\" style=\"font-size: 10px; color: red; "
+			"overflow: auto;\"></div>");
 	Console::setFrame(frame);
 }
 
