@@ -38,6 +38,7 @@ var documentStatus = {$status};
 		  		<span id="customer-failed" class="hidden">*</span>
 		  	</p>
 		  	<object id="bar_code_input" type="application/x-bar_code_line_edit"></object>
+		  	<span id="bar_code-failed" class="hidden">*</span>
 		  	<div id="details" class="items register"></div>
 		  	<div id="receipt_info">
 		  		<p >
