@@ -110,7 +110,9 @@ input[type="text"], input[type="password"] {
 }
 
 .register {
-	height: 18em;
+	height: 17em;
+	margin-bottom: 1em;
+	overflow: auto;
 }
 
 .console_display p {
