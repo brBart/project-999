@@ -16,17 +16,17 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="5"></td>
+	       			<td colspan="6"></td>
 	       			<td class="total_col">Sub-Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/sub_total" /></td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="5"></td>
+	       			<td colspan="6"></td>
 	       			<td class="total_col">Descuento:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/discount" /></td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="5"></td>
+	       			<td colspan="6"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
 	       		</tr>
@@ -42,6 +42,9 @@
 	           	<xsl:if test="position() mod 2 != 0">
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
+	           	<td>
+	           		<xsl:value-of select="position()" />
+	           	</td>
 	       		<td>
 	       			<xsl:attribute name="id">
 		             	<xsl:value-of select="detail_id" />
