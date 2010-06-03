@@ -605,4 +605,5 @@ void SalesSection::fetchInvoiceDetails()
 
 	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
 	div.setInnerXml(result);
+	div.evaluateJavaScript("this.scrollTop = this.scrollHeight;");
 }
