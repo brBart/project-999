@@ -260,8 +260,10 @@ void SalesSection::addProductInvoice(int quantity)
 				m_Handler->handle(content, transformer, &errorMsg, &elementId);
 		if (response == XmlResponseHandler::Success) {
 			fetchInvoiceDetails();
+			m_Console->cleanFailure("bar_code");
 			m_BarCodeLineEdit->setText("");
 		} else if (response == XmlResponseHandler::Failure) {
+			//m_Console->cleanFailure("bar_code");
 			m_Console->displayFailure(errorMsg, elementId);
 		} else {
 			m_Console->displayError(errorMsg);
