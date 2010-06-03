@@ -30,7 +30,7 @@ WidgetConsole::WidgetConsole(QMap<QString, QLabel*> elements)
 }
 
 /**
- * Creates the console div element first then calls the parents setFrame method.
+ * Creates the console div element first then calls its parent's setFrame method.
  */
 void WidgetConsole::setFrame(QWebFrame *frame)
 {
