@@ -38,6 +38,7 @@ public slots:
 	void discardInvoice();
 	void setCustomer();
 	void fetchInvoice(QString id);
+	void addProductInvoice(int quantity = 1);
 
 private:
 	Console *m_Console;

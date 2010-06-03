@@ -69,7 +69,6 @@ SalesSection::~SalesSection()
 void SalesSection::loadFinished(bool ok)
 {
 	Section::loadFinished(ok);
-	m_Console->setFrame(ui.webView->page()->mainFrame());
 
 	if (ok) {
 		QWebFrame *frame = ui.webView->page()->mainFrame();
@@ -82,6 +81,7 @@ void SalesSection::loadFinished(bool ok)
 		m_CRegisterStatus = Error;
 	}
 
+	m_Console->setFrame(ui.webView->page()->mainFrame());
 	updateActions();
 }
 
@@ -233,6 +233,44 @@ void SalesSection::setCustomer()
 void SalesSection::fetchInvoice(QString id)
 {
 
+}
+
+/**
+ * Adds a product to the invoice in the server.
+ */
+void SalesSection::addProductInvoice(int quantity)
+{
+	QString barCode = m_BarCodeLineEdit->text().trimmed();
+
+	if (barCode != "") {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd", "add_product_invoice");
+		url.addQueryItem("key", m_NewInvoiceKey);
+		url.addQueryItem("bar_code", barCode);
+		url.addQueryItem("quantity", QString::number(quantity));
+		url.addQueryItem("type", "xml");
+
+		QString content = m_Request->get(url);
+
+		XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->create("stub");
+
+		QString errorMsg, elementId;
+		XmlResponseHandler::ResponseType response =
+				m_Handler->handle(content, transformer, &errorMsg, &elementId);
+		if (response == XmlResponseHandler::Success) {
+			fetchInvoiceDetails();
+			m_BarCodeLineEdit->setText("");
+		} else if (response == XmlResponseHandler::Failure) {
+			m_Console->displayFailure(errorMsg, elementId);
+		} else {
+			m_Console->displayError(errorMsg);
+		}
+
+		delete transformer;
+	} else {
+		m_BarCodeLineEdit->setText("");
+	}
 }
 
 /**
@@ -540,6 +578,9 @@ void SalesSection::setPlugins()
 	WebPluginFactory *factory =
 			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
 	factory->install("application/x-bar_code_line_edit", m_BarCodeLineEdit);
+
+	connect(m_BarCodeLineEdit, SIGNAL(returnPressed()), this,
+			SLOT(addProductInvoice()));
 }
 
 /**
