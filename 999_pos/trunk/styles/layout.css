@@ -223,7 +223,6 @@ input[type="text"], input[type="password"] {
 
 #bar_code_input {
 	height: 1.5em;
-	float: right;
 }
 
 #bonus, #reserve_items {
