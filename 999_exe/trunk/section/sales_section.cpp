@@ -9,6 +9,7 @@
 
 #include <QList>
 #include <QMessageBox>
+#include <QInputDialog>
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
@@ -263,7 +264,7 @@ void SalesSection::addProductInvoice(int quantity)
 			m_Console->cleanFailure("bar_code");
 			m_BarCodeLineEdit->setText("");
 		} else if (response == XmlResponseHandler::Failure) {
-			//m_Console->cleanFailure("bar_code");
+			m_Console->cleanFailure("bar_code");
 			m_Console->displayFailure(errorMsg, elementId);
 		} else {
 			m_Console->displayError(errorMsg);
@@ -272,6 +273,48 @@ void SalesSection::addProductInvoice(int quantity)
 		delete transformer;
 	} else {
 		m_BarCodeLineEdit->setText("");
+	}
+}
+
+/**
+ * Removes a product from the invoice on the server.
+ */
+void SalesSection::deleteProductInvoice()
+{
+	bool ok;
+	int row = QInputDialog::getInt(this, "Quitar Producto", "Fila #:", 0, 1, 9999,
+			1, &ok);
+
+	if (ok) {
+		QWebElement tr = ui.webView->page()->mainFrame()
+				->findFirstElement("#tr" + QString::number(row));
+
+		if (!tr.isNull()) {
+			QWebElement td = tr.findFirst("td");
+			QString detailId = td.attribute("id");
+
+			QUrl url(*m_ServerUrl);
+			url.addQueryItem("cmd", "delete_product_invoice");
+			url.addQueryItem("key", m_NewInvoiceKey);
+			url.addQueryItem("detail_id", detailId);
+			url.addQueryItem("type", "xml");
+
+			QString content = m_Request->get(url);
+
+			XmlTransformer *transformer = XmlTransformerFactory::instance()
+					->create("stub");
+
+			QString errorMsg;
+			XmlResponseHandler::ResponseType response =
+					m_Handler->handle(content, transformer, &errorMsg);
+			if (response == XmlResponseHandler::Success) {
+				fetchInvoiceDetails();
+			} else if(response == XmlResponseHandler::Error) {
+				m_Console->displayError(errorMsg);
+			}
+
+			delete transformer;
+		}
 	}
 }
 
@@ -308,8 +351,10 @@ void SalesSection::setActions()
 	m_AddProductAction = new QAction("Agregar producto", this);
 	m_AddProductAction->setShortcut(tr("Ctrl+I"));
 
-	m_RemoveProductAction = new QAction("Quitar producto", this);
-	m_RemoveProductAction->setShortcut(tr("Del"));
+	m_DeleteProductAction = new QAction("Quitar producto", this);
+	m_DeleteProductAction->setShortcut(tr("Ctrl+D"));
+	connect(m_DeleteProductAction, SIGNAL(triggered()), this,
+			SLOT(deleteProductInvoice()));
 
 	m_SearchProductAction = new QAction("Buscar producto", this);
 	m_SearchProductAction->setShortcut(Qt::Key_F5);
@@ -352,7 +397,7 @@ void SalesSection::setMenu()
 	menu->addAction(m_ClientAction);
 	menu->addAction(m_DiscountAction);
 	menu->addAction(m_AddProductAction);
-	menu->addAction(m_RemoveProductAction);
+	menu->addAction(m_DeleteProductAction);
 	menu->addAction(m_SearchProductAction);
 
 	menu = m_Window->menuBar()->addMenu("Ver");
@@ -381,7 +426,7 @@ void SalesSection::setActionsManager()
 	*actions << m_ClientAction;
 	*actions << m_DiscountAction;
 	*actions << m_AddProductAction;
-	*actions << m_RemoveProductAction;
+	*actions << m_DeleteProductAction;
 	*actions << m_SearchProductAction;
 
 	*actions << m_MoveFirstAction;

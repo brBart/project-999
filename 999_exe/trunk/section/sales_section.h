@@ -39,6 +39,7 @@ public slots:
 	void setCustomer();
 	void fetchInvoice(QString id);
 	void addProductInvoice(int quantity = 1);
+	void deleteProductInvoice();
 
 private:
 	Console *m_Console;
@@ -68,7 +69,7 @@ private:
 	QAction *m_ClientAction;
 	QAction *m_DiscountAction;
 	QAction *m_AddProductAction;
-	QAction *m_RemoveProductAction;
+	QAction *m_DeleteProductAction;
 	QAction *m_SearchProductAction;
 
 	// View actions.
