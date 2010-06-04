@@ -612,7 +612,7 @@ void SalesSection::updateCustomerData(QString nit, QString name)
 	element.setInnerXml(nit);
 
 	element = frame->findFirstElement("#customer");
-	element.setInnerXml(name);
+	element.setInnerXml(name + "&nbsp;");
 }
 
 /**
