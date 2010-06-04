@@ -43,12 +43,12 @@
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
 	           	<td>
+	           		<xsl:attribute name="id">
+		             	<xsl:value-of select="detail_id" />
+		           	</xsl:attribute>
 	           		<xsl:value-of select="position()" />
 	           	</td>
 	       		<td>
-	       			<xsl:attribute name="id">
-		             	<xsl:value-of select="detail_id" />
-		           	</xsl:attribute>
 	       			<xsl:value-of select="bar_code" />
 	       		</td>
 	       		<td><xsl:value-of select="manufacturer" /></td>
