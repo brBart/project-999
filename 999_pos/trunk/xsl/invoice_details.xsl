@@ -16,19 +16,22 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="3"></td>
 	       			<td class="total_col">Sub-Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/sub_total" /></td>
+	       			<td></td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="3"></td>
 	       			<td class="total_col">Descuento:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/discount" /></td>
+	       			<td></td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="3"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
+	       			<td></td>
 	       		</tr>
 	       	</tfoot>
 		</table>
@@ -42,21 +45,17 @@
 	           	<xsl:if test="position() mod 2 != 0">
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
-	           	<td>
-	           		<xsl:attribute name="id">
+	       		<td>
+	       			<xsl:attribute name="id">
 		             	<xsl:value-of select="detail_id" />
 		           	</xsl:attribute>
-	           		<xsl:value-of select="position()" />
-	           	</td>
-	       		<td>
-	       			<xsl:value-of select="bar_code" />
-	       		</td>
-	       		<td><xsl:value-of select="manufacturer" /></td>
+	       			<xsl:value-of select="quantity" />
+       			</td>
 	       		<td><xsl:value-of select="product" /></td>
 	       		<td><xsl:value-of select="packaging" /></td>
-	       		<td><xsl:value-of select="quantity" /></td>
 	       		<td><xsl:value-of select="price" /></td>
 	       		<td class="total_col"><xsl:value-of select="total" /></td>
+	       		<td><xsl:value-of select="position()" /></td>
 			</xsl:element>
         </xsl:for-each>
 	</xsl:template>
