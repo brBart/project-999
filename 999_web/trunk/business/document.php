@@ -483,7 +483,7 @@ class DocBonusDetail extends DocumentDetail{
 		return array('id' => $this->getId(), 'bar_code' => '', 'manufacturer' => '',
 				'product' => $product->getName(), 'packaging' => $product->getPackaging(),
 				'um' => '', 'quantity' => $this->_mQuantity, 'price' => $this->_mPrice,
-				'total' => $this->getTotal(), 'expiration_date' => '');
+				'total' => $this->getTotal(), 'expiration_date' => '', 'is_bonus' => '1');
 	}
 	
 	/**
