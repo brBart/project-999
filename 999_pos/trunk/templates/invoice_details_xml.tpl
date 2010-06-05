@@ -14,6 +14,13 @@ header('Content-Type: text/xml');
 	<grid>
 		{section name=i loop=$details}
 		<row>
+			{if $details[i].is_bonus eq 1}
+			<row_pos>0</row_pos>
+			<is_bonus>1</is_bonus>
+			{else}
+			<row_pos>{counter}</row_pos>
+			<is_bonus>0</is_bonus>
+			{/if}
 			<detail_id>{$details[i].id}</detail_id>
 			<product><![CDATA[{$details[i].product}]]></product>
 			<packaging><![CDATA[{$details[i].packaging}]]></packaging>

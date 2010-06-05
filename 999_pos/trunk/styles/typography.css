@@ -15,7 +15,7 @@ table th{
 	text-align: left;
 }
 
-.failed {
+.failed, .bonus {
 	font-weight: bold;
 }
 

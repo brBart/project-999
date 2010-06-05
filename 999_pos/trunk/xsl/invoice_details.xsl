@@ -9,7 +9,7 @@
 		  			</xsl:when>
 		  			<xsl:otherwise>
 		  				<tr>
-			       			<td colspan="7"></td>
+			       			<td colspan="5"></td>
 			       		</tr>
 		  			</xsl:otherwise>
 		  		</xsl:choose>
@@ -39,23 +39,47 @@
 	<xsl:template name="body">
 		<xsl:for-each select="response/grid/row">
 			<xsl:element name="tr">
-	           	<xsl:attribute name="id">
-	             	<xsl:value-of select="concat('tr', position())" />
-	           	</xsl:attribute>
-	           	<xsl:if test="position() mod 2 != 0">
-	           		<xsl:attribute name="class">even</xsl:attribute>
-	           	</xsl:if>
-	       		<td>
-	       			<xsl:attribute name="id">
-		             	<xsl:value-of select="detail_id" />
+				<xsl:if test="is_bonus = 0">
+		           	<xsl:attribute name="id">
+		             	<xsl:value-of select="concat('tr', row_pos)" />
 		           	</xsl:attribute>
-	       			<xsl:value-of select="quantity" />
-       			</td>
+	           	</xsl:if>
+	           	<xsl:choose>
+		  			<xsl:when test="position() mod 2 != 0 and is_bonus = 1">
+		  				<xsl:attribute name="class">even bonus</xsl:attribute>
+		  			</xsl:when>
+		  			<xsl:when test="position() mod 2 != 0">
+		  				<xsl:attribute name="class">even</xsl:attribute>
+		  			</xsl:when>
+		  			<xsl:when test="is_bonus = 1">
+		  				<xsl:attribute name="class">bonus</xsl:attribute>
+		  			</xsl:when>
+		  		</xsl:choose>
+		  		<xsl:choose>
+	       			<xsl:when test="is_bonus = 0">
+	       				<td>
+			       			<xsl:attribute name="id">
+				             	<xsl:value-of select="detail_id" />
+				           	</xsl:attribute>
+			       			<xsl:value-of select="quantity" />
+		       			</td>
+	       			</xsl:when>
+	       			<xsl:otherwise>
+	       				<td></td>
+	       			</xsl:otherwise>
+	       		</xsl:choose>
 	       		<td><xsl:value-of select="product" /></td>
 	       		<td><xsl:value-of select="packaging" /></td>
 	       		<td><xsl:value-of select="price" /></td>
 	       		<td class="total_col"><xsl:value-of select="total" /></td>
-	       		<td><xsl:value-of select="position()" /></td>
+	       		<xsl:choose>
+	       			<xsl:when test="is_bonus = 0">
+	       				<td><xsl:value-of select="row_pos" /></td>
+	       			</xsl:when>
+	       			<xsl:otherwise>
+	       				<td></td>
+	       			</xsl:otherwise>
+	       		</xsl:choose>
 			</xsl:element>
         </xsl:for-each>
 	</xsl:template>

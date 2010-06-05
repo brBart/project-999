@@ -95,6 +95,10 @@ a:hover {
 	color: gray;
 }
 
+.bonus {
+	color: #1ADF00;
+}
+
 .disabled th {
 	color: gray;
 }
