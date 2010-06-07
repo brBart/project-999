@@ -260,6 +260,7 @@ void SalesSection::addProductInvoice(int quantity)
 		XmlResponseHandler::ResponseType response =
 				m_Handler->handle(content, transformer, &errorMsg, &elementId);
 		if (response == XmlResponseHandler::Success) {
+			QApplication::beep();
 			fetchInvoiceDetails();
 			m_Console->cleanFailure("bar_code");
 			m_BarCodeLineEdit->setText("");
