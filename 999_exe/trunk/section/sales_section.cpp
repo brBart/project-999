@@ -319,6 +319,29 @@ void SalesSection::deleteProductInvoice()
 }
 
 /**
+ * Scrolls the detail's div element up.
+ */
+void SalesSection::scrollUp()
+{
+	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
+
+	if (div.evaluateJavaScript("this.scrollTop").toInt() > 0)
+		div.evaluateJavaScript("this.scrollTop -= 10");
+}
+
+/**
+ * Scrolls the detail's div element down.
+ */
+void SalesSection::scrollDown()
+{
+	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
+
+	if (div.evaluateJavaScript("this.scrollTop").toInt()
+			< div.evaluateJavaScript("this.scrollHeight").toInt())
+		div.evaluateJavaScript("this.scrollTop += 10");
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -358,6 +381,14 @@ void SalesSection::setActions()
 
 	m_SearchProductAction = new QAction("Buscar producto", this);
 	m_SearchProductAction->setShortcut(Qt::Key_F5);
+
+	m_ScrollUpAction = new QAction("Desplazar arriba", this);
+	m_ScrollUpAction->setShortcut(tr("Ctrl+Up"));
+	connect(m_ScrollUpAction, SIGNAL(triggered()), this, SLOT(scrollUp()));
+
+	m_ScrollDownAction = new QAction("Desplazar abajo", this);
+	m_ScrollDownAction->setShortcut(tr("Ctrl+Down"));
+	connect(m_ScrollDownAction, SIGNAL(triggered()), this, SLOT(scrollDown()));
 
 	m_MoveFirstAction = new QAction("Primero", this);
 	m_MoveFirstAction->setShortcut(tr("Home"));
@@ -401,6 +432,9 @@ void SalesSection::setMenu()
 	menu->addAction(m_SearchProductAction);
 
 	menu = m_Window->menuBar()->addMenu("Ver");
+	menu->addAction(m_ScrollUpAction);
+	menu->addAction(m_ScrollDownAction);
+	menu->addSeparator();
 	menu->addAction(m_MoveFirstAction);
 	menu->addAction(m_MovePreviousAction);
 	menu->addAction(m_MoveNextAction);
@@ -429,6 +463,8 @@ void SalesSection::setActionsManager()
 	*actions << m_DeleteProductAction;
 	*actions << m_SearchProductAction;
 
+	*actions << m_ScrollUpAction;
+	*actions << m_ScrollDownAction;
 	*actions << m_MoveFirstAction;
 	*actions << m_MovePreviousAction;
 	*actions << m_MoveNextAction;
@@ -499,24 +535,24 @@ void SalesSection::updateActions()
 	switch (m_CRegisterStatus) {
 		case Open:
 			if (m_DocumentStatus == Edit) {
-				values = "0110011111000001";
+				values = "011001111111000001";
 				m_BarCodeLineEdit->setEnabled(true);
 			} else {
 				QString cancel =
 						(m_DocumentStatus == Idle
 								&& m_Recordset.size() > 0) ? "1" : "0";
-				values = "100" + cancel + "100000" + viewValues();
+				values = "100" + cancel + "10000000" + navigateValues();
 				m_BarCodeLineEdit->setEnabled(false);
 			}
 			break;
 
 		case Closed:
-			values = "0000100000" + viewValues();
+			values = "000010000000" + navigateValues();
 			m_BarCodeLineEdit->setEnabled(false);
 			break;
 
 		case Error:
-			values = "0000100000000000";
+			values = "000010000000000000";
 			break;
 
 		default:;
@@ -528,7 +564,7 @@ void SalesSection::updateActions()
 /**
  * Auxialiry method for updating the QActions related to the recordset.
  */
-QString SalesSection::viewValues()
+QString SalesSection::navigateValues()
 {
 	if (m_Recordset.size() > 0) {
 		if (m_Recordset.isFirst()) {

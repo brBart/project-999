@@ -40,6 +40,8 @@ public slots:
 	void fetchInvoice(QString id);
 	void addProductInvoice(int quantity = 1);
 	void deleteProductInvoice();
+	void scrollUp();
+	void scrollDown();
 
 private:
 	Console *m_Console;
@@ -73,6 +75,8 @@ private:
 	QAction *m_SearchProductAction;
 
 	// View actions.
+	QAction *m_ScrollUpAction;
+	QAction *m_ScrollDownAction;
 	QAction *m_MoveFirstAction;
 	QAction *m_MovePreviousAction;
 	QAction *m_MoveNextAction;
@@ -87,7 +91,7 @@ private:
 	void refreshRecordset();
 	void fetchInvoiceForm();
 	void updateActions();
-	QString viewValues();
+	QString navigateValues();
 	void prepareInvoiceForm(QString dateTime, QString username);
 	void fetchCashRegisterStatus();
 	void updateCustomerData(QString nit, QString name);
