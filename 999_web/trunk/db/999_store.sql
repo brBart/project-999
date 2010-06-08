@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-05-2010 a las 11:13:25
+-- Tiempo de generación: 08-06-2010 a las 11:32:51
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -903,7 +903,8 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 23, 2, 1),
 (1, 24, 2, 1),
 (1, 25, 2, 1),
-(1, 26, 1, 1);
+(1, 26, 1, 1),
+(1, 27, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1013,7 +1014,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1045,7 +1046,8 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (23, 'payment_card_type'),
 (24, 'payment_card_brand'),
 (25, 'reserve'),
-(26, 'pos');
+(26, 'pos'),
+(27, 'invoice');
 
 -- --------------------------------------------------------
 
@@ -1530,7 +1532,9 @@ BEGIN
 
   SELECT bonus_id FROM bonus
 
-    WHERE product_id = inProductId AND quantity = inQuantity AND expiration_date > CURDATE();
+    WHERE product_id = inProductId AND quantity <= inQuantity AND expiration_date > CURDATE()
+
+  ORDER BY quantity DESC;
 
 END$$
 
