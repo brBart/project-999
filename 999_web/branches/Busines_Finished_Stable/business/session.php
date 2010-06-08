@@ -254,6 +254,24 @@ class POSSession extends SessionHelper{
 	static protected $_mInstance;
 	
 	/**
+	 * Returns the current session's working day.
+	 *
+	 * @return WorkingDay
+	 */
+	public function getWorkingDay(){
+		return $_SESSION[$this->_mModuleName]['working_day'];
+	}
+	
+	/**
+	 * Sets the session's working day.
+	 *
+	 * @param WorkingDay $workingDay
+	 */
+	public function setWorkingDay(WorkingDay $workingDay){
+		$_SESSION[$this->_mModuleName]['working_day'] = $workingDay;
+	}
+	
+	/**
 	 * Returns the instance of the session helper.
 	 *
 	 * @return SessionHelper
