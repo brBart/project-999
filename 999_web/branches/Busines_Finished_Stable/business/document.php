@@ -483,7 +483,8 @@ class DocBonusDetail extends DocumentDetail{
 		return array('id' => $this->getId(), 'bar_code' => '', 'manufacturer' => '',
 				'product' => $product->getName(), 'packaging' => $product->getPackaging(),
 				'um' => '', 'quantity' => $this->_mQuantity, 'price' => $this->_mPrice,
-				'total' => $this->getTotal(), 'expiration_date' => '');
+				'total' => $this->getTotal(), 'expiration_date' => '', 'is_bonus' => '1',
+				'percentage' => $this->_mBonus->getPercentage());
 	}
 	
 	/**
@@ -584,11 +585,11 @@ class DocProductDetail extends DocumentDetail{
 	 */
 	public function getId(){
 		$lot = $this->_mLot;
-		// For new lots that has there id equal to cero must be distinguish.
+		// For new lots that has their id equal to cero must be distinguish.
 		$lot_id = (!$lot->getId()) ? str_replace('/', '', $lot->getExpirationDate()) : $lot->getId();
 		
 		/**
-		 * @todo Check if this is OK.
+		 * @TODO Check if this is OK.
 		 * For distinguish new lots with same product same expiration date but with different price.
 		 */
 		if($this->_mTransaction instanceof Entry)
@@ -1478,7 +1479,7 @@ class Invoice extends Document{
 	 */
 	public function getTotalDiscount(){
 		/**
-		 * @todo Verify it it the result needs rounding.
+		 * @TODO Verify it it the result needs rounding.
 		 */
 		$discount = (is_null($this->_mDiscount)) ? 0.00 :
 				$this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100);
@@ -1525,7 +1526,6 @@ class Invoice extends Document{
 	 * @param Customer $obj
 	 */
 	public function setCustomer(Customer $obj){
-		self::validateObjectFromDatabase($obj);
 		$this->_mCustomerNit = $obj->getNit();
 		$this->_mCustomerName = $obj->getName();
 	}
