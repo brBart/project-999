@@ -26,7 +26,7 @@ class CreateInvoiceCommand extends CreateCashRegisterObjectCommand{
 	 * @return boolean
 	 */
 	protected function testRights(UserAccount $user){
-		return AccessManager::isAllowed($user, 'purchase_return', 'write');
+		return AccessManager::isAllowed($user, 'invoice', 'write');
 	}
 	
 	/**
