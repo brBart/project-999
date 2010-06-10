@@ -15,6 +15,9 @@
  * Gives the enter key functionality to the QPushButton objects.
  */
 
+/**
+ * Constructs the object with a parent.
+ */
 EnterKeyEventFilter::EnterKeyEventFilter(QObject *parent) : QObject(parent)
 {
 
