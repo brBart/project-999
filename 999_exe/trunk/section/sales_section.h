@@ -19,6 +19,7 @@
 #include "../recordset/recordset.h"
 #include "../actions_manager/actions_manager.h"
 #include "../plugins/bar_code_line_edit.h"
+#include "../authentication_dialog/authentication_dialog.h"
 
 class SalesSection: public Section
 {
@@ -42,6 +43,8 @@ public slots:
 	void deleteProductInvoice();
 	void scrollUp();
 	void scrollDown();
+	void showAuthenticationDialog();
+	void createDiscount();
 
 private:
 	Console *m_Console;
@@ -53,6 +56,7 @@ private:
 	BarCodeLineEdit *m_BarCodeLineEdit;
 	QXmlQuery *m_Query;
 	QString m_StyleSheet;
+	AuthenticationDialog *m_AuthenticationDlg;
 
 	QString m_CRegisterKey;
 	QString m_NewInvoiceKey;
@@ -97,6 +101,7 @@ private:
 	void updateCustomerData(QString nit, QString name);
 	void setPlugins();
 	void fetchInvoiceDetails();
+	void setDiscountInvoice(QString discountKey);
 };
 
 #endif /* SALES_SECTION_H_ */

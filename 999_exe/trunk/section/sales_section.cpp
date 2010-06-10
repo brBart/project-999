@@ -14,6 +14,7 @@
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
 #include "../registry.h"
+#include "../discount_dialog/discount_dialog.h"
 
 /**
  * @class SalesSection
@@ -284,7 +285,7 @@ void SalesSection::deleteProductInvoice()
 {
 	bool ok;
 	int row = QInputDialog::getInt(this, "Quitar Producto", "Fila #:", 0, 1, 9999,
-			1, &ok);
+			1, &ok, Qt::WindowTitleHint);
 
 	if (ok) {
 		QWebElement tr = ui.webView->page()->mainFrame()
@@ -343,6 +344,57 @@ void SalesSection::scrollDown()
 }
 
 /**
+ * Shows the authentication dialog.
+ */
+void SalesSection::showAuthenticationDialog()
+{
+	m_AuthenticationDlg = new AuthenticationDialog(this, Qt::WindowTitleHint);
+	m_AuthenticationDlg->setAttribute(Qt::WA_DeleteOnClose);
+	m_AuthenticationDlg->setModal(true);
+
+	connect(m_AuthenticationDlg, SIGNAL(okClicked()), this, SLOT(createDiscount()));
+
+	m_AuthenticationDlg->show();
+}
+
+/**
+ * Creates a discount on the server.
+ */
+void SalesSection::createDiscount()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "create_discount");
+	url.addQueryItem("username", m_AuthenticationDlg->usernameLineEdit()->text());
+	url.addQueryItem("password", m_AuthenticationDlg->passwordLineEdit()->text());
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("object_key");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *params = list[0];
+		QString discountKey = params->value("key");
+		m_AuthenticationDlg->done();
+
+		DiscountDialog dlg(m_Request->cookieJar(), m_ServerUrl, discountKey, this,
+				Qt::WindowTitleHint);
+
+		if (dlg.exec() == QDialog::Accepted)
+			setDiscountInvoice(discountKey);
+
+	} else {
+		m_AuthenticationDlg->console()->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -371,6 +423,8 @@ void SalesSection::setActions()
 
 	m_DiscountAction = new QAction("Descuento", this);
 	m_DiscountAction->setShortcut(Qt::Key_F7);
+	connect(m_DiscountAction, SIGNAL(triggered()), this, SLOT(
+			showAuthenticationDialog()));
 
 	m_AddProductAction = new QAction("Agregar producto", this);
 	m_AddProductAction->setShortcut(tr("Ctrl+I"));
@@ -563,7 +617,7 @@ void SalesSection::updateActions()
 }
 
 /**
- * Auxialiry method for updating the QActions related to the recordset.
+ * Auxiliary method for updating the QActions related to the recordset.
  */
 QString SalesSection::navigateValues()
 {
@@ -688,4 +742,31 @@ void SalesSection::fetchInvoiceDetails()
 	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
 	div.setInnerXml(result);
 	div.evaluateJavaScript("this.scrollTop = this.scrollHeight;");
+}
+
+/**
+ * Sets a discount to an invoice on the server.
+ */
+void SalesSection::setDiscountInvoice(QString discountKey)
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "set_discount_invoice");
+	url.addQueryItem("discount_key", discountKey);
+	url.addQueryItem("key", m_NewInvoiceKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->create("stub");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		fetchInvoiceDetails();
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
 }

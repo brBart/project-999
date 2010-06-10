@@ -7,7 +7,9 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += plugins/plugin_widget_factory.h \
+HEADERS += discount_dialog/discount_dialog.h \
+    authentication_dialog/authentication_dialog.h \
+    plugins/plugin_widget_factory.h \
     plugins/web_plugin_factory.h \
     plugins/bar_code_line_edit.h \
     plugins/plugin_widget.h \
@@ -41,7 +43,9 @@ HEADERS += plugins/plugin_widget_factory.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += plugins/plugin_widget_factory.cpp \
+SOURCES += discount_dialog/discount_dialog.cpp \
+    authentication_dialog/authentication_dialog.cpp \
+    plugins/plugin_widget_factory.cpp \
     plugins/web_plugin_factory.cpp \
     plugins/bar_code_line_edit.cpp \
     xml_transformer/xml_transformer_factory.cpp \
@@ -75,7 +79,9 @@ SOURCES += plugins/plugin_widget_factory.cpp \
     http_request/http_request.cpp \
     main.cpp \
     mainwindow.cpp
-FORMS += customer_dialog/customer_dialog.ui \
+FORMS += discount_dialog/discount_dialog.ui \
+    authentication_dialog/authentication_dialog.ui \
+    customer_dialog/customer_dialog.ui \
     recordset/recordset.ui \
     cash_register_dialog/cash_register_dialog.ui \
     section/section.ui \
