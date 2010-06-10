@@ -1438,6 +1438,15 @@ class Invoice extends Document{
 	}
 	
 	/**
+	 * Returns the invoice discount's percentage.
+	 *
+	 * @return float
+	 */
+	public function getDiscountPercentage(){
+		return (is_null($this->_mDiscount)) ? 0.00 : $this->_mDiscount->getPercentage();
+	}
+	
+	/**
 	 * Returns the invoice's cash register.
 	 *
 	 * @return CashRegister
@@ -1797,8 +1806,8 @@ class Discount extends Persist{
 	 * @param float $value
 	 */
 	public function setPercentage($value){
-		Number::validatePositiveFloat($value, 'Porcentage inv&aacute;lido.');
 		$this->_mPercentage = $value;
+		Number::validatePositiveNumber($value, 'Porcentaje inv&aacute;lido.');
 	}
 	
 	/**
