@@ -23,7 +23,12 @@
 	       		</tr>
 	       		<tr>
 	       			<td colspan="3"></td>
-	       			<td class="total_col">Descuento:</td>
+	       			<td class="total_col">
+	       				Descuento
+	       				<span class="percentages">
+	       					(<xsl:value-of select="response/params/discount_percentage" />%)
+	       				</span>:
+       				</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/discount" /></td>
 	       			<td></td>
 	       		</tr>
@@ -71,7 +76,7 @@
 			           	<td></td>
 			           	<td><xsl:value-of select="product" /></td>
 	       				<td><xsl:value-of select="packaging" /></td>
-	       				<td><xsl:value-of select="percentage" /></td>
+	       				<td class="percentages"><xsl:value-of select="percentage" /></td>
 	       				<td class="total_col"><xsl:value-of select="total" /></td>
 	       				<td></td>
 					</xsl:otherwise>

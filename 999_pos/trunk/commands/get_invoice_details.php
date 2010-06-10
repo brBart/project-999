@@ -33,6 +33,7 @@ class GetInvoiceDetailsCommand extends Command{
 		$invoice = $helper->getObject((int)$request->getProperty('key'));
 		$details = DetailsPrinter::showPage($invoice);
 		Page::display(array('details' => $details, 'sub_total' => $invoice->getSubTotal(),
+				'discount_percentage' => $invoice->getDiscountPercentage(),
 				'discount' => $invoice->getTotalDiscount(), 'total' => $invoice->getTotal(),
 				'total_items' => count($details)), 'invoice_details_xml.tpl');
 	}

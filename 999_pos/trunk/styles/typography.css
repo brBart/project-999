@@ -50,3 +50,8 @@ tfoot .total_col {
 #frm .pos {
 	font-size: 1.5em;
 }
+
+#details .percentages {
+	font-size: 0.7em;
+	font-weight: normal;
+}

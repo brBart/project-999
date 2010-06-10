@@ -7,6 +7,7 @@ header('Content-Type: text/xml');
 	<success>1</success>
 	<params>
 		<sub_total>{$sub_total|nf:2}</sub_total>
+		<discount_percentage>{$discount_percentage|nf:2}</discount_percentage>
 		<discount>{$discount|nf:2}</discount>
 		<total>{$total|nf:2}</total>
 		<total_items>{$total_items}</total_items>
