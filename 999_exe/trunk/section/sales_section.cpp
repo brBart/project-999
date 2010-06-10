@@ -388,6 +388,9 @@ void SalesSection::createDiscount()
 			setDiscountInvoice(discountKey);
 
 	} else {
+		m_AuthenticationDlg->passwordLineEdit()->setText("");
+		m_AuthenticationDlg->usernameLineEdit()->selectAll();
+		m_AuthenticationDlg->usernameLineEdit()->setFocus();
 		m_AuthenticationDlg->console()->displayError(errorMsg);
 	}
 
