@@ -379,7 +379,7 @@ void SalesSection::createDiscount()
 		QList<QMap<QString, QString>*> list = transformer->content();
 		QMap<QString, QString> *params = list[0];
 		QString discountKey = params->value("key");
-		m_AuthenticationDlg->done();
+		m_AuthenticationDlg->close();
 
 		DiscountDialog dlg(m_Request->cookieJar(), m_ServerUrl, discountKey, this,
 				Qt::WindowTitleHint);

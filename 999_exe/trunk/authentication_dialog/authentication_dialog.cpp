@@ -20,7 +20,7 @@ AuthenticationDialog::AuthenticationDialog(QWidget *parent, Qt::WindowFlags f)
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
 	connect(ui.okPushButton, SIGNAL(clicked()), this, SIGNAL(okClicked()));
-	connect(ui.cancelPushButton, SIGNAL(clicked()), this, SLOT(done()));
+	connect(ui.cancelPushButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 /**
@@ -53,12 +53,4 @@ QLineEdit* AuthenticationDialog::passwordLineEdit()
 Console* AuthenticationDialog::console()
 {
 	return m_Console;
-}
-
-/**
- * Closes the dialog.
- */
-void AuthenticationDialog::done()
-{
-	QDialog::done(0);
 }

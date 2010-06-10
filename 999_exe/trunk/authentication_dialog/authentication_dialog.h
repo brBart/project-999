@@ -17,9 +17,6 @@ public:
     QLineEdit* passwordLineEdit();
     Console* console();
 
-public slots:
-	void done();
-
 signals:
 	void okClicked();
 
