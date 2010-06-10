@@ -37,9 +37,11 @@ input[type="text"], input[type="password"]{
 	color: red;
 }
 </style>
+<script type="text/javascript" src="../scripts/text_range.js"></script>
 <script type="text/javascript">
 	function init(){
 		var oInput = document.getElementById('username');
+		TextRange.selectRange(oInput, 0, oInput.value.length);
 		oInput.focus();
 	}
 </script>

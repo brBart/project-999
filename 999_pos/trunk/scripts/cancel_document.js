@@ -118,5 +118,9 @@ CancelDocumentCommand.prototype.displaySuccess = function(xmlDoc){
 CancelDocumentCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	// Must clean it in case a failure has been already display for the same element.
 	this._mConsole.displayError(strMsg);
+	
+	this._mPassword.value = '';
+	
+	TextRange.selectRange(this._mUser, 0, this._mUser.value.length);
 	this._mUser.focus();
 }

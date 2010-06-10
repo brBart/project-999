@@ -23,6 +23,7 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
 {if $status eq 1}
 <script type="text/javascript" src="../scripts/modal_form.js"></script>
 <script type="text/javascript" src="../scripts/cancel_document.js"></script>
+<script type="text/javascript" src="../scripts/text_range.js"></script>
 <div id="authenticate_container" class="hidden">
 	<div id="authenticate_form">
 		<fieldset>
