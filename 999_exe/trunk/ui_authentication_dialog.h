@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'authentication_dialog.ui'
 **
-** Created: Wed 9. Jun 17:09:56 2010
+** Created: Fri 11. Jun 16:18:39 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -45,7 +45,7 @@ public:
     {
         if (AuthenticationDialogClass->objectName().isEmpty())
             AuthenticationDialogClass->setObjectName(QString::fromUtf8("AuthenticationDialogClass"));
-        AuthenticationDialogClass->resize(310, 135);
+        AuthenticationDialogClass->resize(310, 145);
         gridLayout_2 = new QGridLayout(AuthenticationDialogClass);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'discount_dialog.ui'
 **
-** Created: Thu 10. Jun 09:23:06 2010
+** Created: Fri 11. Jun 16:18:39 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -44,7 +44,7 @@ public:
     {
         if (DiscountDialogClass->objectName().isEmpty())
             DiscountDialogClass->setObjectName(QString::fromUtf8("DiscountDialogClass"));
-        DiscountDialogClass->resize(310, 109);
+        DiscountDialogClass->resize(310, 120);
         gridLayout = new QGridLayout(DiscountDialogClass);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
