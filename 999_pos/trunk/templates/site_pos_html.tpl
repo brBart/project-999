@@ -8,7 +8,6 @@
 <link href="../styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="../styles/typography.css" rel="stylesheet" type="text/css" />
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../scripts/session.js"></script>
 <script type="text/javascript">
 	var isSessionActive = true;
 </script>
