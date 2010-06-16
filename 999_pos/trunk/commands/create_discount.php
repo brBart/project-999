@@ -53,7 +53,7 @@ class CreateDiscountCommand extends Command{
 				}
 				else{
 					$msg = 'Insuficientes privilegios.';
-					Page::display(array('message' => $msg), 'failure_xml.tpl');
+					Page::display(array('message' => $msg), 'error_xml.tpl');
 				}
 			}
 		} catch(Exception $e){
