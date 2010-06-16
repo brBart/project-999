@@ -140,8 +140,11 @@ a:hover {
 	border-width: 1px;
 }
 
-#wrapper {
+#wrapper, #wrapper_cash_receipt {
 	background-color: #EEEEEE;
+}
+
+#wrapper {
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
 }
