@@ -45,6 +45,7 @@ public slots:
 	void scrollDown();
 	void showAuthenticationDialog();
 	void createDiscount();
+	void createCashReceipt();
 
 private:
 	Console *m_Console;
@@ -57,6 +58,7 @@ private:
 	QXmlQuery *m_Query;
 	QString m_StyleSheet;
 	AuthenticationDialog *m_AuthenticationDlg;
+	QString m_CashReceiptKey;
 
 	QString m_CRegisterKey;
 	QString m_NewInvoiceKey;

@@ -15,6 +15,7 @@
 #include "../customer_dialog/customer_dialog.h"
 #include "../registry.h"
 #include "../discount_dialog/discount_dialog.h"
+#include "cash_receipt_section.h"
 
 /**
  * @class SalesSection
@@ -183,6 +184,21 @@ void SalesSection::discardInvoice()
 		url.addQueryItem("type", "xml");
 
 		m_Request->get(url, true);
+
+		// If a cash receipt was created, remove it from session.
+		if (m_CashReceiptKey != "") {
+			url = *m_ServerUrl;
+			url.addQueryItem("cmd", "remove_session_object");
+			url.addQueryItem("key", m_CashReceiptKey);
+			url.addQueryItem("type", "xml");
+
+			HttpRequest request(ui.webView->page()->networkAccessManager()
+					->cookieJar(), this);
+
+			request.get(url, true);
+
+			m_CashReceiptKey = "";
+		}
 
 		if (m_Recordset.size() > 0) {
 			m_Recordset.refresh();
@@ -398,6 +414,62 @@ void SalesSection::createDiscount()
 }
 
 /**
+ * Creates a cash receipt on the server.
+ */
+void SalesSection::createCashReceipt()
+{
+	bool errorFree = true;
+
+	// If there is not a cash receipt already.
+	if (m_CashReceiptKey == "") {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd", "create_cash_receipt");
+		url.addQueryItem("invoice_key", m_NewInvoiceKey);
+		url.addQueryItem("type", "xml");
+
+		QString content = m_Request->get(url);
+
+		XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->create("object_key");
+
+		QString errorMsg, elementId;
+		XmlResponseHandler::ResponseType response = m_Handler->handle(content,
+			transformer, &errorMsg, &elementId);
+
+		if (response == XmlResponseHandler::Success) {
+			QList<QMap<QString, QString>*> list = transformer->content();
+			QMap<QString, QString> *params = list[0];
+			m_CashReceiptKey = params->value("key");
+			m_Console->reset();
+		} else if (response == XmlResponseHandler::Failure) {
+			m_Console->reset();
+			m_Console->displayFailure(errorMsg, elementId);
+			errorFree = false;
+		} else {
+			m_Console->displayError(errorMsg);
+			errorFree = false;
+		}
+	}
+
+	if (errorFree) {
+		QMainWindow *window = new QMainWindow(this, Qt::WindowTitleHint);
+		window->setAttribute(Qt::WA_DeleteOnClose);
+		window->setWindowModality(Qt::WindowModal);
+		window->setWindowTitle("Recibo");
+		window->resize(width() - (width() / 3), height() - 150);
+		window->move(x() + (width() / 6), y() + 100);
+
+		CashReceiptSection *section = new CashReceiptSection(
+				ui.webView->page()->networkAccessManager()->cookieJar(),
+				ui.webView->page()->pluginFactory(), m_ServerUrl, m_CashReceiptKey,
+				window);
+
+		window->setCentralWidget(section);
+		window->show();
+	}
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -408,6 +480,7 @@ void SalesSection::setActions()
 
 	m_SaveAction = new QAction("Guardar", this);
 	m_SaveAction->setShortcut(tr("Ctrl+S"));
+	connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(createCashReceipt()));
 
 	m_DiscardAction = new QAction("Cancelar", this);
 	m_DiscardAction->setShortcut(tr("Ctrl+W"));
