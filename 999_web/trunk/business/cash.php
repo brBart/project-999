@@ -980,21 +980,6 @@ class CashReceipt extends PersistDocument{
 	public function __construct(Invoice $invoice, $id = NULL, $status = PersistDocument::IN_PROGRESS){
 		parent::__construct($id, $status);
 		
-		if($this->_mStatus == PersistDocument::IN_PROGRESS){
-			self::validateNewObject($invoice);
-			if($invoice->getTotal() <= 0)
-				throw new Exception('Factura no contiene detalles.');
-		}
-		else
-			try{
-				self::validateObjectFromDatabase($invoice);
-			} catch(Exception $e){
-				$et = new Exception('Interno; Llamando al metodo construct en CashReceipt con datos ' .
-						'erroneos! ' . $e->getMessage());
-				throw $et;
-			}
-			
-		$invoice->hasCashReceipt(true);
 		$this->_mInvoice = $invoice;
 		$this->_mCash = new Cash(0.0);
 	}

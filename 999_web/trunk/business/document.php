@@ -1592,6 +1592,28 @@ class Invoice extends Document{
 	}
 	
 	/**
+	 * Creates and returns a cash receipt object.
+	 * 
+	 * @return CashReceipt
+	 */
+	public function createCashReceipt(){
+		$serial_number = Correlative::getDefaultSerialNumber();
+		
+		if(is_null($serial_number))
+			throw new Exception('No hay correlativo predeterminado.');
+			
+		$this->_mCorrelative = Correlative::getInstance($serial_number);
+		
+		if($this->_mCorrelative->getFinalNumber()
+				== $this->_mCorrelative->getCurrentNumber())
+			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
+		
+		$this->validateMainProperties();
+		
+		return new CashReceipt($this);
+	}
+	
+	/**
 	 * Saves the document's data in the database.
 	 *
 	 * Only applies if the document's status property has the PersistDocument::IN_PROGRESS value. Returns
@@ -1600,21 +1622,17 @@ class Invoice extends Document{
 	 */
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
-			$serial_number = Correlative::getDefaultSerialNumber();
-			if(is_null($serial_number))
-				throw new Exception('No hay correlativo predeterminado.');
-			
-			$this->_mCorrelative = Correlative::getInstance($serial_number);
-			$this->validateMainProperties();
-			
 			$this->_mVatPercentage = Vat::getInstance()->getPercentage();
-			$current_number = $this->_mCorrelative->getCurrentNumber();
-			if($this->_mCorrelative->getFinalNumber() == $current_number)
-				throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');			
+			
+			if($this->_mCorrelative->getFinalNumber()
+					== $this->_mCorrelative->getCurrentNumber())
+				throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
+							
 			$this->_mNumber = $this->_mCorrelative->getNextNumber();
+			
 			$this->insert();	
 			$this->_mStatus = PersistDocument::CREATED;
-			// Watch out, if any error occurs the database has already been altereted!
+			// Watch out, if any error occurs the database has already been altered!
 			$i = 1;
 			foreach($this->_mDetails as &$detail)
 				$detail->save($this, $i++);
@@ -1697,12 +1715,7 @@ class Invoice extends Document{
 	 */
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
-		
-		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.');
-		if(is_null($this->_mCorrelative))
-			throw new Exception('No hay ningun correlativo predeterminado.');
-		if(!$this->_mHasCashReceipt)
-			throw new Exception('Interno: Favor crear el recibo para poder cancelar la factura.');
+		String::validateString($this->_mCustomerNit, 'Nit inv&aacute;lido.', 'nit');
 	}
 	
 	/**
