@@ -76,6 +76,7 @@ input[type="text"], input[type="password"]{
 			  	</div>
 			  	<p>
 					<input name="login" type="submit" value="Iniciar sesi&oacute;n" />
+					<input name="close" type="button" value="Salir" onclick="mainWindow.close();" />
 			  	</p>
 		  	</fieldset>
 	  	</form>
