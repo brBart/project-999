@@ -338,7 +338,7 @@ input[type="text"], input[type="password"] {
 
 #cash_register p {
 	float: left;
-	padding: 0 5.5em;
+	padding: 0 5em;
 }
 
 #cash_register label {
