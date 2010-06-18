@@ -24,6 +24,7 @@ public:
 
 public slots:
 	void loadFinished(bool ok);
+	void setCash(QString amount);
 
 private:
 	QString m_CashReceiptKey;
@@ -44,6 +45,7 @@ private:
 
 	void setActions();
 	void setMenu();
+	void setPlugins();
 };
 
 #endif /* CASH_RECEIPT_SECTION_H_ */

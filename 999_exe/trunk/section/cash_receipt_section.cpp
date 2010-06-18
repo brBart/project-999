@@ -9,6 +9,8 @@
 
 #include <QMenuBar>
 #include "../console/console_factory.h"
+#include "../plugins/cash_line_edit.h"
+#include "../plugins/web_plugin_factory.h"
 
 /**
  * @class CashReceiptSection
@@ -27,6 +29,7 @@ CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 	ui.webView->setFocusPolicy(Qt::NoFocus);
 	setActions();
 	setMenu();
+	setPlugins();
 
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 
@@ -52,6 +55,14 @@ void CashReceiptSection::loadFinished(bool ok)
 {
 	Section::loadFinished(ok);
 	m_Console->setFrame(ui.webView->page()->mainFrame());
+}
+
+/**
+ * Sets the cash amount on the receipt on the server.
+ */
+void CashReceiptSection::setCash(QString amount)
+{
+
 }
 
 /**
@@ -102,4 +113,19 @@ void CashReceiptSection::setMenu()
 	menu = m_Window->menuBar()->addMenu("Ver");
 	menu->addAction(m_ScrollUpAction);
 	menu->addAction(m_ScrollDownAction);
+}
+
+/**
+ * Installs the necessary plugins widgets in the plugin factory of the web view.
+ */
+void CashReceiptSection::setPlugins()
+{
+	CashLineEdit *cashLineEdit = new CashLineEdit();
+
+	WebPluginFactory *factory =
+			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
+	factory->install("application/x-cash_line_edit", cashLineEdit);
+
+	connect(cashLineEdit, SIGNAL(textEdited(QString)), this,
+			SLOT(setCash(QString)));
 }
