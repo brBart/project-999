@@ -13,6 +13,8 @@
 
 class BarCodeLineEdit : public QLineEdit, public PluginWidget
 {
+	Q_OBJECT
+
 public:
 	BarCodeLineEdit(QWidget *parent = 0);
 	virtual ~BarCodeLineEdit() {};
