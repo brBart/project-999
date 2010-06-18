@@ -11,7 +11,7 @@
 
 /**
  * @class BarCodeLineEdit
- * Subclass of the QLineEdit and implements the PluginWidget interface.
+ * Widget use for entering products' bar codes.
  */
 
 /**
