@@ -243,7 +243,7 @@ input[type="text"], input[type="password"] {
 }
 
 #cash_input {
-	height: 1.5em;
+	height: 1.2em;
 }
 
 #dates_range div {
@@ -425,6 +425,10 @@ input[type="text"], input[type="password"] {
 
 .cash_receipt #total_amounts label, #cash_input {
 	width: 45%;
+}
+
+.cash_receipt #total_amounts p {
+	margin: 1em 0;
 }
 
 #frm .pos {

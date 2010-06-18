@@ -10,6 +10,7 @@
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	var isSessionActive = true;
+	var isLarge = true;
 </script>
 </head>
 <body>
@@ -17,6 +18,7 @@
 	<script type="text/javascript">
 		if(screen.width <= 1000 && screen.height <= 700){
 			document.body.style.fontSize = '8px';
+			isLarge = false;
 		}
 		else{
 			document.body.style.fontSize = '10px';
@@ -34,7 +36,16 @@
 				<div id="total_amounts">
 					<p>
 				  		<label id="cash_label">Efectivo:</label>
-				  		<object id="cash_input" type="application/x-cash_line_edit"></object>
+				  		<object id="cash_input" type="application/x-cash_line_edit">
+				  			<param name="is_large" id="is_large" />
+				  		</object>
+				  		<script type="text/javascript">
+			  				var oParam = document.getElementById("is_large");
+			  				if(isLarge)
+				  				oParam.setAttribute("value", "1");
+			  				else
+				  				oParam.setAttribute("value", "0");
+			  			</script>
 				  		<span id="cash-failed" class="hidden">*</span>
 				  	</p>
 				  	<p>

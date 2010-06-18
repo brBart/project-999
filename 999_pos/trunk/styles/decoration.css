@@ -193,7 +193,7 @@ a:hover {
 	border-width: 1px;
 }
 
-#product_tb > div {
+#product_tb > div, .cash_receipt #total_amounts {
 	border-style: solid;
 	border-color: white;
 	border-width: 1px;
@@ -236,4 +236,11 @@ a:hover {
 
 #frm .pos {
 	background-color: white;
+}
+
+.cash_receipt #total_amounts p {
+	border-bottom-style: solid;
+	border-top-style: solid;
+	border-color: white;
+	border-width: 1px;
 }
