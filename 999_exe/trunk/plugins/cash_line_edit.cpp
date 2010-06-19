@@ -35,9 +35,9 @@ void CashLineEdit::init(const QStringList &argumentNames,
 
 	// If the screen resolution is large.
 	if (argumentValues[argumentNames.indexOf("is_large")] == "1") {
-		fon.setPointSize(18);
+		fon.setPointSize(19);
 	} else {
-		fon.setPointSize(16);
+		fon.setPointSize(15);
 	}
 
 	setFont(fon);
