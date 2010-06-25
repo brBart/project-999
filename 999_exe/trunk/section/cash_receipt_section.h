@@ -11,6 +11,7 @@
 #include "section.h"
 
 #include <QMainWindow>
+#include <QTimer>
 #include "../console/console.h"
 
 class CashReceiptSection: public Section
@@ -21,15 +22,19 @@ public:
 	CashReceiptSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cashReceiptKey, QWidget *parent = 0);
 	virtual ~CashReceiptSection();
+	void loadUrl();
 
 public slots:
 	void loadFinished(bool ok);
 	void setCash(QString amount);
+	void addTimerObject();
+	void checkForChanges();
 
 private:
 	QString m_CashReceiptKey;
 	Console *m_Console;
 	QMainWindow *m_Window;
+	QTimer m_Timer;
 
 	// File actions.
 	QAction *m_SaveAction;
@@ -45,7 +50,6 @@ private:
 
 	void setActions();
 	void setMenu();
-	void setPlugins();
 };
 
 #endif /* CASH_RECEIPT_SECTION_H_ */

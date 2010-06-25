@@ -466,6 +466,8 @@ void SalesSection::createCashReceipt()
 
 		window->setCentralWidget(section);
 		window->show();
+
+		section->loadUrl();
 	}
 }
 

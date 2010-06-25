@@ -9,8 +9,6 @@
 
 #include <QMenuBar>
 #include "../console/console_factory.h"
-#include "../plugins/cash_line_edit.h"
-#include "../plugins/web_plugin_factory.h"
 
 /**
  * @class CashReceiptSection
@@ -26,18 +24,14 @@ CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 		m_CashReceiptKey(cashReceiptKey)
 {
 	m_Window = dynamic_cast<QMainWindow*>(parentWidget());
-	ui.webView->setFocusPolicy(Qt::NoFocus);
 	setActions();
 	setMenu();
-	setPlugins();
 
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 
-	QUrl url(*m_ServerUrl);
-	url.addQueryItem("cmd", "show_cash_receipt_form");
-	url.addQueryItem("key", m_CashReceiptKey);
-
-	ui.webView->load(url);
+	connect(ui.webView->page()->mainFrame(),
+			SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(addTimerObject()));
+	connect(&m_Timer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
 }
 
 /**
@@ -61,6 +55,37 @@ void CashReceiptSection::loadFinished(bool ok)
  * Sets the cash amount on the receipt on the server.
  */
 void CashReceiptSection::setCash(QString amount)
+{
+
+}
+
+/**
+ * Make available the timer object to the html page.
+ */
+void CashReceiptSection::addTimerObject()
+{
+	ui.webView->page()->mainFrame()
+			->addToJavaScriptWindowObject("timerObj", &m_Timer);
+}
+
+/**
+ * Loads the html page from the server.
+ */
+void CashReceiptSection::loadUrl()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "show_cash_receipt_form");
+	url.addQueryItem("key", m_CashReceiptKey);
+
+	ui.webView->load(url);
+}
+
+/**
+ * Checks if the cash input value has changed.
+ * If has change, the new value is sent to the server for setting the new cash
+ * value.
+ */
+void CashReceiptSection::checkForChanges()
 {
 
 }
@@ -113,19 +138,4 @@ void CashReceiptSection::setMenu()
 	menu = m_Window->menuBar()->addMenu("Ver");
 	menu->addAction(m_ScrollUpAction);
 	menu->addAction(m_ScrollDownAction);
-}
-
-/**
- * Installs the necessary plugins widgets in the plugin factory of the web view.
- */
-void CashReceiptSection::setPlugins()
-{
-	CashLineEdit *cashLineEdit = new CashLineEdit();
-
-	WebPluginFactory *factory =
-			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
-	factory->install("application/x-cash_line_edit", cashLineEdit);
-
-	connect(cashLineEdit, SIGNAL(textEdited(QString)), this,
-			SLOT(setCash(QString)));
 }

@@ -7,8 +7,7 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += plugins/cash_line_edit.h \
-    section/cash_receipt_section.h \
+HEADERS += section/cash_receipt_section.h \
     discount_dialog/discount_dialog.h \
     authentication_dialog/authentication_dialog.h \
     plugins/plugin_widget_factory.h \
@@ -45,8 +44,7 @@ HEADERS += plugins/cash_line_edit.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += plugins/cash_line_edit.cpp \
-    section/cash_receipt_section.cpp \
+SOURCES += section/cash_receipt_section.cpp \
     discount_dialog/discount_dialog.cpp \
     authentication_dialog/authentication_dialog.cpp \
     plugins/plugin_widget_factory.cpp \
