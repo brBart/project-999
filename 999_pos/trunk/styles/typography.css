@@ -33,6 +33,10 @@ tfoot .total_col {
 	font-size: 1.1em;
 }
 
+#cash_input {
+	text-align: right;
+}
+
 #header strong {
 	font-size: 1.2em;
 	font-weight: normal;

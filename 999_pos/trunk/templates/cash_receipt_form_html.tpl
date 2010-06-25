@@ -36,16 +36,7 @@
 				<div id="total_amounts">
 					<p>
 				  		<label id="cash_label">Efectivo:</label>
-				  		<object id="cash_input" type="application/x-cash_line_edit">
-				  			<param name="is_large" id="is_large" />
-				  		</object>
-				  		<script type="text/javascript">
-			  				var oParam = document.getElementById("is_large");
-			  				if(isLarge)
-				  				oParam.setAttribute("value", "1");
-			  				else
-				  				oParam.setAttribute("value", "0");
-			  			</script>
+						<input id="cash_input" type="text" onfocus="timerObj.start(500);" onblur="timerObj.stop();" />
 				  		<span id="cash-failed" class="hidden">*</span>
 				  	</p>
 				  	<p>
@@ -66,4 +57,8 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	var oInput = document.getElementById('cash_input');
+	oInput.focus();
+</script>
 </html>

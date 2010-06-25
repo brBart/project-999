@@ -242,10 +242,6 @@ input[type="text"], input[type="password"] {
 	margin: 1em auto;
 }
 
-#cash_input {
-	height: 1.2em;
-}
-
 #dates_range div {
 	float: left;
 	position: relative;
