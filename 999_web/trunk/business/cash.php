@@ -2042,7 +2042,7 @@ class CashEntryEvent{
 	 */
 	static public function apply(CashReceipt $receipt, $amount){
 		Persist::validateNewObject($receipt);
-		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'cash');
+		Number::validateUnsignedNumber($amount, 'Monto inv&aacute;lido.', 'cash');
 		
 		$invoice = $receipt->getInvoice();
 		$total_invoice = $invoice->getTotal();
