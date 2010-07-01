@@ -9,6 +9,7 @@
 
 #include <QMenuBar>
 #include "../console/console_factory.h"
+#include "../xml_transformer/xml_transformer_factory.h"
 
 /**
  * @class CashReceiptSection
@@ -28,10 +29,21 @@ CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 	setMenu();
 
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
+	m_CashRequest = new HttpRequest(jar, this);
+	m_Handler = new XmlResponseHandler(this);
 
+	connect(ui.webView, SIGNAL(loadFinished(bool)), this,
+				SLOT(loadFinished(bool)));
 	connect(ui.webView->page()->mainFrame(),
 			SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(addTimerObject()));
-	connect(&m_Timer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
+	connect(m_CashRequest, SIGNAL(finished(QString)), this,
+			SLOT(updateChangeValue(QString)));
+	connect(&m_CheckerTimer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
+	connect(&m_SenderTimer, SIGNAL(timeout()), this, SLOT(setCash()));
+
+	m_CheckerTimer.setInterval(500);
+	m_SenderTimer.setInterval(500);
+	m_SenderTimer.setSingleShot(true);
 }
 
 /**
@@ -54,9 +66,25 @@ void CashReceiptSection::loadFinished(bool ok)
 /**
  * Sets the cash amount on the receipt on the server.
  */
-void CashReceiptSection::setCash(QString amount)
+void CashReceiptSection::setCash()
 {
+	if (!m_CashRequest->isBusy()) {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd", "set_cash_cash_receipt");
+		url.addQueryItem("key", m_CashReceiptKey);
+		url.addQueryItem("amount", m_CashValues.dequeue());
+		url.addQueryItem("type", "xml");
 
+		m_CashRequest->get(url, true);
+	} else {
+		// If there was already a waiting call, clean it.
+		if (m_SenderTimer.timerId() > -1) {
+			m_CashValues.dequeue();
+			m_SenderTimer.stop();
+		}
+
+		m_SenderTimer.start();
+	}
 }
 
 /**
@@ -65,7 +93,7 @@ void CashReceiptSection::setCash(QString amount)
 void CashReceiptSection::addTimerObject()
 {
 	ui.webView->page()->mainFrame()
-			->addToJavaScriptWindowObject("timerObj", &m_Timer);
+			->addToJavaScriptWindowObject("timerObj", &m_CheckerTimer);
 }
 
 /**
@@ -87,7 +115,42 @@ void CashReceiptSection::loadUrl()
  */
 void CashReceiptSection::checkForChanges()
 {
+	QString cashValue = ui.webView->page()->mainFrame()
+			->findFirstElement("#cash_input").evaluateJavaScript("this.value;")
+			.toString();
 
+	if (cashValue != m_CashValue) {
+		m_CashValue = cashValue;
+		m_CashValues.enqueue(cashValue);
+		setCash();
+	}
+}
+
+/**
+ * Update the change value after setting the cash value on the server.
+ */
+void CashReceiptSection::updateChangeValue(QString content)
+{
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("change");
+
+	QString errorMsg, elementId;
+	XmlResponseHandler::ResponseType response =
+			m_Handler->handle(content, transformer, &errorMsg, &elementId);
+	if (response == XmlResponseHandler::Success) {
+		QList<QMap<QString, QString>*> list = transformer->content();
+		m_Console->cleanFailure("cash");
+		ui.webView->page()->mainFrame()
+				->findFirstElement("#change_amount")
+				.setInnerXml(list[0]->value("change"));
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->cleanFailure("cash");
+		m_Console->displayFailure(errorMsg, "cash");
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
 }
 
 /**

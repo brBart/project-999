@@ -26,30 +26,26 @@
 	</script>
 	{/literal}
 	<div id="wrapper_cash_receipt">
-		<div id="console" class="console_display">
-		{if $notify eq 1}
-			<p id="{$type}" class="{$type}">{$message}</p>
-		{/if}
-		</div>
+		<div id="console" class="console_display"></div>
 		<div id="frm" class="cash_receipt">
 			<fieldset id="main_data">
 				<div id="total_amounts">
 					<p>
-				  		<label id="cash_label">Efectivo:</label>
-						<input id="cash_input" type="text" onfocus="timerObj.start(500);" onblur="timerObj.stop();" />
+				  		<label id="cash_label" class="total_display">Efectivo:</label>
+						<input id="cash_input" class="total_display" type="text" value="{$cash|nf:2}" onfocus="timerObj.start();" onblur="timerObj.stop();" />
 				  		<span id="cash-failed" class="hidden">*</span>
 				  	</p>
 				  	<p>
-				  		<label id="vouchers_total_label">Tarjetas:</label>
-				  		<span id="vouchers_total">{$total_vouchers|nf:2}</span>
+				  		<label id="vouchers_total_label" class="total_display">Tarjetas:</label>
+				  		<span id="vouchers_total" class="total_display">{$total_vouchers|nf:2}</span>
 				  	</p>
 				  	<p>
-			  			<label id="invoice_total_label">Total:</label>
-				  		<span id="invoice_total">{$invoice_total|nf:2}</span>
+			  			<label id="invoice_total_label" class="total_display">Total:</label>
+				  		<span id="invoice_total" class="total_display">{$invoice_total|nf:2}</span>
 				  	</p>
 				  	<p>
-				  		<label id="change_total_label">Vuelto:</label>
-				  		<span id="change_total">{$change|nf:2}</span>
+				  		<label id="change_amount_label" class="total_display">Vuelto:</label>
+				  		<span id="change_amount" class="total_display">{$change|nf:2}</span>
 				  	</p>
 			  	</div>
 			  	<div id="details" class="items"></div>

@@ -62,6 +62,9 @@ tfoot .total_col {
 }
 
 #frm.cash_receipt p {
-	font-size: 2.5em;
 	text-align: right;
+}
+
+#frm.cash_receipt .total_display {
+	font-size: 2.5em;
 }

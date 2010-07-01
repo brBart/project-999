@@ -22,6 +22,7 @@ public:
 	virtual ~HttpRequest() {};
 	QString get(QUrl url, bool isAsync = false);
 	QNetworkCookieJar* cookieJar();
+	bool isBusy();
 
 private slots:
 	void loadFinished(QNetworkReply *reply);
@@ -31,6 +32,7 @@ signals:
 
 private:
 	QNetworkAccessManager m_Manager;
+	bool m_IsBusy;
 };
 
 #endif /* HTTPREQUEST_H_ */

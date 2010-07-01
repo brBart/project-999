@@ -15,6 +15,7 @@
 #include "stub_xml_transformer.h"
 #include "customer_xml_transformer.h"
 #include "invoice_customer_xml_transformer.h"
+#include "change_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -55,6 +56,8 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new CustomerXmlTransformer();
 	} else if (name == "invoice_customer") {
 		return new InvoiceCustomerXmlTransformer();
+	} else if (name == "change") {
+		return new ChangeXmlTransformer();
 	} else {
 		return NULL;
 	}

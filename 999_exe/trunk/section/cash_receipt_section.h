@@ -12,7 +12,10 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QQueue>
 #include "../console/console.h"
+#include "../http_request/http_request.h"
+#include "../xml_response_handler/xml_response_handler.h"
 
 class CashReceiptSection: public Section
 {
@@ -26,15 +29,21 @@ public:
 
 public slots:
 	void loadFinished(bool ok);
-	void setCash(QString amount);
+	void setCash();
 	void addTimerObject();
 	void checkForChanges();
+	void updateChangeValue(QString content);
 
 private:
 	QString m_CashReceiptKey;
 	Console *m_Console;
 	QMainWindow *m_Window;
-	QTimer m_Timer;
+	QTimer m_CheckerTimer;
+	QTimer m_SenderTimer;
+	QString m_CashValue;
+	QQueue<QString> m_CashValues;
+	HttpRequest *m_CashRequest;
+	XmlResponseHandler *m_Handler;
 
 	// File actions.
 	QAction *m_SaveAction;

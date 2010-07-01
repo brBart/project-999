@@ -22,6 +22,7 @@ HttpRequest::HttpRequest(QNetworkCookieJar *jar, QObject *parent)
 {
 	m_Manager.setCookieJar(jar);
 	jar->setParent(0);
+	m_IsBusy = false;
 }
 
 /**
@@ -45,6 +46,7 @@ QString HttpRequest::get(QUrl url, bool isAsync)
 			SLOT(loadFinished(QNetworkReply*)));
 
 	m_Manager.get(QNetworkRequest(url));
+	m_IsBusy = true;
 
 	return NULL;
 }
@@ -58,12 +60,22 @@ QNetworkCookieJar* HttpRequest::cookieJar()
 }
 
 /**
+ * Returns true if the request object is busy waiting a response.
+ */
+bool HttpRequest::isBusy()
+{
+	return m_IsBusy;
+}
+
+/**
  * Handles the response in case the communication was made asynchronously.
  * Emits the finished signal.
  */
 void HttpRequest::loadFinished(QNetworkReply *reply)
 {
 	emit finished(QString::fromUtf8(reply->readAll()));
+
+	m_IsBusy = false;
 
 	m_Manager.disconnect(this);
 }
