@@ -1071,7 +1071,7 @@ class CashReceipt extends PersistDocument{
 	 * @param float $amount
 	 */
 	public function setChange($amount){
-		Number::validateUnsignedFloat($amount, 'Cantidad de cambio inv&aacute;lido.');
+		Number::validateUnsignedNumber($amount, 'Cantidad de cambio inv&aacute;lido.');
 		$this->_mChange = $amount;
 	}
 	
@@ -1619,10 +1619,10 @@ class Cash extends Persist{
 	public function __construct($amount, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		Number::validateUnsignedFloat($amount, 'Monto de efectivo inv&aacute;lido.');
+		Number::validateUnsignedNumber($amount, 'Monto de efectivo inv&aacute;lido.');
 		
 		if(!is_null($id))
-			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+			Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 		
 		$this->_mAmount = $amount;
 		$this->_mId = $id;
@@ -2042,7 +2042,7 @@ class CashEntryEvent{
 	 */
 	static public function apply(CashReceipt $receipt, $amount){
 		Persist::validateNewObject($receipt);
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'cash');
 		
 		$invoice = $receipt->getInvoice();
 		$total_invoice = $invoice->getTotal();
