@@ -29,9 +29,11 @@ class ShowCashReceiptFormCommand extends Command{
 		$receipt = $helper->getObject((int)$request->getProperty('key'));
 		$invoice = $receipt->getInvoice();
 		$cash = $receipt->getCash();
+		$change = $receipt->getChange();
 		
-		Page::display(array('cash' => $cash->getAmount(), 'total_vouchers' => $receipt->getTotalVouchers(),
-				'invoice_total' => $invoice->getTotal(), 'change' => $receipt->getChange()),
+		Page::display(array('cash' => ($cash->getAmount() + $change),
+				'total_vouchers' => $receipt->getTotalVouchers(),
+				'invoice_total' => $invoice->getTotal(), 'change' => $change),
 				'cash_receipt_form_html.tpl');
 	}
 }
