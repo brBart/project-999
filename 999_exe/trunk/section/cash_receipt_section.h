@@ -13,6 +13,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QQueue>
+#include <QXmlQuery>
 #include "../console/console.h"
 #include "../http_request/http_request.h"
 #include "../xml_response_handler/xml_response_handler.h"
@@ -44,6 +45,9 @@ private:
 	QQueue<QString> m_CashValues;
 	HttpRequest *m_CashRequest;
 	XmlResponseHandler *m_Handler;
+	QXmlQuery *m_Query;
+	QString m_StyleSheet;
+	HttpRequest *m_Request;
 
 	// File actions.
 	QAction *m_SaveAction;
@@ -59,6 +63,8 @@ private:
 
 	void setActions();
 	void setMenu();
+	void fetchStyleSheet();
+	void fetchVouchers();
 };
 
 #endif /* CASH_RECEIPT_SECTION_H_ */

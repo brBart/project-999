@@ -10,6 +10,7 @@
 #include <QMenuBar>
 #include "../console/console_factory.h"
 #include "../xml_transformer/xml_transformer_factory.h"
+#include "../registry.h"
 
 /**
  * @class CashReceiptSection
@@ -30,6 +31,7 @@ CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 	m_CashRequest = new HttpRequest(jar, this);
+	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
 
 	connect(ui.webView, SIGNAL(loadFinished(bool)), this,
@@ -40,6 +42,10 @@ CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 			SLOT(updateChangeValue(QString)));
 	connect(&m_CheckerTimer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
 	connect(&m_SenderTimer, SIGNAL(timeout()), this, SLOT(setCash()));
+
+	m_Query = new QXmlQuery(QXmlQuery::XSLT20);
+
+	fetchStyleSheet();
 
 	m_CheckerTimer.setInterval(500);
 	m_SenderTimer.setInterval(500);
@@ -61,6 +67,8 @@ void CashReceiptSection::loadFinished(bool ok)
 {
 	Section::loadFinished(ok);
 	m_Console->setFrame(ui.webView->page()->mainFrame());
+
+	fetchVouchers();
 }
 
 /**
@@ -201,4 +209,38 @@ void CashReceiptSection::setMenu()
 	menu = m_Window->menuBar()->addMenu("Ver");
 	menu->addAction(m_ScrollUpAction);
 	menu->addAction(m_ScrollDownAction);
+}
+
+/**
+ * Fetch the xslt style sheet from the server.
+ */
+void CashReceiptSection::fetchStyleSheet()
+{
+	QUrl url = *(Registry::instance()->xslUrl());
+	url.setPath(url.path() + "cash_receipt_vouchers.xsl");
+
+	m_StyleSheet = m_Request->get(url);
+}
+
+/**
+ * Fetch the vouchers from the server.
+ */
+void CashReceiptSection::fetchVouchers()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "get_cash_receipt_vouchers");
+	url.addQueryItem("key", m_CashReceiptKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	m_Query->setFocus(content);
+	m_Query->setQuery(m_StyleSheet);
+
+	QString result;
+	m_Query->evaluateTo(&result);
+
+	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
+	div.setInnerXml(result);
+	div.evaluateJavaScript("this.scrollTop = this.scrollHeight;");
 }

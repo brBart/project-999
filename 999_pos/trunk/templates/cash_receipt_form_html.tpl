@@ -48,6 +48,7 @@
 				  		<span id="change_amount" class="total_display">{$change|nf:2}</span>
 				  	</p>
 			  	</div>
+			  	<p>&nbsp;</p>
 			  	<div id="details" class="items"></div>
 			</fieldset>
 		</div>
