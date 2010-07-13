@@ -33,13 +33,12 @@ Section::Section(QNetworkCookieJar *jar, QWebPluginFactory *factory,
  */
 void Section::loadFinished(bool ok)
 {
+	QWebFrame *frame = ui.webView->page()->mainFrame();
+
 	if (ok) {
-		QWebFrame *frame = ui.webView->page()->mainFrame();
 		bool sessionStatus = frame->evaluateJavaScript("isSessionActive").toBool();
 
 		emit sessionStatusChanged(sessionStatus);
-
-		frame->addToJavaScriptWindowObject("mainWindow", parent());
 	} else {
 		QFile file(":/resources/not_found.html");
 		file.open(QIODevice::ReadOnly);
@@ -51,4 +50,6 @@ void Section::loadFinished(bool ok)
 
 		file.close();
 	}
+
+	frame->addToJavaScriptWindowObject("mainWindow", parent());
 }
