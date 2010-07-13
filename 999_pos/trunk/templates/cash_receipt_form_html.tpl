@@ -49,7 +49,7 @@
 				  	</p>
 			  	</div>
 			  	<p>&nbsp;</p>
-			  	<div id="details" class="items"></div>
+			  	<div id="details" class="items register"></div>
 			</fieldset>
 		</div>
 	</div>
