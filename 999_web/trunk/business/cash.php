@@ -1569,7 +1569,8 @@ class Voucher{
 		$type = $this->_mPaymentCard->getType();
 		$brand = $this->_mPaymentCard->getBrand();
 		
-		return array('type' => $type->getName(), 'brand' => $brand->getName(),
+		return array('transaction_number' => $this->_mTransactionNumber,
+				'type' => $type->getName(), 'brand' => $brand->getName(),
 				'number' => $this->_mPaymentCard->getNumber(), 'name' => $this->_mPaymentCard->getHolderName(),
 				'amount' => $this->_mAmount, 'expiration_date' => $this->_mPaymentCard->getExpirationDate());
 	}
