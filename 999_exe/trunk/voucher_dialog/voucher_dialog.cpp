@@ -17,9 +17,7 @@ VoucherDialog::VoucherDialog(QNetworkCookieJar *jar, QUrl *url,
 {
 	ui.setupUi(this);
 
-	m_Console = ConsoleFactory::instance()
-				->createWidgetConsole(QMap<QString, QLabel*>());
-	m_Console->setFrame(ui.webView->page()->mainFrame());
+	setConsole();
 
 	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
@@ -47,6 +45,24 @@ void VoucherDialog::init()
 }
 
 /**
+ * Sets the Console object.
+ */
+void VoucherDialog::setConsole()
+{
+	QMap<QString, QLabel*> elements;
+	elements.insert("transaction", ui.transactionFailedLabel);
+	elements.insert("payment_card_number", ui.paymentCardNumberFailedLabel);
+	elements.insert("type_id", ui.typeIdFailedLabel);
+	elements.insert("brand_id", ui.brandIdFailedLabel);
+	elements.insert("name", ui.nameFailedLabel);
+	elements.insert("expiration_date", ui.expirationDateFailedLabel);
+	elements.insert("amount", ui.amountFailedLabel);
+
+	m_Console = ConsoleFactory::instance()->createWidgetConsole(elements);
+	m_Console->setFrame(ui.webView->page()->mainFrame());
+}
+
+/**
  * Populates the types combo box with data from the server.
  */
 void VoucherDialog::fetchTypes()
@@ -65,11 +81,11 @@ void VoucherDialog::fetchTypes()
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
 
-		ui.typesComboBox->addItem("", "");
+		ui.typeIdComboBox->addItem("", "");
 		QMap<QString, QString> *type;
 		for (int i = 0; i < list.size(); i++) {
 			type = list[i];
-			ui.typesComboBox->addItem(type->value("name"),
+			ui.typeIdComboBox->addItem(type->value("name"),
 					type->value("payment_card_type_id"));
 		}
 	} else {
@@ -98,11 +114,11 @@ void VoucherDialog::fetchBrands()
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
 
-		ui.brandsComboBox->addItem("", "");
+		ui.brandIdComboBox->addItem("", "");
 		QMap<QString, QString> *brand;
 		for (int i = 0; i < list.size(); i++) {
 			brand = list[i];
-			ui.brandsComboBox->addItem(brand->value("name"),
+			ui.brandIdComboBox->addItem(brand->value("name"),
 					brand->value("payment_card_brand_id"));
 		}
 	} else {

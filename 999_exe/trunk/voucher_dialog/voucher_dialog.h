@@ -31,6 +31,7 @@ private:
     HttpRequest *m_Request;
     XmlResponseHandler *m_Handler;
 
+    void setConsole();
     void fetchTypes();
     void fetchBrands();
 };
