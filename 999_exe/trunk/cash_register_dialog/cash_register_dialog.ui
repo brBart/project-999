@@ -34,12 +34,12 @@
         <string>Turno:</string>
        </property>
        <property name="buddy">
-        <cstring>shiftsComboBox</cstring>
+        <cstring>shiftIdComboBox</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="shiftsComboBox">
+      <widget class="QComboBox" name="shiftIdComboBox">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -159,7 +159,7 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>shiftsComboBox</tabstop>
+  <tabstop>shiftIdComboBox</tabstop>
   <tabstop>okPushButton</tabstop>
   <tabstop>cancelPushButton</tabstop>
   <tabstop>webView</tabstop>

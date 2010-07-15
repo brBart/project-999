@@ -56,11 +56,11 @@ void CashRegisterDialog::init()
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
 
-		ui.shiftsComboBox->addItem("", "");
+		ui.shiftIdComboBox->addItem("", "");
 		QMap<QString, QString> *shift;
 		for (int i = 0; i < list.size(); i++) {
 			shift = list[i];
-			ui.shiftsComboBox->addItem(shift->value("name"),
+			ui.shiftIdComboBox->addItem(shift->value("name"),
 					shift->value("shift_id"));
 		}
 	} else {
@@ -75,7 +75,7 @@ void CashRegisterDialog::init()
  */
 void CashRegisterDialog::fetchKey()
 {
-	QVariant id = ui.shiftsComboBox->itemData(ui.shiftsComboBox->currentIndex());
+	QVariant id = ui.shiftIdComboBox->itemData(ui.shiftIdComboBox->currentIndex());
 
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_cash_register");
