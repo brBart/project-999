@@ -34,6 +34,7 @@ public slots:
 	void addTimerObject();
 	void checkForChanges();
 	void updateChangeValue(QString content);
+	void showVoucherDialog();
 
 private:
 	QString m_CashReceiptKey;

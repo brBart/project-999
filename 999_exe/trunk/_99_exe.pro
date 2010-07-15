@@ -7,7 +7,10 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/change_xml_transformer.h \
+HEADERS += xml_transformer/payment_card_brand_list_xml_transformer.h \
+    xml_transformer/payment_card_type_list_xml_transformer.h \
+    voucher_dialog/voucher_dialog.h \
+    xml_transformer/change_xml_transformer.h \
     section/cash_receipt_section.h \
     discount_dialog/discount_dialog.h \
     authentication_dialog/authentication_dialog.h \
@@ -45,7 +48,10 @@ HEADERS += xml_transformer/change_xml_transformer.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/change_xml_transformer.cpp \
+SOURCES += xml_transformer/payment_card_brand_list_xml_transformer.cpp \
+    xml_transformer/payment_card_type_list_xml_transformer.cpp \
+    voucher_dialog/voucher_dialog.cpp \
+    xml_transformer/change_xml_transformer.cpp \
     section/cash_receipt_section.cpp \
     discount_dialog/discount_dialog.cpp \
     authentication_dialog/authentication_dialog.cpp \
@@ -83,7 +89,8 @@ SOURCES += xml_transformer/change_xml_transformer.cpp \
     http_request/http_request.cpp \
     main.cpp \
     mainwindow.cpp
-FORMS += discount_dialog/discount_dialog.ui \
+FORMS += voucher_dialog/voucher_dialog.ui \
+    discount_dialog/discount_dialog.ui \
     authentication_dialog/authentication_dialog.ui \
     customer_dialog/customer_dialog.ui \
     recordset/recordset.ui \

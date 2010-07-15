@@ -16,6 +16,8 @@
 #include "customer_xml_transformer.h"
 #include "invoice_customer_xml_transformer.h"
 #include "change_xml_transformer.h"
+#include "payment_card_type_list_xml_transformer.h"
+#include "payment_card_brand_list_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -58,6 +60,10 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new InvoiceCustomerXmlTransformer();
 	} else if (name == "change") {
 		return new ChangeXmlTransformer();
+	} else if (name == "payment_card_type_list") {
+		return new PaymentCardTypeListXmlTransformer();
+	} else if (name == "payment_card_brand_list") {
+		return new PaymentCardBrandListXmlTransformer();
 	} else {
 		return NULL;
 	}

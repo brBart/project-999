@@ -11,6 +11,7 @@
 #include "../console/console_factory.h"
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../registry.h"
+#include "../voucher_dialog/voucher_dialog.h"
 
 /**
  * @class CashReceiptSection
@@ -162,6 +163,21 @@ void CashReceiptSection::updateChangeValue(QString content)
 }
 
 /**
+ * Shows the voucher dialog for adding a voucher to the cash receipt on the server.
+ */
+void CashReceiptSection::showVoucherDialog()
+{
+	VoucherDialog dialog(ui.webView->page()->networkAccessManager()->cookieJar(),
+			m_ServerUrl, this, Qt::WindowTitleHint);
+
+	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
+
+	dialog.init();
+	dialog.exec();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void CashReceiptSection::setActions()
@@ -176,6 +192,8 @@ void CashReceiptSection::setActions()
 
 	m_AddVoucherAction = new QAction("Agregar voucher", this);
 	m_AddVoucherAction->setShortcut(tr("Ctrl+I"));
+	connect(m_AddVoucherAction, SIGNAL(triggered()), this,
+			SLOT(showVoucherDialog()));
 
 	m_DeleteVoucherAction = new QAction("Quitar voucher", this);
 	m_DeleteVoucherAction->setShortcut(tr("Ctrl+D"));
