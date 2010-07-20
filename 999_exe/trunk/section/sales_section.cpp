@@ -462,7 +462,7 @@ void SalesSection::createCashReceipt()
 		CashReceiptSection *section = new CashReceiptSection(
 				ui.webView->page()->networkAccessManager()->cookieJar(),
 				ui.webView->page()->pluginFactory(), m_ServerUrl, m_CashReceiptKey,
-				window);
+				m_NewInvoiceKey, window);
 
 		window->setCentralWidget(section);
 		window->show();

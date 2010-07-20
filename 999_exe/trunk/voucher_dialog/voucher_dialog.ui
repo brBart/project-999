@@ -24,10 +24,10 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="transactionLineEdit"/>
+      <widget class="QLineEdit" name="transactionNumberLineEdit"/>
      </item>
      <item row="0" column="2">
-      <widget class="QLabel" name="transactionFailedLabel">
+      <widget class="QLabel" name="transactionNumberFailedLabel">
        <property name="palette">
         <palette>
          <active>
@@ -132,10 +132,10 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QComboBox" name="typeIdComboBox"/>
+      <widget class="QComboBox" name="paymentCardTypeIdComboBox"/>
      </item>
      <item row="2" column="2">
-      <widget class="QLabel" name="typeIdFailedLabel">
+      <widget class="QLabel" name="paymentCardTypeIdFailedLabel">
        <property name="palette">
         <palette>
          <active>
@@ -186,10 +186,10 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QComboBox" name="brandIdComboBox"/>
+      <widget class="QComboBox" name="paymentCardBrandIdComboBox"/>
      </item>
      <item row="3" column="2">
-      <widget class="QLabel" name="brandIdFailedLabel">
+      <widget class="QLabel" name="paymentCardBrandIdFailedLabel">
        <property name="palette">
         <palette>
          <active>
@@ -240,10 +240,10 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="nameLineEdit"/>
+      <widget class="QLineEdit" name="holderNameLineEdit"/>
      </item>
      <item row="4" column="2">
-      <widget class="QLabel" name="nameFailedLabel">
+      <widget class="QLabel" name="holderNameFailedLabel">
        <property name="palette">
         <palette>
          <active>

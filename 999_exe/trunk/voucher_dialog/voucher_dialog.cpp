@@ -13,7 +13,9 @@
  * Constructs the dialog.
  */
 VoucherDialog::VoucherDialog(QNetworkCookieJar *jar, QUrl *url,
-		QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f), m_ServerUrl(url)
+		QString cashReceiptKey, QString invoiceKey, QWidget *parent,
+		Qt::WindowFlags f) : QDialog(parent, f), m_ServerUrl(url),
+		m_CashReceiptKey(cashReceiptKey), m_InvoiceKey(invoiceKey)
 {
 	ui.setupUi(this);
 
@@ -24,7 +26,8 @@ VoucherDialog::VoucherDialog(QNetworkCookieJar *jar, QUrl *url,
 
 	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)));
-	//connect(ui.okPushButton, SIGNAL(clicked()), this, SLOT(addVoucher()));
+	connect(ui.okPushButton, SIGNAL(clicked()), this,
+			SLOT(addVoucherCashReceipt()));
 }
 
 /**
@@ -45,16 +48,63 @@ void VoucherDialog::init()
 }
 
 /**
+ * Adds a voucher to the cash receipt on the server.
+ */
+void VoucherDialog::addVoucherCashReceipt()
+{
+	QVariant id;
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "add_voucher_cash_receipt");
+	url.addQueryItem("cash_receipt_key", m_CashReceiptKey);
+	url.addQueryItem("invoice_key", m_InvoiceKey);
+	url.addQueryItem("transaction_number", ui.transactionNumberLineEdit->text());
+	url.addQueryItem("payment_card_number", ui.paymentCardNumberLineEdit->text());
+
+	id = ui.paymentCardTypeIdComboBox
+			->itemData(ui.paymentCardTypeIdComboBox->currentIndex());
+	url.addQueryItem("payment_card_type_id", id.toString());
+
+	id = ui.paymentCardBrandIdComboBox
+			->itemData(ui.paymentCardBrandIdComboBox->currentIndex());
+	url.addQueryItem("payment_card_brand_id", id.toString());
+
+	url.addQueryItem("holder_name", ui.holderNameLineEdit->text());
+	url.addQueryItem("expiration_date", ui.expirationDateLineEdit->text());
+	url.addQueryItem("amount", ui.amountLineEdit->text());
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("stub");
+
+	QString errorMsg, elementId;
+	XmlResponseHandler::ResponseType response =
+			m_Handler->handle(content, transformer, &errorMsg, &elementId);
+	if (response == XmlResponseHandler::Success) {
+		accept();
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->reset();
+		m_Console->displayFailure(errorMsg, elementId);
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
  * Sets the Console object.
  */
 void VoucherDialog::setConsole()
 {
 	QMap<QString, QLabel*> elements;
-	elements.insert("transaction", ui.transactionFailedLabel);
+	elements.insert("transaction_number", ui.transactionNumberFailedLabel);
 	elements.insert("payment_card_number", ui.paymentCardNumberFailedLabel);
-	elements.insert("type_id", ui.typeIdFailedLabel);
-	elements.insert("brand_id", ui.brandIdFailedLabel);
-	elements.insert("name", ui.nameFailedLabel);
+	elements.insert("payment_card_type_id", ui.paymentCardTypeIdFailedLabel);
+	elements.insert("payment_card_brand_id", ui.paymentCardBrandIdFailedLabel);
+	elements.insert("holder_name", ui.holderNameFailedLabel);
 	elements.insert("expiration_date", ui.expirationDateFailedLabel);
 	elements.insert("amount", ui.amountFailedLabel);
 
@@ -81,11 +131,11 @@ void VoucherDialog::fetchTypes()
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
 
-		ui.typeIdComboBox->addItem("", "");
+		ui.paymentCardTypeIdComboBox->addItem("", "");
 		QMap<QString, QString> *type;
 		for (int i = 0; i < list.size(); i++) {
 			type = list[i];
-			ui.typeIdComboBox->addItem(type->value("name"),
+			ui.paymentCardTypeIdComboBox->addItem(type->value("name"),
 					type->value("payment_card_type_id"));
 		}
 	} else {
@@ -114,11 +164,11 @@ void VoucherDialog::fetchBrands()
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
 
-		ui.brandIdComboBox->addItem("", "");
+		ui.paymentCardBrandIdComboBox->addItem("", "");
 		QMap<QString, QString> *brand;
 		for (int i = 0; i < list.size(); i++) {
 			brand = list[i];
-			ui.brandIdComboBox->addItem(brand->value("name"),
+			ui.paymentCardBrandIdComboBox->addItem(brand->value("name"),
 					brand->value("payment_card_brand_id"));
 		}
 	} else {

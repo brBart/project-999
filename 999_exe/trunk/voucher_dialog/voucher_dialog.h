@@ -13,13 +13,13 @@ class VoucherDialog : public QDialog
     Q_OBJECT
 
 public:
-    VoucherDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent = 0,
-    		Qt::WindowFlags f = 0);
+    VoucherDialog(QNetworkCookieJar *jar, QUrl *url, QString cashReceiptKey,
+    		QString invoiceKey, QWidget *parent = 0, Qt::WindowFlags f = 0);
     ~VoucherDialog();
     void init();
 
-/*public slots:
-	void addVoucher();*/
+public slots:
+	void addVoucherCashReceipt();
 
 signals:
 	void sessionStatusChanged(bool isActive);
@@ -27,6 +27,8 @@ signals:
 private:
     Ui::VoucherDialogClass ui;
     QUrl *m_ServerUrl;
+    QString m_CashReceiptKey;
+    QString m_InvoiceKey;
     Console *m_Console;
     HttpRequest *m_Request;
     XmlResponseHandler *m_Handler;

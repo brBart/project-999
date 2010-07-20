@@ -23,8 +23,8 @@
  */
 CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 		QWebPluginFactory *factory, QUrl *serverUrl, QString cashReceiptKey,
-		QWidget *parent) : Section(jar, factory, serverUrl, parent),
-		m_CashReceiptKey(cashReceiptKey)
+		QString invoiceKey, QWidget *parent) : Section(jar, factory, serverUrl,
+				parent), m_CashReceiptKey(cashReceiptKey), m_InvoiceKey(invoiceKey)
 {
 	m_Window = dynamic_cast<QMainWindow*>(parentWidget());
 	setActions();
@@ -168,13 +168,15 @@ void CashReceiptSection::updateChangeValue(QString content)
 void CashReceiptSection::showVoucherDialog()
 {
 	VoucherDialog dialog(ui.webView->page()->networkAccessManager()->cookieJar(),
-			m_ServerUrl, this, Qt::WindowTitleHint);
+			m_ServerUrl, m_CashReceiptKey, m_InvoiceKey, this, Qt::WindowTitleHint);
 
 	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
 
 	dialog.init();
-	dialog.exec();
+
+	if (dialog.exec() == QDialog::Accepted)
+		fetchVouchers();
 }
 
 /**

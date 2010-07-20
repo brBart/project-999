@@ -24,7 +24,8 @@ class CashReceiptSection: public Section
 
 public:
 	CashReceiptSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
-			QUrl *serverUrl, QString cashReceiptKey, QWidget *parent = 0);
+			QUrl *serverUrl, QString cashReceiptKey, QString invoiceKey,
+			QWidget *parent = 0);
 	virtual ~CashReceiptSection();
 	void loadUrl();
 
@@ -38,6 +39,7 @@ public slots:
 
 private:
 	QString m_CashReceiptKey;
+	QString m_InvoiceKey;
 	Console *m_Console;
 	QMainWindow *m_Window;
 	QTimer m_CheckerTimer;
