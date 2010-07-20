@@ -69,7 +69,7 @@ void CashReceiptSection::loadFinished(bool ok)
 	Section::loadFinished(ok);
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
-	fetchVouchers();
+	updateVouchers(fetchVouchersData());
 }
 
 /**
@@ -175,8 +175,11 @@ void CashReceiptSection::showVoucherDialog()
 
 	dialog.init();
 
-	if (dialog.exec() == QDialog::Accepted)
-		fetchVouchers();
+	if (dialog.exec() == QDialog::Accepted) {
+		QString content = fetchVouchersData();
+		updateVouchers(content);
+		updateVouchersTotal(content);
+	}
 }
 
 /**
@@ -245,15 +248,21 @@ void CashReceiptSection::fetchStyleSheet()
 /**
  * Fetch the vouchers from the server.
  */
-void CashReceiptSection::fetchVouchers()
+QString CashReceiptSection::fetchVouchersData()
 {
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_cash_receipt_vouchers");
 	url.addQueryItem("key", m_CashReceiptKey);
 	url.addQueryItem("type", "xml");
 
-	QString content = m_Request->get(url);
+	return m_Request->get(url);
+}
 
+/**
+ * Updates the vouchers' div table with new data.
+ */
+void CashReceiptSection::updateVouchers(QString content)
+{
 	m_Query->setFocus(content);
 	m_Query->setQuery(m_StyleSheet);
 
@@ -263,4 +272,28 @@ void CashReceiptSection::fetchVouchers()
 	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
 	div.setInnerXml(result);
 	div.evaluateJavaScript("this.scrollTop = this.scrollHeight;");
+}
+
+/**
+ * Updates the total html span element with a new value.
+ */
+void CashReceiptSection::updateVouchersTotal(QString content)
+{
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->create("total");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *total = list[0];
+
+		QWebElement element =
+				ui.webView->page()->mainFrame()->findFirstElement("#vouchers_total");
+		element.setInnerXml(total->value("total"));
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
 }

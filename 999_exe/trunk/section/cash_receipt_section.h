@@ -67,7 +67,9 @@ private:
 	void setActions();
 	void setMenu();
 	void fetchStyleSheet();
-	void fetchVouchers();
+	QString fetchVouchersData();
+	void updateVouchers(QString content);
+	void updateVouchersTotal(QString content);
 };
 
 #endif /* CASH_RECEIPT_SECTION_H_ */

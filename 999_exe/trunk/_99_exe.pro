@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/payment_card_brand_list_xml_transformer.h \
+HEADERS += xml_transformer/total_xml_transformer.h \
+    xml_transformer/payment_card_brand_list_xml_transformer.h \
     xml_transformer/payment_card_type_list_xml_transformer.h \
     voucher_dialog/voucher_dialog.h \
     xml_transformer/change_xml_transformer.h \
@@ -48,7 +49,8 @@ HEADERS += xml_transformer/payment_card_brand_list_xml_transformer.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/payment_card_brand_list_xml_transformer.cpp \
+SOURCES += xml_transformer/total_xml_transformer.cpp \
+    xml_transformer/payment_card_brand_list_xml_transformer.cpp \
     xml_transformer/payment_card_type_list_xml_transformer.cpp \
     voucher_dialog/voucher_dialog.cpp \
     xml_transformer/change_xml_transformer.cpp \
