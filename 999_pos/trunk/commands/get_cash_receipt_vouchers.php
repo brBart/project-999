@@ -27,9 +27,14 @@ class GetCashReceiptVouchersCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$receipt = $helper->getObject((int)$request->getProperty('key'));
-		$details = $receipt->getVouchers();
-		Page::display(array('details' => $details, 'total' => $receipt->getTotalVouchers()),
-				'cash_receipt_vouchers_xml.tpl');
+		$vouchers = $receipt->getVouchers();
+		$details = array();
+		
+		foreach($vouchers as $voucher)
+			$details[] = $voucher->show();
+		
+		Page::display(array('details' => $details, 'page_items' => count($details),
+				'total' => $receipt->getTotalVouchers()), 'cash_receipt_vouchers_xml.tpl');
 	}
 }
 ?>

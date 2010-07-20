@@ -7,11 +7,12 @@ header('Content-Type: text/xml');
 	<success>1</success>
 	<params>
 		<total>{$total|nf:2}</total>
+		<page_items>{$page_items}</page_items>
 	</params>
 	<grid>
 		{section name=i loop=$details}
 		<row>
-			<transaction_number>{$details[i].transaction_number}</transaction_number>
+			<transaction_number><![CDATA[{$details[i].transaction_number}]]></transaction_number>
 			<number>{$details[i].number}</number>
 			<type><![CDATA[{$details[i].type}]]></type>
 			<brand><![CDATA[{$details[i].brand}]]></brand>
