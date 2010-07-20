@@ -1410,11 +1410,9 @@ class PaymentCard{
 	 * @param string $date
 	 */
 	public function __construct($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
-		Number::validatePositiveInteger($number, 'N&uacute;mero de tarjeta inv&aacute;lido.');
-		Persist::validateObjectFromDatabase($type);
-		Persist::validateObjectFromDatabase($brand);
-		String::validateString($holderName, 'Nombre del titular inv&aacute;lido.');
-		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
+		Number::validatePositiveNumber($number, 'N&uacute;mero de tarjeta inv&aacute;lido.', 'payment_card_number');
+		String::validateString($holderName, 'Nombre del titular inv&aacute;lido.', 'holder_name');
+		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.', 'expiration_date');
 		
 		$this->_mNumber = $number;
 		$this->_mType = $type;
@@ -1524,8 +1522,8 @@ class Voucher{
 	 * @param float $amount
 	 */
 	public function __construct($transactionNumber, PaymentCard $card, $amount){
-		String::validateString($transactionNumber, 'N&uacute;mero de transacci&oacute;n inv&aacute;lido.');
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		String::validateString($transactionNumber, 'N&uacute;mero de transacci&oacute;n inv&aacute;lido.', 'transaction_number');
+		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
 		
 		$this->_mTransactionNumber = $transactionNumber;
 		$this->_mPaymentCard = $card;
@@ -2081,7 +2079,7 @@ class VoucherEntryEvent{
 	 */
 	static public function apply($transaction, PaymentCard $card, Invoice $invoice, CashReceipt $receipt,
 			$amount){
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
 		Persist::validateNewObject($receipt);
 		
 		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
