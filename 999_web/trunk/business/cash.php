@@ -1402,7 +1402,7 @@ class PaymentCard{
 	 * Constructs the payment card with the provided data.
 	 *
 	 * Use these method only from the database layer please. Use the create method instead. Lack of experience
-	 * sorry.
+	 * sorry. Date format is mm/yyyy.
 	 * @param integer $number
 	 * @param PaymentCardType $type
 	 * @param PaymentCardBrand $brand
@@ -1412,7 +1412,14 @@ class PaymentCard{
 	public function __construct($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
 		Number::validatePositiveNumber($number, 'N&uacute;mero de tarjeta inv&aacute;lido.', 'payment_card_number');
 		String::validateString($holderName, 'Nombre del titular inv&aacute;lido.', 'holder_name');
-		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.', 'expiration_date');
+		$date = "01/" . $date;
+		
+		try{
+			Date::validateDate($date, '');
+		} catch(ValidateException $e){
+			throw new ValidateException('Fecha inv&aacute;lida.  No existe o debe ser en formato \'mm/aaaa\'.',
+					'expiration_date');
+		}
 		
 		$this->_mNumber = $number;
 		$this->_mType = $type;
