@@ -86,7 +86,7 @@ class AddVoucherCashReceiptCommand extends Command{
 		}
 		
 		$expiration_date = $request->getProperty('expiration_date');
-		if($expiration_date == ''){
+		if($expiration_date == '' || $expiration_date == '/'){
 			$msg = 'Ingrese fecha de vencimiento.';
 			Page::display(array('success' => '0', 'element_id' => 'expiration_date',
 					'message' => $msg), 'validate_xml.tpl');
