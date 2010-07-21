@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>310</width>
+    <width>350</width>
     <height>265</height>
    </rect>
   </property>
@@ -78,7 +78,11 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="paymentCardNumberLineEdit"/>
+      <widget class="QLineEdit" name="paymentCardNumberLineEdit">
+       <property name="inputMask">
+        <string>####; </string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="2">
       <widget class="QLabel" name="paymentCardNumberFailedLabel">
@@ -121,6 +125,50 @@
        </property>
        <property name="text">
         <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_9">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>115</red>
+             <green>115</green>
+             <blue>115</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>115</red>
+             <green>115</green>
+             <blue>115</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>120</red>
+             <green>120</green>
+             <blue>120</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="text">
+        <string>ult. 4 dig.</string>
        </property>
       </widget>
      </item>
@@ -294,7 +342,11 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="expirationDateLineEdit"/>
+      <widget class="QLineEdit" name="expirationDateLineEdit">
+       <property name="inputMask">
+        <string>##/####; </string>
+       </property>
+      </widget>
      </item>
      <item row="5" column="2">
       <widget class="QLabel" name="expirationDateFailedLabel">
@@ -337,6 +389,50 @@
        </property>
        <property name="text">
         <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QLabel" name="label_8">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>115</red>
+             <green>115</green>
+             <blue>115</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>115</red>
+             <green>115</green>
+             <blue>115</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>120</red>
+             <green>120</green>
+             <blue>120</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="text">
+        <string>mm/aaaa</string>
        </property>
       </widget>
      </item>
