@@ -43,9 +43,7 @@ void Console::cleanFailure(QString elementId)
 	// If there was a message.
 	if (!elementP.isNull()) {
 		elementP.removeFromDocument();
-		m_Div.evaluateJavaScript("scrollTop = "
-				+ m_Div.evaluateJavaScript("scrollHeight").toString() + ";");
-
+		m_Div.evaluateJavaScript("this.scrollTop = this.scrollHeight;");
 		hideElementIndicator(elementId);
 	}
 }
