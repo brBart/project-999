@@ -85,8 +85,11 @@ void DiscountDialog::percentageSetted(QString content)
 
 void DiscountDialog::okClicked()
 {
-	if (m_IsPercentageSet)
+	if (m_IsPercentageSet) {
 		accept();
+	} else {
+		ui.percentageLineEdit->setFocus();
+	}
 }
 
 /**
