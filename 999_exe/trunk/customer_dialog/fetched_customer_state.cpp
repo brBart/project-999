@@ -69,6 +69,12 @@ void FetchedCustomerState::save()
 		m_Dialog->accept();
 	} else if (response == XmlResponseHandler::Failure) {
 		m_Dialog->console()->displayFailure(errorMsg, elementId);
+		// Best I could...
+		if (elementId == "nit") {
+			m_Dialog->nitLineEdit()->setFocus();
+		} else {
+			m_Dialog->nameLineEdit()->setFocus();
+		}
 	} else {
 		m_Dialog->console()->displayError(errorMsg);
 	}

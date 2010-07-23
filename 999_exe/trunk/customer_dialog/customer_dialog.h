@@ -27,6 +27,7 @@ public:
     XmlResponseHandler* xmlResponseHandler();
     void setCustomerKey(QString key);
     QString customerKey();
+    LineEdit* nitLineEdit();
     LineEdit* nameLineEdit();
 
 public slots:

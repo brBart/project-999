@@ -135,6 +135,14 @@ QString CustomerDialog::customerKey()
 }
 
 /**
+ * Returns the nitLineEdit widget.
+ */
+LineEdit* CustomerDialog::nitLineEdit()
+{
+	return ui.nitLineEdit;
+}
+
+/**
  * Returns the nameLineEdit widget.
  */
 LineEdit* CustomerDialog::nameLineEdit()

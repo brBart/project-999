@@ -40,16 +40,19 @@ void CustomerState::fetchCustomer(QString nit)
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
 			->create("customer");
 
-	QString errorMsg;
-	if (m_Dialog->xmlResponseHandler()
-			->handle(content, transformer, &errorMsg) ==
-					XmlResponseHandler::Success) {
+	QString errorMsg, elementId;
+	XmlResponseHandler::ResponseType response = m_Dialog->xmlResponseHandler()
+					->handle(content, transformer, &errorMsg, &elementId);
+	if (response == XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
 		QMap<QString, QString> *params = list[0];
 		m_Dialog->setCustomerKey(params->value("key"));
 		m_Dialog->nameLineEdit()->setText(params->value("name"));
 		m_Dialog->setState(m_Dialog->fetchedState());
 		m_Dialog->console()->reset();
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Dialog->console()->displayFailure(errorMsg, elementId);
+		m_Dialog->setState(m_Dialog->notFetchedState());
 	} else {
 		m_Dialog->console()->displayError(errorMsg);
 		m_Dialog->setState(m_Dialog->notFetchedState());

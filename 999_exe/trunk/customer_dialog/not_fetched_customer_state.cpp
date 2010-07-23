@@ -34,5 +34,5 @@ void NotFetchedCustomerState::setName(QString name)
  */
 void NotFetchedCustomerState::save()
 {
-
+	m_Dialog->nitLineEdit()->setFocus();
 }
