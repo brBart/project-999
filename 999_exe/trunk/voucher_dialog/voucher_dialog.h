@@ -32,6 +32,7 @@ private:
     Console *m_Console;
     HttpRequest *m_Request;
     XmlResponseHandler *m_Handler;
+    QMap<QString, QWidget*> m_FocusWidgets;
 
     void setConsole();
     void fetchTypes();

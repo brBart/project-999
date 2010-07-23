@@ -87,6 +87,7 @@ void VoucherDialog::addVoucherCashReceipt()
 	} else if (response == XmlResponseHandler::Failure) {
 		m_Console->reset();
 		m_Console->displayFailure(errorMsg, elementId);
+		m_FocusWidgets.value(elementId)->setFocus();
 	} else {
 		m_Console->displayError(errorMsg);
 	}
@@ -107,6 +108,14 @@ void VoucherDialog::setConsole()
 	elements.insert("holder_name", ui.holderNameFailedLabel);
 	elements.insert("expiration_date", ui.expirationDateFailedLabel);
 	elements.insert("amount", ui.amountFailedLabel);
+
+	m_FocusWidgets.insert("transaction_number", ui.transactionNumberLineEdit);
+	m_FocusWidgets.insert("payment_card_number", ui.paymentCardNumberLineEdit);
+	m_FocusWidgets.insert("payment_card_type_id", ui.paymentCardTypeIdComboBox);
+	m_FocusWidgets.insert("payment_card_brand_id", ui.paymentCardBrandIdComboBox);
+	m_FocusWidgets.insert("holder_name", ui.holderNameLineEdit);
+	m_FocusWidgets.insert("expiration_date", ui.expirationDateLineEdit);
+	m_FocusWidgets.insert("amount", ui.amountLineEdit);
 
 	m_Console = ConsoleFactory::instance()->createWidgetConsole(elements);
 	m_Console->setFrame(ui.webView->page()->mainFrame());
