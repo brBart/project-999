@@ -8,42 +8,41 @@
 /**
  * Base class.
  */
-require_once('commands/get_object.php');
+require_once('presentation/command.php');
 /**
- * Library with the branch class.
+ * For displaying the results.
  */
-require_once('business/agent.php');
+require_once('presentation/page.php');
 
 /**
- * Returns the customer object key and name.
+ * Defines functionality for obtaining a customer object.
  * @package Command
  * @author Roberto Oliveros
  */
-class GetCustomerCommand extends GetObjectCommand{
+class GetCustomerCommand extends Command{
 	/**
-	 * Gets the desired object.
-	 * @return variant
+	 * Execute the command.
+	 * @param Request $request
+	 * @param SessionHelper $helper
 	 */
-	protected function getObject(){
-		return Customer::getInstance($this->_mRequest->getProperty('nit'));
-	}
-	
-	/**
-	 * Display failure in case the object does not exists or an error occurs.
-	 * @param string $msg
-	 */
-	protected function displayFailure($msg){
-		Page::display(array('message' => $msg), 'error_xml.tpl');
-	}
-	
-	/**
-	 * Display the information of the object.
-	 * @param string $key
-	 * @param variant $obj
-	 * @param array $backQuery
-	 */
-	protected function displayObject($key, $obj, $backQuery){
-		Page::display(array('key' => $key, 'name' => $obj->getName()), 'customer_xml.tpl');
+	public function execute(Request $request, SessionHelper $helper){
+		try{
+			$customer = Customer::getInstance($request->getProperty('nit'));
+			
+			$key = KeyGenerator::generateKey();
+			$helper->setObject($key, $customer);
+			
+			Page::display(array('key' => $key, 'name' => $customer->getName()),
+					'customer_xml.tpl');
+		} catch(ValidateException $e){
+			$msg = $e->getMessage();
+			$element_id = $e->getProperty();
+			Page::display(array('success' => '0', 'element_id' => $element_id, 'message' => $msg),
+					'validate_xml.tpl');
+			return;
+		} catch(Exception $e){
+			Page::display(array('message' => $msg), 'error_xml.tpl');
+		}
 	}
 }
 ?>
