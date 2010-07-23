@@ -17,11 +17,19 @@ require_once('presentation/command.php');
  */
 abstract class ShowNotFoundCommand extends Command{
 	/**
+	 * Holds the helper object.
+	 * @var Request
+	 */
+	protected $_mHelper;
+	
+	/**
 	 * Execute the command.
 	 * @param Request $request
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
+		$this->_mHelper = $helper;
+		
 		$msg = 'Interno: Comando no existe.';
 		$type = $request->getProperty('type');
 		
