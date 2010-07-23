@@ -72,8 +72,10 @@ void FetchedCustomerState::save()
 		// Best I could...
 		if (elementId == "nit") {
 			m_Dialog->nitLineEdit()->setFocus();
+			m_Dialog->nitLineEdit()->selectAll();
 		} else {
 			m_Dialog->nameLineEdit()->setFocus();
+			m_Dialog->nameLineEdit()->selectAll();
 		}
 	} else {
 		m_Dialog->console()->displayError(errorMsg);

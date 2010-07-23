@@ -89,6 +89,7 @@ void DiscountDialog::okClicked()
 		accept();
 	} else {
 		ui.percentageLineEdit->setFocus();
+		ui.percentageLineEdit->selectAll();
 	}
 }
 
