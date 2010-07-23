@@ -2090,7 +2090,7 @@ class VoucherEntryEvent{
 		Persist::validateNewObject($receipt);
 		
 		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
-			throw new Exception('Voucher excede el total de la factura.');
+			throw new ValidateException('Voucher excede el total de la factura.', 'amount');
 			
 		$receipt->addVoucher(new Voucher($transaction, $card, $amount));
 	}
