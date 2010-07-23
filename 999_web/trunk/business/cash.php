@@ -1124,7 +1124,8 @@ class CashReceipt extends PersistDocument{
 			if($voucher->getTransactionNumber() != $newVoucher->getTransactionNumber())
 				$temp_vouchers[] = $voucher;
 			else
-				$newVoucher->increase($voucher->getAmount());
+				throw new ValidateException('Voucher con n&uacute;mero de transacci&oacute;n ya fue ingresado.',
+						'transaction_number');
 			
 		$temp_vouchers[] = $newVoucher;
 		$this->_mVouchers = $temp_vouchers;
@@ -1581,16 +1582,6 @@ class Voucher{
 				'type' => $type->getName(), 'brand' => $brand->getName(),
 				'number' => $this->_mPaymentCard->getNumber(), 'name' => $this->_mPaymentCard->getHolderName(),
 				'amount' => $this->_mAmount, 'expiration_date' => $this->_mPaymentCard->getExpirationDate());
-	}
-	
-	/**
-	 * Increases the voucher's amount value.
-	 *
-	 * @param float $amount
-	 */
-	public function increase($amount){
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
-		$this->_mAmount += $amount;
 	}
 }
 
