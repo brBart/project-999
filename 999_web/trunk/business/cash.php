@@ -1421,6 +1421,9 @@ class PaymentCard{
 					'expiration_date');
 		}
 		
+		if(!Date::compareDates(date('d/m/Y'), $date))
+			throw new ValidateException('Tarjeta ya caduco.', 'expiration_date');
+		
 		$this->_mNumber = $number;
 		$this->_mType = $type;
 		$this->_mBrand = $brand;
