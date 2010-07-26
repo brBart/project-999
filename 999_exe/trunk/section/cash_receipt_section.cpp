@@ -8,6 +8,7 @@
 #include "cash_receipt_section.h"
 
 #include <QMenuBar>
+#include <QInputDialog>
 #include "../console/console_factory.h"
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../registry.h"
@@ -183,6 +184,50 @@ void CashReceiptSection::showVoucherDialog()
 }
 
 /**
+ * Removes a voucher from a cash receipt on the server.
+ */
+void CashReceiptSection::deleteVoucherCashReceipt()
+{
+	bool ok;
+	int row = QInputDialog::getInt(this, "Quitar Voucher", "Fila #:", 0, 1, 9999,
+			1, &ok, Qt::WindowTitleHint);
+
+	if (ok) {
+		QWebElement tr = ui.webView->page()->mainFrame()
+				->findFirstElement("#tr" + QString::number(row));
+
+		if (!tr.isNull()) {
+			QWebElement td = tr.findFirst("td");
+			QString detailId = td.attribute("id");
+
+			QUrl url(*m_ServerUrl);
+			url.addQueryItem("cmd", "delete_voucher_cash_receipt");
+			url.addQueryItem("key", m_CashReceiptKey);
+			url.addQueryItem("detail_id", detailId);
+			url.addQueryItem("type", "xml");
+
+			QString content = m_Request->get(url);
+
+			XmlTransformer *transformer = XmlTransformerFactory::instance()
+					->create("stub");
+
+			QString errorMsg;
+			XmlResponseHandler::ResponseType response =
+					m_Handler->handle(content, transformer, &errorMsg);
+			if (response == XmlResponseHandler::Success) {
+				QString data = fetchVouchersData();
+				updateVouchers(data);
+				updateVouchersTotal(data);
+			} else if(response == XmlResponseHandler::Error) {
+				m_Console->displayError(errorMsg);
+			}
+
+			delete transformer;
+		}
+	}
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void CashReceiptSection::setActions()
@@ -202,8 +247,8 @@ void CashReceiptSection::setActions()
 
 	m_DeleteVoucherAction = new QAction("Quitar voucher", this);
 	m_DeleteVoucherAction->setShortcut(tr("Ctrl+D"));
-	/*connect(m_DeleteVoucherAction, SIGNAL(triggered()), this,
-			SLOT(deleteVoucherInvoice()));*/
+	connect(m_DeleteVoucherAction, SIGNAL(triggered()), this,
+			SLOT(deleteVoucherCashReceipt()));
 
 	m_ScrollUpAction = new QAction("Desplazar arriba", this);
 	m_ScrollUpAction->setShortcut(tr("Ctrl+Up"));
