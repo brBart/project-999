@@ -228,6 +228,29 @@ void CashReceiptSection::deleteVoucherCashReceipt()
 }
 
 /**
+ * Scrolls the detail's div element up.
+ */
+void CashReceiptSection::scrollUp()
+{
+	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
+
+	if (div.evaluateJavaScript("this.scrollTop").toInt() > 0)
+		div.evaluateJavaScript("this.scrollTop -= 10");
+}
+
+/**
+ * Scrolls the detail's div element down.
+ */
+void CashReceiptSection::scrollDown()
+{
+	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
+
+	if (div.evaluateJavaScript("this.scrollTop").toInt()
+			< div.evaluateJavaScript("this.scrollHeight").toInt())
+		div.evaluateJavaScript("this.scrollTop += 10");
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void CashReceiptSection::setActions()
@@ -252,11 +275,11 @@ void CashReceiptSection::setActions()
 
 	m_ScrollUpAction = new QAction("Desplazar arriba", this);
 	m_ScrollUpAction->setShortcut(tr("Ctrl+Up"));
-	//connect(m_ScrollUpAction, SIGNAL(triggered()), this, SLOT(scrollUp()));
+	connect(m_ScrollUpAction, SIGNAL(triggered()), this, SLOT(scrollUp()));
 
 	m_ScrollDownAction = new QAction("Desplazar abajo", this);
 	m_ScrollDownAction->setShortcut(tr("Ctrl+Down"));
-	//connect(m_ScrollDownAction, SIGNAL(triggered()), this, SLOT(scrollDown()));
+	connect(m_ScrollDownAction, SIGNAL(triggered()), this, SLOT(scrollDown()));
 }
 
 /**

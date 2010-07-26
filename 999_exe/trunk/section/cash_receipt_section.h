@@ -37,6 +37,8 @@ public slots:
 	void updateChangeValue(QString content);
 	void showVoucherDialog();
 	void deleteVoucherCashReceipt();
+	void scrollUp();
+	void scrollDown();
 
 private:
 	QString m_CashReceiptKey;
