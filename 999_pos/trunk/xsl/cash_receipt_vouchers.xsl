@@ -31,12 +31,12 @@
 	           		<xsl:attribute name="class">even</xsl:attribute>
 	           	</xsl:if>
 	           	<td>
+	           		<xsl:attribute name="id">
+		             	<xsl:value-of select="transaction_number" />
+		           	</xsl:attribute>
 	           		<xsl:value-of select="position()" />
 	           	</td>
 	       		<td>
-	       			<xsl:attribute name="id">
-		             	<xsl:value-of select="transaction_number" />
-		           	</xsl:attribute>
 	       			<xsl:value-of select="transaction_number" />
 	       		</td>
 	       		<td><xsl:value-of select="number" /></td>
