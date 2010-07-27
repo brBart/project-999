@@ -17,13 +17,13 @@
  */
 void InvoiceListXmlTransformer::transform(QDomDocument *document)
 {
-	QDomNodeList ids = document->elementsByTagName("invoice_id");
+	QDomNodeList ids = document->elementsByTagName("id");
 	QDomNodeList serials = document->elementsByTagName("serial_number");
 	QDomNodeList numbers = document->elementsByTagName("number");
 
 	for (int i = 0; i < ids.size(); i++) {
 		QMap<QString, QString> *map = new QMap<QString, QString>();
-		map->insert("invoice_id", ids.at(i).toElement().text());
+		map->insert("id", ids.at(i).toElement().text());
 		map->insert("serial_number", serials.at(i).toElement().text());
 		map->insert("number", numbers.at(i).toElement().text());
 		m_Content << map;

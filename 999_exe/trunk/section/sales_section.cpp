@@ -658,7 +658,7 @@ void SalesSection::refreshRecordset()
 {
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_invoice_list");
-	url.addQueryItem("register_key", m_CRegisterKey);
+	url.addQueryItem("key", m_CRegisterKey);
 	url.addQueryItem("type", "xml");
 
 	QString content = m_Request->get(url);
@@ -671,6 +671,8 @@ void SalesSection::refreshRecordset()
 			XmlResponseHandler::Success) {
 		QList<QMap<QString, QString>*> list = transformer->content();
 		m_Recordset.setList(list);
+	} else {
+		m_Console->displayError(errorMsg);
 	}
 
 	delete transformer;
