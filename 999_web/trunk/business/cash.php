@@ -1152,11 +1152,12 @@ class CashReceipt extends PersistDocument{
 	 * Saves the receipt's data in the database.
 	 *
 	 * Only applies if the receipt's status property is set to PersistDocument::IN_PROGRESS.
+	 * @return integer
 	 */
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
-			$this->insert();
+			return $this->insert();
 		}
 	}
 	
@@ -1206,12 +1207,15 @@ class CashReceipt extends PersistDocument{
 	 * Inserts the receipt's data in the database.
 	 *
 	 * It also calls the save method of the receipt's invoice.
+	 * @return integer
 	 */
 	protected function insert(){
 		$this->_mInvoice->save();
 		CashReceiptDAM::insert($this);
 		$this->_mId = $this->_mInvoice->getId();
 		$this->_mStatus = PersistDocument::CREATED;
+		
+		return $this->_mId;
 	}
 	
 	/**
@@ -1222,11 +1226,11 @@ class CashReceipt extends PersistDocument{
 	 */
 	private function validateMainProperties(){
 		if($this->_mCash->getAmount() <= 0 && empty($this->_mVouchers))
-			throw new Exception('Favor ingresar efectivo o algun voucher.');
+			throw new ValidateException('Favor ingresar efectivo o algun voucher.', 'cash');
 
 		if(bccomp($this->getTotal(), $this->_mInvoice->getTotal(), 2))
-			throw new Exception('Recibo no se puede guardar, el monto ingresado no es el requerido: ' .
-					$this->_mInvoice->getTotal());
+			throw new ValidateException('Recibo no se puede guardar, el monto ingresado no es el requerido: ' .
+					$this->_mInvoice->getTotal() . '.', 'cash');
 	}
 }
 
