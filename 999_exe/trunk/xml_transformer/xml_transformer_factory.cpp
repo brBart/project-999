@@ -19,6 +19,7 @@
 #include "payment_card_type_list_xml_transformer.h"
 #include "payment_card_brand_list_xml_transformer.h"
 #include "total_xml_transformer.h"
+#include "object_id_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -67,6 +68,8 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new PaymentCardBrandListXmlTransformer();
 	} else if (name == "total") {
 		return new TotalXmlTransformer();
+	} else if (name == "object_id") {
+		return new ObjectIdXmlTransformer();
 	} else {
 		return NULL;
 	}

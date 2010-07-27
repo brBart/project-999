@@ -251,13 +251,46 @@ void CashReceiptSection::scrollDown()
 }
 
 /**
+ * Saves the cash receipt in the server.
+ */
+void CashReceiptSection::saveCashReceipt()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "save_object");
+	url.addQueryItem("key", m_CashReceiptKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("object_id");
+
+	QString errorMsg, elementId;
+	XmlResponseHandler::ResponseType response = m_Handler->handle(content,
+			transformer, &errorMsg, &elementId);
+	if (response == XmlResponseHandler::Success) {
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *objectId = list[0];
+
+		emit cashReceiptSaved(objectId->value("id"));
+
+		m_Window->close();
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->reset();
+		m_Console->displayFailure(errorMsg, elementId);
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void CashReceiptSection::setActions()
 {
 	m_SaveAction = new QAction("Guardar", this);
 	m_SaveAction->setShortcut(tr("Ctrl+S"));
-	//connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(createCashReceipt()));
+	connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(saveCashReceipt()));
 
 	m_ExitAction = new QAction("Salir", this);
 	m_ExitAction->setShortcut(tr("Ctrl+Q"));

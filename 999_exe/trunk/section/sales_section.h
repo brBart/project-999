@@ -46,6 +46,7 @@ public slots:
 	void showAuthenticationDialog();
 	void createDiscount();
 	void createCashReceipt();
+	void finishInvoice(QString Id);
 
 private:
 	Console *m_Console;
@@ -104,6 +105,7 @@ private:
 	void setPlugins();
 	void fetchInvoiceDetails();
 	void setDiscountInvoice(QString discountKey);
+	void printInvoice(QString id);
 };
 
 #endif /* SALES_SECTION_H_ */

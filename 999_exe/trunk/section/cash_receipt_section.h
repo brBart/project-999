@@ -39,6 +39,10 @@ public slots:
 	void deleteVoucherCashReceipt();
 	void scrollUp();
 	void scrollDown();
+	void saveCashReceipt();
+
+signals:
+	void cashReceiptSaved(QString newInvoiceId);
 
 private:
 	QString m_CashReceiptKey;

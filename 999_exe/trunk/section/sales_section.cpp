@@ -464,11 +464,43 @@ void SalesSection::createCashReceipt()
 				ui.webView->page()->pluginFactory(), m_ServerUrl, m_CashReceiptKey,
 				m_NewInvoiceKey, window);
 
+		connect(section, SIGNAL(cashReceiptSaved(QString)), this,
+				SLOT(finishInvoice(QString)));
+
 		window->setCentralWidget(section);
 		window->show();
 
 		section->loadUrl();
 	}
+}
+
+/**
+ * Prints and load the new created invoice from the server.
+ */
+void SalesSection::finishInvoice(QString id)
+{
+	// Remove the objects from the session.
+	/*QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "remove_session_object");
+	url.addQueryItem("key", m_NewInvoiceKey);
+	url.addQueryItem("type", "xml");
+
+	m_Request->get(url, true);
+
+	url = *m_ServerUrl;
+	url.addQueryItem("cmd", "remove_session_object");
+	url.addQueryItem("key", m_CashReceiptKey);
+	url.addQueryItem("type", "xml");
+
+	HttpRequest request(ui.webView->page()->networkAccessManager()
+			->cookieJar(), this);
+
+	request.get(url, true);*/
+
+	printInvoice(id);
+
+	//m_Recordset.refresh();
+	//m_Recordset.moveLast();
 }
 
 /**
@@ -847,4 +879,12 @@ void SalesSection::setDiscountInvoice(QString discountKey)
 	}
 
 	delete transformer;
+}
+
+/**
+ * Fetchs the invoice printing format and prints it.
+ */
+void SalesSection::printInvoice(QString id)
+{
+	QMessageBox::information(this, "Imprimiendo", "Imprimiendo...");
 }
