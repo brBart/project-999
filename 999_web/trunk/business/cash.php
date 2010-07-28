@@ -1407,7 +1407,7 @@ class PaymentCard{
 	 * Constructs the payment card with the provided data.
 	 *
 	 * Use these method only from the database layer please. Use the create method instead. Lack of experience
-	 * sorry. Date format is mm/yyyy.
+	 * sorry.
 	 * @param integer $number
 	 * @param PaymentCardType $type
 	 * @param PaymentCardBrand $brand
@@ -1417,17 +1417,7 @@ class PaymentCard{
 	public function __construct($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
 		Number::validatePositiveNumber($number, 'N&uacute;mero de tarjeta inv&aacute;lido.', 'payment_card_number');
 		String::validateString($holderName, 'Nombre del titular inv&aacute;lido.', 'holder_name');
-		$date = "01/" . $date;
-		
-		try{
-			Date::validateDate($date, '');
-		} catch(ValidateException $e){
-			throw new ValidateException('Fecha inv&aacute;lida.  No existe o debe ser en formato \'mm/aaaa\'.',
-					'expiration_date');
-		}
-		
-		if(!Date::compareDates(date('d/m/Y'), $date))
-			throw new ValidateException('Tarjeta ya caduco.', 'expiration_date');
+		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
 		
 		$this->_mNumber = $number;
 		$this->_mType = $type;
@@ -1482,7 +1472,8 @@ class PaymentCard{
 	}
 	
 	/**
-	 * Creates a new payment card validating if the provided date has not expired.
+	 * Creates a new payment card validating if the provided date has not expired. Date
+	 * format is mm/yyyy.
 	 *
 	 * @param integer $number
 	 * @param PaymentCardType $type
@@ -1493,9 +1484,17 @@ class PaymentCard{
 	 * @throws Exception
 	 */
 	static public function create($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
-		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
+		$date = "01/" . $date;
+		
+		try{
+			Date::validateDate($date, '');
+		} catch(ValidateException $e){
+			throw new ValidateException('Fecha inv&aacute;lida.  No existe o debe ser en formato \'mm/aaaa\'.',
+					'expiration_date');
+		}
+		
 		if(!Date::compareDates(date('d/m/Y'), $date))
-			throw new Exception('Fecha de la tarjeta ya caduco.');
+			throw new ValidateException('Fecha de la tarjeta ya caduco.', 'expiration_date');
 		else
 			return new PaymentCard($number, $type, $brand, $holderName, $date);
 	}

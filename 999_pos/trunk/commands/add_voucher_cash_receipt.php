@@ -103,7 +103,7 @@ class AddVoucherCashReceiptCommand extends Command{
 		
 		// Now do the work.
 		try{
-			$payment_card = new PaymentCard($payment_card_number, $payment_card_type,
+			$payment_card = PaymentCard::create($payment_card_number, $payment_card_type,
 					$payment_card_brand, $holder_name, $expiration_date);
 					
 			$invoice = $helper->getObject((int)$request->getProperty('invoice_key'));
