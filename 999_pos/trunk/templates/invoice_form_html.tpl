@@ -2,6 +2,9 @@
 <script type="text/javascript">
 var cashRegisterStatus = {$cash_register_status};
 var documentStatus = {$status};
+{if $key neq ''}
+var objectKey = {$key};
+{/if}
 </script>
 <div id="content">
 	<div id="frm" class="content_large">
@@ -44,13 +47,13 @@ var documentStatus = {$status};
 		  	<div id="details" class="items register"></div>
 		  	<div id="receipt_info">
 		  		<p >
-			  		<label>Efectivo:</label><span id="cash">&nbsp;</span>
+			  		<label>Efectivo:</label><span id="cash">{$cash_amount|nf:2}&nbsp;</span>
 		  		</p>
 		  		<p>
-			  		<label>Tarjetas:</label><span id="vouchers">&nbsp;</span>
+			  		<label>Tarjetas:</label><span id="vouchers">{$vouchers_total|nf:2}&nbsp;</span>
 			  	</p>
 			  	<p>
-			  		<label>Cambio:</label><span id="change">&nbsp;</span>
+			  		<label>Cambio:</label><span id="change">{$change_amount|nf:2}&nbsp;</span>
 			  	</p>
 		  	</div>
 	  	</fieldset>
