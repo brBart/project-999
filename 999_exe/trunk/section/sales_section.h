@@ -47,6 +47,7 @@ public slots:
 	void createDiscount();
 	void createCashReceipt();
 	void finishInvoice(QString Id);
+	void unloadSection();
 
 private:
 	Console *m_Console;
@@ -63,6 +64,7 @@ private:
 
 	QString m_CRegisterKey;
 	QString m_NewInvoiceKey;
+	QString m_InvoiceKey;
 
 	CRegisterStatus m_CRegisterStatus;
 	DocumentStatus m_DocumentStatus;
@@ -103,9 +105,11 @@ private:
 	void fetchCashRegisterStatus();
 	void updateCustomerData(QString nit, QString name);
 	void setPlugins();
-	void fetchInvoiceDetails();
+	void fetchInvoiceDetails(QString invoiceKey);
 	void setDiscountInvoice(QString discountKey);
 	void printInvoice(QString id);
+	void removeNewInvoiceFromSession();
+	void removeInvoiceFromSession();
 };
 
 #endif /* SALES_SECTION_H_ */

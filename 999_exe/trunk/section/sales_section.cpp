@@ -80,12 +80,18 @@ void SalesSection::loadFinished(bool ok)
 						.toInt());
 		m_DocumentStatus =
 				DocumentStatus(frame->evaluateJavaScript("documentStatus").toInt());
+
+		m_InvoiceKey = frame->evaluateJavaScript("objectKey").toString();
 	} else {
 		m_CRegisterStatus = Error;
 	}
 
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 	updateActions();
+
+	// If a invoice was loaded.
+	if (m_InvoiceKey != "")
+		fetchInvoiceDetails(m_InvoiceKey);
 }
 
 /**
@@ -113,7 +119,7 @@ void SalesSection::createInvoice()
 		m_NewInvoiceKey = params->value("key");
 
 		prepareInvoiceForm(params->value("date_time"), params->value("username"));
-		fetchInvoiceDetails();
+		fetchInvoiceDetails(m_NewInvoiceKey);
 
 		m_DocumentStatus = Edit;
 		updateActions();
@@ -178,27 +184,7 @@ void SalesSection::discardInvoice()
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
-		url = *m_ServerUrl;
-		url.addQueryItem("cmd", "remove_session_object");
-		url.addQueryItem("key", m_NewInvoiceKey);
-		url.addQueryItem("type", "xml");
-
-		m_Request->get(url, true);
-
-		// If a cash receipt was created, remove it from session.
-		if (m_CashReceiptKey != "") {
-			url = *m_ServerUrl;
-			url.addQueryItem("cmd", "remove_session_object");
-			url.addQueryItem("key", m_CashReceiptKey);
-			url.addQueryItem("type", "xml");
-
-			HttpRequest request(ui.webView->page()->networkAccessManager()
-					->cookieJar(), this);
-
-			request.get(url, true);
-
-			m_CashReceiptKey = "";
-		}
+		removeNewInvoiceFromSession();
 
 		if (m_Recordset.size() > 0) {
 			m_Recordset.refresh();
@@ -250,7 +236,18 @@ void SalesSection::setCustomer()
  */
 void SalesSection::fetchInvoice(QString id)
 {
+	// If there was an invoice on the session. Remove it.
+	if (m_InvoiceKey != "")
+		removeInvoiceFromSession();
 
+	// Reinstall plugins because they will be lost on the page load.
+	setPlugins();
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "get_invoice");
+	url.addQueryItem("id", id);
+	url.addQueryItem("register_key", m_CRegisterKey);
+	ui.webView->load(url);
 }
 
 /**
@@ -278,7 +275,7 @@ void SalesSection::addProductInvoice(int quantity)
 				m_Handler->handle(content, transformer, &errorMsg, &elementId);
 		if (response == XmlResponseHandler::Success) {
 			QApplication::beep();
-			fetchInvoiceDetails();
+			fetchInvoiceDetails(m_NewInvoiceKey);
 			m_Console->cleanFailure("bar_code");
 			m_BarCodeLineEdit->setText("");
 		} else if (response == XmlResponseHandler::Failure) {
@@ -326,7 +323,7 @@ void SalesSection::deleteProductInvoice()
 			XmlResponseHandler::ResponseType response =
 					m_Handler->handle(content, transformer, &errorMsg);
 			if (response == XmlResponseHandler::Success) {
-				fetchInvoiceDetails();
+				fetchInvoiceDetails(m_NewInvoiceKey);
 			} else if(response == XmlResponseHandler::Error) {
 				m_Console->displayError(errorMsg);
 			}
@@ -479,28 +476,24 @@ void SalesSection::createCashReceipt()
  */
 void SalesSection::finishInvoice(QString id)
 {
-	// Remove the objects from the session.
-	/*QUrl url(*m_ServerUrl);
-	url.addQueryItem("cmd", "remove_session_object");
-	url.addQueryItem("key", m_NewInvoiceKey);
-	url.addQueryItem("type", "xml");
-
-	m_Request->get(url, true);
-
-	url = *m_ServerUrl;
-	url.addQueryItem("cmd", "remove_session_object");
-	url.addQueryItem("key", m_CashReceiptKey);
-	url.addQueryItem("type", "xml");
-
-	HttpRequest request(ui.webView->page()->networkAccessManager()
-			->cookieJar(), this);
-
-	request.get(url, true);*/
+	removeNewInvoiceFromSession();
 
 	printInvoice(id);
 
-	//m_Recordset.refresh();
-	//m_Recordset.moveLast();
+	refreshRecordset();
+	m_Recordset.moveLast();
+}
+
+/**
+ * Tests if there is a invoice on session, then unloads the section.
+ */
+void SalesSection::unloadSection()
+{
+	// If there was an invoice on the session. Remove it.
+	if (m_InvoiceKey != "")
+		removeInvoiceFromSession();
+
+	m_Window->loadMainSection();
 }
 
 /**
@@ -525,7 +518,7 @@ void SalesSection::setActions()
 
 	m_ExitAction = new QAction("Salir", this);
 	m_ExitAction->setShortcut(tr("Ctrl+Q"));
-	connect(m_ExitAction, SIGNAL(triggered()), m_Window, SLOT(loadMainSection()));
+	connect(m_ExitAction, SIGNAL(triggered()), this, SLOT(unloadSection()));
 
 	m_ClientAction = new QAction("Cliente", this);
 	m_ClientAction->setShortcut(tr("Ctrl+E"));
@@ -836,11 +829,11 @@ void SalesSection::setPlugins()
 /**
  * Fetch the invoice details from the server.
  */
-void SalesSection::fetchInvoiceDetails()
+void SalesSection::fetchInvoiceDetails(QString invoiceKey)
 {
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_invoice_details");
-	url.addQueryItem("key", m_NewInvoiceKey);
+	url.addQueryItem("key", invoiceKey);
 	url.addQueryItem("type", "xml");
 
 	QString content = m_Request->get(url);
@@ -875,7 +868,7 @@ void SalesSection::setDiscountInvoice(QString discountKey)
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
-		fetchInvoiceDetails();
+		fetchInvoiceDetails(m_NewInvoiceKey);
 	} else {
 		m_Console->displayError(errorMsg);
 	}
@@ -889,4 +882,45 @@ void SalesSection::setDiscountInvoice(QString discountKey)
 void SalesSection::printInvoice(QString id)
 {
 	QMessageBox::information(this, "Imprimiendo", "Imprimiendo...");
+}
+
+/**
+ * Removes the new invoice object from the session on the server.
+ */
+void SalesSection::removeNewInvoiceFromSession()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "remove_session_object");
+	url.addQueryItem("key", m_NewInvoiceKey);
+	url.addQueryItem("type", "xml");
+
+	m_Request->get(url, true);
+
+	// If a cash receipt was created, remove it from session.
+	if (m_CashReceiptKey != "") {
+		url = *m_ServerUrl;
+		url.addQueryItem("cmd", "remove_session_object");
+		url.addQueryItem("key", m_CashReceiptKey);
+		url.addQueryItem("type", "xml");
+
+		HttpRequest request(ui.webView->page()->networkAccessManager()
+				->cookieJar(), this);
+
+		request.get(url, true);
+
+		m_CashReceiptKey = "";
+	}
+}
+
+/**
+ * Removes the invoice object from the session on the server.
+ */
+void SalesSection::removeInvoiceFromSession()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "remove_session_object");
+	url.addQueryItem("key", m_InvoiceKey);
+	url.addQueryItem("type", "xml");
+
+	m_Request->get(url, true);
 }
