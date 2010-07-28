@@ -1358,13 +1358,6 @@ class Invoice extends Document{
 	private $_mCashRegister;
 	
 	/**
-	 * Holds the flag that indicates if the invoice has a corresponding receipt.
-	 *
-	 * @var boolean
-	 */
-	private $_mHasCashReceipt = false;
-	
-	/**
 	 * Holds the invoice's additional discount.
 	 *
 	 * @var Discount
@@ -1519,16 +1512,6 @@ class Invoice extends Document{
 				if($bonus->getProduct()->getId() == $product->getId())
 					return $detail;
 			}
-	}
-	
-	/**
-	 * Sets the hasCashReceipt flag value.
-	 *
-	 * This method is called when assigning the corresponding receipt.
-	 * @param boolean $bool
-	 */
-	public function hasCashReceipt($bool){	
-		$this->_mHasCashReceipt = (boolean)$bool;
 	}
 	
 	/**
