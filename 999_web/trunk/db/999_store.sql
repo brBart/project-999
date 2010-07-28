@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-06-2010 a las 11:32:51
+-- Tiempo de generación: 28-07-2010 a las 13:56:20
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Volcar la base de datos para la tabla `bonus`
@@ -827,7 +827,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=44 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Volcar la base de datos para la tabla `reserve`
@@ -904,7 +904,9 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 24, 2, 1),
 (1, 25, 2, 1),
 (1, 26, 1, 1),
-(1, 27, 2, 1);
+(1, 27, 2, 1),
+(1, 28, 2, 1),
+(1, 29, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1014,7 +1016,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1047,7 +1049,9 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (24, 'payment_card_brand'),
 (25, 'reserve'),
 (26, 'pos'),
-(27, 'invoice');
+(27, 'invoice'),
+(28, 'discount'),
+(29, 'cash_receipt');
 
 -- --------------------------------------------------------
 
@@ -3063,7 +3067,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_list_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT invoice_id FROM invoice
+  SELECT invoice_id AS id, serial_number, number  FROM invoice
 
     WHERE cash_register_id = inCashRegisterId;
 
