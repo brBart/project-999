@@ -980,21 +980,6 @@ class CashReceipt extends PersistDocument{
 	public function __construct(Invoice $invoice, $id = NULL, $status = PersistDocument::IN_PROGRESS){
 		parent::__construct($id, $status);
 		
-		if($this->_mStatus == PersistDocument::IN_PROGRESS){
-			self::validateNewObject($invoice);
-			if($invoice->getTotal() <= 0)
-				throw new Exception('Factura no contiene detalles.');
-		}
-		else
-			try{
-				self::validateObjectFromDatabase($invoice);
-			} catch(Exception $e){
-				$et = new Exception('Interno; Llamando al metodo construct en CashReceipt con datos ' .
-						'erroneos! ' . $e->getMessage());
-				throw $et;
-			}
-			
-		$invoice->hasCashReceipt(true);
 		$this->_mInvoice = $invoice;
 		$this->_mCash = new Cash(0.0);
 	}
@@ -1086,7 +1071,7 @@ class CashReceipt extends PersistDocument{
 	 * @param float $amount
 	 */
 	public function setChange($amount){
-		Number::validateUnsignedFloat($amount, 'Cantidad de cambio inv&aacute;lido.');
+		Number::validateUnsignedNumber($amount, 'Cantidad de cambio inv&aacute;lido.');
 		$this->_mChange = $amount;
 	}
 	
@@ -1139,7 +1124,8 @@ class CashReceipt extends PersistDocument{
 			if($voucher->getTransactionNumber() != $newVoucher->getTransactionNumber())
 				$temp_vouchers[] = $voucher;
 			else
-				$newVoucher->increase($voucher->getAmount());
+				throw new ValidateException('Voucher con n&uacute;mero de transacci&oacute;n ya fue ingresado.',
+						'transaction_number');
 			
 		$temp_vouchers[] = $newVoucher;
 		$this->_mVouchers = $temp_vouchers;
@@ -1166,11 +1152,12 @@ class CashReceipt extends PersistDocument{
 	 * Saves the receipt's data in the database.
 	 *
 	 * Only applies if the receipt's status property is set to PersistDocument::IN_PROGRESS.
+	 * @return integer
 	 */
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
-			$this->insert();
+			return $this->insert();
 		}
 	}
 	
@@ -1220,12 +1207,15 @@ class CashReceipt extends PersistDocument{
 	 * Inserts the receipt's data in the database.
 	 *
 	 * It also calls the save method of the receipt's invoice.
+	 * @return integer
 	 */
 	protected function insert(){
 		$this->_mInvoice->save();
 		CashReceiptDAM::insert($this);
 		$this->_mId = $this->_mInvoice->getId();
 		$this->_mStatus = PersistDocument::CREATED;
+		
+		return $this->_mId;
 	}
 	
 	/**
@@ -1236,11 +1226,11 @@ class CashReceipt extends PersistDocument{
 	 */
 	private function validateMainProperties(){
 		if($this->_mCash->getAmount() <= 0 && empty($this->_mVouchers))
-			throw new Exception('Favor ingresar efectivo o algun voucher.');
+			throw new ValidateException('Favor ingresar efectivo o algun voucher.', 'cash');
 
 		if(bccomp($this->getTotal(), $this->_mInvoice->getTotal(), 2))
-			throw new Exception('Recibo no se puede guardar, el monto ingresado no es el requerido: ' .
-					$this->_mInvoice->getTotal());
+			throw new ValidateException('Recibo no se puede guardar, el monto ingresado no es el requerido: ' .
+					$this->_mInvoice->getTotal() . '.', 'cash');
 	}
 }
 
@@ -1425,10 +1415,8 @@ class PaymentCard{
 	 * @param string $date
 	 */
 	public function __construct($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
-		Number::validatePositiveInteger($number, 'N&uacute;mero de tarjeta inv&aacute;lido.');
-		Persist::validateObjectFromDatabase($type);
-		Persist::validateObjectFromDatabase($brand);
-		String::validateString($holderName, 'Nombre del titular inv&aacute;lido.');
+		Number::validatePositiveNumber($number, 'N&uacute;mero de tarjeta inv&aacute;lido.', 'payment_card_number');
+		String::validateString($holderName, 'Nombre del titular inv&aacute;lido.', 'holder_name');
 		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
 		
 		$this->_mNumber = $number;
@@ -1484,7 +1472,8 @@ class PaymentCard{
 	}
 	
 	/**
-	 * Creates a new payment card validating if the provided date has not expired.
+	 * Creates a new payment card validating if the provided date has not expired. Date
+	 * format is mm/yyyy.
 	 *
 	 * @param integer $number
 	 * @param PaymentCardType $type
@@ -1495,9 +1484,17 @@ class PaymentCard{
 	 * @throws Exception
 	 */
 	static public function create($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
-		Date::validateDate($date, 'Fecha de la tarjeta inv&aacute;lida.');
+		$date = "01/" . $date;
+		
+		try{
+			Date::validateDate($date, '');
+		} catch(ValidateException $e){
+			throw new ValidateException('Fecha inv&aacute;lida.  No existe o debe ser en formato \'mm/aaaa\'.',
+					'expiration_date');
+		}
+		
 		if(!Date::compareDates(date('d/m/Y'), $date))
-			throw new Exception('Fecha de la tarjeta ya caduco.');
+			throw new ValidateException('Fecha de la tarjeta ya caduco.', 'expiration_date');
 		else
 			return new PaymentCard($number, $type, $brand, $holderName, $date);
 	}
@@ -1539,8 +1536,8 @@ class Voucher{
 	 * @param float $amount
 	 */
 	public function __construct($transactionNumber, PaymentCard $card, $amount){
-		String::validateString($transactionNumber, 'N&uacute;mero de transacci&oacute;n inv&aacute;lido.');
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		String::validateString($transactionNumber, 'N&uacute;mero de transacci&oacute;n inv&aacute;lido.', 'transaction_number');
+		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
 		
 		$this->_mTransactionNumber = $transactionNumber;
 		$this->_mPaymentCard = $card;
@@ -1584,19 +1581,10 @@ class Voucher{
 		$type = $this->_mPaymentCard->getType();
 		$brand = $this->_mPaymentCard->getBrand();
 		
-		return array('type' => $type->getName(), 'brand' => $brand->getName(),
+		return array('transaction_number' => $this->_mTransactionNumber,
+				'type' => $type->getName(), 'brand' => $brand->getName(),
 				'number' => $this->_mPaymentCard->getNumber(), 'name' => $this->_mPaymentCard->getHolderName(),
 				'amount' => $this->_mAmount, 'expiration_date' => $this->_mPaymentCard->getExpirationDate());
-	}
-	
-	/**
-	 * Increases the voucher's amount value.
-	 *
-	 * @param float $amount
-	 */
-	public function increase($amount){
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
-		$this->_mAmount += $amount;
 	}
 }
 
@@ -1634,10 +1622,10 @@ class Cash extends Persist{
 	public function __construct($amount, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		Number::validateUnsignedFloat($amount, 'Monto de efectivo inv&aacute;lido.');
+		Number::validateUnsignedNumber($amount, 'Monto de efectivo inv&aacute;lido.');
 		
 		if(!is_null($id))
-			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+			Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 		
 		$this->_mAmount = $amount;
 		$this->_mId = $id;
@@ -2057,7 +2045,7 @@ class CashEntryEvent{
 	 */
 	static public function apply(CashReceipt $receipt, $amount){
 		Persist::validateNewObject($receipt);
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		Number::validateUnsignedNumber($amount, 'Monto inv&aacute;lido.', 'cash');
 		
 		$invoice = $receipt->getInvoice();
 		$total_invoice = $invoice->getTotal();
@@ -2095,11 +2083,11 @@ class VoucherEntryEvent{
 	 */
 	static public function apply($transaction, PaymentCard $card, Invoice $invoice, CashReceipt $receipt,
 			$amount){
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
 		Persist::validateNewObject($receipt);
 		
 		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
-			throw new Exception('Voucher excede el total de la factura.');
+			throw new ValidateException('Voucher excede el total de la factura.', 'amount');
 			
 		$receipt->addVoucher(new Voucher($transaction, $card, $amount));
 	}
