@@ -550,15 +550,21 @@ void SalesSection::setActions()
 
 	m_MoveFirstAction = new QAction("Primero", this);
 	m_MoveFirstAction->setShortcut(tr("Home"));
+	connect(m_MoveFirstAction, SIGNAL(triggered()), &m_Recordset,
+			SLOT(moveFirst()));
 
 	m_MovePreviousAction = new QAction("Anterior", this);
 	m_MovePreviousAction->setShortcut(tr("PgUp"));
+	connect(m_MovePreviousAction, SIGNAL(triggered()), &m_Recordset,
+			SLOT(movePrevious()));
 
 	m_MoveNextAction = new QAction("Siguiente", this);
 	m_MoveNextAction->setShortcut(tr("PgDown"));
+	connect(m_MoveNextAction, SIGNAL(triggered()), &m_Recordset, SLOT(moveNext()));
 
 	m_MoveLastAction = new QAction("Ultimo", this);
 	m_MoveLastAction->setShortcut(tr("End"));
+	connect(m_MoveLastAction, SIGNAL(triggered()), &m_Recordset, SLOT(moveLast()));
 
 	m_SearchAction = new QAction("Buscar", this);
 	m_SearchAction->setShortcut(Qt::Key_F1);
