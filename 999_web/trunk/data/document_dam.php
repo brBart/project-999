@@ -438,7 +438,7 @@ class InvoiceDAM{
 		$cash_register = $obj->getCashRegister();
 		$params = array(':serial_number' => $correlative->getSerialNumber(), ':number' => $obj->getNumber(),
 				':username' => $user->getUserName(), ':date' => Date::dbDateTimeFormat($obj->getDateTime()),
-				':nit' => $obj->getCustomerNit(), ':name' => $obj->getCustomerName(), ':total' => $obj->getTotal(),
+				':nit' => $obj->getCustomerNit(), ':name' => $obj->getCustomerName(), ':total' => $obj->getSubTotal(),
 				':vat' => $obj->getVatPercentage(), ':cash_register_id' => $cash_register->getId(),
 				':status' => PersistDocument::CREATED);
 		DatabaseHandler::execute($sql, $params);
