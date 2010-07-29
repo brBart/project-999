@@ -51,7 +51,8 @@ class GetInvoiceCommand extends Command{
 					'serial_number' => $correlative->getSerialNumber(), 'number' => $invoice->getNumber(),
 					'date_time' => $invoice->getDateTime(), 'username' => $user->getUserName(),
 					'nit' => $invoice->getCustomerNit(), 'customer' => $invoice->getCustomerName(),
-					'cash_amount' => $cash->getAmount(), 'vouchers_total' => $cash_receipt->getTotalVouchers(),
+					'cash_amount' => $cash->getAmount() + $cash_receipt->getChange(),
+					'vouchers_total' => $cash_receipt->getTotalVouchers(),
 					'change_amount' => $cash_receipt->getChange()), 'site_pos_html.tpl');
 		}
 		else{
