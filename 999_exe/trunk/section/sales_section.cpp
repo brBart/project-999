@@ -701,13 +701,13 @@ void SalesSection::updateActions()
 				QString cancel =
 						(m_DocumentStatus == Idle
 								&& m_Recordset.size() > 0) ? "1" : "0";
-				values = "100" + cancel + "10000000" + navigateValues();
+				values = "100" + cancel + "100000" + navigateValues();
 				m_BarCodeLineEdit->setEnabled(false);
 			}
 			break;
 
 		case Closed:
-			values = "000010000000" + navigateValues();
+			values = "0000100000" + navigateValues();
 			m_BarCodeLineEdit->setEnabled(false);
 			break;
 
@@ -727,15 +727,17 @@ void SalesSection::updateActions()
 QString SalesSection::navigateValues()
 {
 	if (m_Recordset.size() > 0) {
-		if (m_Recordset.isFirst()) {
-			return "110011";
+		if (m_Recordset.isFirst() && m_Recordset.isLast()) {
+			return "11000011";
+		} else if (m_Recordset.isFirst()) {
+			return "11001111";
 		} else if (m_Recordset.isLast()) {
-			return "001111";
+			return "11110011";
 		} else {
-			return "111111";
+			return "11111111";
 		}
 	} else {
-		return "000001";
+		return "00000001";
 	}
 }
 
