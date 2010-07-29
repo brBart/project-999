@@ -727,8 +727,8 @@ void SalesSection::updateActions()
 QString SalesSection::navigateValues()
 {
 	if (m_Recordset.size() > 0) {
-		if (m_Recordset.isFirst() && m_Recordset.isLast()) {
-			return "11000011";
+		if (m_Recordset.size() == 1) {
+			return "11000001";
 		} else if (m_Recordset.isFirst()) {
 			return "11001111";
 		} else if (m_Recordset.isLast()) {

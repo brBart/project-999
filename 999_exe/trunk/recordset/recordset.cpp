@@ -91,7 +91,7 @@ void Recordset::moveLast()
  */
 bool Recordset::isFirst()
 {
-	return ((m_List.size() == 1) ? true : !m_Iterator->hasPrevious());
+	return (m_Index == 0);
 }
 
 /**
@@ -99,7 +99,7 @@ bool Recordset::isFirst()
  */
 bool Recordset::isLast()
 {
-	return ((m_List.size() == 1) ? true : !m_Iterator->hasNext());
+	return (m_Index == m_List.size() - 1);
 }
 
 /**
