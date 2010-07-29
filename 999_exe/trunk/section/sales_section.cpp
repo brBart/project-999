@@ -780,6 +780,15 @@ void SalesSection::prepareInvoiceForm(QString dateTime, QString username)
 
 	element = frame->findFirstElement("#customer");
 	element.setInnerXml("&nbsp;");
+
+	element = frame->findFirstElement("#cash_amount");
+	element.setInnerXml("0.00");
+
+	element = frame->findFirstElement("#vouchers_total");
+	element.setInnerXml("0.00");
+
+	element = frame->findFirstElement("#change_amount");
+	element.setInnerXml("0.00");
 }
 
 /**
