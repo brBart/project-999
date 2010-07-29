@@ -39,7 +39,7 @@ void Recordset::moveFirst()
 {
 	m_Iterator->toFront();
 	QMap<QString, QString> *record = m_Iterator->next();
-	m_Index = 1;
+	m_Index = 0;
 
 	emit recordChanged(record->value("id"));
 
@@ -79,7 +79,7 @@ void Recordset::moveLast()
 {
 	m_Iterator->toBack();
 	QMap<QString, QString> *record = m_Iterator->previous();
-	m_Index = m_List.size();
+	m_Index = m_List.size() - 1;
 
 	emit recordChanged(record->value("id"));
 
