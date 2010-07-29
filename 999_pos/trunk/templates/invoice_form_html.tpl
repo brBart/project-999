@@ -47,13 +47,13 @@ var objectKey = {$key};
 		  	<div id="details" class="items register"></div>
 		  	<div id="receipt_info">
 		  		<p >
-			  		<label>Efectivo:</label><span id="cash">{$cash_amount|nf:2}&nbsp;</span>
+			  		<label>Efectivo:</label><span id="cash_amount">{$cash_amount|nf:2}&nbsp;</span>
 		  		</p>
 		  		<p>
-			  		<label>Tarjetas:</label><span id="vouchers">{$vouchers_total|nf:2}&nbsp;</span>
+			  		<label>Tarjetas:</label><span id="vouchers_total">{$vouchers_total|nf:2}&nbsp;</span>
 			  	</p>
 			  	<p>
-			  		<label>Cambio:</label><span id="change">{$change_amount|nf:2}&nbsp;</span>
+			  		<label>Cambio:</label><span id="change_amount">{$change_amount|nf:2}&nbsp;</span>
 			  	</p>
 		  	</div>
 	  	</fieldset>
