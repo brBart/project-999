@@ -21,7 +21,7 @@ Recordset::Recordset(QWidget *parent)
 void Recordset::setList(QList<QMap<QString, QString>*> list)
 {
 	m_List = list;
-	m_Iterator = new QListIterator<QMap<QString, QString>*>(m_List);
+	m_Iterator = m_List.begin();
 }
 
 /**
@@ -37,13 +37,12 @@ int Recordset::size()
  */
 void Recordset::moveFirst()
 {
-	m_Iterator->toFront();
-	QMap<QString, QString> *record = m_Iterator->next();
-	m_Index = 0;
+	m_Iterator = m_List.begin();
 
-	emit recordChanged(record->value("id"));
+	emit recordChanged((*m_Iterator)->value("id"));
 
 	updateLabel();
+	m_Index = 0;
 }
 
 /**
@@ -51,12 +50,12 @@ void Recordset::moveFirst()
  */
 void Recordset::movePrevious()
 {
-	QMap<QString, QString> *record = m_Iterator->previous();
-	m_Index = m_Index - 1;
+	--m_Iterator;
 
-	emit recordChanged(record->value("id"));
+	emit recordChanged((*m_Iterator)->value("id"));
 
 	updateLabel();
+	m_Index = m_Index - 1;
 }
 
 /**
@@ -64,12 +63,12 @@ void Recordset::movePrevious()
  */
 void Recordset::moveNext()
 {
-	QMap<QString, QString> *record = m_Iterator->next();
-	m_Index = m_Index + 1;
+	++m_Iterator;
 
-	emit recordChanged(record->value("id"));
+	emit recordChanged((*m_Iterator)->value("id"));
 
 	updateLabel();
+	m_Index = m_Index + 1;
 }
 
 /**
@@ -77,13 +76,13 @@ void Recordset::moveNext()
  */
 void Recordset::moveLast()
 {
-	m_Iterator->toBack();
-	QMap<QString, QString> *record = m_Iterator->previous();
-	m_Index = m_List.size() - 1;
+	m_Iterator = m_List.end();
+	--m_Iterator;
 
-	emit recordChanged(record->value("id"));
+	emit recordChanged((*m_Iterator)->value("id"));
 
 	updateLabel();
+	m_Index = m_List.size() - 1;
 }
 
 /**
@@ -107,9 +106,7 @@ bool Recordset::isLast()
  */
 void Recordset::refresh()
 {
-	QMap<QString, QString> *record = m_List.at(m_Index);
-
-	emit recordChanged(record->value("id"));
+	emit recordChanged((m_List.at(m_Index))->value("id"));
 }
 
 /**

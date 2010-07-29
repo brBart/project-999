@@ -32,7 +32,7 @@ signals:
 private:
     Ui::RecordsetClass ui;
     QList<QMap<QString, QString>*> m_List;
-    QListIterator<QMap<QString, QString>*> *m_Iterator;
+    QList<QMap<QString, QString>*>::const_iterator m_Iterator;
     int m_Index;
 
     void updateLabel();
