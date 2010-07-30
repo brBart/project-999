@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/object_id_xml_transformer.h \
+HEADERS += plugins/label.h \
+    xml_transformer/object_id_xml_transformer.h \
     xml_transformer/total_xml_transformer.h \
     xml_transformer/payment_card_brand_list_xml_transformer.h \
     xml_transformer/payment_card_type_list_xml_transformer.h \
@@ -50,7 +51,8 @@ HEADERS += xml_transformer/object_id_xml_transformer.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += xml_transformer/object_id_xml_transformer.cpp \
+SOURCES += plugins/label.cpp \
+    xml_transformer/object_id_xml_transformer.cpp \
     xml_transformer/total_xml_transformer.cpp \
     xml_transformer/payment_card_brand_list_xml_transformer.cpp \
     xml_transformer/payment_card_type_list_xml_transformer.cpp \
@@ -97,7 +99,6 @@ FORMS += voucher_dialog/voucher_dialog.ui \
     discount_dialog/discount_dialog.ui \
     authentication_dialog/authentication_dialog.ui \
     customer_dialog/customer_dialog.ui \
-    recordset/recordset.ui \
     cash_register_dialog/cash_register_dialog.ui \
     section/section.ui \
     mainwindow.ui

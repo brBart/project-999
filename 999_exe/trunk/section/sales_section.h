@@ -20,6 +20,7 @@
 #include "../actions_manager/actions_manager.h"
 #include "../plugins/bar_code_line_edit.h"
 #include "../authentication_dialog/authentication_dialog.h"
+#include "../plugins/label.h"
 
 class SalesSection: public Section
 {
@@ -61,6 +62,7 @@ private:
 	QString m_StyleSheet;
 	AuthenticationDialog *m_AuthenticationDlg;
 	QString m_CashReceiptKey;
+	Label *m_RecordsetLabel;
 
 	QString m_CRegisterKey;
 	QString m_NewInvoiceKey;

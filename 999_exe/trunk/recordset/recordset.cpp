@@ -7,15 +7,6 @@
  */
 
 /**
- * Constructs a Recordset.
- */
-Recordset::Recordset(QWidget *parent)
-    : QWidget(parent)
-{
-	ui.setupUi(this);
-}
-
-/**
  * Set the list the Recordset will use.
  */
 void Recordset::setList(QList<QMap<QString, QString>*> list)
@@ -38,11 +29,10 @@ int Recordset::size()
 void Recordset::moveFirst()
 {
 	m_Iterator = m_List.begin();
+	m_Index = 0;
+	updateLabel();
 
 	emit recordChanged((*m_Iterator)->value("id"));
-
-	updateLabel();
-	m_Index = 0;
 }
 
 /**
@@ -51,11 +41,10 @@ void Recordset::moveFirst()
 void Recordset::movePrevious()
 {
 	--m_Iterator;
+	m_Index = m_Index - 1;
+	updateLabel();
 
 	emit recordChanged((*m_Iterator)->value("id"));
-
-	updateLabel();
-	m_Index = m_Index - 1;
 }
 
 /**
@@ -64,11 +53,10 @@ void Recordset::movePrevious()
 void Recordset::moveNext()
 {
 	++m_Iterator;
+	m_Index = m_Index + 1;
+	updateLabel();
 
 	emit recordChanged((*m_Iterator)->value("id"));
-
-	updateLabel();
-	m_Index = m_Index + 1;
 }
 
 /**
@@ -78,11 +66,10 @@ void Recordset::moveLast()
 {
 	m_Iterator = m_List.end();
 	--m_Iterator;
+	m_Index = m_List.size() - 1;
+	updateLabel();
 
 	emit recordChanged((*m_Iterator)->value("id"));
-
-	updateLabel();
-	m_Index = m_List.size() - 1;
 }
 
 /**
@@ -110,9 +97,17 @@ void Recordset::refresh()
 }
 
 /**
+ * Returns the text to display on a label or else.
+ */
+QString Recordset::text()
+{
+	return m_Text;
+}
+
+/**
  * Updates the label with the actual index position.
  */
 void Recordset::updateLabel()
 {
-	ui.label->setText(QString("%1 de %2").arg(m_Index).arg(m_List.size()));
+	m_Text = QString("%1 de %2").arg(m_Index + 1).arg(m_List.size());
 }

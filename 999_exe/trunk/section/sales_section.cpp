@@ -795,6 +795,8 @@ void SalesSection::prepareInvoiceForm(QString dateTime, QString username)
 
 	element = frame->findFirstElement("#change_amount");
 	element.setInnerXml("0.00");
+
+	m_RecordsetLabel->setText("");
 }
 
 /**
@@ -833,11 +835,15 @@ void SalesSection::updateCustomerData(QString nit, QString name)
  */
 void SalesSection::setPlugins()
 {
-	m_BarCodeLineEdit = new BarCodeLineEdit();
-
 	WebPluginFactory *factory =
-			static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
+				static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
+
+	m_BarCodeLineEdit = new BarCodeLineEdit();
 	factory->install("application/x-bar_code_line_edit", m_BarCodeLineEdit);
+
+	m_RecordsetLabel = new Label();
+	m_RecordsetLabel->setText(m_Recordset.text());
+	factory->install("application/x-recordset", m_RecordsetLabel);
 
 	connect(m_BarCodeLineEdit, SIGNAL(returnPressed()), this,
 			SLOT(addProductInvoice()));
