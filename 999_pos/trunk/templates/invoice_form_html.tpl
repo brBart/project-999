@@ -58,7 +58,7 @@ var objectKey = {$key};
 		  	</div>
 	  	</fieldset>
 	  	<fieldset id="data_footer">
-	  		<object id="recordset"></object>
+	  		<object id="recordset" type="application/x-recordset"></object>
 	  	</fieldset>
 	</div>
 </div>
