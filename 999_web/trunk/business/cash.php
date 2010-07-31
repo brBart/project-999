@@ -1622,8 +1622,6 @@ class Cash extends Persist{
 	public function __construct($amount, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		Number::validateUnsignedNumber($amount, 'Monto de efectivo inv&aacute;lido.');
-		
 		if(!is_null($id))
 			Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 		
@@ -2044,7 +2042,10 @@ class CashEntryEvent{
 	 * @param float $amount
 	 */
 	static public function apply(CashReceipt $receipt, $amount){
-		Persist::validateNewObject($receipt);
+		// Reset the receipt in case an error occurs next.
+		$receipt->setChange(0.00);
+		$receipt->setCash(new Cash(0.00));
+		
 		Number::validateUnsignedNumber($amount, 'Monto inv&aacute;lido.', 'cash');
 		
 		$invoice = $receipt->getInvoice();
