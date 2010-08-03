@@ -904,7 +904,18 @@ void SalesSection::setDiscountInvoice(QString discountKey)
  */
 void SalesSection::printInvoice(QString id)
 {
-	QMessageBox::information(this, "Imprimiendo", "Imprimiendo...");
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "print_invoice");
+	url.addQueryItem("id", id);
+
+	QWebView *webView = new QWebView();
+
+	webView->page()
+			->setNetworkAccessManager(ui.webView->page()->networkAccessManager());
+	webView->load(url);
+	webView->resize(65, 50);
+
+	webView->show();
 }
 
 /**
