@@ -13,6 +13,10 @@ require_once('commands/get_object.php');
  * Library with the invoice class.
  */
 require_once('business/document.php');
+/**
+ * For obtaining the cash receipt.
+ */
+require_once('business/cash.php');
 
 /**
  * Displays the invoice form in idle mode.
