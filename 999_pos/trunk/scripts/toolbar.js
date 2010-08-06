@@ -16,6 +16,10 @@ function Toolbar(){}
  */
 Toolbar.checkResolution = function(sToolbar){
 	var oToolbar = document.getElementById(sToolbar);
-	if(screen.width <= 1000 && screen.height <= 700)
+	
+	if(screen.width < 900) {
 		oToolbar.style.fontSize = '6.5px';
+	} else if(screen.width < 1200) {
+		oToolbar.style.fontSize = '8px';
+	}
 }

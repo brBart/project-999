@@ -24,7 +24,7 @@
 <body>
 	{literal}
 	<script type="text/javascript">
-		if(screen.width <= 1000 && screen.height <= 700){
+		if(screen.width < 1000){
 			document.body.style.fontSize = '8px';
 		}
 		else{
