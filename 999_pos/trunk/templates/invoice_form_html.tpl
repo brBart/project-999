@@ -14,7 +14,20 @@ var objectKey = {$key};
 			<p><label>Turno:</label><span>{$shift}</span></p>
 			<p><label>Status:</label><span id="cash_register_status">{if $cash_register_status eq 1}Abierto{else}Cerrado{/if}</span></p>
 		</fieldset>
-		{include file='status_bar_doc_html.tpl'}
+		<fieldset id="status_bar_invoice">
+			<p>
+				<label>Status:</label>
+				<span id="status_label" {if $status eq 2}class="cancel_status"{/if}>
+					{if $status eq 0}
+						Creando...
+					{elseif $status eq 1}
+						Cerrado
+					{else}
+						Anulado
+					{/if}
+				</span>
+			</p>
+		</fieldset>
 		<fieldset id="header_data">
 			<p>
 				<label>Factura Serie:</label><span id="serial_number">{$serial_number}</span>

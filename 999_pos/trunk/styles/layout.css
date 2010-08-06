@@ -324,7 +324,7 @@ input[type="text"], input[type="password"] {
 
 #receipt_info p {
 	float: left;
-	padding: 0 5em;
+	margin-right: 7em;
 }
 
 #receipt_info label {
@@ -342,6 +342,11 @@ input[type="text"], input[type="password"] {
 	margin-right: 1em;
 }
 
+#status_bar_invoice label {
+	width: auto;
+	margin-right: 3em;
+}
+
 #scroll table {
 	float: left;
 	width: 20em;
@@ -349,6 +354,11 @@ input[type="text"], input[type="password"] {
 
 #scroll td {
 	padding: 0.2em 0.2em;
+}
+
+#status_bar_invoice {
+	float: left;
+	width: 15%;
 }
 
 #product_tb label, #bonus_tb label {
