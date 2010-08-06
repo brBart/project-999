@@ -10,6 +10,7 @@
 #include <QStringList>
 #include <QFile>
 #include <QTextStream>
+#include <QApplication>
 
 /**
  * @class Registry
@@ -28,16 +29,33 @@ Registry::Registry()
 	QString serverUrl = "127.0.0.1/999_project/pos/";
 	QString xslUrl = "127.0.0.1/999_project/xsl/";
 
-	QFile file("preferences.txt");
+	QFile file(QApplication::applicationDirPath() + "/preferences.txt");
 
 	if (file.exists()) {
 		file.open(QIODevice::ReadOnly);
 		QTextStream stream(&file);
 
-		QString line = stream.readLine();
-		QStringList address = line.split(" ");
-		serverUrl = ((address[1] == "localhost" || address[1] == "") ?
-				"127.0.0.1" : address[1]);
+		while (!stream.atEnd()) {
+			QString line = stream.readLine();
+			QString data = line.mid(0, line.indexOf("#") - 1);
+			data = data.trimmed();
+
+			if (data != "") {
+				QStringList params = data.split(" ");
+
+				if (params[0] == "commands_address") {
+					QStringList values = params[1].split("/");
+					values[0] = ((values[0] == "localhost" || values[0] == "") ?
+								"127.0.0.1" : values[0]);
+					serverUrl = values.join("/");
+				} else if (params[0] == "xsl_address") {
+					QStringList values = params[1].split("/");
+					values[0] = ((values[0] == "localhost" || values[0] == "") ?
+								"127.0.0.1" : values[0]);
+					xslUrl = values.join("/");
+				}
+			}
+		}
 
 		file.close();
 	}
