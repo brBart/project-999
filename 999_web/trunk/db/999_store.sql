@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-08-2010 a las 10:19:53
+-- Tiempo de generación: 07-08-2010 a las 12:38:24
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -827,7 +827,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=101 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=102 ;
 
 --
 -- Volcar la base de datos para la tabla `reserve`
@@ -933,8 +933,8 @@ INSERT INTO `root` (`password`) VALUES
 
 CREATE TABLE IF NOT EXISTS `shift` (
   `shift_id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `time_table` varchar(100) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(15) collate utf8_unicode_ci NOT NULL,
+  `time_table` varchar(30) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`shift_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
