@@ -54,7 +54,7 @@ input[type="text"], input[type="password"]{
 				<legend>Login - {$module_title}</legend>
 			  	<p>
 					<label for="username">Usuario:</label>
-					<input name="username" id="username" type="text" value="{$username}" maxlength="20" />
+					<input name="username" id="username" type="text" value="{$username}" maxlength="10" />
 			  	</p>
 			  	<p>
 					<label for="password">Contrase&ntilde;a:</label>
