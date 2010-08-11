@@ -7,12 +7,24 @@
 
 #include "printer_status_handler.h"
 
+/**
+ * @class PrinterStatusHandler
+ * Class which make use of the Epson APD4 driver for monitoring the TMU printer.
+ */
+
+/**
+ * Constructs the object with the printer's name.
+ */
 PrinterStatusHandler::PrinterStatusHandler(QString printerName)
 		: m_PrinterName(printerName)
 {
 
 }
 
+/**
+ * Returns true if the printer is ready to print. Otherwise false with the error
+ * message stored in the errorMsg parameter.
+ */
 bool PrinterStatusHandler::isReady(QString *errorMsg)
 {
 	bool isReady = true;
