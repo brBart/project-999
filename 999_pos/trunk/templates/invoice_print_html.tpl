@@ -7,8 +7,8 @@
 {literal}
 <style type="text/css">
 body {
-	font-size: 9px;
-	font-family: Verdana, Arial;
+	font-size: 10px;
+	font-family: Arial, Verdana;
 }
 
 #title {
