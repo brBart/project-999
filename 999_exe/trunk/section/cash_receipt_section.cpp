@@ -9,10 +9,12 @@
 
 #include <QMenuBar>
 #include <QInputDialog>
+#include <QMessageBox>
 #include "../console/console_factory.h"
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../registry.h"
 #include "../voucher_dialog/voucher_dialog.h"
+#include "../printer_status_handler/printer_status_handler.h"
 
 /**
  * @class CashReceiptSection
@@ -255,6 +257,22 @@ void CashReceiptSection::scrollDown()
  */
 void CashReceiptSection::saveCashReceipt()
 {
+
+	PrinterStatusHandler printerHandler("EPSON TM-U220 Receipt");
+	QString readyMsg;
+	bool printerOk = false;
+
+	do {
+		printerOk = printerHandler.isReady(&readyMsg);
+		if (!printerOk) {
+			if (QMessageBox::critical(this, "Impresora", "Impresora no esta lista: " +
+					readyMsg + " Presione Aceptar cuando este lista para poder "
+					"continuar o Cancelar para regresar.",
+					QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
+				return;
+		}
+	} while(!printerOk);
+
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "save_object");
 	url.addQueryItem("key", m_CashReceiptKey);

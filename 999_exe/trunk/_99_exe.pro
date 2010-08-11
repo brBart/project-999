@@ -7,7 +7,10 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += plugins/label.h \
+HEADERS += printer_status_handler/printer_status_handler.h \
+    printer_status_handler/StatusAPI.h \
+    printer_status_handler/EpsStmApi.h \
+    plugins/label.h \
     xml_transformer/object_id_xml_transformer.h \
     xml_transformer/total_xml_transformer.h \
     xml_transformer/payment_card_brand_list_xml_transformer.h \
@@ -51,7 +54,9 @@ HEADERS += plugins/label.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += plugins/label.cpp \
+SOURCES += printer_status_handler/printer_status_handler.cpp \
+    printer_status_handler/StatusAPI.cpp \
+    plugins/label.cpp \
     xml_transformer/object_id_xml_transformer.cpp \
     xml_transformer/total_xml_transformer.cpp \
     xml_transformer/payment_card_brand_list_xml_transformer.cpp \
