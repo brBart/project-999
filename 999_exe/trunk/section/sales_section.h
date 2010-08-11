@@ -49,6 +49,7 @@ public slots:
 	void createCashReceipt();
 	void finishInvoice(QString Id);
 	void unloadSection();
+	void tempo();
 
 private:
 	Console *m_Console;

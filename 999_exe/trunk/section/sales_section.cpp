@@ -10,6 +10,7 @@
 #include <QList>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QPrinter>
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 #include "../customer_dialog/customer_dialog.h"
@@ -496,6 +497,16 @@ void SalesSection::unloadSection()
 	m_Window->loadMainSection();
 }
 
+void SalesSection::tempo()
+{
+	bool ok;
+	QString id = QInputDialog::getText(this, "Id", "Id: ", QLineEdit::Normal,
+			"", &ok);
+
+	if (ok)
+		printInvoice(id);
+}
+
 /**
  * Creates the QActions for the menu bar.
  */
@@ -515,6 +526,7 @@ void SalesSection::setActions()
 
 	m_CancelAction = new QAction("Anular", this);
 	m_CancelAction->setShortcut(Qt::Key_F10);
+	connect(m_CancelAction, SIGNAL(triggered()), this, SLOT(tempo()));
 
 	m_ExitAction = new QAction("Salir", this);
 	m_ExitAction->setShortcut(tr("Ctrl+Q"));
@@ -908,14 +920,16 @@ void SalesSection::printInvoice(QString id)
 	url.addQueryItem("cmd", "print_invoice");
 	url.addQueryItem("id", id);
 
+	QString content = m_Request->get(url);
+
 	QWebView *webView = new QWebView();
 
-	webView->page()
-			->setNetworkAccessManager(ui.webView->page()->networkAccessManager());
-	webView->load(url);
-	webView->resize(65, 50);
+	webView->setHtml(content);
 
-	webView->show();
+	QPrinter printer;
+	printer.setPrinterName("EPSON TM-U220 Receipt");
+
+	webView->print(&printer);
 }
 
 /**
