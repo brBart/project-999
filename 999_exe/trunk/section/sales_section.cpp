@@ -928,7 +928,6 @@ void SalesSection::printInvoice(QString id)
 
 	QPrinter printer;
 	printer.setPrinterName("EPSON TM-U220 Receipt");
-
 	webView->print(&printer);
 }
 
