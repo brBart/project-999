@@ -15,7 +15,7 @@ table th{
 	text-align: left;
 }
 
-.failed, .bonus {
+.failed, .bonus, .pos_open_status {
 	font-weight: bold;
 }
 

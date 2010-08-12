@@ -3,7 +3,12 @@
 	<div id="frm" class="content_tiny">
 		<fieldset id="working_day">
 			<p><label>Jornada:</label><span>{$date}</span></p>
-			<p><label>Status:</label><span>{if $status eq 1}Abierto{else}Cerrado{/if}</span></p>
+			<p>
+				<label>Status:</label>
+				<span class="{if $status eq 1}pos_open_status{else}pos_closed_status{/if}">
+					{if $status eq 1}Abierto{else}Cerrado{/if}
+				</span>
+			</p>
 		</fieldset>
 		<fieldset id="pos_menu">
 			<ul>

@@ -71,8 +71,12 @@ a:hover {
 	color: gray;
 }
 
-.cancel_status {
+.cancel_status, .pos_closed_status {
 	color: red;
+}
+
+.pos_open_status {
+	color: green;
 }
 
 .modal_form {
