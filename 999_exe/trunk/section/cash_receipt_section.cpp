@@ -257,21 +257,24 @@ void CashReceiptSection::scrollDown()
  */
 void CashReceiptSection::saveCashReceipt()
 {
+	Registry *registry = Registry::instance();
 
-	PrinterStatusHandler printerHandler("EPSON TM-U220 Receipt");
-	QString readyMsg;
-	bool printerOk = false;
+	if (registry->isTMUPrinter()) {
+		PrinterStatusHandler printerHandler(registry->printerName());
+		QString readyMsg;
+		bool printerOk = false;
 
-	do {
-		printerOk = printerHandler.isReady(&readyMsg);
-		if (!printerOk) {
-			if (QMessageBox::critical(this, "Impresora", "Impresora no esta lista: " +
-					readyMsg + " Presione Aceptar cuando este lista para poder "
-					"continuar o Cancelar para regresar.",
-					QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
-				return;
-		}
-	} while(!printerOk);
+		do {
+			printerOk = printerHandler.isReady(&readyMsg);
+			if (!printerOk) {
+				if (QMessageBox::critical(this, "Impresora", "Impresora no esta lista: " +
+						readyMsg + " Presione Aceptar cuando este lista para poder "
+						"continuar o Cancelar para regresar.",
+						QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
+					return;
+			}
+		} while(!printerOk);
+	}
 
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "save_object");

@@ -26,8 +26,10 @@ Registry* Registry::m_Instance = 0;
  */
 Registry::Registry()
 {
-	QString serverUrl = "127.0.0.1/999_project/pos/";
-	QString xslUrl = "127.0.0.1/999_project/xsl/";
+	QString serverUrl;
+	QString xslUrl;
+	QString printerName;
+	bool isTMUPrinter = IS_TMU_PRINTER;
 
 	QFile file(QApplication::applicationDirPath() + "/preferences.txt");
 
@@ -41,18 +43,22 @@ Registry::Registry()
 			data = data.trimmed();
 
 			if (data != "") {
-				QStringList params = data.split(" ");
+				QStringList params = data.split("=");
 
-				if (params[0] == "commands_address") {
-					QStringList values = params[1].split("/");
+				if (params[0].trimmed() == "commands_address") {
+					QStringList values = params[1].trimmed().split("/");
 					values[0] = ((values[0] == "localhost" || values[0] == "") ?
 								"127.0.0.1" : values[0]);
 					serverUrl = values.join("/");
-				} else if (params[0] == "xsl_address") {
-					QStringList values = params[1].split("/");
+				} else if (params[0].trimmed() == "xsl_address") {
+					QStringList values = params[1].trimmed().split("/");
 					values[0] = ((values[0] == "localhost" || values[0] == "") ?
 								"127.0.0.1" : values[0]);
 					xslUrl = values.join("/");
+				} else if (params[0].trimmed() == "printer_name") {
+					printerName = params[1].trimmed();
+				} else if (params[0].trimmed() == "is_tmu_printer") {
+					isTMUPrinter = (params[1].trimmed() == "yes");
 				}
 			}
 		}
@@ -60,8 +66,13 @@ Registry::Registry()
 		file.close();
 	}
 
+	serverUrl = (serverUrl != "") ? serverUrl : SERVER_URL;
+	xslUrl = (xslUrl != "") ? xslUrl : XSL_URL;
+
 	m_ServerUrl = new QUrl("http://" + serverUrl);
 	m_XslUrl = new QUrl("http://" + xslUrl);
+	m_PrinterName = (printerName != "") ? printerName : PRINTER_NAME;
+	m_IsTMUPrinter = isTMUPrinter;
 }
 
 /**
@@ -89,4 +100,20 @@ QUrl* Registry::serverUrl()
 QUrl* Registry::xslUrl()
 {
 	return m_XslUrl;
+}
+
+/**
+ * Returns the name of the printer to use.
+ */
+QString Registry::printerName()
+{
+	return m_PrinterName;
+}
+
+/**
+ * Returns true if the printer is a Epson TM-U printer.
+ */
+bool Registry::isTMUPrinter()
+{
+	return m_IsTMUPrinter;
 }

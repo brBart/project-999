@@ -10,17 +10,26 @@
 
 #include <QUrl>
 
+const QString SERVER_URL = "127.0.0.1/999_project/pos/";
+const QString XSL_URL = "127.0.0.1/999_project/xsl/";
+const QString PRINTER_NAME = "EPSON TM-U220 Receipt";
+const bool IS_TMU_PRINTER = true;
+
 class Registry
 {
 public:
 	virtual ~Registry() {};
 	QUrl* serverUrl();
 	QUrl* xslUrl();
+	QString printerName();
+	bool isTMUPrinter();
 	static Registry* instance();
 
 private:
 	QUrl *m_ServerUrl;
 	QUrl *m_XslUrl;
+	QString m_PrinterName;
+	bool m_IsTMUPrinter;
 	static Registry *m_Instance;
 
 	Registry();
