@@ -50,7 +50,7 @@ class GetInvoiceCommand extends Command{
 			Page::display(array('module_title' => POS_TITLE, 'back_trace' => $back_trace,
 					'content' => 'invoice_form_html.tpl', 'key' => $key,
 					'cash_register_id' => $cash_register->getId(), 'date' => $working_day->getDate(),
-					'status' => '1', 'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
+					'status' => $invoice->getStatus(), 'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
 					'cash_register_status' => (int)$cash_register->isOpen(),
 					'serial_number' => $correlative->getSerialNumber(), 'number' => $invoice->getNumber(),
 					'date_time' => $invoice->getDateTime(), 'username' => $user->getUserName(),
