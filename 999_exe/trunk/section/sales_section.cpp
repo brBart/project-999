@@ -127,6 +127,8 @@ void SalesSection::createInvoice()
 		updateActions();
 
 		setCustomer();
+
+		m_BarCodeLineEdit->setFocus();
 	} else {
 		m_Console->displayError(errorMsg);
 		fetchCashRegisterStatus();
