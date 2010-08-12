@@ -27,10 +27,10 @@ class SalesSection: public Section
 	Q_OBJECT
 
 public:
-	enum CRegisterStatus {Closed, Open, Error};
+	enum CRegisterStatus {Closed, Open, Error, Loading};
 	enum DocumentStatus {Edit, Idle, Cancelled};
 	SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
-			QUrl *serverUrl, QString cRegisterKey, QWidget *parent = 0);
+			QUrl *serverUrl, QString cashRegisterKey, QWidget *parent = 0);
 	virtual ~SalesSection();
 
 public slots:
@@ -65,11 +65,11 @@ private:
 	QString m_CashReceiptKey;
 	Label *m_RecordsetLabel;
 
-	QString m_CRegisterKey;
+	QString m_CashRegisterKey;
 	QString m_NewInvoiceKey;
 	QString m_InvoiceKey;
 
-	CRegisterStatus m_CRegisterStatus;
+	CRegisterStatus m_CashRegisterStatus;
 	DocumentStatus m_DocumentStatus;
 
 	// File actions.
@@ -113,6 +113,7 @@ private:
 	void printInvoice(QString id);
 	void removeNewInvoiceFromSession();
 	void removeInvoiceFromSession();
+	void loadUrl(QUrl url);
 };
 
 #endif /* SALES_SECTION_H_ */

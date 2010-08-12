@@ -27,8 +27,8 @@
  * Constructs the section.
  */
 SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
-		QUrl *serverUrl, QString cRegisterKey, QWidget *parent)
-		: Section(jar, factory, serverUrl, parent), m_CRegisterKey(cRegisterKey)
+		QUrl *serverUrl, QString cashRegisterKey, QWidget *parent)
+		: Section(jar, factory, serverUrl, parent), m_CashRegisterKey(cashRegisterKey)
 {
 	m_Window = dynamic_cast<MainWindow*>(parentWidget());
 	ui.webView->setFocusPolicy(Qt::NoFocus);
@@ -76,7 +76,7 @@ void SalesSection::loadFinished(bool ok)
 
 	if (ok) {
 		QWebFrame *frame = ui.webView->page()->mainFrame();
-		m_CRegisterStatus =
+		m_CashRegisterStatus =
 				CRegisterStatus(frame->evaluateJavaScript("cashRegisterStatus")
 						.toInt());
 		m_DocumentStatus =
@@ -84,15 +84,16 @@ void SalesSection::loadFinished(bool ok)
 
 		m_InvoiceKey = frame->evaluateJavaScript("objectKey").toString();
 	} else {
-		m_CRegisterStatus = Error;
+		m_CashRegisterStatus = Error;
 	}
 
 	m_Console->setFrame(ui.webView->page()->mainFrame());
-	updateActions();
 
 	// If a invoice was loaded.
 	if (m_InvoiceKey != "")
 		fetchInvoiceDetails(m_InvoiceKey);
+
+	updateActions();
 }
 
 /**
@@ -104,7 +105,7 @@ void SalesSection::createInvoice()
 
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "create_invoice");
-	url.addQueryItem("register_key", m_CRegisterKey);
+	url.addQueryItem("register_key", m_CashRegisterKey);
 	url.addQueryItem("type", "xml");
 
 	QString content = m_Request->get(url);
@@ -153,7 +154,7 @@ void SalesSection::updateCashRegisterStatus(QString content)
 			QWebElement element = ui.webView->page()->mainFrame()
 							->findFirstElement("#cash_register_status");
 			element.setInnerXml("Cerrado");
-			m_CRegisterStatus = Closed;
+			m_CashRegisterStatus = Closed;
 			updateActions();
 		}
 	}
@@ -247,8 +248,8 @@ void SalesSection::fetchInvoice(QString id)
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_invoice");
 	url.addQueryItem("id", id);
-	url.addQueryItem("register_key", m_CRegisterKey);
-	ui.webView->load(url);
+	url.addQueryItem("register_key", m_CashRegisterKey);
+	loadUrl(url);
 }
 
 /**
@@ -669,7 +670,7 @@ void SalesSection::refreshRecordset()
 {
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_invoice_list");
-	url.addQueryItem("key", m_CRegisterKey);
+	url.addQueryItem("key", m_CashRegisterKey);
 	url.addQueryItem("type", "xml");
 
 	QString content = m_Request->get(url);
@@ -699,8 +700,8 @@ void SalesSection::fetchInvoiceForm()
 
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "show_invoice_form");
-	url.addQueryItem("register_key", m_CRegisterKey);
-	ui.webView->load(url);
+	url.addQueryItem("register_key", m_CashRegisterKey);
+	loadUrl(url);
 }
 
 /**
@@ -710,7 +711,7 @@ void SalesSection::updateActions()
 {
 	QString values;
 
-	switch (m_CRegisterStatus) {
+	switch (m_CashRegisterStatus) {
 		case Open:
 			if (m_DocumentStatus == Edit) {
 				values = "011001111111000001";
@@ -730,6 +731,10 @@ void SalesSection::updateActions()
 			break;
 
 		case Error:
+			values = "000010000000000000";
+			break;
+
+		case Loading:
 			values = "000010000000000000";
 			break;
 
@@ -818,7 +823,7 @@ void SalesSection::fetchCashRegisterStatus()
 {
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_is_open_cash_register");
-	url.addQueryItem("key", m_CRegisterKey);
+	url.addQueryItem("key", m_CashRegisterKey);
 	url.addQueryItem("type", "xml");
 
 	connect(m_Request, SIGNAL(finished(QString)), this,
@@ -970,4 +975,16 @@ void SalesSection::removeInvoiceFromSession()
 	url.addQueryItem("type", "xml");
 
 	m_Request->get(url, true);
+}
+
+/**
+ * Changes the cash register to Loading state and loads a html page.
+ */
+void SalesSection::loadUrl(QUrl url)
+{
+	m_CashRegisterStatus = Loading;
+
+	updateActions();
+
+	ui.webView->load(url);
 }
