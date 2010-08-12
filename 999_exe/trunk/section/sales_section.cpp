@@ -225,6 +225,7 @@ void SalesSection::setCustomer()
 				XmlResponseHandler::Success) {
 			QList<QMap<QString, QString>*> list = transformer->content();
 			updateCustomerData(list[0]->value("nit"), list[0]->value("name"));
+			m_Console->cleanFailure("nit");
 		} else {
 			m_Console->displayError(errorMsg);
 		}
@@ -278,10 +279,10 @@ void SalesSection::addProductInvoice(int quantity)
 		if (response == XmlResponseHandler::Success) {
 			QApplication::beep();
 			fetchInvoiceDetails(m_NewInvoiceKey);
-			m_Console->cleanFailure("bar_code");
+			m_Console->reset();
 			m_BarCodeLineEdit->setText("");
 		} else if (response == XmlResponseHandler::Failure) {
-			m_Console->cleanFailure("bar_code");
+			m_Console->cleanFailure(elementId);
 			m_Console->displayFailure(errorMsg, elementId);
 		} else {
 			m_Console->displayError(errorMsg);
