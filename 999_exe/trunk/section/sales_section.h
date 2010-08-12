@@ -44,12 +44,13 @@ public slots:
 	void deleteProductInvoice();
 	void scrollUp();
 	void scrollDown();
-	void showAuthenticationDialog();
+	void showAuthenticationDialogForDiscount();
 	void createDiscount();
 	void createCashReceipt();
 	void finishInvoice(QString Id);
 	void unloadSection();
-	void tempo();
+	void showAuthenticationDialogForCancel();
+	void cancelInvoice();
 
 private:
 	Console *m_Console;

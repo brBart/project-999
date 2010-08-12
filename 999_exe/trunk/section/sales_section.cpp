@@ -362,9 +362,9 @@ void SalesSection::scrollDown()
 }
 
 /**
- * Shows the authentication dialog.
+ * Shows the authentication dialog to authorize a discount.
  */
-void SalesSection::showAuthenticationDialog()
+void SalesSection::showAuthenticationDialogForDiscount()
 {
 	m_AuthenticationDlg = new AuthenticationDialog(this, Qt::WindowTitleHint);
 	m_AuthenticationDlg->setAttribute(Qt::WA_DeleteOnClose);
@@ -501,14 +501,58 @@ void SalesSection::unloadSection()
 	m_Window->loadMainSection();
 }
 
-void SalesSection::tempo()
+/**
+ * Shows the authentication dialog to cancel an invoice.
+ */
+void SalesSection::showAuthenticationDialogForCancel()
 {
-	bool ok;
-	QString id = QInputDialog::getText(this, "Id", "Id: ", QLineEdit::Normal,
-			"", &ok);
+	m_AuthenticationDlg = new AuthenticationDialog(this, Qt::WindowTitleHint);
+	m_AuthenticationDlg->setAttribute(Qt::WA_DeleteOnClose);
+	m_AuthenticationDlg->setModal(true);
 
-	if (ok)
-		printInvoice(id);
+	connect(m_AuthenticationDlg, SIGNAL(okClicked()), this, SLOT(cancelInvoice()));
+
+	m_AuthenticationDlg->show();
+}
+
+/**
+ * Cancels an invoice on the server.
+ */
+void SalesSection::cancelInvoice()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "cancel_invoice");
+	url.addQueryItem("username", m_AuthenticationDlg->usernameLineEdit()->text());
+	url.addQueryItem("password", m_AuthenticationDlg->passwordLineEdit()->text());
+	url.addQueryItem("key", m_InvoiceKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()->create("stub");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+
+		m_AuthenticationDlg->close();
+
+		QWebFrame *frame = ui.webView->page()->mainFrame();
+		QWebElement element = frame->findFirstElement("#status_label");
+		element.setInnerXml("Anulado");
+		element.addClass("cancel_status");
+
+		m_DocumentStatus = Cancelled;
+		updateActions();
+
+	} else {
+		m_AuthenticationDlg->passwordLineEdit()->setText("");
+		m_AuthenticationDlg->usernameLineEdit()->selectAll();
+		m_AuthenticationDlg->usernameLineEdit()->setFocus();
+		m_AuthenticationDlg->console()->displayError(errorMsg);
+	}
+
+	delete transformer;
 }
 
 /**
@@ -530,7 +574,8 @@ void SalesSection::setActions()
 
 	m_CancelAction = new QAction("Anular", this);
 	m_CancelAction->setShortcut(Qt::Key_F10);
-	connect(m_CancelAction, SIGNAL(triggered()), this, SLOT(tempo()));
+	connect(m_CancelAction, SIGNAL(triggered()), this,
+			SLOT(showAuthenticationDialogForCancel()));
 
 	m_ExitAction = new QAction("Salir", this);
 	m_ExitAction->setShortcut(tr("Ctrl+Q"));
@@ -543,7 +588,7 @@ void SalesSection::setActions()
 	m_DiscountAction = new QAction("Descuento", this);
 	m_DiscountAction->setShortcut(Qt::Key_F7);
 	connect(m_DiscountAction, SIGNAL(triggered()), this, SLOT(
-			showAuthenticationDialog()));
+			showAuthenticationDialogForDiscount()));
 
 	m_AddProductAction = new QAction("Agregar producto", this);
 	m_AddProductAction->setShortcut(tr("Ctrl+I"));
