@@ -19,7 +19,7 @@
  */
 BarCodeLineEdit::BarCodeLineEdit(QWidget *parent) : QLineEdit(parent)
 {
-
+	connect(this, SIGNAL(returnPressed()), this, SLOT(returnKeyPressed()));
 }
 
 /**
@@ -33,4 +33,12 @@ void BarCodeLineEdit::init(const QStringList &argumentNames,
 	QPalette pale = palette();
 	pale.setColor(QPalette::Disabled, QPalette::Base, Qt::white);
 	setPalette(pale);
+}
+
+/**
+ * Emits the signal when the return key is hit with the text value.
+ */
+void BarCodeLineEdit::returnKeyPressed()
+{
+	emit returnPressedBarCode(text());
 }

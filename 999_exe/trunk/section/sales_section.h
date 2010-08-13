@@ -40,7 +40,7 @@ public slots:
 	void discardInvoice();
 	void setCustomer();
 	void fetchInvoice(QString id);
-	void addProductInvoice(int quantity = 1);
+	void addProductInvoice(QString barCode, int quantity = 1);
 	void deleteProductInvoice();
 	void scrollUp();
 	void scrollDown();
@@ -51,6 +51,7 @@ public slots:
 	void unloadSection();
 	void showAuthenticationDialogForCancel();
 	void cancelInvoice();
+	void addProductWithQuantity();
 
 private:
 	Console *m_Console;

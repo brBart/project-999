@@ -19,6 +19,12 @@ public:
 	BarCodeLineEdit(QWidget *parent = 0);
 	virtual ~BarCodeLineEdit() {};
 	void init(const QStringList &argumentNames, const QStringList &argumentValues);
+
+public slots:
+	void returnKeyPressed();
+
+signals:
+	void returnPressedBarCode(QString barCode);
 };
 
 #endif /* BAR_CODE_LINE_EDIT_H_ */

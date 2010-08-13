@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += printer_status_handler/printer_status_handler.h \
+HEADERS += product_quantity_dialog/product_quantity_dialog.h \
+    printer_status_handler/printer_status_handler.h \
     printer_status_handler/StatusAPI.h \
     printer_status_handler/EpsStmApi.h \
     plugins/label.h \
@@ -54,7 +55,8 @@ HEADERS += printer_status_handler/printer_status_handler.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += printer_status_handler/printer_status_handler.cpp \
+SOURCES += product_quantity_dialog/product_quantity_dialog.cpp \
+    printer_status_handler/printer_status_handler.cpp \
     printer_status_handler/StatusAPI.cpp \
     plugins/label.cpp \
     xml_transformer/object_id_xml_transformer.cpp \
@@ -100,7 +102,8 @@ SOURCES += printer_status_handler/printer_status_handler.cpp \
     http_request/http_request.cpp \
     main.cpp \
     mainwindow.cpp
-FORMS += voucher_dialog/voucher_dialog.ui \
+FORMS += product_quantity_dialog/product_quantity_dialog.ui \
+    voucher_dialog/voucher_dialog.ui \
     discount_dialog/discount_dialog.ui \
     authentication_dialog/authentication_dialog.ui \
     customer_dialog/customer_dialog.ui \

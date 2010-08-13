@@ -17,6 +17,7 @@
 #include "../registry.h"
 #include "../discount_dialog/discount_dialog.h"
 #include "cash_receipt_section.h"
+#include "../product_quantity_dialog/product_quantity_dialog.h"
 
 /**
  * @class SalesSection
@@ -258,9 +259,9 @@ void SalesSection::fetchInvoice(QString id)
 /**
  * Adds a product to the invoice in the server.
  */
-void SalesSection::addProductInvoice(int quantity)
+void SalesSection::addProductInvoice(QString barCode, int quantity)
 {
-	QString barCode = m_BarCodeLineEdit->text().trimmed();
+	barCode = barCode.trimmed();
 
 	if (barCode != "") {
 		QUrl url(*m_ServerUrl);
@@ -556,6 +557,21 @@ void SalesSection::cancelInvoice()
 }
 
 /**
+ * Shows the ProductQuantityDialog to enter a bar code and a quantity value.
+ */
+void SalesSection::addProductWithQuantity()
+{
+	ProductQuantityDialog dialog(this, Qt::WindowTitleHint);
+
+	if (dialog.exec() == QDialog::Accepted) {
+		// The bar code text set to the line edit in case of fail validation
+		// retrospective.
+		m_BarCodeLineEdit->setText(dialog.barCode());
+		addProductInvoice(dialog.barCode(), dialog.quantity());
+	}
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -592,6 +608,8 @@ void SalesSection::setActions()
 
 	m_AddProductAction = new QAction("Agregar producto", this);
 	m_AddProductAction->setShortcut(tr("Ctrl+I"));
+	connect(m_AddProductAction, SIGNAL(triggered()), this, SLOT(
+			addProductWithQuantity()));
 
 	m_DeleteProductAction = new QAction("Quitar producto", this);
 	m_DeleteProductAction->setShortcut(tr("Ctrl+D"));
@@ -822,6 +840,7 @@ void SalesSection::prepareInvoiceForm(QString dateTime, QString username)
 
 	element = frame->findFirstElement("#status_label");
 	element.setInnerXml("Creando...");
+	element.removeClass("cancel_status");
 
 	element = frame->findFirstElement("#serial_number");
 	element.setInnerXml("");
@@ -910,8 +929,8 @@ void SalesSection::setPlugins()
 	m_RecordsetLabel->setText(m_Recordset.text());
 	factory->install("application/x-recordset", m_RecordsetLabel);
 
-	connect(m_BarCodeLineEdit, SIGNAL(returnPressed()), this,
-			SLOT(addProductInvoice()));
+	connect(m_BarCodeLineEdit, SIGNAL(returnPressedBarCode(QString)), this,
+			SLOT(addProductInvoice(QString)));
 }
 
 /**
