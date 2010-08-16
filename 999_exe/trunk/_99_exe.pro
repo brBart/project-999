@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += product_quantity_dialog/product_quantity_dialog.h \
+HEADERS += search_product_dialog/search_product_dialog.h \
+    product_quantity_dialog/product_quantity_dialog.h \
     printer_status_handler/printer_status_handler.h \
     printer_status_handler/StatusAPI.h \
     printer_status_handler/EpsStmApi.h \
@@ -55,7 +56,8 @@ HEADERS += product_quantity_dialog/product_quantity_dialog.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h \
     mainwindow.h
-SOURCES += product_quantity_dialog/product_quantity_dialog.cpp \
+SOURCES += search_product_dialog/search_product_dialog.cpp \
+    product_quantity_dialog/product_quantity_dialog.cpp \
     printer_status_handler/printer_status_handler.cpp \
     printer_status_handler/StatusAPI.cpp \
     plugins/label.cpp \
@@ -102,7 +104,8 @@ SOURCES += product_quantity_dialog/product_quantity_dialog.cpp \
     http_request/http_request.cpp \
     main.cpp \
     mainwindow.cpp
-FORMS += product_quantity_dialog/product_quantity_dialog.ui \
+FORMS += search_product_dialog/search_product_dialog.ui \
+    product_quantity_dialog/product_quantity_dialog.ui \
     voucher_dialog/voucher_dialog.ui \
     discount_dialog/discount_dialog.ui \
     authentication_dialog/authentication_dialog.ui \
