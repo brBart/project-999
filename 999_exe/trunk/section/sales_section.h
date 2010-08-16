@@ -12,7 +12,7 @@
 
 #include <QAction>
 #include <QXmlQuery>
-#include "../mainwindow.h"
+#include "../main_window.h"
 #include "../console/console.h"
 #include "../http_request/http_request.h"
 #include "../xml_response_handler/xml_response_handler.h"

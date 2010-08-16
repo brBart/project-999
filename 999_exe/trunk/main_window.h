@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAIN_WINDOW_H
+#define MAIN_WINDOW_H
 
 #include <QtGui/QMainWindow>
 #include "ui_mainwindow.h"
@@ -34,4 +34,4 @@ private:
     void setSection(Section *section);
 };
 
-#endif // MAINWINDOW_H
+#endif // MAIN_WINDOW_H
