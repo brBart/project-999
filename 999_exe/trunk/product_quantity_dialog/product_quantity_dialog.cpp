@@ -12,6 +12,7 @@ ProductQuantityDialog::ProductQuantityDialog(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
 	ui.setupUi(this);
+	ui.quantitySpinBox->selectAll();
 }
 
 /**
