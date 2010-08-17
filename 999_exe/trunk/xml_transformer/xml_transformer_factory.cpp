@@ -20,6 +20,7 @@
 #include "payment_card_brand_list_xml_transformer.h"
 #include "total_xml_transformer.h"
 #include "object_id_xml_transformer.h"
+#include "search_product_results_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -70,6 +71,8 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new TotalXmlTransformer();
 	} else if (name == "object_id") {
 		return new ObjectIdXmlTransformer();
+	} else if (name == "search_product_results") {
+			return new SearchProductResultsXmlTransformer();
 	} else {
 		return NULL;
 	}

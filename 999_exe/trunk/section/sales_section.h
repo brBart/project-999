@@ -52,6 +52,7 @@ public slots:
 	void showAuthenticationDialogForCancel();
 	void cancelInvoice();
 	void addProductWithQuantity();
+	void searchProduct();
 
 private:
 	Console *m_Console;

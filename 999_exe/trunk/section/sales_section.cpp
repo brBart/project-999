@@ -18,6 +18,7 @@
 #include "../discount_dialog/discount_dialog.h"
 #include "cash_receipt_section.h"
 #include "../product_quantity_dialog/product_quantity_dialog.h"
+#include "../search_product_dialog/search_product_dialog.h"
 
 /**
  * @class SalesSection
@@ -572,6 +573,17 @@ void SalesSection::addProductWithQuantity()
 }
 
 /**
+ * Searchs for a product's bar code by name and adds it to the invoice.
+ */
+void SalesSection::searchProduct()
+{
+	SearchProductDialog dialog(m_Request->cookieJar(), m_ServerUrl, this,
+			Qt::WindowTitleHint);
+
+	dialog.exec();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -618,6 +630,8 @@ void SalesSection::setActions()
 
 	m_SearchProductAction = new QAction("Buscar producto", this);
 	m_SearchProductAction->setShortcut(Qt::Key_F5);
+	connect(m_SearchProductAction, SIGNAL(triggered()), this,
+				SLOT(searchProduct()));
 
 	m_ScrollUpAction = new QAction("Desplazar arriba", this);
 	m_ScrollUpAction->setShortcut(tr("Ctrl+Up"));
