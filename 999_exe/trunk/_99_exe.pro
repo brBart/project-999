@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/search_product_results_xml_transformer.h \
+HEADERS += search_product_line_edit/search_product_line_edit.h \
+    xml_transformer/search_product_results_xml_transformer.h \
     main_window.h \
     search_product_dialog/search_product_dialog.h \
     product_quantity_dialog/product_quantity_dialog.h \
@@ -57,7 +58,8 @@ HEADERS += xml_transformer/search_product_results_xml_transformer.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += xml_transformer/search_product_results_xml_transformer.cpp \
+SOURCES += search_product_line_edit/search_product_line_edit.cpp \
+    xml_transformer/search_product_results_xml_transformer.cpp \
     main_window.cpp \
     search_product_dialog/search_product_dialog.cpp \
     product_quantity_dialog/product_quantity_dialog.cpp \

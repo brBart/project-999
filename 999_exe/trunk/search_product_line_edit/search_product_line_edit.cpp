@@ -1,0 +1,173 @@
+/*
+ * search_product_line_edit.cpp
+ *
+ *  Created on: 17/08/2010
+ *      Author: pc
+ */
+
+#include "search_product_line_edit.h"
+
+#include <QList>
+#include <QTreeView>
+#include <QCompleter>
+#include "../xml_transformer/xml_transformer_factory.h"
+#include <QDebug>
+
+/**
+ * @class SearchProductLineEdit
+ * Widget for searching for a product's bar code by its name.
+ */
+
+/**
+ * Constructs the widget.
+ */
+SearchProductLineEdit::SearchProductLineEdit(QWidget *parent) : QLineEdit(parent)
+{
+	m_Model = new QStandardItemModel(this);
+	m_Model->setColumnCount(3);
+
+	QTreeView *tree = new QTreeView(this);
+	tree->setHeaderHidden(true);
+	tree->setIndentation(0);
+
+	QCompleter *completer = new QCompleter(m_Model, this);
+	completer->setPopup(tree);
+	completer->setCaseSensitivity(Qt::CaseInsensitive);
+
+	setCompleter(completer);
+
+	tree->hideColumn(2);
+
+	connect(&m_CheckerTimer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
+	connect(&m_SenderTimer, SIGNAL(timeout()), this, SLOT(fetchProducts()));
+
+	m_CheckerTimer.setInterval(500);
+	m_SenderTimer.setInterval(500);
+	m_SenderTimer.setSingleShot(true);
+}
+
+/**
+ * Sets the necessary objects to communicate with the server.
+ */
+void SearchProductLineEdit::setNetworkRequestObjects(QNetworkCookieJar *jar,
+		QUrl *url, Console *console)
+{
+	m_Request = new HttpRequest(jar, this);
+	m_Handler = new XmlResponseHandler(this);
+	m_ServerUrl = url;
+	m_Console = console;
+
+	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
+				SIGNAL(sessionStatusChanged(bool)));
+	connect(m_Request, SIGNAL(finished(QString)), this,
+			SLOT(updateProductModel(QString)));
+}
+
+/**
+ * Sets the QLineEdit widget to display the bar code result.
+ */
+void SearchProductLineEdit::setDisplayWidget(QLineEdit *lineEdit)
+{
+	m_Display = lineEdit;
+}
+
+/**
+ * Checks if the name has change.
+ * If the name value has change and there is no current completion on the completer
+ * object then fetch for more products from the server.
+ */
+void SearchProductLineEdit::checkForChanges()
+{
+	QString keyword = text();
+
+	if (keyword != "" && (m_Keywords.indexOf(keyword) == -1)) {
+		m_NamesQueue.enqueue(keyword);
+		fetchProducts();
+	}
+}
+
+/**
+ * Fetch for more products' names for matching the product name is being search for.
+ */
+void SearchProductLineEdit::fetchProducts()
+{
+	if (!m_Request->isBusy()) {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd", "search_product");
+		url.addQueryItem("keyword", m_NamesQueue.dequeue());
+		url.addQueryItem("type", "xml");
+
+		m_Request->get(url, true);
+	} else {
+		// If there was already a waiting call, clean it.
+		if (m_SenderTimer.timerId() > -1) {
+			m_NamesQueue.dequeue();
+			m_SenderTimer.stop();
+		}
+
+		m_SenderTimer.start();
+	}
+}
+
+/**
+ * Updates the products name model to match the product's name is being search for.
+ */
+void SearchProductLineEdit::updateProductModel(QString content)
+{
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->create("search_product_results");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *map;
+
+		QString keyword = list[0]->value("keyword");
+
+		QList<QStandardItem*> *itemList;
+		for (int i = 1; i < list.size(); i++) {
+			map = list[i];
+
+			if ((m_Model->findItems(map->value("name"))).size() == 0) {
+				itemList = new QList<QStandardItem*>;
+				itemList->append(new QStandardItem(map->value("name")));
+				itemList->append(new QStandardItem(map->value("packaging")));
+				itemList->append(new QStandardItem(map->value("bar_code")));
+
+				m_Model->appendRow(*itemList);
+			}
+		}
+
+		m_Model->sort(0, Qt::AscendingOrder);
+		m_Keywords << keyword;
+
+		// Display the drop down list if the name value has not change.
+		if (keyword == text())
+			completer()->popup()->show();
+
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
+ * Start listening to the name values changes.
+ */
+void SearchProductLineEdit::focusInEvent(QFocusEvent *e)
+{
+	m_CheckerTimer.start();
+	QLineEdit::focusInEvent(e);
+}
+
+/**
+ * Stop listening to name values changes.
+ */
+void SearchProductLineEdit::focusOutEvent(QFocusEvent *e)
+{
+	m_CheckerTimer.stop();
+	QLineEdit::focusOutEvent(e);
+}

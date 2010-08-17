@@ -57,7 +57,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="nameLineEdit">
+      <widget class="SearchProductLineEdit" name="nameLineEdit">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -90,7 +90,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="barCodeLineEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -108,7 +108,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QWebView" name="webView">
+    <widget class="QWebView" name="webView" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -167,7 +167,7 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="url">
+     <property name="url" stdset="0">
       <url>
        <string>about:blank</string>
       </url>
@@ -214,7 +214,29 @@
    <extends>QWidget</extends>
    <header>QtWebKit/QWebView</header>
   </customwidget>
+  <customwidget>
+   <class>SearchProductLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>search_product_line_edit/search_product_line_edit.h</header>
+  </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cancelPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SearchProductDialogClass</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>676</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>698</x>
+     <y>92</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
