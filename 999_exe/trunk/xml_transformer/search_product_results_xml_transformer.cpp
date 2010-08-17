@@ -26,7 +26,8 @@ void SearchProductResultsXmlTransformer::transform(QDomDocument *document)
 	map->insert("keyword", keywords.at(0).toElement().text());
 	m_Content << map;
 
-	for (int i = 1; i < barCodes.size(); i++) {
+	for (int i = 0; i < barCodes.size(); i++) {
+		map = new QMap<QString, QString>();
 		map->insert("bar_code", barCodes.at(i).toElement().text());
 		map->insert("name", names.at(i).toElement().text());
 		map->insert("packaging", packagings.at(i).toElement().text());
