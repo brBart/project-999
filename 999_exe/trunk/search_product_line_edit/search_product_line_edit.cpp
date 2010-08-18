@@ -40,6 +40,8 @@ SearchProductLineEdit::SearchProductLineEdit(QWidget *parent) : QLineEdit(parent
 
 	connect(&m_CheckerTimer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
 	connect(&m_SenderTimer, SIGNAL(timeout()), this, SLOT(fetchProducts()));
+	connect(completer, SIGNAL(activated(const QModelIndex&)), this,
+			SLOT(itemChose(const QModelIndex&)));
 
 	m_CheckerTimer.setInterval(500);
 	m_SenderTimer.setInterval(500);
@@ -64,11 +66,11 @@ void SearchProductLineEdit::setNetworkRequestObjects(QNetworkCookieJar *jar,
 }
 
 /**
- * Sets the QLineEdit widget to display the bar code result.
+ * Returns the bar code of the searched product.
  */
-void SearchProductLineEdit::setDisplayWidget(QLineEdit *lineEdit)
+QString SearchProductLineEdit::barCode()
 {
-	m_Display = lineEdit;
+	return m_BarCode;
 }
 
 /**
@@ -137,21 +139,35 @@ void SearchProductLineEdit::updateProductModel(QString content)
 				itemList->append(new QStandardItem(map->value("bar_code")));
 
 				m_Model->appendRow(*itemList);
+				// Add name to the keywords so we don't have to search it againg.
+				m_Keywords << map->value("name");
 			}
 		}
 
 		m_Model->sort(0, Qt::AscendingOrder);
+
 		m_Keywords << keyword;
 
 		// Display the drop down list if the name value has not change.
 		if (keyword == text())
-			completer()->popup()->show();
+			completer()->complete();
 
 	} else {
 		m_Console->displayError(errorMsg);
 	}
 
 	delete transformer;
+}
+
+/**
+ * Emits the activated signal with the bar code string value chosen.
+ */
+void SearchProductLineEdit::itemChose(const QModelIndex &index)
+{
+	m_BarCode = completer()->completionModel()->index(index.row(), 2)
+			.data().toString();
+
+	emit activated();
 }
 
 /**

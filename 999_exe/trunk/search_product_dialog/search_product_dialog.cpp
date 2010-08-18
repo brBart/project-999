@@ -19,8 +19,9 @@ SearchProductDialog::SearchProductDialog(QNetworkCookieJar *jar, QUrl *url,
 			->createWidgetConsole(QMap<QString, QLabel*>());
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
-	ui.nameLineEdit->setNetworkRequestObjects(jar, url, m_Console);
-	ui.nameLineEdit->setDisplayWidget(ui.barCodeLineEdit);
+	ui.nameSearchProductLineEdit->setNetworkRequestObjects(jar, url, m_Console);
+
+	connect(ui.nameSearchProductLineEdit, SIGNAL(activated()), this, SLOT(accept()));
 }
 
 /**

@@ -27,15 +27,17 @@ public:
 	virtual ~SearchProductLineEdit() {};
 	void setNetworkRequestObjects(QNetworkCookieJar *jar, QUrl *url,
 			Console *console);
-	void setDisplayWidget(QLineEdit *lineEdit);
+	QString barCode();
 
 public slots:
 	void checkForChanges();
 	void fetchProducts();
 	void updateProductModel(QString content);
+	void itemChose(const QModelIndex &index);
 
 signals:
 	void sessionStatusChanged(bool isActive);
+	void activated();
 
 protected:
 	void focusInEvent(QFocusEvent *e);
@@ -51,10 +53,9 @@ private:
 	QTimer m_SenderTimer;
 	QQueue<QString> m_NamesQueue;
 	QStringList m_Keywords;
+	QString m_BarCode;
 
 	QStandardItemModel *m_Model;
-
-	QLineEdit *m_Display;
 };
 
 #endif /* SEARCH_PRODUCT_LINE_EDIT_H_ */

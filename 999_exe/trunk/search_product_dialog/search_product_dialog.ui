@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>704</width>
+    <width>560</width>
     <height>119</height>
    </rect>
   </property>
@@ -43,7 +43,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>10</width>
+         <width>13</width>
          <height>20</height>
         </size>
        </property>
@@ -57,49 +57,10 @@
       </widget>
      </item>
      <item>
-      <widget class="SearchProductLineEdit" name="nameLineEdit">
+      <widget class="SearchProductLineEdit" name="nameSearchProductLineEdit">
        <property name="minimumSize">
         <size>
          <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>10</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Barra:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="barCodeLineEdit">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>180</width>
          <height>0</height>
         </size>
        </property>
@@ -188,13 +149,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="okPushButton">
-       <property name="text">
-        <string>&amp;Aceptar</string>
-       </property>
-      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="cancelPushButton">
