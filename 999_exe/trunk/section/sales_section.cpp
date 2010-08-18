@@ -580,7 +580,8 @@ void SalesSection::searchProduct()
 	SearchProductDialog dialog(m_Request->cookieJar(), m_ServerUrl, this,
 			Qt::WindowTitleHint);
 
-	dialog.exec();
+	if (dialog.exec() == QDialog::Accepted)
+		m_BarCodeLineEdit->setText(dialog.barCode());
 }
 
 /**

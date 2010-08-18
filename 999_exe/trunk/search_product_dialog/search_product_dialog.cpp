@@ -31,3 +31,11 @@ SearchProductDialog::~SearchProductDialog()
 {
 	delete m_Console;
 }
+
+/**
+ * Returns the bar code of the searched product.
+ */
+QString SearchProductDialog::barCode()
+{
+	return ui.nameSearchProductLineEdit->barCode();
+}

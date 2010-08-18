@@ -16,6 +16,7 @@ public:
     SearchProductDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent = 0,
     		Qt::WindowFlags f = 0);
     ~SearchProductDialog();
+    QString barCode();
 
 signals:
 	void sessionStatusChanged(bool isActive);
