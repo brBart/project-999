@@ -35,6 +35,15 @@ SearchProductModel* SearchProductModel::instance()
 }
 
 /**
+ * Destroys the static instance in case there was one.
+ */
+void SearchProductModel::destroy()
+{
+	delete m_Instance;
+	m_Instance = 0;
+}
+
+/**
  * Returns the list of keywords that have been searched.
  */
 QStringList* SearchProductModel::keywords()

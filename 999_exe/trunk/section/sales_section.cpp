@@ -68,6 +68,8 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 SalesSection::~SalesSection()
 {
 	delete m_Console;
+	// Destroy the SearchProductModel in case there was one.
+	SearchProductModel::destroy();
 }
 
 /**

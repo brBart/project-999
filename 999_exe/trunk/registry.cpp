@@ -24,7 +24,7 @@ Registry* Registry::m_Instance = 0;
  * Constructs the Registry.
  * Opens and reads the file and loads the necessary objects.
  */
-Registry::Registry()
+Registry::Registry(QObject *parent) : QObject(parent)
 {
 	QString serverUrl;
 	QString xslUrl;
@@ -81,7 +81,7 @@ Registry::Registry()
 Registry* Registry::instance()
 {
 	if (m_Instance == 0)
-		m_Instance = new Registry();
+		m_Instance = new Registry(qApp);
 
 	return m_Instance;
 }
