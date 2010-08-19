@@ -1,6 +1,7 @@
 #include "search_product_dialog.h"
 
 #include "../console/console_factory.h"
+#include "../enter_key_event_filter/enter_key_event_filter.h"
 
 /**
  * @class SearchProductDialog
@@ -20,7 +21,11 @@ SearchProductDialog::SearchProductDialog(QNetworkCookieJar *jar, QUrl *url,
 			->createWidgetConsole(QMap<QString, QLabel*>());
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
+	ui.quantitySpinBox->selectAll();
+
 	ui.nameSearchProductLineEdit->init(jar, url, m_Console, model);
+
+	ui.cancelPushButton->installEventFilter(new EnterKeyEventFilter(this));
 
 	connect(ui.nameSearchProductLineEdit, SIGNAL(activated()), this, SLOT(accept()));
 }
@@ -39,4 +44,12 @@ SearchProductDialog::~SearchProductDialog()
 QString SearchProductDialog::barCode()
 {
 	return ui.nameSearchProductLineEdit->barCode();
+}
+
+/**
+ * Returns the quantity of the searched product.
+ */
+int SearchProductDialog::quantity()
+{
+	return ui.quantitySpinBox->value();
 }

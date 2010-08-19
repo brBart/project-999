@@ -581,8 +581,12 @@ void SalesSection::searchProduct()
 	SearchProductDialog dialog(m_Request->cookieJar(), m_ServerUrl,
 			SearchProductModel::instance(), this, Qt::WindowTitleHint);
 
-	if (dialog.exec() == QDialog::Accepted)
+	if (dialog.exec() == QDialog::Accepted) {
+		// The bar code text set to the line edit in case of fail validation
+		// retrospective.
 		m_BarCodeLineEdit->setText(dialog.barCode());
+		addProductInvoice(dialog.barCode(), dialog.quantity());
+	}
 }
 
 /**
