@@ -11,7 +11,8 @@
  * Constructs the dialog.
  */
 SearchProductDialog::SearchProductDialog(QNetworkCookieJar *jar, QUrl *url,
-		QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
+		SearchProductModel *model, QWidget *parent, Qt::WindowFlags f)
+		: QDialog(parent, f)
 {
 	ui.setupUi(this);
 
@@ -19,7 +20,7 @@ SearchProductDialog::SearchProductDialog(QNetworkCookieJar *jar, QUrl *url,
 			->createWidgetConsole(QMap<QString, QLabel*>());
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
-	ui.nameSearchProductLineEdit->setNetworkRequestObjects(jar, url, m_Console);
+	ui.nameSearchProductLineEdit->init(jar, url, m_Console, model);
 
 	connect(ui.nameSearchProductLineEdit, SIGNAL(activated()), this, SLOT(accept()));
 }

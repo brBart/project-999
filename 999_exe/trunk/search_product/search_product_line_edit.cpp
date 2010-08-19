@@ -23,8 +23,27 @@
  */
 SearchProductLineEdit::SearchProductLineEdit(QWidget *parent) : QLineEdit(parent)
 {
-	m_Model = new QStandardItemModel(this);
-	m_Model->setColumnCount(3);
+
+}
+
+/**
+ * Sets the necessary objects to communicate with the server.
+ */
+void SearchProductLineEdit::init(QNetworkCookieJar *jar, QUrl *url,
+		Console *console, SearchProductModel *model)
+{
+	m_Request = new HttpRequest(jar, this);
+	m_Handler = new XmlResponseHandler(this);
+	m_ServerUrl = url;
+	m_Console = console;
+
+	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
+				SIGNAL(sessionStatusChanged(bool)));
+	connect(m_Request, SIGNAL(finished(QString)), this,
+			SLOT(updateProductModel(QString)));
+
+	m_Keywords = model->keywords();
+	m_Model = model;
 
 	QTreeView *tree = new QTreeView(this);
 	tree->setHeaderHidden(true);
@@ -49,23 +68,6 @@ SearchProductLineEdit::SearchProductLineEdit(QWidget *parent) : QLineEdit(parent
 }
 
 /**
- * Sets the necessary objects to communicate with the server.
- */
-void SearchProductLineEdit::setNetworkRequestObjects(QNetworkCookieJar *jar,
-		QUrl *url, Console *console)
-{
-	m_Request = new HttpRequest(jar, this);
-	m_Handler = new XmlResponseHandler(this);
-	m_ServerUrl = url;
-	m_Console = console;
-
-	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
-				SIGNAL(sessionStatusChanged(bool)));
-	connect(m_Request, SIGNAL(finished(QString)), this,
-			SLOT(updateProductModel(QString)));
-}
-
-/**
  * Returns the bar code of the searched product.
  */
 QString SearchProductLineEdit::barCode()
@@ -82,7 +84,7 @@ void SearchProductLineEdit::checkForChanges()
 {
 	QString keyword = text();
 
-	if (keyword != "" && (m_Keywords.indexOf(keyword) == -1)) {
+	if (keyword != "" && (m_Keywords->indexOf(keyword) == -1)) {
 		m_NamesQueue.enqueue(keyword);
 		fetchProducts();
 	}
@@ -140,13 +142,13 @@ void SearchProductLineEdit::updateProductModel(QString content)
 
 				m_Model->appendRow(*itemList);
 				// Add name to the keywords so we don't have to search it againg.
-				m_Keywords << map->value("name");
+				*m_Keywords << map->value("name");
 			}
 		}
 
 		m_Model->sort(0, Qt::AscendingOrder);
 
-		m_Keywords << keyword;
+		*m_Keywords << keyword;
 
 		// Display the drop down list if the name value has not change.
 		if (keyword == text())

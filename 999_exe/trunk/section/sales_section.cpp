@@ -19,6 +19,7 @@
 #include "cash_receipt_section.h"
 #include "../product_quantity_dialog/product_quantity_dialog.h"
 #include "../search_product_dialog/search_product_dialog.h"
+#include "../search_product/search_product_model.h"
 
 /**
  * @class SalesSection
@@ -577,8 +578,8 @@ void SalesSection::addProductWithQuantity()
  */
 void SalesSection::searchProduct()
 {
-	SearchProductDialog dialog(m_Request->cookieJar(), m_ServerUrl, this,
-			Qt::WindowTitleHint);
+	SearchProductDialog dialog(m_Request->cookieJar(), m_ServerUrl,
+			SearchProductModel::instance(), this, Qt::WindowTitleHint);
 
 	if (dialog.exec() == QDialog::Accepted)
 		m_BarCodeLineEdit->setText(dialog.barCode());

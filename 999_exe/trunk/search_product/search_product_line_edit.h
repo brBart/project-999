@@ -13,10 +13,10 @@
 #include <QTimer>
 #include <QFocusEvent>
 #include <QStringList>
-#include <QStandardItem>
 #include "../http_request/http_request.h"
 #include "../xml_response_handler/xml_response_handler.h"
 #include "../console/console.h"
+#include "../search_product/search_product_model.h"
 
 class SearchProductLineEdit : public QLineEdit
 {
@@ -25,8 +25,8 @@ class SearchProductLineEdit : public QLineEdit
 public:
 	SearchProductLineEdit(QWidget *parent = 0);
 	virtual ~SearchProductLineEdit() {};
-	void setNetworkRequestObjects(QNetworkCookieJar *jar, QUrl *url,
-			Console *console);
+	void init(QNetworkCookieJar *jar, QUrl *url, Console *console,
+			SearchProductModel *model);
 	QString barCode();
 
 public slots:
@@ -52,10 +52,10 @@ private:
 	QTimer m_CheckerTimer;
 	QTimer m_SenderTimer;
 	QQueue<QString> m_NamesQueue;
-	QStringList m_Keywords;
 	QString m_BarCode;
+	QStringList *m_Keywords;
 
-	QStandardItemModel *m_Model;
+	SearchProductModel *m_Model;
 };
 
 #endif /* SEARCH_PRODUCT_LINE_EDIT_H_ */

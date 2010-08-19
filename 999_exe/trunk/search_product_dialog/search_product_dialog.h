@@ -7,14 +7,15 @@
 #include <QNetworkCookieJar>
 #include <QUrl>
 #include "../console/console.h"
+#include "../search_product/search_product_model.h"
 
 class SearchProductDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    SearchProductDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent = 0,
-    		Qt::WindowFlags f = 0);
+    SearchProductDialog(QNetworkCookieJar *jar, QUrl *url, SearchProductModel *model,
+    		QWidget *parent = 0, Qt::WindowFlags f = 0);
     ~SearchProductDialog();
     QString barCode();
 
