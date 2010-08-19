@@ -11,7 +11,6 @@
 #include <QTreeView>
 #include <QCompleter>
 #include "../xml_transformer/xml_transformer_factory.h"
-#include <QDebug>
 
 /**
  * @class SearchProductLineEdit
