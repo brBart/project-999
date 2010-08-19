@@ -58,8 +58,6 @@ void SearchProductLineEdit::init(QNetworkCookieJar *jar, QUrl *url,
 
 	connect(&m_CheckerTimer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
 	connect(&m_SenderTimer, SIGNAL(timeout()), this, SLOT(fetchProducts()));
-	connect(completer, SIGNAL(activated(const QModelIndex&)), this,
-			SLOT(itemChose(const QModelIndex&)));
 
 	m_CheckerTimer.setInterval(500);
 	m_SenderTimer.setInterval(500);
@@ -176,6 +174,10 @@ void SearchProductLineEdit::itemChose(const QModelIndex &index)
  */
 void SearchProductLineEdit::focusInEvent(QFocusEvent *e)
 {
+	// Has to be here, don't know why.
+	connect(completer(), SIGNAL(activated(const QModelIndex&)), this,
+			SLOT(itemChose(const QModelIndex&)));
+
 	m_CheckerTimer.start();
 	QLineEdit::focusInEvent(e);
 }
