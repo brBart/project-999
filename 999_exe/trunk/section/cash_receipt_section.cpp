@@ -316,7 +316,7 @@ void CashReceiptSection::setActions()
 	connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(saveCashReceipt()));
 
 	m_ExitAction = new QAction("Salir", this);
-	m_ExitAction->setShortcut(tr("Ctrl+Q"));
+	m_ExitAction->setShortcut(Qt::Key_Escape);
 	connect(m_ExitAction, SIGNAL(triggered()), m_Window, SLOT(close()));
 
 	m_AddVoucherAction = new QAction("Agregar voucher", this);

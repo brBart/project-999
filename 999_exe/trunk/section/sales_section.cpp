@@ -613,7 +613,7 @@ void SalesSection::setActions()
 	connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(createCashReceipt()));
 
 	m_DiscardAction = new QAction("Cancelar", this);
-	m_DiscardAction->setShortcut(tr("Ctrl+W"));
+	m_DiscardAction->setShortcut(Qt::Key_Escape);
 	connect(m_DiscardAction, SIGNAL(triggered()), this, SLOT(discardInvoice()));
 
 	m_CancelAction = new QAction("Anular", this);
@@ -622,7 +622,7 @@ void SalesSection::setActions()
 			SLOT(showAuthenticationDialogForCancel()));
 
 	m_ExitAction = new QAction("Salir", this);
-	m_ExitAction->setShortcut(tr("Ctrl+Q"));
+	m_ExitAction->setShortcut(Qt::Key_Escape);
 	connect(m_ExitAction, SIGNAL(triggered()), this, SLOT(unloadSection()));
 
 	m_ClientAction = new QAction("Cliente", this);
