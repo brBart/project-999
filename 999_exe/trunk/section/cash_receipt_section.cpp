@@ -38,8 +38,10 @@ CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
 
+	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)));
 	connect(ui.webView, SIGNAL(loadFinished(bool)), this,
-				SLOT(loadFinished(bool)));
+			SLOT(loadFinished(bool)));
 	connect(ui.webView->page()->mainFrame(),
 			SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(addTimerObject()));
 	connect(m_CashRequest, SIGNAL(finished(QString)), this,

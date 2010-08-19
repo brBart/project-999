@@ -213,6 +213,9 @@ void SalesSection::setCustomer()
 	CustomerDialog dialog(m_Request->cookieJar(), m_ServerUrl, this,
 			Qt::WindowTitleHint);
 
+	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
+
 	if (dialog.exec() == QDialog::Accepted) {
 		QUrl url(*m_ServerUrl);
 		url.addQueryItem("cmd", "set_customer_invoice");
@@ -469,6 +472,8 @@ void SalesSection::createCashReceipt()
 				ui.webView->page()->pluginFactory(), m_ServerUrl, m_CashReceiptKey,
 				m_NewInvoiceKey, window);
 
+		connect(section, SIGNAL(sessionStatusChanged(bool)), this,
+				SIGNAL(sessionStatusChanged(bool)));
 		connect(section, SIGNAL(cashReceiptSaved(QString)), this,
 				SLOT(finishInvoice(QString)));
 
@@ -580,6 +585,9 @@ void SalesSection::searchProduct()
 {
 	SearchProductDialog dialog(m_Request->cookieJar(), m_ServerUrl,
 			SearchProductModel::instance(), this, Qt::WindowTitleHint);
+
+	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
 
 	if (dialog.exec() == QDialog::Accepted) {
 		// The bar code text set to the line edit in case of fail validation

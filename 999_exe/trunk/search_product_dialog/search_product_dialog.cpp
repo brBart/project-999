@@ -27,6 +27,8 @@ SearchProductDialog::SearchProductDialog(QNetworkCookieJar *jar, QUrl *url,
 
 	ui.cancelPushButton->installEventFilter(new EnterKeyEventFilter(this));
 
+	connect(ui.nameSearchProductLineEdit, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)));
 	connect(ui.nameSearchProductLineEdit, SIGNAL(activated()), this, SLOT(accept()));
 }
 
