@@ -53,6 +53,7 @@ public slots:
 	void cancelInvoice();
 	void addProductWithQuantity();
 	void searchProduct();
+	void searchInvoice();
 
 private:
 	Console *m_Console;

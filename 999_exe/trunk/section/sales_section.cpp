@@ -20,6 +20,8 @@
 #include "../product_quantity_dialog/product_quantity_dialog.h"
 #include "../search_product_dialog/search_product_dialog.h"
 #include "../search_product/search_product_model.h"
+#include "../recordset/invoice_recordset_searcher.h"
+#include "../search_invoice_dialog/search_invoice_dialog.h"
 
 /**
  * @class SalesSection
@@ -42,6 +44,7 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
+	m_Recordset.installSearcher(new InvoiceRecordsetSearcher());
 
 	connect(ui.webView, SIGNAL(loadFinished(bool)), this,
 			SLOT(loadFinished(bool)));
@@ -600,6 +603,23 @@ void SalesSection::searchProduct()
 }
 
 /**
+ * Shows the search dialog and pass the search criteria to the recordset.
+ */
+void SalesSection::searchInvoice()
+{
+	SearchInvoiceDialog dialog(this, Qt::WindowTitleHint);
+
+	if (dialog.exec() == QDialog::Accepted) {
+		QString value = dialog.serialNumber() + " " + dialog.number();
+
+		if (value.trimmed() != "") {
+			if (!m_Recordset.search(value))
+				m_Console->displayError("Factura no se encuentra en esta caja.");
+		}
+	}
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -677,6 +697,7 @@ void SalesSection::setActions()
 
 	m_SearchAction = new QAction("Buscar", this);
 	m_SearchAction->setShortcut(Qt::Key_F1);
+	connect(m_SearchAction, SIGNAL(triggered()), this, SLOT(searchInvoice()));
 
 	m_ConsultProductAction = new QAction("Consultar producto", this);
 	m_ConsultProductAction->setShortcut(Qt::Key_F6);

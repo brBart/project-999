@@ -7,6 +7,14 @@
  */
 
 /**
+ * Destroys the searcher.
+ */
+Recordset::~Recordset()
+{
+	delete m_Searcher;
+}
+
+/**
  * Set the list the Recordset will use.
  */
 void Recordset::setList(QList<QMap<QString, QString>*> list)
@@ -102,6 +110,32 @@ void Recordset::refresh()
 QString Recordset::text()
 {
 	return m_Text;
+}
+
+/**
+ * Sets the searcher this recordset will use.
+ */
+void Recordset::installSearcher(RecordsetSearcher *searcher)
+{
+	m_Searcher = searcher;
+}
+
+/**
+ * Searches for the specified value in the recordset. Returns true if found.
+ */
+bool Recordset::search(QString value)
+{
+	if (m_Searcher->search(value, &m_List)) {
+		// Sets the new values to reflect the new position.
+		m_Iterator = m_Searcher->newIterator();
+		m_Index = m_Searcher->newIndex();
+		updateLabel();
+		refresh();
+
+		return true;
+	}
+
+	return false;
 }
 
 /**
