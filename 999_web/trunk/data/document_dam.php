@@ -155,11 +155,14 @@ class CorrelativeDAM{
 	 * Returns true if a a correlative with the provided serial number exists in the database.
 	 *
 	 * @param string $serialNumber
+	 * @param integer $initialNumber
+	 * @param integer $finalNumber
 	 * @return boolean
 	 */
-	static public function exists($serialNumber){
-		$sql = 'CALL correlative_exists(:serial_number)';
-		$params = array(':serial_number' => $serialNumber);
+	static public function exists($serialNumber, $initialNumber, $finalNumber){
+		$sql = 'CALL correlative_exists(:serial_number, :initial_number, :final_number)';
+		$params = array(':serial_number' => $serialNumber,
+				':initial_number' => $initialNumber, ':final_number' => $finalNumber);
 		return (boolean)DatabaseHandler::getOne($sql, $params);
 		
 		if($result > 0)
@@ -185,8 +188,8 @@ class CorrelativeDAM{
 	 * @return integer
 	 */
 	static public function getNextNumber(Correlative $obj){
-		$sql = 'CALL correlative_next_number(:serial_number)';
-		$params = array(':serial_number' => $obj->getSerialNumber());
+		$sql = 'CALL correlative_next_number(:correlative_id)';
+		$params = array(':correlative_id' => $obj->getId());
 		return (int)DatabaseHandler::getOne($sql, $params);
 	}
 	
@@ -196,26 +199,26 @@ class CorrelativeDAM{
 	 * @param Correlative $obj
 	 */
 	static public function makeDefault(Correlative $obj){
-		$sql = 'CALL correlative_make_default(:serial_number)';
-		$params = array(':serial_number' => $obj->getSerialNumber());
+		$sql = 'CALL correlative_make_default(:correlative_id)';
+		$params = array(':correlative_id' => $obj->getId());
 		DatabaseHandler::execute($sql, $params);
 	}
 	
 	/**
 	 * Returns an instance of a correlative with database data.
 	 *
-	 * Returns NULL if there was no match for the provided serial number in the database.
-	 * @param string $serialNumber
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
 	 * @return Correlative
 	 */
-	static public function getInstance($serialNumber){
-		$sql = 'CALL correlative_get(:serial_number)';
-		$params = array(':serial_number' => $serialNumber);
+	static public function getInstance($id){
+		$sql = 'CALL correlative_get(:correlative_id)';
+		$params = array(':correlative_id' => $id);
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$correlative = new Correlative($serialNumber, (boolean)$result['is_default'], (int)$result['current'],
-					Persist::CREATED);
+			$correlative = new Correlative($id, $result['serial_number'], (boolean)$result['is_default'],
+					(int)$result['current'], Persist::CREATED);
 			$correlative->setData($result['resolution_number'], $result['resolution_date'],
 					(int)$result['initial_number'], (int)$result['final_number']);
 			return $correlative;
@@ -225,19 +228,21 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Returns the serial number of the default correlative.
+	 * Returns the integer of the default correlative.
 	 *
-	 * @return string
+	 * @return integer
 	 */
-	static public function getDefaultSerialNumber(){
-		$sql = 'CALL correlative_default_serial_number()';
+	static public function getDefaultCorrelativeId(){
+		$sql = 'CALL correlative_default_id()';
 		return DatabaseHandler::getOne($sql);
 	}
 	
 	/**
 	 * Inserts the correlative's data in the database.
 	 *
+	 * Returns the new created id from the database.
 	 * @param Correlative $obj
+	 * @return integer
 	 */
 	static public function insert(Correlative $obj){
 		$sql = 'CALL correlative_insert(:serial_number, :resolution_number, :resolution_date, :initial_number, ' .
@@ -247,6 +252,9 @@ class CorrelativeDAM{
 				':resolution_date' => Date::dbFormat($obj->getResolutionDate()),
 				':initial_number' => $obj->getInitialNumber(), ':final_number' => $obj->getFinalNumber());
 		DatabaseHandler::execute($sql, $params);
+		
+		$sql = 'CALL get_last_insert_id()';
+		return (int)DatabaseHandler::getOne($sql);
 	}
 	
 	/**
@@ -257,14 +265,14 @@ class CorrelativeDAM{
 	 * @return boolean
 	 */
 	static public function delete(Correlative $obj){
-		$sql = 'CALL correlative_dependencies(:serial_number)';
-		$params = array(':serial_number' => $obj->getSerialNumber());
+		$sql = 'CALL correlative_dependencies(:correlative_id)';
+		$params = array(':correlative_id' => $obj->getId());
 		$result = DatabaseHandler::getOne($sql, $params);
 		
 		// If there are dependencies in the invoice table.
 		if($result) return false;
 		
-		$sql = 'CALL correlative_delete(:serial_number)';
+		$sql = 'CALL correlative_delete(:correlative_id)';
 		DatabaseHandler::execute($sql, $params);
 		return true;
 	}
@@ -397,7 +405,7 @@ class InvoiceDAM{
 			$cash_register = CashRegister::getInstance((int)$result['cash_register_id']);
 			$invoice = new Invoice($cash_register, $result['created_date'], $user, $id, (int)$result['status']);
 			
-			$correlative = Correlative::getInstance($result['serial_number']);
+			$correlative = Correlative::getInstance($result['correlative_id']);
 			$discount = Discount::getInstance($invoice);
 			
 			$sql = 'CALL invoice_items_get(:invoice_id)';
@@ -431,12 +439,12 @@ class InvoiceDAM{
 	 * @return integer
 	 */
 	static public function insert(Invoice $obj){
-		$sql = 'CALL invoice_insert(:serial_number, :number, :username, :date, :nit, :name, :total, :vat, ' .
+		$sql = 'CALL invoice_insert(:correlative_id, :number, :username, :date, :nit, :name, :total, :vat, ' .
 				':cash_register_id, :status)';
 		$correlative = $obj->getCorrelative();
 		$user = $obj->getUser();
 		$cash_register = $obj->getCashRegister();
-		$params = array(':serial_number' => $correlative->getSerialNumber(), ':number' => $obj->getNumber(),
+		$params = array(':correlative_id' => $correlative->getId(), ':number' => $obj->getNumber(),
 				':username' => $user->getUserName(), ':date' => Date::dbDateTimeFormat($obj->getDateTime()),
 				':nit' => $obj->getCustomerNit(), ':name' => $obj->getCustomerName(), ':total' => $obj->getSubTotal(),
 				':vat' => $obj->getVatPercentage(), ':cash_register_id' => $cash_register->getId(),
