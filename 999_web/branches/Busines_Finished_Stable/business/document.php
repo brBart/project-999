@@ -859,6 +859,12 @@ class Reserve extends Persist{
  */
 class Correlative extends Persist{
 	/**
+	 * Holds the correlative's id.
+	 * @var integer
+	 */
+	private $_mId;
+	
+	/**
 	 * Holds the serial number of the correlative.
 	 *
 	 * @var string
@@ -912,16 +918,26 @@ class Correlative extends Persist{
 	 * Construct the correlative with the provided data.
 	 * 
 	 * Parameters must be set only if called from the database layer.
+	 * @param integer $id
 	 * @param string $serialNumber
 	 * @param boolean $default
 	 * @param integer $currentNumber
 	 * @param integer $status
 	 * @throws Exception
 	 */
-	public function __construct($serialNumber = NULL, $default = false, $currentNumber = 0,
+	public function __construct($id = NULL, $serialNumber = NULL, $default = false, $currentNumber = 0,
 			$status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
+		if(!is_null($id))
+			try{
+				Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
+			} catch(Exception $e){
+				$et = new Exception('Interno: Llamando al metodo construct en Correlative con datos ' .
+						'erroneos! ' . $e->getMessage());
+				throw $et;
+			}
+			
 		if(!is_null($serialNumber))
 			try{
 				String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
@@ -940,9 +956,19 @@ class Correlative extends Persist{
 				throw $et;
 			}
 			
+		$this->_mId = $id;
 		$this->_mSerialNumber = $serialNumber;
 		$this->_mDefault = (boolean)$default;
 		$this->_mCurrentNumber = $currentNumber;
+	}
+	
+	/**
+	 * Returns the correlative's id.
+	 * 
+	 * @return integer
+	 */
+	public function getId(){
+		return $this->_mId;
 	}
 	
 	/**
@@ -1030,9 +1056,8 @@ class Correlative extends Persist{
 	 */
 	public function setSerialNumber($serialNumber){
 		if($this->_mStatus == Persist::IN_PROGRESS){
-			$this->_mSerialNumber = $serialNumber;
+			$this->_mSerialNumber = strtoupper($serialNumber);
 			String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
-			$this->verifySerialNumber($serialNumber);
 		}
 	}
 	
@@ -1119,9 +1144,10 @@ class Correlative extends Persist{
 			// Verify if there are records in the database.
 			$no_records = CorrelativeDAM::isEmpty();
 			if(!$no_records)
-				$this->verifySerialNumber($this->_mSerialNumber);
+				$this->verifySerialNumber($this->_mSerialNumber,
+						$this->_mInitialNumber, $this->_mFinalNumber);
 				
-			CorrelativeDAM::insert($this);
+			$this->_mId = CorrelativeDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
 			
 			// If there were no records, make this one the default.
@@ -1129,29 +1155,28 @@ class Correlative extends Persist{
 				self::makeDefault($this);
 			
 			// For presentation purposes.
-			return $this->_mSerialNumber;
+			return $this->_mId;
 		}
 	}
 	
 	/**
 	 * Returns an instance of a correlative with database data.
 	 *
-	 * Returns NULL if there was no match for the provided serial number in the database.
-	 * @param string $serialNumber
+	 * Returns NULL if there was no match for the provided id in the database.
+	 * @param integer $id
 	 * @return Correlative
 	 */
-	static public function getInstance($serialNumber){
-		String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
-		return CorrelativeDAM::getInstance($serialNumber);
+	static public function getInstance($id){
+		return CorrelativeDAM::getInstance($id);
 	}
 	
 	/**
-	 * Returns the serial number of the default correlative.
+	 * Returns the id of the default correlative.
 	 *
-	 * @return string
+	 * @return integer
 	 */
-	static public function getDefaultSerialNumber(){
-		return CorrelativeDAM::getDefaultSerialNumber();
+	static public function getDefaultCorrelativeId(){
+		return CorrelativeDAM::getDefaultCorrelativeId();
 	}
 	
 	/**
@@ -1218,11 +1243,14 @@ class Correlative extends Persist{
 	 *
 	 * Throws an exception if it does.
 	 * @param string $serialNumber
+	 * @param integer $initialNumber
+	 * @param integer $finalNumber
 	 * @throws Exception
 	 */
-	private function verifySerialNumber($serialNumber){
-		if(CorrelativeDAM::exists($serialNumber))
-			throw new ValidateException('N&uacute;mero de serie ya existe.', 'serial_number');
+	private function verifySerialNumber($serialNumber, $initialNumber, $finalNumber){
+		if(CorrelativeDAM::exists($serialNumber, $initialNumber, $finalNumber))
+			throw new ValidateException('N&uacute;mero de serie con ese correlativo ya existe o se traslapa.',
+					'serial_number');
 	}
 }
 
@@ -1556,7 +1584,6 @@ class Invoice extends Document{
 		
 		try{
 			Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
-			self::validateObjectFromDatabase($correlative);
 			Number::validatePositiveFloat($vatPercentage, 'Porcentage Iva inv&aacute;lido.');
 			if(!is_null($discount))
 				self::validateObjectFromDatabase($discount);
@@ -1580,12 +1607,12 @@ class Invoice extends Document{
 	 * @return CashReceipt
 	 */
 	public function createCashReceipt(){
-		$serial_number = Correlative::getDefaultSerialNumber();
+		$correlative_id = Correlative::getDefaultCorrelativeId();
 		
-		if(is_null($serial_number))
+		if(is_null($correlative_id))
 			throw new Exception('No hay correlativo predeterminado.');
 			
-		$this->_mCorrelative = Correlative::getInstance($serial_number);
+		$this->_mCorrelative = Correlative::getInstance($correlative_id);
 		
 		if($this->_mCorrelative->getFinalNumber()
 				== $this->_mCorrelative->getCurrentNumber())

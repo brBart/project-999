@@ -114,19 +114,21 @@ class ReserveDAM{
  * @author Roberto Oliveros
  */
 class CorrelativeDAM{
-	static private $_mDefaultA021 = false;
-	static private $_mCurrentA021 = 457;
+	static private $_mDefault1 = false;
+	static private $_mCurrent1 = 457;
 	
-	static private $_mDefaultA022 = true;
-	static private $_mCurrentA022 = 0;
+	static private $_mDefault2 = true;
+	static private $_mCurrent2 = 0;
 	
 	/**
 	 * Returns true if a a correlative with the provided serial number exists in the database.
 	 *
 	 * @param string $serialNumber
+	 * @param integer $initialNumber
+	 * @param integer $finalNumber
 	 * @return boolean
 	 */
-	static public function exists($serialNumber){
+	static public function exists($serialNumber, $initialNumber, $finalNumber){
 		switch($serialNumber){
 			case 'A021':
 				return true;
@@ -152,13 +154,13 @@ class CorrelativeDAM{
 	
 	
 	static public function getNextNumber(Correlative $obj){
-		switch($obj->getSerialNumber()){
-			case 'A021':
-				return ++self::$_mCurrentA021;
+		switch($obj->getId()){
+			case 1:
+				return ++self::$_mCurrent1;
 				break;
 			
-			case 'A022':
-				return ++self::$_mCurrentA022;
+			case 2:
+				return ++self::$_mCurrent2;
 				break;
 				
 			default:
@@ -171,15 +173,15 @@ class CorrelativeDAM{
 	 * @param Correlative $obj
 	 */
 	static public function makeDefault(Correlative $obj){
-		switch($obj->getSerialNumber()){
-			case 'A021':
-				self::$_mDefaultA021 = true;
-				self::$_mDefaultA022 = false;
+		switch($obj->getId()){
+			case 1:
+				self::$_mDefault1 = true;
+				self::$_mDefault2 = false;
 				break;
 			
-			case 'A022':
-				self::$_mDefaultA021 = false;
-				self::$_mDefaultA022 = true;
+			case 2:
+				self::$_mDefault1 = false;
+				self::$_mDefault2 = true;
 				break;
 				
 			default:
@@ -190,21 +192,21 @@ class CorrelativeDAM{
 	 * Returns an instance of a correlative with database data.
 	 *
 	 * Returns NULL if there was no match for the provided serial number in the database.
-	 * @param string $serialNumber
+	 * @param integer $id
 	 * @return Correlative
 	 */
-	static public function getInstance($serialNumber){
-		switch($serialNumber){
-			case 'A021':
-				$correlative = new Correlative($serialNumber, self::$_mDefaultA021,
-						self::$_mCurrentA021, Persist::CREATED);
+	static public function getInstance($id){
+		switch($id){
+			case 1:
+				$correlative = new Correlative($id, 'A021', self::$_mDefault1,
+						self::$_mCurrent1, Persist::CREATED);
 				$correlative->setData('2008-10', '15/01/2008', 100, 5000);
 				return $correlative;
 				break;
 				
-			case 'A022':
-				$correlative = new Correlative($serialNumber, self::$_mDefaultA022,
-						self::$_mCurrentA022, Persist::CREATED);
+			case 2:
+				$correlative = new Correlative($id, 'A022', self::$_mDefault2,
+						self::$_mCurrent2, Persist::CREATED);
 				$correlative->setData('2008-05', '15/01/2008', 5000, 10000);
 				return $correlative;
 				break;
@@ -219,11 +221,11 @@ class CorrelativeDAM{
 	 *
 	 * @return String
 	 */
-	static public function getDefaultSerialNumber(){
-		if(self::$_mDefaultA021)
-			return 'A021';
-		elseif(self::$_mDefaultA022)
-			return 'A022';
+	static public function getDefaultCorrelativeId(){
+		if(self::$_mDefault1)
+			return 1;
+		elseif(self::$_mDefault2)
+			return 2;
 		else
 			return NULL;
 	}
@@ -245,7 +247,7 @@ class CorrelativeDAM{
 	 * @return boolean
 	 */
 	static public function delete(Correlative $obj){
-		if($obj->getSerialNumber() == 'A021')
+		if($obj->getId() == 1)
 			return true;
 		else
 			return false;
@@ -361,7 +363,7 @@ class InvoiceDAM{
 				$invoice = new Invoice(CashRegister::getInstance(123), '25/04/2009 09:09:09',
 						UserAccount::getInstance('roboli'), $id, PersistDocument::CREATED);
 				$details[] = new DocProductDetail(Lot::getInstance(5432), new Withdraw(), 5, 7.90);
-				$invoice->setData(457, Correlative::getInstance('A022'), 'C/F', 12.00, 39.50, $details);
+				$invoice->setData(457, Correlative::getInstance(2), 'C/F', 12.00, 39.50, $details);
 				$total_pages = 1;
 				$total_items = 1;
 				return $invoice;
