@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-08-2010 a las 12:38:24
+-- Tiempo de generación: 23-08-2010 a las 18:40:36
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -258,6 +258,7 @@ CREATE TABLE IF NOT EXISTS `comparison_product` (
 --
 
 CREATE TABLE IF NOT EXISTS `correlative` (
+  `correlative_id` int(11) NOT NULL auto_increment,
   `serial_number` varchar(10) collate utf8_unicode_ci NOT NULL,
   `resolution_number` varchar(100) collate utf8_unicode_ci NOT NULL,
   `resolution_date` date NOT NULL,
@@ -265,8 +266,9 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   `final_number` bigint(20) NOT NULL,
   `current` bigint(20) NOT NULL default '0',
   `is_default` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`serial_number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY  (`correlative_id`),
+  UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Volcar la base de datos para la tabla `correlative`
@@ -483,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment_lot` (
 
 CREATE TABLE IF NOT EXISTS `invoice` (
   `invoice_id` int(11) NOT NULL auto_increment,
-  `serial_number` varchar(10) collate utf8_unicode_ci NOT NULL,
+  `correlative_id` int(11) NOT NULL,
   `number` bigint(20) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
@@ -494,9 +496,10 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   `cash_register_id` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`invoice_id`),
-  UNIQUE KEY `unique_serial_number_number` (`serial_number`,`number`),
+  UNIQUE KEY `unique_correlative_id_number` (`correlative_id`,`number`),
   KEY `idx_invoice_user_account_username` (`user_account_username`),
-  KEY `idx_invoice_cash_register_id` (`cash_register_id`)
+  KEY `idx_invoice_cash_register_id` (`cash_register_id`),
+  KEY `idx_invoice_correlative_id` (`correlative_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -827,7 +830,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=102 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Volcar la base de datos para la tabla `reserve`
@@ -906,7 +909,8 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 26, 1, 1),
 (1, 27, 2, 1),
 (1, 28, 2, 1),
-(1, 29, 2, 1);
+(1, 29, 2, 1),
+(1, 27, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -2023,25 +2027,25 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_default_serial_number`()
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_default_id`()
 BEGIN
 
-  SELECT serial_number FROM correlative
+  SELECT correlative_id FROM correlative
 
     WHERE is_default = 1;
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_delete`(IN inSerialNumber VARCHAR(10))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_delete`(IN inCorrelativeId INT)
 BEGIN
 
   DELETE FROM correlative
 
-    WHERE serial_number = inSerialNumber;
+    WHERE correlative_id = inCorrelativeId;
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_dependencies`(IN inSerialNumber VARCHAR(10))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_dependencies`(IN inCorrelativeId INT)
 BEGIN
 
   DECLARE correlativeRowsCount INT;
@@ -2052,7 +2056,7 @@ BEGIN
 
   SELECT COUNT(*) FROM invoice
 
-    WHERE serial_number = inSerialNumber
+    WHERE correlative_id = inCorrelativeId
 
     INTO correlativeRowsCount;
 
@@ -2074,23 +2078,24 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_exists`(IN inSerialNumber VARCHAR(10))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_exists`(IN inSerialNumber VARCHAR(10), IN inInitialNumber BIGINT,
+IN inFinalNumber BIGINT)
 BEGIN
 
-  SELECT COUNT(*) FROM correlative
-
-  WHERE serial_number = inSerialNumber;
+  SELECT COUNT(*) FROM (SELECT * FROM correlative WHERE serial_number = inSerialNumber) cor
+      WHERE (inInitialNumber BETWEEN cor.initial_number AND cor.final_number OR inFinalNumber BETWEEN cor.initial_number AND cor.final_number)
+          OR (cor.initial_number BETWEEN inInitialNumber AND inFinalNumber OR cor.final_number BETWEEN inInitialNumber AND inFinalNumber);
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_get`(IN inSerialNumber VARCHAR(10))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_get`(IN inCorrelativeId INT)
 BEGIN
 
-  SELECT resolution_number, DATE_FORMAT(resolution_date, '%d/%m/%Y') AS resolution_date, initial_number, final_number,
+  SELECT serial_number, resolution_number, DATE_FORMAT(resolution_date, '%d/%m/%Y') AS resolution_date, initial_number, final_number,
 
       current, is_default FROM correlative
 
-    WHERE serial_number = inSerialNumber;
+    WHERE correlative_id = inCorrelativeId;
 
 END$$
 
@@ -2142,9 +2147,9 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT serial_number AS id, is_default FROM correlative
+    "SELECT correlative_id AS id, serial_number, is_default, initial_number, final_number FROM correlative
 
-      ORDER BY serial_number
+      ORDER BY serial_number, initial_number
 
       LIMIT ?, ?";
 
@@ -2160,7 +2165,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_make_default`(IN inSerialNumber VARCHAR(10))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_make_default`(IN inCorrelativeId INT)
 BEGIN
 
   UPDATE correlative
@@ -2173,11 +2178,11 @@ BEGIN
 
     SET is_default = 1
 
-    WHERE serial_number = inSerialNumber;
+    WHERE correlative_id = inCorrelativeId;
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_next_number`(IN inSerialNumber VARCHAR(10))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_next_number`(IN inCorrelativeId INT)
 BEGIN
 
   DECLARE initialNumber BIGINT;
@@ -2188,7 +2193,7 @@ BEGIN
 
   SELECT initial_number, current FROM correlative
 
-    WHERE serial_number = inSerialNumber
+    WHERE correlative_id = inCorrelativeId
 
     INTO initialNumber, currentNumber;
 
@@ -2200,7 +2205,7 @@ BEGIN
 
       SET current = initialNumber
 
-      WHERE serial_number = inSerialNumber;
+      WHERE correlative_id = inCorrelativeId;
 
     
 
@@ -2216,7 +2221,7 @@ BEGIN
 
       SET current = current + 1
 
-      WHERE serial_number = inSerialNumber;
+      WHERE correlative_id = inCorrelativeId;
 
   END IF;
 
@@ -2763,13 +2768,13 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS created_date, dis.user_account_username, inv.serial_number,
+    "SELECT DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS created_date, dis.user_account_username, cor.serial_number,
 
          inv.number, inv.total AS subtotal, dis.percentage, inv.total * (dis.percentage / 100) AS amount,
 
          inv.total - inv.total * (dis.percentage / 100) AS total FROM discount dis INNER JOIN invoice inv 
 
-         ON dis.invoice_id = inv.invoice_id
+         ON dis.invoice_id = inv.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
      WHERE inv.status = 1 AND inv.date BETWEEN ? AND ?
 
@@ -3017,7 +3022,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_get`(IN inInvoiceId INT)
 BEGIN
 
-  SELECT serial_number, number, user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, nit, name, total, vat,
+  SELECT correlative_id, number, user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, nit, name, total, vat,
 
       cash_register_id, status FROM invoice
 
@@ -3028,22 +3033,22 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_id_get`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
 BEGIN
 
-  SELECT invoice_id FROM invoice
+  SELECT invoice_id FROM invoice inv INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
-    WHERE serial_number = inSerialNumber AND number = inNumber;
+    WHERE cor.serial_number = inSerialNumber AND inv.number = inNumber;
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_insert`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_insert`(IN inCorrelativeId INT, IN inNumber BIGINT,
 
   IN inUserName VARCHAR(50), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(100), IN inTotal DECIMAL(10, 2),
 
   IN inVat DECIMAL(10, 2), IN inCashRegisterId INT, IN inStatus TINYINT)
 BEGIN
 
-  INSERT INTO invoice (serial_number, number, user_account_username, date, nit, name, total, vat, cash_register_id, status)
+  INSERT INTO invoice (correlative_id, number, user_account_username, date, nit, name, total, vat, cash_register_id, status)
 
-    VALUES (inSerialNumber, inNumber, inUserName, inDate, inNit, inName, inTotal, inVat, inCashRegisterId, inStatus);
+    VALUES (inCorrelativeId, inNumber, inUserName, inDate, inNit, inName, inTotal, inVat, inCashRegisterId, inStatus);
 
 END$$
 
@@ -3067,7 +3072,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_list_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT invoice_id AS id, serial_number, number  FROM invoice
+  SELECT invoice_id AS id, serial_number, number  FROM invoice inv INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
     WHERE cash_register_id = inCashRegisterId;
 
@@ -3098,7 +3103,9 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT invoice_id, serial_number, number, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM invoice
+    "SELECT invoice_id, serial_number, number, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM invoice inv
+
+      INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
       WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
@@ -3360,9 +3367,11 @@ BEGIN
 
        (SELECT DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Factura' AS document,
 
-            CONCAT(inv.serial_number, '-', inv.number) AS number, inv_lot.lot_id, '' AS entry, inv_lot.quantity AS withdraw,
+            CONCAT(cor.serial_number, '-', inv.number) AS number, inv_lot.lot_id, '' AS entry, inv_lot.quantity AS withdraw,
 
-            inv_lot.number AS item_number FROM invoice inv INNER JOIN invoice_lot inv_lot
+            inv_lot.number AS item_number FROM invoice inv INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
+
+            INNER JOIN invoice_lot inv_lot
 
             ON inv.invoice_id = inv_lot.invoice_id INNER JOIN lot ON inv_lot.lot_id = lot.lot_id
 
@@ -4750,7 +4759,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_invoices_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT inv.serial_number, inv.number, inv.name, IF(inv.status = 2, 0, cr.cash) AS cash,
+  SELECT cor.serial_number, inv.number, inv.name, IF(inv.status = 2, 0, cr.cash) AS cash,
 
       IF(inv.status = 2, 0, cr.total_vouchers) as total_vouchers,
 
@@ -4758,7 +4767,7 @@ BEGIN
 
       IF(inv.status = 2, 0, inv.total - inv.total * (@discount_percentage / 100)) AS total, status FROM invoice inv 
 
-      INNER JOIN cash_receipt cr ON inv.invoice_id = cr.cash_receipt_id
+      INNER JOIN cash_receipt cr ON inv.invoice_id = cr.cash_receipt_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
       LEFT JOIN discount dis ON inv.invoice_id = dis.invoice_id
 
