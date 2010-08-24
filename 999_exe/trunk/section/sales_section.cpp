@@ -22,6 +22,7 @@
 #include "../search_product/search_product_model.h"
 #include "../recordset/invoice_recordset_searcher.h"
 #include "../search_invoice_dialog/search_invoice_dialog.h"
+#include "../consult_product_dialog/consult_product_dialog.h"
 
 /**
  * @class SalesSection
@@ -620,6 +621,16 @@ void SalesSection::searchInvoice()
 }
 
 /**
+ * Shows the consult product dialog for searching for certain product.
+ */
+void SalesSection::consultProduct()
+{
+	ConsultProductDialog dialog(m_Request->cookieJar(), m_ServerUrl,
+			SearchProductModel::instance(), this, Qt::WindowTitleHint);
+	dialog.exec();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -701,6 +712,8 @@ void SalesSection::setActions()
 
 	m_ConsultProductAction = new QAction("Consultar producto", this);
 	m_ConsultProductAction->setShortcut(Qt::Key_F6);
+	connect(m_ConsultProductAction, SIGNAL(triggered()), this,
+			SLOT(consultProduct()));
 }
 
 /**

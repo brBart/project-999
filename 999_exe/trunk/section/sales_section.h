@@ -54,6 +54,7 @@ public slots:
 	void addProductWithQuantity();
 	void searchProduct();
 	void searchInvoice();
+	void consultProduct();
 
 private:
 	Console *m_Console;

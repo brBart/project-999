@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += search_invoice_dialog/search_invoice_dialog.h \
+HEADERS += consult_product_dialog/consult_product_dialog.h \
+    search_invoice_dialog/search_invoice_dialog.h \
     recordset/invoice_recordset_searcher.h \
     recordset/recordset_searcher.h \
     search_product/search_product_model.h \
@@ -62,7 +63,8 @@ HEADERS += search_invoice_dialog/search_invoice_dialog.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += search_invoice_dialog/search_invoice_dialog.cpp \
+SOURCES += consult_product_dialog/consult_product_dialog.cpp \
+    search_invoice_dialog/search_invoice_dialog.cpp \
     recordset/recordset_searcher.cpp \
     recordset/invoice_recordset_searcher.cpp \
     search_product/search_product_model.cpp \
@@ -116,7 +118,8 @@ SOURCES += search_invoice_dialog/search_invoice_dialog.cpp \
     xml_response_handler/xml_response_handler.cpp \
     http_request/http_request.cpp \
     main.cpp
-FORMS += search_invoice_dialog/search_invoice_dialog.ui \
+FORMS += consult_product_dialog/consult_product_dialog.ui \
+    search_invoice_dialog/search_invoice_dialog.ui \
     search_product_dialog/search_product_dialog.ui \
     product_quantity_dialog/product_quantity_dialog.ui \
     voucher_dialog/voucher_dialog.ui \
