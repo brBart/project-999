@@ -8,6 +8,13 @@
 <link href="../styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="../styles/typography.css" rel="stylesheet" type="text/css" />
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
+{literal}
+<style type="text/css">
+body {
+	background-color: #EEEEEE;
+}
+</style>
+{/literal}
 <script type="text/javascript">
 	var isSessionActive = true;
 </script>
@@ -23,7 +30,7 @@
 		}
 	</script>
 	{/literal}
-	<div id="wrapper_cash_receipt">
+	<div>
 		<div id="console" class="console_display"></div>
 		<div id="frm" class="cash_receipt">
 			<fieldset id="main_data">

@@ -150,10 +150,6 @@ input[type="text"], input[type="password"] {
 	min-height: 95%;
 }
 
-#wrapper_cash_receipt {
-	height: 100%;
-}
-
 #header {
 	padding: 1em 0;
 }
