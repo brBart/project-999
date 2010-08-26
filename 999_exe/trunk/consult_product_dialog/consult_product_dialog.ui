@@ -90,7 +90,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QWebView" name="webView">
+    <widget class="QWebView" name="webView" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -149,7 +149,7 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="url">
+     <property name="url" stdset="0">
       <url>
        <string>about:blank</string>
       </url>
@@ -215,12 +215,44 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>515</x>
-     <y>113</y>
+     <x>549</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
      <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>barCodeLineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>barCodePushButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>416</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>idLineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>idPushButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>449</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>493</x>
+     <y>47</y>
     </hint>
    </hints>
   </connection>

@@ -78,23 +78,26 @@ void ConsultProductDialog::search(int id)
  */
 void ConsultProductDialog::fetchProduct(QString value, bool isBarCode)
 {
-	QUrl url(*m_ServerUrl);
-	url.addQueryItem("cmd",
-			isBarCode ? "show_product_by_bar_code" : "show_product_by_id");
-	if (isBarCode) {
-		url.addQueryItem("bar_code", value);
-	} else {
-		url.addQueryItem("id", value);
+	if (value != "") {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd",
+				isBarCode ? "show_product_by_bar_code" : "show_product_by_id");
+		if (isBarCode) {
+			url.addQueryItem("bar_code", value);
+		} else {
+			url.addQueryItem("id", value);
+		}
+
+		QDialog dialog(this, Qt::WindowTitleHint);
+		dialog.setWindowTitle("Producto");
+		QHBoxLayout *layout = new QHBoxLayout(&dialog);
+
+		QWebView view;
+		view.page()->networkAccessManager()->setCookieJar(m_Jar);
+		m_Jar->setParent(0);
+		view.load(url);
+
+		layout->addWidget(&view);
+		dialog.exec();
 	}
-
-	QDialog dialog;
-	QHBoxLayout *layout = new QHBoxLayout(&dialog);
-
-	QWebView view;
-	view.page()->networkAccessManager()->setCookieJar(m_Jar);
-	m_Jar->setParent(0);
-	view.load(url);
-
-	layout->addWidget(&view);
-	dialog.exec();
 }
