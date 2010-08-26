@@ -10,7 +10,6 @@
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	var isSessionActive = true;
-	var isLarge = true;
 </script>
 </head>
 <body>
@@ -18,7 +17,6 @@
 	<script type="text/javascript">
 		if(screen.width <= 1000 && screen.height <= 700){
 			document.body.style.fontSize = '8px';
-			isLarge = false;
 		}
 		else{
 			document.body.style.fontSize = '10px';
