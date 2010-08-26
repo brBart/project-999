@@ -32,7 +32,7 @@ private:
     QNetworkCookieJar *m_Jar;
     QUrl *m_ServerUrl;
 
-    void fetchProduct(QString value, bool idBarCode = true);
+    void fetchProduct(QString value, bool isBarCode = true);
 };
 
 #endif // CONSULT_PRODUCT_DIALOG_H
