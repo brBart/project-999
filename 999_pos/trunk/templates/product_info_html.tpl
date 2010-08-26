@@ -8,6 +8,13 @@
 <link href="../styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="../styles/typography.css" rel="stylesheet" type="text/css" />
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
+{literal}
+<style type="text/css">
+body {
+	background-color: #EEEEEE;
+}
+</style>
+{/literal}
 <script type="text/javascript">
 	var isSessionActive = true;
 </script>
@@ -23,39 +30,43 @@
 		}
 	</script>
 	{/literal}
-	<div id="wrapper_cash_receipt">
-		<div id="console" class="console_display"></div>
+	<div>
+		<div id="console" class="console_display">
+		{if $notify eq 1}
+			<p id="{$type}" class="{$type}">{$message}</p>
+		{/if}
+		</div>
 		<div id="frm" class="cash_receipt">
 			<fieldset id="main_data">
 				<div id="product_details">
 					<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 				  	<p>
 				  		<label>Nombre:</label>
-				  		<span>{$name|htmlchars}</span>
+				  		<span>{$name|htmlchars}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>C&oacute;digo barra:</label>
-				  		<span>{$bar_code|htmlchars}</span>
+				  		<span>{$bar_code|htmlchars}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Presentaci&oacute;n:</label>
-				  		<span>{$packaging|htmlchars}</span>
+				  		<span>{$packaging|htmlchars}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Descripci&oacute;n:</label>
-				  		<span>{$description|htmlchars}</span>
+				  		<span>{$description|htmlchars}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Casa:</label>
-				  		<span>{$manufacturer|htmlchars}</span>
+				  		<span>{$manufacturer|htmlchars}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Unidad de Medida:</label>
-				  		<span>{$um|htmlchars}</span>
+				  		<span>{$um|htmlchars}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Precio:</label>
-				  		<span>{$price}</span>
+				  		<span>{$price}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label for="deactivated">Desactivado:</label>
@@ -69,6 +80,7 @@
 				<div id="product_suppliers">
 				  	<div id="details" class="items">
 				  		<table class="read_only">
+				  			<caption>Proveedores</caption>
 					      	<thead>
 					      		<tr>
 					      			<th>Proveedor</th>
@@ -86,8 +98,11 @@
 						</table>
 				  	</div>
 				</div>
+			</fieldset>
+			<fieldset>
 				<div id="lots" class="items">
 					<table class="read_only">
+						<caption>Lotes</caption>
 				      	<thead>
 				      		<tr>
 				      			<th>Lote</th> 
@@ -114,8 +129,10 @@
 				       	</tbody>
 					</table>
 				</div>
+				<p>&nbsp;</p>
 				<div id="reserves" class="items">
 					<table class="read_only">
+						<caption>Reservados</caption>
 				      	<thead>
 				      		<tr>
 				      			<th>Reservado No.</th> 
