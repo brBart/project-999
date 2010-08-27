@@ -37,7 +37,7 @@ bool EnterKeyEventFilter::eventFilter(QObject *obj, QEvent *event)
 			button->animateClick();
 			return true;
 		}
-	} else {
-		return false;
 	}
+
+	return false;
 }
