@@ -7,11 +7,19 @@
 
 #include "document_section.h"
 
+/**
+ * @class DocumentSection
+ * Base class with common functionality for the document derived sections.
+ */
+
 #include <QMessageBox>
 #include "../registry.h"
 #include "../console/console_factory.h"
 #include "../xml_transformer/xml_transformer_factory.h"
 
+/**
+ * Constructs the section.
+ */
 DocumentSection::DocumentSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 		QUrl *serverUrl, QString cashRegisterKey, QWidget *parent)
 		: Section(jar, factory, serverUrl, parent), m_CashRegisterKey(cashRegisterKey)
@@ -33,6 +41,9 @@ DocumentSection::DocumentSection(QNetworkCookieJar *jar, QWebPluginFactory *fact
 	m_Query = new QXmlQuery(QXmlQuery::XSLT20);
 }
 
+/**
+ * Destroys the console object.
+ */
 DocumentSection::~DocumentSection()
 {
 	delete m_Console;
