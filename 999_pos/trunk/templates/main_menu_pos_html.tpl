@@ -13,6 +13,7 @@
 		<fieldset id="pos_menu">
 			<ul>
 				<li><a id="sales" href="#" onclick="mainWindow.loadSalesSection();">Facturaci&oacute;n</a></li>
+				<li><a href="#" onclick="mainWindow.loadDepositSection();">Depositos</a></li>
     			<li><a href="index.php?cmd=logout">Logout</a></li>
     		</ul>
 		</fieldset>
