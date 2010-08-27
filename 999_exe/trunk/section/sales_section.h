@@ -8,74 +8,49 @@
 #ifndef SALES_SECTION_H_
 #define SALES_SECTION_H_
 
-#include "section.h"
+#include "document_section.h"
 
-#include <QAction>
-#include <QXmlQuery>
-#include "../main_window.h"
-#include "../console/console.h"
-#include "../http_request/http_request.h"
-#include "../xml_response_handler/xml_response_handler.h"
-#include "../recordset/recordset.h"
-#include "../actions_manager/actions_manager.h"
 #include "../plugins/bar_code_line_edit.h"
-#include "../authentication_dialog/authentication_dialog.h"
 #include "../plugins/label.h"
 
-class SalesSection: public Section
+class SalesSection: public DocumentSection
 {
 	Q_OBJECT
 
 public:
-	enum CRegisterStatus {Closed, Open, Error, Loading};
-	enum DocumentStatus {Edit, Idle, Cancelled};
 	SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cashRegisterKey, QWidget *parent = 0);
 	virtual ~SalesSection();
 
 public slots:
-	void loadFinished(bool ok);
-	void createInvoice();
-	void updateCashRegisterStatus(QString content);
-	void discardInvoice();
 	void setCustomer();
-	void fetchInvoice(QString id);
 	void addProductInvoice(QString barCode, int quantity = 1);
 	void deleteProductInvoice();
-	void scrollUp();
-	void scrollDown();
 	void showAuthenticationDialogForDiscount();
 	void createDiscount();
 	void createCashReceipt();
 	void finishInvoice(QString Id);
-	void unloadSection();
-	void showAuthenticationDialogForCancel();
-	void cancelInvoice();
 	void addProductWithQuantity();
 	void searchProduct();
 	void searchInvoice();
 	void consultProduct();
 
+protected:
+	void setActions();
+	void setMenu();
+	void setActionsManager();
+	void installRecordsetSearcher();
+	void setPlugins();
+	void updateActions();
+	void removeNewDocumentFromSession();
+	void prepareDocumentForm(QString dateTime, QString username);
+
+	void createDocumentEvent(bool ok);
+
 private:
-	Console *m_Console;
-	HttpRequest *m_Request;
-	XmlResponseHandler *m_Handler;
-	Recordset m_Recordset;
-	MainWindow *m_Window;
-	ActionsManager m_ActionsManager;
 	BarCodeLineEdit *m_BarCodeLineEdit;
-	QXmlQuery *m_Query;
-	QString m_StyleSheet;
-	AuthenticationDialog *m_AuthenticationDlg;
 	QString m_CashReceiptKey;
 	Label *m_RecordsetLabel;
-
-	QString m_CashRegisterKey;
-	QString m_NewInvoiceKey;
-	QString m_InvoiceKey;
-
-	CRegisterStatus m_CashRegisterStatus;
-	DocumentStatus m_DocumentStatus;
 
 	// File actions.
 	QAction *m_NewAction;
@@ -101,24 +76,10 @@ private:
 	QAction *m_SearchAction;
 	QAction *m_ConsultProductAction;
 
-	void setActions();
-	void setMenu();
-	void setActionsManager();
-	void fetchStyleSheet();
-	void refreshRecordset();
-	void fetchInvoiceForm();
-	void updateActions();
 	QString navigateValues();
-	void prepareInvoiceForm(QString dateTime, QString username);
-	void fetchCashRegisterStatus();
 	void updateCustomerData(QString nit, QString name);
-	void setPlugins();
-	void fetchInvoiceDetails(QString invoiceKey);
 	void setDiscountInvoice(QString discountKey);
 	void printInvoice(QString id);
-	void removeNewInvoiceFromSession();
-	void removeInvoiceFromSession();
-	void loadUrl(QUrl url);
 };
 
 #endif /* SALES_SECTION_H_ */

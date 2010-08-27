@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += consult_product_dialog/consult_product_dialog.h \
+HEADERS += section/document_section.h \
+    consult_product_dialog/consult_product_dialog.h \
     search_invoice_dialog/search_invoice_dialog.h \
     recordset/invoice_recordset_searcher.h \
     recordset/recordset_searcher.h \
@@ -63,7 +64,8 @@ HEADERS += consult_product_dialog/consult_product_dialog.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += consult_product_dialog/consult_product_dialog.cpp \
+SOURCES += section/document_section.cpp \
+    consult_product_dialog/consult_product_dialog.cpp \
     search_invoice_dialog/search_invoice_dialog.cpp \
     recordset/recordset_searcher.cpp \
     recordset/invoice_recordset_searcher.cpp \

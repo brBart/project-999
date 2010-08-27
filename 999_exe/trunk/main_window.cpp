@@ -63,8 +63,21 @@ void MainWindow::loadSalesSection()
 
 	dialog.init();
 	if (dialog.exec() == QDialog::Accepted) {
-		setSection(new SalesSection(&m_CookieJar, &m_PluginFactory, m_ServerUrl,
-				dialog.key(), this));
+		SalesSection *section = new SalesSection(&m_CookieJar, &m_PluginFactory,
+				m_ServerUrl, dialog.key(), this);
+		section->setStyleSheetFileName("invoice_details.xsl");
+		section->setGetDocumentDetailsCmd("get_invoice_details");
+		section->setGetDocumentListCmd("get_invoice_list");
+		section->setShowDocumentFormCmd("show_invoice_form");
+		section->setGetDocumentCmd("get_invoice");
+		section->setCreateDocumentCmd("create_invoice");
+		section->setDeleteItemDocumentCmd("delete_product_invoice");
+		section->setCanceDocumentCmd("cancel_invoice");
+
+		section->setCreateDocumentTransformerName("invoice");
+
+		section->init();
+		setSection(section);
 	}
 }
 
