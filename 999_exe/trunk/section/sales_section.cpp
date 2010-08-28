@@ -362,14 +362,14 @@ void SalesSection::setActions()
 	connect(m_DiscountAction, SIGNAL(triggered()), this, SLOT(
 			showAuthenticationDialogForDiscount()));
 
-	m_AddProductAction = new QAction("Agregar producto", this);
-	m_AddProductAction->setShortcut(tr("Ctrl+I"));
-	connect(m_AddProductAction, SIGNAL(triggered()), this, SLOT(
+	m_AddItemAction = new QAction("Agregar producto", this);
+	m_AddItemAction->setShortcut(tr("Ctrl+I"));
+	connect(m_AddItemAction, SIGNAL(triggered()), this, SLOT(
 			addProductWithQuantity()));
 
-	m_DeleteProductAction = new QAction("Quitar producto", this);
-	m_DeleteProductAction->setShortcut(tr("Ctrl+D"));
-	connect(m_DeleteProductAction, SIGNAL(triggered()), this,
+	m_DeleteItemAction = new QAction("Quitar producto", this);
+	m_DeleteItemAction->setShortcut(tr("Ctrl+D"));
+	connect(m_DeleteItemAction, SIGNAL(triggered()), this,
 			SLOT(deleteProductInvoice()));
 
 	m_SearchProductAction = new QAction("Buscar producto", this);
@@ -431,8 +431,8 @@ void SalesSection::setMenu()
 	menu = m_Window->menuBar()->addMenu("Editar");
 	menu->addAction(m_ClientAction);
 	menu->addAction(m_DiscountAction);
-	menu->addAction(m_AddProductAction);
-	menu->addAction(m_DeleteProductAction);
+	menu->addAction(m_AddItemAction);
+	menu->addAction(m_DeleteItemAction);
 	menu->addAction(m_SearchProductAction);
 
 	menu = m_Window->menuBar()->addMenu("Ver");
@@ -463,8 +463,8 @@ void SalesSection::setActionsManager()
 
 	*actions << m_ClientAction;
 	*actions << m_DiscountAction;
-	*actions << m_AddProductAction;
-	*actions << m_DeleteProductAction;
+	*actions << m_AddItemAction;
+	*actions << m_DeleteItemAction;
 	*actions << m_SearchProductAction;
 
 	*actions << m_ScrollUpAction;

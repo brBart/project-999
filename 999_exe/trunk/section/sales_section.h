@@ -36,6 +36,14 @@ public slots:
 	void consultProduct();
 
 protected:
+	// Edit actions.
+	QAction *m_ClientAction;
+	QAction *m_DiscountAction;
+	QAction *m_SearchProductAction;
+
+	// View actions.
+	QAction *m_ConsultProductAction;
+
 	void setActions();
 	void setMenu();
 	void setActionsManager();
@@ -51,30 +59,6 @@ private:
 	BarCodeLineEdit *m_BarCodeLineEdit;
 	QString m_CashReceiptKey;
 	Label *m_RecordsetLabel;
-
-	// File actions.
-	QAction *m_NewAction;
-	QAction *m_SaveAction;
-	QAction *m_DiscardAction;
-	QAction *m_CancelAction;
-	QAction *m_ExitAction;
-
-	// Edit actions.
-	QAction *m_ClientAction;
-	QAction *m_DiscountAction;
-	QAction *m_AddProductAction;
-	QAction *m_DeleteProductAction;
-	QAction *m_SearchProductAction;
-
-	// View actions.
-	QAction *m_ScrollUpAction;
-	QAction *m_ScrollDownAction;
-	QAction *m_MoveFirstAction;
-	QAction *m_MovePreviousAction;
-	QAction *m_MoveNextAction;
-	QAction *m_MoveLastAction;
-	QAction *m_SearchAction;
-	QAction *m_ConsultProductAction;
 
 	QString navigateValues();
 	void updateCustomerData(QString nit, QString name);

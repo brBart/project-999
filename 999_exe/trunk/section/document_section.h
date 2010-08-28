@@ -74,6 +74,26 @@ protected:
 	CashRegisterStatus m_CashRegisterStatus;
 	DocumentStatus m_DocumentStatus;
 
+	// File actions.
+	QAction *m_NewAction;
+	QAction *m_SaveAction;
+	QAction *m_DiscardAction;
+	QAction *m_CancelAction;
+	QAction *m_ExitAction;
+
+	// Edit actions.
+	QAction *m_AddItemAction;
+	QAction *m_DeleteItemAction;
+
+	// View actions.
+	QAction *m_ScrollUpAction;
+	QAction *m_ScrollDownAction;
+	QAction *m_MoveFirstAction;
+	QAction *m_MovePreviousAction;
+	QAction *m_MoveNextAction;
+	QAction *m_MoveLastAction;
+	QAction *m_SearchAction;
+
 	void loadUrl(QUrl url);
 	void refreshRecordset();
 	void fetchDocumentDetails(QString documentKey);
