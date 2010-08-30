@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowInvoiceFormCommand class.
+ * Library containing the ShowDepositFormCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -11,17 +11,17 @@
 require_once('commands/show_cash_register_object_form.php');
 
 /**
- * Command to display an invoice form and indicate an empty list.
+ * Command to display a deposit form and indicate an empty list.
  * @package Command
  * @author Roberto Oliveros
  */
-class ShowInvoiceFormCommand extends ShowCashRegisterObjectFormCommand{
+class ShowDepositFormCommand extends ShowCashRegisterObjectFormCommand{
 	/**
 	 * Returns an array with the back trace strings to display.
 	 * @return array
 	 */
 	protected function getBackTrace(){
-		return array('Inicio', 'Facturaci&oacute;n');
+		return array('Inicio', 'Depositos');
 	}
 	
 	/**
@@ -29,7 +29,7 @@ class ShowInvoiceFormCommand extends ShowCashRegisterObjectFormCommand{
 	 * @return string
 	 */
 	protected function getTemplate(){
-		return 'invoice_form_html.tpl';
+		return 'deposit_form_html.tpl';
 	}
 	
 	/**
@@ -37,7 +37,7 @@ class ShowInvoiceFormCommand extends ShowCashRegisterObjectFormCommand{
 	 * @return string
 	 */
 	protected function getMessage(){
-		return 'No hay facturas en esta caja.';
+		return 'No hay depositos en esta caja.';
 	}
 }
 ?>
