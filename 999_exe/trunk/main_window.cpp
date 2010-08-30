@@ -7,6 +7,7 @@
 #include "section/main_section.h"
 #include "cash_register_dialog/cash_register_dialog.h"
 #include "section/sales_section.h"
+#include "section/deposit_section.h"
 
 /**
  * @class MainWindow
@@ -75,6 +76,36 @@ void MainWindow::loadSalesSection()
 		section->setCanceDocumentCmd("cancel_invoice");
 
 		section->setCreateDocumentTransformerName("invoice");
+
+		section->init();
+		setSection(section);
+	}
+}
+
+/**
+ * Loads the DepositSection.
+ */
+void MainWindow::loadDepositSection()
+{
+	CashRegisterDialog dialog(&m_CookieJar, m_ServerUrl, this, Qt::WindowTitleHint);
+
+	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
+			SLOT(setIsSessionActive(bool)), Qt::QueuedConnection);
+
+	dialog.init();
+	if (dialog.exec() == QDialog::Accepted) {
+		DepositSection *section = new DepositSection(&m_CookieJar, &m_PluginFactory,
+				m_ServerUrl, dialog.key(), this);
+		section->setStyleSheetFileName("deposit_details.xsl");
+		section->setGetDocumentDetailsCmd("get_deposit_details");
+		section->setGetDocumentListCmd("get_deposit_list");
+		section->setShowDocumentFormCmd("show_deposit_form");
+		section->setGetDocumentCmd("get_deposit");
+		section->setCreateDocumentCmd("create_deposit");
+		section->setDeleteItemDocumentCmd("delete_cash_receipt_deposit");
+		section->setCanceDocumentCmd("cancel_deposit");
+
+		section->setCreateDocumentTransformerName("deposit");
 
 		section->init();
 		setSection(section);

@@ -20,6 +20,7 @@ public slots:
 	void setIsSessionActive(bool isActive);
 	void loadMainSection();
 	void loadSalesSection();
+	void loadDepositSection();
 
 protected:
 	void closeEvent(QCloseEvent *event);
