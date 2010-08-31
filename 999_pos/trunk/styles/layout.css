@@ -103,6 +103,11 @@ input[type="text"], input[type="password"] {
 	float: right;
 }
 
+.widget_input {
+	height: 2em;
+	width: 20em;
+}
+
 .console_display {
 	height: 5em;
 	padding: 0;
