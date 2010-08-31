@@ -7,6 +7,14 @@
 
 #include "line_edit_plugin.h"
 
+/**
+ * @class LineEdit
+ * LineEdit widget plugin for html display purposes.
+ */
+
+/**
+ * Constructs the widget with parent.
+ */
 LineEditPlugin::LineEditPlugin(QWidget *parent) : LineEdit(parent)
 {
 
