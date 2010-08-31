@@ -160,6 +160,11 @@ void DepositSection::setPlugins()
 	webPluginFactory()
 			->install("application/x-deposit_number_line_edit",
 					m_DepositNumberLineEdit);
+
+	m_BankAccountComboBox = new ComboBox();
+	webPluginFactory()
+				->install("application/x-bank_account_combo_box",
+						m_BankAccountComboBox);
 }
 
 /**
@@ -173,16 +178,22 @@ void DepositSection::updateActions()
 		case Open:
 			if (m_DocumentStatus == Edit) {
 				values = "01100111100000";
+				m_DepositNumberLineEdit->setEnabled(true);
+				m_BankAccountComboBox->setEnabled(true);
 			} else {
 				QString cancel =
 						(m_DocumentStatus == Idle
 								&& m_Recordset.size() > 0) ? "1" : "0";
 				values = "100" + cancel + "100" + navigateValues();
+				m_DepositNumberLineEdit->setEnabled(false);
+				m_BankAccountComboBox->setEnabled(false);
 			}
 			break;
 
 		case Closed:
 			values = "0000100" + navigateValues();
+			m_DepositNumberLineEdit->setEnabled(false);
+			m_BankAccountComboBox->setEnabled(false);
 			break;
 
 		case Error:

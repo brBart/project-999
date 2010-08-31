@@ -11,6 +11,7 @@
 #include "document_section.h"
 
 #include "../plugins/line_edit_plugin.h"
+#include "../plugins/combo_box.h"
 
 class DepositSection: public DocumentSection
 {
@@ -31,6 +32,7 @@ protected:
 
 private:
 	LineEditPlugin *m_DepositNumberLineEdit;
+	ComboBox *m_BankAccountComboBox;
 
 	QString navigateValues();
 };

@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += plugins/line_edit_plugin.h \
+HEADERS += plugins/combo_box.h \
+    plugins/line_edit_plugin.h \
     section/deposit_section.h \
     section/document_section.h \
     consult_product_dialog/consult_product_dialog.h \
@@ -65,7 +66,8 @@ HEADERS += plugins/line_edit_plugin.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += plugins/line_edit_plugin.cpp \
+SOURCES += plugins/combo_box.cpp \
+    plugins/line_edit_plugin.cpp \
     section/deposit_section.cpp \
     section/document_section.cpp \
     consult_product_dialog/consult_product_dialog.cpp \
