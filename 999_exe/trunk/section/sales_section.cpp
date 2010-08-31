@@ -492,15 +492,11 @@ void SalesSection::installRecordsetSearcher()
  */
 void SalesSection::setPlugins()
 {
-	WebPluginFactory *factory =
-				static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
+	DocumentSection::setPlugins();
 
 	m_BarCodeLineEdit = new BarCodeLineEdit();
-	factory->install("application/x-bar_code_line_edit", m_BarCodeLineEdit);
-
-	m_RecordsetLabel = new Label();
-	m_RecordsetLabel->setText(m_Recordset.text());
-	factory->install("application/x-recordset", m_RecordsetLabel);
+	webPluginFactory()
+			->install("application/x-bar_code_line_edit", m_BarCodeLineEdit);
 
 	connect(m_BarCodeLineEdit, SIGNAL(returnPressedBarCode(QString)), this,
 			SLOT(addProductInvoice(QString)));

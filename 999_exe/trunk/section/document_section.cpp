@@ -22,7 +22,8 @@
  */
 DocumentSection::DocumentSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 		QUrl *serverUrl, QString cashRegisterKey, QWidget *parent)
-		: Section(jar, factory, serverUrl, parent), m_CashRegisterKey(cashRegisterKey)
+		: Section(jar, factory, serverUrl, parent),
+		  m_CashRegisterKey(cashRegisterKey)
 {
 	m_Window = dynamic_cast<MainWindow*>(parentWidget());
 	ui.webView->setFocusPolicy(Qt::NoFocus);
@@ -533,6 +534,24 @@ void DocumentSection::deleteItemDocument(int row)
 
 		delete transformer;
 	}
+}
+
+/**
+ * Returns a pointer to the web plugin factory.
+ */
+WebPluginFactory* DocumentSection::webPluginFactory()
+{
+	return static_cast<WebPluginFactory*>(ui.webView->page()->pluginFactory());
+}
+
+/**
+ * Installs the necessary plugins widgets in the plugin factory of the web view.
+ */
+void DocumentSection::setPlugins()
+{
+	m_RecordsetLabel = new Label();
+	m_RecordsetLabel->setText(m_Recordset.text());
+	webPluginFactory()->install("application/x-recordset", m_RecordsetLabel);
 }
 
 /**

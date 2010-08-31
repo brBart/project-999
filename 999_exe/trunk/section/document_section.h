@@ -19,6 +19,7 @@
 #include "../recordset/recordset.h"
 #include "../actions_manager/actions_manager.h"
 #include "../authentication_dialog/authentication_dialog.h"
+#include "../plugins/label.h"
 
 class DocumentSection: public Section
 {
@@ -63,6 +64,7 @@ protected:
 	MainWindow *m_Window;
 	ActionsManager m_ActionsManager;
 	AuthenticationDialog *m_AuthenticationDlg;
+	Label *m_RecordsetLabel;
 
 	QXmlQuery *m_Query;
 	QString m_StyleSheet;
@@ -101,6 +103,8 @@ protected:
 	void removeNewDocumentFromSession();
 	void prepareDocumentForm(QString dateTime, QString username);
 	void deleteItemDocument(int row);
+	WebPluginFactory* webPluginFactory();
+	void setPlugins();
 
 	virtual void createDocumentEvent(bool ok);
 
@@ -108,7 +112,6 @@ protected:
 	virtual void setMenu() = 0;
 	virtual void setActionsManager() = 0;
 	virtual void installRecordsetSearcher() = 0;
-	virtual void setPlugins() = 0;
 	virtual void updateActions() = 0;
 
 private:

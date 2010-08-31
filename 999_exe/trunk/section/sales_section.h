@@ -11,7 +11,6 @@
 #include "document_section.h"
 
 #include "../plugins/bar_code_line_edit.h"
-#include "../plugins/label.h"
 
 class SalesSection: public DocumentSection
 {
@@ -58,7 +57,6 @@ protected:
 private:
 	BarCodeLineEdit *m_BarCodeLineEdit;
 	QString m_CashReceiptKey;
-	Label *m_RecordsetLabel;
 
 	QString navigateValues();
 	void updateCustomerData(QString nit, QString name);
