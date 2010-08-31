@@ -154,7 +154,12 @@ void DepositSection::installRecordsetSearcher()
  */
 void DepositSection::setPlugins()
 {
+	DocumentSection::setPlugins();
 
+	m_DepositNumberLineEdit = new LineEditPlugin();
+	webPluginFactory()
+			->install("application/x-deposit_number_line_edit",
+					m_DepositNumberLineEdit);
 }
 
 /**

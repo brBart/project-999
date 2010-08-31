@@ -10,6 +10,8 @@
 
 #include "document_section.h"
 
+#include "../plugins/line_edit_plugin.h"
+
 class DepositSection: public DocumentSection
 {
 	Q_OBJECT
@@ -28,6 +30,8 @@ protected:
 	void updateActions();
 
 private:
+	LineEditPlugin *m_DepositNumberLineEdit;
+
 	QString navigateValues();
 };
 

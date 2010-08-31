@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += section/deposit_section.h \
+HEADERS += plugins/line_edit_plugin.h \
+    section/deposit_section.h \
     section/document_section.h \
     consult_product_dialog/consult_product_dialog.h \
     search_invoice_dialog/search_invoice_dialog.h \
@@ -32,7 +33,6 @@ HEADERS += section/deposit_section.h \
     section/cash_receipt_section.h \
     discount_dialog/discount_dialog.h \
     authentication_dialog/authentication_dialog.h \
-    plugins/plugin_widget_factory.h \
     plugins/web_plugin_factory.h \
     plugins/bar_code_line_edit.h \
     plugins/plugin_widget.h \
@@ -65,7 +65,8 @@ HEADERS += section/deposit_section.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += section/deposit_section.cpp \
+SOURCES += plugins/line_edit_plugin.cpp \
+    section/deposit_section.cpp \
     section/document_section.cpp \
     consult_product_dialog/consult_product_dialog.cpp \
     search_invoice_dialog/search_invoice_dialog.cpp \
@@ -89,7 +90,6 @@ SOURCES += section/deposit_section.cpp \
     section/cash_receipt_section.cpp \
     discount_dialog/discount_dialog.cpp \
     authentication_dialog/authentication_dialog.cpp \
-    plugins/plugin_widget_factory.cpp \
     plugins/web_plugin_factory.cpp \
     plugins/bar_code_line_edit.cpp \
     xml_transformer/xml_transformer_factory.cpp \

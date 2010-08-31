@@ -104,7 +104,7 @@ protected:
 	void prepareDocumentForm(QString dateTime, QString username);
 	void deleteItemDocument(int row);
 	WebPluginFactory* webPluginFactory();
-	void setPlugins();
+	virtual void setPlugins();
 
 	virtual void createDocumentEvent(bool ok);
 
