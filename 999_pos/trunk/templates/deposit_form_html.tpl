@@ -13,29 +13,22 @@ var objectKey = {$key};
 		{include file='header_data_html.tpl' document_name='Deposito'}
 		<fieldset id="main_data">
 			<p>
-		  		<label id="deposit_number_label">Boleta No:</label><span class="hidden">*</span>
+		  		<label id="deposit_number_label">Boleta No:<span class="hidden">*</span></label>
 		  		<span id="deposit_number_value">{$deposit_number|htmlchars}&nbsp;</span>
-		  		<input name="form_widget" id="deposit_number" class="hidden" type="text" maxlength="50"
-		  			onblur="mainWindow.setDepositNumber(this.value);" />
+		  		<object id="deposit_number" class="widget_input hidden" type="application/x-deposit_number_line_edit"></object>
 		  		<span id="deposit_number-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
-		  		<label id="bank_account_label">Cuenta bancaria:</label><span class="hidden">*</span>
+		  		<label id="bank_account_label">Cuenta bancaria:<span class="hidden">*</span></label>
 		  		<span id="bank_account">{$bank_account|htmlchars}&nbsp;</span>
-		  		<select name="form_widget" id="bank_account_id" class="hidden"
-		  			onchange="mainWindow.setBankAccount(this.value);">
-	    			{section name=i loop=$bank_account_list}
-	    				<option value="{$bank_account_list[i].id}">
-	    					{$bank_account_list[i].name|htmlchars}
-	    				</option>
-	    			{/section}
-	    		</select>
+		  		<object id="bank_account_id" class="widget_input hidden" type="application/x-bank_account_combo_box"></object>
 		  		<span id="bank_account-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label id="bank_label">Banco:</label>
 		  		<span id="bank">{$bank|htmlchars}&nbsp;</span>
 		  	</p>
+		  	<p>&nbsp;</p>
 		  	<div id="details" class="items register"></div>
 	  	</fieldset>
 	  	<fieldset id="data_footer">
