@@ -1808,8 +1808,8 @@ class DepositDetail{
 	 * @return array
 	 */
 	public function show(){
-		return array('receipt_id' => $this->_mCash->getId(), 'received' => $this->_mCash->getAmount(),
-				'deposited' => $this->_mAmount);
+		return array('id' => $this->_mCash->getId(), 'receipt_id' => $this->_mCash->getId(),
+				'received' => $this->_mCash->getAmount(), 'deposited' => $this->_mAmount);
 	}
 	
 	/**
