@@ -10,7 +10,7 @@
 #include "shift_list_xml_transformer.h"
 #include "object_key_xml_transformer.h"
 #include "invoice_list_xml_transformer.h"
-#include "invoice_xml_transformer.h"
+#include "new_document_xml_transformer.h"
 #include "cash_register_status_xml_transformer.h"
 #include "stub_xml_transformer.h"
 #include "customer_xml_transformer.h"
@@ -51,8 +51,8 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new ObjectKeyXmlTransformer();
 	} else if (name == "invoice_list") {
 		return new InvoiceListXmlTransformer();
-	} else if (name == "invoice") {
-		return new InvoiceXmlTransformer();
+	} else if (name == "new_document") {
+		return new NewDocumentXmlTransformer();
 	} else if (name == "cash_register_status") {
 		return new CashRegisterStatusXmlTransformer();
 	} else if (name == "stub") {

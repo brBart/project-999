@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += plugins/combo_box.h \
+HEADERS += xml_transformer/new_document_xml_transformer.h \
+    plugins/combo_box.h \
     plugins/line_edit_plugin.h \
     section/deposit_section.h \
     section/document_section.h \
@@ -52,7 +53,6 @@ HEADERS += plugins/combo_box.h \
     xml_transformer/stub_xml_transformer.h \
     xml_transformer/shift_list_xml_transformer.h \
     xml_transformer/cash_register_status_xml_transformer.h \
-    xml_transformer/invoice_xml_transformer.h \
     actions_manager/actions_manager.h \
     xml_transformer/invoice_list_xml_transformer.h \
     recordset/recordset.h \
@@ -66,7 +66,8 @@ HEADERS += plugins/combo_box.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += plugins/combo_box.cpp \
+SOURCES += xml_transformer/new_document_xml_transformer.cpp \
+    plugins/combo_box.cpp \
     plugins/line_edit_plugin.cpp \
     section/deposit_section.cpp \
     section/document_section.cpp \
@@ -109,7 +110,6 @@ SOURCES += plugins/combo_box.cpp \
     xml_transformer/stub_xml_transformer.cpp \
     xml_transformer/shift_list_xml_transformer.cpp \
     xml_transformer/cash_register_status_xml_transformer.cpp \
-    xml_transformer/invoice_xml_transformer.cpp \
     xml_transformer/xml_transformer.cpp \
     actions_manager/actions_manager.cpp \
     xml_transformer/invoice_list_xml_transformer.cpp \

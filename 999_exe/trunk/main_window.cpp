@@ -75,8 +75,6 @@ void MainWindow::loadSalesSection()
 		section->setDeleteItemDocumentCmd("delete_product_invoice");
 		section->setCanceDocumentCmd("cancel_invoice");
 
-		section->setCreateDocumentTransformerName("invoice");
-
 		section->init();
 		setSection(section);
 	}
@@ -104,8 +102,6 @@ void MainWindow::loadDepositSection()
 		section->setCreateDocumentCmd("create_deposit");
 		section->setDeleteItemDocumentCmd("delete_cash_receipt_deposit");
 		section->setCanceDocumentCmd("cancel_deposit");
-
-		section->setCreateDocumentTransformerName("deposit");
 
 		section->init();
 		setSection(section);

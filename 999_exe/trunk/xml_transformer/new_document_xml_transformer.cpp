@@ -5,17 +5,17 @@
  *      Author: pc
  */
 
-#include "invoice_xml_transformer.h"
+#include "new_document_xml_transformer.h"
 
 /**
- * @class InvoiceXmlTransformer
- * Transforms an xml document to a new invoice's data.
+ * @class NewDocumentXmlTransformer
+ * Transforms an xml document to a new document's data.
  */
 
 /**
- * Stores the new invoice's data into the QList for future retrieval.
+ * Stores the new document's data into the QList for future retrieval.
  */
-void InvoiceXmlTransformer::transform(QDomDocument *document)
+void NewDocumentXmlTransformer::transform(QDomDocument *document)
 {
 	QDomNodeList keys = document->elementsByTagName("key");
 	QDomNodeList dateTimes = document->elementsByTagName("date_time");

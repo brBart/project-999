@@ -135,14 +135,6 @@ void DocumentSection::setCanceDocumentCmd(QString cmd)
 }
 
 /**
- * Sets the name of the transformer to use.
- */
-void DocumentSection::setCreateDocumentTransformerName(QString name)
-{
-	m_CreateDocumentTransformer = name;
-}
-
-/**
  * Updates the status of the section depending on the page received.
  */
 void DocumentSection::loadFinished(bool ok)
@@ -217,7 +209,7 @@ void DocumentSection::createDocument()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->create(m_CreateDocumentTransformer);
+			->create("new_document");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
