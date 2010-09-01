@@ -102,10 +102,10 @@ class Deposit extends PersistDocument implements Itemized{
 	/**
 	 * Holds the date in which the deposit was created.
 	 *
-	 * Date format: 'dd/mm/yyyy'.
+	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
 	 * @var string
 	 */
-	private $_mDate;
+	private $_mDateTime;
 	
 	/**
 	 * Bank where the deposit is being made.
@@ -149,31 +149,31 @@ class Deposit extends PersistDocument implements Itemized{
 	 * its been created (Deposit::IN_PROGRESS) the cash register must be open, otherwise it doesn't
 	 * matter because it is an already created (Deposit::CREATED) deposit.
 	 * @param CashRegister $cashRegister
-	 * @param string $date
+	 * @param string $dateTime
 	 * @param UserAccount $user
 	 * @param integer $id
 	 * @param integer $status
 	 * @throws Exception
 	 */
-	public function __construct(CashRegister $cashRegister, $date = NULL, UserAccount $user = NULL,
+	public function __construct(CashRegister $cashRegister, $dateTime = NULL, UserAccount $user = NULL,
 			$id = NULL, $status = Deposit::IN_PROGRESS){
 		parent::__construct($id, $status);
 		
 		if($this->_mStatus == Deposit::IN_PROGRESS && !$cashRegister->isOpen())
 			throw new Exception('Caja ya esta cerrada.');
 			
-		if(!is_null($date)){
+		if(!is_null($dateTime)){
 			try{
-				Date::validateDate($date, 'Fecha inv&aacute;lida.');
+				Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en Document con datos erroneos! ' .
 						$e->getMessage());
 				throw $et;
 			}
-			$this->_mDate = $date;
+			$this->_mDateTime = $dateTime;
 		}
 		else
-			$this->_mDate = date('d/m/Y');
+			$this->_mDateTime = date('d/m/Y H:i:s');
 		
 		if(!is_null($user)){
 			try{
@@ -207,8 +207,8 @@ class Deposit extends PersistDocument implements Itemized{
 	 *
 	 * @return string
 	 */
-	public function getDate(){
-		return $this->_mDate;
+	public function getDateTime(){
+		return $this->_mDateTime;
 	}
 	
 	/**

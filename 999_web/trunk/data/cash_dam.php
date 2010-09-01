@@ -647,7 +647,7 @@ class DepositDAM{
 		
 		$params = array(':bank_account_number' => $bank_account->getNumber(),
 				':cash_register_id' => $cash_register->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($obj->getDate()), ':number' => $obj->getNumber(),
+				':date' => Date::dbDateTimeFormat($obj->getDateTime()), ':number' => $obj->getNumber(),
 				':total' => $obj->getTotal(), ':status' => Deposit::CREATED);
 		DatabaseHandler::execute($sql, $params);
 		
