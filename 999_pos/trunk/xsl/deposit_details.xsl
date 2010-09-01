@@ -24,10 +24,9 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="3"></td>
+	       			<td colspan="2"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
-	       			<td></td>
 	       		</tr>
 	       	</tfoot>
 		</table>
