@@ -34,7 +34,7 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 		QUrl *serverUrl, QString cashRegisterKey, QWidget *parent)
 		: DocumentSection(jar, factory, serverUrl, cashRegisterKey, parent)
 {
-	ui.webView->setFocusPolicy(Qt::NoFocus);
+
 }
 
 /**

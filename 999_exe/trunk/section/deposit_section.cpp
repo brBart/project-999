@@ -150,6 +150,23 @@ void DepositSection::installRecordsetSearcher()
 }
 
 /**
+ * Installs the necessary plugins widgets in the plugin factory of the web view.
+ */
+void DepositSection::setPlugins()
+{
+	DocumentSection::setPlugins();
+
+	m_DepositNumberLineEdit = new LineEditPlugin();
+	webPluginFactory()
+			->install("application/x-deposit_number_line_edit",
+					m_DepositNumberLineEdit);
+
+	m_BankAccountComboBox = new ComboBox();
+	webPluginFactory()
+			->install("application/x-bank_account_combo_box", m_BankAccountComboBox);
+}
+
+/**
  * Updates the QActions depending on the actual section status.
  */
 void DepositSection::updateActions()
@@ -184,6 +201,48 @@ void DepositSection::updateActions()
 	}
 
 	m_ActionsManager.updateActions(values);
+}
+
+/**
+ * Prepare the deposit form for creating a new deposit.
+ */
+void DepositSection::prepareDocumentForm(QString dateTime, QString username)
+{
+	DocumentSection::prepareDocumentForm(dateTime, username);
+
+	QWebFrame *frame = ui.webView->page()->mainFrame();
+	QWebElement element;
+
+	element = frame->findFirstElement("#deposit_number_label span");
+	element.removeClass("hidden");
+
+	element = frame->findFirstElement("#deposit_number_value");
+	element.addClass("hidden");
+
+	element = frame->findFirstElement("#deposit_number");
+	element.removeClass("hidden");
+
+	element = frame->findFirstElement("#bank_account_label span");
+	element.removeClass("hidden");
+
+	element = frame->findFirstElement("#bank_account");
+	element.addClass("hidden");
+
+	element = frame->findFirstElement("#bank_account_id");
+	element.removeClass("hidden");
+
+	element = frame->findFirstElement("#bank");
+	element.setInnerXml("&nbsp;");
+}
+
+/**
+ * Extends functionality after the event.
+ */
+void DepositSection::createDocumentEvent(bool ok)
+{
+	if (ok) {
+		m_DepositNumberLineEdit->setFocus();
+	}
 }
 
 /**

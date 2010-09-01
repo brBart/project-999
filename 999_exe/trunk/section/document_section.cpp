@@ -27,6 +27,8 @@ DocumentSection::DocumentSection(QNetworkCookieJar *jar, QWebPluginFactory *fact
 {
 	m_Window = dynamic_cast<MainWindow*>(parentWidget());
 
+	ui.webView->setFocusPolicy(Qt::NoFocus);
+
 	m_Console = ConsoleFactory::instance()->createHtmlConsole();
 	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
