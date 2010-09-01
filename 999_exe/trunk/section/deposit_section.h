@@ -10,9 +10,6 @@
 
 #include "document_section.h"
 
-#include "../plugins/line_edit_plugin.h"
-#include "../plugins/combo_box.h"
-
 class DepositSection: public DocumentSection
 {
 	Q_OBJECT
@@ -27,13 +24,9 @@ protected:
 	void setMenu();
 	void setActionsManager();
 	void installRecordsetSearcher();
-	void setPlugins();
 	void updateActions();
 
 private:
-	LineEditPlugin *m_DepositNumberLineEdit;
-	ComboBox *m_BankAccountComboBox;
-
 	QString navigateValues();
 };
 
