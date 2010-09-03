@@ -36,5 +36,16 @@ class CreateInvoiceCommand extends CreateCashRegisterObjectCommand{
 	protected function createObject(CashRegister $cashRegister){
 		return new Invoice($cashRegister);
 	}
+	
+	/**
+	 * Display the form for creating the object.
+	 * @param string $key
+	 * @param variant $obj
+	 */
+	protected function displayObject($key, $obj){
+		$user = $obj->getUser();
+		Page::display(array('key' => $key, 'username' => $user->getUserName(),
+				'date_time' => $obj->getDateTime()), 'invoice_xml.tpl');
+	}
 }
 ?>

@@ -34,10 +34,7 @@ abstract class CreateCashRegisterObjectCommand extends Command{
 				$obj = $this->createObject($cash_register);
 				$key = KeyGenerator::generateKey();
 				$helper->setObject($key, $obj);
-				
-				$user = $obj->getUser();
-				Page::display(array('key' => $key, 'username' => $user->getUserName(),
-						'date_time' => $obj->getDateTime()), 'cash_register_object_xml.tpl');
+				$this->displayObject($key, $obj);
 			} catch(Exception $e){
 				$msg = $e->getMessage();
 				Page::display(array('message' => $msg), 'error_xml.tpl');
@@ -61,5 +58,12 @@ abstract class CreateCashRegisterObjectCommand extends Command{
 	 * @return variant
 	 */
 	abstract protected function createObject(CashRegister $cashRegister);
+	
+	/**
+	 * Display the form for creating the object.
+	 * @param string $key
+	 * @param variant $obj
+	 */
+	abstract protected function displayObject($key, $obj);
 }
 ?>

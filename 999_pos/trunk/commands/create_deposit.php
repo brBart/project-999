@@ -13,6 +13,10 @@ require_once('commands/create_cash_register_object.php');
  * Library with the deposit class.
  */
 require_once('business/cash.php');
+/**
+ * Library with the bank accounts list.
+ */
+require_once('business/list.php');
 
 /**
  * Creates a deposit and returns its information.
@@ -35,6 +39,19 @@ class CreateDepositCommand extends CreateCashRegisterObjectCommand{
 	 */
 	protected function createObject(CashRegister $cashRegister){
 		return new Deposit($cashRegister);
+	}
+	
+	/**
+	 * Display the form for creating the object.
+	 * @param string $key
+	 * @param variant $obj
+	 */
+	protected function displayObject($key, $obj){
+		$bank_account_list = BankAccountList::getList();
+		$user = $obj->getUser();
+		Page::display(array('key' => $key, 'username' => $user->getUserName(),
+				'date_time' => $obj->getDateTime(),
+				'bank_account_list' => $bank_account_list), 'deposit_xml.tpl');
 	}
 }
 ?>
