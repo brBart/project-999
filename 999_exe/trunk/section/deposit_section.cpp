@@ -238,9 +238,19 @@ void DepositSection::prepareDocumentForm(QString dateTime, QString username)
 /**
  * Extends functionality after the event.
  */
-void DepositSection::createDocumentEvent(bool ok)
+void DepositSection::createDocumentEvent(bool ok,
+		QList<QMap<QString, QString>*> *list)
 {
 	if (ok) {
+		// Add bank accounts to the combo box.
+		QMap<QString, QString> *params = list->at(1);
+		m_BankAccountComboBox->addItem("");
+		QMapIterator<QString, QString> i(*params);
+		while (i.hasNext()) {
+			i.next();
+			m_BankAccountComboBox->addItem(i.key() + ", " + i.value(), i.key());
+		}
+
 		m_DepositNumberLineEdit->setFocus();
 	}
 }

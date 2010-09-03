@@ -608,7 +608,7 @@ void SalesSection::prepareDocumentForm(QString dateTime, QString username)
 /**
  * Extends functionality after the event.
  */
-void SalesSection::createDocumentEvent(bool ok)
+void SalesSection::createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *list)
 {
 	if (ok) {
 		setCustomer();

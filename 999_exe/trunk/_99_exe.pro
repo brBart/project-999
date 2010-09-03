@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/new_document_xml_transformer.h \
+HEADERS += xml_transformer/deposit_xml_transformer.h \
+    xml_transformer/invoice_xml_transformer.h \
     plugins/combo_box.h \
     plugins/line_edit_plugin.h \
     section/deposit_section.h \
@@ -66,7 +67,8 @@ HEADERS += xml_transformer/new_document_xml_transformer.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += xml_transformer/new_document_xml_transformer.cpp \
+SOURCES += xml_transformer/deposit_xml_transformer.cpp \
+    xml_transformer/invoice_xml_transformer.cpp \
     plugins/combo_box.cpp \
     plugins/line_edit_plugin.cpp \
     section/deposit_section.cpp \

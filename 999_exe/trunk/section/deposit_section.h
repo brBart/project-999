@@ -31,7 +31,7 @@ protected:
 	void updateActions();
 	void prepareDocumentForm(QString dateTime, QString username);
 
-	void createDocumentEvent(bool ok);
+	void createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *list = 0);
 
 private:
 	LineEditPlugin *m_DepositNumberLineEdit;

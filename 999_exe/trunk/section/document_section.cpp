@@ -137,6 +137,14 @@ void DocumentSection::setCanceDocumentCmd(QString cmd)
 }
 
 /**
+ * Sets the name of the transformer to use.
+ */
+void DocumentSection::setCreateDocumentTransformerName(QString name)
+{
+	m_CreateDocumentTransformer = name;
+}
+
+/**
  * Updates the status of the section depending on the page received.
  */
 void DocumentSection::loadFinished(bool ok)
@@ -211,7 +219,7 @@ void DocumentSection::createDocument()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->create("new_document");
+			->create(m_CreateDocumentTransformer);
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
@@ -226,7 +234,7 @@ void DocumentSection::createDocument()
 		m_DocumentStatus = Edit;
 		updateActions();
 
-		createDocumentEvent(true);
+		createDocumentEvent(true, &list);
 	} else {
 		m_Console->displayError(errorMsg);
 		fetchCashRegisterStatus();
@@ -550,7 +558,8 @@ void DocumentSection::setPlugins()
 /**
  * Reimplement this method for extending functionality.
  */
-void DocumentSection::createDocumentEvent(bool ok)
+void DocumentSection::createDocumentEvent(bool ok,
+		QList<QMap<QString, QString>*> *list)
 {
 
 }
