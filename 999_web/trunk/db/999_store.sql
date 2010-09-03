@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-08-2010 a las 18:40:36
+-- Tiempo de generación: 03-09-2010 a las 12:10:42
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -344,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   `bank_account_number` varchar(100) collate utf8_unicode_ci NOT NULL,
   `cash_register_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `number` varchar(50) collate utf8_unicode_ci NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
@@ -910,7 +910,8 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 27, 2, 1),
 (1, 28, 2, 1),
 (1, 29, 2, 1),
-(1, 27, 3, 1);
+(1, 27, 3, 1),
+(1, 30, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1020,7 +1021,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1055,7 +1056,8 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (26, 'pos'),
 (27, 'invoice'),
 (28, 'discount'),
-(29, 'cash_receipt');
+(29, 'cash_receipt'),
+(30, 'deposit');
 
 -- --------------------------------------------------------
 
@@ -2628,7 +2630,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_get`(IN inDepositId INT)
 BEGIN
 
-  SELECT bank_account_number, cash_register_id, user_account_username, DATE_FORMAT(date, '%d/%m/%Y') AS created_date, number,
+  SELECT bank_account_number, cash_register_id, user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, number,
 
     total, status FROM deposit
 
@@ -2638,7 +2640,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(100), IN inCashRegisterId INT, IN inUserName VARCHAR(50),
 
-  IN inDate DATE, IN inNumber VARCHAR(50), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
+  IN inDate DATETIME, IN inNumber VARCHAR(50), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO deposit (bank_account_number, cash_register_id, user_account_username, date, number, total, status)
@@ -2650,7 +2652,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_list_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT deposit_id FROM deposit
+  SELECT deposit_id AS id FROM deposit
 
     WHERE cash_register_id = inCashRegisterId;
 
