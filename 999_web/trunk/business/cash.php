@@ -288,9 +288,10 @@ class Deposit extends PersistDocument implements Itemized{
 	 *
 	 * @param BankAccount $obj
 	 */
-	public function setBankAccount(BankAccount $obj){
-		self::validateObjectFromDatabase($obj);
+	public function setBankAccount(BankAccount $obj = NULL){
 		$this->_mBankAccount = $obj;
+		if(is_null($obj))
+			throw new ValidateException('Seleccione una cuenta bancaria.');
 	}
 	
 	/**
@@ -635,7 +636,6 @@ class BankAccount extends PersistObject{
 	 * @return BankAccount
 	 */
 	static public function getInstance($number){
-		String::validateString($number, 'N&uacute;mero de cuenta inv&aacute;lido.');
 		return BankAccountDAM::getInstance($number);
 	}
 	
