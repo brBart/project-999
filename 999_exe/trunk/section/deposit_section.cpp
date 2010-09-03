@@ -7,6 +7,8 @@
 
 #include "deposit_section.h"
 
+#include "../xml_transformer/xml_transformer_factory.h"
+
 /**
  * @class DepositSection
  * Section that manages the deposit documents.
@@ -20,6 +22,47 @@ DepositSection::DepositSection(QNetworkCookieJar *jar, QWebPluginFactory *factor
 		: DocumentSection(jar, factory, serverUrl, cashRegisterKey, parent)
 {
 
+}
+
+/**
+ * Sets the slip number to the deposit on the server.
+ */
+void DepositSection::setNumber(QString number)
+{
+	HttpRequest *request = new HttpRequest(m_Request->cookieJar(), this);
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "set_number_object");
+	url.addQueryItem("value", m_DepositNumberLineEdit->text());
+	url.addQueryItem("key", m_NewDocumentKey);
+	url.addQueryItem("type", "xml");
+
+	connect(request, SIGNAL(finished(QString)), this, SLOT(numberSetted(QString)));
+
+	request->get(url, true);
+}
+
+/**
+ * Reads the response of the server after setting the deposit number.
+ */
+void DepositSection::numberSetted(QString content)
+{
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->create("stub");
+
+	QString errorMsg;
+	XmlResponseHandler::ResponseType response =
+			m_Handler->handle(content, transformer, &errorMsg);
+	if (response == XmlResponseHandler::Success) {
+		m_Console->cleanFailure("deposit_number");
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->cleanFailure("deposit_number");
+		m_Console->displayFailure(errorMsg, "deposit_number");
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
 }
 
 /**
@@ -160,6 +203,9 @@ void DepositSection::setPlugins()
 	webPluginFactory()
 			->install("application/x-deposit_number_line_edit",
 					m_DepositNumberLineEdit);
+
+	connect(m_DepositNumberLineEdit, SIGNAL(blurAndChanged(QString)), this,
+			SLOT(setNumber(QString)));
 
 	m_BankAccountComboBox = new ComboBox();
 	webPluginFactory()

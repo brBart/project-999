@@ -22,6 +22,10 @@ public:
 			QUrl *serverUrl, QString cashRegisterKey, QWidget *parent = 0);
 	virtual ~DepositSection() {};
 
+public slots:
+	void setNumber(QString number);
+	void numberSetted(QString content);
+
 protected:
 	void setActions();
 	void setMenu();
