@@ -29,7 +29,7 @@ void LineEdit::focusOutEvent(QFocusEvent *e)
 	QString value = text();
 
 	// If is empty, continue. But if is not, must be with different value.
-	if (value == "" || (value != "" && value != m_LastText)) {
+	if (m_LastText.isNull() || value != m_LastText) {
 		m_LastText = value;
 
 		emit blurAndChanged(value);

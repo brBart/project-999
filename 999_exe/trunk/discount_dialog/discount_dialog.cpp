@@ -73,6 +73,7 @@ void DiscountDialog::percentageSetted(QString content)
 		m_Console->cleanFailure("percentage");
 		m_IsPercentageSet = true;
 	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->cleanFailure("percentage");
 		m_Console->displayFailure(errorMsg, "percentage");
 		m_IsPercentageSet = false;
 	} else {

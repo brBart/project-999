@@ -100,6 +100,7 @@ void FetchedCustomerState::nameSetted(QString content)
 	if (response == XmlResponseHandler::Success) {
 		m_Dialog->console()->cleanFailure("name");
 	} else if (response == XmlResponseHandler::Failure) {
+		m_Dialog->console()->cleanFailure("name");
 		m_Dialog->console()->displayFailure(errorMsg, "name");
 	} else {
 		m_Dialog->console()->displayError(errorMsg);
