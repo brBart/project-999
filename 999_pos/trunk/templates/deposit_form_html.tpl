@@ -22,7 +22,7 @@ var objectKey = {$key};
 		  		<label id="bank_account_label">Cuenta bancaria:<span class="hidden">*</span></label>
 		  		<span id="bank_account">{$bank_account|htmlchars}&nbsp;</span>
 		  		<object id="bank_account_id" class="widget_input hidden" type="application/x-bank_account_combo_box"></object>
-		  		<span id="bank_account-failed" class="hidden">*</span>
+		  		<span id="bank_account_id-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label id="bank_label">Banco:</label>
