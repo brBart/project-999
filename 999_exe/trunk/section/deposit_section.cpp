@@ -66,6 +66,62 @@ void DepositSection::numberSetted(QString content)
 }
 
 /**
+ * Sets the bank account on the index of the combo box to the deposit on the server.
+ */
+void DepositSection::setBankAccount(int index)
+{
+	QString bankAccountId = (index != -1)
+			? m_BankAccountComboBox->itemData(index).toString()
+					: "";
+
+	HttpRequest *request = new HttpRequest(m_Request->cookieJar(), this);
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "set_bank_account_deposit");
+	url.addQueryItem("bank_account_id", bankAccountId);
+	url.addQueryItem("key", m_NewDocumentKey);
+	url.addQueryItem("type", "xml");
+
+	connect(request, SIGNAL(finished(QString)), this,
+			SLOT(bankAccountSetted(QString)));
+
+	request->get(url, true);
+}
+
+/**
+ * Reads the response from the server after setting the bank account to the deposit.
+ */
+void DepositSection::bankAccountSetted(QString content)
+{
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+					->create("bank");
+
+	QString errorMsg;
+	XmlResponseHandler::ResponseType response =
+			m_Handler->handle(content, transformer, &errorMsg);
+	if (response == XmlResponseHandler::Success) {
+		m_Console->cleanFailure("bank_account_id");
+
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *params = list[0];
+
+		ui.webView->page()->mainFrame()->findFirstElement("#bank")
+				.setInnerXml(params->value("bank"));
+
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->cleanFailure("bank_account_id");
+		m_Console->displayFailure(errorMsg, "bank_account_id");
+
+		ui.webView->page()->mainFrame()->findFirstElement("#bank")
+				.setInnerXml("&nbsp;");
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void DepositSection::setActions()
@@ -296,6 +352,10 @@ void DepositSection::createDocumentEvent(bool ok,
 			i.next();
 			m_BankAccountComboBox->addItem(i.key() + ", " + i.value(), i.key());
 		}
+
+		// Has to be here. QComboBox signal fires even programmatically!
+		connect(m_BankAccountComboBox, SIGNAL(currentIndexChanged(int)), this,
+					SLOT(setBankAccount(int)));
 
 		m_DepositNumberLineEdit->setFocus();
 	}

@@ -25,6 +25,8 @@ public:
 public slots:
 	void setNumber(QString number);
 	void numberSetted(QString content);
+	void setBankAccount(int index);
+	void bankAccountSetted(QString content);
 
 protected:
 	void setActions();

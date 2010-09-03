@@ -22,6 +22,7 @@
 #include "object_id_xml_transformer.h"
 #include "search_product_results_xml_transformer.h"
 #include "deposit_xml_transformer.h"
+#include "bank_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -73,9 +74,11 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 	} else if (name == "object_id") {
 		return new ObjectIdXmlTransformer();
 	} else if (name == "search_product_results") {
-			return new SearchProductResultsXmlTransformer();
+		return new SearchProductResultsXmlTransformer();
 	} else if (name == "deposit") {
-			return new DepositXmlTransformer();
+		return new DepositXmlTransformer();
+	} else if (name == "bank") {
+		return new BankXmlTransformer();
 	} else {
 		return NULL;
 	}
