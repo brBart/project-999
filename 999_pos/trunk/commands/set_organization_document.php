@@ -13,6 +13,10 @@ require_once('presentation/command.php');
  * For displaying the results.
  */
 require_once('presentation/page.php');
+/**
+ * For obtaining the organization class.
+ */
+require_once('business/agent.php');
 
 /**
  * Defines common functionality for the set organization document derived classes.

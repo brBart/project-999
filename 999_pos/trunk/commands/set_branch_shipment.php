@@ -9,10 +9,6 @@
  * Base class.
  */
 require_once('commands/set_organization_document.php');
-/**
- * For obtaining the branch class.
- */
-require_once('business/agent.php');
 
 /**
  * Defines functionality for setting the shipment's branch.
