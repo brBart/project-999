@@ -688,7 +688,7 @@ class DepositDAM{
 	static public function getInstance($id, &$total_pages, &$total_items, $page){
 		switch($id){
 			case 123:
-				$deposit = new Deposit(CashRegister::getInstance(123), '12/03/2009',
+				$deposit = new Deposit(CashRegister::getInstance(123), '12/03/2009 00:00:00',
 						UserAccount::getInstance('roboli'), $id, Deposit::CREATED);
 				$details[] = new DepositDetail(new Cash(1.0, 123, Persist::CREATED), 5.00);
 				$deposit->setData('4215', BankAccount::getInstance('123'), 5.00, $details);
