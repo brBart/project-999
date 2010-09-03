@@ -279,8 +279,8 @@ class Deposit extends PersistDocument implements Itemized{
 	 * @param string $number
 	 */
 	public function setNumber($number){
-		String::validateString($number, 'N&uacute;mero de deposito inv&aacute;lido.');
 		$this->_mNumber = $number;
+		String::validateString($number, 'N&uacute;mero de deposito inv&aacute;lido.');
 	}
 	
 	/**
