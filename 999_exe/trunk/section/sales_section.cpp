@@ -533,7 +533,7 @@ void SalesSection::updateActions()
 			break;
 
 		case Loading:
-			values = "000010000000000000";
+			values = "000000000000000000";
 			break;
 
 		default:;

@@ -296,7 +296,7 @@ void DepositSection::updateActions()
 			break;
 
 		case Loading:
-			values = "00001000000000";
+			values = "00000000000000";
 			break;
 
 		default:;
