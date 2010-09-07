@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/bank_xml_transformer.h \
+HEADERS += available_cash_dialog/available_cash_dialog.h \
+    xml_transformer/bank_xml_transformer.h \
     xml_transformer/deposit_xml_transformer.h \
     xml_transformer/invoice_xml_transformer.h \
     plugins/combo_box.h \
@@ -68,7 +69,8 @@ HEADERS += xml_transformer/bank_xml_transformer.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += xml_transformer/bank_xml_transformer.cpp \
+SOURCES += available_cash_dialog/available_cash_dialog.cpp \
+    xml_transformer/bank_xml_transformer.cpp \
     xml_transformer/deposit_xml_transformer.cpp \
     xml_transformer/invoice_xml_transformer.cpp \
     plugins/combo_box.cpp \
@@ -128,7 +130,8 @@ SOURCES += xml_transformer/bank_xml_transformer.cpp \
     xml_response_handler/xml_response_handler.cpp \
     http_request/http_request.cpp \
     main.cpp
-FORMS += consult_product_dialog/consult_product_dialog.ui \
+FORMS += available_cash_dialog/available_cash_dialog.ui \
+    consult_product_dialog/consult_product_dialog.ui \
     search_invoice_dialog/search_invoice_dialog.ui \
     search_product_dialog/search_product_dialog.ui \
     product_quantity_dialog/product_quantity_dialog.ui \
