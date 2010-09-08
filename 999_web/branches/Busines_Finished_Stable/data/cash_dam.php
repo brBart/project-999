@@ -445,32 +445,6 @@ class CashDAM{
 	static private $_mReserved125 = 12.75;
 	static private $_mDeposited125 = 30.00;
 	
-	/**
-	 * Returns the cash amount of the provided object from the database.
-	 *
-	 * @param Cash $obj
-	 * @return float
-	 */
-	static public function getAmount(Cash $obj){
-		switch($obj->getId()){
-			case 123:
-				return self::$_mAmount123;
-				break;
-				
-			case 124:
-				return self::$_mAmount124;
-				break;
-				
-			case 125:
-				return self::$_mAmount125;
-				break;
-			
-			default:
-				return 0;
-		}
-	}
-	
-	
 	static public function getAvailable(Cash $obj){
 		switch($obj->getId()){
 			case 123:
@@ -593,7 +567,18 @@ class CashDAM{
 	 * @return Cash
 	 */
 	static public function getInstance($id){
-		return new Cash(0.00, $id, Persist::CREATED);
+		switch($id){
+			case 123:
+				return new Cash(self::$_mAmount123, $id, NULL, NULL, Persist::CREATED); 
+				
+			case 124:
+				return new Cash(self::$_mAmount124, $id, NULL, NULL, Persist::CREATED);
+				
+			case 125:
+				return new Cash(self::$_mAmount125, $id, NULL, NULL, Persist::CREATED);
+				
+			default:
+		}
 	}
 }
 
@@ -615,7 +600,7 @@ class CashReceiptDAM{
 		switch($obj->getId()){
 			case 123:
 				$receipt = new CashReceipt($obj, 123, $obj->getStatus());
-				$cash = new Cash(43.50, 123, Persist::CREATED);
+				$cash = new Cash(43.50, 123, NULL, NULL, Persist::CREATED);
 				$receipt->setData($cash);
 				return $receipt;
 				break;
@@ -690,7 +675,7 @@ class DepositDAM{
 			case 123:
 				$deposit = new Deposit(CashRegister::getInstance(123), '12/03/2009 00:00:00',
 						UserAccount::getInstance('roboli'), $id, Deposit::CREATED);
-				$details[] = new DepositDetail(new Cash(1.0, 123, Persist::CREATED), 5.00);
+				$details[] = new DepositDetail(new Cash(1.0, 123, NULL, NULL, Persist::CREATED), 5.00);
 				$deposit->setData('4215', BankAccount::getInstance('123'), 5.00, $details);
 				$total_pages = 1;
 				$total_items = 1;
