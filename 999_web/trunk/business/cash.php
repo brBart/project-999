@@ -1849,7 +1849,6 @@ class DepositDetail{
 	 * @param float $amount
 	 */
 	public function increase($amount){
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 		$this->_mAmount += $amount;
 	}
 	
