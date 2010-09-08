@@ -14,8 +14,9 @@ header('Content-Type: text/xml');
 		<row>
 			<detail_id>{$details[i].id}</detail_id>
 			<receipt_id>{$details[i].receipt_id}</receipt_id>
-			<received>{$details[i].received}</received>
-			<deposited>{$details[i].deposited}</deposited>
+			<invoice>{$details[i].serial_number|cat:"-"|cat:$details[i].number}</invoice>
+			<received>{$details[i].received|nf:2}</received>
+			<deposited>{$details[i].deposited|nf:2}</deposited>
 		</row>
 		{/section}
 	</grid>

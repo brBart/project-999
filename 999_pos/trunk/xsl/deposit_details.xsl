@@ -6,6 +6,7 @@
 	      		<tr>
 	      			<th>No.</th>
 	      			<th>Recibo No.</th>
+	      			<th>Factura</th>
 	         		<th>Total efectivo</th>
 	         		<th>Depositado</th>
 	      		</tr>
@@ -17,14 +18,14 @@
 		  			</xsl:when>
 		  			<xsl:otherwise>
 		  				<tr>
-			       			<td colspan="4"></td>
+			       			<td colspan="5"></td>
 			       		</tr>
 		  			</xsl:otherwise>
 		  		</xsl:choose>
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="2"></td>
+	       			<td colspan="3"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
 	       		</tr>
@@ -48,6 +49,9 @@
 	           	</td>
 	           	<td>
 	       			<xsl:value-of select="receipt_id" />
+       			</td>
+       			<td>
+	       			<xsl:value-of select="invoice" />
        			</td>
        			<td><xsl:value-of select="received" /></td>
     			<td class="total_col"><xsl:value-of select="deposited" /></td>
