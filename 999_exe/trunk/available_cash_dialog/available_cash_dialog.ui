@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>472</width>
+    <width>560</width>
     <height>311</height>
    </rect>
   </property>
@@ -83,15 +83,20 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QTreeWidget" name="treeWidget">
+    <widget class="QTreeWidget" name="availableCashReceiptTreeWidget">
      <column>
       <property name="text">
-       <string/>
+       <string>  </string>
       </property>
      </column>
      <column>
       <property name="text">
        <string>Recibo No.</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Factura</string>
       </property>
      </column>
      <column>

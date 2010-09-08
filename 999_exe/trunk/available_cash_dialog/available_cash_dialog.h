@@ -15,8 +15,8 @@ class AvailableCashDialog : public QDialog
     Q_OBJECT
 
 public:
-    AvailableCashDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent = 0,
-    		Qt::WindowFlags f = 0);
+    AvailableCashDialog(QNetworkCookieJar *jar, QUrl *url, QString cashRegisterKey,
+    		QWidget *parent = 0, Qt::WindowFlags f = 0);
     ~AvailableCashDialog();
     void init();
 
@@ -29,8 +29,10 @@ private:
 	Console *m_Console;
 	HttpRequest *m_Request;
 	XmlResponseHandler *m_Handler;
+	QString m_CashRegisterKey;
 
 	void setConsole();
+	void populateList(QList<QMap<QString, QString>*> list);
 };
 
 #endif // AVAILABLE_CASH_DIALOG_H

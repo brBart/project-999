@@ -14,8 +14,8 @@
  * Constructs the dialog.
  */
 AvailableCashDialog::AvailableCashDialog(QNetworkCookieJar *jar, QUrl *url,
-		QWidget *parent, Qt::WindowFlags f)
-    : QDialog(parent, f), m_ServerUrl(url)
+		QString cashRegisterKey, QWidget *parent, Qt::WindowFlags f)
+    : QDialog(parent, f), m_ServerUrl(url), m_CashRegisterKey(cashRegisterKey)
 {
 	ui.setupUi(this);
 
@@ -47,18 +47,19 @@ void AvailableCashDialog::init()
 {
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "get_available_cash_receipt_list");
+	url.addQueryItem("key", m_CashRegisterKey);
 	url.addQueryItem("type", "xml");
 
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->create("cash_receipt_list");
+			->create("available_cash_receipt_list");
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==
 			XmlResponseHandler::Success) {
-		QList<QMap<QString, QString>*> list = transformer->content();
 
+		populateList(transformer->content());
 
 	} else {
 		m_Console->displayError(errorMsg);
@@ -70,7 +71,7 @@ void AvailableCashDialog::init()
 /**
  * Sets the Console object.
  */
-void DiscountDialog::setConsole()
+void AvailableCashDialog::setConsole()
 {
 	QMap<QString, QLabel*> elements;
 	elements.insert("cash_receipt", ui.cashReceiptFailedLabel);
@@ -78,4 +79,23 @@ void DiscountDialog::setConsole()
 
 	m_Console = ConsoleFactory::instance()->createWidgetConsole(elements);
 	m_Console->setFrame(ui.webView->page()->mainFrame());
+}
+
+/**
+ * Populates the tree widget with the cash receipt available list.
+ */
+void AvailableCashDialog::populateList(QList<QMap<QString, QString>*> list)
+{
+	QTreeWidgetItem *item;
+
+	for (int i = 0; i < list.size(); i++) {
+		item = new QTreeWidgetItem(ui.availableCashReceiptTreeWidget);
+		item->setText(1, list.at(i)->value("id"));
+		item->setText(2, list.at(i)->value("serial_number") + " " +
+				list.at(i)->value("number"));
+		item->setText(3, list.at(i)->value("received_cash"));
+		item->setText(4, list.at(i)->value("available_cash"));
+
+		ui.availableCashReceiptTreeWidget->addTopLevelItem(item);
+	}
 }

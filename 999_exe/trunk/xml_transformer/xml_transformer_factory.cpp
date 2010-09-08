@@ -23,6 +23,7 @@
 #include "search_product_results_xml_transformer.h"
 #include "deposit_xml_transformer.h"
 #include "bank_xml_transformer.h"
+#include "available_cash_receipt_list_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -79,6 +80,8 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new DepositXmlTransformer();
 	} else if (name == "bank") {
 		return new BankXmlTransformer();
+	} else if (name == "available_cash_receipt_list") {
+			return new AvailableCashReceiptListXmlTransformer();
 	} else {
 		return NULL;
 	}

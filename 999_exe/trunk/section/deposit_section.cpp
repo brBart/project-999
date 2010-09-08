@@ -9,6 +9,8 @@
 
 #include "../xml_transformer/xml_transformer_factory.h"
 
+#include "../available_cash_dialog/available_cash_dialog.h"
+
 /**
  * @class DepositSection
  * Section that manages the deposit documents.
@@ -122,6 +124,22 @@ void DepositSection::bankAccountSetted(QString content)
 }
 
 /**
+ * Shows the AvailableCashDialog for adding cash to the deposit.
+ */
+void DepositSection::addCashDeposit()
+{
+	AvailableCashDialog dialog(m_Request->cookieJar(), m_ServerUrl, m_CashRegisterKey,
+			this, Qt::WindowTitleHint);
+
+	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
+
+	dialog.init();
+
+	dialog.exec();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void DepositSection::setActions()
@@ -146,10 +164,11 @@ void DepositSection::setActions()
 	m_ExitAction->setShortcut(Qt::Key_Escape);
 	connect(m_ExitAction, SIGNAL(triggered()), this, SLOT(unloadSection()));
 
-	m_AddItemAction = new QAction("Agregar producto", this);
+	m_AddItemAction = new QAction("Agregar efectivo", this);
 	m_AddItemAction->setShortcut(tr("Ctrl+I"));
+	connect(m_AddItemAction, SIGNAL(triggered()), this, SLOT(addCashDeposit()));
 
-	m_DeleteItemAction = new QAction("Quitar producto", this);
+	m_DeleteItemAction = new QAction("Quitar efectivo", this);
 	m_DeleteItemAction->setShortcut(tr("Ctrl+D"));
 
 	m_ScrollUpAction = new QAction("Desplazar arriba", this);

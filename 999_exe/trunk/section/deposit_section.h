@@ -27,6 +27,7 @@ public slots:
 	void numberSetted(QString content);
 	void setBankAccount(int index);
 	void bankAccountSetted(QString content);
+	void addCashDeposit();
 
 protected:
 	void setActions();
