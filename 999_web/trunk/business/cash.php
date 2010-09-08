@@ -1608,6 +1608,20 @@ class Cash extends Persist{
 	private $_mId;
 	
 	/**
+	 * Holds the invoice's serial number from which this cash belongs.
+	 * 
+	 * @var string
+	 */
+	private $_mSerialNumber;
+	
+	/**
+	 * Holds the invoice's number from which this cash belongs.
+	 * 
+	 * @var integer
+	 */
+	private $_mNumber;
+	
+	/**
 	 * Holds the amount value on cash.
 	 *
 	 * @var float
@@ -1619,7 +1633,8 @@ class Cash extends Persist{
 	 *
 	 * @param float $amount
 	 */
-	public function __construct($amount, $id = NULL, $status = Persist::IN_PROGRESS){
+	public function __construct($amount, $id = NULL, $serialNumber = NULL, $number = NULL,
+			$status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if(!is_null($id))
@@ -1627,6 +1642,8 @@ class Cash extends Persist{
 		
 		$this->_mAmount = $amount;
 		$this->_mId = $id;
+		$this->_mSerialNumber = $serialNumber;
+		$this->_mNumber = $number;
 	}
 	
 	/**
@@ -1639,16 +1656,30 @@ class Cash extends Persist{
 	}
 	
 	/**
+	 * Returns the invoice's serial number. Sorry, for displaying purposes.
+	 * 
+	 * @return string
+	 */
+	public function getSerialNumber(){
+		return $this->_mSerialNumber;
+	}
+	
+	/**
+	 * Returns the invoice's number.  Sorry, for displaying purposes.
+	 * 
+	 * @return integer
+	 */
+	public function getNumber(){
+		return $this->_mNumber;
+	}
+	
+	/**
 	 * Returns the cash amount.
 	 *
-	 * If the status property is set to Persist::CREATED the database value is returned.
 	 * @return float
 	 */
 	public function getAmount(){
-		if($this->_mStatus == Persist::CREATED)
-			return CashDAM::getAmount($this);
-		else
-			return $this->_mAmount;
+		return $this->_mAmount;
 	}
 	
 	/**
@@ -1807,7 +1838,9 @@ class DepositDetail{
 	 */
 	public function show(){
 		return array('id' => $this->_mCash->getId(), 'receipt_id' => $this->_mCash->getId(),
-				'received' => $this->_mCash->getAmount(), 'deposited' => $this->_mAmount);
+				'serial_number' => $this->_mCash->getSerialNumber(),
+				'number' => $this->_mCash->getNumber(), 'received' => $this->_mCash->getAmount(),
+				'deposited' => $this->_mAmount);
 	}
 	
 	/**

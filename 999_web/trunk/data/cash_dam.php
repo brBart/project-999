@@ -449,18 +449,6 @@ class PaymentCardBrandDAM{
  */
 class CashDAM{	
 	/**
-	 * Returns the cash amount of the provided object from the database.
-	 *
-	 * @param Cash $obj
-	 * @return float
-	 */
-	static public function getAmount(Cash $obj){
-		$sql = 'CALL cash_receipt_cash_get(:cash_receipt_id)';
-		$params = array(':cash_receipt_id' => $obj->getId());
-		return (float)DatabaseHandler::getOne($sql, $params);
-	}
-	
-	/**
 	 * Returns the cash amount available of the provided object from the database.
 	 *
 	 * @param Cash $obj
@@ -527,13 +515,14 @@ class CashDAM{
 	 * @return Cash
 	 */
 	static public function getInstance($id){
-		$sql = 'CALL cash_receipt_exists(:cash_receipt_id)';
+		$sql = 'CALL cash_receipt_cash_get(:cash_receipt_id)';
 		$params = array(':cash_receipt_id' => $id);
-		$result = DatabaseHandler::getOne($sql, $params);
+		$result = DatabaseHandler::getRow($sql, $params);
 		
-		if($result > 0)
+		if(!empty($result))
 			// Because the cash object consults directly with the database.
-			return new Cash(0.00, $id, Persist::CREATED);
+			return new Cash($result['cash'], $id, $result['serial_number'], $result['number'],
+					Persist::CREATED);
 		else
 			return NULL;
 	}
