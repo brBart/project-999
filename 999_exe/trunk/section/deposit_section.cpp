@@ -128,15 +128,16 @@ void DepositSection::bankAccountSetted(QString content)
  */
 void DepositSection::addCashDeposit()
 {
-	AvailableCashDialog dialog(m_Request->cookieJar(), m_ServerUrl, m_CashRegisterKey,
-			this, Qt::WindowTitleHint);
+	AvailableCashDialog dialog(m_Request->cookieJar(), m_ServerUrl,
+			m_CashRegisterKey, m_NewDocumentKey, this, Qt::WindowTitleHint);
 
 	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
 
 	dialog.init();
 
-	dialog.exec();
+	if (dialog.exec() == QDialog::Accepted)
+		fetchDocumentDetails(m_NewDocumentKey);
 }
 
 /**

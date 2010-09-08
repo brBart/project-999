@@ -16,9 +16,14 @@ class AvailableCashDialog : public QDialog
 
 public:
     AvailableCashDialog(QNetworkCookieJar *jar, QUrl *url, QString cashRegisterKey,
-    		QWidget *parent = 0, Qt::WindowFlags f = 0);
+    		QString depositKey, QWidget *parent = 0, Qt::WindowFlags f = 0);
     ~AvailableCashDialog();
     void init();
+
+public slots:
+	void setCashReceiptId(const QString id);
+	void selectRadioButton(QTreeWidgetItem *item, int column);
+	void addCashDeposit();
 
 signals:
 	void sessionStatusChanged(bool isActive);
@@ -30,6 +35,8 @@ private:
 	HttpRequest *m_Request;
 	XmlResponseHandler *m_Handler;
 	QString m_CashRegisterKey;
+	QString m_DepositKey;
+	QString m_CashReceiptId;
 
 	void setConsole();
 	void populateList(QList<QMap<QString, QString>*> list);
