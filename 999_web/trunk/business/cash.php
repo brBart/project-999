@@ -1672,7 +1672,6 @@ class Cash extends Persist{
 	 */
 	public function reserve($amount){
 		if($this->_mStatus == Persist::CREATED){
-			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 			CashDAM::reserve($this, $amount);
 		}
 	}
@@ -1685,7 +1684,6 @@ class Cash extends Persist{
 	 */
 	public function decreaseReserve($amount){
 		if($this->_mStatus == Persist::CREATED){
-			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 			CashDAM::decreaseReserve($this, $amount);
 		}
 	}
@@ -1777,7 +1775,7 @@ class DepositDetail{
 	 */
 	public function __construct(Cash $cash, $amount){
 		Persist::validateObjectFromDatabase($cash);
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
+		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.');
 		
 		$this->_mCash = $cash;
 		$this->_mAmount = $amount;
@@ -1857,11 +1855,10 @@ class DepositEvent{
 	 * @throws Exception
 	 */
 	static public function apply(Cash $cash, Deposit $deposit, $amount){
-		Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
-		Persist::validateNewObject($deposit);
+		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
 		
 		if($cash->getAvailable() < $amount)
-			throw new Exception('No hay suficiente efectivo disponible.');
+			throw new ValidateException('No hay suficiente efectivo disponible.', 'amount');
 			
 		$deposit->addDetail(new DepositDetail($cash, $amount));
 		$cash->reserve($amount);
