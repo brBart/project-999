@@ -10,8 +10,6 @@
 
 #include "xml_transformer.h"
 
-#include <QMap>
-
 class InvoiceListXmlTransformer: public XmlTransformer
 {
 public:
