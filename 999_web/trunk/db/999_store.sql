@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-09-2010 a las 12:10:42
+-- Tiempo de generación: 08-09-2010 a las 18:44:40
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -1671,11 +1671,13 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_available_list_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT cash_receipt_id, cash AS received_cash, (cash - (reserved + deposited)) AS available_cash FROM cash_receipt cr
+  SELECT cr.cash_receipt_id AS id, cor.serial_number, inv.number, cr.cash AS received_cash,
 
-      INNER JOIN invoice inv ON cr.cash_receipt_id = inv.invoice_id
+      (cr.cash - (cr.reserved + cr.deposited)) AS available_cash FROM cash_receipt cr
 
-    WHERE inv.cash_register_id = inCashRegisterId;
+      INNER JOIN invoice inv ON cr.cash_receipt_id = inv.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
+
+    WHERE inv.cash_register_id = inCashRegisterId AND (cr.cash - (cr.reserved + cr.deposited)) > 0 AND inv.status = 1;
 
 END$$
 
@@ -1691,7 +1693,9 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_cash_get`(IN inCashReceiptId INT)
 BEGIN
 
-  SELECT cash FROM cash_receipt
+  SELECT cr.cash, cor.serial_number, inv.number FROM cash_receipt cr INNER JOIN invoice inv ON cr.cash_receipt_id = inv.invoice_id
+
+     INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
     WHERE cash_receipt_id = inCashReceiptId;
 
@@ -1719,19 +1723,10 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_exists`(IN inCashReceiptId INT)
-BEGIN
-
-  SELECT COUNT(*) FROM cash_receipt
-
-    WHERE cash_receipt_id = inCashReceiptId;
-
-END$$
-
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_get`(IN inCashReceiptId INT)
 BEGIN
 
-  SELECT change_amount, total_vouchers FROM cash_receipt
+  SELECT cash, change_amount, total_vouchers FROM cash_receipt
 
     WHERE cash_receipt_id = inCashReceiptId;
 
