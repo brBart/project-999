@@ -35,7 +35,7 @@ void DepositSection::setNumber(QString number)
 
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "set_number_object");
-	url.addQueryItem("value", m_DepositNumberLineEdit->text());
+	url.addQueryItem("value", m_SlipNumberLineEdit->text());
 	url.addQueryItem("key", m_NewDocumentKey);
 	url.addQueryItem("type", "xml");
 
@@ -56,10 +56,10 @@ void DepositSection::numberSetted(QString content)
 	XmlResponseHandler::ResponseType response =
 			m_Handler->handle(content, transformer, &errorMsg);
 	if (response == XmlResponseHandler::Success) {
-		m_Console->cleanFailure("deposit_number");
+		m_Console->cleanFailure("slip_number");
 	} else if (response == XmlResponseHandler::Failure) {
-		m_Console->cleanFailure("deposit_number");
-		m_Console->displayFailure(errorMsg, "deposit_number");
+		m_Console->cleanFailure("slip_number");
+		m_Console->displayFailure(errorMsg, "slip_number");
 	} else {
 		m_Console->displayError(errorMsg);
 	}
@@ -277,12 +277,12 @@ void DepositSection::setPlugins()
 {
 	DocumentSection::setPlugins();
 
-	m_DepositNumberLineEdit = new LineEditPlugin();
+	m_SlipNumberLineEdit = new LineEditPlugin();
 	webPluginFactory()
-			->install("application/x-deposit_number_line_edit",
-					m_DepositNumberLineEdit);
+			->install("application/x-slip_number_line_edit",
+					m_SlipNumberLineEdit);
 
-	connect(m_DepositNumberLineEdit, SIGNAL(blurAndChanged(QString)), this,
+	connect(m_SlipNumberLineEdit, SIGNAL(blurAndChanged(QString)), this,
 			SLOT(setNumber(QString)));
 
 	m_BankAccountComboBox = new ComboBox();
@@ -337,13 +337,13 @@ void DepositSection::prepareDocumentForm(QString dateTime, QString username)
 	QWebFrame *frame = ui.webView->page()->mainFrame();
 	QWebElement element;
 
-	element = frame->findFirstElement("#deposit_number_label span");
+	element = frame->findFirstElement("#slip_number_label span");
 	element.removeClass("hidden");
 
-	element = frame->findFirstElement("#deposit_number_value");
+	element = frame->findFirstElement("#slip_number_value");
 	element.addClass("hidden");
 
-	element = frame->findFirstElement("#deposit_number");
+	element = frame->findFirstElement("#slip_number");
 	element.removeClass("hidden");
 
 	element = frame->findFirstElement("#bank_account_label span");
@@ -379,7 +379,7 @@ void DepositSection::createDocumentEvent(bool ok,
 		connect(m_BankAccountComboBox, SIGNAL(currentIndexChanged(int)), this,
 					SLOT(setBankAccount(int)));
 
-		m_DepositNumberLineEdit->setFocus();
+		m_SlipNumberLineEdit->setFocus();
 	}
 }
 

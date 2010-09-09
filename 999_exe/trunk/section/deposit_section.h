@@ -41,7 +41,7 @@ protected:
 	void createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *list = 0);
 
 private:
-	LineEditPlugin *m_DepositNumberLineEdit;
+	LineEditPlugin *m_SlipNumberLineEdit;
 	ComboBox *m_BankAccountComboBox;
 
 	QString navigateValues();
