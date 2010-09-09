@@ -7,8 +7,8 @@
 
 #include "deposit_section.h"
 
+#include <QMessageBox>
 #include "../xml_transformer/xml_transformer_factory.h"
-
 #include "../available_cash_dialog/available_cash_dialog.h"
 
 /**
@@ -140,6 +140,39 @@ void DepositSection::addCashDeposit()
 		fetchDocumentDetails(m_NewDocumentKey);
 }
 
+void DepositSection::saveDeposit()
+{
+	if (QMessageBox::question(this, "Guardar",
+			"Una vez guardado el documento no se podra editar mas. ¿Desea guardar?",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		return;
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "save_object");
+	url.addQueryItem("key", m_NewDocumentKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()->create("stub");
+
+	QString errorMsg, elementId;
+	XmlResponseHandler::ResponseType response = m_Handler->handle(content,
+			transformer, &errorMsg, &elementId);
+	if (response == XmlResponseHandler::Success) {
+
+		removeNewDocumentFromSession();
+		refreshRecordset();
+		m_Recordset.moveLast();
+
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->reset();
+		m_Console->displayFailure(errorMsg, elementId);
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+}
+
 /**
  * Creates the QActions for the menu bar.
  */
@@ -151,6 +184,7 @@ void DepositSection::setActions()
 
 	m_SaveAction = new QAction("Guardar", this);
 	m_SaveAction->setShortcut(tr("Ctrl+S"));
+	connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(saveDeposit()));
 
 	m_DiscardAction = new QAction("Cancelar", this);
 	m_DiscardAction->setShortcut(Qt::Key_Escape);
