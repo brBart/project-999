@@ -44,6 +44,8 @@ public:
 
 	void setCreateDocumentTransformerName(QString name);
 
+	void setItemsName(QString name);
+
 public slots:
 	void loadFinished(bool ok);
 	void fetchDocument(QString id);
@@ -55,6 +57,7 @@ public slots:
 	void scrollDown();
 	void showAuthenticationDialogForCancel();
 	void cancelDocument();
+	void deleteItemDocument();
 
 protected:
 	Console *m_Console;
@@ -102,7 +105,6 @@ protected:
 	void fetchDocumentForm();
 	void removeNewDocumentFromSession();
 	virtual void prepareDocumentForm(QString dateTime, QString username);
-	void deleteItemDocument(int row);
 	WebPluginFactory* webPluginFactory();
 	virtual void setPlugins();
 
@@ -126,6 +128,8 @@ private:
 	QString m_CancelDocumentCmd;
 
 	QString m_CreateDocumentTransformer;
+
+	QString m_ItemsName;
 
 	void fetchStyleSheet();
 	void removeDocumentFromSession();

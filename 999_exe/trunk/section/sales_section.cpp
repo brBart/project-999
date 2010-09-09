@@ -8,7 +8,6 @@
 #include "sales_section.h"
 
 #include <QList>
-#include <QInputDialog>
 #include <QPrinter>
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../customer_dialog/customer_dialog.h"
@@ -121,19 +120,6 @@ void SalesSection::addProductInvoice(QString barCode, int quantity)
 	} else {
 		m_BarCodeLineEdit->setText("");
 	}
-}
-
-/**
- * Removes a product from the invoice on the server.
- */
-void SalesSection::deleteProductInvoice()
-{
-	bool ok;
-	int row = QInputDialog::getInt(this, "Quitar Producto", "Fila #:", 0, 1, 9999,
-			1, &ok, Qt::WindowTitleHint);
-
-	if (ok)
-		deleteItemDocument(row);
 }
 
 /**
@@ -370,7 +356,7 @@ void SalesSection::setActions()
 	m_DeleteItemAction = new QAction("Quitar producto", this);
 	m_DeleteItemAction->setShortcut(tr("Ctrl+D"));
 	connect(m_DeleteItemAction, SIGNAL(triggered()), this,
-			SLOT(deleteProductInvoice()));
+			SLOT(deleteItemDocument()));
 
 	m_SearchProductAction = new QAction("Buscar producto", this);
 	m_SearchProductAction->setShortcut(Qt::Key_F5);

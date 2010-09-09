@@ -13,6 +13,7 @@
  */
 
 #include <QMessageBox>
+#include <QInputDialog>
 #include "../registry.h"
 #include "../console/console_factory.h"
 #include "../xml_transformer/xml_transformer_factory.h"
@@ -142,6 +143,14 @@ void DocumentSection::setCanceDocumentCmd(QString cmd)
 void DocumentSection::setCreateDocumentTransformerName(QString name)
 {
 	m_CreateDocumentTransformer = name;
+}
+
+/**
+ * Sets the name to use for the items for the delete items dialog title.
+ */
+void DocumentSection::setItemsName(QString name)
+{
+	m_ItemsName = name;
 }
 
 /**
@@ -388,6 +397,48 @@ void DocumentSection::cancelDocument()
 }
 
 /**
+ * Deletes the row from the document details on the server.
+ */
+void DocumentSection::deleteItemDocument()
+{
+	bool ok;
+	int row = QInputDialog::getInt(this, "Quitar " + m_ItemsName ,
+			"Fila #:", 0, 1, 9999, 1, &ok, Qt::WindowTitleHint);
+
+	if (ok) {
+		QWebElement tr = ui.webView->page()->mainFrame()
+						->findFirstElement("#tr" + QString::number(row));
+
+		if (!tr.isNull()) {
+			QWebElement td = tr.findFirst("td");
+			QString detailId = td.attribute("id");
+
+			QUrl url(*m_ServerUrl);
+			url.addQueryItem("cmd", m_DeleteItemDocumentCmd);
+			url.addQueryItem("key", m_NewDocumentKey);
+			url.addQueryItem("detail_id", detailId);
+			url.addQueryItem("type", "xml");
+
+			QString content = m_Request->get(url);
+
+			XmlTransformer *transformer = XmlTransformerFactory::instance()
+					->create("stub");
+
+			QString errorMsg;
+			XmlResponseHandler::ResponseType response =
+					m_Handler->handle(content, transformer, &errorMsg);
+			if (response == XmlResponseHandler::Success) {
+				fetchDocumentDetails(m_NewDocumentKey);
+			} else if(response == XmlResponseHandler::Error) {
+				m_Console->displayError(errorMsg);
+			}
+
+			delete transformer;
+		}
+	}
+}
+
+/**
  * Changes the cash register to Loading state and loads a html page.
  */
 void DocumentSection::loadUrl(QUrl url)
@@ -499,42 +550,6 @@ void DocumentSection::prepareDocumentForm(QString dateTime, QString username)
 	element = frame->findFirstElement("#main_data");
 	element.removeClass("disabled");
 	element.addClass("enabled");
-}
-
-/**
- * Deletes the row from the document details on the server.
- */
-void DocumentSection::deleteItemDocument(int row)
-{
-	QWebElement tr = ui.webView->page()->mainFrame()
-					->findFirstElement("#tr" + QString::number(row));
-
-	if (!tr.isNull()) {
-		QWebElement td = tr.findFirst("td");
-		QString detailId = td.attribute("id");
-
-		QUrl url(*m_ServerUrl);
-		url.addQueryItem("cmd", m_DeleteItemDocumentCmd);
-		url.addQueryItem("key", m_NewDocumentKey);
-		url.addQueryItem("detail_id", detailId);
-		url.addQueryItem("type", "xml");
-
-		QString content = m_Request->get(url);
-
-		XmlTransformer *transformer = XmlTransformerFactory::instance()
-				->create("stub");
-
-		QString errorMsg;
-		XmlResponseHandler::ResponseType response =
-				m_Handler->handle(content, transformer, &errorMsg);
-		if (response == XmlResponseHandler::Success) {
-			fetchDocumentDetails(m_NewDocumentKey);
-		} else if(response == XmlResponseHandler::Error) {
-			m_Console->displayError(errorMsg);
-		}
-
-		delete transformer;
-	}
 }
 
 /**

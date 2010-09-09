@@ -24,7 +24,6 @@ public:
 public slots:
 	void setCustomer();
 	void addProductInvoice(QString barCode, int quantity = 1);
-	void deleteProductInvoice();
 	void showAuthenticationDialogForDiscount();
 	void createDiscount();
 	void createCashReceipt();
