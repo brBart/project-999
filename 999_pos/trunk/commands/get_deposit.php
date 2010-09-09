@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetInvoiceCommand class.
+ * Library containing the GetDepositCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -10,11 +10,7 @@
  */
 require_once('commands/get_cash_register_object.php');
 /**
- * Library with the invoice class.
- */
-require_once('business/document.php');
-/**
- * For obtaining the cash receipt.
+ * For obtaining the objects.
  */
 require_once('business/cash.php');
 
@@ -23,7 +19,7 @@ require_once('business/cash.php');
  * @package Command
  * @author Roberto Oliveros
  */
-class GetInvoiceCommand extends GetCashRegisterObjectCommand{
+class GetDepositCommand extends GetCashRegisterObjectCommand{
 	/**
 	 * Returns an instance of the object to display.
 	 * 
@@ -31,7 +27,7 @@ class GetInvoiceCommand extends GetCashRegisterObjectCommand{
 	 * @return variant
 	 */
 	protected function getObject($id){
-		return Invoice::getInstance((int)$id);
+		return Deposit::getInstance((int)$id);
 	}
 	
 	/**
@@ -45,22 +41,19 @@ class GetInvoiceCommand extends GetCashRegisterObjectCommand{
 	protected function displayObject(WorkingDay $workingDay, CashRegister $cashRegister,
 			Shift $shift, $key, $obj){
 				
-		$correlative = $obj->getCorrelative();
 		$user = $obj->getUser();
-		$cash_receipt = CashReceipt::getInstance($obj);
-		$cash = $cash_receipt->getCash();
+		$bank_account = $obj->getBankAccount();
+		$bank = $bank_account->getBank();
 		
 		Page::display(array('module_title' => POS_TITLE, 'back_trace' => $this->getBackTrace(),
 				'content' => $this->getTemplate(), 'key' => $key,
 				'cash_register_id' => $cashRegister->getId(), 'date' => $workingDay->getDate(),
 				'status' => $obj->getStatus(), 'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
 				'cash_register_status' => (int)$cashRegister->isOpen(),
-				'serial_number' => $correlative->getSerialNumber(), 'number' => $obj->getNumber(),
-				'date_time' => $obj->getDateTime(), 'username' => $user->getUserName(),
-				'nit' => $obj->getCustomerNit(), 'customer' => $obj->getCustomerName(),
-				'cash_amount' => $cash->getAmount() + $cash_receipt->getChange(),
-				'vouchers_total' => $cash_receipt->getTotalVouchers(),
-				'change_amount' => $cash_receipt->getChange()), 'site_pos_html.tpl');
+				'id' => $obj->getId(), 'date_time' => $obj->getDateTime(),
+				'username' => $user->getUserName(), 'slip_number' => $obj->getNumber(),
+				'bank_account' => $bank_account->getNumber() . ', ' . $bank_account->getHolderName(),
+				'bank' => $bank->getName()), 'site_pos_html.tpl');
 	}
 	
 	/**
@@ -69,7 +62,7 @@ class GetInvoiceCommand extends GetCashRegisterObjectCommand{
 	 * @return array
 	 */
 	protected function getBackTrace(){
-		return array('Inicio', 'Facturaci&oacute;n');
+		return array('Inicio', 'Depositos');
 	}
 	
 	/**
@@ -78,7 +71,7 @@ class GetInvoiceCommand extends GetCashRegisterObjectCommand{
 	 * @return string
 	 */
 	protected function getTemplate(){
-		return 'invoice_form_html.tpl';
+		return 'deposit_form_html.tpl';
 	}
 	
 	/**
@@ -87,7 +80,7 @@ class GetInvoiceCommand extends GetCashRegisterObjectCommand{
 	 * @return string
 	 */
 	protected function getMessage(){
-		return 'Factura no existe.';
+		return 'Deposito no existe.';
 	}
 }
 ?>
