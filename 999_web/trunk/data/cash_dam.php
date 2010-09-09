@@ -609,6 +609,19 @@ class CashReceiptDAM{
  */
 class DepositDAM{
 	/**
+	 * Verifies if the slip number on the bank already exists in the database.
+	 *
+	 * @param string $number
+	 * @param Bank $bank
+	 * @return boolean
+	 */
+	static public function exists($number, Bank $bank){
+		$sql = 'CALL deposit_number_bank_exists(:number, :bank_id)';
+		$params = array(':number' => $number, 'bank_id' => $bank->getId());
+		return (boolean)DatabaseHandler::getOne($sql, $params);
+	}
+	
+	/**
 	 * Change the deposit's status to confirmed in the database.
 	 *
 	 * @param Deposit $obj
