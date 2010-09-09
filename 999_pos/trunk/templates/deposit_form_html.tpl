@@ -13,10 +13,10 @@ var objectKey = {$key};
 		{include file='header_data_html.tpl' document_name='Deposito'}
 		<fieldset id="main_data">
 			<p>
-		  		<label id="deposit_number_label">Boleta No:<span class="hidden">*</span></label>
-		  		<span id="deposit_number_value">{$deposit_number|htmlchars}&nbsp;</span>
-		  		<object id="deposit_number" class="widget_input hidden" type="application/x-deposit_number_line_edit"></object>
-		  		<span id="deposit_number-failed" class="hidden">*</span>
+		  		<label id="slip_number_label">Boleta No:<span class="hidden">*</span></label>
+		  		<span id="slip_number_value">{$slip_number|htmlchars}&nbsp;</span>
+		  		<object id="slip_number" class="widget_input hidden" type="application/x-slip_number_line_edit"></object>
+		  		<span id="slip_number-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label id="bank_account_label">Cuenta bancaria:<span class="hidden">*</span></label>
