@@ -255,7 +255,7 @@ class Deposit extends PersistDocument implements Itemized{
 	 * @return DepositDetail
 	 */
 	public function getDetail($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido');
+		Number::validatePositiveNumber($id, 'Id inv&aacute;lido');
 		
 		foreach($this->_mDetails as &$detail)
 			if($detail->getCash()->getId() == $id)
