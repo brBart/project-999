@@ -545,11 +545,6 @@ void DocumentSection::prepareDocumentForm(QString dateTime, QString username)
 
 	element = frame->findFirstElement("#username");
 	element.setInnerXml(username);
-
-	// Change div css style from disabled to enabled.
-	element = frame->findFirstElement("#main_data");
-	element.removeClass("disabled");
-	element.addClass("enabled");
 }
 
 /**

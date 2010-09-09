@@ -371,6 +371,11 @@ void DepositSection::prepareDocumentForm(QString dateTime, QString username)
 	QWebFrame *frame = ui.webView->page()->mainFrame();
 	QWebElement element;
 
+	// Change div css style from disabled to enabled.
+	element = frame->findFirstElement("#details");
+	element.removeClass("disabled");
+	element.addClass("enabled");
+
 	element = frame->findFirstElement("#slip_number_label span");
 	element.removeClass("hidden");
 

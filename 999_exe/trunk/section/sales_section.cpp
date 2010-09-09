@@ -561,6 +561,11 @@ void SalesSection::prepareDocumentForm(QString dateTime, QString username)
 	QWebFrame *frame = ui.webView->page()->mainFrame();
 	QWebElement element;
 
+	// Change div css style from disabled to enabled.
+	element = frame->findFirstElement("#main_data");
+	element.removeClass("disabled");
+	element.addClass("enabled");
+
 	element = frame->findFirstElement("#serial_number");
 	element.setInnerXml("");
 
