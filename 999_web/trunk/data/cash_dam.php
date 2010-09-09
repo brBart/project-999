@@ -707,8 +707,7 @@ class DepositDAM{
 			
 			$details = array();
 			foreach($items_result as $detail){
-				// Because the cash object consults directly with the database.
-				$cash = new Cash(0.00, (int)$detail['cash_receipt_id'], Persist::CREATED);
+				$cash = CashDAM::getInstance($detail['cash_receipt_id']);
 				$details[] = new DepositDetail($cash, (float)$detail['amount']);
 			}
 			
