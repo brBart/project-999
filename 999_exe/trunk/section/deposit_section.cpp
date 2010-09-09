@@ -171,6 +171,8 @@ void DepositSection::setActions()
 
 	m_DeleteItemAction = new QAction("Quitar efectivo", this);
 	m_DeleteItemAction->setShortcut(tr("Ctrl+D"));
+	connect(m_DeleteItemAction, SIGNAL(triggered()), this,
+			SLOT(deleteItemDocument()));
 
 	m_ScrollUpAction = new QAction("Desplazar arriba", this);
 	m_ScrollUpAction->setShortcut(tr("Ctrl+Up"));

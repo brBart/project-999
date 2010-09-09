@@ -104,7 +104,7 @@ void MainWindow::loadDepositSection()
 		section->setShowDocumentFormCmd("show_deposit_form");
 		section->setGetDocumentCmd("get_deposit");
 		section->setCreateDocumentCmd("create_deposit");
-		section->setDeleteItemDocumentCmd("delete_cash_receipt_deposit");
+		section->setDeleteItemDocumentCmd("delete_cash_deposit");
 		section->setCanceDocumentCmd("cancel_deposit");
 
 		section->setCreateDocumentTransformerName("deposit");
