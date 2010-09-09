@@ -29,7 +29,7 @@ var objectKey = {$key};
 		  		<span id="bank">{$bank|htmlchars}&nbsp;</span>
 		  	</p>
 		  	<p>&nbsp;</p>
-		  	<div id="details" class="items register"></div>
+		  	<div id="details" class="items register disabled"></div>
 	  	</fieldset>
 	  	<fieldset id="data_footer">
 	  		<object id="recordset" type="application/x-recordset"></object>
