@@ -280,7 +280,7 @@ class Deposit extends PersistDocument implements Itemized{
 	 */
 	public function setNumber($number){
 		$this->_mNumber = $number;
-		String::validateString($number, 'N&uacute;mero de deposito inv&aacute;lido.');
+		String::validateString($number, 'N&uacute;mero de boleta inv&aacute;lido.');
 	}
 	
 	/**
@@ -456,13 +456,28 @@ class Deposit extends PersistDocument implements Itemized{
 	 * @throws Exception
 	 */
 	private function validateMainProperties(){
-		String::validateString($this->_mNumber, 'N&uacute;mero de deposito inv&aacute;lido.');
+		String::validateString($this->_mNumber, 'N&uacute;mero de boleta inv&aacute;lido.', 'slip_number');
 		
 		if(is_null($this->_mBankAccount))
-			throw new Exception('Cuenta Bancaria inv&aacute;lida.');
+			throw new ValidateException('Cuenta Bancaria inv&aacute;lida.', 'bank_account_id');
+			
+		$this->verifyNumberBank($this->_mNumber, $this->_mBankAccount->getBank());
 			
 		if(empty($this->_mDetails))
-			throw new Exception('No hay ningun detalle.');
+			throw new ValidateException('No hay ningun detalle.', 'details');
+	}
+	
+	/**
+	 * Verifies if the slip number on the bank already exists in the database.
+	 * 
+	 * Throws an exception if it does.
+	 * @param string $number
+	 * @param Bank $bank
+	 * @throws Exception
+	 */
+	private function verifyNumberBank($number, Bank $bank){
+		if(DepositDAM::exists($number, $bank))
+			throw new ValidateException('N&uacute;mero de boleta ya existe para este banco.', 'slip_number');
 	}
 }
 
@@ -1727,7 +1742,6 @@ class Cash extends Persist{
 	 */
 	public function deposit($amount){
 		if($this->_mStatus == Persist::CREATED){
-			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 			CashDAM::deposit($this, $amount);
 		}
 	}
