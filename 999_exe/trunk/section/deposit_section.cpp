@@ -311,7 +311,9 @@ void DepositSection::setPlugins()
 {
 	DocumentSection::setPlugins();
 
-	m_SlipNumberLineEdit = new LineEditPlugin();
+	// Ownership taken by the section in case the widget is never shown.
+	m_SlipNumberLineEdit = new LineEditPlugin(this);
+	m_SlipNumberLineEdit->hide();
 	webPluginFactory()
 			->install("application/x-slip_number_line_edit",
 					m_SlipNumberLineEdit);
@@ -319,7 +321,9 @@ void DepositSection::setPlugins()
 	connect(m_SlipNumberLineEdit, SIGNAL(blurAndChanged(QString)), this,
 			SLOT(setNumber(QString)));
 
-	m_BankAccountComboBox = new ComboBox();
+	// Ownership taken by the section in case the widget is never shown.
+	m_BankAccountComboBox = new ComboBox(this);
+	m_BankAccountComboBox->hide();
 	webPluginFactory()
 			->install("application/x-bank_account_combo_box", m_BankAccountComboBox);
 }
