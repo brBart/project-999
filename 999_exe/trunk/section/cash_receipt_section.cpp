@@ -59,11 +59,12 @@ CashReceiptSection::CashReceiptSection(QNetworkCookieJar *jar,
 }
 
 /**
- * Destroys the console object.
+ * Destroys the console and query objects.
  */
 CashReceiptSection::~CashReceiptSection()
 {
 	delete m_Console;
+	delete m_Query;
 }
 
 /**

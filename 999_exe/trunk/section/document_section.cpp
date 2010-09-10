@@ -45,11 +45,12 @@ DocumentSection::DocumentSection(QNetworkCookieJar *jar, QWebPluginFactory *fact
 }
 
 /**
- * Destroys the console object.
+ * Destroys the console and query objects.
  */
 DocumentSection::~DocumentSection()
 {
 	delete m_Console;
+	delete m_Query;
 }
 
 /**
