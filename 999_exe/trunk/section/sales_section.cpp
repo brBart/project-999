@@ -680,11 +680,11 @@ void SalesSection::printInvoice(QString id)
 
 	QString content = m_Request->get(url);
 
-	QWebView *webView = new QWebView();
+	QWebView webView;
 
-	webView->setHtml(content);
+	webView.setHtml(content);
 
 	QPrinter printer;
 	printer.setPrinterName(Registry::instance()->printerName());
-	webView->print(&printer);
+	webView.print(&printer);
 }
