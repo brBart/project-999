@@ -212,6 +212,8 @@ void SalesSection::createCashReceipt()
 			m_Console->displayError(errorMsg);
 			errorFree = false;
 		}
+
+		delete transformer;
 	}
 
 	if (errorFree) {
