@@ -127,6 +127,8 @@ void AvailableCashDialog::addCashDeposit()
 	} else {
 		m_Console->displayError(errorMsg);
 	}
+
+	delete transformer;
 }
 
 /**
