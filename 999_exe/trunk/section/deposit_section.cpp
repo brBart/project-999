@@ -171,6 +171,8 @@ void DepositSection::saveDeposit()
 	} else {
 		m_Console->displayError(errorMsg);
 	}
+
+	delete transformer;
 }
 
 /**
