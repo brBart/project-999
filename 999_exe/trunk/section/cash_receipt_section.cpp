@@ -305,6 +305,8 @@ void CashReceiptSection::saveCashReceipt()
 	} else {
 		m_Console->displayError(errorMsg);
 	}
+
+	delete transformer;
 }
 
 /**
