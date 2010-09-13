@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/available_cash_receipt_list_xml_transformer.h \
+HEADERS += recordset/recordset_searcher_factory.h \
+    xml_transformer/available_cash_receipt_list_xml_transformer.h \
     available_cash_dialog/available_cash_dialog.h \
     xml_transformer/bank_xml_transformer.h \
     xml_transformer/deposit_xml_transformer.h \
@@ -70,7 +71,8 @@ HEADERS += xml_transformer/available_cash_receipt_list_xml_transformer.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += xml_transformer/available_cash_receipt_list_xml_transformer.cpp \
+SOURCES += recordset/recordset_searcher_factory.cpp \
+    xml_transformer/available_cash_receipt_list_xml_transformer.cpp \
     available_cash_dialog/available_cash_dialog.cpp \
     xml_transformer/bank_xml_transformer.cpp \
     xml_transformer/deposit_xml_transformer.cpp \

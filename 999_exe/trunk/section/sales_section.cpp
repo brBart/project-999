@@ -17,7 +17,7 @@
 #include "../product_quantity_dialog/product_quantity_dialog.h"
 #include "../search_product_dialog/search_product_dialog.h"
 #include "../search_product/search_product_model.h"
-#include "../recordset/invoice_recordset_searcher.h"
+#include "../recordset/recordset_searcher_factory.h"
 #include "../search_invoice_dialog/search_invoice_dialog.h"
 #include "../consult_product_dialog/consult_product_dialog.h"
 
@@ -299,7 +299,8 @@ void SalesSection::searchInvoice()
 		QString value = dialog.serialNumber() + " " + dialog.number();
 
 		if (value.trimmed() != "") {
-			InvoiceRecordsetSearcher *searcher = new InvoiceRecordsetSearcher();
+			RecordsetSearcher *searcher =
+					RecordsetSearcherFactory::instance()->create("invoice");
 
 			m_Recordset.installSearcher(searcher);
 
