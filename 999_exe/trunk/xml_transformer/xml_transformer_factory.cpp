@@ -83,6 +83,6 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 	} else if (name == "available_cash_receipt_list") {
 			return new AvailableCashReceiptListXmlTransformer();
 	} else {
-		return NULL;
+		return 0;
 	}
 }
