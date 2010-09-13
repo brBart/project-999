@@ -299,8 +299,14 @@ void SalesSection::searchInvoice()
 		QString value = dialog.serialNumber() + " " + dialog.number();
 
 		if (value.trimmed() != "") {
+			InvoiceRecordsetSearcher *searcher = new InvoiceRecordsetSearcher();
+
+			m_Recordset.installSearcher(searcher);
+
 			if (!m_Recordset.search(value))
 				m_Console->displayError("Factura no se encuentra en esta caja.");
+
+			delete searcher;
 		}
 	}
 }
@@ -465,14 +471,6 @@ void SalesSection::setActionsManager()
 	*actions << m_ConsultProductAction;
 
 	m_ActionsManager.setActions(actions);
-}
-
-/**
- * Installs the recordset searcher.
- */
-void SalesSection::installRecordsetSearcher()
-{
-	m_Recordset.installSearcher(new InvoiceRecordsetSearcher());
 }
 
 /**

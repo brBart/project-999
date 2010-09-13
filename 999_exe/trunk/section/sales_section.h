@@ -45,7 +45,6 @@ protected:
 	void setActions();
 	void setMenu();
 	void setActionsManager();
-	void installRecordsetSearcher();
 	void setPlugins();
 	void updateActions();
 	void removeNewDocumentFromSession();

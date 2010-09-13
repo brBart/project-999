@@ -34,7 +34,6 @@ protected:
 	void setActions();
 	void setMenu();
 	void setActionsManager();
-	void installRecordsetSearcher();
 	void setPlugins();
 	void updateActions();
 	void prepareDocumentForm(QString dateTime, QString username);

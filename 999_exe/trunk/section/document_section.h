@@ -114,7 +114,6 @@ protected:
 	virtual void setActions() = 0;
 	virtual void setMenu() = 0;
 	virtual void setActionsManager() = 0;
-	virtual void installRecordsetSearcher() = 0;
 	virtual void updateActions() = 0;
 
 private:

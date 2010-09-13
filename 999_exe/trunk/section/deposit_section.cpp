@@ -299,14 +299,6 @@ void DepositSection::setActionsManager()
 }
 
 /**
- * Installs the recordset searcher.
- */
-void DepositSection::installRecordsetSearcher()
-{
-
-}
-
-/**
  * Installs the necessary plugins widgets in the plugin factory of the web view.
  */
 void DepositSection::setPlugins()

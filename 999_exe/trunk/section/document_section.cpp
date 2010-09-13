@@ -64,7 +64,6 @@ void DocumentSection::init()
 
 	fetchStyleSheet();
 
-	installRecordsetSearcher();
 	refreshRecordset();
 
 	if (m_Recordset.size() > 0) {

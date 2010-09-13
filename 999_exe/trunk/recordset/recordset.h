@@ -12,7 +12,7 @@ class Recordset : public QObject
 
 public:
     Recordset() {};
-    ~Recordset();
+    ~Recordset() {};
     void setList(QList<QMap<QString, QString>*> list);
     int size();
     bool isFirst();

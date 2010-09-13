@@ -7,14 +7,6 @@
  */
 
 /**
- * Destroys the searcher.
- */
-Recordset::~Recordset()
-{
-	delete m_Searcher;
-}
-
-/**
  * Set the list the Recordset will use.
  */
 void Recordset::setList(QList<QMap<QString, QString>*> list)
