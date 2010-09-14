@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += recordset/recordset_searcher_factory.h \
+HEADERS += search_deposit_dialog/search_deposit_dialog.h \
+    recordset/recordset_searcher_factory.h \
     xml_transformer/available_cash_receipt_list_xml_transformer.h \
     available_cash_dialog/available_cash_dialog.h \
     xml_transformer/bank_xml_transformer.h \
@@ -71,7 +72,8 @@ HEADERS += recordset/recordset_searcher_factory.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += recordset/recordset_searcher_factory.cpp \
+SOURCES += search_deposit_dialog/search_deposit_dialog.cpp \
+    recordset/recordset_searcher_factory.cpp \
     xml_transformer/available_cash_receipt_list_xml_transformer.cpp \
     available_cash_dialog/available_cash_dialog.cpp \
     xml_transformer/bank_xml_transformer.cpp \
@@ -134,7 +136,8 @@ SOURCES += recordset/recordset_searcher_factory.cpp \
     xml_response_handler/xml_response_handler.cpp \
     http_request/http_request.cpp \
     main.cpp
-FORMS += available_cash_dialog/available_cash_dialog.ui \
+FORMS += search_deposit_dialog/search_deposit_dialog.ui \
+    available_cash_dialog/available_cash_dialog.ui \
     consult_product_dialog/consult_product_dialog.ui \
     search_invoice_dialog/search_invoice_dialog.ui \
     search_product_dialog/search_product_dialog.ui \
