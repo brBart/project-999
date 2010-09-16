@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../available_cash_dialog/available_cash_dialog.h"
+#include "../search_deposit_dialog/search_deposit_dialog.h"
 
 /**
  * @class DepositSection
@@ -176,6 +177,22 @@ void DepositSection::saveDeposit()
 }
 
 /**
+ * Use the SearchDepositDialog class for searching a deposit.
+ */
+void DepositSection::searchDeposit()
+{
+	SearchDepositDialog dialog(m_Request->cookieJar(), m_ServerUrl, this,
+			Qt::WindowTitleHint);
+
+	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
+
+	dialog.init();
+
+	dialog.exec();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void DepositSection::setActions()
@@ -238,6 +255,7 @@ void DepositSection::setActions()
 
 	m_SearchAction = new QAction("Buscar", this);
 	m_SearchAction->setShortcut(Qt::Key_F1);
+	connect(m_SearchAction, SIGNAL(triggered()), this, SLOT(searchDeposit()));
 }
 
 /**

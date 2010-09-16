@@ -4,6 +4,12 @@
 #include <QtGui/QDialog>
 #include "ui_search_deposit_dialog.h"
 
+#include <QNetworkCookieJar>
+#include <QUrl>
+#include "../console/console.h"
+#include "../http_request/http_request.h"
+#include "../xml_response_handler/xml_response_handler.h"
+
 class SearchDepositDialog : public QDialog
 {
     Q_OBJECT
