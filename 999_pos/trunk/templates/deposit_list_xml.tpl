@@ -9,9 +9,7 @@ header('Content-Type: text/xml');
 		{section name=i loop=$list}
 		<row>
 			<id>{$list[i].id}</id>
-			<bank_acount_number>
-				<![CDATA[{$list[i].bank_account_number}]]>
-			</bank_acount_number>
+			<bank_id>{$list[i].bank_id}</bank_id>
 			<number><![CDATA[{$list[i].number}]]></number>
 			<status>{$list[i].status}</status>
 		</row>
