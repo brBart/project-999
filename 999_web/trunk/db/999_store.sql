@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-09-2010 a las 18:44:40
+-- Tiempo de generación: 17-09-2010 a las 17:38:17
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -911,7 +911,8 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 28, 2, 1),
 (1, 29, 2, 1),
 (1, 27, 3, 1),
-(1, 30, 2, 1);
+(1, 30, 2, 1),
+(1, 30, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -2647,9 +2648,18 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_list_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT deposit_id AS id FROM deposit
+  SELECT deposit_id AS id, bank_id, number, status FROM deposit dep INNER JOIN bank_account ba ON dep.bank_account_number = ba.bank_account_number
 
-    WHERE cash_register_id = inCashRegisterId;
+    WHERE cash_register_id = inCashRegisterId ORDER BY deposit_id;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_number_bank_exists`(IN inNumber VARCHAR(50), IN inBankId INT)
+BEGIN
+
+  SELECT COUNT(*) FROM deposit dep INNER JOIN bank_account ba ON dep.bank_account_number = ba.bank_account_number
+
+  WHERE dep.number = inNumber AND ba.bank_id = inBankId AND status = 1;
 
 END$$
 
