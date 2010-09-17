@@ -43,6 +43,7 @@ public:
 	void setCanceDocumentCmd(QString cmd);
 
 	void setCreateDocumentTransformerName(QString name);
+	void setDocumentListTransformerName(QString name);
 
 	void setItemsName(QString name);
 
@@ -127,6 +128,7 @@ private:
 	QString m_CancelDocumentCmd;
 
 	QString m_CreateDocumentTransformer;
+	QString m_DocumentListTransformer;
 
 	QString m_ItemsName;
 

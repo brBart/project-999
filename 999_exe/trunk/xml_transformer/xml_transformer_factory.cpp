@@ -25,6 +25,7 @@
 #include "bank_xml_transformer.h"
 #include "available_cash_receipt_list_xml_transformer.h"
 #include "bank_list_xml_transformer.h"
+#include "deposit_list_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -85,6 +86,8 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new AvailableCashReceiptListXmlTransformer();
 	} else if (name == "bank_list") {
 		return new BankListXmlTransformer();
+	} else if (name == "deposit_list") {
+		return new DepositListXmlTransformer();
 	} else {
 		return 0;
 	}

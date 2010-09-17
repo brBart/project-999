@@ -146,6 +146,14 @@ void DocumentSection::setCreateDocumentTransformerName(QString name)
 }
 
 /**
+ * Sets the name of the transformer to use.
+ */
+void DocumentSection::setDocumentListTransformerName(QString name)
+{
+	m_DocumentListTransformer = name;
+}
+
+/**
  * Sets the name to use for the items for the delete items dialog title.
  */
 void DocumentSection::setItemsName(QString name)
@@ -463,7 +471,7 @@ void DocumentSection::refreshRecordset()
 	QString content = m_Request->get(url);
 
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->create("invoice_list");
+			->create(m_DocumentListTransformer);
 
 	QString errorMsg;
 	if (m_Handler->handle(content, transformer, &errorMsg) ==

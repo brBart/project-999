@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += recordset/deposit_number_bank_recordset_searcher.h \
+HEADERS += xml_transformer/deposit_list_xml_transformer.h \
+    recordset/deposit_number_bank_recordset_searcher.h \
     recordset/deposit_id_recordset_searcher.h \
     xml_transformer/bank_list_xml_transformer.h \
     search_deposit_dialog/search_deposit_dialog.h \
@@ -75,7 +76,8 @@ HEADERS += recordset/deposit_number_bank_recordset_searcher.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += recordset/deposit_number_bank_recordset_searcher.cpp \
+SOURCES += xml_transformer/deposit_list_xml_transformer.cpp \
+    recordset/deposit_number_bank_recordset_searcher.cpp \
     recordset/deposit_id_recordset_searcher.cpp \
     xml_transformer/bank_list_xml_transformer.cpp \
     search_deposit_dialog/search_deposit_dialog.cpp \
