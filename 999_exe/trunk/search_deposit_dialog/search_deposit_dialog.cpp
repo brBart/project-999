@@ -1,5 +1,6 @@
 #include "search_deposit_dialog.h"
 
+#include <QSignalMapper>
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../console/console_factory.h"
 
@@ -25,6 +26,12 @@ SearchDepositDialog::SearchDepositDialog(QNetworkCookieJar *jar, QUrl *url,
 
 	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)));
+
+	QSignalMapper *mapper = new QSignalMapper(this);
+	mapper->setMapping(ui.depositIdPushButton, 0);
+	mapper->setMapping(ui.numberBankPushButton, 1);
+
+	connect(mapper, SIGNAL(mapped(int)), this, SLOT(setSearchMode(int)));
 }
 
 /**
@@ -66,4 +73,48 @@ void SearchDepositDialog::init()
 	}
 
 	delete transformer;
+}
+
+/**
+ * Returns the search mode to use.
+ */
+SearchMode SearchDepositDialog::searchMode()
+{
+	return m_SearchMode;
+}
+
+/**
+ * Returns the deposit id.
+ */
+QString SearchDepositDialog::depositId()
+{
+	return ui.depositIdLineEdit->text().trimmed();
+}
+
+/**
+ * Returns the bank id.
+ */
+QString SearchDepositDialog::bankId()
+{
+	return ui.bankIdComboBox->itemData(ui.bankIdComboBox->currentIndex()).toString();
+}
+
+/**
+ * Returns the slip number.
+ */
+QString SearchDepositDialog::slipNumber()
+{
+	return ui.slipNumberLineEdit->text().trimmed();
+}
+
+/**
+ * Sets the search mode to use.
+ */
+void SearchDepositDialog::setSearchMode(int button)
+{
+	if (button == 0) {
+		m_SearchMode = ById;
+	} else {
+		m_SearchMode = BySlipNumber;
+	}
 }

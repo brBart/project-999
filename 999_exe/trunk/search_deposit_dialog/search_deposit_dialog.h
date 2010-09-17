@@ -15,10 +15,18 @@ class SearchDepositDialog : public QDialog
     Q_OBJECT
 
 public:
+    enum SearchMode {ById, BySlipNumber};
     SearchDepositDialog(QNetworkCookieJar *jar, QUrl *url, QWidget *parent = 0,
     		Qt::WindowFlags f = 0);
     ~SearchDepositDialog();
     void init();
+    SearchMode searchMode();
+    QString depositId();
+    QString bankId();
+    QString slipNumber();
+
+public slots:
+	void setSearchMode(int button);
 
 signals:
 	void sessionStatusChanged(bool isActive);
@@ -29,6 +37,7 @@ private:
 	Console *m_Console;
 	HttpRequest *m_Request;
 	XmlResponseHandler *m_Handler;
+	SearchMode m_SearchMode;
 };
 
 #endif // SEARCH_DEPOSIT_DIALOG_H
