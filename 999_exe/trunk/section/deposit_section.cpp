@@ -11,6 +11,7 @@
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../available_cash_dialog/available_cash_dialog.h"
 #include "../search_deposit_dialog/search_deposit_dialog.h"
+#include "../recordset/recordset_searcher_factory.h"
 
 /**
  * @class DepositSection
@@ -189,7 +190,22 @@ void DepositSection::searchDeposit()
 
 	dialog.init();
 
-	dialog.exec();
+	if (dialog.exec() == QDialog::Accepted) {
+		if (dialog.searchMode() == SearchDepositDialog::ById) {
+			if (dialog.depositId() != "") {
+				RecordsetSearcher *searcher =
+						RecordsetSearcherFactory::instance()->create("deposit_id");
+
+				m_Recordset.installSearcher(searcher);
+
+				if (!m_Recordset.search(dialog.depositId()))
+					m_Console
+						->displayError("Deposito no se encuentra en esta caja.");
+
+				delete searcher;
+			}
+		}
+	}
 }
 
 /**

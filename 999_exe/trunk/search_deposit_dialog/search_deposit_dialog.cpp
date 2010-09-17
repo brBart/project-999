@@ -31,6 +31,9 @@ SearchDepositDialog::SearchDepositDialog(QNetworkCookieJar *jar, QUrl *url,
 	mapper->setMapping(ui.depositIdPushButton, 0);
 	mapper->setMapping(ui.numberBankPushButton, 1);
 
+	connect(ui.depositIdPushButton, SIGNAL(clicked()), mapper, SLOT(map()));
+	connect(ui.numberBankPushButton, SIGNAL(clicked()), mapper, SLOT(map()));
+
 	connect(mapper, SIGNAL(mapped(int)), this, SLOT(setSearchMode(int)));
 }
 
@@ -78,7 +81,7 @@ void SearchDepositDialog::init()
 /**
  * Returns the search mode to use.
  */
-SearchMode SearchDepositDialog::searchMode()
+SearchDepositDialog::SearchMode SearchDepositDialog::searchMode()
 {
 	return m_SearchMode;
 }
@@ -117,4 +120,6 @@ void SearchDepositDialog::setSearchMode(int button)
 	} else {
 		m_SearchMode = BySlipNumber;
 	}
+
+	accept();
 }
