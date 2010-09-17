@@ -204,6 +204,23 @@ void DepositSection::searchDeposit()
 
 				delete searcher;
 			}
+		} else {
+			QString value = dialog.bankId() + " " + dialog.slipNumber();
+
+			if (value.trimmed() != "") {
+				RecordsetSearcher *searcher =
+						RecordsetSearcherFactory::instance()
+								->create("deposit_number_bank");
+
+				m_Recordset.installSearcher(searcher);
+
+				if (!m_Recordset.search(value))
+					m_Console
+						->displayError("Deposito no se encuentra en esta caja o "
+								"esta anulado.");
+
+				delete searcher;
+			}
 		}
 	}
 }

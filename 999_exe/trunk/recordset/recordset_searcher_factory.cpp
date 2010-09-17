@@ -10,6 +10,7 @@
 #include <QApplication>
 #include "invoice_recordset_searcher.h"
 #include "deposit_id_recordset_searcher.h"
+#include "deposit_number_bank_recordset_searcher.h"
 
 /**
  * @class RecordsetSearcherFactory
@@ -35,6 +36,8 @@ RecordsetSearcher* RecordsetSearcherFactory::create(QString name)
 		return new InvoiceRecordsetSearcher();
 	} else if (name == "deposit_id") {
 		return new DepositIdRecordsetSearcher();
+	} else if (name == "deposit_number_bank") {
+		return new DepositNumberBankRecordsetSearcher();
 	} else {
 		return 0;
 	}
