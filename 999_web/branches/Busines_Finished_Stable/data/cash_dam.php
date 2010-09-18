@@ -628,6 +628,18 @@ class CashReceiptDAM{
  */
 class DepositDAM{
 	/**
+	 * Verifies if the slip number on the bank already exists in the database.
+	 * 
+	 * Throws an exception if it does.
+	 * @param string $number
+	 * @param Bank $bank
+	 * @throws Exception
+	 */
+	static public function exists($number, Bank $bank){
+		
+	}
+	
+	/**
 	 * Change the deposit's status to confirmed in the database.
 	 *
 	 * @param Deposit $obj
@@ -735,7 +747,7 @@ class DepositDetailListDAM{
 	static public function getList(Cash $obj){
 		switch($obj->getId()){
 			case 123:
-				return array(array('id' => 123), array('id' => 124), array('id' => 125));
+				return array(array('deposit_id' => 123));
 				break;
 				
 			default:

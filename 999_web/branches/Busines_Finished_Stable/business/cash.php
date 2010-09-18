@@ -255,7 +255,7 @@ class Deposit extends PersistDocument implements Itemized{
 	 * @return DepositDetail
 	 */
 	public function getDetail($id){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido');
+		Number::validatePositiveNumber($id, 'Id inv&aacute;lido');
 		
 		foreach($this->_mDetails as &$detail)
 			if($detail->getCash()->getId() == $id)
@@ -280,7 +280,7 @@ class Deposit extends PersistDocument implements Itemized{
 	 */
 	public function setNumber($number){
 		$this->_mNumber = $number;
-		String::validateString($number, 'N&uacute;mero de deposito inv&aacute;lido.');
+		String::validateString($number, 'N&uacute;mero de boleta inv&aacute;lido.');
 	}
 	
 	/**
@@ -431,9 +431,9 @@ class Deposit extends PersistDocument implements Itemized{
 	 * @return Invoice
 	 */
 	static public function getInstance($id, &$totalPages = 0, &$totalItems = 0, $page = 0){
-		Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
+		Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 		if($page !== 0)
-			Number::validatePositiveInteger($page, 'N&uacute;mero de pagina inv&aacute;lido.');
+			Number::validatePositiveNumber($page, 'N&uacute;mero de pagina inv&aacute;lido.');
 			
 		return DepositDAM::getInstance($id, $totalPages, $totalItems, $page);
 	}
@@ -456,13 +456,28 @@ class Deposit extends PersistDocument implements Itemized{
 	 * @throws Exception
 	 */
 	private function validateMainProperties(){
-		String::validateString($this->_mNumber, 'N&uacute;mero de deposito inv&aacute;lido.');
+		String::validateString($this->_mNumber, 'N&uacute;mero de boleta inv&aacute;lido.', 'slip_number');
 		
 		if(is_null($this->_mBankAccount))
-			throw new Exception('Cuenta Bancaria inv&aacute;lida.');
+			throw new ValidateException('Cuenta Bancaria inv&aacute;lida.', 'bank_account_id');
+			
+		$this->verifyNumberBank($this->_mNumber, $this->_mBankAccount->getBank());
 			
 		if(empty($this->_mDetails))
-			throw new Exception('No hay ningun detalle.');
+			throw new ValidateException('No hay ningun detalle.', 'details');
+	}
+	
+	/**
+	 * Verifies if the slip number on the bank already exists in the database.
+	 * 
+	 * Throws an exception if it does.
+	 * @param string $number
+	 * @param Bank $bank
+	 * @throws Exception
+	 */
+	private function verifyNumberBank($number, Bank $bank){
+		if(DepositDAM::exists($number, $bank))
+			throw new ValidateException('N&uacute;mero de boleta ya existe para este banco.', 'slip_number');
 	}
 }
 
@@ -1178,16 +1193,14 @@ class CashReceipt extends PersistDocument{
 	 */
 	public function cancel(UserAccount $user){
 		if($this->_mStatus == PersistDocument::CREATED){
-			if($this->_mInvoice->getStatus() == PersistDocument::CANCELLED){
-				$deposit_ids = DepositDetailList::getList($this->_mCash);
-				if(!empty($deposit_details))
-					foreach($deposit_ids as $id){
-						$deposit = Deposit::getInstance($id);
-						$deposit->cancel($user);
-					}
-				
-				$this->_mStatus = PersistDocument::CANCELLED;
-			}
+			$deposit_ids = DepositDetailList::getList($this->_mCash);
+			if(!empty($deposit_ids))
+				foreach($deposit_ids as $id){
+					$deposit = Deposit::getInstance($id['deposit_id']);
+					$deposit->cancel($user);
+				}
+			
+			$this->_mStatus = PersistDocument::CANCELLED;
 		}
 	}
 	
@@ -1727,7 +1740,6 @@ class Cash extends Persist{
 	 */
 	public function deposit($amount){
 		if($this->_mStatus == Persist::CREATED){
-			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 			CashDAM::deposit($this, $amount);
 		}
 	}
@@ -1740,7 +1752,6 @@ class Cash extends Persist{
 	 */
 	public function decreaseDeposit($amount){
 		if($this->_mStatus == Persist::CREATED){
-			Number::validatePositiveFloat($amount, 'Monto inv&aacute;lido.');
 			CashDAM::decreaseDeposit($this, $amount);
 		}
 	}
