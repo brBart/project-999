@@ -497,11 +497,13 @@ void DocumentSection::fetchDocumentDetails(QString documentKey)
 
 	QString content = m_Request->get(url);
 
-	m_Query->setFocus(content);
-	m_Query->setQuery(m_StyleSheet);
+	// Must copy object to be reentrant and thread safe.
+	QXmlQuery qry(*m_Query);
+	qry.setFocus(content);
+	qry.setQuery(m_StyleSheet);
 
 	QString result;
-	m_Query->evaluateTo(&result);
+	qry.evaluateTo(&result);
 
 	QWebElement div = ui.webView->page()->mainFrame()->findFirstElement("#details");
 	div.setInnerXml(result);
