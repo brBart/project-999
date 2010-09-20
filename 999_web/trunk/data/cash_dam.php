@@ -762,7 +762,14 @@ class SalesReportDAM{
 		$sql = 'CALL sales_report_invoices_get(:cash_register_id)';
 		$invoices = DatabaseHandler::getAll($sql, $params);
 		
-		return new SalesReport($total_vouchers, $total_cash, $total_discount, $total_vat, $invoices);
+		$sql = 'CALL sales_report_total_deposits(:cash_register_id)';
+		$total_deposits = (float)DatabaseHandler::getOne($sql, $params);
+		
+		$sql = 'CALL sales_report_deposits_get(:cash_register_id)';
+		$deposits = DatabaseHandler::getAll($sql, $params);
+		
+		return new SalesReport($total_vouchers, $total_cash, $total_discount, $total_vat,
+				$total_deposits, $invoices, $deposits);
 	}
 }
 
