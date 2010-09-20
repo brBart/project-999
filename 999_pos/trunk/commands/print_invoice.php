@@ -18,6 +18,10 @@ require_once('presentation/page.php');
  */
 require_once('business/itemized.php');
 /**
+ * For displaying the invoice.
+ */
+require_once('business/document.php');
+/**
  * For displaying the company's name.
  */
 require_once('business/various.php');
