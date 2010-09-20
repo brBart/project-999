@@ -132,6 +132,7 @@ void CashRegisterSection::setActionsManager()
 void CashRegisterSection::fetchForm()
 {
 	QUrl url(*m_ServerUrl);
+	url.addQueryItem("register_key", m_CashRegisterKey);
 	url.addQueryItem("cmd", "show_cash_register_form");
 
 	ui.webView->load(url);
