@@ -68,7 +68,7 @@ void CashRegisterSection::loadFinished(bool ok)
 
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
-	//updateActions();
+	updateActions();
 }
 
 /**
@@ -135,5 +135,38 @@ void CashRegisterSection::fetchForm()
 	url.addQueryItem("register_key", m_CashRegisterKey);
 	url.addQueryItem("cmd", "show_cash_register_form");
 
+	m_CashRegisterStatus = Loading;
+	updateActions();
+
 	ui.webView->load(url);
+}
+
+/**
+ * Updates the QActions depending on the actual section status.
+ */
+void CashRegisterSection::updateActions()
+{
+	QString values;
+
+	switch (m_CashRegisterStatus) {
+		case Open:
+			values = "1110";
+			break;
+
+		case Closed:
+			values = "1001";
+			break;
+
+		case Error:
+			values = "1000";
+			break;
+
+		case Loading:
+			values = "0000";
+			break;
+
+		default:;
+	}
+
+	m_ActionsManager.updateActions(values);
 }

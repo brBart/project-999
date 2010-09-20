@@ -19,6 +19,8 @@
 
 class CashRegisterSection: public Section
 {
+	Q_OBJECT
+
 public:
 	enum CashRegisterStatus {Closed, Open, Error, Loading};
 	CashRegisterSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
@@ -52,6 +54,7 @@ private:
 	void setMenu();
 	void setActionsManager();
 	void fetchForm();
+	void updateActions();
 };
 
 #endif /* CASH_REGISTER_SECTION_H_ */
