@@ -1,10 +1,6 @@
 {* Smarty * }
 <script type="text/javascript">
 var cashRegisterStatus = {$cash_register_status};
-var documentStatus = {$status};
-{if $key neq ''}
-var objectKey = {$key};
-{/if}
 </script>
 <div id="content">
 	<div id="frm" class="content_small">
