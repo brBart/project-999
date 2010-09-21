@@ -22,6 +22,9 @@ public:
 			QWidget *parent = 0);
 	virtual ~SalesReportSection() {};
 
+public slots:
+	void printReport();
+
 private:
 	QMainWindow *m_Window;
 	QString m_CashRegisterKey;

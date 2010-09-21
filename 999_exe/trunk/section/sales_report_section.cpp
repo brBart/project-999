@@ -8,6 +8,8 @@
 #include "sales_report_section.h"
 
 #include <QMenuBar>
+#include <QPrinter>
+#include "../registry.h"
 
 /**
  * @class SalesReportSection
@@ -31,12 +33,23 @@ SalesReportSection::SalesReportSection(QNetworkCookieJar *jar,
 }
 
 /**
+ * Sends the report to the printer.
+ */
+void SalesReportSection::printReport()
+{
+	QPrinter printer;
+	printer.setPrinterName(Registry::instance()->printerName());
+	ui.webView->print(&printer);
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesReportSection::setActions()
 {
 	m_PrintAction = new QAction("Imprimir", this);
 	m_PrintAction->setShortcut(tr("Ctrl+P"));
+	connect(m_PrintAction, SIGNAL(triggered()), this, SLOT(printReport()));
 
 	m_ExitAction = new QAction("Salir", this);
 	m_ExitAction->setShortcut(Qt::Key_Escape);
