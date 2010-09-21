@@ -97,6 +97,7 @@ body {
 				</tr>
 	       	</tfoot>
 		</table>
+		<br />
 		<table>
 			<caption>Depositos: {$count_deposits}</caption>
 			<thead>
