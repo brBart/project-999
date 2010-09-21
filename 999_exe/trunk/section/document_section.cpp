@@ -267,7 +267,6 @@ void DocumentSection::createDocument()
  */
 void DocumentSection::updateCashRegisterStatus(QString content)
 {
-	// TODO: Test this if a closed cash register.
 	XmlTransformer *transformer = XmlTransformerFactory::instance()
 			->create("cash_register_status");
 
@@ -281,7 +280,11 @@ void DocumentSection::updateCashRegisterStatus(QString content)
 			QWebElement element = ui.webView->page()->mainFrame()
 							->findFirstElement("#cash_register_status");
 			element.setInnerXml("Cerrado");
+			element.removeClass("pos_open_status");
+			element.addClass("pos_closed_status");
+
 			m_CashRegisterStatus = Closed;
+
 			updateActions();
 		}
 	}
