@@ -18,12 +18,14 @@ class SalesReportSection: public Section
 
 public:
 	SalesReportSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
-			QUrl *serverUrl, QString cashRegisterKey, QWidget *parent = 0);
+			QUrl *serverUrl, QString cashRegisterKey, bool isPreliminary,
+			QWidget *parent = 0);
 	virtual ~SalesReportSection() {};
 
 private:
-	QString m_CashRegisterKey;
 	QMainWindow *m_Window;
+	QString m_CashRegisterKey;
+	bool m_IsPreliminary;
 
 	// File actions.
 	QAction *m_PrintAction;
@@ -31,6 +33,7 @@ private:
 
 	void setActions();
 	void setMenu();
+	void fetchReport();
 };
 
 #endif /* SALES_REPORT_SECTION_H_ */

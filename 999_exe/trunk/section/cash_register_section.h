@@ -29,6 +29,7 @@ public:
 
 public slots:
 	void loadFinished(bool ok);
+	void viewReport(int action);
 
 private:
 	Console *m_Console;

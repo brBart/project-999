@@ -7,7 +7,10 @@
 
 #include "cash_register_section.h"
 
+#include <QSignalMapper>
+#include <QMainWindow>
 #include "../console/console_factory.h"
+#include "sales_report_section.h"
 
 /**
  * @class CashRegisterSection
@@ -72,6 +75,30 @@ void CashRegisterSection::loadFinished(bool ok)
 }
 
 /**
+ * Displays the sales report section.
+ */
+void CashRegisterSection::viewReport(int action)
+{
+	QMainWindow *window = new QMainWindow(this, Qt::WindowTitleHint);
+	window->setAttribute(Qt::WA_DeleteOnClose);
+	window->setWindowModality(Qt::WindowModal);
+	window->setWindowTitle(action ? "**PRELIMINAR**" : "Corte de Caja");
+	window->resize(width() - (width() / 3), height() - 150);
+	window->move(x() + (width() / 6), y() + 100);
+
+	SalesReportSection *section = new SalesReportSection(
+			ui.webView->page()->networkAccessManager()->cookieJar(),
+			ui.webView->page()->pluginFactory(), m_ServerUrl, m_CashRegisterKey,
+			action, window);
+
+	connect(section, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)));
+
+	window->setCentralWidget(section);
+	window->show();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void CashRegisterSection::setActions()
@@ -83,12 +110,22 @@ void CashRegisterSection::setActions()
 	m_CloseAction = new QAction("Cerrar", this);
 	m_CloseAction->setShortcut(tr("Ctrl+C"));
 
+	QSignalMapper *mapper = new QSignalMapper(this);
+
 	m_ViewPreliminarySalesReportAction = new QAction("Corte de caja preliminar",
 			this);
 	m_ViewPreliminarySalesReportAction->setShortcut(tr("Ctrl+I"));
+	connect(m_ViewPreliminarySalesReportAction, SIGNAL(triggered()), mapper,
+			SLOT(map()));
 
 	m_ViewSalesReportAction = new QAction("Corte de caja", this);
 	m_ViewSalesReportAction->setShortcut(tr("Ctrl+A"));
+	connect(m_ViewSalesReportAction, SIGNAL(triggered()), mapper, SLOT(map()));
+
+	mapper->setMapping(m_ViewSalesReportAction, 0);
+	mapper->setMapping(m_ViewPreliminarySalesReportAction, 1);
+
+	connect(mapper, SIGNAL(mapped(int)), this, SLOT(viewReport(int)));
 }
 
 /**

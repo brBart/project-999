@@ -19,14 +19,15 @@
  */
 SalesReportSection::SalesReportSection(QNetworkCookieJar *jar,
 		QWebPluginFactory *factory, QUrl *serverUrl, QString cashRegisterKey,
-		QWidget *parent) : Section(jar, factory, serverUrl, parent),
-		m_CashRegisterKey(cashRegisterKey)
+		bool isPreliminary, QWidget *parent) : Section(jar, factory, serverUrl,
+				parent), m_CashRegisterKey(cashRegisterKey),
+				m_IsPreliminary(isPreliminary)
 {
 	m_Window = dynamic_cast<QMainWindow*>(parentWidget());
 	setActions();
 	setMenu();
 
-	connect(ui.webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+	fetchReport();
 }
 
 /**
@@ -53,4 +54,17 @@ void SalesReportSection::setMenu()
 	menu->addAction(m_PrintAction);
 	menu->addSeparator();
 	menu->addAction(m_ExitAction);
+}
+
+/**
+ * Fetchs the sales report from the server.
+ */
+void SalesReportSection::fetchReport()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "print_sales_report");
+	url.addQueryItem("register_key", m_CashRegisterKey);
+	url.addQueryItem("is_preliminary", m_IsPreliminary ? "1" : "0");
+
+	ui.webView->load(url);
 }
