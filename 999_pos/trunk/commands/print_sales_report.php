@@ -51,7 +51,7 @@ class PrintSalesReportCommand extends Command{
 					'cash_register_id' => $cash_register->getId(),
 					'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
 					'date' => $working_day->getDate(), 'total_vouchers' => $report->getTotalVouchers(),
-					'cash' => $report->getTotalDeposits() - $report->getTotalCash(),
+					'cash' => $report->getTotalCash() - $report->getTotalDeposits(),
 					'total_deposits' => $report->getTotalDeposits(),
 					'total' => $report->getTotal(), 'vat_total' => $report->getTotalVat(),
 					'count_invoices' => count($report->getInvoices()), 'invoices' => $report->getInvoices(),
