@@ -9,8 +9,10 @@
 
 #include <QSignalMapper>
 #include <QMainWindow>
+#include <QMessageBox>
 #include "../console/console_factory.h"
 #include "sales_report_section.h"
+#include "../xml_transformer/xml_transformer_factory.h"
 
 /**
  * @class CashRegisterSection
@@ -99,6 +101,50 @@ void CashRegisterSection::viewReport(int action)
 }
 
 /**
+ * Closes the cash register on the server.
+ */
+void CashRegisterSection::closeCashRegister()
+{
+	if (QMessageBox::question(this, "Cerrar Caja",
+			"Una vez cerrada no se podra facturar ni crear depositos."
+			"¿Desea cerrar?",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		return;
+
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "close_cash_register");
+	url.addQueryItem("key", m_CashRegisterKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("stub");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg)
+			== XmlResponseHandler::Success) {
+
+		m_Console->reset();
+
+		QWebElement element = ui.webView->page()->mainFrame()
+				->findFirstElement("#cash_register_status");
+		element.setInnerXml("Cerrado");
+		element.removeClass("pos_open_status");
+		element.addClass("pos_closed_status");
+
+		m_CashRegisterStatus = Closed;
+
+		updateActions();
+
+	} else {
+		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void CashRegisterSection::setActions()
@@ -109,6 +155,7 @@ void CashRegisterSection::setActions()
 
 	m_CloseAction = new QAction("Cerrar", this);
 	m_CloseAction->setShortcut(tr("Ctrl+C"));
+	connect(m_CloseAction, SIGNAL(triggered()), this, SLOT(closeCashRegister()));
 
 	QSignalMapper *mapper = new QSignalMapper(this);
 

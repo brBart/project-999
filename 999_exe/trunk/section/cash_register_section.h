@@ -30,6 +30,7 @@ public:
 public slots:
 	void loadFinished(bool ok);
 	void viewReport(int action);
+	void closeCashRegister();
 
 private:
 	Console *m_Console;
