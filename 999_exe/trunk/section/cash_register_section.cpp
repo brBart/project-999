@@ -85,7 +85,7 @@ void CashRegisterSection::setActions()
 
 	m_ViewPreliminarySalesReportAction = new QAction("Corte de caja preliminar",
 			this);
-	m_ViewPreliminarySalesReportAction->setShortcut(tr("Ctrl+P"));
+	m_ViewPreliminarySalesReportAction->setShortcut(tr("Ctrl+I"));
 
 	m_ViewSalesReportAction = new QAction("Corte de caja", this);
 	m_ViewSalesReportAction->setShortcut(tr("Ctrl+A"));
