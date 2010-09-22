@@ -1,41 +1,39 @@
 /*
- * sales_report_section.cpp
+ * report_section.cpp
  *
  *  Created on: 20/09/2010
  *      Author: pc
  */
 
-#include "sales_report_section.h"
+#include "report_section.h"
 
 #include <QMenuBar>
 #include <QPrinter>
 #include "../registry.h"
 
 /**
- * @class SalesReportSection
- * Section for displaying the sales report.
+ * @class ReportSection
+ * Section for displaying a report.
  */
 
 /**
  * Constructs the section.
  */
-SalesReportSection::SalesReportSection(QNetworkCookieJar *jar,
-		QWebPluginFactory *factory, QUrl *serverUrl, QString cashRegisterKey,
-		bool isPreliminary, QWidget *parent) : Section(jar, factory, serverUrl,
-				parent), m_CashRegisterKey(cashRegisterKey),
-				m_IsPreliminary(isPreliminary)
+ReportSection::ReportSection(QNetworkCookieJar *jar,
+		QWebPluginFactory *factory, QUrl *reportUrl, QWidget *parent)
+		: Section(jar, factory, reportUrl, parent)
 {
 	m_Window = dynamic_cast<QMainWindow*>(parentWidget());
 	setActions();
 	setMenu();
 
-	fetchReport();
+	ui.webView->load(*reportUrl);
 }
 
 /**
  * Sends the report to the printer.
  */
-void SalesReportSection::printReport()
+void ReportSection::printReport()
 {
 	QPrinter printer;
 	printer.setPrinterName(Registry::instance()->printerName());
@@ -45,7 +43,7 @@ void SalesReportSection::printReport()
 /**
  * Creates the QActions for the menu bar.
  */
-void SalesReportSection::setActions()
+void ReportSection::setActions()
 {
 	m_PrintAction = new QAction("Imprimir", this);
 	m_PrintAction->setShortcut(tr("Ctrl+P"));
@@ -59,7 +57,7 @@ void SalesReportSection::setActions()
 /**
  * Sets the window's menu bar.
  */
-void SalesReportSection::setMenu()
+void ReportSection::setMenu()
 {
 	QMenu *menu;
 
@@ -67,17 +65,4 @@ void SalesReportSection::setMenu()
 	menu->addAction(m_PrintAction);
 	menu->addSeparator();
 	menu->addAction(m_ExitAction);
-}
-
-/**
- * Fetchs the sales report from the server.
- */
-void SalesReportSection::fetchReport()
-{
-	QUrl url(*m_ServerUrl);
-	url.addQueryItem("cmd", "print_sales_report");
-	url.addQueryItem("register_key", m_CashRegisterKey);
-	url.addQueryItem("is_preliminary", m_IsPreliminary ? "1" : "0");
-
-	ui.webView->load(url);
 }

@@ -138,6 +138,14 @@ void MainWindow::loadCashRegisterSection()
 				new CashRegisterSection(&m_CookieJar, &m_PluginFactory,
 						m_ServerUrl, dialog.key(), this);
 
+		section->setPreliminaryReportName("Corte de caja preliminar");
+		section->setReportName("Corte de caja");
+		section->setObjectName("Caja");
+		section->setCloseMessage("Una vez cerrada no se podra facturar ni crear"
+				"depositos.");
+
+		section->init();
+
 		setSection(section);
 	}
 }
