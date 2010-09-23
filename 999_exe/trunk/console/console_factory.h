@@ -12,7 +12,7 @@
 #include <QLabel>
 #include "console.h"
 
-class ConsoleFactory
+class ConsoleFactory : QObject
 {
 public:
 	virtual ~ConsoleFactory() {};
@@ -23,7 +23,7 @@ public:
 private:
 	static ConsoleFactory *m_Instance;
 
-	ConsoleFactory() {};
+	ConsoleFactory(QObject *parent = 0);
 };
 
 #endif /* CONSOLE_FACTORY_H_ */

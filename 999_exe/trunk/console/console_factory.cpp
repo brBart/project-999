@@ -7,6 +7,7 @@
 
 #include "console_factory.h"
 
+#include <QApplication>
 #include "widget_console.h"
 #include "html_console.h"
 
@@ -18,12 +19,20 @@
 ConsoleFactory* ConsoleFactory::m_Instance = 0;
 
 /**
+ * Constructs the factory with a parent.
+ */
+ConsoleFactory::ConsoleFactory(QObject *parent) : QObject(parent)
+{
+
+}
+
+/**
  * Returns the only instance.
  */
 ConsoleFactory* ConsoleFactory::instance()
 {
 	if (m_Instance == 0)
-		m_Instance = new ConsoleFactory();
+		m_Instance = new ConsoleFactory(qApp);
 
 	return m_Instance;
 }
