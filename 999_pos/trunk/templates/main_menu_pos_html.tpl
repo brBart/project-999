@@ -16,6 +16,7 @@
 				<li><a href="#" onclick="mainWindow.loadDepositSection();">Depositos</a></li>
 				<li><a href="#" onclick="mainWindow.loadCashRegisterSection();">Caja Opciones</a></li>
 				<li><a href="#" onclick="mainWindow.loadWorkingDaySection();">Jornada Opciones</a></li>
+				<li><a href="#" onclick="mainWindow.consultProduct();">Consultar Producto</a></li>
     			<li><a href="index.php?cmd=logout">Logout</a></li>
     		</ul>
 		</fieldset>
