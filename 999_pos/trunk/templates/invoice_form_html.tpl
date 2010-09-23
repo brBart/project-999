@@ -39,7 +39,7 @@ var objectKey = {$key};
 		</fieldset>
 		<fieldset id="main_data" class="pos disabled">
 			<p>
-		  		<label id="nit_label">Nit:</label>
+		  		<label id="nit_label">Nit:<span class="hidden">*</span></label>
 		  		<span id="nit">{$nit|htmlchars}&nbsp;</span>
 		  		<span id="nit-failed" class="hidden">*</span>
 		  	</p>

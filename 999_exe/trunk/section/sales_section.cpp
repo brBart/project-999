@@ -579,8 +579,8 @@ void SalesSection::prepareDocumentForm(QString dateTime, QString username)
 	element = frame->findFirstElement("#nit");
 	element.setInnerXml("&nbsp;");
 
-	element = frame->findFirstElement("#customer_label");
-	element.setInnerXml(element.toPlainText() + "*");
+	element = frame->findFirstElement("#nit_label span");
+	element.removeClass("hidden");
 
 	element = frame->findFirstElement("#customer");
 	element.setInnerXml("&nbsp;");
