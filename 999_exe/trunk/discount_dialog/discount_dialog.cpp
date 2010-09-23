@@ -27,6 +27,8 @@ DiscountDialog::DiscountDialog(QNetworkCookieJar *jar, QUrl *url,
 	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
 
+	connect(m_Handler, SIGNAL(sessionStatusChanged(bool)), this,
+			SIGNAL(sessionStatusChanged(bool)));
 	connect(ui.percentageLineEdit, SIGNAL(blurAndChanged(QString)), this,
 			SLOT(setPercentage(QString)));
 	connect(ui.okPushButton, SIGNAL(clicked()), this, SLOT(okClicked()));

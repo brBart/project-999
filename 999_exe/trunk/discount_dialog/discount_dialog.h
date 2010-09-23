@@ -23,6 +23,9 @@ public slots:
 	void percentageSetted(QString content);
 	void okClicked();
 
+signals:
+	void sessionStatusChanged(bool isActive);
+
 private:
     Ui::DiscountDialogClass ui;
     QUrl *m_ServerUrl;

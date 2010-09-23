@@ -163,6 +163,9 @@ void SalesSection::createDiscount()
 		DiscountDialog dlg(m_Request->cookieJar(), m_ServerUrl, discountKey, this,
 				Qt::WindowTitleHint);
 
+		connect(&dlg, SIGNAL(sessionStatusChanged(bool)), this,
+				SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
+
 		if (dlg.exec() == QDialog::Accepted)
 			setDiscountInvoice(discountKey);
 
