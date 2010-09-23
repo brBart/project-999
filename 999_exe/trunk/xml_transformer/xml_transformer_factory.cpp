@@ -7,6 +7,7 @@
 
 #include "xml_transformer_factory.h"
 
+#include <QApplication>
 #include "shift_list_xml_transformer.h"
 #include "object_key_xml_transformer.h"
 #include "invoice_list_xml_transformer.h"
@@ -35,12 +36,20 @@
 XmlTransformerFactory* XmlTransformerFactory::m_Instance = 0;
 
 /**
+ * Constructs factory with a parent.
+ */
+XmlTransformerFactory::XmlTransformerFactory(QObject *parent) : QObject(parent)
+{
+
+}
+
+/**
  * Returns the only instance.
  */
 XmlTransformerFactory* XmlTransformerFactory::instance()
 {
 	if (m_Instance == 0)
-		m_Instance = new XmlTransformerFactory();
+		m_Instance = new XmlTransformerFactory(qApp);
 
 	return m_Instance;
 }

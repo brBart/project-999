@@ -8,10 +8,13 @@
 #ifndef XML_TRANSFORMER_FACTORY_H_
 #define XML_TRANSFORMER_FACTORY_H_
 
+#include <QObject>
 #include "xml_transformer.h"
 
-class XmlTransformerFactory
+class XmlTransformerFactory : public QObject
 {
+	Q_OBJECT
+
 public:
 	virtual ~XmlTransformerFactory() {};
 	XmlTransformer* create(QString name);
@@ -20,7 +23,7 @@ public:
 private:
 	static XmlTransformerFactory* m_Instance;
 
-	XmlTransformerFactory() {};
+	XmlTransformerFactory(QObject *parent = 0);
 };
 
 #endif /* XML_TRANSFORMER_FACTORY_H_ */
