@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the PrintInvoiceCommand base class.
+ * Library containing the PrintSalesReportCommand base class.
  * @package Command
  * @author Roberto Oliveros
  */
