@@ -21,7 +21,7 @@ class Registry : public QObject
 	Q_OBJECT
 
 public:
-	virtual ~Registry() {};
+	virtual ~Registry();
 	QUrl* serverUrl();
 	QUrl* xslUrl();
 	QString printerName();

@@ -76,6 +76,15 @@ Registry::Registry(QObject *parent) : QObject(parent)
 }
 
 /**
+ * Destroys the url objects.
+ */
+Registry::~Registry()
+{
+	delete m_ServerUrl;
+	delete m_XslUrl;
+}
+
+/**
  * Returns the only instance.
  */
 Registry* Registry::instance()
