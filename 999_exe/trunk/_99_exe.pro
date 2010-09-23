@@ -7,7 +7,8 @@ QT += core \
     xmlpatterns \
     network \
     webkit
-HEADERS += section/report_section.h \
+HEADERS += section/working_day_section.h \
+    section/report_section.h \
     section/object_section.h \
     section/cash_register_section.h \
     xml_transformer/deposit_list_xml_transformer.h \
@@ -79,7 +80,8 @@ HEADERS += section/report_section.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += section/report_section.cpp \
+SOURCES += section/working_day_section.cpp \
+    section/report_section.cpp \
     section/object_section.cpp \
     section/cash_register_section.cpp \
     xml_transformer/deposit_list_xml_transformer.cpp \

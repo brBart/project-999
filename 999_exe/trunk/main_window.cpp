@@ -9,6 +9,7 @@
 #include "section/sales_section.h"
 #include "section/deposit_section.h"
 #include "section/cash_register_section.h"
+#include "section/working_day_section.h"
 
 /**
  * @class MainWindow
@@ -100,8 +101,8 @@ void MainWindow::loadDepositSection()
 
 	dialog.init();
 	if (dialog.exec() == QDialog::Accepted) {
-		DepositSection *section = new DepositSection(&m_CookieJar,
-				&m_PluginFactory, m_ServerUrl, dialog.key(), this);
+		DepositSection *section = new DepositSection(&m_CookieJar, &m_PluginFactory,
+				m_ServerUrl, dialog.key(), this);
 		section->setStyleSheetFileName("deposit_details.xsl");
 		section->setGetDocumentDetailsCmd("get_deposit_details");
 		section->setGetDocumentListCmd("get_deposit_list");
@@ -135,8 +136,8 @@ void MainWindow::loadCashRegisterSection()
 	dialog.init();
 	if (dialog.exec() == QDialog::Accepted) {
 		CashRegisterSection *section =
-				new CashRegisterSection(&m_CookieJar, &m_PluginFactory,
-						m_ServerUrl, dialog.key(), this);
+				new CashRegisterSection(&m_CookieJar, &m_PluginFactory, m_ServerUrl,
+						dialog.key(), this);
 
 		section->setPreliminaryReportName("Corte de caja preliminar");
 		section->setReportName("Corte de caja");
@@ -148,6 +149,24 @@ void MainWindow::loadCashRegisterSection()
 
 		setSection(section);
 	}
+}
+
+/**
+ * Loads the WorkingDaySection.
+ */
+void MainWindow::loadWorkingDaySection()
+{
+	WorkingDaySection *section = new WorkingDaySection(&m_CookieJar,
+			&m_PluginFactory, m_ServerUrl, this);
+
+	section->setPreliminaryReportName("Reporte de ventas preliminar");
+	section->setReportName("Reporte de ventas");
+	section->setObjectName("Jornada");
+	section->setCloseMessage("Se cerraran todas las cajas en esta jornada.");
+
+	section->init();
+
+	setSection(section);
 }
 
 /**
