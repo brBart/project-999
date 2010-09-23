@@ -19,7 +19,7 @@ class SalesSection: public DocumentSection
 public:
 	SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 			QUrl *serverUrl, QString cashRegisterKey, QWidget *parent = 0);
-	virtual ~SalesSection();
+	virtual ~SalesSection() {};
 
 public slots:
 	void setCustomer();

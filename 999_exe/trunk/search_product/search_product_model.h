@@ -19,7 +19,6 @@ public:
 	virtual ~SearchProductModel() {};
 	QStringList* keywords();
 	static SearchProductModel* instance();
-	static void destroy();
 
 private:
 	QStringList m_Keywords;

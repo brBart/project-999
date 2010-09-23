@@ -7,6 +7,8 @@
 
 #include "search_product_model.h"
 
+#include <QApplication>
+
 /**
  * @class SearchProductModel
  * Extends the QStandardItemModel a sets the column count property to 3. Also made
@@ -29,18 +31,9 @@ SearchProductModel::SearchProductModel(QObject *parent) : QStandardItemModel(par
 SearchProductModel* SearchProductModel::instance()
 {
 	if (m_Instance == 0)
-		m_Instance = new SearchProductModel();
+		m_Instance = new SearchProductModel(qApp);
 
 	return m_Instance;
-}
-
-/**
- * Destroys the static instance in case there was one.
- */
-void SearchProductModel::destroy()
-{
-	delete m_Instance;
-	m_Instance = 0;
 }
 
 /**

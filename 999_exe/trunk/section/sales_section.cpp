@@ -37,14 +37,6 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 }
 
 /**
- * Destroys the search product model in case there was one.
- */
-SalesSection::~SalesSection()
-{
-	SearchProductModel::destroy();
-}
-
-/**
  * Sets a customer to the invoice in the server.
  */
 void SalesSection::setCustomer()
