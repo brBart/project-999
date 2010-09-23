@@ -14,6 +14,8 @@
 
 class ConsoleFactory : public QObject
 {
+	Q_OBJECT
+
 public:
 	virtual ~ConsoleFactory() {};
 	Console* createWidgetConsole(QMap<QString, QLabel*> elements);
