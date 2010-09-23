@@ -23,6 +23,7 @@ public slots:
 	void loadDepositSection();
 	void loadCashRegisterSection();
 	void loadWorkingDaySection();
+	void consultProduct();
 
 protected:
 	void closeEvent(QCloseEvent *event);

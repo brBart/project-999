@@ -10,6 +10,8 @@
 #include "section/deposit_section.h"
 #include "section/cash_register_section.h"
 #include "section/working_day_section.h"
+#include "../consult_product_dialog/consult_product_dialog.h"
+#include "../search_product/search_product_model.h"
 
 /**
  * @class MainWindow
@@ -167,6 +169,16 @@ void MainWindow::loadWorkingDaySection()
 	section->init();
 
 	setSection(section);
+}
+
+/**
+ * Shows the consult product dialog for searching for certain product.
+ */
+void MainWindow::consultProduct()
+{
+	ConsultProductDialog dialog(&m_CookieJar, m_ServerUrl,
+			SearchProductModel::instance(), this, Qt::WindowTitleHint);
+	dialog.exec();
 }
 
 /**
