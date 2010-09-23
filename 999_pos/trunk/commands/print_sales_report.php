@@ -23,7 +23,7 @@ require_once('business/various.php');
 require_once('business/cash.php');
 
 /**
- * Defines functionality for displaying an invoice for printing purposes.
+ * Defines functionality for displaying the sales report for printing purposes.
  * @package Command
  * @author Roberto Oliveros
  */
