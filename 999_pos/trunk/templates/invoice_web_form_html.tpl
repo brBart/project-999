@@ -36,7 +36,7 @@
 	  		<p>&nbsp;</p>
 		  	<div id="details" class="items"></div>
 		</fieldset>
-		{include file='controls_invoice_html.tpl' cancel_cmd='cancel_purchase_return'}
+		{include file='controls_invoice_html.tpl' cancel_cmd='cancel_invoice'}
 	</div>
 </div>
 <script type="text/javascript">
