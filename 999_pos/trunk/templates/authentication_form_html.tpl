@@ -8,8 +8,8 @@
 		<fieldset>
 			<legend>Autorizaci&oacute;n</legend>
 		  	<p>
-				<label for="username">Usuario:</label>
-				<input name="username" id="username" type="text" maxlength="20" />
+				<label for="auth_username">Usuario:</label>
+				<input name="auth_username" id="auth_username" type="text" maxlength="20" />
 		  	</p>
 		  	<p>
 				<label for="password">Contrase&ntilde;a:</label>
@@ -27,6 +27,6 @@
 var oModalFrm = new ModalForm('authenticate_container');
 var miniConsole = new Console('mini_console');
 var oCancel = new CancelDocumentCommand(oSession, miniConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oModalFrm);
-oCancel.init('username', 'password');
+oCancel.init('auth_username', 'password');
 </script>
 {/if}
