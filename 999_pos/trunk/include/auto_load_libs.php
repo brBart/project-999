@@ -129,6 +129,10 @@ function __autoload($className){
 			require_once('business/agent.php');
 			break;
 			
+		case 'CashRegister':
+			require_once('business/cash.php');
+			break;
+			
 		default:
 	}
 }
