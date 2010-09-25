@@ -9,34 +9,8 @@ var objectKey = {$key};
 <div id="content">
 	<div id="frm" class="content_large">
 		{include file='cash_register_status_bar_html.tpl'}
-		<fieldset id="status_bar_invoice">
-			<p>
-				<label>Status:</label>
-				<span id="status_label" {if $status eq 2}class="cancel_status"{/if}>
-					{if $status eq 0}
-						Creando...
-					{elseif $status eq 1}
-						Cerrado
-					{else}
-						Anulado
-					{/if}
-				</span>
-			</p>
-		</fieldset>
-		<fieldset id="header_data">
-			<p>
-				<label>Factura Serie:</label><span id="serial_number">{$serial_number}</span>
-			</p>
-			<p>
-				<label>No:</label><span id="number">{$number}&nbsp;</span>
-			</p>
-			<p>
-				<label>Fecha:</label><span id="date_time">{$date_time}</span>
-			</p>
-			<p>
-				<label>Usuario:</label><span id="username">{$username}</span>
-			</p>
-		</fieldset>
+		{include file='status_bar_invoice_html.tpl'}
+		{include file='header_data_invoice_html.tpl'}
 		<fieldset id="main_data" class="pos disabled">
 			<p>
 		  		<label id="nit_label">Nit:<span class="hidden">*</span></label>
