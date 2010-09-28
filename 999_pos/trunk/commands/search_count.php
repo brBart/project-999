@@ -43,7 +43,7 @@ class SearchCountCommand extends SearchObjectByDateCommand{
 		$start_date = $this->_mRequest->getProperty('start_date');
 		$end_date = $this->_mRequest->getProperty('end_date');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Conteo',
 				'create_link' => 'index.php?cmd=create_count', 'get_link' => 'index.php?cmd=get_count',
@@ -57,7 +57,7 @@ class SearchCountCommand extends SearchObjectByDateCommand{
 	protected function displayEmpty(){
 		$back_trace = array('Inicio', 'Inventariados', 'Conteos');
 		$msg = 'No hay conteos en esas fechas en la base de datos.';
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_count_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'info',
 				'message' => $msg), 'site_html.tpl');
@@ -80,7 +80,7 @@ class SearchCountCommand extends SearchObjectByDateCommand{
 	protected function displayList($list, $startDate, $endDate, $totalPages, $totalItems, $page, $firstItem,
 			$lastItem, $previousLink, $nextLink, $actualCmd){
 		$back_trace = array('Inicio', 'Inventariados', 'Conteos');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_count_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'document_list_html.tpl', 'document_name' => 'Conteo',
 				'list' => $list, 'start_date' => $startDate, 'end_date' => $endDate,

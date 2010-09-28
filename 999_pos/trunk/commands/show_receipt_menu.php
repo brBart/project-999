@@ -27,7 +27,7 @@ class ShowReceiptMenuCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio', 'Movimientos', 'Recibos');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Recibo',
 				'create_link' => 'index.php?cmd=create_receipt', 'get_link' => 'index.php?cmd=get_receipt',

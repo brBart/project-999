@@ -40,7 +40,7 @@ class ShowCountingTemplateMenuCommand extends Command{
 		$manufacturer_list = array(array());
 		$manufacturer_list = array_merge($manufacturer_list, ManufacturerDistinctList::getList());
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
 				'content' => 'counting_template_menu_html.tpl', 'product_list' => $product_list,
 				'manufacturer_list' => $manufacturer_list), 'site_html.tpl');

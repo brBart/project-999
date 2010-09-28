@@ -1,6 +1,6 @@
 <?php
 /**
- * Point of departure for the 999 operations system.
+ * Point of departure for the 999 inventory system.
  * @package 999_pos
  * @author Roberto Oliveros
  */
@@ -19,9 +19,9 @@ require_once('include/auto_load_libs.php');
 require_once('presentation/controller.php');
 
 // Activate the right session object.
-$helper = OperationsSession::getInstance();
+$helper = InventorySession::getInstance();
 ActiveSession::setHelper($helper);
 
-// Execute the operations system.
-OperationsController::run();
+// Execute the inventory system.
+InventoryController::run();
 ?>

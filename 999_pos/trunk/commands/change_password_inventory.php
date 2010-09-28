@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ChangePasswordOperationsCommand class.
+ * Library containing the ChangePasswordInventoryCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -11,17 +11,17 @@
 require_once('commands/change_password.php');
 
 /**
- * Displays the change password form for the operations side of the system.
+ * Displays the change password form for the inventory side of the system.
  * @package Command
  * @author Roberto Oliveros
  */
-class ChangePasswordOperationsCommand extends ChangePasswordCommand{
+class ChangePasswordInventoryCommand extends ChangePasswordCommand{
 	/**
 	 * Returns the name of the template.
 	 * @return string
 	 */
 	protected function getModuleTitle(){
-		return OPERATIONS_TITLE;
+		return INVENTORY_TITLE;
 	}
 	
 	/**
@@ -29,7 +29,7 @@ class ChangePasswordOperationsCommand extends ChangePasswordCommand{
 	 * @return string
 	 */
 	protected function getMainMenuTemplate(){
-		return 'main_menu_operations_html.tpl';
+		return 'main_menu_inventory_html.tpl';
 	}
 }
 ?>

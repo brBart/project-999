@@ -57,8 +57,8 @@ class GetProductBySupplierCommand extends GetProductCommand{
 		$list = array(array());
 		$list = array_merge($list, SupplierList::getList($pages, $items, 0));
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_inventory_html.tpl',
 				'content' => 'product_menu_html.tpl', 'supplier_list' => $list, 'notify' => '1',
 				'type' => 'error', 'message' => $msg, 'supplier_id' => $supplier_id,
 				'product_sku' => $product_sku), 'site_html.tpl');

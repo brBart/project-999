@@ -49,7 +49,7 @@ class GetEntryAdjustmentCommand extends GetObjectCommand{
 		
 		$id = $this->_mRequest->getProperty('id');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Vale de Entrada',
 				'create_link' => 'index.php?cmd=create_entry_adjustment',
@@ -75,7 +75,7 @@ class GetEntryAdjustmentCommand extends GetObjectCommand{
 				
 		$user = $obj->getUser();
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'entry_adjustment_form_html.tpl', 'status' => $obj->getStatus(),'key' => $key,
 				'back_link' => $back_link, 'id' => $obj->getId(), 'username' => $user->getUserName(),

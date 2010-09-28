@@ -45,7 +45,7 @@ class GetComparisonCommand extends GetObjectCommand{
 		
 		$id = $this->_mRequest->getProperty('id');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Comparaci&oacute;n',
 				'create_link' => 'index.php?cmd=show_create_comparison_form',
@@ -76,7 +76,7 @@ class GetComparisonCommand extends GetObjectCommand{
 				
 		$user = $obj->getUser();
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'comparison_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $obj->getId(),
 				'username' => $user->getUserName(), 'date_time' => $obj->getDateTime(),

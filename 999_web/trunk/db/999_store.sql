@@ -1029,7 +1029,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
 --
 
 INSERT INTO `subject` (`subject_id`, `name`) VALUES
-(1, 'operations'),
+(1, 'inventory'),
 (2, 'manufacturer'),
 (3, 'unit_of_measure'),
 (4, 'product'),

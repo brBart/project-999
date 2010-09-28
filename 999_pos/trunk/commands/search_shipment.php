@@ -43,7 +43,7 @@ class SearchShipmentCommand extends SearchObjectByDateCommand{
 		$start_date = $this->_mRequest->getProperty('start_date');
 		$end_date = $this->_mRequest->getProperty('end_date');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Envio',
 				'create_link' => 'index.php?cmd=create_shipment', 'get_link' => 'index.php?cmd=get_shipment',
@@ -58,7 +58,7 @@ class SearchShipmentCommand extends SearchObjectByDateCommand{
 	protected function displayEmpty(){
 		$back_trace = array('Inicio', 'Movimientos', 'Envios');
 		$msg = 'No hay envios en esas fechas en la base de datos.';
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_shipment_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'info',
 				'message' => $msg), 'site_html.tpl');
@@ -81,7 +81,7 @@ class SearchShipmentCommand extends SearchObjectByDateCommand{
 	protected function displayList($list, $startDate, $endDate, $totalPages, $totalItems, $page, $firstItem,
 			$lastItem, $previousLink, $nextLink, $actualCmd){
 		$back_trace = array('Inicio', 'Movimientos', 'Envios');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_shipment_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'document_list_html.tpl',
 				'document_name' => 'Envio', 'list' => $list, 'start_date' => $startDate,

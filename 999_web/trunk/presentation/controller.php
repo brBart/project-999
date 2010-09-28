@@ -141,18 +141,18 @@ abstract class Controller{
 
 
 /**
- * Executes the operations side of the system.
+ * Executes the inventory side of the system.
  * @package Controller
  * @author Roberto Oliveros
  */
-class OperationsController extends Controller{
+class InventoryController extends Controller{
 	/**
 	 * It starts to run the system.
 	 * 
 	 * It obtains and executes the command in the cmd argument provided by the user.
 	 */
 	static public function run(){
-		$instance = new OperationsController();
+		$instance = new InventoryController();
 		$instance->init();
 		$instance->handleRequest();	
 	}
@@ -162,7 +162,7 @@ class OperationsController extends Controller{
 	 * @return Command
 	 */
 	protected function getDefaultCommand(){
-		return CommandResolver::getCommand('show_home_operations');
+		return CommandResolver::getCommand('show_home_inventory');
 	}
 	
 	/**
@@ -170,7 +170,7 @@ class OperationsController extends Controller{
 	 * @return Command
 	 */
 	protected function getNotFoundCommand(){
-		return CommandResolver::getCommand('show_not_found_operations');
+		return CommandResolver::getCommand('show_not_found_inventory');
 	}
 	
 	/**
@@ -178,7 +178,7 @@ class OperationsController extends Controller{
 	 * @return Command
  	 */
 	protected function getNotLoginCommand(){
-		return CommandResolver::getCommand('login_operations');
+		return CommandResolver::getCommand('login_inventory');
 	}
 }
 
@@ -303,7 +303,7 @@ class CommandResolver{
 	/**
 	 * Receives the name of the file of the command and it returns the formated name of the command.
 	 * 
-	 * e.g. show_login_operations, returns ShowLoginOperations.
+	 * e.g. show_login_inventory, returns ShowLoginInventory.
 	 * @param string $cmd
 	 * @return string
 	 */

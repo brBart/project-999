@@ -75,9 +75,9 @@ define('DB_DATABASE', '999_store');
  */
 define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
 /**
- * Title of the operations module.
+ * Title of the inventory module.
  */
-define('OPERATIONS_TITLE', 'Operaciones');
+define('INVENTORY_TITLE', 'Inventario');
 /**
  * Title of the admin module.
  */

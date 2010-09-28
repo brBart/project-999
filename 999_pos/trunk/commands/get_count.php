@@ -45,7 +45,7 @@ class GetCountCommand extends GetObjectCommand{
 		
 		$id = $this->_mRequest->getProperty('id');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Conteo',
 				'create_link' => 'index.php?cmd=create_count', 'get_link' => 'index.php?cmd=get_count',
@@ -75,7 +75,7 @@ class GetCountCommand extends GetObjectCommand{
 				
 		$user = $obj->getUser();
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'count_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $obj->getId(),
 				'username' => $user->getUserName(), 'date_time' => $obj->getDateTime(),

@@ -35,7 +35,7 @@ class CreateCountCommand extends CreateObjectCommand{
 	protected function displayFailure(){
 		$back_trace = array('Inicio', 'Inventariados', 'Conteos');
 		$msg = 'Usuario no cuenta con los suficientes privilegios.';
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Conteo',
 				'create_link' => 'index.php?cmd=create_count', 'get_link' => 'index.php?cmd=get_count',
@@ -61,7 +61,7 @@ class CreateCountCommand extends CreateObjectCommand{
 		
 		$user = $obj->getUser();
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'count_form_html.tpl',
 				'status' => '0', 'key' => $key, 'back_link' => 'index.php?cmd=show_count_menu',
 				'foward_link' => 'index.php?cmd=get_count', 'username' => $user->getUserName(),

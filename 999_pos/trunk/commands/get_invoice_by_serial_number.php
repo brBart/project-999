@@ -60,7 +60,7 @@ class GetInvoiceBySerialNumberCommand extends GetObjectCommand{
 		$serial_number = $this->_mRequest->getProperty('serial_number');
 		$number = $this->_mRequest->getProperty('number');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'invoice_menu_html.tpl', 'notify' => '1',
 				'type' => 'error', 'message' => $msg, 'serial_number' => $serial_number,
@@ -85,7 +85,7 @@ class GetInvoiceBySerialNumberCommand extends GetObjectCommand{
 		$user = $obj->getUser();
 		$correlative = $obj->getCorrelative();
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'invoice_web_form_html.tpl', 'status' => $obj->getStatus(),'key' => $key,
 				'back_link' => $back_link, 'serial_number' => $correlative->getSerialNumber(), 'number' => $obj->getNumber(),

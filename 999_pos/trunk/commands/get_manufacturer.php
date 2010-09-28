@@ -38,8 +38,8 @@ class GetManufacturerCommand extends GetObjectCommand{
 	 */
 	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Casas');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_inventory_html.tpl',
 				'content' => 'object_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'create_link' => 'index.php?cmd=create_manufacturer',
 				'show_list_link' => 'index.php?cmd=show_manufacturer_list&page=1'), 'site_html.tpl');
@@ -63,7 +63,7 @@ class GetManufacturerCommand extends GetObjectCommand{
 		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'manufacturer_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
 				'name' => $obj->getName(), 'foward_link' => $foward_link, 'edit_cmd' => 'edit_manufacturer',

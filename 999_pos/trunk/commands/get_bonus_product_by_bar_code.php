@@ -41,8 +41,8 @@ class GetBonusProductByBarCodeCommand extends GetBonusProductCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Ofertas');
 		$bar_code = $this->_mRequest->getProperty('bar_code');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_inventory_html.tpl',
 				'content' => 'bonus_menu_html.tpl', 'notify' => '1', 'type' => 'error', 'message' => $msg,
 				'bar_code' => $bar_code), 'site_html.tpl');
 	}

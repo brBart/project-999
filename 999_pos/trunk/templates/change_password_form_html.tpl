@@ -1,7 +1,7 @@
 {* Smarty *}
 <div id="content">
 	<div id="frm" class="content_small">
-		<form method="post" action="index.php?cmd=change_password_operations" onsubmit="return oSession.setIsLink(true);">
+		<form method="post" action="index.php?cmd=change_password_inventory" onsubmit="return oSession.setIsLink(true);">
 			<fieldset id="main_data">
 				<p><label>Usuario:</label><span>{$username}</span></p>
 			    <p><label for="password">Contrase&ntilde;a actual:</label><input name="password" id="password" type="password" maxlength="20" /></p>

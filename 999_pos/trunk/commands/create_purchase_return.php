@@ -39,7 +39,7 @@ class CreatePurchaseReturnCommand extends CreateObjectCommand{
 	protected function displayFailure(){
 		$back_trace = array('Inicio', 'Movimientos', 'Devoluciones');
 		$msg = 'Usuario no cuenta con los suficientes privilegios.';
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Devoluci&oacute;n',
 				'create_link' => 'index.php?cmd=create_purchase_return',
@@ -70,7 +70,7 @@ class CreatePurchaseReturnCommand extends CreateObjectCommand{
 		$empty_item = array(array());
 		$supplier_list = array_merge($empty_item, SupplierList::getList($pages, $items, 0));
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'purchase_return_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_purchase_return_menu',

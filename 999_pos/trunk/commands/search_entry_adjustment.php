@@ -43,7 +43,7 @@ class SearchEntryAdjustmentCommand extends SearchObjectByDateCommand{
 		$start_date = $this->_mRequest->getProperty('start_date');
 		$end_date = $this->_mRequest->getProperty('end_date');
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Vale de Entrada',
 				'create_link' => 'index.php?cmd=create_entry_adjustment',
@@ -59,7 +59,7 @@ class SearchEntryAdjustmentCommand extends SearchObjectByDateCommand{
 	protected function displayEmpty(){
 		$back_trace = array('Inicio', 'Movimientos', 'Vales de Entrada');
 		$msg = 'No hay vales de entrada en esas fechas en la base de datos.';
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_entry_adjustment_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'info',
 				'message' => $msg), 'site_html.tpl');
@@ -82,7 +82,7 @@ class SearchEntryAdjustmentCommand extends SearchObjectByDateCommand{
 	protected function displayList($list, $startDate, $endDate, $totalPages, $totalItems, $page, $firstItem,
 			$lastItem, $previousLink, $nextLink, $actualCmd){
 		$back_trace = array('Inicio', 'Movimientos', 'Vales de Entrada');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_entry_adjustment_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'document_list_html.tpl',
 				'document_name' => 'Vale de Entrada', 'list' => $list, 'start_date' => $startDate,

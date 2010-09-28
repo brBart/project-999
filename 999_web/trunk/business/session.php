@@ -172,16 +172,16 @@ abstract class SessionHelper{
 }
 
 /**
- * Utility class for keeping session data on the operations side of the system.
+ * Utility class for keeping session data on the inventory side of the system.
  * @package Session
  * @author Roberto Oliveros
  */
-class OperationsSession extends SessionHelper{
+class InventorySession extends SessionHelper{
 	/**
 	 * Name of the module in use.
 	 * @var string
 	 */
-	protected $_mModuleName = 'Operations';
+	protected $_mModuleName = 'Inventory';
 	
 	/**
 	 * Instance of the helper.
@@ -196,7 +196,7 @@ class OperationsSession extends SessionHelper{
 	 */
 	static public function getInstance(){
 		if(is_null(self::$_mInstance))
-			self::$_mInstance = new OperationsSession();
+			self::$_mInstance = new InventorySession();
 			
 		return self::$_mInstance;
 	}

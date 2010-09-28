@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowNotFoundOperationsCommand class.
+ * Library containing the ShowNotFoundInventoryCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,19 +15,19 @@ require_once('commands/show_not_found.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the not found message on the operations site.
+ * Command to display the not found message on the inventory site.
  * @package Command
  * @author Roberto Oliveros
  */
-class ShowNotFoundOperationsCommand extends ShowNotFoundCommand{
+class ShowNotFoundInventoryCommand extends ShowNotFoundCommand{
 	/**
 	 * Displays the failure message to the user in html format.
 	 * @param string $msg
 	 */
 	protected function displayFailure($msg){
 		$back_trace = array('Inicio');
-		Page::display(array('module_title' => OPERATIONS_TITLE,
-				'main_menu' => 'main_menu_operations_html.tpl', 'back_trace' => $back_trace,
+		Page::display(array('module_title' => INVENTORY_TITLE,
+				'main_menu' => 'main_menu_inventory_html.tpl', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'error',
 				'message' => $msg), 'site_html.tpl');
 	}

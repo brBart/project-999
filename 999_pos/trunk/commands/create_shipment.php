@@ -39,7 +39,7 @@ class CreateShipmentCommand extends CreateObjectCommand{
 	protected function displayFailure(){
 		$back_trace = array('Inicio', 'Movimientos', 'Envios');
 		$msg = 'Usuario no cuenta con los suficientes privilegios.';
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Envio',
 				'create_link' => 'index.php?cmd=create_shipment', 'get_link' => 'index.php?cmd=get_shipment',
@@ -69,7 +69,7 @@ class CreateShipmentCommand extends CreateObjectCommand{
 		$empty_item = array(array());
 		$branch_list = array_merge($empty_item, BranchList::getList($pages, $items, 0));
 		
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'shipment_form_html.tpl',
 				'status' => '0', 'key' => $key, 'back_link' => 'index.php?cmd=show_shipment_menu',
 				'foward_link' => 'index.php?cmd=get_shipment', 'username' => $user->getUserName(),

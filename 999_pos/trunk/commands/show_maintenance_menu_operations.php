@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowMaintenanceMenuOperationsCommand class.
+ * Library containing the ShowMaintenanceMenuInventoryCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,11 +15,11 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the maintenance menu on the operations site.
+ * Command to display the maintenance menu on the inventory site.
  * @package Command
  * @author Roberto Oliveros
  */
-class ShowMaintenanceMenuOperationsCommand extends Command{
+class ShowMaintenanceMenuInventoryCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
@@ -27,8 +27,8 @@ class ShowMaintenanceMenuOperationsCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio', 'Mantenimiento');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_inventory_html.tpl',
 				'content' => 'none', 'notify' => '0'), 'site_html.tpl');
 	}
 }

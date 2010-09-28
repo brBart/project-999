@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ShowHomeOperationsCommand class.
+ * Library containing the ShowHomeInventoryCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -15,11 +15,11 @@ require_once('presentation/command.php');
 require_once('presentation/page.php');
 
 /**
- * Command to display the operations home page.
+ * Command to display the inventory home page.
  * @package Command
  * @author Roberto Oliveros
  */
-class ShowHomeOperationsCommand extends Command{
+class ShowHomeInventoryCommand extends Command{
 	/**
 	 * Execute the command.
 	 * @param Request $request
@@ -27,7 +27,7 @@ class ShowHomeOperationsCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'none',
 				'notify' => '0'), 'site_html.tpl');
 	}

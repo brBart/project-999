@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the LoginOperationsCommand class.
+ * Library containing the LoginInventoryCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -11,17 +11,17 @@
 require_once('commands/login.php');
 
 /**
- * Displays the login form for the operations side of the system.
+ * Displays the login form for the inventory side of the system.
  * @package Command
  * @author Roberto Oliveros
  */
-class LoginOperationsCommand extends LoginCommand{
+class LoginInventoryCommand extends LoginCommand{
 	/**
 	 * Returns the name of the template.
 	 * @return string
 	 */
 	protected function getModuleTitle(){
-		return OPERATIONS_TITLE;
+		return INVENTORY_TITLE;
 	}
 	
 	/**
@@ -30,7 +30,7 @@ class LoginOperationsCommand extends LoginCommand{
 	 * @return boolean
 	 */
 	protected function testRights(UserAccount $user){
-		return AccessManager::isAllowed($user, 'operations', 'access');
+		return AccessManager::isAllowed($user, 'inventory', 'access');
 	}
 }
 ?>

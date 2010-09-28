@@ -27,7 +27,7 @@ class ShowComparisonMenuCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio', 'Inventariados', 'Comparaciones');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'main_menu_operations_html.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
 				'content' => 'document_menu_html.tpl', 'document_name' => 'Comparaci&oacute;n',
 				'create_link' => 'index.php?cmd=show_create_comparison_form',

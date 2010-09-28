@@ -31,8 +31,8 @@ class ShowCreateComparisonFormCommand extends Command{
 		if(!AccessManager::isAllowed($user, 'comparison', 'write')){
 			$back_trace = array('Inicio', 'Inventariados', 'Comparaciones');
 			$msg = 'Usuario no cuenta con los suficientes privilegios.';
-			Page::display(array('module_title' => OPERATIONS_TITLE,
-					'main_menu' => 'main_menu_operations_html.tpl', 'back_trace' => $back_trace,
+			Page::display(array('module_title' => INVENTORY_TITLE,
+					'main_menu' => 'main_menu_inventory_html.tpl', 'back_trace' => $back_trace,
 					'second_menu' => 'inventory_menu_html.tpl', 'content' => 'document_menu_html.tpl',
 					'notify' => '1', 'type' => 'error', 'message' => $msg,
 					'document_name' => 'Comparaci&oacute;n',
@@ -42,7 +42,7 @@ class ShowCreateComparisonFormCommand extends Command{
 		}
 		else{
 			$back_trace = array('Inicio', 'Inventariados', 'Comparaciones');
-			Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'blank.tpl',
+			Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'content' => 'comparison_form_html.tpl', 'status' => '0', 'key' => $key,
 					'back_link' => 'index.php?cmd=show_comparison_menu',

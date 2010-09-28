@@ -37,7 +37,7 @@ class ShowUnitOfMeasureListCommand extends ShowListCommand{
 	protected function displayEmpty(){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Unidades de Medida');
 		$msg = 'No hay unidades de medida en la base de datos.';
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_unit_of_measure_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'info',
 				'message' => $msg), 'site_html.tpl');
@@ -58,7 +58,7 @@ class ShowUnitOfMeasureListCommand extends ShowListCommand{
 	protected function displayList($list, $totalPages, $totalItems, $page, $firstItem, $lastItem, $previousLink,
 			$nextLink, $actualCmd){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Unidades de Medida');
-		Page::display(array('module_title' => OPERATIONS_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_unit_of_measure_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'identifier_list_html.tpl', 'list' => $list,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
