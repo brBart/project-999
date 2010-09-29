@@ -38,8 +38,8 @@ class GetCorrelativeCommand extends GetObjectCommand{
 	 */
 	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Correlativos');
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'main_menu_admin_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_admin_html.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'main_menu_pos_admin_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_pos_admin_html.tpl',
 				'content' => 'object_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'create_link' => 'index.php?cmd=create_correlative',
 				'show_list_link' => 'index.php?cmd=show_correlative_list&page=1'), 'site_html.tpl');
@@ -58,7 +58,7 @@ class GetCorrelativeCommand extends GetObjectCommand{
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_correlative_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
 		
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'correlative_form_html.tpl', 'status' => '1', 'key' => $key,
 				'serial_number' => $obj->getSerialNumber(), 'is_default' => $obj->isDefault(),

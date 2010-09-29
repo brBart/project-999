@@ -37,7 +37,7 @@ class ShowCorrelativeListCommand extends ShowListCommand{
 	protected function displayEmpty(){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Correlativos');
 		$msg = 'No hay correlativos en la base de datos.';
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_correlative_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'none', 'notify' => '1', 'type' => 'info',
 				'message' => $msg), 'site_html.tpl');
@@ -58,7 +58,7 @@ class ShowCorrelativeListCommand extends ShowListCommand{
 	protected function displayList($list, $totalPages, $totalItems, $page, $firstItem, $lastItem, $previousLink,
 			$nextLink, $actualCmd){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Correlativos');
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_correlative_menu', 'back_trace' => $back_trace,
 				'second_menu' => 'none', 'content' => 'correlative_list_html.tpl', 'list' => $list,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
