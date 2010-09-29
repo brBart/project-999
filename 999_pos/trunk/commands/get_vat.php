@@ -34,8 +34,8 @@ class GetVatCommand extends GetUniqueObjectCommand{
 	 */
 	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Mantenimiento', 'I.V.A.');
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'main_menu_admin_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_admin_html.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'main_menu_pos_admin_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_pos_admin_html.tpl',
 				'content' => 'none', 'notify' => '1', 'type' => 'error',
 				'message' => $msg), 'site_html.tpl');
 	}
@@ -47,10 +47,10 @@ class GetVatCommand extends GetUniqueObjectCommand{
 	 */
 	protected function displayObject($key, $obj){
 		$back_trace = array('Inicio', 'Mantenimiento', 'I.V.A.');
-		$back_link = 'index.php?cmd=show_maintenance_menu_admin';
+		$back_link = 'index.php?cmd=show_maintenance_menu_pos_admin';
 		$foward_link = 'index.php?cmd=get_vat';
 		
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'vat_form_html.tpl', 'key' => $key, 'percentage' => $obj->getPercentage(),
 				'foward_link' => $foward_link, 'edit_cmd' => 'edit_vat'), 'site_html.tpl');
