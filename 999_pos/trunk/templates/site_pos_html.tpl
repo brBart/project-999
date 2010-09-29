@@ -47,5 +47,6 @@
 		{/if}
 		<div id="footer"></div>
 	</div>
+	<p id="copyright">{#system_copyright#}</p>
 </body>
 </html>

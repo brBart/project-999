@@ -176,6 +176,10 @@ a:hover {
 	border-width: 1px;
 }
 
+#copyright {
+	color: grey;
+}
+
 #list td {
 	border-bottom-style: solid;
 	border-color: #00067F;
