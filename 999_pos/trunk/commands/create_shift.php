@@ -35,8 +35,8 @@ class CreateShiftCommand extends CreateObjectCommand{
 	protected function displayFailure(){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Turnos de Caja');
 		$msg = 'Usuario no cuenta con los suficientes privilegios.';
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'main_menu_admin_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_admin_html.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'main_menu_pos_admin_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_pos_admin_html.tpl',
 				'content' => 'object_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'create_link' => 'index.php?cmd=create_shift',
 				'show_list_link' => 'index.php?cmd=show_shift_list&page=1'), 'site_html.tpl');
@@ -57,7 +57,7 @@ class CreateShiftCommand extends CreateObjectCommand{
 	 */
 	protected function displayObject($key, $obj){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Turnos de Caja');
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'blank.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'shift_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_shift_menu',
