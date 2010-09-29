@@ -270,6 +270,49 @@ class POSController extends Controller{
 
 
 /**
+ * Executes the POS Admin side of the system.
+ * @package Controller
+ * @author Roberto Oliveros
+ */
+class POSAdminController extends Controller{
+	/**
+	 * It starts to run the system.
+	 * 
+	 * It obtains and executes the command in the cmd argument provided by the user.
+	 */
+	static public function run(){
+		$instance = new POSAdminController();
+		$instance->init();
+		$instance->handleRequest();	
+	}
+	
+	/**
+	 * Returns the default command for the controller.
+	 * @return Command
+	 */
+	protected function getDefaultCommand(){
+		return CommandResolver::getCommand('show_home_pos_admin');
+	}
+	
+	/**
+	 * Returns the default NotFoundCommand for the controller.
+	 * @return Command
+	 */
+	protected function getNotFoundCommand(){
+		return CommandResolver::getCommand('show_not_found_pos_admin');
+	}
+	
+	/**
+ 	 * Returns the default NotLoginCommand for the controller.
+	 * @return Command
+ 	 */
+	protected function getNotLoginCommand(){
+		return CommandResolver::getCommand('login_pos_admin');
+	}
+}
+
+
+/**
  * Class in charge of obtaining the requested command.
  * @package Controller
  * @author Roberto Oliveros

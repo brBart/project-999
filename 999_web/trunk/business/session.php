@@ -286,6 +286,38 @@ class POSSession extends SessionHelper{
 
 
 /**
+ * Utility class for keeping session data on the POS Administration side of the system.
+ * @package Session
+ * @author Roberto Oliveros
+ */
+class POSAdminSession extends SessionHelper{
+	/**
+	 * Name of the module in use.
+	 * @var string
+	 */
+	protected $_mModuleName = 'POS Admin';
+	
+	/**
+	 * Instance of the helper.
+	 * @var SessionHelper
+	 */
+	static protected $_mInstance;
+	
+	/**
+	 * Returns the instance of the session helper.
+	 *
+	 * @return SessionHelper
+	 */
+	static public function getInstance(){
+		if(is_null(self::$_mInstance))
+			self::$_mInstance = new POSAdminSession();
+			
+		return self::$_mInstance;
+	}
+}
+
+
+/**
  * Class for generating keys to identify objects in the session object.
  * @package Session
  * @author Roberto Oliveros
