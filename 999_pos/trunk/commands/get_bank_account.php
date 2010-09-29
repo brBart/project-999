@@ -42,8 +42,8 @@ class GetBankAccountCommand extends GetObjectCommand{
 	 */
 	protected function displayFailure($msg){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Cuentas Bancarias');
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'main_menu_admin_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_admin_html.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'main_menu_pos_admin_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_pos_admin_html.tpl',
 				'content' => 'object_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'create_link' => 'index.php?cmd=create_bank_account',
 				'show_list_link' => 'index.php?cmd=show_bank_account_list&page=1'), 'site_html.tpl');
@@ -72,7 +72,7 @@ class GetBankAccountCommand extends GetObjectCommand{
 		$empty_item = array(array());
 		$bank_list = array_merge($empty_item, BankList::getList($pages, $items, 0));
 		
-		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'bank_account_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $number,
 				'number' => $number, 'holder_name' => $obj->getHolderName(), 'bank_id' => $bank->getId(),
