@@ -1717,6 +1717,21 @@ class Invoice extends Document{
 	}
 	
 	/**
+	 * Returns the invoice identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day, serial number and number in the database.
+	 * @param WorkingDay $workingDay
+	 * @param string $serialNumber
+	 * @param integer $number
+	 * @return integer
+	 */
+	static public function getInvoiceIdByWorkingDay(WorkingDay $workingDay, $serialNumber, $number){
+		String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
+		Number::validatePositiveNumber($number, 'N&uacute;mero de factura inv&aacute;lido.');
+		return InvoiceDAM::getIdByWorkingDay($workingDay, $serialNumber, $number);
+	}
+	
+	/**
 	 * Validates the invoice main properties.
 	 *
 	 * This method call its parent validateMainProperties method. And nit must not be empty, cash receipt and

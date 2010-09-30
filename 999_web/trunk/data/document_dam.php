@@ -389,6 +389,22 @@ class InvoiceDAM{
 	}
 	
 	/**
+	 * Returns the invoice identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day, serial number and number in the database.
+	 * @param WorkingDay $workingDay
+	 * @param string $serialNumber
+	 * @param integer $number
+	 * @return integer
+	 */
+	static public function getIdByWorkingDay(WorkingDay $workingDay, $serialNumber, $number){
+		$sql = 'CALL invoice_id_get_by_working_day(:working_day, :serial_number, :number)';
+		$params = array(':date' => Date::dbFormat($workingDay->getDate()), ':serial_number' => $serialNumber,
+				':number' => $number);
+		return (int)DatabaseHandler::getOne($sql, $params);
+	}
+	
+	/**
 	 * Returns an invoice with the details.
 	 *
 	 * Returns NULL if there was no match for the provided id in the database.
