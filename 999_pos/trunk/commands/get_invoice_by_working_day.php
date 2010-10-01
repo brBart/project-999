@@ -80,7 +80,7 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 		$back_trace = array('Inicio', 'Caja', 'Facturas');
 		
 		// Build the back link.
-		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_invoice_menu' :
+		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_invoice_admin_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'] . '&start_date=' .
 				$this->_mRequest->getProperty('start_date') . '&end_date=' .
 				$this->_mRequest->getProperty('end_date');
@@ -93,11 +93,11 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 		
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'invoice_pos_admin_form_html.tpl', 'cash_register_id' => $cashRegister->getId(),
-				'date' => $workingDay->getDate(), 'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
-				'cash_register_status' => (int)$cashRegister->isOpen(),
-				'status' => $obj->getStatus(),'key' => $key,
-				'back_link' => $back_link, 'serial_number' => $correlative->getSerialNumber(), 'number' => $obj->getNumber(),
+				'content' => 'invoice_pos_admin_form_html.tpl', 'cash_register_id' => $cash_register->getId(),
+				'date' => $working_day->getDate(), 'shift' => $shift->getName() . ', ' . $shift->getTimeTable(),
+				'cash_register_status' => (int)$cash_register->isOpen(),
+				'status' => $obj->getStatus(),'key' => $key, 'back_link' => $back_link,
+				'serial_number' => $correlative->getSerialNumber(), 'number' => $obj->getNumber(),
 				'date_time' => $obj->getDateTime(), 'username' => $user->getUserName(),
 				'nit' => $obj->getCustomerNit(), 'customer' => $obj->getCustomerName()), 'site_html.tpl');
 	}
