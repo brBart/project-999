@@ -399,7 +399,7 @@ class InvoiceDAM{
 	 */
 	static public function getIdByWorkingDay(WorkingDay $workingDay, $serialNumber, $number){
 		$sql = 'CALL invoice_id_get_by_working_day(:working_day, :serial_number, :number)';
-		$params = array(':date' => Date::dbFormat($workingDay->getDate()), ':serial_number' => $serialNumber,
+		$params = array(':working_day' => Date::dbFormat($workingDay->getDate()), ':serial_number' => $serialNumber,
 				':number' => $number);
 		return (int)DatabaseHandler::getOne($sql, $params);
 	}
