@@ -20,4 +20,6 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
   			onclick="window.open('index.php?cmd={$print_cmd}&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
   	{/if}
 </fieldset>
+{if $status eq 1}
 {include file='authentication_form_html.tpl'}
+{/if}

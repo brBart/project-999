@@ -1,5 +1,4 @@
 {* Smarty *}
-{if $status eq 1}
 <script type="text/javascript" src="../scripts/modal_form.js"></script>
 <script type="text/javascript" src="../scripts/cancel_document.js"></script>
 <script type="text/javascript" src="../scripts/text_range.js"></script>
@@ -29,4 +28,3 @@ var miniConsole = new Console('mini_console');
 var oCancel = new CancelDocumentCommand(oSession, miniConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oModalFrm);
 oCancel.init('auth_username', 'password');
 </script>
-{/if}
