@@ -91,6 +91,9 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 		$user = $obj->getUser();
 		$correlative = $obj->getCorrelative();
 		
+		$cash_receipt = CashReceipt::getInstance($obj);
+		$cash = $cash_receipt->getCash();
+		
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'invoice_pos_admin_form_html.tpl', 'cash_register_id' => $cash_register->getId(),
@@ -99,7 +102,9 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 				'status' => $obj->getStatus(),'key' => $key, 'back_link' => $back_link,
 				'serial_number' => $correlative->getSerialNumber(), 'number' => $obj->getNumber(),
 				'date_time' => $obj->getDateTime(), 'username' => $user->getUserName(),
-				'nit' => $obj->getCustomerNit(), 'customer' => $obj->getCustomerName()), 'site_html.tpl');
+				'nit' => $obj->getCustomerNit(), 'customer' => $obj->getCustomerName(),
+				'cash_amount' => $cash->getAmount() + $cash_receipt->getChange(),
+				'change_amount' => $cash_receipt->getChange()), 'site_html.tpl');
 	}
 }
 ?>

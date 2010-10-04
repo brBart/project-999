@@ -33,14 +33,50 @@
 		  		<label>Nombre:</label>
 		  		<span>{$customer|htmlchars}&nbsp;</span>
 		  	</p>
+		  	<br />
+		  	<p>
+		  		<label>Efectivo:</label>
+		  		<span>{$cash_amount|nf:2}</span>
+		  	</p>
+			<p>
+				<label>Cambio:</label>
+				<span>{$change_amount|nf:2}</span>
+			</p>
+			<p>
+				<label>Tarjetas:</label>
+				<span><a href="#" onclick="oVouchersList.showForm();">Ver...</a></span>
+			</p>
 	  		{* Because Firefox css rule margin-top on table rule bug. *}
 	  		<p>&nbsp;</p>
 		  	<div id="details" class="items"></div>
 		</fieldset>
-		{include file='controls_invoice_html.tpl' cancel_cmd='cancel_invoice'}
+		<fieldset id="controls">
+		  	<input name="form_widget" id="cancel" type="button" value="Anular"
+		  			{if $status eq 1 and $cash_register_status eq 1}onclick="oCancel.showForm();"{else}disabled="disabled"{/if} />
+		</fieldset>
+		{if $status eq 1 and $cash_register_status eq 1}
+		{include file='authentication_form_html.tpl' cancel_cmd='cancel_invoice'}
+		{/if}
 	</div>
 </div>
 <script type="text/javascript">
 oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
 oDetails.getLastPage();
+</script>
+<div id="vouchers_container" class="hidden">
+	<div class="list_form">
+		<a class="close_window" href="#" onclick="oVouchersList.hideForm();">Cerrar[X]</a>
+		<div id="vouchers_console" class="console_display"></div>
+		<div id="vouchers" class="items"></div>
+	 </div>
+</div>
+<script type="text/javascript" src="../scripts/modal_form.js"></script>
+<script type="text/javascript" src="../scripts/modal_list.js"></script>
+<script type="text/javascript" src="../scripts/object_details.js"></script>
+<script type="text/javascript">
+var oVouchersFrm = new ModalForm('vouchers_container');
+var oVouchersConsole = new Console('vouchers_console');
+var oVouchers = new ObjectDetails(oSession, oVouchersConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_invoice_cash_receipt_vouchers');
+oVouchers.init('../xsl/invoice_cash_receipt_vouchers.xsl', 'vouchers', 'oVouchers');
+var oVouchersList = new ModalList(oVouchers, oVouchersFrm);
 </script>

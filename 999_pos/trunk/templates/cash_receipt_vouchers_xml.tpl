@@ -6,8 +6,9 @@ header('Content-Type: text/xml');
 <response>
 	<success>1</success>
 	<params>
-		<total>{$total|nf:2}</total>
+		<page>{$page}</page>
 		<page_items>{$page_items}</page_items>
+		<total>{$total|nf:2}</total>
 	</params>
 	<grid>
 		{section name=i loop=$details}
