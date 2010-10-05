@@ -5,14 +5,14 @@
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
-<script type="text/javascript" src="../scripts/document_page.js"></script>
+<script type="text/javascript" src="../scripts/invoice_page.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oMachine = new StateMachine({$status});
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
 	oEventDelegator.init();
-	var oDetails = new DocumentPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
+	var oDetails = new InvoicePage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -40,6 +40,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-oDetails.init('../xsl/document_page.xsl', 'details', 'oDetails');
+oDetails.init('../xsl/invoice_page.xsl', 'details', 'oDetails');
 oDetails.getLastPage();
 </script>
