@@ -2290,9 +2290,9 @@ class WorkingDay extends Persist{
 	 * @throws Exception
 	 */
 	static public function getInstance($date){
-		Date::validateDate($date, 'Fecha inv&aacute;lida.');
+		Date::validateDate($date, 'Jornada inv&aacute;lida.');
 		if(Date::compareDates(date('d/m/Y'), $date))
-			throw new Exception('La fecha es posterior a la fecha de hoy.');
+			throw new Exception('La jornada es posterior a la fecha de hoy.');
 			
 		$workingDay = WorkingDayDAM::getInstance($date);
 		
