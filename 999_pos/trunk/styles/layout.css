@@ -139,6 +139,16 @@ input[type="text"], input[type="password"] {
 	padding: 0.5em 1em;
 }
 
+.many_search input[type="text"] {
+	width: 11em;
+}
+
+.working_day_search div span {
+	position: absolute;
+	top: -1.2em;
+	left: 8em;
+}
+
 #authenticate_form {
 	position: relative;
 	padding: 1em;
@@ -243,7 +253,7 @@ input[type="text"], input[type="password"] {
 	margin: 1em auto;
 }
 
-#dates_range div {
+#dates_range div, .working_day_search div {
 	float: left;
 	position: relative;
 }
