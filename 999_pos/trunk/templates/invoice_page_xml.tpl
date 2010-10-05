@@ -18,18 +18,15 @@ header('Content-Type: text/xml');
 		<discount_percentage>{$discount_percentage|nf:2}</discount_percentage>
 		<discount>{$discount|nf:2}</discount>
 		<total>{$total|nf:2}</total>
-		<total_items>{$total_items}</total_items>
 	</params>
 	<grid>
 		{section name=i loop=$details}
 		<row>
 			{if $details[i].is_bonus eq 1}
-			<row_pos>0</row_pos>
 			<is_bonus>1</is_bonus>
 			{assign var=format_percent value=$details[i].percentage|nf:2}
 			<percentage>{'(-'|cat:$format_percent|cat:'%)'}</percentage>
 			{else}
-			<row_pos>{counter}</row_pos>
 			<is_bonus>0</is_bonus>
 			<percentage>0</percentage>
 			<bar_code><![CDATA[{$details[i].bar_code}]]></bar_code>
