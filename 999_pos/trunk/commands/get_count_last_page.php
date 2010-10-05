@@ -23,5 +23,13 @@ class GetCountLastPageCommand extends GetObjectLastPageCommand{
 	protected function getTemplate(){
 		return 'count_page_xml.tpl';
 	}
+	
+	/**
+	 * Returns the params to display for the object.
+	 * @param variant $obj
+	 */
+	protected function getObjectParams($obj){
+		return array('total' => $obj->getTotal());
+	}
 }
 ?>

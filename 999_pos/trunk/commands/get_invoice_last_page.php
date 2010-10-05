@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the GetDocumentLastPageCommand class.
+ * Library containing the GetInvoiceLastPageCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -11,17 +11,17 @@
 require_once('commands/get_object_last_page.php');
 
 /**
- * Returns the name of the template to use for displaying the document's details.
+ * Returns the name of the template to use for displaying the count's details.
  * @package Command
  * @author Roberto Oliveros
  */
-class GetDocumentLastPageCommand extends GetObjectLastPageCommand{
+class GetInvoiceLastPageCommand extends GetObjectLastPageCommand{
 	/**
 	 * Returns the name of the template to use.
 	 * @return string
 	 */
 	protected function getTemplate(){
-		return 'document_page_xml.tpl';
+		return 'invoice_page_xml.tpl';
 	}
 	
 	/**
@@ -29,7 +29,9 @@ class GetDocumentLastPageCommand extends GetObjectLastPageCommand{
 	 * @param variant $obj
 	 */
 	protected function getObjectParams($obj){
-		return array('total' => $obj->getTotal());
+		return array('sub_total' => $obj->getSubTotal(),
+				'discount_percentage' => $obj->getDiscountPercentage(),
+				'discount' => $obj->getTotalDiscount(), 'total' => $obj->getTotal());
 	}
 }
 ?>
