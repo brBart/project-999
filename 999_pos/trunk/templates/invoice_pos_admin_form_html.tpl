@@ -60,7 +60,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-oDetails.init('../xsl/invoice_read_only_details.xsl', 'details', 'oDetails');
+oDetails.init('../xsl/invoice_page.xsl', 'details', 'oDetails');
 oDetails.getLastPage();
 </script>
 <div id="vouchers_container" class="hidden">
