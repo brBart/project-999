@@ -65,7 +65,7 @@ input[type="text"], input[type="password"]{
 					<input name="password" id="password" type="password" maxlength="20" />
 			  	</p>
 			  	<p>
-					<label for="date">Fecha:</label>
+					<label for="date">Jornada:</label>
 					<input name="date" id="date" type="text" value="{$date}" maxlength="10" />
 					<span class="hint">dd/mm/aaaa</span>
 			  	</p>
