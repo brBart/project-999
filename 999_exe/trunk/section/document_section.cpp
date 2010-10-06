@@ -397,6 +397,7 @@ void DocumentSection::cancelDocument()
 		m_DocumentStatus = Cancelled;
 		updateActions();
 
+		cancelDocumentEvent(true);
 	} else {
 		m_AuthenticationDlg->passwordLineEdit()->setText("");
 		m_AuthenticationDlg->usernameLineEdit()->selectAll();
@@ -583,6 +584,14 @@ void DocumentSection::setPlugins()
  */
 void DocumentSection::createDocumentEvent(bool ok,
 		QList<QMap<QString, QString>*> *list)
+{
+
+}
+
+/**
+ * Reimplement this method for extending functionality.
+ */
+void DocumentSection::cancelDocumentEvent(bool ok)
 {
 
 }

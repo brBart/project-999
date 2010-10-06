@@ -111,6 +111,7 @@ protected:
 
 	virtual void createDocumentEvent(bool ok,
 			QList<QMap<QString, QString>*> *list = 0);
+	virtual void cancelDocumentEvent(bool ok);
 
 	virtual void setActions() = 0;
 	virtual void setMenu() = 0;

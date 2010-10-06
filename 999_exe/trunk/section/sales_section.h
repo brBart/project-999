@@ -33,6 +33,7 @@ public slots:
 	void searchInvoice();
 	void consultProduct();
 	void showVouchers();
+	void checkPrinterForCancel();
 
 protected:
 	// Edit actions.
@@ -53,6 +54,7 @@ protected:
 	void prepareDocumentForm(QString dateTime, QString username);
 
 	void createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *list = 0);
+	void cancelDocumentEvent(bool ok);
 
 private:
 	BarCodeLineEdit *m_BarCodeLineEdit;

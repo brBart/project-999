@@ -9,6 +9,7 @@
 
 #include <QList>
 #include <QPrinter>
+#include <QMessageBox>
 #include "../xml_transformer/xml_transformer_factory.h"
 #include "../customer_dialog/customer_dialog.h"
 #include "../registry.h"
@@ -20,6 +21,7 @@
 #include "../recordset/recordset_searcher_factory.h"
 #include "../search_invoice_dialog/search_invoice_dialog.h"
 #include "../consult_product_dialog/consult_product_dialog.h"
+#include "../printer_status_handler/printer_status_handler.h"
 
 /**
  * @class SalesSection
@@ -340,6 +342,33 @@ void SalesSection::showVouchers()
 }
 
 /**
+ * It verifies if the printer is ready.
+ */
+void SalesSection::checkPrinterForCancel()
+{
+	Registry *registry = Registry::instance();
+
+	if (registry->isTMUPrinter()) {
+		PrinterStatusHandler printerHandler(registry->printerName());
+		QString readyMsg;
+		bool printerOk = false;
+
+		do {
+			printerOk = printerHandler.isReady(&readyMsg);
+			if (!printerOk) {
+				if (QMessageBox::critical(this, "Impresora", "Impresora no esta lista: " +
+						readyMsg + " Presione Aceptar cuando este lista para poder "
+						"continuar o Cancelar para regresar.",
+						QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
+					return;
+			}
+		} while(!printerOk);
+	}
+
+	showAuthenticationDialogForCancel();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -359,7 +388,7 @@ void SalesSection::setActions()
 	m_CancelAction = new QAction("Anular", this);
 	m_CancelAction->setShortcut(Qt::Key_F10);
 	connect(m_CancelAction, SIGNAL(triggered()), this,
-			SLOT(showAuthenticationDialogForCancel()));
+			SLOT(checkPrinterForCancel()));
 
 	m_ExitAction = new QAction("Salir", this);
 	m_ExitAction->setShortcut(Qt::Key_Escape);
@@ -628,6 +657,28 @@ void SalesSection::createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *
 	if (ok) {
 		setCustomer();
 		m_BarCodeLineEdit->setFocus();
+	}
+}
+
+/**
+ * Extends functionality after the event.
+ */
+void SalesSection::cancelDocumentEvent(bool ok)
+{
+	if (ok) {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd", "print_cancelled_invoice");
+		url.addQueryItem("key", m_DocumentKey);
+
+		QString content = m_Request->get(url);
+
+		QWebView webView;
+
+		webView.setHtml(content);
+
+		QPrinter printer;
+		printer.setPrinterName(Registry::instance()->printerName());
+		webView.print(&printer);
 	}
 }
 
