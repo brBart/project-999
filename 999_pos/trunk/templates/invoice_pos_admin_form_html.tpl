@@ -44,7 +44,7 @@
 			</p>
 			<p>
 				<label>Tarjetas:</label>
-				<span><a href="#" onclick="oVouchersList.showForm();">Ver...</a></span>
+				<span><a href="#" onclick="oVouchersFrm.show();">Ver...</a></span>
 			</p>
 	  		{* Because Firefox css rule margin-top on table rule bug. *}
 	  		<p>&nbsp;</p>
@@ -65,18 +65,47 @@ oDetails.getLastPage();
 </script>
 <div id="vouchers_container" class="hidden">
 	<div class="list_form">
-		<a class="close_window" href="#" onclick="oVouchersList.hideForm();">Cerrar[X]</a>
-		<div id="vouchers_console" class="console_display"></div>
-		<div id="vouchers" class="items"></div>
+		<a class="close_window" href="#" onclick="oVouchersFrm.hide();">Cerrar[X]</a>
+		<br />
+		<div id="vouchers" class="items">
+			<table class="read_only">
+				<caption>Tarjetas: {$vouchers_count}</caption>
+		      	<thead>
+		      		<tr>
+		      			<th>Transaccion</th>
+		         		<th>Tarjeta No.</th>
+		         		<th>Tipo</th>
+		         		<th>Marca</th>
+		         		<th>Nombre</th>
+		         		<th>Fecha Vence</th>
+		         		<th>Monto</th>
+		      		</tr>
+		       	</thead>
+		       	<tbody>
+		       		{section name=i loop=$vouchers}
+	       			<tr>
+			       		<td>{$vouchers[i].transaction_number|htmlchars}</td>
+			       		<td>{$vouchers[i].number}</td>
+					    <td>{$vouchers[i].type|htmlchars}</td>
+					    <td>{$vouchers[i].brand|htmlchars}</td>
+					    <td>{$vouchers[i].name|htmlchars}</td>
+					    <td>{$vouchers[i].expiration_date}</td>
+					    <td class="total_col">{$vouchers[i].amount|nf:2}</td>
+					</tr>
+					{/section}
+		       	</tbody>
+		       	<tfoot>
+		       		<tr>
+		       			<td colspan="5"></td>
+		       			<td class="total_col">Total:</td>
+		       			<td class="total_col">{$vouchers_total}</td>
+		       		</tr>
+		       	</tfoot>
+			</table>
+		</div>
 	 </div>
 </div>
 <script type="text/javascript" src="../scripts/modal_form.js"></script>
-<script type="text/javascript" src="../scripts/modal_list.js"></script>
-<script type="text/javascript" src="../scripts/object_details.js"></script>
 <script type="text/javascript">
 var oVouchersFrm = new ModalForm('vouchers_container');
-var oVouchersConsole = new Console('vouchers_console');
-var oVouchers = new ObjectDetails(oSession, oVouchersConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_invoice_cash_receipt_vouchers');
-oVouchers.init('../xsl/invoice_cash_receipt_vouchers.xsl', 'vouchers', 'oVouchers');
-var oVouchersList = new ModalList(oVouchers, oVouchersFrm);
 </script>

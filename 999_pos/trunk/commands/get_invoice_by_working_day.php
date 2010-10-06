@@ -93,6 +93,10 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 		
 		$cash_receipt = CashReceipt::getInstance($obj);
 		$cash = $cash_receipt->getCash();
+		$vouchers_obj = $cash_receipt->getVouchers();
+		
+		foreach($vouchers_obj as $voucher)
+			$vouchers[] = $voucher->show();
 		
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
@@ -104,7 +108,9 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 				'date_time' => $obj->getDateTime(), 'username' => $user->getUserName(),
 				'nit' => $obj->getCustomerNit(), 'customer' => $obj->getCustomerName(),
 				'cash_amount' => $cash->getAmount() + $cash_receipt->getChange(),
-				'change_amount' => $cash_receipt->getChange()), 'site_html.tpl');
+				'change_amount' => $cash_receipt->getChange(), 'vouchers' => $vouchers,
+				'vouchers_count' => count($vouchers), 'vouchers_total' => $cash_receipt->getTotalVouchers())
+				, 'site_html.tpl');
 	}
 }
 ?>
