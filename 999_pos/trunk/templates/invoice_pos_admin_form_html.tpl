@@ -50,13 +50,7 @@
 	  		<p>&nbsp;</p>
 		  	<div id="details" class="items"></div>
 		</fieldset>
-		<fieldset id="controls">
-		  	<input name="form_widget" id="cancel" type="button" value="Anular"
-		  			{if $status eq 1 and $cash_register_status eq 1}onclick="oCancel.showForm();"{else}disabled="disabled"{/if} />
-		</fieldset>
-		{if $status eq 1 and $cash_register_status eq 1}
-		{include file='authentication_form_html.tpl' cancel_cmd='cancel_invoice'}
-		{/if}
+		<fieldset>&nbsp;</fieldset>
 	</div>
 </div>
 <script type="text/javascript">
