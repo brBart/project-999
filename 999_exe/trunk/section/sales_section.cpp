@@ -318,6 +318,28 @@ void SalesSection::consultProduct()
 }
 
 /**
+ * Opens a dialog showing the vouchers used on this invoice's cash receipt.
+ */
+void SalesSection::showVouchers()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "show_invoice_cash_receipt_vouchers");
+	url.addQueryItem("key", m_DocumentKey);
+
+	QDialog dialog(this, Qt::WindowTitleHint);
+	dialog.setWindowTitle("Tarjetas");
+	QHBoxLayout *layout = new QHBoxLayout(&dialog);
+
+	QWebView view;
+	view.page()->networkAccessManager()->setCookieJar(m_Request->cookieJar());
+	m_Request->cookieJar()->setParent(0);
+	view.load(url);
+
+	layout->addWidget(&view);
+	dialog.exec();
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void SalesSection::setActions()
@@ -397,6 +419,10 @@ void SalesSection::setActions()
 	m_SearchAction->setShortcut(Qt::Key_F1);
 	connect(m_SearchAction, SIGNAL(triggered()), this, SLOT(searchInvoice()));
 
+	m_ViewVouchers = new QAction("Tarjetas", this);
+	m_ViewVouchers->setShortcut(tr("Ctrl+T"));
+	connect(m_ViewVouchers, SIGNAL(triggered()), this, SLOT(showVouchers()));
+
 	m_ConsultProductAction = new QAction("Consultar producto", this);
 	m_ConsultProductAction->setShortcut(Qt::Key_F6);
 	connect(m_ConsultProductAction, SIGNAL(triggered()), this,
@@ -434,6 +460,7 @@ void SalesSection::setMenu()
 	menu->addAction(m_MoveNextAction);
 	menu->addAction(m_MoveLastAction);
 	menu->addAction(m_SearchAction);
+	menu->addAction(m_ViewVouchers);
 	menu->addSeparator();
 	menu->addAction(m_ConsultProductAction);
 }
@@ -464,6 +491,7 @@ void SalesSection::setActionsManager()
 	*actions << m_MoveNextAction;
 	*actions << m_MoveLastAction;
 	*actions << m_SearchAction;
+	*actions << m_ViewVouchers;
 	*actions << m_ConsultProductAction;
 
 	m_ActionsManager.setActions(actions);
@@ -494,7 +522,7 @@ void SalesSection::updateActions()
 	switch (m_CashRegisterStatus) {
 		case Open:
 			if (m_DocumentStatus == Edit) {
-				values = "011001111111000001";
+				values = "0110011111110000001";
 				m_BarCodeLineEdit->setEnabled(true);
 			} else {
 				QString cancel =
@@ -511,11 +539,11 @@ void SalesSection::updateActions()
 			break;
 
 		case Error:
-			values = "000010000000000000";
+			values = "0000100000000000000";
 			break;
 
 		case Loading:
-			values = "000000000000000000";
+			values = "0000000000000000000";
 			break;
 
 		default:;
@@ -610,16 +638,16 @@ QString SalesSection::navigateValues()
 {
 	if (m_Recordset.size() > 0) {
 		if (m_Recordset.size() == 1) {
-			return "11000001";
+			return "110000011";
 		} else if (m_Recordset.isFirst()) {
-			return "11001111";
+			return "110011111";
 		} else if (m_Recordset.isLast()) {
-			return "11110011";
+			return "111100111";
 		} else {
-			return "11111111";
+			return "111111111";
 		}
 	} else {
-		return "00000001";
+		return "000000001";
 	}
 }
 

@@ -32,6 +32,7 @@ public slots:
 	void searchProduct();
 	void searchInvoice();
 	void consultProduct();
+	void showVouchers();
 
 protected:
 	// Edit actions.
@@ -40,6 +41,7 @@ protected:
 	QAction *m_SearchProductAction;
 
 	// View actions.
+	QAction *m_ViewVouchers;
 	QAction *m_ConsultProductAction;
 
 	void setActions();
