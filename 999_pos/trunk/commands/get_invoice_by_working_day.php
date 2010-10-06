@@ -94,6 +94,7 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 		$cash_receipt = CashReceipt::getInstance($obj);
 		$cash = $cash_receipt->getCash();
 		$vouchers_obj = $cash_receipt->getVouchers();
+		$vouchers = array();
 		
 		foreach($vouchers_obj as $voucher)
 			$vouchers[] = $voucher->show();
