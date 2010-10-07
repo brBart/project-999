@@ -350,6 +350,22 @@ class InvoiceDAM{
 	}
 	
 	/**
+	 * Returns the invoice identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working_day, serial number and number in the database.
+	 * @param WorkingDay $workingDay
+	 * @param string $serialNumber
+	 * @param integer $number
+	 * @return integer
+	 */
+	static public function getIdByWorkingDay($workingDay, $serialNumber, $number){
+		if($serialNumber == 'A022' && $number == 457)
+			return 123;
+		else
+			return 0;
+	}
+	
+	/**
 	 * Returns an invoice with the details corresponding to the requested page.
 	 *
 	 * The total_pages and total_items parameters are necessary to return their respective values. Returns NULL

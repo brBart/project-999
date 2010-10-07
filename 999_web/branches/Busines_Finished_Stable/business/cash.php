@@ -1957,11 +1957,25 @@ class SalesReport{
 	private $_mTotalVat;
 	
 	/**
-	 * Holds an array with the invoices' id and total amounts belonging to the report's cash register.
+	 * Holds the total monetary amount of all the deposits.
+	 *
+	 * @var float
+	 */
+	private $_mTotalDeposits;
+	
+	/**
+	 * Holds an array with the invoices' data.
 	 *
 	 * @var array
 	 */
 	private $_mInvoices = array();
+	
+	/**
+	 * Holds an array with the deposits' data.
+	 *
+	 * @var array
+	 */
+	private $_mDeposits = array();
 	
 	/**
 	 * Constructs the sales report with the provided data.
@@ -1971,15 +1985,19 @@ class SalesReport{
 	 * @param float $totalCash
 	 * @param float $totalDiscount
 	 * @param float $totalVat
+	 * @param float $totalDeposits
 	 * @param array $invoices
+	 * @param array $deposits
 	 * @throws Exception
 	 */
-	public function __construct($totalVouchers, $totalCash, $totalDiscount, $totalVat, $invoices){
+	public function __construct($totalVouchers, $totalCash, $totalDiscount, $totalVat,
+			$totalDeposits, $invoices, $deposits){
 		try{
 			Number::validateFloat($totalVouchers, 'Total de vouchers inv&aacute;lido.');
 			Number::validateFloat($totalCash, 'Total de efectivo inv&aacute;lido.');
 			Number::validateFloat($totalDiscount, 'Total de descuento inv&aacute;lido.');
 			Number::validateFloat($totalVat, 'Total de I.V.A. inv&aacute;lido.');
+			Number::validateFloat($totalDeposits, 'Total de depositos inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en SalesReport con datos erroneos! ' .
 					$e->getMessage());
@@ -1990,7 +2008,9 @@ class SalesReport{
 		$this->_mTotalCash = $totalCash;
 		$this->_mTotalDiscount = $totalDiscount;
 		$this->_mTotalVat = $totalVat;
+		$this->_mTotalDeposits = $totalDeposits;
 		$this->_mInvoices = $invoices;
+		$this->_mDeposits = $deposits;
 	}
 	
 	/**
@@ -2039,13 +2059,33 @@ class SalesReport{
 	}
 	
 	/**
+	 * Returns the sum of all the deposits.
+	 *
+	 * @return float
+	 */
+	public function getTotalDeposits(){
+		return $this->_mTotalDeposits;
+	}
+	
+	/**
 	 * Returns an array with the details of all the invoices of the report.
 	 *
-	 * The array contains the fields serial_number, number, name and total.
+	 * The array contains the fields serial_number, number, name, cash, total_vouchers, discount,
+	 * total and status.
 	 * @return array
 	 */
 	public function getInvoices(){
 		return $this->_mInvoices;
+	}
+	
+	/**
+	 * Returns an array with the details of all the deposits of the report.
+	 *
+	 * The array contains the fields id, bank_account_number, number, total, status.
+	 * @return array
+	 */
+	public function getDeposits(){
+		return $this->_mDeposits;
 	}
 	
 	/**
@@ -2250,9 +2290,9 @@ class WorkingDay extends Persist{
 	 * @throws Exception
 	 */
 	static public function getInstance($date){
-		Date::validateDate($date, 'Fecha inv&aacute;lida.');
+		Date::validateDate($date, 'Jornada inv&aacute;lida.');
 		if(Date::compareDates(date('d/m/Y'), $date))
-			throw new Exception('La fecha es posterior a la fecha de hoy.');
+			throw new Exception('La jornada es posterior a la fecha de hoy.');
 			
 		$workingDay = WorkingDayDAM::getInstance($date);
 		

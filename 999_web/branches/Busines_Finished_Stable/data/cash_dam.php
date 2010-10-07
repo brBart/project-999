@@ -722,7 +722,7 @@ class SalesReportDAM{
 						'cash' => 2.23, 'payment_cards' => 2.34, 'discount' => 32.32, 'total' => 33.81),
 						array('serial_number' => 'A021', 'number' => 125, 'name' => 'Jose',
 						'cash' => 2.23, 'payment_cards' => 2.34, 'discount' => 32.32, 'total' => 135.15));
-				$report = new SalesReport(0.0, 231.49, 25.50, 23.14, $invoices);
+				$report = new SalesReport(0.0, 231.49, 25.50, 23.14, 0.0, $invoices, array());
 				return $report;
 				break;
 				

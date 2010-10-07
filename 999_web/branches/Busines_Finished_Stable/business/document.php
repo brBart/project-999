@@ -1712,8 +1712,23 @@ class Invoice extends Document{
 	 */
 	static public function getInvoiceId($serialNumber, $number){
 		String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
-		Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
+		Number::validatePositiveNumber($number, 'N&uacute;mero de factura inv&aacute;lido.');
 		return InvoiceDAM::getId($serialNumber, $number);
+	}
+	
+	/**
+	 * Returns the invoice identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day, serial number and number in the database.
+	 * @param WorkingDay $workingDay
+	 * @param string $serialNumber
+	 * @param integer $number
+	 * @return integer
+	 */
+	static public function getInvoiceIdByWorkingDay(WorkingDay $workingDay, $serialNumber, $number){
+		String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
+		Number::validatePositiveNumber($number, 'N&uacute;mero de factura inv&aacute;lido.');
+		return InvoiceDAM::getIdByWorkingDay($workingDay, $serialNumber, $number);
 	}
 	
 	/**
