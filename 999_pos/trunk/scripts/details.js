@@ -341,7 +341,7 @@ Details.prototype.handlePrevTabKey = function(oEvent){
 		// Stop propagation because the document is already listening.
 		oEvent.cancelBubble = true;
 		
-		// Cancel default behaviour (which is tab foward), also detect if it is FF.
+		// Cancel default behaviour (which is tab forward), also detect if it is FF.
 		if(document.addEventListener)
 			oEvent.preventDefault();
 		else
@@ -368,7 +368,7 @@ Details.prototype.handleNextTabKey = function(oEvent){
 		// Stop propagation because the document is already listening.
 		oEvent.cancelBubble = true;
 		
-		// Cancel default behaviour (which is tab foward), also detect if it is FF.
+		// Cancel default behaviour (which is tab forward), also detect if it is FF.
 		if(document.addEventListener)
 			oEvent.preventDefault();
 		else
