@@ -27,7 +27,11 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="usernameLineEdit"/>
+      <widget class="QLineEdit" name="usernameLineEdit">
+       <property name="maxLength">
+        <number>10</number>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
@@ -41,6 +45,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="passwordLineEdit">
+       <property name="maxLength">
+        <number>20</number>
+       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
@@ -49,7 +56,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QWebView" name="webView">
+    <widget class="QWebView" name="webView" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -99,7 +106,7 @@
        </disabled>
       </palette>
      </property>
-     <property name="url">
+     <property name="url" stdset="0">
       <url>
        <string>about:blank</string>
       </url>

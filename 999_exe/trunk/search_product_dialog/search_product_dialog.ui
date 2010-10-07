@@ -64,6 +64,9 @@
          <height>0</height>
         </size>
        </property>
+       <property name="maxLength">
+        <number>100</number>
+       </property>
       </widget>
      </item>
     </layout>

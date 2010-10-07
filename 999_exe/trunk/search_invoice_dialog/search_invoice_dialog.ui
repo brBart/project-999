@@ -27,7 +27,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="serialNumberLineEdit"/>
+      <widget class="QLineEdit" name="serialNumberLineEdit">
+       <property name="maxLength">
+        <number>10</number>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -53,7 +57,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="numberLineEdit"/>
+      <widget class="QLineEdit" name="numberLineEdit">
+       <property name="maxLength">
+        <number>20</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

@@ -24,7 +24,11 @@
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="percentageLineEdit"/>
+      <widget class="LineEdit" name="percentageLineEdit">
+       <property name="maxLength">
+        <number>6</number>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="percentageFailedLabel">

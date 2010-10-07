@@ -27,7 +27,11 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="barCodeLineEdit"/>
+      <widget class="QLineEdit" name="barCodeLineEdit">
+       <property name="maxLength">
+        <number>100</number>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="barCodePushButton">
@@ -56,7 +60,11 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="idLineEdit"/>
+      <widget class="QLineEdit" name="idLineEdit">
+       <property name="maxLength">
+        <number>11</number>
+       </property>
+      </widget>
      </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="idPushButton">
@@ -85,7 +93,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="SearchProductLineEdit" name="nameSearchProductLineEdit"/>
+      <widget class="SearchProductLineEdit" name="nameSearchProductLineEdit">
+       <property name="maxLength">
+        <number>100</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

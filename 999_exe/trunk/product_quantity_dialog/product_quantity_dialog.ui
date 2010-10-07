@@ -63,7 +63,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="barCodeLineEdit"/>
+      <widget class="QLineEdit" name="barCodeLineEdit">
+       <property name="maxLength">
+        <number>100</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

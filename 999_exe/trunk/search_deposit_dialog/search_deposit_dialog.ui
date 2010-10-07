@@ -27,7 +27,11 @@
       </widget>
      </item>
      <item row="0" column="1" colspan="3">
-      <widget class="QLineEdit" name="depositIdLineEdit"/>
+      <widget class="QLineEdit" name="depositIdLineEdit">
+       <property name="maxLength">
+        <number>11</number>
+       </property>
+      </widget>
      </item>
      <item row="0" column="4">
       <widget class="QPushButton" name="depositIdPushButton">
@@ -67,7 +71,11 @@
       </widget>
      </item>
      <item row="1" column="3">
-      <widget class="QLineEdit" name="slipNumberLineEdit"/>
+      <widget class="QLineEdit" name="slipNumberLineEdit">
+       <property name="maxLength">
+        <number>50</number>
+       </property>
+      </widget>
      </item>
      <item row="1" column="4">
       <widget class="QPushButton" name="numberBankPushButton">
@@ -79,7 +87,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QWebView" name="webView" native="true">
+    <widget class="QWebView" name="webView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -138,7 +146,7 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="url" stdset="0">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
