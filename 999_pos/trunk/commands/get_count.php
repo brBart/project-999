@@ -67,9 +67,9 @@ class GetCountCommand extends GetObjectCommand{
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'] . '&start_date=' .
 				$this->_mRequest->getProperty('start_date') . '&end_date=' .
 				$this->_mRequest->getProperty('end_date');
-		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_count';
-		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the forward link.
+		$forward_link = 'index.php?cmd=get_count';
+		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'] . '&start_date=' . $this->_mRequest->getProperty('start_date') .
 				'&end_date=' . $this->_mRequest->getProperty('end_date');;
 				
@@ -79,7 +79,7 @@ class GetCountCommand extends GetObjectCommand{
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'count_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $obj->getId(),
 				'username' => $user->getUserName(), 'date_time' => $obj->getDateTime(),
-				'reason' => $obj->getReason(), 'foward_link' => $foward_link), 'site_html.tpl');
+				'reason' => $obj->getReason(), 'forward_link' => $forward_link), 'site_html.tpl');
 	}
 }
 ?>

@@ -66,7 +66,7 @@ class CreateWithdrawAdjustmentCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'withdraw_adjustment_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_withdraw_adjustment_menu',
-				'foward_link' => 'index.php?cmd=get_withdraw_adjustment', 'username' => $user->getUserName(),
+				'forward_link' => 'index.php?cmd=get_withdraw_adjustment', 'username' => $user->getUserName(),
 				'date_time' => $obj->getDateTime()), 'site_html.tpl');
 	}
 }

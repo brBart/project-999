@@ -68,9 +68,9 @@ class GetComparisonCommand extends GetObjectCommand{
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'] . '&start_date=' .
 				$this->_mRequest->getProperty('start_date') . '&end_date=' .
 				$this->_mRequest->getProperty('end_date');
-		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_comparison';
-		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the forward link.
+		$forward_link = 'index.php?cmd=get_comparison';
+		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'] . '&start_date=' . $this->_mRequest->getProperty('start_date') .
 				'&end_date=' . $this->_mRequest->getProperty('end_date');;
 				
@@ -81,7 +81,7 @@ class GetComparisonCommand extends GetObjectCommand{
 				'content' => 'comparison_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $obj->getId(),
 				'username' => $user->getUserName(), 'date_time' => $obj->getDateTime(),
 				'reason' => $obj->getReason(), 'general' => (int)$obj->isGeneral(),
-				'foward_link' => $foward_link), 'site_html.tpl');
+				'forward_link' => $forward_link), 'site_html.tpl');
 	}
 }
 ?>

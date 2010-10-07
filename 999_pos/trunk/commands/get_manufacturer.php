@@ -58,15 +58,15 @@ class GetManufacturerCommand extends GetObjectCommand{
 		// Build the back link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_manufacturer_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
-		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_manufacturer';
-		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the forward link.
+		$forward_link = 'index.php?cmd=get_manufacturer';
+		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 		
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'manufacturer_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
-				'name' => $obj->getName(), 'foward_link' => $foward_link, 'edit_cmd' => 'edit_manufacturer',
+				'name' => $obj->getName(), 'forward_link' => $forward_link, 'edit_cmd' => 'edit_manufacturer',
 				'delete_cmd' => 'delete_manufacturer'), 'site_html.tpl');
 	}
 }

@@ -70,7 +70,7 @@ class CreateBankAccountCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'bank_account_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_bank_account_menu',
-				'foward_link' => 'index.php?cmd=get_bank_account', 'bank_list' => $bank_list),
+				'forward_link' => 'index.php?cmd=get_bank_account', 'bank_list' => $bank_list),
 				'site_html.tpl');
 	}
 }

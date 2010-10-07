@@ -61,7 +61,7 @@ class CreateBranchCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'branch_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_branch_menu',
-				'foward_link' => 'index.php?cmd=get_branch'), 'site_html.tpl');
+				'forward_link' => 'index.php?cmd=get_branch'), 'site_html.tpl');
 	}
 }
 ?>

@@ -46,7 +46,7 @@ class ShowCreateComparisonFormCommand extends Command{
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'content' => 'comparison_form_html.tpl', 'status' => '0', 'key' => $key,
 					'back_link' => 'index.php?cmd=show_comparison_menu',
-					'foward_link' => 'index.php?cmd=get_comparison', 'username' => $user->getUserName()),
+					'forward_link' => 'index.php?cmd=get_comparison', 'username' => $user->getUserName()),
 					'site_html.tpl');
 		}
 	}

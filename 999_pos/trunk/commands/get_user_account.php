@@ -67,9 +67,9 @@ class GetUserAccountCommand extends GetObjectCommand{
 		// Build the back link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_user_account_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
-		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_user_account';
-		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the forward link.
+		$forward_link = 'index.php?cmd=get_user_account';
+		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 				
 		// Get the lists for the select options.
@@ -81,7 +81,7 @@ class GetUserAccountCommand extends GetObjectCommand{
 				'content' => 'user_account_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $username,
 				'username' => $username, 'role_id' => $role->getId(), 'first_name' => $obj->getFirstName(),
 				'last_name' => $obj->getLastName(), 'deactivated' => (int)$obj->isDeactivated(),
-				'role_list' => $role_list, 'foward_link' => $foward_link, 'edit_cmd' => 'edit_user_account',
+				'role_list' => $role_list, 'forward_link' => $forward_link, 'edit_cmd' => 'edit_user_account',
 				'delete_cmd' => 'delete_user_account'), 'site_html.tpl');
 	}
 }

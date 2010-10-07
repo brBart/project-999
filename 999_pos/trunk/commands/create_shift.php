@@ -61,7 +61,7 @@ class CreateShiftCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'shift_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_shift_menu',
-				'foward_link' => 'index.php?cmd=get_shift'), 'site_html.tpl');
+				'forward_link' => 'index.php?cmd=get_shift'), 'site_html.tpl');
 	}
 }
 ?>

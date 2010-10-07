@@ -61,7 +61,7 @@ class CreatePaymentCardTypeCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'identifier_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_payment_card_type_menu',
-				'foward_link' => 'index.php?cmd=get_payment_card_type'), 'site_html.tpl');
+				'forward_link' => 'index.php?cmd=get_payment_card_type'), 'site_html.tpl');
 	}
 }
 ?>

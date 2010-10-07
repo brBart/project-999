@@ -72,7 +72,7 @@ class CreateReceiptCommand extends CreateObjectCommand{
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'receipt_form_html.tpl',
 				'status' => '0', 'key' => $key, 'back_link' => 'index.php?cmd=show_receipt_menu',
-				'foward_link' => 'index.php?cmd=get_receipt', 'username' => $user->getUserName(),
+				'forward_link' => 'index.php?cmd=get_receipt', 'username' => $user->getUserName(),
 				'date_time' => $obj->getDateTime(), 'supplier_list' => $supplier_list),
 				'site_html.tpl');
 	}

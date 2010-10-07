@@ -33,7 +33,7 @@ class ChangePasswordInventoryCommand extends ChangePasswordCommand{
 	}
 	
 	/**
-	 * Returns the link to foward the form on action.
+	 * Returns the link to forward the form on action.
 	 * @return string
 	 */
 	protected function getForwardLink(){

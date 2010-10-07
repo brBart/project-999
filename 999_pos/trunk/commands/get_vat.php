@@ -48,12 +48,12 @@ class GetVatCommand extends GetUniqueObjectCommand{
 	protected function displayObject($key, $obj){
 		$back_trace = array('Inicio', 'Mantenimiento', 'I.V.A.');
 		$back_link = 'index.php?cmd=show_maintenance_menu_pos_admin';
-		$foward_link = 'index.php?cmd=get_vat';
+		$forward_link = 'index.php?cmd=get_vat';
 		
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'vat_form_html.tpl', 'key' => $key, 'percentage' => $obj->getPercentage(),
-				'foward_link' => $foward_link, 'edit_cmd' => 'edit_vat'), 'site_html.tpl');
+				'forward_link' => $forward_link, 'edit_cmd' => 'edit_vat'), 'site_html.tpl');
 	}
 }
 ?>

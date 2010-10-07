@@ -60,7 +60,7 @@ class CreateBankCommand extends CreateObjectCommand{
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'identifier_form_html.tpl', 'status' => '0', 'key' => $key,
-				'back_link' => 'index.php?cmd=show_bank_menu', 'foward_link' => 'index.php?cmd=get_bank'),
+				'back_link' => 'index.php?cmd=show_bank_menu', 'forward_link' => 'index.php?cmd=get_bank'),
 				'site_html.tpl');
 	}
 }

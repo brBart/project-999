@@ -37,9 +37,9 @@ abstract class GetProductCommand extends GetObjectCommand{
 		// Build the back link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_product_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
-		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_product_by_id';
-		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the forward link.
+		$forward_link = 'index.php?cmd=get_product_by_id';
+		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 
 		// Get the lists for the select options.
@@ -55,7 +55,7 @@ abstract class GetProductCommand extends GetObjectCommand{
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'product_form_html.tpl', 'status' => '1', 'key' => $key,
-				'back_link' => $back_link, 'foward_link' => $foward_link,
+				'back_link' => $back_link, 'forward_link' => $forward_link,
 				'manufacturer_list' => $manufacturer_list, 'um_list' => $um_list,
 				'supplier_list' => $supplier_list, 'id' => $id, 'name' => $obj->getName(),
 				'bar_code' => $obj->getBarCode(), 'packaging' => $obj->getPackaging(),

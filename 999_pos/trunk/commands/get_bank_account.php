@@ -63,9 +63,9 @@ class GetBankAccountCommand extends GetObjectCommand{
 		// Build the back link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_bank_account_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
-		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_bank_account';
-		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the forward link.
+		$forward_link = 'index.php?cmd=get_bank_account';
+		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 				
 		// Get the lists for the select options.
@@ -76,7 +76,7 @@ class GetBankAccountCommand extends GetObjectCommand{
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'bank_account_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $number,
 				'number' => $number, 'holder_name' => $obj->getHolderName(), 'bank_id' => $bank->getId(),
-				'bank_list' => $bank_list, 'foward_link' => $foward_link, 'edit_cmd' => 'edit_bank_account',
+				'bank_list' => $bank_list, 'forward_link' => $forward_link, 'edit_cmd' => 'edit_bank_account',
 				'delete_cmd' => 'delete_bank_account'), 'site_html.tpl');
 	}
 }

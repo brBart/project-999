@@ -2918,7 +2918,7 @@ BEGIN
 
   DECLARE productId INT;
 
-  DECLARE balanceFoward INT;
+  DECLARE balanceForward INT;
 
   DECLARE finalBalance INT;
 
@@ -2944,9 +2944,9 @@ BEGIN
 
   WHILE NOT done DO
 
-    SELECT balance_forward FROM product WHERE product_id = productId INTO balanceFoward;
+    SELECT balance_forward FROM product WHERE product_id = productId INTO balanceForward;
 
-    CALL kardex_balance_forward_from_date_get(productId, balanceFoward, fromDate, finalBalance);
+    CALL kardex_balance_forward_from_date_get(productId, balanceForward, fromDate, finalBalance);
 
     IF finalBalance != 0 THEN
       UPDATE product
@@ -3198,12 +3198,12 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_from_date_get`(IN inProductId INT, IN inBalanceFoward INT,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_from_date_get`(IN inProductId INT, IN inBalanceForward INT,
 
   IN inDate DATE, OUT finalBalance INT)
 BEGIN
 
-  SET @balance := inBalanceFoward;
+  SET @balance := inBalanceForward;
 
 
 
@@ -3279,10 +3279,10 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_get`(IN inProductId INT, IN inLastItem INT,
 
-  IN inBalanceFoward INT)
+  IN inBalanceForward INT)
 BEGIN
 
-  SET @balance := inBalanceFoward;
+  SET @balance := inBalanceForward;
 
 
 
@@ -3421,10 +3421,10 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_get`(IN inProductId INT, IN inStartItem INT, IN inItemsPerPage INT,
 
-  IN inBalanceFoward INT)
+  IN inBalanceForward INT)
 BEGIN
 
-  SET @balance := inBalanceFoward;
+  SET @balance := inBalanceForward;
 
 
 

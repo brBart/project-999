@@ -61,7 +61,7 @@ class CreateCorrelativeCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'correlative_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_correlative_menu',
-				'foward_link' => 'index.php?cmd=get_correlative'), 'site_html.tpl');
+				'forward_link' => 'index.php?cmd=get_correlative'), 'site_html.tpl');
 	}
 }
 ?>

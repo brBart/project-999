@@ -64,7 +64,7 @@ class CreateCountCommand extends CreateObjectCommand{
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'count_form_html.tpl',
 				'status' => '0', 'key' => $key, 'back_link' => 'index.php?cmd=show_count_menu',
-				'foward_link' => 'index.php?cmd=get_count', 'username' => $user->getUserName(),
+				'forward_link' => 'index.php?cmd=get_count', 'username' => $user->getUserName(),
 				'date_time' => $obj->getDateTime()), 'site_html.tpl');
 	}
 }

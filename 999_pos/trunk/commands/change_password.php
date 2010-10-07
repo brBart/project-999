@@ -101,7 +101,7 @@ abstract class ChangePasswordCommand extends Command{
 	abstract protected function getMainMenuTemplate();
 	
 	/**
-	 * Returns the link to foward the form on action.
+	 * Returns the link to forward the form on action.
 	 * @return string
 	 */
 	abstract protected function getForwardLink();

@@ -74,7 +74,7 @@ class CreatePurchaseReturnCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'purchase_return_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_purchase_return_menu',
-				'foward_link' => 'index.php?cmd=get_purchase_return', 'username' => $user->getUserName(),
+				'forward_link' => 'index.php?cmd=get_purchase_return', 'username' => $user->getUserName(),
 				'date_time' => $obj->getDateTime(), 'supplier_list' => $supplier_list,
 				'reason' => $obj->getReason()), 'site_html.tpl');
 	}

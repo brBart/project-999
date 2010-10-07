@@ -61,7 +61,7 @@ class CreateUnitOfMeasureCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'identifier_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_unit_of_measure_menu',
-				'foward_link' => 'index.php?cmd=get_unit_of_measure'), 'site_html.tpl');
+				'forward_link' => 'index.php?cmd=get_unit_of_measure'), 'site_html.tpl');
 	}
 }
 ?>

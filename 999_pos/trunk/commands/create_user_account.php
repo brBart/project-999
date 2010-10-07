@@ -70,7 +70,7 @@ class CreateUserAccountCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'user_account_form_html.tpl', 'status' => '0', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_user_account_menu',
-				'foward_link' => 'index.php?cmd=get_user_account', 'role_list' => $role_list),
+				'forward_link' => 'index.php?cmd=get_user_account', 'role_list' => $role_list),
 				'site_html.tpl');
 	}
 }

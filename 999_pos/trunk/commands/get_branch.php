@@ -58,9 +58,9 @@ class GetBranchCommand extends GetObjectCommand{
 		// Build the back link.
 		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_branch_menu' :
 				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'];
-		// Build the foward link.
-		$foward_link = 'index.php?cmd=get_branch';
-		$foward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
+		// Build the forward link.
+		$forward_link = 'index.php?cmd=get_branch';
+		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'];
 		
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
@@ -68,7 +68,7 @@ class GetBranchCommand extends GetObjectCommand{
 				'content' => 'branch_form_html.tpl', 'status' => '1', 'key' => $key, 'id' => $id,
 				'name' => $obj->getName(), 'nit' => $obj->getNit(), 'telephone' => $obj->getTelephone(),
 				'address' => $obj->getAddress(), 'email' => $obj->getEmail(), 'contact' => $obj->getContact(),
-				'foward_link' => $foward_link, 'edit_cmd' => 'edit_branch',
+				'forward_link' => $forward_link, 'edit_cmd' => 'edit_branch',
 				'delete_cmd' => 'delete_branch'), 'site_html.tpl');
 	}
 }
