@@ -66,7 +66,7 @@
 		<fieldset id="controls">
 			{if $status eq 0}
 		  	<input name="form_widget" id="save" type="button" value="Guardar"
-		  		onclick="oCreateComparison.execute('{$foward_link}');" />
+		  		onclick="oCreateComparison.execute('{$forward_link}');" />
 		  	<input name="form_widget" id="undo" type="button" value="Cancelar"
 		  		onclick="oSession.loadHref('{$back_link}');" />
 		  	{else}

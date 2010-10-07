@@ -14,7 +14,7 @@ var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequest
 </script>
 <fieldset id="controls">
   	<input name="form_widget" id="save" type="button" value="Guardar"
-  		onclick="oSave.execute('{$foward_link}');" {if $status eq 1}disabled="disabled"{/if} />
+  		onclick="oSave.execute('{$forward_link}');" {if $status eq 1}disabled="disabled"{/if} />
   	<input name="form_widget" id="edit" type="button" value="Editar"
   		{if $status eq 1}
   			onclick="oEdit.execute('{$edit_cmd}', '{$focus_on_edit}');"
@@ -28,7 +28,7 @@ var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequest
   			disabled="disabled"
   		{/if} />
   	<input name="form_widget" id="undo" type="button" value="Cancelar"
-  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$foward_link|cat:'&id='|cat:$id}{/if}');"
+  			onclick="oSession.loadHref('{if $status eq 0}{$back_link}{else}{$forward_link|cat:'&id='|cat:$id}{/if}');"
   			{if $status eq 1}disabled="disabled"{/if} />
 </fieldset>
 <script type="text/javascript">

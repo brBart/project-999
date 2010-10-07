@@ -658,7 +658,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `deactivated` tinyint(1) NOT NULL,
   `quantity` int(11) NOT NULL default '0',
   `reserved` int(11) NOT NULL default '0',
-  `balance_foward` int(11) NOT NULL default '0',
+  `balance_forward` int(11) NOT NULL default '0',
   PRIMARY KEY  (`product_id`),
   UNIQUE KEY `unique_bar_code` (`bar_code`),
   KEY `idx_product_unit_of_measure_id` (`unit_of_measure_id`),
@@ -2944,13 +2944,13 @@ BEGIN
 
   WHILE NOT done DO
 
-    SELECT balance_foward FROM product WHERE product_id = productId INTO balanceFoward;
+    SELECT balance_forward FROM product WHERE product_id = productId INTO balanceFoward;
 
-    CALL kardex_balance_foward_from_date_get(productId, balanceFoward, fromDate, finalBalance);
+    CALL kardex_balance_forward_from_date_get(productId, balanceFoward, fromDate, finalBalance);
 
     IF finalBalance != 0 THEN
       UPDATE product
-        SET balance_foward = finalBalance
+        SET balance_forward = finalBalance
         WHERE product_id = productId;
     END IF;
 
@@ -3198,7 +3198,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_foward_from_date_get`(IN inProductId INT, IN inBalanceFoward INT,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_from_date_get`(IN inProductId INT, IN inBalanceFoward INT,
 
   IN inDate DATE, OUT finalBalance INT)
 BEGIN
@@ -3277,7 +3277,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_foward_get`(IN inProductId INT, IN inLastItem INT,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_get`(IN inProductId INT, IN inLastItem INT,
 
   IN inBalanceFoward INT)
 BEGIN
@@ -3992,10 +3992,10 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_balance_foward_get`(IN inProductId INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_balance_forward_get`(IN inProductId INT)
 BEGIN
 
-  SELECT balance_foward FROM product
+  SELECT balance_forward FROM product
 
     WHERE product_id = inProductId;
 

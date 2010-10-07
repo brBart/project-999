@@ -10,7 +10,7 @@ var oDiscard = new DiscardDocumentCommand(oSession, oConsole, Request.createXmlH
 <fieldset id="controls">
 	{if $status eq 0}
   	<input name="form_widget" id="save" type="button" value="Guardar"
-  			onclick="if(confirm('Una vez guardado el documento no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$foward_link}');" />
+  			onclick="if(confirm('Una vez guardado el documento no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$forward_link}');" />
   	<input name="form_widget" id="undo" type="button" value="Cancelar"
   			onclick="oDiscard.execute('{$back_link}');" />
   	{else}

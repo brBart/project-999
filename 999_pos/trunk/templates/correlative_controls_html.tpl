@@ -15,7 +15,7 @@ var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequest
 <fieldset id="controls">
 	{if $status eq 0}
   	<input name="form_widget" id="save" type="button" value="Guardar"
-  		onclick="if(confirm('Una vez guardado el correlativo no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$foward_link}');" />
+  		onclick="if(confirm('Una vez guardado el correlativo no se podra editar mas. &iquest;Desea guardar?')) oSave.execute('{$forward_link}');" />
   	<input name="form_widget" id="undo" type="button" value="Cancelar"
   		onclick="oSession.loadHref('{$back_link}');" />
   	{else}

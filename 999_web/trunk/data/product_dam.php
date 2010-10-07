@@ -841,13 +841,13 @@ class KardexDAM{
 		$totalItems = DatabaseHandler::getOne($sql, $params);
 		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
-		$sql = 'CALL product_balance_foward_get(:product_id)';
+		$sql = 'CALL product_balance_forward_get(:product_id)';
 		$balance = DatabaseHandler::getOne($sql, $params);
 		
 		if($page > 1){
-			$sql = 'CALL kardex_balance_foward_get(:product_id, :last_item, :balance_foward)';
+			$sql = 'CALL kardex_balance_forward_get(:product_id, :last_item, :balance_forward)';
 			$params = array(':product_id' => $product->getId(),
-					':last_item' => ($page - 1) * ITEMS_PER_PAGE, ':balance_foward' => $balance);
+					':last_item' => ($page - 1) * ITEMS_PER_PAGE, ':balance_forward' => $balance);
 			$balance = DatabaseHandler::getOne($sql, $params);
 		}
 		
@@ -858,8 +858,8 @@ class KardexDAM{
 			$params = array('product_id' => $product->getId(), ':start_item' => 0,
 					':items_per_page' => $totalItems);
 		
-		$params = array_merge($params, array(':balance_foward' => $balance));
-		$sql = 'CALL kardex_get(:product_id, :start_item, :items_per_page, :balance_foward)';
+		$params = array_merge($params, array(':balance_forward' => $balance));
+		$sql = 'CALL kardex_get(:product_id, :start_item, :items_per_page, :balance_forward)';
 		return DatabaseHandler::getAll($sql, $params);
 	}
 }
