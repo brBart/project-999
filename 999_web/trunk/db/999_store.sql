@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-09-2010 a las 17:38:17
+-- Tiempo de generación: 07-10-2010 a las 10:01:12
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `action` (
   `action_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`action_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Volcar la base de datos para la tabla `action`
@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS `action` (
 INSERT INTO `action` (`action_id`, `name`) VALUES
 (1, 'access'),
 (2, 'write'),
-(3, 'cancel');
+(3, 'cancel'),
+(4, 'close');
 
 -- --------------------------------------------------------
 
@@ -912,7 +913,10 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 29, 2, 1),
 (1, 27, 3, 1),
 (1, 30, 2, 1),
-(1, 30, 3, 1);
+(1, 30, 3, 1),
+(1, 31, 4, 1),
+(1, 32, 4, 1),
+(1, 33, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1022,7 +1026,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1058,7 +1062,10 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (27, 'invoice'),
 (28, 'discount'),
 (29, 'cash_receipt'),
-(30, 'deposit');
+(30, 'deposit'),
+(31, 'cash_register'),
+(32, 'working_day'),
+(33, 'pos_admin');
 
 -- --------------------------------------------------------
 
@@ -2962,7 +2969,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `general_sales_report_cash_registers_get`(IN inWorkingDay DATE)
 BEGIN
 
-  SELECT cr.cash_register_id, sf.name, sf.time_table,
+  SELECT cr.cash_register_id AS id, sf.name, sf.time_table,
 
       SUM(inv.total - inv.total * (IFNULL(dis.percentage, 0) / 100)) AS total FROM invoice inv
 
@@ -3007,6 +3014,50 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+BEGIN
+
+  SELECT COUNT(*) FROM invoice inv
+
+      INNER JOIN cash_register cr ON inv.cash_register_id = cr.cash_register_id
+
+    WHERE CAST(working_day AS DATE) BETWEEN inStartDate AND inEndDate;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT invoice_id, serial_number, number, DATE_FORMAT(working_day, '%d/%m/%Y') AS working_day FROM invoice inv
+
+      INNER JOIN cash_register cr ON inv.cash_register_id = cr.cash_register_id
+
+      INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
+
+      WHERE CAST(working_day AS DATE) BETWEEN ? AND ?
+
+      ORDER BY CAST(working_day AS DATE), invoice_id
+
+      LIMIT ?, ?";
+
+
+
+  SET @p1 = inStartDate;
+
+  SET @p2 = inEndDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(50),
 
   IN inDate DATE)
@@ -3043,6 +3094,17 @@ BEGIN
   SELECT invoice_id FROM invoice inv INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
     WHERE cor.serial_number = inSerialNumber AND inv.number = inNumber;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_id_get_by_working_day`(IN inWorkingDay DATE, IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
+BEGIN
+
+  SELECT invoice_id FROM invoice inv INNER JOIN cash_register cr ON inv.cash_register_id = cr.cash_register_id
+
+      INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
+
+    WHERE cr.working_day = inWorkingDay AND cor.serial_number = inSerialNumber AND inv.number = inNumber;
 
 END$$
 
@@ -4763,6 +4825,15 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_deposits_get`(IN inCashRegisterId INT)
+BEGIN
+
+  SELECT deposit_id AS id, bank_account_number, number, IF(status = 2, 0, total) as total, status FROM deposit
+
+    WHERE cash_register_id = inCashRegisterId;
+
+END$$
+
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_invoices_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -4790,6 +4861,15 @@ BEGIN
     INNER JOIN invoice inv ON cr.cash_receipt_id = inv.invoice_id
 
     WHERE inv.cash_register_id = inCashRegisterId AND inv.status = 1;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_deposits`(IN inCashRegisterId INT)
+BEGIN
+
+  SELECT SUM(total) FROM deposit
+
+    WHERE cash_register_id = inCashRegisterId AND status = 1;
 
 END$$
 
