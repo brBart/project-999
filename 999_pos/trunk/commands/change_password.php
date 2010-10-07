@@ -34,7 +34,8 @@ abstract class ChangePasswordCommand extends Command{
 		if(is_null($request->getProperty('change_password'))){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'change_password_form_html.tpl', 'username' => $username), 'site_html.tpl');
+				'content' => 'change_password_form_html.tpl', 'username' => $username,
+				'forward_link' => $this->getForwardLink()), 'site_html.tpl');
 			return;
 		}
 		
@@ -55,7 +56,8 @@ abstract class ChangePasswordCommand extends Command{
 		if($msg != ''){
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
-					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
+					'content' => 'change_password_form_html.tpl', 'username' => $username,
+					'forward_link' => $this->getForwardLink(), 'notify' => '1',
 					'type' => 'failure', 'message' => $msg), 'site_html.tpl');
 			return;
 		}
@@ -73,13 +75,15 @@ abstract class ChangePasswordCommand extends Command{
 			$msg = $e->getMessage();
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
-					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
+					'content' => 'change_password_form_html.tpl', 'username' => $username,
+					'forward_link' => $this->getForwardLink(), 'notify' => '1',
 					'type' => 'failure', 'message' => $msg), 'site_html.tpl');
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
-					'content' => 'change_password_form_html.tpl', 'username' => $username, 'notify' => '1',
+					'content' => 'change_password_form_html.tpl', 'username' => $username,
+					'forward_link' => $this->getForwardLink(), 'notify' => '1',
 					'type' => 'error', 'message' => $msg), 'site_html.tpl');
 		}
 	}
@@ -95,5 +99,11 @@ abstract class ChangePasswordCommand extends Command{
 	 * @return string
 	 */
 	abstract protected function getMainMenuTemplate();
+	
+	/**
+	 * Returns the link to foward the form on action.
+	 * @return string
+	 */
+	abstract protected function getForwardLink();
 }
 ?>

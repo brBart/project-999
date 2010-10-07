@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the ChangePasswordInventoryCommand class.
+ * Library containing the ChangePasswordPosAdminCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -11,17 +11,17 @@
 require_once('commands/change_password.php');
 
 /**
- * Displays the change password form for the inventory side of the system.
+ * Displays the change password form for the POS Admin side of the system.
  * @package Command
  * @author Roberto Oliveros
  */
-class ChangePasswordInventoryCommand extends ChangePasswordCommand{
+class ChangePasswordPosAdminCommand extends ChangePasswordCommand{
 	/**
 	 * Returns the name of the template.
 	 * @return string
 	 */
 	protected function getModuleTitle(){
-		return INVENTORY_TITLE;
+		return POS_ADMIN_TITLE;
 	}
 	
 	/**
@@ -29,7 +29,7 @@ class ChangePasswordInventoryCommand extends ChangePasswordCommand{
 	 * @return string
 	 */
 	protected function getMainMenuTemplate(){
-		return 'main_menu_inventory_html.tpl';
+		return 'main_menu_pos_admin_html.tpl';
 	}
 	
 	/**
@@ -37,7 +37,7 @@ class ChangePasswordInventoryCommand extends ChangePasswordCommand{
 	 * @return string
 	 */
 	protected function getForwardLink(){
-		return 'index.php?cmd=change_password_inventory';
+		return 'index.php?cmd=change_password_pos_admin';	
 	}
 }
 ?>
