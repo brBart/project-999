@@ -2131,8 +2131,8 @@ class CashEntryEvent{
 		$invoice = $receipt->getInvoice();
 		$total_invoice = $invoice->getTotal();
 		$total_vouchers = $receipt->getTotalVouchers();
-		
-		if($total_invoice < ($amount + $total_vouchers)){
+
+		if(bccomp($total_invoice, ($amount + $total_vouchers), 2) == -1){
 			$receipt->setChange(($amount + $total_vouchers) - $total_invoice);
 			$cash = new Cash($total_invoice - $total_vouchers);
 		}
@@ -2167,7 +2167,7 @@ class VoucherEntryEvent{
 		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
 		Persist::validateNewObject($receipt);
 		
-		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
+		if(bccomp($invoice->getTotal(), ($receipt->getTotal() + $amount), 2) == -1)
 			throw new ValidateException('Voucher excede el total de la factura.', 'amount');
 			
 		$receipt->addVoucher(new Voucher($transaction, $card, $amount));
