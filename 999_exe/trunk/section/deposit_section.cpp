@@ -243,7 +243,7 @@ void DepositSection::setActions()
 	connect(m_DiscardAction, SIGNAL(triggered()), this, SLOT(discardDocument()));
 
 	m_CancelAction = new QAction("Anular", this);
-	m_CancelAction->setShortcut(Qt::Key_F10);
+	m_CancelAction->setShortcut(Qt::Key_F12);
 	connect(m_CancelAction, SIGNAL(triggered()), this,
 			SLOT(showAuthenticationDialogForCancel()));
 
