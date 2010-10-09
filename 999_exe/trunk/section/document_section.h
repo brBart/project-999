@@ -104,7 +104,7 @@ protected:
 	void refreshRecordset();
 	void fetchDocumentDetails(QString documentKey);
 	void fetchDocumentForm();
-	void removeNewDocumentFromSession();
+	virtual void removeNewDocumentFromSession();
 	virtual void prepareDocumentForm(QString dateTime, QString username);
 	WebPluginFactory* webPluginFactory();
 	virtual void setPlugins();
