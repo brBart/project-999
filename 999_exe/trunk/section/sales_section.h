@@ -26,7 +26,7 @@ public slots:
 	void addProductInvoice(QString barCode, int quantity = 1);
 	void showAuthenticationDialogForDiscount();
 	void createDiscount();
-	void createCashReceipt();
+	void validate();
 	void finishInvoice(QString Id);
 	void addProductWithQuantity();
 	void searchProduct();
@@ -63,6 +63,7 @@ private:
 	QString navigateValues();
 	void updateCustomerData(QString nit, QString name);
 	void setDiscountInvoice(QString discountKey);
+	void showCashReceipt();
 	void printInvoice(QString id);
 };
 

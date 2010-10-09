@@ -174,68 +174,37 @@ void SalesSection::createDiscount()
 }
 
 /**
- * Creates a cash receipt on the server.
+ * Validates the invoice before creating the cash receipt.
  */
-void SalesSection::createCashReceipt()
+void SalesSection::validate()
 {
-	bool errorFree = true;
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "validate_invoice");
+	url.addQueryItem("invoice_key", m_NewDocumentKey);
+	url.addQueryItem("type", "xml");
 
-	// If there is not a cash receipt already.
-	if (m_CashReceiptKey == "") {
-		QUrl url(*m_ServerUrl);
-		url.addQueryItem("cmd", "create_cash_receipt");
-		url.addQueryItem("invoice_key", m_NewDocumentKey);
-		url.addQueryItem("type", "xml");
+	QString content = m_Request->get(url);
 
-		QString content = m_Request->get(url);
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("stub");
 
-		XmlTransformer *transformer = XmlTransformerFactory::instance()
-				->create("object_key");
+	QString errorMsg, elementId;
+	XmlResponseHandler::ResponseType response = m_Handler->handle(content,
+		transformer, &errorMsg, &elementId);
 
-		QString errorMsg, elementId;
-		XmlResponseHandler::ResponseType response = m_Handler->handle(content,
-			transformer, &errorMsg, &elementId);
+	if (response == XmlResponseHandler::Success) {
+		m_Console->reset();
 
-		if (response == XmlResponseHandler::Success) {
-			QList<QMap<QString, QString>*> list = transformer->content();
-			QMap<QString, QString> *params = list[0];
-			m_CashReceiptKey = params->value("key");
-			m_Console->reset();
-		} else if (response == XmlResponseHandler::Failure) {
-			m_Console->reset();
-			m_Console->displayFailure(errorMsg, elementId);
-			errorFree = false;
-		} else {
-			m_Console->displayError(errorMsg);
-			errorFree = false;
-		}
+		showCashReceipt();
 
-		delete transformer;
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->reset();
+		m_Console->displayFailure(errorMsg, elementId);
+	} else {
+		m_Console->displayError(errorMsg);
 	}
 
-	if (errorFree) {
-		QMainWindow *window = new QMainWindow(this, Qt::WindowTitleHint);
-		window->setAttribute(Qt::WA_DeleteOnClose);
-		window->setWindowModality(Qt::WindowModal);
-		window->setWindowTitle("Recibo");
-		window->resize(width() - (width() / 3), height() - 150);
-		window->move(x() + (width() / 6), y() + 100);
-
-		CashReceiptSection *section = new CashReceiptSection(
-				ui.webView->page()->networkAccessManager()->cookieJar(),
-				ui.webView->page()->pluginFactory(), m_ServerUrl, m_CashReceiptKey,
-				m_NewDocumentKey, window);
-
-		connect(section, SIGNAL(sessionStatusChanged(bool)), this,
-				SIGNAL(sessionStatusChanged(bool)));
-		connect(section, SIGNAL(cashReceiptSaved(QString)), this,
-				SLOT(finishInvoice(QString)));
-
-		window->setCentralWidget(section);
-		window->show();
-
-		section->loadUrl();
-	}
+	delete transformer;
 }
 
 /**
@@ -379,7 +348,7 @@ void SalesSection::setActions()
 
 	m_SaveAction = new QAction("Guardar", this);
 	m_SaveAction->setShortcut(tr("Ctrl+S"));
-	connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(createCashReceipt()));
+	connect(m_SaveAction, SIGNAL(triggered()), this, SLOT(validate()));
 
 	m_DiscardAction = new QAction("Cancelar", this);
 	m_DiscardAction->setShortcut(Qt::Key_Escape);
@@ -742,6 +711,68 @@ void SalesSection::setDiscountInvoice(QString discountKey)
 	}
 
 	delete transformer;
+}
+
+/**
+ * Creates a cash receipt on the server.
+ */
+void SalesSection::showCashReceipt()
+{
+	bool errorFree = true;
+
+	// If there is not a cash receipt already.
+	if (m_CashReceiptKey == "") {
+		QUrl url(*m_ServerUrl);
+		url.addQueryItem("cmd", "create_cash_receipt");
+		url.addQueryItem("invoice_key", m_NewDocumentKey);
+		url.addQueryItem("type", "xml");
+
+		QString content = m_Request->get(url);
+
+		XmlTransformer *transformer = XmlTransformerFactory::instance()
+				->create("object_key");
+
+		QString errorMsg;
+		if (m_Handler->handle(content,
+				transformer, &errorMsg) == XmlResponseHandler::Success) {
+
+			QList<QMap<QString, QString>*> list = transformer->content();
+			QMap<QString, QString> *params = list[0];
+
+			m_CashReceiptKey = params->value("key");
+			m_Console->reset();
+
+		} else {
+			m_Console->displayError(errorMsg);
+			errorFree = false;
+		}
+
+		delete transformer;
+	}
+
+	if (errorFree) {
+		QMainWindow *window = new QMainWindow(this, Qt::WindowTitleHint);
+		window->setAttribute(Qt::WA_DeleteOnClose);
+		window->setWindowModality(Qt::WindowModal);
+		window->setWindowTitle("Recibo");
+		window->resize(width() - (width() / 3), height() - 150);
+		window->move(x() + (width() / 6), y() + 100);
+
+		CashReceiptSection *section = new CashReceiptSection(
+				ui.webView->page()->networkAccessManager()->cookieJar(),
+				ui.webView->page()->pluginFactory(), m_ServerUrl, m_CashReceiptKey,
+				m_NewDocumentKey, window);
+
+		connect(section, SIGNAL(sessionStatusChanged(bool)), this,
+				SIGNAL(sessionStatusChanged(bool)));
+		connect(section, SIGNAL(cashReceiptSaved(QString)), this,
+				SLOT(finishInvoice(QString)));
+
+		window->setCentralWidget(section);
+		window->show();
+
+		section->loadUrl();
+	}
 }
 
 /**

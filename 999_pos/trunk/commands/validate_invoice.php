@@ -1,6 +1,6 @@
 <?php
 /**
- * Library containing the CreateCashReceiptCommand class.
+ * Library containing the ValidateInvoiceCommand class.
  * @package Command
  * @author Roberto Oliveros
  */
@@ -13,17 +13,13 @@ require_once('presentation/command.php');
  * For displaying the results.
  */
 require_once('presentation/page.php');
-/**
- * For creating the cash receipt object.
- */
-require_once('business/cash.php');
 
 /**
- * Defines functionality for creating a cash receipt.
+ * Defines functionality for validating an invoice.
  * @package Command
  * @author Roberto Oliveros
  */
-class CreateCashReceiptCommand extends Command{
+class ValidateInvoiceCommand extends Command{
 	/**
 	 * Executes the tasks of the command.
 	 * @param Request $request
@@ -33,11 +29,15 @@ class CreateCashReceiptCommand extends Command{
 		$invoice = $helper->getObject((int)$request->getProperty('invoice_key'));
 		
 		try{
-			$receipt = $invoice->createCashReceipt();
-			$key = KeyGenerator::generateKey();
-			$helper->setObject($key, $receipt);
+			$invoice->validate();
 			
-			Page::display(array('key' => $key), 'object_key_xml.tpl');
+			Page::display(array(), 'success_xml.tpl');
+		} catch(ValidateException $e){
+			$msg = $e->getMessage();
+			$element_id = $e->getProperty();
+			Page::display(array('element_id' => $element_id, 'message' => $msg, 'success' => '0'),
+					'validate_xml.tpl');
+			return;
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			Page::display(array('message' => $msg), 'error_xml.tpl');
