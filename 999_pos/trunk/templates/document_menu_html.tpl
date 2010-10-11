@@ -4,8 +4,8 @@
 	    <li><a href="{$create_link}" onclick="return oSession.setIsLink(true);">Crear</a></li>
 	    <li>
 	    	<form method="post" action="{$get_link}" onsubmit="return oSession.setIsLink(true);">
-	    		<label for="receipt_id">{$document_name} No:</label>
-	    		<input name="id" id="receipt_id" type="text" value="{$id}" maxlength="11" />
+	    		<label for="id">{$document_name} No:</label>
+	    		<input name="id" id="id" type="text" value="{$id}" maxlength="11" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>
