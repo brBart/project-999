@@ -439,6 +439,19 @@ class Deposit extends PersistDocument implements Itemized{
 	}
 	
 	/**
+	 * Returns the deposit identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day and id in the database.
+	 * @param WorkingDay $workingDay
+	 * @param integer $id
+	 * @return integer
+	 */
+	static public function getDepositIdByWorkingDay(WorkingDay $workingDay, $id){
+		Number::validatePositiveNumber($id, 'N&uacute;mero de deposito inv&aacute;lido.');
+		return DepositDAM::getIdByWorkingDay($workingDay, $serialNumber, $number);
+	}
+	
+	/**
 	 * Inserts the deposit's data in the database.
 	 *
 	 */

@@ -730,6 +730,20 @@ class DepositDAM{
 		else
 			return NULL;
 	}
+	
+	/**
+	 * Returns the deposit identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day and id in the database.
+	 * @param WorkingDay $workingDay
+	 * @param integer $id
+	 * @return integer
+	 */
+	static public function getIdByWorkingDay(WorkingDay $workingDay, $id){
+		$sql = 'CALL deposit_id_get_by_working_day(:working_day, :id)';
+		$params = array(':working_day' => Date::dbFormat($workingDay->getDate()), ':id' => $id);
+		return (int)DatabaseHandler::getOne($sql, $params);
+	}
 }
 
 
