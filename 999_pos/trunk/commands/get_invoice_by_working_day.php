@@ -49,7 +49,7 @@ class GetInvoiceByWorkingDayCommand extends GetObjectCommand{
 		if($id != 0)
 			return Invoice::getInstance($id);
 		else
-			throw new Exception('Factura no existe.');
+			throw new Exception('Factura no existe en esa jornada.');
 	}
 	
 	/**
