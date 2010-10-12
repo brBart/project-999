@@ -133,6 +133,10 @@ function __autoload($className){
 			require_once('business/cash.php');
 			break;
 			
+		case 'Deposit':
+			require_once('business/cash.php');
+			break;
+			
 		default:
 	}
 }
