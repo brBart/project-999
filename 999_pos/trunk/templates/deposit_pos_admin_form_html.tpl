@@ -1,4 +1,3 @@
-{* Smarty * }
 {* Smarty *}
 {* status = 0 Edit, status = 1 Idle, status = 2 Cancelled *}
 <script type="text/javascript" src="../scripts/core_libs.js"></script>
@@ -41,7 +40,15 @@
 		  	<p>&nbsp;</p>
 		  	<div id="details" class="items"></div>
 	  	</fieldset>
-	  	{include file='controls_doc_html.tpl' print_cmd='print_deposit' cancel_cmd='cancel_deposit'}
+		<fieldset id="controls">
+		  	<input name="form_widget" id="cancel" type="button" value="Anular"
+		  			{if $status eq 1 and $cash_register_status eq 1}onclick="oCancel.showForm();"{else}disabled="disabled"{/if} />
+		  	<input name="form_widget" id="print" type="button" value="Imprimir"
+		  			onclick="window.open('index.php?cmd=print_deposit&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+		</fieldset>
+		{if $status eq 1 and $cash_register_status eq 1}
+		{include file='authentication_form_html.tpl' cancel_cmd='cancel_deposit'}
+		{/if}
 	</div>
 </div>
 <script type="text/javascript">
