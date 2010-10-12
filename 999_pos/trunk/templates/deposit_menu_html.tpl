@@ -3,7 +3,7 @@
 	<ul>
 	    <li>
 	    	<div class="working_day_search many_search">
-		    	<form method="post" action="index.php?cmd=get_deposit_admin" onsubmit="return oSession.setIsLink(true);">
+		    	<form method="post" action="index.php?cmd=get_deposit_by_working_day" onsubmit="return oSession.setIsLink(true);">
 		    		<div>
 			    		<label for="deposit_working_day">Jornada:</label>
 			    		<input name="deposit_working_day" id="deposit_working_day" type="text" value="{$working_day}" maxlength="10" />
@@ -17,7 +17,7 @@
 	    </li>
 	    <li>
 	    	<div class="working_day_search many_search">
-		    	<form method="post" action="index.php?cmd=get_deposit_by_slip" onsubmit="return oSession.setIsLink(true);">
+		    	<form method="post" action="index.php?cmd=get_deposit_by_working_day_slip" onsubmit="return oSession.setIsLink(true);">
 		    		<div>
 			    		<label for="slip_working_day">Jornada:</label>
 			    		<input name="slip_working_day" id="slip_working_day" type="text" value="{$working_day}" maxlength="10" />
