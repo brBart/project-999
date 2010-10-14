@@ -1030,7 +1030,7 @@ class Bonus extends Persist{
 			$this->_mCreatedDate = date('d/m/Y');
 			
 		if(!Date::compareDates($this->_mCreatedDate, $expirationDate))
-			throw new ValidateException('Dia creado es mas reciente que el de vencimiento.', 'bonus');
+			throw new ValidateException('Fecha de vencimiento es igual o mas reciente que la fecha de creaci&oacute;n.', 'bonus');
 		
 		$this->_mId = $id;
 		$this->_mProduct = $product;
