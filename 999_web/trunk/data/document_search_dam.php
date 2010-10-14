@@ -43,6 +43,38 @@ class DepositSearchDAM{
 
 
 /**
+ * Defines functionality for searching the database for Deposit Documents.
+ * @package DocumentSearchDAM
+ * @author Roberto Oliveros
+ */
+class DepositByWorkingDaySearchDAM{
+	/**
+	 * Returns an array with the found data in the database. The array fields are working_day & id
+	 * which is the working day when the document was created and its respective ids.
+	 *
+	 * @param string $startDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function search($startDate, $endDate, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL deposit_by_working_day_search_count(:start_date, :end_date)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		$sql = 'CALL deposit_by_working_day_search_get(:start_date, :end_date, :start_item, :items_per_page)';
+		$params = array(':start_date' => $startDate, ':end_date' => $endDate,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
+	}
+}
+
+
+/**
  * Defines functionality for searching the database for Comparison Documents.
  * @package DocumentSearchDAM
  * @author Roberto Oliveros
