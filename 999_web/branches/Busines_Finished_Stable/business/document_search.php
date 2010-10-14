@@ -68,6 +68,37 @@ class DepositSearch extends DocumentSearch{
 
 
 /**
+ * Implements specific functionality for a deposit document search by working day dates.
+ * @package DocumentSearch
+ * @author Roberto Oliveros
+ */
+class DepositByWorkingDaySearch extends DocumentSearch{
+	/**
+	 * Realizes a deposit search in the database.
+	 * 
+	 * Returns an array with the found data in the database. The array fields are working_day & id
+	 * which is the working day when the document was created and its respective ids. The first 2 paramters must
+	 * be in the the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The
+	 * other 2 arguments are passed by reference so the respective values can be return.
+	 * @param string $startDate
+	 * @param string $endDate
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function search($startDate, $endDate, &$totalPages = 0, &$totalItems = 0, $page = 1){
+		Date::validateDate($startDate, 'Jornada inicial inv&aacute;lida.');
+		Date::validateDate($endDate, 'Jornada final inv&aacute;lida.');
+		$startDate = Date::dbFormat($startDate);
+		$endDate = Date::dbFormat($endDate);
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+		return DepositByWorkingDaySearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
+	}
+}
+
+
+/**
  * Implements specific functionality for a comparison document search.
  * @package DocumentSearch
  * @author Roberto Oliveros

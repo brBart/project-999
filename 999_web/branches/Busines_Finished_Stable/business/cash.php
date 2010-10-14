@@ -439,6 +439,33 @@ class Deposit extends PersistDocument implements Itemized{
 	}
 	
 	/**
+	 * Returns the deposit identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day and id in the database.
+	 * @param WorkingDay $workingDay
+	 * @param integer $id
+	 * @return integer
+	 */
+	static public function getDepositIdByWorkingDay(WorkingDay $workingDay, $id){
+		Number::validatePositiveNumber($id, 'N&uacute;mero de deposito inv&aacute;lido.');
+		return DepositDAM::getIdByWorkingDay($workingDay, $id);
+	}
+	
+	/**
+	 * Returns the deposit identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day, bank and slip number in the database.
+	 * @param WorkingDay $workingDay
+	 * @param Bank $bank
+	 * @param string number
+	 * @return integer
+	 */
+	static public function getDepositIdByWorkingDaySlip(WorkingDay $workingDay, Bank $bank, $number){
+		String::validateString($number, 'N&uacute;mero de boleta inv&aacute;lido.');
+		return DepositDAM::getIdByWorkingDaySlip($workingDay, $bank, $number);
+	}
+	
+	/**
 	 * Inserts the deposit's data in the database.
 	 *
 	 */
@@ -2131,8 +2158,8 @@ class CashEntryEvent{
 		$invoice = $receipt->getInvoice();
 		$total_invoice = $invoice->getTotal();
 		$total_vouchers = $receipt->getTotalVouchers();
-		
-		if($total_invoice < ($amount + $total_vouchers)){
+
+		if(bccomp($total_invoice, ($amount + $total_vouchers), 2) == -1){
 			$receipt->setChange(($amount + $total_vouchers) - $total_invoice);
 			$cash = new Cash($total_invoice - $total_vouchers);
 		}
@@ -2167,7 +2194,7 @@ class VoucherEntryEvent{
 		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
 		Persist::validateNewObject($receipt);
 		
-		if($invoice->getTotal() < ($receipt->getTotal() + $amount))
+		if(bccomp($invoice->getTotal(), ($receipt->getTotal() + $amount), 2) == -1)
 			throw new ValidateException('Voucher excede el total de la factura.', 'amount');
 			
 		$receipt->addVoucher(new Voucher($transaction, $card, $amount));

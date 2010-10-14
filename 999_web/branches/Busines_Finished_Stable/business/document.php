@@ -1602,6 +1602,13 @@ class Invoice extends Document{
 	}
 	
 	/**
+	 * Call the validateMainProperties method.
+	 */
+	public function validate(){
+		$this->validateMainProperties();
+	}
+	
+	/**
 	 * Creates and returns a cash receipt object.
 	 * 
 	 * @return CashReceipt
@@ -1617,8 +1624,6 @@ class Invoice extends Document{
 		if($this->_mCorrelative->getFinalNumber()
 				== $this->_mCorrelative->getCurrentNumber())
 			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
-		
-		$this->validateMainProperties();
 		
 		return new CashReceipt($this);
 	}
