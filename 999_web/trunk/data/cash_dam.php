@@ -744,6 +744,22 @@ class DepositDAM{
 		$params = array(':working_day' => Date::dbFormat($workingDay->getDate()), ':id' => $id);
 		return (int)DatabaseHandler::getOne($sql, $params);
 	}
+	
+	/**
+	 * Returns the deposit identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day, bank and slip number in the database.
+	 * @param WorkingDay $workingDay
+	 * @param Bank $bank
+	 * @param string $number
+	 * @return integer
+	 */
+	static public function getIdByWorkingDaySlip(WorkingDay $workingDay, Bank $bank, $number){
+		$sql = 'CALL deposit_id_get_by_working_day_slip(:working_day, :bank_id, :number)';
+		$params = array(':working_day' => Date::dbFormat($workingDay->getDate()), ':bank_id' => $bank->getId(),
+				':number' => $number);
+		return (int)DatabaseHandler::getOne($sql, $params);
+	}
 }
 
 

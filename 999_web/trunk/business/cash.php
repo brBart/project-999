@@ -452,6 +452,20 @@ class Deposit extends PersistDocument implements Itemized{
 	}
 	
 	/**
+	 * Returns the deposit identifier.
+	 *
+	 * Returns 0 if there was no match for the provided working day, bank and slip number in the database.
+	 * @param WorkingDay $workingDay
+	 * @param Bank $bank
+	 * @param string number
+	 * @return integer
+	 */
+	static public function getDepositIdByWorkingDaySlip(WorkingDay $workingDay, Bank $bank, $number){
+		String::validateString($number, 'N&uacute;mero de boleta inv&aacute;lido.');
+		return DepositDAM::getIdByWorkingDaySlip($workingDay, $bank, $number);
+	}
+	
+	/**
 	 * Inserts the deposit's data in the database.
 	 *
 	 */
