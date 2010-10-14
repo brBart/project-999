@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-10-2010 a las 10:01:12
+-- Tiempo de generación: 14-10-2010 a las 17:58:39
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -2546,6 +2546,48 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+BEGIN
+
+  SELECT COUNT(*) FROM deposit dep
+
+      INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
+
+    WHERE CAST(working_day AS DATE) BETWEEN inStartDate AND inEndDate;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT deposit_id AS id, DATE_FORMAT(working_day, '%d/%m/%Y') AS working_day FROM deposit dep
+
+      INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
+
+      WHERE CAST(working_day AS DATE) BETWEEN ? AND ?
+
+      ORDER BY CAST(working_day AS DATE), deposit_id
+
+      LIMIT ?, ?";
+
+
+
+  SET @p1 = inStartDate;
+
+  SET @p2 = inEndDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(50), IN inDate DATE)
 BEGIN
 
@@ -2636,6 +2678,26 @@ BEGIN
     total, status FROM deposit
 
     WHERE deposit_id = inDepositId;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_id_get_by_working_day`(IN inWorkingDay DATE, IN inId INT)
+BEGIN
+
+  SELECT deposit_id FROM deposit dep INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
+
+    WHERE cr.working_day = inWorkingDay AND dep.deposit_id = inId;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_id_get_by_working_day_slip`(IN inWorkingDay DATE, IN inBankId INT, IN inNumber VARCHAR(50))
+BEGIN
+
+  SELECT deposit_id FROM deposit dep INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
+
+    INNER JOIN bank_account ba ON dep.bank_account_number = ba.bank_account_number
+
+    WHERE cr.working_day = inWorkingDay AND ba.bank_id = inBankId AND dep.number = inNumber AND dep.status = 1;
 
 END$$
 
