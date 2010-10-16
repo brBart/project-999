@@ -1542,7 +1542,7 @@ class Kardex{
 	/**
 	 * Returns an array with the kardex details of the product provided.
 	 *
-	 * The array's fields are date, document, number, entry, withdraw and balance. The balance
+	 * The array's fields are created_date, document, number, lot_id, entry, withdraw and balance. The balance
 	 * argument returns it respective value. If no page argument or cero is passed all the details are
 	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Product $product
