@@ -161,7 +161,7 @@ oProductBalance.init('quantity', 'available');
 <script type="text/javascript" src="../scripts/object_page.js"></script>
 <script type="text/javascript" src="../scripts/kardex_page.js"></script>
 <div id="kardex_container" class="hidden">
-	<div class="list_form">
+	<div class="list_form_large">
 		<a class="close_window" href="#" onclick="oKardexList.hideForm();">Cerrar[X]</a>
 		<div id="kardex_console" class="console_display"></div>
 		<div id="kardex" class="items"></div>

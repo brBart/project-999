@@ -85,14 +85,22 @@ input[type="text"], input[type="password"] {
 	left: 0;
 }
 
-.list_form {
+.list_form, .list_form_large {
 	position: relative;
 	padding: 1em;
-	width: 50%;
 	height: 80%;
 	top: 10%;
-	left: 25%;
 	overflow: scroll;
+}
+
+.list_form {
+	width: 50%;
+	left: 25%;
+}
+
+.list_form_large {
+	width: 75%;
+	left: 15%;
 }
 
 .date_title {
