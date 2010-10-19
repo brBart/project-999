@@ -6,7 +6,7 @@
 /**
  * @class Represents a modal form with a list of details.
  * @constructor
- * @param {ObjectDetails} oStateMachine
+ * @param {ObjectDetails} oDetails
  * @param {ModalForm} oForm
  * @param {Command} oCommand
  */
