@@ -827,7 +827,8 @@ class KardexDAM{
 	 *
 	 * The array's fields are created_date, document, number, lot_id, entry, withdraw and balance. The balance
 	 * argument returns it respective value. If no page argument or cero is passed all the details are
-	 * returned. The totalPages and totalItems arguments are necessary to return their respective values.
+	 * returned, if -1 is passed, the last page is returned. The totalPages and totalItems arguments are
+	 * necessary to return their respective values.
 	 * @param Product $product
 	 * @param integer &$balance
 	 * @param integer &$totalPages
@@ -843,6 +844,9 @@ class KardexDAM{
 		
 		$sql = 'CALL product_balance_forward_get(:product_id)';
 		$balance = DatabaseHandler::getOne($sql, $params);
+		
+		// If -1 is passed as the last page.
+		$page = ($page == -1) ? $totalPages : $page;
 		
 		if($page > 1){
 			$sql = 'CALL kardex_balance_forward_get(:product_id, :last_item, :balance_forward)';

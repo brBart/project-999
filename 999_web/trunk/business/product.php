@@ -1540,7 +1540,7 @@ class ManufacturerProductList{
  */
 class Kardex{
 	/**
-	 * Returns an array with the kardex details of the product provided.
+	 * Returns an array with the kardex details of the requested page of the product provided.
 	 *
 	 * The array's fields are created_date, document, number, lot_id, entry, withdraw and balance. The balance
 	 * argument returns it respective value. If no page argument or cero is passed all the details are
@@ -1552,13 +1552,30 @@ class Kardex{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Product $product, &$balance, &$total_pages = 0,
+	static public function showPage(Product $product, &$balance, &$total_pages = 0,
 			&$total_items = 0, $page = 0){
-		Persist::validateObjectFromDatabase($product);
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
 			
 		return KardexDAM::getList($product, $balance, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Returns an array with the kardex details of the last page of the product provided.
+	 *
+	 * The array's fields are created_date, document, number, lot_id, entry, withdraw and balance. The balance
+	 * argument returns it respective value. If no page argument or cero is passed all the details are
+	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param Product $product
+	 * @param integer &$balance
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function showLastPage(Product $product, &$balance, &$total_pages = 0,
+			&$total_items = 0){
+		return KardexDAM::getList($product, $balance, $total_pages, $total_items, -1);
 	}
 }
 
