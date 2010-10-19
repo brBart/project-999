@@ -162,7 +162,7 @@ oProductBalance.init('quantity', 'available');
 <script type="text/javascript" src="../scripts/kardex_page.js"></script>
 <div id="kardex_container" class="hidden">
 	<div class="list_form_large">
-		<input type="button" value="Imprimir" />
+		<input type="button" value="Imprimir" onclick="window.open('index.php?cmd=print_kardex&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
 		<a class="close_window" href="#" onclick="oKardexList.hideForm();">Cerrar[X]</a>
 		<div id="kardex_console" class="console_display"></div>
 		<div id="kardex" class="items"></div>
