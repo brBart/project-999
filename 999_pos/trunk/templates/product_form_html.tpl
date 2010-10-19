@@ -32,7 +32,7 @@
 		{include file='status_bar_html.tpl'}
 		<fieldset id="sub_menu">
 			<p {if $status eq 0}class="invisible"{/if}>
-				<a name="form_widget" href="#">Kardex</a>
+				<a name="form_widget" href="#" onclick="oKardexList.showForm();">Kardex</a>
 				<a name="form_widget" href="#" onclick="oLotsList.showForm();">Lotes</a>
 				<a name="form_widget" href="#" onclick="oReservesList.showForm();">Reservados</a>
 			</p>
@@ -151,13 +151,30 @@ oProductSuppliers.init('../xsl/product_suppliers.xsl', 'details', 'oProductSuppl
 oProductSuppliers.update();
 </script>
 {if $status eq 1}
-<script type="text/javascript" src="../scripts/modal_form.js"></script>
-<script type="text/javascript" src="../scripts/modal_list.js"></script>
 <script type="text/javascript" src="../scripts/get_product_balance.js"></script>
 <script type="text/javascript">
 var oProductBalance = new GetProductBalanceCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 oProductBalance.init('quantity', 'available');
 </script>
+<script type="text/javascript" src="../scripts/modal_form.js"></script>
+<script type="text/javascript" src="../scripts/modal_page.js"></script>
+<script type="text/javascript" src="../scripts/object_page.js"></script>
+<script type="text/javascript" src="../scripts/kardex_page.js"></script>
+<div id="kardex_container" class="hidden">
+	<div class="list_form">
+		<a class="close_window" href="#" onclick="oKardexList.hideForm();">Cerrar[X]</a>
+		<div id="kardex_console" class="console_display"></div>
+		<div id="kardex" class="items"></div>
+	 </div>
+</div>
+<script type="text/javascript">
+var oKardexFrm = new ModalForm('kardex_container');
+var oKardexConsole = new Console('kardex_console');
+var oKardex = new KardexPage(oSession, oKardexConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
+oKardex.init('../xsl/kardex.xsl', 'kardex', 'oKardex');
+var oKardexList = new ModalList(oKardex, oKardexFrm, oProductBalance);
+</script>
+<script type="text/javascript" src="../scripts/modal_list.js"></script>
 <div id="lots_container" class="hidden">
 	<div class="list_form">
 		<a class="close_window" href="#" onclick="oLotsList.hideForm();">Cerrar[X]</a>
