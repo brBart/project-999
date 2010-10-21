@@ -170,6 +170,13 @@ void DepositSection::saveDeposit()
 	} else if (response == XmlResponseHandler::Failure) {
 		m_Console->reset();
 		m_Console->displayFailure(errorMsg, elementId);
+
+		if (elementId == "slip_number") {
+			m_SlipNumberLineEdit->setFocus();
+		} else if (elementId == "bank_account_id") {
+			m_BankAccountComboBox->setFocus();
+		}
+
 	} else {
 		m_Console->displayError(errorMsg);
 	}
