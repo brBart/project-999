@@ -124,6 +124,11 @@ void AvailableCashDialog::addCashDeposit()
 	} else if (response == XmlResponseHandler::Failure) {
 		m_Console->reset();
 		m_Console->displayFailure(errorMsg, elementId);
+
+		if (elementId == "amount") {
+			ui.amountLineEdit->setFocus();
+		}
+
 	} else {
 		m_Console->displayError(errorMsg);
 	}
