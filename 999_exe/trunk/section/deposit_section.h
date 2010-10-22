@@ -37,7 +37,7 @@ protected:
 	void setActionsManager();
 	void setPlugins();
 	void updateActions();
-	void prepareDocumentForm(QString dateTime, QString username);
+	void prepareDocumentForm(QString username);
 
 	void createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *list = 0);
 

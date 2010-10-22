@@ -245,7 +245,7 @@ void DocumentSection::createDocument()
 		QMap<QString, QString> *params = list[0];
 		m_NewDocumentKey = params->value("key");
 
-		prepareDocumentForm(params->value("date_time"), params->value("username"));
+		prepareDocumentForm(params->value("username"));
 		fetchDocumentDetails(m_NewDocumentKey);
 
 		m_DocumentStatus = Edit;
@@ -544,7 +544,7 @@ void DocumentSection::removeNewDocumentFromSession()
 /**
  * Prepare the document form for creating a new document.
  */
-void DocumentSection::prepareDocumentForm(QString dateTime, QString username)
+void DocumentSection::prepareDocumentForm(QString username)
 {
 	QWebFrame *frame = ui.webView->page()->mainFrame();
 	QWebElement element;
@@ -553,9 +553,8 @@ void DocumentSection::prepareDocumentForm(QString dateTime, QString username)
 	element.setInnerXml("Creando...");
 	element.removeClass("cancel_status");
 
-
 	element = frame->findFirstElement("#date_time");
-	element.setInnerXml(dateTime);
+	element.setInnerXml("");
 
 	element = frame->findFirstElement("#username");
 	element.setInnerXml(username);

@@ -50,7 +50,6 @@ class CreateDepositCommand extends CreateCashRegisterObjectCommand{
 		$bank_account_list = BankAccountList::getList();
 		$user = $obj->getUser();
 		Page::display(array('key' => $key, 'username' => $user->getUserName(),
-				'date_time' => $obj->getDateTime(),
 				'bank_account_list' => $bank_account_list), 'deposit_xml.tpl');
 	}
 }

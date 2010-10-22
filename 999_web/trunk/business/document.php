@@ -34,7 +34,14 @@ abstract class Document extends PersistDocument implements Itemized{
 	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
 	 * @var string
 	 */
-	private $_mDateTime;
+	protected $_mDateTime;
+	
+	/**
+	 * Array containing all the document details.
+	 *
+	 * @var array<DocumentDetail>
+	 */
+	protected $_mDetails = array();
 	
 	/**
 	 * Holds the documents grand total.
@@ -49,13 +56,6 @@ abstract class Document extends PersistDocument implements Itemized{
 	 * @var UserAccount
 	 */
 	private $_mUser;
-	
-	/**
-	 * Array containing all the document details.
-	 *
-	 * @var array<DocumentDetail>
-	 */
-	protected $_mDetails = array();
 	
 	/**
 	 * Constructs the document with the provided data.
@@ -81,8 +81,6 @@ abstract class Document extends PersistDocument implements Itemized{
 			}
 			$this->_mDateTime = $dateTime;
 		}
-		else
-			$this->_mDateTime = date('d/m/Y H:i:s');
 		
 		if(!is_null($user)){
 			try{
@@ -241,7 +239,10 @@ abstract class Document extends PersistDocument implements Itemized{
 	public function save(){
 		if($this->_mStatus == PersistDocument::IN_PROGRESS){
 			$this->validateMainProperties();
+			
+			$this->_mDateTime = date('d/m/Y H:i:s');
 			$this->insert();
+			
 			$this->_mStatus = PersistDocument::CREATED;
 			
 			$i = 1;
@@ -1645,7 +1646,8 @@ class Invoice extends Document{
 							
 			$this->_mNumber = $this->_mCorrelative->getNextNumber();
 			
-			$this->insert();	
+			$this->_mDateTime = date('d/m/Y H:i:s');
+			$this->insert();
 			$this->_mStatus = PersistDocument::CREATED;
 			// Watch out, if any error occurs the database has already been altered!
 			$i = 1;

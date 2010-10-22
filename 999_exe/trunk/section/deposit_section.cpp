@@ -420,9 +420,9 @@ void DepositSection::updateActions()
 /**
  * Prepare the deposit form for creating a new deposit.
  */
-void DepositSection::prepareDocumentForm(QString dateTime, QString username)
+void DepositSection::prepareDocumentForm(QString username)
 {
-	DocumentSection::prepareDocumentForm(dateTime, username);
+	DocumentSection::prepareDocumentForm(username);
 
 	QWebFrame *frame = ui.webView->page()->mainFrame();
 	QWebElement element;

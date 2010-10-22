@@ -73,8 +73,7 @@ class CreateReceiptCommand extends CreateObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'receipt_form_html.tpl',
 				'status' => '0', 'key' => $key, 'back_link' => 'index.php?cmd=show_receipt_menu',
 				'forward_link' => 'index.php?cmd=get_receipt', 'username' => $user->getUserName(),
-				'date_time' => $obj->getDateTime(), 'supplier_list' => $supplier_list),
-				'site_html.tpl');
+				'supplier_list' => $supplier_list), 'site_html.tpl');
 	}
 }
 ?>

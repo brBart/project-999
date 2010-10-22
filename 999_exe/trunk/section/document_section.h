@@ -105,7 +105,7 @@ protected:
 	void fetchDocumentDetails(QString documentKey);
 	void fetchDocumentForm();
 	virtual void removeNewDocumentFromSession();
-	virtual void prepareDocumentForm(QString dateTime, QString username);
+	virtual void prepareDocumentForm(QString username);
 	WebPluginFactory* webPluginFactory();
 	virtual void setPlugins();
 

@@ -51,7 +51,7 @@ protected:
 	void setPlugins();
 	void updateActions();
 	void removeNewDocumentFromSession();
-	void prepareDocumentForm(QString dateTime, QString username);
+	void prepareDocumentForm(QString username);
 
 	void createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *list = 0);
 	void cancelDocumentEvent(bool ok);

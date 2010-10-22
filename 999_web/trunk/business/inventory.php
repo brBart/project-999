@@ -503,8 +503,6 @@ class Count extends PersistObject implements Itemized{
 			}
 			$this->_mDateTime = $dateTime;
 		}
-		else
-			$this->_mDateTime = date('d/m/Y H:i:s');
 		
 		if(!is_null($user)){
 			try{
@@ -698,6 +696,7 @@ class Count extends PersistObject implements Itemized{
 		$this->validateMainProperties();
 		
 		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->_mDateTime = date('d/m/Y H:i:s');
 			$this->_mId = $this->insert();
 			$this->_mStatus = Persist::CREATED;
 		}

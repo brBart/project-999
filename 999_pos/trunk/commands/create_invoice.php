@@ -44,8 +44,8 @@ class CreateInvoiceCommand extends CreateCashRegisterObjectCommand{
 	 */
 	protected function displayObject($key, $obj){
 		$user = $obj->getUser();
-		Page::display(array('key' => $key, 'username' => $user->getUserName(),
-				'date_time' => $obj->getDateTime()), 'invoice_xml.tpl');
+		Page::display(array('key' => $key, 'username' => $user->getUserName()),
+				'invoice_xml.tpl');
 	}
 }
 ?>

@@ -576,9 +576,9 @@ void SalesSection::removeNewDocumentFromSession()
 /**
  * Prepare the invoice form for creating a new invoice.
  */
-void SalesSection::prepareDocumentForm(QString dateTime, QString username)
+void SalesSection::prepareDocumentForm(QString username)
 {
-	DocumentSection::prepareDocumentForm(dateTime, username);
+	DocumentSection::prepareDocumentForm(username);
 
 	QWebFrame *frame = ui.webView->page()->mainFrame();
 	QWebElement element;

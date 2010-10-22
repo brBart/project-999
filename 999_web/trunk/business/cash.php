@@ -172,8 +172,6 @@ class Deposit extends PersistDocument implements Itemized{
 			}
 			$this->_mDateTime = $dateTime;
 		}
-		else
-			$this->_mDateTime = date('d/m/Y H:i:s');
 		
 		if(!is_null($user)){
 			try{
@@ -371,7 +369,10 @@ class Deposit extends PersistDocument implements Itemized{
 	public function save(){
 		if($this->_mStatus == self::IN_PROGRESS){
 			$this->validateMainProperties();
+			
+			$this->_mDateTime = date('d/m/Y H:i:s');
 			$this->insert();
+			
 			return $this->_mId;
 		}
 	}
