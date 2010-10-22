@@ -1026,11 +1026,9 @@ class Bonus extends Persist{
 			Date::validateDate($createdDate, 'Fecha de creaci&oacute;n inv&aacute;lida.');
 			$this->_mCreatedDate = $createdDate;
 		}
-		else
-			$this->_mCreatedDate = date('d/m/Y');
 			
 		if(!Date::compareDates($this->_mCreatedDate, $expirationDate))
-			throw new ValidateException('Dia creado es mas reciente que el de vencimiento.', 'bonus');
+			throw new ValidateException('Fecha de vencimiento es igual o mas reciente que la fecha de creaci&oacute;n.', 'bonus');
 		
 		$this->_mId = $id;
 		$this->_mProduct = $product;
@@ -1103,7 +1101,8 @@ class Bonus extends Persist{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			if(BonusDAM::exists($this->_mProduct, $this->_mQuantity))
 				throw new ValidateException('Oferta ya existe.', 'bonus');
-				
+			
+			$this->_mCreatedDate = date('d/m/Y');
 			$this->_mId = BonusDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
 		}
@@ -1250,8 +1249,6 @@ class Lot extends Persist{
 			Date::validateDate($entryDate, 'Fecha de ingreso inv&aacute;lida.');
 			$this->_mEntryDate = $entryDate;
 		}
-		else
-			$this->_mEntryDate = date('d/m/Y');
 
 		if($id !== 0)
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
@@ -1450,6 +1447,7 @@ class Lot extends Persist{
 	 */
 	public function save(){
 		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->_mEntryDate = date('d/m/Y');
 			$this->_mId = LotDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
 		}
@@ -1540,9 +1538,9 @@ class ManufacturerProductList{
  */
 class Kardex{
 	/**
-	 * Returns an array with the kardex details of the product provided.
+	 * Returns an array with the kardex details of the requested page of the product provided.
 	 *
-	 * The array's fields are date, document, number, entry, withdraw and balance. The balance
+	 * The array's fields are created_date, document, number, lot_id, entry, withdraw and balance. The balance
 	 * argument returns it respective value. If no page argument or cero is passed all the details are
 	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
 	 * @param Product $product
@@ -1552,13 +1550,30 @@ class Kardex{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(Product $product, &$balance, &$total_pages = 0,
+	static public function showPage(Product $product, &$balance, &$total_pages = 0,
 			&$total_items = 0, $page = 0){
-		Persist::validateObjectFromDatabase($product);
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
 			
 		return KardexDAM::getList($product, $balance, $total_pages, $total_items, $page);
+	}
+	
+	/**
+	 * Returns an array with the kardex details of the last page of the product provided.
+	 *
+	 * The array's fields are created_date, document, number, lot_id, entry, withdraw and balance. The balance
+	 * argument returns it respective value. If no page argument or cero is passed all the details are
+	 * returned. The total_pages and total_items arguments are necessary to return their respective values.
+	 * @param Product $product
+	 * @param integer &$balance
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function showLastPage(Product $product, &$balance, &$total_pages = 0,
+			&$total_items = 0){
+		return KardexDAM::getList($product, $balance, $total_pages, $total_items, -1);
 	}
 }
 
