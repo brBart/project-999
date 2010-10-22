@@ -1026,8 +1026,6 @@ class Bonus extends Persist{
 			Date::validateDate($createdDate, 'Fecha de creaci&oacute;n inv&aacute;lida.');
 			$this->_mCreatedDate = $createdDate;
 		}
-		else
-			$this->_mCreatedDate = date('d/m/Y');
 			
 		if(!Date::compareDates($this->_mCreatedDate, $expirationDate))
 			throw new ValidateException('Fecha de vencimiento es igual o mas reciente que la fecha de creaci&oacute;n.', 'bonus');
@@ -1103,7 +1101,8 @@ class Bonus extends Persist{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			if(BonusDAM::exists($this->_mProduct, $this->_mQuantity))
 				throw new ValidateException('Oferta ya existe.', 'bonus');
-				
+			
+			$this->_mCreatedDate = date('d/m/Y');
 			$this->_mId = BonusDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
 		}
@@ -1250,8 +1249,6 @@ class Lot extends Persist{
 			Date::validateDate($entryDate, 'Fecha de ingreso inv&aacute;lida.');
 			$this->_mEntryDate = $entryDate;
 		}
-		else
-			$this->_mEntryDate = date('d/m/Y');
 
 		if($id !== 0)
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
@@ -1450,6 +1447,7 @@ class Lot extends Persist{
 	 */
 	public function save(){
 		if($this->_mStatus == Persist::IN_PROGRESS){
+			$this->_mEntryDate = date('d/m/Y');
 			$this->_mId = LotDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
 		}
