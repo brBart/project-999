@@ -39,7 +39,7 @@
 		    	</form>
 	    	</div>
 	    </li>
-	    <li id="li_last">
+	    <li>
 	    	<div id="dates_range">
 		    	<form method="post" action="index.php?cmd=search_deposit_by_working_day&page=1"
 		    			onsubmit="return oSession.setIsLink(true);">
@@ -57,5 +57,6 @@
 		    	</form>
 	    	</div>
 	    </li>
+	    <li id="li_last"><a href="index.php?cmd=show_pending_deposit_list&page=1" onclick="return oSession.setIsLink(true);">Depositos Sin Confirmar</a></li>
 	</ul>
 </div>
