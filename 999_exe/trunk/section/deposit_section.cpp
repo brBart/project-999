@@ -427,6 +427,9 @@ void DepositSection::prepareDocumentForm(QString username)
 	QWebFrame *frame = ui.webView->page()->mainFrame();
 	QWebElement element;
 
+	element = frame->findFirstElement("#document_id");
+	element.setInnerXml("");
+
 	// Change div css style from disabled to enabled.
 	element = frame->findFirstElement("#details");
 	element.removeClass("disabled");
