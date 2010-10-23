@@ -9,7 +9,7 @@
 	var oConfirmDeposit = new ConfirmDepositCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), '', 'confirm_deposit', {$page});
 </script>
 <div id="content">
-	<table id="list" class="content_small">
+	<table id="list" class="content_medium">
 		{include file='list_caption_html.tpl'}
 		<thead>
 			<tr>

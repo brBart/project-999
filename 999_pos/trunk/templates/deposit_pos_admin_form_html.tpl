@@ -22,7 +22,7 @@
 <div id="content">
 	<div id="frm" class="content_large">
 		{include file='cash_register_status_bar_html.tpl'}
-		{include file='status_bar_doc_html.tpl'}
+		{include file='status_bar_deposit_html.tpl'}
 		{include file='header_data_html.tpl' document_name='Deposito'}
 		<fieldset id="main_data">
 			<p>

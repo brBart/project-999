@@ -32,7 +32,7 @@
 		  		<span>{$bank|htmlchars}</span>
 		  	</p>
 		</fieldset>
-		{include file='status_bar_doc_html.tpl'}
+		{include file='status_bar_deposit_html.tpl'}
 		{include file='header_data_html.tpl'}
 		<p id="separator">&nbsp;</p>
 		<table>
