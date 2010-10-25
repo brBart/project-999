@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-10-2010 a las 17:58:39
+-- Tiempo de generación: 25-10-2010 a las 12:39:17
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `action` (
   `action_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`action_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Volcar la base de datos para la tabla `action`
@@ -44,7 +44,8 @@ INSERT INTO `action` (`action_id`, `name`) VALUES
 (1, 'access'),
 (2, 'write'),
 (3, 'cancel'),
-(4, 'close');
+(4, 'close'),
+(5, 'confirm');
 
 -- --------------------------------------------------------
 
@@ -915,7 +916,8 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 30, 3, 1),
 (1, 31, 4, 1),
 (1, 32, 4, 1),
-(1, 33, 1, 1);
+(1, 33, 1, 1),
+(1, 30, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -2744,7 +2746,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT dep.deposit_id, DATE_FORMAT(dep.date, '%d/%m/%Y') AS created_date, dep.bank_account_number, dep.number, 
+    "SELECT dep.deposit_id AS id, DATE_FORMAT(dep.date, '%d/%m/%Y') AS created_date, dep.bank_account_number, dep.number, 
 
         ban.name AS bank, dep.total FROM deposit dep
 
