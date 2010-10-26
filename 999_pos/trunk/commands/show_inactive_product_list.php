@@ -40,7 +40,7 @@ class ShowInactiveProductListCommand extends Command{
 			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
 			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 			
-			$link = 'index.php?cmd=show_inactive_product_list&page=';
+			$link = 'index.php?cmd=show_inactive_product_list&days=' . $days . '&page=';
 			$previous_link = ($page == 1) ? '' : $link . ($page - 1);
 			$next_link = ($page == $total_pages) ? '' : $link . ($page + 1);
 			
