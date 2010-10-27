@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-10-2010 a las 12:39:17
+-- Tiempo de generación: 26-10-2010 a las 19:38:39
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -4265,7 +4265,7 @@ BEGIN
 
                     WHERE lot.product_id IN (SELECT product_id FROM product) AND inv.status = 1
 
-                      AND inv.date <= DATE_ADD(CURDATE(), INTERVAL -1 * inDays day)
+                      AND inv.date <= DATE_ADD(CURDATE(), INTERVAL -1 * inDays DAY)
 
                     GROUP BY lot.product_id) AS last_inv
 
@@ -4300,7 +4300,7 @@ BEGIN
 
                      WHERE lot.product_id IN (SELECT product_id FROM product) AND inv.status = 1
 
-                         AND inv.date <= DATE_ADD(CURDATE(), INTERVAL -1 * ? day)
+                         AND inv.date <= DATE_ADD(CURDATE(), INTERVAL -1 * ? DAY)
 
 			 GROUP BY lot.product_id) AS last_inv
 
@@ -4308,7 +4308,7 @@ BEGIN
 
      GROUP BY pro.product_id
 
-     ORDER BY pro.name
+     ORDER BY inv.invoice_id, pro.name
 
      LIMIT ?, ?";
 
