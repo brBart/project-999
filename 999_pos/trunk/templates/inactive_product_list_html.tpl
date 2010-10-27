@@ -43,7 +43,7 @@
 			</table>
 		</fieldset>
 		<fieldset>
-			<input type="button" value="Imprimir" />
+			<input type="button" value="Imprimir" onclick="window.open('index.php?cmd=print_inactive_product_list&days={$days}&date={$date|escape:'url'}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
 		</fieldset>
 	</div>
 </div>
