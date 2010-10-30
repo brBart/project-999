@@ -43,6 +43,8 @@ abstract class ShowLogCommand extends Command{
 		$this->_mRequest = $request;
 		
 		if($this->testRights($helper->getUser())){
+			$start_date = $this->_mRequest->getProperty($this->getPrefix() . '_start_date');
+			$end_date = $this->_mRequest->getProperty($this->getPrefix() . '_end_date');
 			$page = (int)$this->_mRequest->getProperty('page');
 			
 			try{
@@ -61,7 +63,7 @@ abstract class ShowLogCommand extends Command{
 				$actual_cmd = $this->_mRequest->getProperty('cmd');
 				
 				$link = 'index.php?cmd=' . $actual_cmd . '&page=';
-				$dates = '&start_date=' . $start_date . '&end_date=' . $end_date;
+				$dates = '&' . $this->getPrefix() . '_start_date=' . urlencode($start_date) . '&' . $this->getPrefix() . '_end_date=' . urlencode($end_date);
 				$previous_link = ($page == 1) ? '' : $link . ($page - 1) . $dates;
 				$next_link = ($page == $total_pages) ? '' : $link . ($page + 1) . $dates;
 				
@@ -76,6 +78,12 @@ abstract class ShowLogCommand extends Command{
 			$this->displayFailure($msg);
 		}
 	}
+	
+	/**
+	 * Returns the prefix of the date variables to use.
+	 * @return string
+	 */
+	abstract protected function getPrefix();
 
 	/**
 	 * Tests if the user has the right to cancel the document.
@@ -86,14 +94,14 @@ abstract class ShowLogCommand extends Command{
 	
 	/**
 	 * Returns a list with information.
-	 * @param string &$startDate
-	 * @param string &$endDate
+	 * @param string $startDate
+	 * @param string $endDate
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	abstract protected function getList(&$startDate, &$endDate, &$totalPages, &$totalItems, $page);
+	abstract protected function getList($startDate, $endDate, &$totalPages, &$totalItems, $page);
 	
 	/**
 	 * Displays a message if something goes wrong.

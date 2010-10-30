@@ -17,6 +17,14 @@ require_once('commands/show_log.php');
  */
 class ShowInvoiceDiscountLogCommand extends ShowLogCommand{
 	/**
+	 * Returns the prefix of the date variables to use.
+	 * @return string
+	 */
+	protected function getPrefix(){
+		return 'discount';
+	}
+	
+	/**
 	 * Tests if the user has the right to cancel.
 	 * @param UserAccount $user
 	 * @return boolean
@@ -27,17 +35,14 @@ class ShowInvoiceDiscountLogCommand extends ShowLogCommand{
 	
 	/**
 	 * Returns a list with information.
-	 * @param string &$startDate
-	 * @param string &$endDate
+	 * @param string $startDate
+	 * @param string $endDate
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	protected function getList(&$startDate, &$endDate, &$totalPages, &$totalItems, $page){
-		$startDate = $this->_mRequest->getProperty('discount_start_date');
-		$endDate = $this->_mRequest->getProperty('discount_end_date');
-		
+	protected function getList($startDate, $endDate, &$totalPages, &$totalItems, $page){
 		return DiscountList::getList($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
 	
