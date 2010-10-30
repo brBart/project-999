@@ -197,7 +197,7 @@ class DiscountList{
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
-			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
 			
 		return DiscountListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
