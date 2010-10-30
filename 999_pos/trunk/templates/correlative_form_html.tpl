@@ -30,7 +30,7 @@
 		  			onblur="oSetProperty.execute('set_serial_number_correlative', this.value, this.id);" />
 		  		<span id="serial_number-failed" class="hidden">*</span>
 		  		{else}
-		  		<span id="serial_number">{$serial_number|htmlchars}{if $is_default eq 1} (Predeterminado){/if}</span>
+		  		<span id="serial_number">{$serial_number|escape}{if $is_default eq 1} (Predeterminado){/if}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
@@ -40,7 +40,7 @@
 		  			onblur="oSetProperty.execute('set_resolution_number_correlative', this.value, this.id);" />
 		  		<span id="resolution_number-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$resolution_number|htmlchars}</span>
+		  		<span>{$resolution_number|escape}</span>
 		  		{/if}
 		  	</p>
 		  	<p>

@@ -10,9 +10,9 @@
 		</thead>
 		<tbody>
 		{section name=i loop=$list}
-			{assign var=id value=$list[i].id|htmlchars}
+			{assign var=id value=$list[i].id|escape}
 			<tr>
-				<td>{$list[i].name|htmlchars}</td>
+				<td>{$list[i].name|escape}</td>
 				<td>
 					<a href="{$item_link|cat:$id|cat:'&last_cmd='|cat:$actual_cmd|cat:'&page='|cat:$page}"
 						onclick="oSession.setIsLink(true);">{$id}</a>

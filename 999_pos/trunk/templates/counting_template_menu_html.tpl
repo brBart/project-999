@@ -15,16 +15,16 @@ function openWindow(sForm)
 	    		<label for="product_first">De Producto:</label>
 	    		<select name="first" id="product_first">
 	    			{section name=i loop=$product_list}
-	    				<option value="{$product_list[i].name|htmlchars}">
-	    					{$product_list[i].name|htmlchars}
+	    				<option value="{$product_list[i].name|escape}">
+	    					{$product_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    		</select>
 	    		<label for="product_last">A:</label>
 	    		<select name="last" id="product_last">
 	    			{section name=i loop=$product_list}
-	    				<option value="{$product_list[i].name|htmlchars}">
-	    					{$product_list[i].name|htmlchars}
+	    				<option value="{$product_list[i].name|escape}">
+	    					{$product_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    		</select>
@@ -36,16 +36,16 @@ function openWindow(sForm)
 	    		<label for="manufacturer_first">De Casa:</label>
 	    		<select name="first" id="manufacturer_first">
 	    			{section name=i loop=$manufacturer_list}
-	    				<option value="{$manufacturer_list[i].name|htmlchars}">
-	    					{$manufacturer_list[i].name|htmlchars}
+	    				<option value="{$manufacturer_list[i].name|escape}">
+	    					{$manufacturer_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    		</select>
 	    		<label for="manufacturer_last">A:</label>
 	    		<select name="last" id="manufacturer_last">
 	    			{section name=i loop=$manufacturer_list}
-	    				<option value="{$manufacturer_list[i].name|htmlchars}">
-	    					{$manufacturer_list[i].name|htmlchars}
+	    				<option value="{$manufacturer_list[i].name|escape}">
+	    					{$manufacturer_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    		</select>

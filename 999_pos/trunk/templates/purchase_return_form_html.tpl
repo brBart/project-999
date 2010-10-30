@@ -45,13 +45,13 @@
 		  			onchange="oSetOrganization.execute(this.value, this.id);">
 	    			{section name=i loop=$supplier_list}
 	    				<option value="{$supplier_list[i].id}">
-	    					{$supplier_list[i].name|htmlchars}
+	    					{$supplier_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    		</select>
 		  		<span id="supplier_id-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$supplier|htmlchars}</span>
+		  		<span>{$supplier|escape}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
@@ -61,7 +61,7 @@
 		  			onblur="oSetProperty.execute('set_contact_object', this.value, this.id);" />
 		  		<span id="contact-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$contact|htmlchars}&nbsp;</span>
+		  		<span>{$contact|escape}&nbsp;</span>
 		  		{/if}
 		  	</p>
 		  	<p>
@@ -71,7 +71,7 @@
 		  			onblur="oSetProperty.execute('set_reason_object', this.value, this.id);" />
 		  		<span id="reason-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$reason|htmlchars}</span>
+		  		<span>{$reason|escape}</span>
 		  		{/if}
 		  	</p>
 		  	{if $status eq 0}

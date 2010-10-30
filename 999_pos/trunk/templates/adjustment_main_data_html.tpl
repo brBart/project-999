@@ -2,6 +2,6 @@
 <fieldset id="main_data">
 	<p>
   		<label>Motivo:</label>
-  		<span>{$reason|htmlchars}</span>
+  		<span>{$reason|escape}</span>
   	</p>
 </fieldset>

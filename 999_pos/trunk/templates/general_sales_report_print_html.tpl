@@ -46,8 +46,8 @@ body {
        			{section name=i loop=$cash_registers}
 				<tr>
 					<td>{$cash_registers[i].id}</td>
-					<td>{$cash_registers[i].name|htmlchars}</td>
-					<td>{$cash_registers[i].time_table|htmlchars}</td>
+					<td>{$cash_registers[i].name|escape}</td>
+					<td>{$cash_registers[i].time_table|escape}</td>
 					<td class="total_col">{$cash_registers[i].total|nf:2}</td>
 				</tr>
 				{/section}

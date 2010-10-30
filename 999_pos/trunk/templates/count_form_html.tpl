@@ -46,7 +46,7 @@
 		  			onblur="oSetProperty.execute('set_reason_object', this.value, this.id);" />
 		  		<span id="reason-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$reason|htmlchars}</span>
+		  		<span>{$reason|escape}</span>
 		  		{/if}
 		  	</p>
 		  	{include file='count_toolbar_html.tpl' details_obj='oDetails' event_delegator_obj='oEventDelegator'}

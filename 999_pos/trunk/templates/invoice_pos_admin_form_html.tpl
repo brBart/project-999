@@ -31,7 +31,7 @@
 		  	</p>
 		  	<p>
 		  		<label>Nombre:</label>
-		  		<span>{$customer|htmlchars}&nbsp;</span>
+		  		<span>{$customer|escape}&nbsp;</span>
 		  	</p>
 		  	<br />
 		  	<p>

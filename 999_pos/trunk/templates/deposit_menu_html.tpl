@@ -28,7 +28,7 @@
 	    			{section name=i loop=$bank_list}
 	    				<option value="{$bank_list[i].id}"
 	    					{if $bank_list[i].id eq $bank_id}selected="selected"{/if}>
-	    					{$bank_list[i].name|htmlchars}
+	    					{$bank_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    			</select>

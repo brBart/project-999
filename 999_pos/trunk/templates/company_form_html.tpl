@@ -21,7 +21,7 @@
 		<fieldset id="main_data">
 		  	<p>
 		  		<label for="name">Nombre:*</label><input name="form_widget" id="name" type="text"
-		  			value="{$name|htmlchars}" maxlength="100"
+		  			value="{$name|escape}" maxlength="100"
 		  			onblur="oSetProperty.execute('set_name_object', this.value, this.id);"
 		  			disabled="disabled" />
 		  		<span id="name-failed" class="hidden">*</span>

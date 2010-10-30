@@ -75,7 +75,7 @@ body {
 						{if $invoices[i].name eq ""}
 							CF
 						{else}
-							{$invoices[i].name|htmlchars}
+							{$invoices[i].name|escape}
 						{/if}
 					</td>
 					<td class="total_col">{$invoices[i].cash|nf:2}</td>
@@ -113,8 +113,8 @@ body {
 				{section name=i loop=$deposits}
 				<tr>
 					<td>{$deposits[i].id}</td>
-					<td>{$deposits[i].bank_account_number|htmlchars}</td>
-					<td>{$deposits[i].number|htmlchars}</td>
+					<td>{$deposits[i].bank_account_number|escape}</td>
+					<td>{$deposits[i].number|escape}</td>
 					<td class="total_col">{$deposits[i].total|nf:2}</td>
 					<td>{if $deposits[i].status eq 2}Anulado{/if}</td>
 				</tr>

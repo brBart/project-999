@@ -43,13 +43,13 @@
 		  			onblur="oSetProperty.execute('set_supplier_receipt', this.value, this.id);">
 	    			{section name=i loop=$supplier_list}
 	    				<option value="{$supplier_list[i].id}">
-	    					{$supplier_list[i].name|htmlchars}
+	    					{$supplier_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    		</select>
 		  		<span id="supplier_id-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$supplier|htmlchars}</span>
+		  		<span>{$supplier|escape}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
@@ -59,7 +59,7 @@
 		  			onblur="oSetProperty.execute('set_shipment_number_receipt', this.value, this.id);" />
 		  		<span id="shipment_number-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$shipment_number|htmlchars}</span>
+		  		<span>{$shipment_number|escape}</span>
 		  		{/if}
 		  	</p>
 		  	<p>

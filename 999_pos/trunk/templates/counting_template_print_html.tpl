@@ -44,10 +44,10 @@
        			{section name=i loop=$details}
 				<tr>
 					<td>{$details[i].id}</td>
-					<td>{$details[i].bar_code|htmlchars}</td>
-					<td>{$details[i].manufacturer|htmlchars}</td>
-					<td>{$details[i].product|htmlchars}</td>
-					<td>{$details[i].packaging|htmlchars}</td>
+					<td>{$details[i].bar_code|escape}</td>
+					<td>{$details[i].manufacturer|escape}</td>
+					<td>{$details[i].product|escape}</td>
+					<td>{$details[i].packaging|escape}</td>
 					<td>__________</td>
 				</tr>
 				{/section}

@@ -34,7 +34,7 @@
 	    <li id="li_last">
 	    	<form method="post" action="index.php?cmd=get_bonus_product_by_bar_code" onsubmit="return oSession.setIsLink(true);">
 	    		<label for="bar_code">C&oacute;digo barra:</label>
-	    		<input name="bar_code" id="bar_code" type="text" value="{$bar_code|htmlchars}" maxlength="100" />
+	    		<input name="bar_code" id="bar_code" type="text" value="{$bar_code|escape}" maxlength="100" />
 	    		<input type="submit" value="Consultar" />
 	    	</form>
 	    </li>

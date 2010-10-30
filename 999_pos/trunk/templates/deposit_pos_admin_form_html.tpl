@@ -27,15 +27,15 @@
 		<fieldset id="main_data">
 			<p>
 		  		<label>Boleta No:</label>
-		  		<span>{$slip_number|htmlchars}</span>
+		  		<span>{$slip_number|escape}</span>
 		  	</p>
 		  	<p>
 		  		<label>Cuenta bancaria:</label>
-		  		<span>{$bank_account|htmlchars}</span>
+		  		<span>{$bank_account|escape}</span>
 		  	</p>
 		  	<p>
 		  		<label>Banco:</label>
-		  		<span>{$bank|htmlchars}</span>
+		  		<span>{$bank|escape}</span>
 		  	</p>
 		  	<p>&nbsp;</p>
 		  	<div id="details" class="items"></div>

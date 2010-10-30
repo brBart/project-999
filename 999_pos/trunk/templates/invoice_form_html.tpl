@@ -14,12 +14,12 @@ var objectKey = {$key};
 		<fieldset id="main_data" class="pos disabled">
 			<p>
 		  		<label id="nit_label">Nit:<span class="hidden">*</span></label>
-		  		<span id="nit">{$nit|htmlchars}&nbsp;</span>
+		  		<span id="nit">{$nit|escape}&nbsp;</span>
 		  		<span id="nit-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label id="customer_label">Cliente:</label>
-		  		<span id="customer">{$customer|htmlchars}&nbsp;</span>
+		  		<span id="customer">{$customer|escape}&nbsp;</span>
 		  		<span id="customer-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>

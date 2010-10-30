@@ -6,5 +6,5 @@ header('Content-Type: text/xml');
 <response>
 	<success>1</success>
 	<nit>{$nit}</nit>
-	<name><![CDATA[{$name|htmlchars}]]></name>
+	<name><![CDATA[{$name|escape}]]></name>
 </response>

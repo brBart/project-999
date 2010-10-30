@@ -2,10 +2,10 @@
 <fieldset id="main_data">
 	<p>
   		<label>Sucursal:</label>
-  		<span>{$branch|htmlchars}</span>
+  		<span>{$branch|escape}</span>
   	</p>
   	<p>
   		<label>Contacto:</label>
-  		<span>{$contact|htmlchars}&nbsp;</span>
+  		<span>{$contact|escape}&nbsp;</span>
   	</p>
 </fieldset>

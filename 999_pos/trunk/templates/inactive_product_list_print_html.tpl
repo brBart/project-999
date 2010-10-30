@@ -36,10 +36,10 @@
 			<tbody>
 			{section name=i loop=$list}
 				<tr>
-					<td>{$list[i].bar_code|htmlchars}</td>
-					<td>{$list[i].manufacturer|htmlchars}</td>
-					<td>{$list[i].name|htmlchars}</td>
-					<td>{$list[i].packaging|htmlchars}</td>
+					<td>{$list[i].bar_code|escape}</td>
+					<td>{$list[i].manufacturer|escape}</td>
+					<td>{$list[i].name|escape}</td>
+					<td>{$list[i].packaging|escape}</td>
 					<td>{$list[i].quantity}</td>
 					<td>{$list[i].last_sale}</td>
 					<td>{$list[i].sale_quantity}</td>

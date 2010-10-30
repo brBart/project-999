@@ -42,27 +42,27 @@ body {
 					<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 				  	<p>
 				  		<label>Nombre:</label>
-				  		<span>{$name|htmlchars}&nbsp;</span>
+				  		<span>{$name|escape}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>C&oacute;digo barra:</label>
-				  		<span>{$bar_code|htmlchars}&nbsp;</span>
+				  		<span>{$bar_code|escape}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Presentaci&oacute;n:</label>
-				  		<span>{$packaging|htmlchars}&nbsp;</span>
+				  		<span>{$packaging|escape}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Descripci&oacute;n:</label>
-				  		<span>{$description|htmlchars}&nbsp;</span>
+				  		<span>{$description|escape}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Casa:</label>
-				  		<span>{$manufacturer|htmlchars}&nbsp;</span>
+				  		<span>{$manufacturer|escape}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Unidad de Medida:</label>
-				  		<span>{$um|htmlchars}&nbsp;</span>
+				  		<span>{$um|escape}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Precio:</label>

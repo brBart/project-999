@@ -43,8 +43,8 @@ body {
        			{section name=i loop=$details}
 				<tr>
 					<td>{$details[i].quantity}</td>
-					<td>{$details[i].product|htmlchars}</td>
-					<td>{$details[i].packaging|htmlchars}</td>
+					<td>{$details[i].product|escape}</td>
+					<td>{$details[i].packaging|escape}</td>
 					<td></td>
 				</tr>
 				<tr>

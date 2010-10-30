@@ -52,8 +52,8 @@
        			{section name=i loop=$kardex}
 				<tr>
 					<td>{$kardex[i].created_date}</td>
-					<td>{$kardex[i].document|htmlchars}</td>
-					<td>{$kardex[i].number|htmlchars}</td>
+					<td>{$kardex[i].document|escape}</td>
+					<td>{$kardex[i].number|escape}</td>
 					<td>{$kardex[i].lot_id}</td>
 					<td>{$kardex[i].entry}</td>
 					<td>{$kardex[i].withdraw}</td>

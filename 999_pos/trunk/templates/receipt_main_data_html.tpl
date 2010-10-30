@@ -2,11 +2,11 @@
 <fieldset id="main_data">
 	<p>
   		<label>Proveedor:</label>
-  		<span>{$supplier|htmlchars}</span>
+  		<span>{$supplier|escape}</span>
   	</p>
   	<p>
   		<label>Env&iacute;o No:</label>
-  		<span>{$shipment_number|htmlchars}</span>
+  		<span>{$shipment_number|escape}</span>
   	</p>
   	<p>
   		<label>Total env&iacute;o:</label>

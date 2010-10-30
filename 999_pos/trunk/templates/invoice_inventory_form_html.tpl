@@ -30,7 +30,7 @@
 		  	</p>
 		  	<p>
 		  		<label>Nombre:</label>
-		  		<span>{$customer|htmlchars}&nbsp;</span>
+		  		<span>{$customer|escape}&nbsp;</span>
 		  	</p>
 	  		{* Because Firefox css rule margin-top on table rule bug. *}
 	  		<p>&nbsp;</p>

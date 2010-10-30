@@ -2,14 +2,14 @@
 <fieldset id="main_data">
 	<p>
   		<label>Proveedor:</label>
-  		<span>{$supplier|htmlchars}</span>
+  		<span>{$supplier|escape}</span>
   	</p>
   	<p>
   		<label>Contacto:</label>
-  		<span>{$contact|htmlchars}&nbsp;</span>
+  		<span>{$contact|escape}&nbsp;</span>
   	</p>
   	<p>
   		<label>Motivo:</label>
-  		<span>{$reason|htmlchars}</span>
+  		<span>{$reason|escape}</span>
   	</p>
 </fieldset>

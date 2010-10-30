@@ -26,9 +26,9 @@
 		<fieldset id="main_data">
 			<div id="product_info">
 				<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
-			  	<p><label>Nombre:</label><span>{$name|htmlchars}</span></p>
-			  	<p><label>C&oacute;digo barra:</label><span>{$bar_code|htmlchars}</span></p>
-			  	<p><label>Presentaci&oacute;n:</label><span>{$packaging|htmlchars}</span></p>
+			  	<p><label>Nombre:</label><span>{$name|escape}</span></p>
+			  	<p><label>C&oacute;digo barra:</label><span>{$bar_code|escape}</span></p>
+			  	<p><label>Presentaci&oacute;n:</label><span>{$packaging|escape}</span></p>
 			  	<p><label>Precio:</label><span>{$price}</span></p>
 			  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 			  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>

@@ -21,15 +21,15 @@
 		<fieldset id="main_data">
 			<p>
 		  		<label>Boleta No:</label>
-		  		<span>{$slip_number|htmlchars}</span>
+		  		<span>{$slip_number|escape}</span>
 		  	</p>
 		  	<p>
 		  		<label>Cuenta bancaria:</label>
-		  		<span>{$bank_account|htmlchars}</span>
+		  		<span>{$bank_account|escape}</span>
 		  	</p>
 		  	<p>
 		  		<label>Banco:</label>
-		  		<span>{$bank|htmlchars}</span>
+		  		<span>{$bank|escape}</span>
 		  	</p>
 		</fieldset>
 		{include file='status_bar_deposit_html.tpl'}
@@ -48,7 +48,7 @@
 	       	<tbody>
        			{section name=i loop=$details}
 				<tr>
-					<td>{$details[i].receipt_id|htmlchars}</td>
+					<td>{$details[i].receipt_id|escape}</td>
 					<td>{$details[i].serial_number|cat:"-"|cat:$details[i].number}</td>
 					<td>{$details[i].received|nf:2}</td>
 					<td class="total_col">{$details[i].deposited|nf:2}</td>

@@ -26,12 +26,12 @@
 		  			onblur="oSetProperty.execute('set_number_object', this.value, this.id);" />
 		  		<span id="number-failed" class="hidden">*</span>
 		  		{else}
-		  		<span>{$number|htmlchars}</span>
+		  		<span>{$number|escape}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
 		  		<label for="holder_name">Titular:*</label>
-		  		<input name="form_widget" id="holder_name" type="text" value="{$holder_name|htmlchars}" maxlength="100"
+		  		<input name="form_widget" id="holder_name" type="text" value="{$holder_name|escape}" maxlength="100"
 		  			onblur="oSetProperty.execute('set_holder_name_bank_account', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="holder_name-failed" class="hidden">*</span>
@@ -44,7 +44,7 @@
 	    			{section name=i loop=$bank_list}
 	    				<option value="{$bank_list[i].id}" 
 	    					{if $bank_list[i].id eq $bank_id}selected="selected"{/if}>
-	    					{$bank_list[i].name|htmlchars}
+	    					{$bank_list[i].name|escape}
 	    				</option>
 	    			{/section}
 	    		</select>

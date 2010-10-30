@@ -14,19 +14,19 @@ var objectKey = {$key};
 		<fieldset id="main_data">
 			<p>
 		  		<label id="slip_number_label">Boleta No:<span class="hidden">*</span></label>
-		  		<span id="slip_number_value">{$slip_number|htmlchars}&nbsp;</span>
+		  		<span id="slip_number_value">{$slip_number|escape}&nbsp;</span>
 		  		<object id="slip_number" class="widget_input hidden" type="application/x-slip_number_line_edit"></object>
 		  		<span id="slip_number-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label id="bank_account_label">Cuenta bancaria:<span class="hidden">*</span></label>
-		  		<span id="bank_account">{$bank_account|htmlchars}&nbsp;</span>
+		  		<span id="bank_account">{$bank_account|escape}&nbsp;</span>
 		  		<object id="bank_account_id" class="widget_input hidden" type="application/x-bank_account_combo_box"></object>
 		  		<span id="bank_account_id-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label id="bank_label">Banco:</label>
-		  		<span id="bank">{$bank|htmlchars}&nbsp;</span>
+		  		<span id="bank">{$bank|escape}&nbsp;</span>
 		  	</p>
 		  	<p>&nbsp;</p>
 		  	<div id="details" class="items register disabled"></div>

@@ -29,7 +29,6 @@ class SmartyPage extends Smarty{
 		
 		// let's map PHP's functions to a Smarty modifiers.
 		$this->register_modifier('nf', 'number_format');
-		$this->register_modifier('htmlchars', 'htmlspecialchars');
 	}
 }
 

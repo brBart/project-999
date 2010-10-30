@@ -45,14 +45,14 @@
 		  	</p>
 		  	<p>
 		  		<label for="first_name">Nombres:*</label>
-		  		<input name="form_widget" id="first_name" type="text" value="{$first_name|htmlchars}" maxlength="50"
+		  		<input name="form_widget" id="first_name" type="text" value="{$first_name|escape}" maxlength="50"
 		  			onblur="oSetProperty.execute('set_first_name_user_account', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="first_name-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label for="last_name">Apellidos:*</label>
-		  		<input name="form_widget" id="last_name" type="text" value="{$last_name|htmlchars}" maxlength="50"
+		  		<input name="form_widget" id="last_name" type="text" value="{$last_name|escape}" maxlength="50"
 		  			onblur="oSetProperty.execute('set_last_name_user_account', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="last_name-failed" class="hidden">*</span>
