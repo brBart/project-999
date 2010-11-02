@@ -98,7 +98,7 @@ class ShowInvoiceDiscountLogCommand extends ShowLogCommand{
 				'list' => $list, 'start_date' => $startDate, 'end_date' => $endDate,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
 				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,
-				'next_link' => $nextLink, 'print_cmd' => 'print_invoice_discounts_log'), 'site_html.tpl');
+				'next_link' => $nextLink, 'print_cmd' => 'print_invoice_discount_log'), 'site_html.tpl');
 	}
 }
 ?>
