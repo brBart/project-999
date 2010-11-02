@@ -758,16 +758,16 @@ class ChangePriceLogDAM{
 	 * Logs the event in the database.
 	 *
 	 * Date format: 'dd/mm/yyyy'.
-	 * @param string $date
+	 * @param string $dateTime
 	 * @param UserAccount $user
 	 * @param Product $product
 	 * @param float $lastPrice
 	 * @param float $newPrice
 	 */
-	static public function insert($date, UserAccount $user, Product $product, $lastPrice, $newPrice){
+	static public function insert($dateTime, UserAccount $user, Product $product, $lastPrice, $newPrice){
 		$sql = 'CALL change_price_log_insert(:username, :product_id, :date, :last_price, :new_price)';
 		$params = array(':username' => $user->getUserName(), ':product_id' => $product->getId(),
-				':date' => Date::dbFormat($date), ':last_price' => $lastPrice, ':new_price' => $newPrice);
+				':date' => Date::dbDateTimeFormat($dateTime), ':last_price' => $lastPrice, ':new_price' => $newPrice);
 		DatabaseHandler::execute($sql, $params);
 	}
 }
