@@ -2,7 +2,7 @@
 <div id="third_menu">
 	<ul>
 	    <li id="li_last">
-	    	<div id="dates_range_desc">
+	    	<div class="dates_range_desc">
 		    	<form method="post" action="index.php?cmd=show_invoice_discount_log&page=1"
 		    			onsubmit="return oSession.setIsLink(true);">
 		    		<div>
