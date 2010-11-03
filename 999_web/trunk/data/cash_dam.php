@@ -674,12 +674,12 @@ class DepositDAM{
 	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param Deposit $deposit
 	 * @param UserAccount $user
-	 * @param string $date
+	 * @param string $dateTime
 	 */
-	static public function cancel(Deposit $deposit, UserAccount $user, $date){
+	static public function cancel(Deposit $deposit, UserAccount $user, $dateTime){
 		$sql = 'CALL deposit_cancel(:deposit_id, :username, :date)';
 		$params = array(':deposit_id' => $deposit->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($date));
+				':date' => Date::dbDateTimeFormat($dateTime));
 		DatabaseHandler::execute($sql, $params);
 	}
 	

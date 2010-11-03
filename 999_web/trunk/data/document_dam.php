@@ -365,12 +365,12 @@ class InvoiceDAM{
 	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param Invoice $invoice
 	 * @param UserAccount $user
-	 * @param string $date
+	 * @param string $dateTime
 	 */
-	static public function cancel(Invoice $invoice, UserAccount $user, $date){
+	static public function cancel(Invoice $invoice, UserAccount $user, $dateTime){
 		$sql = 'CALL invoice_cancel(:invoice_id, :username, :date)';
 		$params = array(':invoice_id' => $invoice->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($date));
+				':date' => Date::dbDateTimeFormat($dateTime));
 		DatabaseHandler::execute($sql, $params);
 	}
 	
@@ -485,12 +485,12 @@ class PurchaseReturnDAM{
 	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param PurchaseReturn $purchaseReturn
 	 * @param UserAccount $user
-	 * @param string $date
+	 * @param string $dateTime
 	 */
-	static public function cancel(PurchaseReturn $purchaseReturn, UserAccount $user, $date){
+	static public function cancel(PurchaseReturn $purchaseReturn, UserAccount $user, $dateTime){
 		$sql = 'CALL purchase_return_cancel(:purchase_return_id, :username, :date)';
 		$params = array(':purchase_return_id' => $purchaseReturn->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($date));
+				':date' => Date::dbDateTimeFormat($dateTime));
 		DatabaseHandler::execute($sql, $params);
 	}
 	
@@ -564,12 +564,12 @@ class ShipmentDAM{
 	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param Shipment $shipment
 	 * @param UserAccount $user
-	 * @param string $date
+	 * @param string $dateTime
 	 */
-	static public function cancel(Shipment $shipment, UserAccount $user, $date){
+	static public function cancel(Shipment $shipment, UserAccount $user, $dateTime){
 		$sql = 'CALL shipment_cancel(:shipment_id, :username, :date)';
 		$params = array(':shipment_id' => $shipment->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($date));
+				':date' => Date::dbDateTimeFormat($dateTime));
 		DatabaseHandler::execute($sql, $params);
 	}
 	
@@ -641,12 +641,12 @@ class ReceiptDAM{
 	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param Receipt $receipt
 	 * @param UserAccount $user
-	 * @param string $date
+	 * @param string $dateTime
 	 */
-	static public function cancel(Receipt $receipt, UserAccount $user, $date){
+	static public function cancel(Receipt $receipt, UserAccount $user, $dateTime){
 		$sql = 'CALL receipt_cancel(:receipt_id, :username, :date)';
 		$params = array(':receipt_id' => $receipt->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($date));
+				':date' => Date::dbDateTimeFormat($dateTime));
 		DatabaseHandler::execute($sql, $params);
 	}
 	
@@ -719,12 +719,12 @@ class EntryIADAM{
 	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param EntryIA $entry
 	 * @param UserAccount $user
-	 * @param string $date
+	 * @param string $dateTime
 	 */
-	static public function cancel(EntryIA $entry, UserAccount $user, $date){
+	static public function cancel(EntryIA $entry, UserAccount $user, $dateTime){
 		$sql = 'CALL entry_adjustment_cancel(:entry_adjustment_id, :username, :date)';
 		$params = array(':entry_adjustment_id' => $entry->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($date));
+				':date' => Date::dbDateTimeFormat($dateTime));
 		DatabaseHandler::execute($sql, $params);
 	}
 	
@@ -795,12 +795,12 @@ class WithdrawIADAM{
 	 * The user and date arguments are to register who and when does the cancel action took place.
 	 * @param WithdrawIA $withdraw
 	 * @param UserAccount $user
-	 * @param string $date
+	 * @param string $dateTime
 	 */
-	static public function cancel(WithdrawIA $withdraw, UserAccount $user, $date){
+	static public function cancel(WithdrawIA $withdraw, UserAccount $user, $dateTime){
 		$sql = 'CALL withdraw_adjustment_cancel(:withdraw_adjustment_id, :username, :date)';
 		$params = array(':withdraw_adjustment_id' => $withdraw->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbFormat($date));
+				':date' => Date::dbDateTimeFormat($dateTime));
 		DatabaseHandler::execute($sql, $params);
 	}
 	
