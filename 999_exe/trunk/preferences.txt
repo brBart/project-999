@@ -1,0 +1,14 @@
+# Direccion del servidor donde los comandos se ejecutaran.
+# Ej: direccion_servidor/ruta/al/directorio/pos/
+commands_address = 192.168.0.2/999_project/pos/
+
+# Direccion del servidor de donde los archivos xsl se descargaran.
+# Ej: direccion_servidor/ruta/al/directorio/xsl/
+xsl_address = 192.168.0.2/999_project/xsl/
+
+# Nombre de la impresora que se va usar.
+# Ej: Epson TM-U220 Receipt
+printer_name = Epson TM-U220 Receipt
+
+# Si la impresora a usar es una Epson TM-U220 (yes o no).
+is_tmu_printer = yes
