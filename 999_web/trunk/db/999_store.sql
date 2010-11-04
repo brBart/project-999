@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-10-2010 a las 19:38:39
+-- Tiempo de generación: 04-11-2010 a las 10:51:31
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `action` (
   `action_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`action_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Volcar la base de datos para la tabla `action`
@@ -45,7 +45,8 @@ INSERT INTO `action` (`action_id`, `name`) VALUES
 (2, 'write'),
 (3, 'cancel'),
 (4, 'close'),
-(5, 'confirm');
+(5, 'confirm'),
+(6, 'read');
 
 -- --------------------------------------------------------
 
@@ -178,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   `entry_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `product_id` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `last_price` decimal(10,2) NOT NULL,
   `new_price` decimal(10,2) NOT NULL,
   PRIMARY KEY  (`entry_id`),
@@ -371,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
 CREATE TABLE IF NOT EXISTS `deposit_cancelled` (
   `deposit_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY  (`deposit_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -449,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
 CREATE TABLE IF NOT EXISTS `entry_adjustment_cancelled` (
   `entry_adjustment_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -537,7 +538,7 @@ CREATE TABLE IF NOT EXISTS `invoice_bonus` (
 CREATE TABLE IF NOT EXISTS `invoice_cancelled` (
   `invoice_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY  (`invoice_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -724,7 +725,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
 CREATE TABLE IF NOT EXISTS `purchase_return_cancelled` (
   `purchase_return_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY  (`purchase_return_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -787,7 +788,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
 CREATE TABLE IF NOT EXISTS `receipt_cancelled` (
   `receipt_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY  (`receipt_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -917,7 +918,11 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 31, 4, 1),
 (1, 32, 4, 1),
 (1, 33, 1, 1),
-(1, 30, 5, 1);
+(1, 30, 5, 1),
+(1, 34, 6, 1),
+(1, 35, 6, 1),
+(1, 36, 6, 1),
+(1, 37, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -987,7 +992,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
 CREATE TABLE IF NOT EXISTS `shipment_cancelled` (
   `shipment_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY  (`shipment_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1027,7 +1032,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1065,7 +1070,11 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (30, 'deposit'),
 (31, 'cash_register'),
 (32, 'working_day'),
-(33, 'pos_admin');
+(33, 'pos_admin'),
+(34, 'invoice_discount_log'),
+(35, 'product_price_log'),
+(36, 'document_cancel_log'),
+(37, 'cash_document_cancel_log');
 
 -- --------------------------------------------------------
 
@@ -1206,7 +1215,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
 CREATE TABLE IF NOT EXISTS `withdraw_adjustment_cancelled` (
   `withdraw_adjustment_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1676,6 +1685,192 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_cash_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+    SELECT SUM(count_rows) FROM
+
+       (SELECT COUNT(*) AS count_rows FROM invoice inv INNER JOIN invoice_cancelled inv_can
+
+            ON inv.invoice_id = inv_can.invoice_id WHERE CAST(inv_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+
+        UNION ALL
+
+        SELECT COUNT(*) AS count_rows FROM deposit dep INNER JOIN deposit_cancelled dep_can ON dep.deposit_id = dep_can.deposit_id
+
+            WHERE CAST(dep_can.date AS DATE) BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_cash_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT date, cancelled_date, username, document, number, total FROM
+
+       (SELECT inv_can.date, DATE_FORMAT(inv_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, inv_can.user_account_username AS username, 'Factura' AS document,
+
+            CONCAT(cor.serial_number, '-', inv.number) AS number, inv.total FROM invoice inv INNER JOIN invoice_cancelled inv_can
+
+            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE CAST(inv_can.date AS DATE) BETWEEN ? AND ?
+
+        UNION
+
+        SELECT dep_can.date, DATE_FORMAT(dep_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, dep_can.user_account_username AS username, 'Deposito' AS document,
+
+            dep.deposit_id AS number, dep.total FROM deposit dep INNER JOIN deposit_cancelled dep_can ON dep.deposit_id = dep_can.deposit_id
+
+            WHERE CAST(dep_can.date AS DATE) BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
+
+      LIMIT ?, ?";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inFirstDate;
+
+  SET @p4 = inLastDate;
+
+  SET @p5 = inStartItem;
+
+  SET @p6 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5, @p6;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+    SELECT SUM(count_rows) FROM
+
+       (SELECT COUNT(*) AS count_rows FROM invoice inv INNER JOIN invoice_cancelled inv_can
+
+            ON inv.invoice_id = inv_can.invoice_id WHERE CAST(inv_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+
+        UNION ALL
+
+        SELECT COUNT(*) AS count_rows FROM receipt rec INNER JOIN receipt_cancelled rec_can ON rec.receipt_id = rec_can.receipt_id
+
+            WHERE CAST(rec_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+
+        UNION ALL
+
+        SELECT COUNT(*) AS count_rows FROM purchase_return pur INNER JOIN purchase_return_cancelled pur_can
+
+            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE CAST(pur_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+
+        UNION ALL
+
+        SELECT COUNT(*) AS count_rows FROM shipment shi INNER JOIN shipment_cancelled shi_can ON shi.shipment_id = shi_can.shipment_id
+
+            WHERE CAST(shi_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+
+        UNION ALL
+
+        SELECT COUNT(*) AS count_rows FROM entry_adjustment ent INNER JOIN entry_adjustment_cancelled ent_can ON
+
+            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE CAST(ent_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+
+        UNION ALL
+
+        SELECT COUNT(*) AS count_rows FROM withdraw_adjustment wit INNER JOIN withdraw_adjustment_cancelled wit_can
+
+            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE CAST(wit_can.date AS DATE) BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT date, cancelled_date, username, document, number, total FROM
+
+       (SELECT inv_can.date, DATE_FORMAT(inv_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, inv_can.user_account_username AS username, 'Factura' AS document,
+
+            CONCAT(cor.serial_number, '-', inv.number) AS number, inv.total FROM invoice inv INNER JOIN invoice_cancelled inv_can
+
+            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE CAST(inv_can.date AS DATE) BETWEEN ? AND ?
+
+        UNION
+
+        SELECT rec_can.date, DATE_FORMAT(rec_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, rec_can.user_account_username AS username, 'Recibo' AS document,
+
+            rec.receipt_id AS number, rec.total FROM receipt rec INNER JOIN receipt_cancelled rec_can ON rec.receipt_id = rec_can.receipt_id
+
+            WHERE CAST(rec_can.date AS DATE) BETWEEN ? AND ?
+
+        UNION
+
+        SELECT pur_can.date, DATE_FORMAT(pur_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, pur_can.user_account_username AS username, 'Devolucion' AS document,
+
+            pur.purchase_return_id AS number, pur.total FROM purchase_return pur INNER JOIN purchase_return_cancelled pur_can
+
+            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE CAST(pur_can.date AS DATE) BETWEEN ? AND ?
+
+        UNION
+
+        SELECT shi_can.date, DATE_FORMAT(shi_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, shi_can.user_account_username AS username, 'Envio' AS document,
+
+            shi.shipment_id AS number, shi.total FROM shipment shi INNER JOIN shipment_cancelled shi_can ON shi.shipment_id = shi_can.shipment_id
+
+            WHERE CAST(shi_can.date AS DATE) BETWEEN ? AND ?
+
+        UNION
+
+        SELECT ent_can.date, DATE_FORMAT(ent_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, ent_can.user_account_username AS username, 'Vale Entrada' AS document,
+
+            ent.entry_adjustment_id AS number, ent.total FROM entry_adjustment ent INNER JOIN entry_adjustment_cancelled ent_can ON
+
+            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE CAST(ent_can.date AS DATE) BETWEEN ? AND ?
+
+        UNION
+
+        SELECT wit_can.date, DATE_FORMAT(wit_can.date, '%d/%m/%Y %H:%i:%s') AS cancelled_date, wit_can.user_account_username AS username, 'Vale Salida' AS document,
+
+            wit.withdraw_adjustment_id AS number, wit.total FROM withdraw_adjustment wit INNER JOIN withdraw_adjustment_cancelled wit_can
+
+            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE CAST(wit_can.date AS DATE) BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
+
+      LIMIT ?, ?";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inFirstDate;
+
+  SET @p4 = inLastDate;
+
+  SET @p5 = inFirstDate;
+
+  SET @p6 = inLastDate;
+
+  SET @p7 = inFirstDate;
+
+  SET @p8 = inLastDate;
+
+  SET @p9 = inFirstDate;
+
+  SET @p10 = inLastDate;
+
+  SET @p11 = inFirstDate;
+
+  SET @p12 = inLastDate;
+
+  SET @p13 = inStartItem;
+
+  SET @p14 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14;
+
+END$$
+
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_available_list_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -1825,7 +2020,7 @@ BEGIN
 
   SELECT COUNT(*) FROM change_price_log
 
-    WHERE date BETWEEN inFirstDate AND inLastDate;
+    WHERE CAST(date AS DATE) BETWEEN inFirstDate AND inLastDate;
 
 END$$
 
@@ -1834,13 +2029,15 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT DATE_FORMAT(log.date, '%d/%m/%Y') AS logged_date, log.user_account_username, pro.bar_code, man.name AS manufacturer, pro.name,
+    "SELECT DATE_FORMAT(log.date, '%d/%m/%Y %H:%i:%s') AS logged_date, log.user_account_username AS username, pro.bar_code, man.name AS
+
+         manufacturer, pro.name,
 
          pro.packaging, log.last_price, log.new_price FROM change_price_log log INNER JOIN product pro ON log.product_id = pro.product_id
 
          INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-     WHERE date BETWEEN ? AND ?
+     WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
      ORDER BY log.entry_id
 
@@ -1862,7 +2059,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(50), IN inProductId INT, IN inDate DATE,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(50), IN inProductId INT, IN inDate DATETIME,
 
   IN inLastPrice DECIMAL(10, 2), IN inNewPrice DECIMAL(10, 2))
 BEGIN
@@ -2590,7 +2787,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(50), IN inDate DATE)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(50), IN inDate DATETIME)
 BEGIN
 
   UPDATE deposit
@@ -2844,7 +3041,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS created_date, dis.user_account_username, cor.serial_number,
+    "SELECT DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS created_date, dis.user_account_username AS username, cor.serial_number,
 
          inv.number, inv.total AS subtotal, dis.percentage, inv.total * (dis.percentage / 100) AS amount,
 
@@ -2876,7 +3073,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_cancel`(IN inEntryAdjustmentId INT, IN inUserName VARCHAR(50),
 
-  IN inDate DATE)
+  IN inDate DATETIME)
 BEGIN
 
   UPDATE entry_adjustment
@@ -3122,7 +3319,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(50),
 
-  IN inDate DATE)
+  IN inDate DATETIME)
 BEGIN
 
   UPDATE invoice
@@ -3496,7 +3693,7 @@ BEGIN
 
          @balance := @balance + CAST(entry AS SIGNED) - CAST(withdraw AS SIGNED) AS balance FROM
 
-       (SELECT DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Factura' AS document,
+       (SELECT date, DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Factura' AS document,
 
             CONCAT(cor.serial_number, '-', inv.number) AS number, inv_lot.lot_id, '' AS entry, inv_lot.quantity AS withdraw,
 
@@ -3510,7 +3707,7 @@ BEGIN
 
         UNION
 
-        SELECT DATE_FORMAT(rec.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Recibo' AS document, rec.receipt_id AS number,
+        SELECT date, DATE_FORMAT(rec.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Recibo' AS document, rec.receipt_id AS number,
 
             rec_lot.lot_id, rec_lot.quantity AS entry, '' AS withdraw, rec_lot.number AS item_number FROM receipt rec INNER
 
@@ -3520,7 +3717,7 @@ BEGIN
 
         UNION
 
-        SELECT DATE_FORMAT(pur.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Devolucion' AS document,
+        SELECT date, DATE_FORMAT(pur.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Devolucion' AS document,
 
             pur.purchase_return_id AS number, pur_lot.lot_id, '' AS entry, pur_lot.quantity AS withdraw,
 
@@ -3532,7 +3729,7 @@ BEGIN
 
         UNION
 
-        SELECT DATE_FORMAT(shi.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Envio' AS document, shi.shipment_id AS number,
+        SELECT date, DATE_FORMAT(shi.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Envio' AS document, shi.shipment_id AS number,
 
             shi_lot.lot_id, '' AS entry, shi_lot.quantity AS withdraw, shi_lot.number AS item_number FROM shipment shi INNER
 
@@ -3542,7 +3739,7 @@ BEGIN
 
         UNION
 
-        SELECT DATE_FORMAT(ent.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Vale Entrada' AS document, ent.entry_adjustment_id
+        SELECT date, DATE_FORMAT(ent.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Vale Entrada' AS document, ent.entry_adjustment_id
 
             AS number, ent_lot.lot_id, ent_lot.quantity AS entry, '' AS withdraw, ent_lot.number AS item_number FROM
 
@@ -3554,7 +3751,7 @@ BEGIN
 
         UNION
 
-        SELECT DATE_FORMAT(wit.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Vale Salida' AS document,
+        SELECT date, DATE_FORMAT(wit.date, '%d/%m/%Y %H:%i:%s') AS created_date, 'Vale Salida' AS document,
 
             wit.withdraw_adjustment_id AS number, wit_lot.lot_id, '' AS entry, wit_lot.quantity AS withdraw,
 
@@ -3562,7 +3759,7 @@ BEGIN
 
             ON wit.withdraw_adjustment_id = wit_lot.withdraw_adjustment_id INNER JOIN lot ON wit_lot.lot_id = lot.lot_id
 
-        WHERE wit.status = 1 AND lot.product_id = ?) AS kardex ORDER BY created_date, item_number
+        WHERE wit.status = 1 AND lot.product_id = ?) AS kardex ORDER BY date, item_number
 
       LIMIT ?, ?";
 
@@ -4557,7 +4754,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_cancel`(IN inPurchaseReturnId INT, IN inUserName VARCHAR(50), IN inDate DATE)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_cancel`(IN inPurchaseReturnId INT, IN inUserName VARCHAR(50), IN inDate DATETIME)
 BEGIN
 
   UPDATE purchase_return
@@ -4658,7 +4855,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_cancel`(IN inReceiptId INT, IN inUserName VARCHAR(50),
 
-  IN inDate DATE)
+  IN inDate DATETIME)
 BEGIN
 
   UPDATE receipt
@@ -5071,7 +5268,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_cancel`(IN inShipmentId INT, IN inUserName VARCHAR(50),
 
-  IN inDate DATE)
+  IN inDate DATETIME)
 BEGIN
 
   UPDATE shipment
@@ -5852,7 +6049,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_cancel`(IN inWithdrawAdjustmentId INT, IN inUserName VARCHAR(50),
 
-  IN inDate DATE)
+  IN inDate DATETIME)
 BEGIN
 
   UPDATE withdraw_adjustment
