@@ -232,4 +232,34 @@ class CancelDocumentList{
 		return CancelDocumentListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
+
+
+/**
+ * Utility class for obtaining the history of cash register document cancelled.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class CancelCashDocumentList{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are date, username, document, number and total.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
+			
+		return CancelCashDocumentListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
+	}
+}
 ?>
