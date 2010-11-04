@@ -417,7 +417,7 @@ class Deposit extends PersistDocument implements Itemized{
 				
 			foreach($this->_mDetails as &$detail)
 				$detail->cancel();
-			DepositDAM::cancel($this, $user, date('Y/m/d'));
+			DepositDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 			$this->_mStatus = self::CANCELLED;
 		}
 	}

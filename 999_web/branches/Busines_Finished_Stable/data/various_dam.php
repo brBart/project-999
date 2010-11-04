@@ -108,4 +108,64 @@ class DiscountListDAM{
 				'number' => '1351', 'subtotal' => 245.83, 'percentage' => 12.00, 'total' => 200.83));
 	}
 }
+
+
+/**
+ * Utility class for obtaing the cancel document data from the database.
+ * @package VariousDAM
+ * @author Roberto Oliveros
+ */
+class CancelDocumentListDAM{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are date, username, document, number and total.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$total_pages, &$total_items, $page){
+		$total_pages = 1;
+		$total_items = 2;
+		return array(array('date' => '01/05/2009', 'username' => 'roboli', 'document' => 'Factura',
+				'number' => 'A021-4359', 'total' => 100.83),
+				array('date' => '05/05/2009', 'username' => 'roboli', 'document' => 'Recibo',
+				'number' => '1351', 'total' => 200.83));
+	}
+}
+
+
+/**
+ * Utility class for obtaing the cancel cash document data from the database.
+ * @package VariousDAM
+ * @author Roberto Oliveros
+ */
+class CancelCashDocumentListDAM{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are date, username, document, number and total.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$total_pages, &$total_items, $page){
+		$total_pages = 1;
+		$total_items = 2;
+		return array(array('date' => '01/05/2009', 'username' => 'roboli', 'document' => 'Factura',
+				'number' => 'A021-4359', 'total' => 100.83),
+				array('date' => '05/05/2009', 'username' => 'roboli', 'document' => 'Deposito',
+				'number' => '1334', 'total' => 200.00));
+	}
+}
 ?>

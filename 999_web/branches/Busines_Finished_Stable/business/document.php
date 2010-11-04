@@ -1765,7 +1765,7 @@ class Invoice extends Document{
 	 * @param UserAccount $user
 	 */
 	protected function updateToCancelled(UserAccount $user){
-		InvoiceDAM::cancel($this, $user, date('d/m/Y'));
+		InvoiceDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
 
@@ -2089,7 +2089,7 @@ class PurchaseReturn extends Document{
 	 * @param UserAccount $user
 	 */
 	protected function updateToCancelled(UserAccount $user){
-		PurchaseReturnDAM::cancel($this, $user, date('d/m/Y'));
+		PurchaseReturnDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
 
@@ -2230,7 +2230,7 @@ class Shipment extends Document{
 	 * @param UserAccount $user
 	 */
 	protected function updateToCancelled(UserAccount $user){
-		ShipmentDAM::cancel($this, $user, date('d/m/Y'));
+		ShipmentDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
 
@@ -2406,7 +2406,7 @@ class Receipt extends Document{
 	 * @param UserAccount $user
 	 */
 	protected function updateToCancelled(UserAccount $user){
-		ReceiptDAM::cancel($this, $user, date('d/m/Y'));
+		ReceiptDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
 
@@ -2523,7 +2523,7 @@ class EntryIA extends AdjustmentDocument{
 	 * @param UserAccount $user
 	 */
 	protected function updateToCancelled(UserAccount $user){
-		EntryIADAM::cancel($this, $user, date('d/m/Y'));
+		EntryIADAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
 
@@ -2571,7 +2571,7 @@ class WithdrawIA extends AdjustmentDocument{
 	 * @param UserAccount $user
 	 */
 	protected function updateToCancelled(UserAccount $user){
-		WithdrawIADAM::cancel($this, $user, date('d/m/Y'));
+		WithdrawIADAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
 ?>
