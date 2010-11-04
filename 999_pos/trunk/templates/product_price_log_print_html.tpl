@@ -18,31 +18,31 @@
 		<table>
 	     	<caption>{$total_items} de {$total_items}</caption>
 	      	<thead>
-					<tr>
-						<th>Fecha</th>
-						<th>Usuario</th>
-						<th>Barra</th>
-						<th>Casa</th>
-						<th>Nombre</th>
-						<th>Presentaci&oacute;n</th>
-						<th>Anterior</th>
-						<th>Nuevo</th>
-					</tr>
-				</thead>
-				<tbody>
-				{section name=i loop=$list}
-					<tr>
-						<td>{$list[i].logged_date}</td>
-						<td>{$list[i].username}</td>
-						<td>{$list[i].bar_code|escape}</td>
-						<td>{$list[i].manufacturer|escape}</td>
-						<td>{$list[i].name|escape}</td>
-						<td>{$list[i].packaging|escape}</td>
-						<td>{$list[i].last_price|nf:2}</td>
-						<td>{$list[i].new_price|nf:2}</td>
-					</tr>
-				{/section}
-				</tbody>
+				<tr>
+					<th>Fecha</th>
+					<th>Usuario</th>
+					<th>Barra</th>
+					<th>Casa</th>
+					<th>Nombre</th>
+					<th>Presentaci&oacute;n</th>
+					<th>Anterior</th>
+					<th>Nuevo</th>
+				</tr>
+			</thead>
+			<tbody>
+			{section name=i loop=$list}
+				<tr>
+					<td>{$list[i].logged_date}</td>
+					<td>{$list[i].username}</td>
+					<td>{$list[i].bar_code|escape}</td>
+					<td>{$list[i].manufacturer|escape}</td>
+					<td>{$list[i].name|escape}</td>
+					<td>{$list[i].packaging|escape}</td>
+					<td>{$list[i].last_price|nf:2}</td>
+					<td>{$list[i].new_price|nf:2}</td>
+				</tr>
+			{/section}
+			</tbody>
 		</table>
 	</div>
 </body>
