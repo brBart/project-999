@@ -69,8 +69,7 @@ abstract class ChangePasswordCommand extends Command{
 			$msg = 'Su contrase&ntilde;a cambio correctamente.';
 			Page::display(array('module_title' => $module_title, 'main_menu' => $this->getMainMenuTemplate(),
 					'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'none',
-					'username' => $username, 'notify' => '1', 'type' => 'success', 'message' => $msg),
-					'site_html.tpl');
+					'notify' => '1', 'type' => 'success', 'message' => $msg), 'site_html.tpl');
 		} catch(ValidateException $e){
 			$msg = $e->getMessage();
 			Page::display(array('module_title' => $module_title, 'main_menu' => 'blank.tpl',
