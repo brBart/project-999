@@ -26,7 +26,7 @@ class ShowTaskMenuAdminCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$back_trace = array('Inicio', 'Herramientas', 'Procesos');
+		$back_trace = array('Inicio', 'Herramientas', 'Tareas');
 		Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'main_menu_admin_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'tools_menu_admin_html.tpl',
 				'content' => 'task_menu_admin_html.tpl', 'notify' => '0'), 'site_html.tpl');
