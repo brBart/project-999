@@ -41,6 +41,15 @@ class ApplyGeneralClosureCommand extends Command{
 			return;
 		}
 		
+		if(!AccessManager::isAllowed($helper->getUser(), 'general_closure', 'write')){
+			$msg = 'Insuficientes privilegios.';
+			Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'none',
+					'back_link' => 'index.php?cmd=show_task_menu_admin',
+					'content' => 'general_closure_form_html.tpl', 'task_name' => 'Cierre General', 'notify' => '1',
+					'type' => 'error', 'message' => $msg), 'site_html.tpl');
+		}
+		
 		try{
 			ClosingEvent::apply($request->getProperty('days'));
 			$back_trace = array('Inicio');
