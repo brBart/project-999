@@ -19,23 +19,12 @@ class ClosingEventDAM{
 	/**
 	 * Makes a closing on the system's data leaving only the provided days of information.
 	 *
-	 * It also makes a backup of the database till the actual date. It returns the name of the backup file that
-	 * is stored in the BACKUP_DIR constant directory value.
 	 * @param integer $days
-	 * @return string
 	 */
 	static public function apply($days){
-		$backup_file = DB_DATABASE . '_' . date('Y-m-d-H-i-s')  . '.sql';
-		$command = 'mysqldump -u ' . DB_USERNAME . ' --password=' . DB_PASSWORD . ' --opt --routines ' .
-				DB_DATABASE . ' > ' . BACKUP_DIR . $backup_file;
-		
-		system($command);
-		
 		$sql = 'CALL general_closure(:days)';
 		$params = array(':days' => $days);
 		DatabaseHandler::execute($sql, $params);
-		
-		return $backup_file;
 	}
 }
 

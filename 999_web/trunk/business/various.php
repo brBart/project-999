@@ -29,8 +29,31 @@ class ClosingEvent{
 	 * @return string
 	 */
 	static public function apply($days){
-		Number::validatePositiveInteger($days, 'Cantidad de dias inv&aacute;lida.');
+		Number::validatePositiveNumber($days, 'Cantidad de dias inv&aacute;lida.');
 		return ClosingEventDAM::apply($days);
+	}
+}
+
+
+/**
+ * Class to perform a backup of the system's data.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class BackupEvent{
+	/**
+	 * It makes a backup of the database till the actual date. It returns the name of the backup file that
+	 * is stored in the BACKUP_DIR constant directory value.
+	 * @return string
+	 */
+	static public function apply(){
+		$backup_file = DB_DATABASE . '_' . date('Y-m-d-H-i-s')  . '.sql';
+		$command = 'mysqldump -u ' . DB_USERNAME . ' --password=' . DB_PASSWORD . ' --opt --routines ' .
+				DB_DATABASE . ' > ' . BACKUP_DIR . $backup_file;
+		
+		system($command);
+		
+		return $backup_file;
 	}
 }
 
