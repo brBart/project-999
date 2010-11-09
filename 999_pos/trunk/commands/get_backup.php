@@ -43,6 +43,8 @@ class GetBackupCommand extends Command{
 		
 		try{
 			$file_url = BackupEvent::apply();
+			$file_url = '..' . BACKUP_DIR_NAME . $file_url;
+			
 			$back_trace = array('Inicio');
 			$msg = 'El backup se realizo exitosamente.';
 			Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl', 'status' => '1',
