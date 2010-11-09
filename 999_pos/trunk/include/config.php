@@ -15,9 +15,13 @@ define('SITE_ROOT', dirname(dirname(__FILE__)));
  */
 define('LIBS_999', 'C:\\Users\\pc\\999_project\\999_middle\\');
 /**
+ * Backup directory name.
+ */ 
+define('BACKUP_DIR_NAME', '/backup/');
+/**
  * Backup directory path.
  */ 
-define('BACKUP_DIR', SITE_ROOT . '/backup/');
+define('BACKUP_DIR', SITE_ROOT . BACKUP_DIR_NAME);
 /** 
  * Command directory (where all the commands reside) path.
  */

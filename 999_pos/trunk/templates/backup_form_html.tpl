@@ -21,7 +21,8 @@
 				{if $status eq '0'}
 					Presione Aceptar para crear el backup.
 				{else}
-					Para descargar el backup presione <a href="{$file_url}" onclick="return oSession.setIsLink(true);">aqui</a>.
+					Para descargar el backup presione <a href="#"
+						onclick="window.open('{$file_url}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=1,toolbar=1,resizable=0,scrollbars=1');">aqui</a>.
 				{/if}
 				</p>
 			</fieldset>
