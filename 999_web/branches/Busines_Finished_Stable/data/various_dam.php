@@ -24,6 +24,23 @@ class ClosingEventDAM{
 
 
 /**
+ * Class to perform a backup of the system's data.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class BackupEventDAM{
+	/**
+	 * It makes a backup of the database till the actual date. It returns the name of the backup file that
+	 * is stored in the BACKUP_DIR constant directory value.
+	 * @return string
+	 */
+	static public function apply(){
+		return 'testo.sql';
+	}
+}
+
+
+/**
  * Class for accessing database information regarding the company.
  * @package VariousDAM
  * @author Roberto Oliveros
