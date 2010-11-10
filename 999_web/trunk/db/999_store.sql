@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-11-2010 a las 10:51:31
+-- Tiempo de generación: 10-11-2010 a las 17:09:46
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -922,7 +922,8 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (1, 34, 6, 1),
 (1, 35, 6, 1),
 (1, 36, 6, 1),
-(1, 37, 6, 1);
+(1, 37, 6, 1),
+(1, 38, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1032,7 +1033,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
 
 --
 -- Volcar la base de datos para la tabla `subject`
@@ -1074,7 +1075,8 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (34, 'invoice_discount_log'),
 (35, 'product_price_log'),
 (36, 'document_cancel_log'),
-(37, 'cash_document_cancel_log');
+(37, 'cash_document_cancel_log'),
+(38, 'general_closure');
 
 -- --------------------------------------------------------
 
