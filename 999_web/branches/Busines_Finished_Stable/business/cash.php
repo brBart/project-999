@@ -172,8 +172,6 @@ class Deposit extends PersistDocument implements Itemized{
 			}
 			$this->_mDateTime = $dateTime;
 		}
-		else
-			$this->_mDateTime = date('d/m/Y H:i:s');
 		
 		if(!is_null($user)){
 			try{
