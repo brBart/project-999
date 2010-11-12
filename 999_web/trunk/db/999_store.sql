@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 10-11-2010 a las 17:09:46
+-- Tiempo de generación: 12-11-2010 a las 11:03:54
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -850,7 +850,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   `role_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`role_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Volcar la base de datos para la tabla `role`
@@ -858,7 +858,10 @@ CREATE TABLE IF NOT EXISTS `role` (
 
 INSERT INTO `role` (`role_id`, `name`) VALUES
 (1, 'Administrador'),
-(2, 'Operador');
+(2, 'Auditor'),
+(3, 'Supervisor'),
+(4, 'Operador'),
+(5, 'Contador');
 
 -- --------------------------------------------------------
 
