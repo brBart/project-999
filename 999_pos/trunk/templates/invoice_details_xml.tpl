@@ -18,8 +18,7 @@ header('Content-Type: text/xml');
 			{if $details[i].is_bonus eq 1}
 			<row_pos>0</row_pos>
 			<is_bonus>1</is_bonus>
-			{assign var=format_percent value=$details[i].percentage|nf:2}
-			<percentage>{'(-'|cat:$format_percent|cat:'%)'}</percentage>
+			<percentage>** USTED AHORRA **</percentage>
 			{else}
 			<row_pos>{counter}</row_pos>
 			<is_bonus>0</is_bonus>
