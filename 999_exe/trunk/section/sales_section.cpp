@@ -351,9 +351,6 @@ void SalesSection::setActions()
 	connect(m_DiscountAction, SIGNAL(triggered()), this, SLOT(
 			showAuthenticationDialogForDiscount()));
 
-	m_AddItemAction = new QAction("Agregar producto", this);
-	m_AddItemAction->setShortcut(tr("Ctrl+I"));
-
 	m_DeleteItemAction = new QAction("Quitar producto", this);
 	m_DeleteItemAction->setShortcut(tr("Ctrl+D"));
 	connect(m_DeleteItemAction, SIGNAL(triggered()), this,
@@ -422,7 +419,6 @@ void SalesSection::setMenu()
 	menu = m_Window->menuBar()->addMenu("Editar");
 	menu->addAction(m_ClientAction);
 	menu->addAction(m_DiscountAction);
-	menu->addAction(m_AddItemAction);
 	menu->addAction(m_DeleteItemAction);
 	menu->addAction(m_SearchProductAction);
 
@@ -455,7 +451,6 @@ void SalesSection::setActionsManager()
 
 	*actions << m_ClientAction;
 	*actions << m_DiscountAction;
-	*actions << m_AddItemAction;
 	*actions << m_DeleteItemAction;
 	*actions << m_SearchProductAction;
 
@@ -497,28 +492,28 @@ void SalesSection::updateActions()
 	switch (m_CashRegisterStatus) {
 		case Open:
 			if (m_DocumentStatus == Edit) {
-				values = "0110011111110000001";
+				values = "011001111110000001";
 				m_BarCodeLineEdit->setEnabled(true);
 			} else {
 				QString cancel =
 						(m_DocumentStatus == Idle
 								&& m_Recordset.size() > 0) ? "1" : "0";
-				values = "100" + cancel + "100000" + navigateValues();
+				values = "100" + cancel + "10000" + navigateValues();
 				m_BarCodeLineEdit->setEnabled(false);
 			}
 			break;
 
 		case Closed:
-			values = "0000100000" + navigateValues();
+			values = "000010000" + navigateValues();
 			m_BarCodeLineEdit->setEnabled(false);
 			break;
 
 		case Error:
-			values = "0000100000000000000";
+			values = "000010000000000000";
 			break;
 
 		case Loading:
-			values = "0000000000000000000";
+			values = "000000000000000000";
 			break;
 
 		default:;

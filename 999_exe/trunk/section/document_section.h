@@ -88,7 +88,6 @@ protected:
 	QAction *m_ExitAction;
 
 	// Edit actions.
-	QAction *m_AddItemAction;
 	QAction *m_DeleteItemAction;
 
 	// View actions.

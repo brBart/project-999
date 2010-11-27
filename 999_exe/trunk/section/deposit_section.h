@@ -32,6 +32,9 @@ public slots:
 	void searchDeposit();
 
 protected:
+	// Edit actions.
+	QAction *m_AddItemAction;
+
 	void setActions();
 	void setMenu();
 	void setActionsManager();
