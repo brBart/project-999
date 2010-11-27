@@ -895,6 +895,13 @@ class Correlative extends Persist{
 	private $_mResolutionDate;
 	
 	/**
+	 * Holds the correlative's regime policy.
+	 *
+	 * @var string
+	 */
+	private $_mRegime;
+	
+	/**
 	 * Holds the first of the correlative's range of numbers.
 	 *
 	 * @var integer
@@ -1010,6 +1017,15 @@ class Correlative extends Persist{
 	}
 	
 	/**
+	 * Returns the correlative's regime policy.
+	 *
+	 * @return string
+	 */
+	public function getRegime(){
+		return $this->_mRegime;
+	}
+	
+	/**
 	 * Returns the first of the correlative's range of numbers.
 	 *
 	 * @return integer
@@ -1083,6 +1099,16 @@ class Correlative extends Persist{
 	}
 	
 	/**
+	 * Sets the correlative's regime policy.
+	 *
+	 * @param string $regime
+	 */
+	public function setRegime($regime){
+		$this->_mRegime = $regime;
+		String::validateString($regime, 'R&eacute;gimen inv&aacute;lido.');
+	}
+	
+	/**
 	 * Sets the first of the correlative's range of numbers.
 	 *
 	 * @param integer $number
@@ -1113,10 +1139,11 @@ class Correlative extends Persist{
 	 * @param integer $finalNumber
 	 * @throws Exception
 	 */
-	public function setData($resolutionNumber, $resolutionDate, $initialNumber, $finalNumber){
+	public function setData($resolutionNumber, $resolutionDate, $regime, $initialNumber, $finalNumber){
 		try{
 			String::validateString($resolutionNumber, 'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
 			Date::validateDate($resolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
+			String::validateString($regime, 'R&eacute;gimen inv&aacute;lido.');
 			Number::validatePositiveInteger($initialNumber, 'N&uacute;mero inicial inv&aacute;lido.');
 			Number::validatePositiveInteger($finalNumber, 'N&uacute;mero final inv&aacute;lido.');
 		} catch(Exception $e){
@@ -1127,6 +1154,7 @@ class Correlative extends Persist{
 		
 		$this->_mResolutionNumber = $resolutionNumber;
 		$this->_mResolutionDate = $resolutionDate;
+		$this->_mRegime = $regime;
 		$this->_mInitialNumber = $initialNumber;
 		$this->_mFinalNumber = $finalNumber;
 	}
@@ -1220,6 +1248,7 @@ class Correlative extends Persist{
 				'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.', 'resolution_number');
 		Date::validateDate($this->_mResolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.',
 				'resolution_date');
+		String::validateString($this->_mRegime, 'R&eacute;gimen inv&aacute;lido.', 'regime');
 		Number::validatePositiveNumber($this->_mInitialNumber, 'N&uacute;mero inicial inv&aacute;lido.',
 				'initial_number');
 		Number::validatePositiveNumber($this->_mFinalNumber, 'N&uacute;mero final inv&aacute;lido.',

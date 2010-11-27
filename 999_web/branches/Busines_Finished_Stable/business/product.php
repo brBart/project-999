@@ -585,8 +585,10 @@ class Product extends Identifier{
 	 */
 	public function setBarCode($barCode){
 		$this->_mBarCode = $barCode;
-		if($barCode != '')
+		if($barCode != ''){
+			$this->validateBarCode($barCode);
 			$this->verifyBarCode($barCode);
+		}
 	}
 	
 	/**
@@ -844,8 +846,10 @@ class Product extends Identifier{
 	protected function validateMainProperties(){
 		parent::validateMainProperties();
 		
-		if(!is_null($this->_mBarCode) && $this->_mBarCode != '')
+		if(!is_null($this->_mBarCode) && $this->_mBarCode != ''){
+			$this->validateBarCode($this->_mBarCode);
 			$this->verifyBarCode($this->_mBarCode);
+		}
 		
 		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.', 'packaging');
 		
@@ -944,6 +948,21 @@ class Product extends Identifier{
 		$restoreDetail->restore();
 		$temp_details[] = $restoreDetail;
 		$this->_mProductSuppliers = $temp_details;
+	}
+	
+	/**
+	 * Validates if the barcode string contains the char "*".
+	 * 
+	 * @param string $barCode
+	 * @throws ValidateException
+	 */
+	private function validateBarCode($barCode){
+		$pos = strpos($barCode, '*');
+
+		if(!($pos === false)){
+			throw new ValidateException('Codigo de barra inv&aacute;lido. Contiene el caracter "*".',
+					'bar_code');
+		}
 	}
 }
 
