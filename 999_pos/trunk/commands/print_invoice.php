@@ -58,7 +58,7 @@ class PrintInvoiceCommand extends Command{
 		
 		Page::display(array('company_name' => $company->getName(), 'company_nit' => $company->getNit(),
 				'resolution_number' => $correlative->getResolutionNumber(),
-				'resolution_date' => $correlative->getResolutionDate(),
+				'resolution_date' => $correlative->getResolutionDate(), 'regime' => $correlative->getRegime(),
 				'correlative_initial_number' => $correlative->getInitialNumber(),
 				'correlative_final_number' => $correlative->getFinalNumber(),
 				'serial_number' => $correlative->getSerialNumber(), 'number' => $invoice->getNumber(),

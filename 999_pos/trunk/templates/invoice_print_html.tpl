@@ -28,7 +28,8 @@ body {
 			Nit: {$company_nit}<br />
 			Resoluci&oacute;n No: {$resolution_number}<br />
 			Fecha: {$resolution_date}<br />
-			Del: {$correlative_initial_number} Al: {$correlative_final_number}
+			Del: {$correlative_initial_number} Al: {$correlative_final_number}<br />
+			{$regime}
 		</p>
 		<p id="header">
 			Factura Serie: {$serial_number} No: {$number}<br />
