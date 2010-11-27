@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-11-2010 a las 11:03:54
+-- Tiempo de generación: 27-11-2010 a las 12:47:28
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -265,6 +265,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   `serial_number` varchar(10) collate utf8_unicode_ci NOT NULL,
   `resolution_number` varchar(100) collate utf8_unicode_ci NOT NULL,
   `resolution_date` date NOT NULL,
+  `regime` varchar(100) collate utf8_unicode_ci NOT NULL,
   `initial_number` bigint(20) NOT NULL,
   `final_number` bigint(20) NOT NULL,
   `current` bigint(20) NOT NULL default '0',
@@ -1113,7 +1114,7 @@ CREATE TABLE IF NOT EXISTS `unit_of_measure` (
   `unit_of_measure_id` int(11) NOT NULL auto_increment,
   `name` varchar(100) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`unit_of_measure_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Volcar la base de datos para la tabla `unit_of_measure`
@@ -2298,7 +2299,7 @@ END$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_get`(IN inCorrelativeId INT)
 BEGIN
 
-  SELECT serial_number, resolution_number, DATE_FORMAT(resolution_date, '%d/%m/%Y') AS resolution_date, initial_number, final_number,
+  SELECT serial_number, resolution_number, DATE_FORMAT(resolution_date, '%d/%m/%Y') AS resolution_date, regime, initial_number, final_number,
 
       current, is_default FROM correlative
 
@@ -2306,14 +2307,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(100), IN inResolutionDate Date,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(100), IN inResolutionDate Date, IN inRegime VARCHAR(100),
 
   IN inInitialNumber BIGINT, IN inFinalNumber BIGINT)
 BEGIN
 
-  INSERT INTO correlative (serial_number, resolution_number, resolution_date, initial_number, final_number)
+  INSERT INTO correlative (serial_number, resolution_number, resolution_date, regime, initial_number, final_number)
 
-    VALUES (inSerialNumber, inResolutionNumber, inResolutionDate, inInitialNumber, inFinalNumber);
+    VALUES (inSerialNumber, inResolutionNumber, inResolutionDate, inRegime, inInitialNumber, inFinalNumber);
 
 END$$
 
