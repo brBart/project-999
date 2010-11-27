@@ -35,7 +35,7 @@ void BarCodeLineEdit::init(const QStringList &argumentNames,
 	pale.setColor(QPalette::Disabled, QPalette::Base, Qt::white);
 	setPalette(pale);
 
-	QRegExp rx("[^\\*]+\\*?[^\\*]+");
+	QRegExp rx("[^\\*]+\\*?[^\\*]*");
 	QValidator *validator = new QRegExpValidator(rx, this);
 	setValidator(validator);
 }
@@ -45,5 +45,17 @@ void BarCodeLineEdit::init(const QStringList &argumentNames,
  */
 void BarCodeLineEdit::returnKeyPressed()
 {
-	emit returnPressedBarCode(text());
+	QString barCode, quantity;
+
+	QStringList values = text().split("*");
+
+	if (values.length() > 1) {
+		quantity = values[0];
+		barCode = values[1];
+	} else {
+		quantity = "1";
+		barCode = values [0];
+	}
+
+	emit returnPressedBarCode(barCode, quantity);
 }

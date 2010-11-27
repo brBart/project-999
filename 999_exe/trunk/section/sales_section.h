@@ -23,12 +23,11 @@ public:
 
 public slots:
 	void setCustomer();
-	void addProductInvoice(QString barCode, int quantity = 1);
+	void addProductInvoice(QString barCode, QString quantity);
 	void showAuthenticationDialogForDiscount();
 	void createDiscount();
 	void validate();
 	void finishInvoice(QString Id);
-	void addProductWithQuantity();
 	void searchProduct();
 	void searchInvoice();
 	void consultProduct();

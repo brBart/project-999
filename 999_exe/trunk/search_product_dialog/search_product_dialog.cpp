@@ -51,7 +51,7 @@ QString SearchProductDialog::barCode()
 /**
  * Returns the quantity of the searched product.
  */
-int SearchProductDialog::quantity()
+QString SearchProductDialog::quantity()
 {
-	return ui.quantitySpinBox->value();
+	return QString::number(ui.quantitySpinBox->value());
 }

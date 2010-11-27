@@ -18,7 +18,7 @@ public:
     		QWidget *parent = 0, Qt::WindowFlags f = 0);
     ~SearchProductDialog();
     QString barCode();
-    int quantity();
+    QString quantity();
 
 signals:
 	void sessionStatusChanged(bool isActive);

@@ -24,7 +24,7 @@ public slots:
 	void returnKeyPressed();
 
 signals:
-	void returnPressedBarCode(QString barCode);
+	void returnPressedBarCode(QString barCode, QString quantity);
 };
 
 #endif /* BAR_CODE_LINE_EDIT_H_ */

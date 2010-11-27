@@ -78,7 +78,7 @@ void SalesSection::setCustomer()
 /**
  * Adds a product to the invoice in the server.
  */
-void SalesSection::addProductInvoice(QString barCode, int quantity)
+void SalesSection::addProductInvoice(QString barCode, QString quantity)
 {
 	barCode = barCode.trimmed();
 
@@ -87,7 +87,7 @@ void SalesSection::addProductInvoice(QString barCode, int quantity)
 		url.addQueryItem("cmd", "add_product_invoice");
 		url.addQueryItem("key", m_NewDocumentKey);
 		url.addQueryItem("bar_code", barCode);
-		url.addQueryItem("quantity", QString::number(quantity));
+		url.addQueryItem("quantity", quantity);
 		url.addQueryItem("type", "xml");
 
 		QString content = m_Request->get(url);
@@ -218,21 +218,6 @@ void SalesSection::finishInvoice(QString id)
 
 	refreshRecordset();
 	m_Recordset.moveLast();
-}
-
-/**
- * Shows the ProductQuantityDialog to enter a bar code and a quantity value.
- */
-void SalesSection::addProductWithQuantity()
-{
-	ProductQuantityDialog dialog(this, Qt::WindowTitleHint);
-
-	if (dialog.exec() == QDialog::Accepted) {
-		// The bar code text set to the line edit in case of fail validation
-		// retrospective.
-		m_BarCodeLineEdit->setText(dialog.barCode());
-		addProductInvoice(dialog.barCode(), dialog.quantity());
-	}
 }
 
 /**
@@ -374,8 +359,6 @@ void SalesSection::setActions()
 
 	m_AddItemAction = new QAction("Agregar producto", this);
 	m_AddItemAction->setShortcut(tr("Ctrl+I"));
-	connect(m_AddItemAction, SIGNAL(triggered()), this, SLOT(
-			addProductWithQuantity()));
 
 	m_DeleteItemAction = new QAction("Quitar producto", this);
 	m_DeleteItemAction->setShortcut(tr("Ctrl+D"));
@@ -506,8 +489,8 @@ void SalesSection::setPlugins()
 	webPluginFactory()
 			->install("application/x-bar_code_line_edit", m_BarCodeLineEdit);
 
-	connect(m_BarCodeLineEdit, SIGNAL(returnPressedBarCode(QString)), this,
-			SLOT(addProductInvoice(QString)));
+	connect(m_BarCodeLineEdit, SIGNAL(returnPressedBarCode(QString, QString)),
+			this, SLOT(addProductInvoice(QString, QString)));
 }
 
 /**
