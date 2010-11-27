@@ -8,6 +8,7 @@
 #include "bar_code_line_edit.h"
 
 #include <QPalette>
+#include <QRegExpValidator>
 
 /**
  * @class BarCodeLineEdit
@@ -33,6 +34,10 @@ void BarCodeLineEdit::init(const QStringList &argumentNames,
 	QPalette pale = palette();
 	pale.setColor(QPalette::Disabled, QPalette::Base, Qt::white);
 	setPalette(pale);
+
+	QRegExp rx("[^\\*]+\\*?[^\\*]+");
+	QValidator *validator = new QRegExpValidator(rx, this);
+	setValidator(validator);
 }
 
 /**
