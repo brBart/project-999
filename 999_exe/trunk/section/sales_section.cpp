@@ -80,40 +80,34 @@ void SalesSection::setCustomer()
  */
 void SalesSection::addProductInvoice(QString barCode, QString quantity)
 {
-	barCode = barCode.trimmed();
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "add_product_invoice");
+	url.addQueryItem("key", m_NewDocumentKey);
+	url.addQueryItem("bar_code", barCode);
+	url.addQueryItem("quantity", quantity);
+	url.addQueryItem("type", "xml");
 
-	if (barCode != "") {
-		QUrl url(*m_ServerUrl);
-		url.addQueryItem("cmd", "add_product_invoice");
-		url.addQueryItem("key", m_NewDocumentKey);
-		url.addQueryItem("bar_code", barCode);
-		url.addQueryItem("quantity", quantity);
-		url.addQueryItem("type", "xml");
+	QString content = m_Request->get(url);
 
-		QString content = m_Request->get(url);
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("stub");
 
-		XmlTransformer *transformer = XmlTransformerFactory::instance()
-				->create("stub");
-
-		QString errorMsg, elementId;
-		XmlResponseHandler::ResponseType response =
-				m_Handler->handle(content, transformer, &errorMsg, &elementId);
-		if (response == XmlResponseHandler::Success) {
-			QApplication::beep();
-			fetchDocumentDetails(m_NewDocumentKey);
-			m_Console->reset();
-			m_BarCodeLineEdit->setText("");
-		} else if (response == XmlResponseHandler::Failure) {
-			m_Console->cleanFailure(elementId);
-			m_Console->displayFailure(errorMsg, elementId);
-		} else {
-			m_Console->displayError(errorMsg);
-		}
-
-		delete transformer;
-	} else {
+	QString errorMsg, elementId;
+	XmlResponseHandler::ResponseType response =
+			m_Handler->handle(content, transformer, &errorMsg, &elementId);
+	if (response == XmlResponseHandler::Success) {
+		QApplication::beep();
+		fetchDocumentDetails(m_NewDocumentKey);
+		m_Console->reset();
 		m_BarCodeLineEdit->setText("");
+	} else if (response == XmlResponseHandler::Failure) {
+		m_Console->cleanFailure(elementId);
+		m_Console->displayFailure(errorMsg, elementId);
+	} else {
+		m_Console->displayError(errorMsg);
 	}
+
+	delete transformer;
 }
 
 /**
