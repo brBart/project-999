@@ -682,7 +682,7 @@ CREATE TABLE IF NOT EXISTS `product` (
 CREATE TABLE IF NOT EXISTS `product_supplier` (
   `product_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
-  `sku` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `sku` varchar(30) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`product_id`,`supplier_id`,`sku`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

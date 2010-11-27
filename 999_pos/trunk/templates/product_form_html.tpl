@@ -128,7 +128,7 @@
 		    		</select>
 		    		<span id="supplier_id-failed" class="hidden">*</span>
 			  		<label for="product_sku">C&oacute;digo:</label>
-			  		<input name="form_widget" id="product_sku" type="text" maxlength="50"
+			  		<input name="form_widget" id="product_sku" type="text" maxlength="30"
 			  			{if $status eq 1}disabled="disabled"{/if} />
 			  		<span id="product_sku-failed" class="hidden">*</span>
 			  		<input name="form_widget" id="add_supplier" type="button" value="Agregar"
