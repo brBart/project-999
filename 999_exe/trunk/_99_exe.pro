@@ -35,7 +35,6 @@ HEADERS += section/working_day_section.h \
     xml_transformer/search_product_results_xml_transformer.h \
     main_window.h \
     search_product_dialog/search_product_dialog.h \
-    product_quantity_dialog/product_quantity_dialog.h \
     printer_status_handler/printer_status_handler.h \
     printer_status_handler/StatusAPI.h \
     printer_status_handler/EpsStmApi.h \
@@ -108,7 +107,6 @@ SOURCES += section/working_day_section.cpp \
     xml_transformer/search_product_results_xml_transformer.cpp \
     main_window.cpp \
     search_product_dialog/search_product_dialog.cpp \
-    product_quantity_dialog/product_quantity_dialog.cpp \
     printer_status_handler/printer_status_handler.cpp \
     printer_status_handler/StatusAPI.cpp \
     plugins/label.cpp \
@@ -157,7 +155,6 @@ FORMS += search_deposit_dialog/search_deposit_dialog.ui \
     consult_product_dialog/consult_product_dialog.ui \
     search_invoice_dialog/search_invoice_dialog.ui \
     search_product_dialog/search_product_dialog.ui \
-    product_quantity_dialog/product_quantity_dialog.ui \
     voucher_dialog/voucher_dialog.ui \
     discount_dialog/discount_dialog.ui \
     authentication_dialog/authentication_dialog.ui \
