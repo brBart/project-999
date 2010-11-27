@@ -55,6 +55,16 @@
 		  		{/if}
 		  	</p>
 		  	<p>
+		  		<label for="regime">R&eacute;gimen:{if $status eq 0}*{/if}</label>
+		  		{if $status eq 0}
+		  		<input name="form_widget" id="regime" type="text" maxlength="100"
+		  			onblur="oSetProperty.execute('set_regime_correlative', this.value, this.id);" />
+		  		<span id="regime-failed" class="hidden">*</span>
+		  		{else}
+		  		<span>{$regime|escape}</span>
+		  		{/if}
+		  	</p>
+		  	<p>
 		  		<label for="initial_number">No. Inicial:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
 		  		<input name="form_widget" id="initial_number" type="text" maxlength="20"

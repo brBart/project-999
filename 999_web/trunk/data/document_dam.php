@@ -219,7 +219,7 @@ class CorrelativeDAM{
 		if(!empty($result)){
 			$correlative = new Correlative($id, $result['serial_number'], (boolean)$result['is_default'],
 					(int)$result['current'], Persist::CREATED);
-			$correlative->setData($result['resolution_number'], $result['resolution_date'],
+			$correlative->setData($result['resolution_number'], $result['resolution_date'], $result['regime'],
 					(int)$result['initial_number'], (int)$result['final_number']);
 			return $correlative;
 		}
@@ -245,11 +245,11 @@ class CorrelativeDAM{
 	 * @return integer
 	 */
 	static public function insert(Correlative $obj){
-		$sql = 'CALL correlative_insert(:serial_number, :resolution_number, :resolution_date, :initial_number, ' .
-				':final_number)';
+		$sql = 'CALL correlative_insert(:serial_number, :resolution_number, :resolution_date, :regime, ' .
+				':initial_number, :final_number)';
 		$params = array(':serial_number' => $obj->getSerialNumber(),
 				':resolution_number' => $obj->getResolutionNumber(),
-				':resolution_date' => Date::dbFormat($obj->getResolutionDate()),
+				':resolution_date' => Date::dbFormat($obj->getResolutionDate()), ':regime' => $obj->getRegime(),
 				':initial_number' => $obj->getInitialNumber(), ':final_number' => $obj->getFinalNumber());
 		DatabaseHandler::execute($sql, $params);
 		
