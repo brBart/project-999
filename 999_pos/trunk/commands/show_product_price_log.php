@@ -17,11 +17,16 @@ require_once('commands/show_log.php');
  */
 class ShowProductPriceLogCommand extends ShowLogCommand{
 	/**
-	 * Returns the prefix of the date variables to use.
-	 * @return string
+	 * Show the empty form.
 	 */
-	protected function getPrefix(){
-		return 'price';
+	protected function showForm(){
+		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'none',
+				'log_name' => 'Cambio de Precios a Productos',
+				'log_cmd' => 'index.php?cmd=show_product_price_log&page=1',
+				'back_link' => 'index.php?cmd=show_log_menu_inventory',
+				'content' => 'log_form_html.tpl'), 'site_html.tpl');
 	}
 	
 	/**
@@ -49,17 +54,18 @@ class ShowProductPriceLogCommand extends ShowLogCommand{
 	/**
 	 * Display failure in case an error occurs.
 	 * @param string $msg
+	 * @param string $startDate
+	 * @param string $endDate
 	 */
-	protected function displayFailure($msg){
+	protected function displayFailure($msg, $startDate, $endDate){
 		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
-		
-		$start_date = $this->_mRequest->getProperty('price_start_date');
-		$end_date = $this->_mRequest->getProperty('price_end_date');
-		
-		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'tools_menu_inventory_html.tpl',
-				'content' => 'log_menu_inventory_html.tpl', 'notify' => '1', 'type' => 'error',
-				'message' => $msg, 'price_start_date' => $start_date, 'price_end_date' => $end_date),
+		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'none',
+				'log_name' => 'Cambio de Precios a Productos',
+				'log_cmd' => 'index.php?cmd=show_product_price_log&page=1',
+				'back_link' => 'index.php?cmd=show_log_menu_inventory',
+				'content' => 'log_form_html.tpl', 'notify' => '1', 'type' => 'error',
+				'message' => $msg, 'start_date' => $startDate, 'end_date' => $endDate),
 				'site_html.tpl');
 	}
 	
@@ -94,7 +100,8 @@ class ShowProductPriceLogCommand extends ShowLogCommand{
 		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_log_menu_inventory', 'back_trace' => $back_trace,
-				'second_menu' => 'none', 'content' => 'product_price_log_html.tpl', 'log_name' => 'Precios de Productos',
+				'second_menu' => 'none', 'content' => 'product_price_log_html.tpl',
+				'log_name' => 'Cambio de Precios a Productos',
 				'list' => $list, 'start_date' => $startDate, 'end_date' => $endDate,
 				'total_items' => $totalItems, 'total_pages' => $totalPages, 'page' => $page,
 				'first_item' => $firstItem, 'last_item' => $lastItem, 'previous_link' => $previousLink,

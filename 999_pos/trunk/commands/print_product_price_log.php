@@ -59,8 +59,9 @@ class PrintProductPriceLogCommand extends PrintLogCommand{
 	 * @param string $actualCmd
 	 */
 	protected function displayList($list, $startDate, $endDate, $totalItems){
-		Page::display(array('log_name' => 'Precios de Productos', 'list' => $list, 'start_date' => $startDate,
-				'end_date' => $endDate, 'total_items' => $totalItems), 'product_price_log_print_html.tpl');
+		Page::display(array('log_name' => 'Cambio de Precios a Productos',
+				'list' => $list, 'start_date' => $startDate, 'end_date' => $endDate,
+				'total_items' => $totalItems), 'product_price_log_print_html.tpl');
 	}
 }
 ?>

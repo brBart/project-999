@@ -40,18 +40,22 @@ abstract class ShowLogCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$this->_mRequest = $request;
+		if(is_null($request->getProperty('show_log'))){
+			$this->showForm();				
+			return;
+		}	
+		
+		$start_date = $request->getProperty('start_date');
+		$end_date = $request->getProperty('end_date');
 		
 		if($this->testRights($helper->getUser())){
-			$start_date = $this->_mRequest->getProperty($this->getPrefix() . '_start_date');
-			$end_date = $this->_mRequest->getProperty($this->getPrefix() . '_end_date');
-			$page = (int)$this->_mRequest->getProperty('page');
+			$page = (int)$request->getProperty('page');
 			
 			try{
 				$list = $this->getList($start_date, $end_date, $total_pages, $total_items, $page);
 			} catch(Exception $e){
 				$msg = $e->getMessage();
-				$this->displayFailure($msg);
+				$this->displayFailure($msg, $start_date, $end_date);
 				return;
 			}
 			
@@ -60,10 +64,10 @@ abstract class ShowLogCommand extends Command{
 				$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 				
 				// For back link purposes.
-				$actual_cmd = $this->_mRequest->getProperty('cmd');
+				$actual_cmd = $request->getProperty('cmd');
 				
-				$link = 'index.php?cmd=' . $actual_cmd . '&page=';
-				$dates = '&' . $this->getPrefix() . '_start_date=' . urlencode($start_date) . '&' . $this->getPrefix() . '_end_date=' . urlencode($end_date);
+				$link = 'index.php?cmd=' . $actual_cmd . '&show_log&page=';
+				$dates = '&start_date=' . urlencode($start_date) . '&end_date=' . urlencode($end_date);
 				$previous_link = ($page == 1) ? '' : $link . ($page - 1) . $dates;
 				$next_link = ($page == $total_pages) ? '' : $link . ($page + 1) . $dates;
 				
@@ -75,15 +79,14 @@ abstract class ShowLogCommand extends Command{
 		}
 		else{
 			$msg = 'Insuficientes privilegios.';
-			$this->displayFailure($msg);
+			$this->displayFailure($msg, $start_date, $end_date);
 		}
 	}
 	
 	/**
-	 * Returns the prefix of the date variables to use.
-	 * @return string
+	 * Shows the empty form.
 	 */
-	abstract protected function getPrefix();
+	abstract protected function showForm();
 
 	/**
 	 * Tests if the user has the right to cancel the document.
@@ -105,9 +108,11 @@ abstract class ShowLogCommand extends Command{
 	
 	/**
 	 * Displays a message if something goes wrong.
-	 * @param strin $msg
+	 * @param string $msg
+	 * @param string $startDate
+	 * @param string $endDate
 	 */
-	abstract protected function displayFailure($msg);
+	abstract protected function displayFailure($msg, $startDate, $endDate);
 	
 	/**
 	 * Displays an empty list.
