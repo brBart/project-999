@@ -17,11 +17,16 @@ require_once('commands/show_log.php');
  */
 class ShowInvoiceDiscountLogCommand extends ShowLogCommand{
 	/**
-	 * Returns the prefix of the date variables to use.
-	 * @return string
+	 * Show the empty form.
 	 */
-	protected function getPrefix(){
-		return 'discount';
+	protected function showForm(){
+		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'none',
+				'log_name' => 'Descuento a Facturas',
+				'log_cmd' => 'index.php?cmd=show_invoice_discount_log&page=1',
+				'back_link' => 'index.php?cmd=show_log_menu_pos_admin',
+				'content' => 'log_form_html.tpl'), 'site_html.tpl');
 	}
 	
 	/**
@@ -49,17 +54,18 @@ class ShowInvoiceDiscountLogCommand extends ShowLogCommand{
 	/**
 	 * Display failure in case an error occurs.
 	 * @param string $msg
+	 * @param string $startDate
+	 * @param string $endDate
 	 */
-	protected function displayFailure($msg){
+	protected function displayFailure($msg, $startDate, $endDate){
 		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
-		
-		$start_date = $this->_mRequest->getProperty('discount_start_date');
-		$end_date = $this->_mRequest->getProperty('discount_end_date');
-		
-		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'main_menu_pos_admin_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'tools_menu_pos_admin_html.tpl',
-				'content' => 'log_menu_pos_admin_html.tpl', 'notify' => '1', 'type' => 'error',
-				'message' => $msg, 'discount_start_date' => $start_date, 'discount_end_date' => $end_date),
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'none',
+				'log_name' => 'Descuento a Facturas',
+				'log_cmd' => 'index.php?cmd=show_invoice_discount_log&page=1',
+				'back_link' => 'index.php?cmd=show_log_menu_pos_admin',
+				'content' => 'log_form_html.tpl', 'notify' => '1', 'type' => 'error',
+				'message' => $msg, 'start_date' => $startDate, 'end_date' => $endDate),
 				'site_html.tpl');
 	}
 	

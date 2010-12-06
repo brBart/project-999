@@ -157,14 +157,6 @@ input[type="text"], input[type="password"] {
 	left: 8em;
 }
 
-.dates_range_desc div span {
-	left: 18em;
-}
-
-.dates_range_desc div + div span {
-	left: 6em;
-}
-
 #authenticate_form {
 	position: relative;
 	padding: 1em;
@@ -235,7 +227,7 @@ input[type="text"], input[type="password"] {
 	height: 2.5em;
 }
 
-#dates_range, #recordset, .dates_range_desc {
+#dates_range, #recordset {
 	height: 1.5em;
 }
 
@@ -269,7 +261,7 @@ input[type="text"], input[type="password"] {
 	margin: 1em auto;
 }
 
-#dates_range div, .working_day_search div, .dates_range_desc div {
+#dates_range div, .working_day_search div {
 	float: left;
 	position: relative;
 }
@@ -408,7 +400,7 @@ input[type="text"], input[type="password"] {
 	float: left;
 }
 
-#bonus_tb div span, #dates_range div span, .dates_range_desc div span, .dates_range_desc div + div span {
+#bonus_tb div span, #dates_range div span {
 	position: absolute;
 	top: -1.2em;
 }
