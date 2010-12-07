@@ -28,7 +28,7 @@
 			</fieldset>
 			<fieldset id="controls">
 				{if $status eq '0'}
-				<input name="apply_closure" type="submit"  value="Aceptar"
+				<input name="get_backup" type="submit"  value="Aceptar"
 					onclick="return confirmSubmit();" />
 			    <input type="button"  value="Cancelar" onclick="oSession.loadHref('{$back_link}');" />
 			    {/if}

@@ -32,7 +32,7 @@ class GetBackupCommand extends Command{
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio', 'Herramientas', 'Tareas');
 		
-		if(is_null($request->getProperty('apply_closure'))){
+		if(is_null($request->getProperty('get_backup'))){
 			Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'back_link' => 'index.php?cmd=show_task_menu_admin', 'status' => '0',
