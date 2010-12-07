@@ -20,7 +20,7 @@
 	    		</p>
 			</fieldset>
 			<fieldset id="controls">
-				<input name="show_log" type="submit"  value="Consultar" />
+				<input name="show_log" type="submit"  value="Aceptar" />
 			    <input type="button"  value="Cancelar" onclick="oSession.loadHref('{$back_link}');" />
 			</fieldset>
 		</form>
