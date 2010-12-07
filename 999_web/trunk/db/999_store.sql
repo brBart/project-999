@@ -4485,7 +4485,7 @@ BEGIN
 
     "SELECT pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging, pro.quantity,
 
-         DATE_FORMAT(inv.date, '%d/%m/%Y') AS last_sale, SUM(inv_lot.quantity) AS sale_quantity FROM product pro
+         DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS last_sale, SUM(inv_lot.quantity) AS sale_quantity FROM product pro
 
          INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
