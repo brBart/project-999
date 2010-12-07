@@ -8,7 +8,7 @@
 </head>
 <body onload="print();">
 	<div id="wrapper">
-		<fieldset id="main_data">
+		<fieldset id="header_data">
 			<p>
 				<label>Reporte:</label><span>Productos Sin Movimiento</span>
 			</p>

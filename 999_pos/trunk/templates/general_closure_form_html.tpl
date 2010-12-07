@@ -20,11 +20,11 @@
 					<label>Dejar:</label>
 					<select name="days" id="days">
 	    				<option value="15">15 dias</option>
-	    			{section name=i loop=150 start=30 step=30}
+	    				{section name=i loop=150 start=30 step=30}
 	    				<option value="{$smarty.section.i.index}">
 	    					{$smarty.section.i.index} dias
 	   					</option>
-	    			{/section}
+	    				{/section}
 	    			</select>
 	    			<span class="hint">(informaci&oacute;n)</span>
 				</p>
