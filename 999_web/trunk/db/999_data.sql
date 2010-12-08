@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-12-2010 a las 09:40:22
+-- Tiempo de generación: 08-12-2010 a las 12:31:36
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -299,6 +299,8 @@ INSERT INTO `root` (`password`) VALUES
 -- Volcar la base de datos para la tabla `shift`
 --
 
+INSERT INTO `shift` (`shift_id`, `name`, `time_table`) VALUES
+(1, 'Diurno', '8 am - 6 pm');
 
 --
 -- Volcar la base de datos para la tabla `shipment`
