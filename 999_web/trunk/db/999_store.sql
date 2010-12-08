@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 27-11-2010 a las 12:47:28
+-- Tiempo de generación: 08-12-2010 a las 09:27:37
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -5087,6 +5087,49 @@ BEGIN
     SELECT 0;
 
   END IF;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ranking_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+       SELECT COUNT(*) FROM (SELECT 1 FROM invoice inv INNER JOIN invoice_lot inv_lot
+
+         ON inv.invoice_id = inv_lot.invoice_id INNER JOIN lot ON inv_lot.lot_id = lot.lot_id INNER JOIN product pro ON
+
+         lot.product_id = pro.product_id WHERE CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ranking_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT @rank := @rank + 1 AS rank, pro.bar_code, man.name AS manufacturer, pro.name AS name, pro.packaging, SUM(inv_lot.quantity) AS quantity
+
+         FROM invoice inv INNER JOIN invoice_lot inv_lot
+
+         ON inv.invoice_id = inv_lot.invoice_id INNER JOIN lot ON inv_lot.lot_id = lot.lot_id INNER JOIN product pro ON
+
+         lot.product_id = pro.product_id INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+         WHERE CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC
+
+      LIMIT ?, ?";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
 
 END$$
 
