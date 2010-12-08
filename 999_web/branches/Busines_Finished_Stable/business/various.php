@@ -277,4 +277,34 @@ class CancelCashDocumentList{
 		return CancelCashDocumentListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
+
+
+/**
+ * Utility class for obtaining the ranking list of sales by product.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesRankingList{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are rank, bar_code, manufacturer, name, packaging and quantity.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
+			
+		return SalesRankingListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
+	}
+}
 ?>
