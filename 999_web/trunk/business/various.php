@@ -407,8 +407,8 @@ class SalesAndPurchasesStadisticsList{
 			$row = $labels[$y];
 			
 			for($x = 0; $x < $months; $x++){
-				$row[0][] = $salesData[$x][$y];
-				$row[0][] = $purchasesData[$x][$y];
+				$row[0][] = array('sales' => $salesData[$x][$y]);
+				$row[0][] = array('purchases' => $purchasesData[$x][$y]);
 				
 				$sales += $salesData[$x][$y][1];
 				$purchases += $purchasesData[$x][$y][1];
