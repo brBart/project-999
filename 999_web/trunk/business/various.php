@@ -326,7 +326,7 @@ class SalesAndPurchasesStadisticsList{
 	 * @return array
 	 */
 	static public function getListByProduct($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
-		$labels = SalesStadisticsListDAM::getLabelsByProduct($first, $last, $totalPages, $totalItems, $page);
+		$labels = SalesAndPurchasesStadisticsListDAM::getLabelsByProduct($first, $last, $totalPages, $totalItems, $page);
 		
 		$sales_data = array();
 		$purchases_data = array();
@@ -351,7 +351,7 @@ class SalesAndPurchasesStadisticsList{
 	 * @return array
 	 */
 	static public function getListByManufacturer($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
-		$labels = SalesStadisticsListDAM::getLabelsByManufacturer($first, $last, $totalPages, $totalItems, $page);
+		$labels = SalesAndPurchasesStadisticsListDAM::getLabelsByManufacturer($first, $last, $totalPages, $totalItems, $page);
 		
 		$sales_data = array();
 		$purchases_data = array();
