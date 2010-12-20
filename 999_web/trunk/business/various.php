@@ -340,7 +340,7 @@ class SalesAndPurchasesStadisticsList{
 			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
 		}
 		
-		return prepareList($labels, $sales_data, $purchases_data);
+		return self::prepareList($labels, $sales_data, $purchases_data);
 	}
 	
 	/**
@@ -368,7 +368,7 @@ class SalesAndPurchasesStadisticsList{
 			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
 		}
 		
-		return prepareList($labels, $sales_data, $purchases_data);
+		return self::prepareList($labels, $sales_data, $purchases_data);
 	}
 	
 	/**
