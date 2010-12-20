@@ -326,6 +326,9 @@ class SalesAndPurchasesStadisticsList{
 	 * @return array
 	 */
 	static public function getListByProduct($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		String::validateString($first, 'Seleccione el primer producto.');
+		String::validateString($last, 'Seleccione el segundo producto.');
+		
 		$labels = SalesAndPurchasesStadisticsListDAM::getLabelsByProduct($first, $last, $totalPages, $totalItems, $page);
 		
 		$sales_data = array();
@@ -351,6 +354,9 @@ class SalesAndPurchasesStadisticsList{
 	 * @return array
 	 */
 	static public function getListByManufacturer($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		String::validateString($first, 'Seleccione la primera casa.');
+		String::validateString($last, 'Seleccione la segunda casa.');
+		
 		$labels = SalesAndPurchasesStadisticsListDAM::getLabelsByManufacturer($first, $last, $totalPages, $totalItems, $page);
 		
 		$sales_data = array();
