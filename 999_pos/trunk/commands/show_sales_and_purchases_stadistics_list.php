@@ -37,18 +37,13 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$back_trace = array('Inicio', 'Herramientas', 'Reportes');
 		
 		if(is_null($request->getProperty('show_report'))){
-			// For displaying the first blank item.
-			$product_list = array(array());
-			$product_list = array_merge($product_list, ProductDistinctList::getList());
-			
-			// For displaying the first blank item.
-			$manufacturer_list = array(array());
-			$manufacturer_list = array_merge($manufacturer_list, ManufacturerDistinctList::getList());
+			$this->builtArrays($months_list, $product_list, $manufacturer_list);
 			
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
 					'content' => 'sales_and_purchases_stadistics_list_form_html.tpl',
+					'months_list' => $months_list, 'months' => '6', 'order' => 'product',
 					'report_name' => 'Estad&iacute;sticas de Ventas y Compras', 'product_list' => $product_list,
 					'manufacturer_list' => $manufacturer_list), 'site_html.tpl');
 			return;
@@ -58,17 +53,37 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$months = (int)$request->getProperty('months');
 		$order = $request->getProperty('order');
 		
-		if($order == 'product'){
-			$first = $request->getProperty('product_first');
-			$last = $request->getProperty('product_last');
-			$list =
-				SalesAndPurchasesStadisticsList::getListByProduct($first, $last, $months, $total_pages, $total_items, $page);
-		}
-		else{
-			$first = $request->getProperty('manufacturer_first');
-			$last = $request->getProperty('manufacturer_last');
-			$list =
-				SalesAndPurchasesStadisticsList::getListByManufacturer($first, $last, $months, $total_pages, $total_items, $page);
+		try{
+			if($order == 'product'){
+				$first = $request->getProperty('product_first');
+				$last = $request->getProperty('product_last');
+				$list =
+					SalesAndPurchasesStadisticsList::getListByProduct($first, $last, $months, $total_pages, $total_items, $page);
+			}
+			else{
+				$first = $request->getProperty('manufacturer_first');
+				$last = $request->getProperty('manufacturer_last');
+				$list =
+					SalesAndPurchasesStadisticsList::getListByManufacturer($first, $last, $months, $total_pages, $total_items, $page);
+			}
+		}Catch(Exception $e){
+			$msg = $e->getMessage();
+			
+			$this->builtArrays($months_list, $product_list, $manufacturer_list);
+			
+			$params = ($order == 'product') ? array('product_first' => $first, 'product_last' => $last) :
+					array('manufacturer_first' => $first, 'manufacturer_last' => $last);
+			
+			$params = array_merge($params, array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
+					'back_trace' => $back_trace, 'second_menu' => 'none',
+					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
+					'content' => 'sales_and_purchases_stadistics_list_form_html.tpl',
+					'months_list' => $months_list, 'months' => $months, 'order' => $order,
+					'report_name' => 'Estad&iacute;sticas de Ventas y Compras', 'product_list' => $product_list,
+					'manufacturer_list' => $manufacturer_list, 'notify' => '1', 'type' => 'error', 'message' => $msg));
+			
+			Page::display($params, 'site_html.tpl');
+			return;
 		}
 		
 		$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
@@ -90,6 +105,19 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 				'total_items' => $total_items, 'total_pages' => $total_pages, 'page' => $page,
 				'first_item' => $first_item, 'last_item' => $last_item, 'previous_link' => $previous_link,
 				'next_link' => $next_link, 'months' => $months, 'date' => date('d/m/Y'), 'order' => $order), 'site_html.tpl');
+	}
+	
+	
+	private function builtArrays(&$monthsList, &$productList, &$manufacturerList){
+		$monthsList = array('3', '6', '9');
+		
+		// For displaying the first blank item.
+		$productList = array(array());
+		$productList = array_merge($productList, ProductDistinctList::getList());
+		
+		// For displaying the first blank item.
+		$manufacturerList = array(array());
+		$manufacturerList = array_merge($manufacturerList, ManufacturerDistinctList::getList());
 	}
 }
 ?>

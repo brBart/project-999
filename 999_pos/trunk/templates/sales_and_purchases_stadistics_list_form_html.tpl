@@ -7,25 +7,31 @@
 				<p>
 					<label>Ultimos:</label>
 					<select name="months" id="months">
-	    				<option value="3">3 meses</option>
-	    				<option value="6" selected="selected">6 meses</option>
-	    				<option value="9">9 meses</option>
+						{section name=i loop=$months_list}
+							<option value="{$months_list[i]}"
+								{if $months_list[i] eq $months}selected="selected"{/if}>
+								{$months_list[i]} meses
+							</option>
+						{/section}
 	    			</select>
 				</p>
 				<p>
 					<label for="product">De producto:</label>
-					<input type="radio" id="product" name="order" checked="checked" value="product" />
-					<select name="first" id="product_first">
+					<input type="radio" id="product" name="order" value="product"
+						{if $order eq 'product'}checked="checked"{/if} />
+					<select name="product_first" id="product_first">
 		    			{section name=i loop=$product_list}
-		    				<option value="{$product_list[i].name|escape}">
+		    				<option value="{$product_list[i].name|escape}"
+		    					{if $product_list[i].name eq $product_first}selected="selected"{/if}>
 		    					{$product_list[i].name|escape}
 		    				</option>
 		    			{/section}
 		    		</select>
 		    		<span>A:</span>
-	    			<select name="last" id="product_last">
+	    			<select name="product_last" id="product_last">
 		    			{section name=i loop=$product_list}
-		    				<option value="{$product_list[i].name|escape}">
+		    				<option value="{$product_list[i].name|escape}"
+		    					{if $product_list[i].name eq $product_last}selected="selected"{/if}>
 		    					{$product_list[i].name|escape}
 		    				</option>
 		    			{/section}
@@ -33,18 +39,21 @@
 		    	</p>
 		    	<p>
 		    		<label for="manufacturer">De casa:</label>
-		    		<input type="radio" id="manufacturer" name="order" value="manufacturer" />
-		    		<select name="first" id="manufacturer_first">
+		    		<input type="radio" id="manufacturer" name="order" value="manufacturer"
+		    			{if $order neq 'product'}checked="checked"{/if}/>
+		    		<select name="manufacturer_first" id="manufacturer_first">
 		    			{section name=i loop=$manufacturer_list}
-		    				<option value="{$manufacturer_list[i].name|escape}">
+		    				<option value="{$manufacturer_list[i].name|escape}"
+		    					{if $manufacturer_list[i].name eq $manufacturer_first}selected="selected"{/if}>
 		    					{$manufacturer_list[i].name|escape}
 		    				</option>
 		    			{/section}
 		    		</select>
 		    		<span>A:</span>
-		    		<select name="last" id="manufacturer_last">
+		    		<select name="manufacturer_last" id="manufacturer_last">
 		    			{section name=i loop=$manufacturer_list}
-		    				<option value="{$manufacturer_list[i].name|escape}">
+		    				<option value="{$manufacturer_list[i].name|escape}"
+		    					{if $manufacturer_list[i].name eq $manufacturer_last}selected="selected"{/if}>
 		    					{$manufacturer_list[i].name|escape}
 		    				</option>
 		    			{/section}
