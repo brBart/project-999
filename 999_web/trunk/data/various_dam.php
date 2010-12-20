@@ -269,5 +269,182 @@ class SalesRankingListDAM{
 		$sql = 'CALL sales_ranking_get(:first_date, :last_date, :start_item, :items_per_page)';
 		return DatabaseHandler::getAll($sql, $params);
 	}
+	
+}
+
+
+/**
+ * Utility class for obtaining the sales and receipts stadistics from certain products from the database.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesAndPurchasesStadisticsListDAM{
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, and packaging. If no page
+	 * argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getLabelsByProduct($first, $last, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL product_stadistics_labels_count(:first, :last)';
+		$params = array(':first' => $first, ':last' => $last);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL product_stadistics_labels_get(:first, :last, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, and packaging. If no page
+	 * argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getLabelsByManufacturer($first, $last, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL manufacturer_stadistics_labels_count(:first, :last)';
+		$params = array(':first' => $first, ':last' => $last);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL manufacturer_stadistics_labels_get(:first, :last, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getSalesListByProduct($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		$params = array(':first' => $first, ':last' => $last, ':first_date' => Date::dbFormat($firstDate),
+				':last_date' => Date::dbFormat($lastDate));
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL product_sales_stadistics_get(:first, :last, :first_date, :last_date, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getPurchasesListByProduct($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		$params = array(':first' => $first, ':last' => $last, ':first_date' => Date::dbFormat($firstDate),
+				':last_date' => Date::dbFormat($lastDate));
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL product_purchases_stadistics_get(:first, :last, :first_date, :last_date, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getSalesListByManufacturer($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		$params = array(':first' => $first, ':last' => $last, ':first_date' => Date::dbFormat($firstDate),
+				':last_date' => Date::dbFormat($lastDate));
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL manufacturer_sales_stadistics_get(:first, :last, :first_date, :last_date, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getPurchasesListByManufacturer($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		$params = array(':first' => $first, ':last' => $last, ':first_date' => Date::dbFormat($firstDate),
+				':last_date' => Date::dbFormat($lastDate));
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL manufacturer_purchases_stadistics_get(:first, :last, :first_date, :last_date, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
 }
 ?>

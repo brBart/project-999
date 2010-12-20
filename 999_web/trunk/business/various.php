@@ -307,4 +307,118 @@ class SalesRankingList{
 		return SalesRankingListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
+
+
+/**
+ * Utility class for obtaining the sales and receipts stadistics from certain products.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesAndPurchasesStadisticsList{
+	/**
+	 * Returns the stadistics for the range of products between first and last for the past number of months.
+	 * @param string $first
+	 * @param string $last
+	 * @param integer $numMonths
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByProduct($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		$labels = SalesStadisticsListDAM::getLabelsByProduct($first, $last, $totalPages, $totalItems, $page);
+		
+		$sales_data = array();
+		$purchases_data = array();
+		
+		for($i = 1; $i <= $numMonths; $i++){
+			self::getRangeDates($i, $start_date, $end_date);
+			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
+			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
+		}
+		
+		return prepareList($labels, $sales_data, $purchases_data);
+	}
+	
+	/**
+	 * Returns the stadistics for the range of manufacturers between first and last for the past number of months.
+	 * @param string $first
+	 * @param string $last
+	 * @param integer $numMonths
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByManufacturer($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		$labels = SalesStadisticsListDAM::getLabelsByManufacturer($first, $last, $totalPages, $totalItems, $page);
+		
+		$sales_data = array();
+		$purchases_data = array();
+		
+		for($i = 1; $i <= $numMonths; $i++){
+			self::getRangeDates($i, $start_date, $end_date);
+			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
+			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
+		}
+		
+		return prepareList($labels, $sales_data, $purchases_data);
+	}
+	
+	/**
+	 * Returns the dates in the format dd/mm/yyyy.
+	 * 
+	 * @param integer $numMonths
+	 * @param string &$startDate
+	 * @param string &$endDate
+	 * @return array
+	 */
+	static private function getRangeDates($numMonths, &$startDate, &$endDate){
+		$date = new DateTime();
+		
+		$date->modify('-' . $numMonths . ' month');
+		$startDate = '01/' . $date->format('m/Y');
+		
+		$date->modify('+1 month');
+		$endDate = '01/' . $date->format('m/Y');
+	}
+	
+	/**
+	 * Changes the list on the way is useful for constructing the report.
+	 * 
+	 * @param array labels
+	 * @param array $salesData
+	 * @param array $purchasesData
+	 * @return array
+	 */
+	static private function prepareList($labels, $salesData, $purchasesData){
+		$list = array();
+		
+		$rows = count($labels);
+		$months = count($salesData);
+		
+		for($y = 0; $y <= $rows; $y++){
+			$row = $labels[$y];
+			
+			for($x = 0; $x < $months; $x++){
+				$row[0][] = $salesData[$x][$y];
+				$row[0][] = $purchasesData[$x][$y];
+				
+				$sales += $salesData[$x][$y][1];
+				$purchases += $purchasesData[$x][$y][1];
+			}
+			
+			// Calculate the average.
+			$row[0][] = array('sales_average' => $sales / $months);
+			$row[0][] = array('purchases_average' => $purchases / $months);
+			
+			$list[] = $row;
+			
+			$sales = 0;
+			$purchases = 0;
+		}
+		
+		return $list;
+	}
+}
 ?>
