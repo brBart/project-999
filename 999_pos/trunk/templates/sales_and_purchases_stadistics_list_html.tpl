@@ -1,0 +1,52 @@
+{* Smarty *}
+<div id="content">
+	<div id="frm" class="content_large">
+		<fieldset id="header_data">
+			<p>
+				<label>Reporte:</label><span>Estad&iacute;sticas de Ventas y Compras</span>
+			</p>
+			<p>
+				<label>Fecha:</label><span>{$date}</span>
+			</p>
+			<p>
+				<label>Ultimos:</label><span>{$months} meses</span>
+			</p>
+			<p>
+				<label>Ordenado por:</label><span>{$order}</span>
+			</p>
+		</fieldset>
+		<fieldset>
+			<p>&nbsp;</p>
+			<table id="list" class="content_medium">
+				{include file='list_caption_html.tpl'}
+				<thead>
+					<tr>
+						<th>Barra</th>
+						<th>Casa</th>
+						<th>Nombre</th>
+						<th>Presentaci&oacute;n</th>
+						{section name=i loop=$months_names}
+							<th>{$months_names[i]}</th>
+						{/section}
+					</tr>
+				</thead>
+				<tbody>
+				{section name=i loop=$list}
+					<tr>
+						<td>{$list[i].bar_code|escape}</td>
+						<td>{$list[i].manufacturer|escape}</td>
+						<td>{$list[i].name|escape}</td>
+						<td>{$list[i].packaging|escape}</td>
+						{section name=x loop=$months start=3}
+							<td>{$list[i][x]} | {$list[i][x]}</td>
+						{/section}
+					</tr>
+				{/section}
+				</tbody>
+			</table>
+		</fieldset>
+		<fieldset>
+			<input type="button" value="Imprimir" onclick="window.open('index.php?cmd=print_sales_ranking_list&start_date={$start_date|escape:'url'}&end_date={$end_date|escape:'url'}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+		</fieldset>
+	</div>
+</div>
