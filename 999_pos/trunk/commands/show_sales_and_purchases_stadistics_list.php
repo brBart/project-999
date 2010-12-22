@@ -135,6 +135,19 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 	 * @param int $months
 	 */
 	private function buildMonthsNames($months){
+		$year_months = array('1' => 'Enero',
+							'2' => 'Febrero',
+							'3' => 'Marzo',
+							'4' => 'Abril',
+							'5' => 'Mayo',
+							'6' => 'Junio',
+							'7' => 'Julio',
+							'8' => 'Agosto',
+							'9' => 'Septiembre',
+							'10' => 'Octubre',
+							'11' => 'Noviembre',
+							'12' => 'Diciembre');
+		
 		$date = new DateTime();
 		$date->modify('- ' . $months  . ' month');
 		
@@ -142,7 +155,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$i = 0;
 		
 		do{
-			$names[] = $date->format('F');
+			$names[] = $year_months[$date->format('n')];
 			$date->modify('+1 month');
 			$i++;
 		}while($i < $months);
