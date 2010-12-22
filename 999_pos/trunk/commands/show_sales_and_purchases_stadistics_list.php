@@ -118,7 +118,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 	 * @param array &$manufacturerList
 	 */
 	private function builtArrays(&$monthsList, &$productList, &$manufacturerList){
-		$monthsList = array('3', '6', '9');
+		$monthsList = array('2', '4', '6');
 		
 		// For displaying the first blank item.
 		$productList = array(array());
