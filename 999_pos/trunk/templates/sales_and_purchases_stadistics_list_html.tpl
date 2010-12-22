@@ -35,9 +35,9 @@
 					<tr>
 						<td>{$list[i].bar_code|escape}</td>
 						<td>{$list[i].manufacturer|escape}</td>
-						<td>{$list[i].name|escape}</td>
+						<td>{$list[i].product|escape}</td>
 						<td>{$list[i].packaging|escape}</td>
-						{section name=x loop=$months start=3}
+						{section name=x loop="$months" start=3}
 							<td>{$list[i][x]} | {$list[i][x]}</td>
 						{/section}
 					</tr>
