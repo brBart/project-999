@@ -334,7 +334,7 @@ class SalesAndPurchasesStadisticsList{
 		$sales_data = array();
 		$purchases_data = array();
 		
-		for($i = 1; $i <= $numMonths; $i++){
+		for($i = $numMonths; $i > 0 ; $i--){
 			self::getRangeDates($i, $start_date, $end_date);
 			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
 			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
@@ -362,7 +362,7 @@ class SalesAndPurchasesStadisticsList{
 		$sales_data = array();
 		$purchases_data = array();
 		
-		for($i = 1; $i <= $numMonths; $i++){
+		for($i = $numMonths; $i > 0 ; $i--){
 			self::getRangeDates($i, $start_date, $end_date);
 			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
 			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
