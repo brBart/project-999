@@ -407,21 +407,27 @@ class SalesAndPurchasesStadisticsList{
 			$row = $labels[$y];
 			
 			for($x = 0; $x < $months; $x++){
-				$row[0][] = array('sales' => $salesData[$x][$y]);
-				$row[0][] = array('purchases' => $purchasesData[$x][$y]);
+				$sales[] = $salesData[$x][$y];
+				$purchases[] = $purchasesData[$x][$y];
 				
-				$sales += $salesData[$x][$y][1];
-				$purchases += $purchasesData[$x][$y][1];
+				$sales_avg += $salesData[$x][$y][1];
+				$purchases_avg += $purchasesData[$x][$y][1];
 			}
 			
+			$row['sales'] = $sales;
+			$row['purchases'] = $purchases;
+			
 			// Calculate the average.
-			$row[0][] = array('sales_average' => $sales / $months);
-			$row[0][] = array('purchases_average' => $purchases / $months);
+			$row['sales_average'] = $sales_avg / $months;
+			$row['purchases_average'] = $purchases_avg / $months;
 			
 			$list[] = $row;
 			
-			$sales = 0;
-			$purchases = 0;
+			$sales = array();
+			$purchases = array();
+			
+			$sales_avg = 0;
+			$purchases_avg = 0;
 		}
 		
 		return $list;
