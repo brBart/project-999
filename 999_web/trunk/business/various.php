@@ -403,7 +403,7 @@ class SalesAndPurchasesStadisticsList{
 		$rows = count($labels);
 		$months = count($salesData);
 		
-		for($y = 0; $y <= $rows; $y++){
+		for($y = 0; $y < $rows; $y++){
 			$row = $labels[$y];
 			
 			for($x = 0; $x < $months; $x++){
