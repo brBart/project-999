@@ -37,8 +37,8 @@
 						<td>{$list[i].manufacturer|escape}</td>
 						<td>{$list[i].product|escape}</td>
 						<td>{$list[i].packaging|escape}</td>
-						{section name=x loop="$months" start=3}
-							<td>{$list[i][x]} | {$list[i][x]}</td>
+						{section name=x loop="$months"}
+							<td>{$list[i].sales[x].sales} | {$list[i].purchases[x].purchases}</td>
 						{/section}
 					</tr>
 				{/section}
