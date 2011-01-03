@@ -30,6 +30,13 @@
 						{/section}
 						<th>Promedio</th>
 					</tr>
+					<tr>
+						<th colspan="4"></th>
+						{section name=i loop=$months_names}
+							<th>V | C</th>
+						{/section}
+						<th>V | C</th>
+					</tr>
 				</thead>
 				<tbody>
 				{section name=i loop=$list}
