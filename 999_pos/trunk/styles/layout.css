@@ -275,11 +275,11 @@ input[type="text"], input[type="password"] {
 	margin: 0 auto;
 }
 
-#list th, td {
+#list th, #list td {
 	padding: 1em 2em;
 }
 
-#list_large th, td {
+#list_large th, #list_large td {
 	padding: 1em 0.5em;
 }
 
