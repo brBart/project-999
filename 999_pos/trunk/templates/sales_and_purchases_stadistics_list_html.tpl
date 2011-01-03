@@ -26,16 +26,20 @@
 						<th>Nombre</th>
 						<th>Presentaci&oacute;n</th>
 						{section name=i loop=$months_names}
-							<th>{$months_names[i]}</th>
+							<th class="data_title" colspan="3">{$months_names[i]}</th>
 						{/section}
-						<th>Promedio</th>
+						<th  class="data_title" colspan="3">Promedio</th>
 					</tr>
 					<tr>
 						<th colspan="4"></th>
 						{section name=i loop=$months_names}
-							<th>V | C</th>
+							<th class="data_col data_left">V</th>
+							<th class="data_col data_separator">|</th>
+							<th class="data_col data_right">C</th>
 						{/section}
-						<th>V | C</th>
+						<th class="data_col data_left">V</th>
+						<th class="data_col data_separator">|</th>
+						<th class="data_col data_right">C</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,9 +50,13 @@
 						<td>{$list[i].product|escape}</td>
 						<td>{$list[i].packaging|escape}</td>
 						{section name=x loop="$months"}
-							<td>{$list[i].sales[x].sales} | {$list[i].purchases[x].purchases}</td>
+							<td class="data_col data_left">{$list[i].sales[x].sales}</td>
+							<td class="data_col data_separator">|</td>
+							<td class="data_col data_right">{$list[i].purchases[x].purchases}</td>
 						{/section}
-						<td>{$list[i].sales_average|nf} | {$list[i].purchases_average|nf}</td>
+						<td class="data_col data_left">{$list[i].sales_average|nf}</td>
+						<td class="data_col data_separator">|</td>
+						<td class="data_col data_right">{$list[i].purchases_average|nf}</td>
 					</tr>
 				{/section}
 				</tbody>

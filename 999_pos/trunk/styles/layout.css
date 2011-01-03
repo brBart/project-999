@@ -283,6 +283,14 @@ input[type="text"], input[type="password"] {
 	padding: 1em 0.5em;
 }
 
+#list_large th.data_col, #list_large td.data_col {
+	padding: 0;
+}
+
+#list_large th.data_separator, #list_large td.data_separator {
+	width: 0;
+}
+
 #header p, h1 {
 	display: inline;
 	margin: 0 1em;

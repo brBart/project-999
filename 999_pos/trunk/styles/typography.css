@@ -69,6 +69,14 @@ tfoot .total_col {
 	font-weight: normal;
 }
 
+#list_large th.data_left, #list_large td.data_left {
+	text-align: right;
+}
+
+#list_large th.data_separator, #list_large td.data_separator, #list_large th.data_title  {
+	text-align: center;
+}
+
 #frm.cash_receipt p {
 	text-align: right;
 }
