@@ -28,6 +28,10 @@ table th{
 	text-align: center;
 }
 
+.large_report th, .large_report td{
+	font-size: 0.8em;
+}
+
 tfoot .total_col {
 	font-weight: bold;
 	font-size: 1.1em;
