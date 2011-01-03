@@ -28,6 +28,7 @@
 						{section name=i loop=$months_names}
 							<th>{$months_names[i]}</th>
 						{/section}
+						<th>Promedio</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -40,6 +41,7 @@
 						{section name=x loop="$months"}
 							<td>{$list[i].sales[x].sales} | {$list[i].purchases[x].purchases}</td>
 						{/section}
+						<td>{$list[i].sales_average|nf} | {$list[i].purchases_average|nf}</td>
 					</tr>
 				{/section}
 				</tbody>
