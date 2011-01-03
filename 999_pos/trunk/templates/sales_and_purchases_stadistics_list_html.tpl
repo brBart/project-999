@@ -17,7 +17,7 @@
 		</fieldset>
 		<fieldset>
 			<p>&nbsp;</p>
-			<table id="list" class="content_medium">
+			<table id="list" class="content_large">
 				{include file='list_caption_html.tpl'}
 				<thead>
 					<tr>
