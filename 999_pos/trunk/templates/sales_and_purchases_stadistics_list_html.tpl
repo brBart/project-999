@@ -12,7 +12,7 @@
 				<label>Ultimos:</label><span>{$months} meses</span>
 			</p>
 			<p>
-				<label>Ordenado por:</label><span>{if $order eq 'product'}Producto{else}Casa{/if}</span>
+				<label>Ordenado por:</label><span>{if $order eq 'product'}Nombre{else}Casa{/if}</span>
 			</p>
 		</fieldset>
 		<fieldset>
