@@ -155,7 +155,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$i = 0;
 		
 		do{
-			$names[] = $year_months[$date->format('n')];
+			$names[] = $year_months[$date->format('n')] . ' ' . $date->format('y');
 			$date->modify('+1 month');
 			$i++;
 		}while($i < $months);
