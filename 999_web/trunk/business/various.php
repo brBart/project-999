@@ -410,8 +410,8 @@ class SalesAndPurchasesStadisticsList{
 				$sales[] = $salesData[$x][$y];
 				$purchases[] = $purchasesData[$x][$y];
 				
-				$sales_avg += $salesData[$x][$y][1];
-				$purchases_avg += $purchasesData[$x][$y][1];
+				$sales_avg += $salesData[$x][$y]['sales'];
+				$purchases_avg += $purchasesData[$x][$y]['purchases'];
 			}
 			
 			$row['sales'] = $sales;
