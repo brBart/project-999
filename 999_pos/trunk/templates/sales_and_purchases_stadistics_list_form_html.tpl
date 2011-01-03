@@ -70,7 +70,7 @@
 </div>
 {literal}
 <script type="text/javascript">
-	var oInput = document.getElementById('days');
+	var oInput = document.getElementById('months');
 	oInput.focus();
 </script>
 {/literal}
