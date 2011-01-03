@@ -279,6 +279,10 @@ input[type="text"], input[type="password"] {
 	padding: 1em 2em;
 }
 
+#list_large th, td {
+	padding: 1em 0.5em;
+}
+
 #header p, h1 {
 	display: inline;
 	margin: 0 1em;

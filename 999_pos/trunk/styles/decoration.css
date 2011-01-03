@@ -180,7 +180,7 @@ a:hover {
 	color: gray;
 }
 
-#list td {
+#list td, #list_large td {
 	border-bottom-style: solid;
 	border-color: #00067F;
 	border-width: 1px;
