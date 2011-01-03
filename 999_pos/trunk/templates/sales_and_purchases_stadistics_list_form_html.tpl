@@ -1,8 +1,8 @@
 {* Smarty *}
 <div id="content">
 	<div id="frm" class="content_medium">
-		{include file='header_data_report_html.tpl'}
 		<form method="post" action="index.php?cmd=show_sales_and_purchases_stadistics_list&page=1" onsubmit="return oSession.setIsLink(true);">
+			{include file='header_data_report_html.tpl'}
 			<fieldset id="main_data">
 				<p>
 					<label>Ultimos:</label>

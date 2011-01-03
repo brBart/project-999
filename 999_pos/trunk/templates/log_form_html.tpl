@@ -1,12 +1,12 @@
 {* Smarty *}
 <div id="content">
 	<div id="frm" class="content_small">
-		<fieldset>
-			<p>
-				<label>Bitacora:</label><span>{$log_name}</span>
-			</p>
-		</fieldset>
 		<form method="post" action="{$log_cmd}" onsubmit="return oSession.setIsLink(true);">
+			<fieldset>
+				<p>
+					<label>Bitacora:</label><span>{$log_name}</span>
+				</p>
+			</fieldset>
 			<fieldset id="main_data">
 				<p>
 	    			<label for="start_date">Fecha inicial:</label>

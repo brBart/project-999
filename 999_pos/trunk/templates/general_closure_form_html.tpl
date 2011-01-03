@@ -13,8 +13,8 @@
 {/literal}
 <div id="content">
 	<div id="frm" class="content_small">
-		{include file='header_data_task_html.tpl'}
 		<form method="post" action="index.php?cmd=apply_general_closure" onsubmit="return oSession.setIsLink(true);">
+			{include file='header_data_task_html.tpl'}
 			<fieldset id="main_data">
 				<p>
 					<label>Dejar:</label>

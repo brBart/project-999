@@ -14,8 +14,8 @@
 {/literal}
 <div id="content">
 	<div id="frm" class="content_small">
-		{include file='header_data_task_html.tpl'}
 		<form method="post" action="index.php?cmd=get_backup" onsubmit="return oSession.setIsLink(true);">
+			{include file='header_data_task_html.tpl'}
 			<fieldset id="main_data">
 				<p>
 				{if $status eq '0'}
