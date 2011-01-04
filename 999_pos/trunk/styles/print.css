@@ -85,3 +85,31 @@ tfoot .total_col {
 #separator {
 	clear: both;
 }
+
+#list_large th, #list_large td {
+	font-size: 0.8em;
+}
+
+#list_large th.data_left, #list_large td.data_left {
+	text-align: right;
+}
+
+#list_large th.data_right {
+	text-align: left;
+}
+
+#list_large th.data_separator, #list_large td.data_separator {
+	text-align: center;
+}
+
+#list_large th, #list_large td {
+	padding: 1em 0.5em;
+}
+
+#list_large th.data_col, #list_large td.data_col {
+	padding: 0;
+}
+
+#list_large th.data_separator, #list_large td.data_separator {
+	width: 0;
+}

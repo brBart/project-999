@@ -23,7 +23,7 @@
 			</p>
 		</fieldset>
 		<p id="separator">&nbsp;</p>
-		<table>
+		<table id="list_large">
 	     	<caption>{$total_items} de {$total_items}</caption>
 			<thead>
 				<tr>
