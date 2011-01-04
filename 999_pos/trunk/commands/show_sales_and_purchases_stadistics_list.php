@@ -52,19 +52,20 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$page = (int)$request->getProperty('page');
 		$months = (int)$request->getProperty('months');
 		$order = $request->getProperty('order');
+		$date = date('d/m/Y');
 		
 		try{
 			if($order == 'product'){
 				$first = $request->getProperty('product_first');
 				$last = $request->getProperty('product_last');
 				$list =
-					SalesAndPurchasesStadisticsList::getListByProduct($first, $last, $months, $total_pages, $total_items, $page);
+					SalesAndPurchasesStadisticsList::getListByProduct($first, $last, $date, $months, $total_pages, $total_items, $page);
 			}
 			else{
 				$first = $request->getProperty('manufacturer_first');
 				$last = $request->getProperty('manufacturer_last');
 				$list =
-					SalesAndPurchasesStadisticsList::getListByManufacturer($first, $last, $months, $total_pages, $total_items, $page);
+					SalesAndPurchasesStadisticsList::getListByManufacturer($first, $last, $date, $months, $total_pages, $total_items, $page);
 			}
 		}Catch(Exception $e){
 			$msg = $e->getMessage();
@@ -106,7 +107,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 				'second_menu' => 'none', 'content' => 'sales_and_purchases_stadistics_list_html.tpl', 'list' => $list,
 				'total_items' => $total_items, 'total_pages' => $total_pages, 'page' => $page,
 				'first_item' => $first_item, 'last_item' => $last_item, 'previous_link' => $previous_link,
-				'next_link' => $next_link, 'months' => $months, 'date' => date('d/m/Y'), 'order' => $order,
+				'next_link' => $next_link, 'months' => $months, 'date' => $date, 'order' => $order,
 				'months_names' => $months_names), 'site_html.tpl');
 	}
 	

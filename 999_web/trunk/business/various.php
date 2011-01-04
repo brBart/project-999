@@ -317,15 +317,18 @@ class SalesRankingList{
 class SalesAndPurchasesStadisticsList{
 	/**
 	 * Returns the stadistics for the range of products between first and last for the past number of months.
+	 * Date format in dd/mm/yyyy.
+	 * 
 	 * @param string $first
 	 * @param string $last
+	 * @param string $date
 	 * @param integer $numMonths
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getListByProduct($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+	static public function getListByProduct($first, $last, $date, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		String::validateString($first, 'Seleccione el primer producto.');
 		String::validateString($last, 'Seleccione el segundo producto.');
 		
@@ -334,8 +337,10 @@ class SalesAndPurchasesStadisticsList{
 		$sales_data = array();
 		$purchases_data = array();
 		
+		$date = Date::dbFormat($date);
+		
 		for($i = $numMonths; $i > 0 ; $i--){
-			self::getRangeDates($i, $start_date, $end_date);
+			self::getRangeDates($date, $i, $start_date, $end_date);
 			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
 			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
 		}
@@ -345,15 +350,18 @@ class SalesAndPurchasesStadisticsList{
 	
 	/**
 	 * Returns the stadistics for the range of manufacturers between first and last for the past number of months.
+	 * Date format in dd/mm/yyyy.
+	 * 
 	 * @param string $first
 	 * @param string $last
+	 * @param string $date
 	 * @param integer $numMonths
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getListByManufacturer($first, $last, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+	static public function getListByManufacturer($first, $last, $date, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		String::validateString($first, 'Seleccione la primera casa.');
 		String::validateString($last, 'Seleccione la segunda casa.');
 		
@@ -362,8 +370,10 @@ class SalesAndPurchasesStadisticsList{
 		$sales_data = array();
 		$purchases_data = array();
 		
+		$date = Date::dbFormat($date);
+		
 		for($i = $numMonths; $i > 0 ; $i--){
-			self::getRangeDates($i, $start_date, $end_date);
+			self::getRangeDates($date, $i, $start_date, $end_date);
 			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
 			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
 		}
@@ -373,20 +383,22 @@ class SalesAndPurchasesStadisticsList{
 	
 	/**
 	 * Returns the dates in the format dd/mm/yyyy.
+	 * $date format in yyyy/mm/dd.
 	 * 
+	 * @param string $date
 	 * @param integer $numMonths
 	 * @param string &$startDate
 	 * @param string &$endDate
 	 * @return array
 	 */
-	static private function getRangeDates($numMonths, &$startDate, &$endDate){
-		$date = new DateTime();
+	static private function getRangeDates($date, $numMonths, &$startDate, &$endDate){
+		$dateObj = new DateTime($date);
 		
-		$date->modify('-' . $numMonths . ' month');
-		$startDate = '01/' . $date->format('m/Y');
+		$dateObj->modify('-' . $numMonths . ' month');
+		$startDate = '01/' . $dateObj->format('m/Y');
 		
-		$date->modify('+1 month');
-		$endDate = '01/' . $date->format('m/Y');
+		$dateObj->modify('+1 month');
+		$endDate = '01/' . $dateObj->format('m/Y');
 	}
 	
 	/**
