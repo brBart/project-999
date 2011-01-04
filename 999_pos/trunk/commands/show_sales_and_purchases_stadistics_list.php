@@ -100,7 +100,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$previous_link = ($page == 1) ? '' : $link . ($page - 1);
 		$next_link = ($page == $total_pages) ? '' : $link . ($page + 1);
 		
-		$months_names = $this->buildMonthsNames($months);
+		$months_names = SalesAndPurchasesStadisticsList::buildMonthsNames($months);
 		
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_report_menu_pos_admin', 'back_trace' => $back_trace,
@@ -108,7 +108,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 				'total_items' => $total_items, 'total_pages' => $total_pages, 'page' => $page,
 				'first_item' => $first_item, 'last_item' => $last_item, 'previous_link' => $previous_link,
 				'next_link' => $next_link, 'months' => $months, 'date' => $date, 'order' => $order,
-				'months_names' => $months_names), 'site_html.tpl');
+				'months_names' => $months_names, 'first' => $first, 'last' => $last), 'site_html.tpl');
 	}
 	
 	/**
@@ -128,40 +128,6 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		// For displaying the first blank item.
 		$manufacturerList = array(array());
 		$manufacturerList = array_merge($manufacturerList, ManufacturerDistinctList::getList());
-	}
-	
-	/**
-	 * Returns an array with the names of the months.
-	 * 
-	 * @param int $months
-	 */
-	private function buildMonthsNames($months){
-		$year_months = array('1' => 'Ene',
-							'2' => 'Feb',
-							'3' => 'Mar',
-							'4' => 'Abr',
-							'5' => 'May',
-							'6' => 'Jun',
-							'7' => 'Jul',
-							'8' => 'Ago',
-							'9' => 'Sep',
-							'10' => 'Oct',
-							'11' => 'Nov',
-							'12' => 'Dic');
-		
-		$date = new DateTime();
-		$date->modify('- ' . $months  . ' month');
-		
-		$names = array();
-		$i = 0;
-		
-		do{
-			$names[] = $year_months[$date->format('n')] . ' ' . $date->format('y');
-			$date->modify('+1 month');
-			$i++;
-		}while($i < $months);
-		
-		return $names;
 	}
 }
 ?>
