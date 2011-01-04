@@ -382,6 +382,40 @@ class SalesAndPurchasesStadisticsList{
 	}
 	
 	/**
+	 * Returns an array with the names of the months.
+	 * 
+	 * @param int $months
+	 */
+	static public function buildMonthsNames($months){
+		$year_months = array('1' => 'Ene',
+							'2' => 'Feb',
+							'3' => 'Mar',
+							'4' => 'Abr',
+							'5' => 'May',
+							'6' => 'Jun',
+							'7' => 'Jul',
+							'8' => 'Ago',
+							'9' => 'Sep',
+							'10' => 'Oct',
+							'11' => 'Nov',
+							'12' => 'Dic');
+		
+		$date = new DateTime();
+		$date->modify('- ' . $months  . ' month');
+		
+		$names = array();
+		$i = 0;
+		
+		do{
+			$names[] = $year_months[$date->format('n')] . ' ' . $date->format('y');
+			$date->modify('+1 month');
+			$i++;
+		}while($i < $months);
+		
+		return $names;
+	}
+	
+	/**
 	 * Returns the dates in the format dd/mm/yyyy.
 	 * $date format in yyyy/mm/dd.
 	 * 
