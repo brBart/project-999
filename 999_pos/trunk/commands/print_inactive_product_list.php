@@ -32,7 +32,7 @@ class PrintInactiveProductListCommand extends Command{
 	public function execute(Request $request, SessionHelper $helper){
 		$days = (int)$request->getProperty('days');
 		$date = $request->getProperty('date');
-		$list = InactiveProductList::getList($days);
+		$list = InactiveProductList::getList($date, $days);
 		
 		Page::display(array('total_items' => count($list), 'days' => $days, 'date' => date('d/m/Y'),
 				'date' => $date, 'list' => $list), 'inactive_product_list_print_html.tpl');

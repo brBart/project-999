@@ -43,7 +43,8 @@ class ShowInactiveProductListCommand extends Command{
 		
 		$page = (int)$request->getProperty('page');
 		$days = (int)$request->getProperty('days');
-		$list = InactiveProductList::getList($days, $total_pages, $total_items, $page);
+		$date = date('d/m/Y');
+		$list = InactiveProductList::getList($date, $days, $total_pages, $total_items, $page);
 		
 		if($total_items > 0){	
 			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
@@ -58,7 +59,7 @@ class ShowInactiveProductListCommand extends Command{
 					'second_menu' => 'none', 'content' => 'inactive_product_list_html.tpl', 'list' => $list,
 					'total_items' => $total_items, 'total_pages' => $total_pages, 'page' => $page,
 					'first_item' => $first_item, 'last_item' => $last_item, 'previous_link' => $previous_link,
-					'next_link' => $next_link, 'days' => $days, 'date' => date('d/m/Y')), 'site_html.tpl');
+					'next_link' => $next_link, 'days' => $days, 'date' => $date), 'site_html.tpl');
 		}
 		else {
 			$msg = 'No hay productos sin movimiento con esos dias.';
