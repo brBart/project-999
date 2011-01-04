@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-12-2010 a las 12:22:24
+-- Tiempo de generación: 04-01-2011 a las 17:46:38
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -3648,6 +3648,136 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_purchases_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT * FROM (
+
+       SELECT IFNULL(SUM(rec.quantity), 0) AS purchases FROM 
+
+         (SELECT product_id, name, manufacturer FROM (SELECT pro.product_id, man.name AS manufacturer, pro.name FROM product pro INNER JOIN 
+
+          manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+          WHERE pro.deactivated = 0) AS product_sort WHERE manufacturer BETWEEN ? AND ?) AS pro
+
+       LEFT JOIN
+
+         (SELECT pro.product_id, rec_lot.quantity FROM product pro INNER JOIN lot ON pro.product_id = lot.product_id INNER JOIN receipt_lot 
+
+          rec_lot ON lot.lot_id = rec_lot.lot_id INNER JOIN receipt rec ON rec_lot.receipt_id = rec.receipt_id WHERE rec.status = 1 AND 
+
+          CAST(rec.date AS DATE) >= ? AND CAST(rec.date AS DATE) < ?) AS rec
+
+       ON pro.product_id = rec.product_id GROUP BY pro.product_id ORDER BY pro.manufacturer, pro.name
+
+     ) AS purchases_stadistics LIMIT ?, ?";
+    
+  SET @p1 = inFirst;
+
+  SET @p2 = inLast;
+
+  SET @p3 = inFirstDate;
+
+  SET @p4 = inLastDate;
+
+  SET @p5 = inStartItem;
+
+  SET @p6 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5, @p6;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_sales_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT * FROM (
+
+       SELECT IFNULL(SUM(inv.quantity), 0) AS sales FROM 
+
+         (SELECT product_id, name, manufacturer FROM (SELECT pro.product_id, man.name AS manufacturer, pro.name FROM product pro INNER JOIN 
+
+          manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+          WHERE pro.deactivated = 0) AS product_sort WHERE manufacturer BETWEEN ? AND ?) AS pro
+
+       LEFT JOIN
+
+         (SELECT pro.product_id, inv_lot.quantity FROM product pro INNER JOIN lot ON pro.product_id = lot.product_id INNER JOIN invoice_lot 
+
+          inv_lot ON lot.lot_id = inv_lot.lot_id INNER JOIN invoice inv ON inv_lot.invoice_id = inv.invoice_id WHERE inv.status = 1 AND 
+
+          CAST(inv.date AS DATE) >= ? AND CAST(inv.date AS DATE) < ?) AS inv
+
+       ON pro.product_id = inv.product_id GROUP BY pro.product_id ORDER BY pro.manufacturer, pro.name
+
+     ) AS sales_stadistics LIMIT ?, ?";
+    
+  SET @p1 = inFirst;
+
+  SET @p2 = inLast;
+
+  SET @p3 = inFirstDate;
+
+  SET @p4 = inLastDate;
+
+  SET @p5 = inStartItem;
+
+  SET @p6 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5, @p6;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_count`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
+BEGIN
+
+       SELECT COUNT(*) FROM (SELECT man.name FROM product pro INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+         WHERE pro.deactivated = 0 ORDER BY man.name, pro.name) AS sales_stadistics WHERE name BETWEEN inFirst AND inLast;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+  "SELECT * FROM
+
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
+
+      INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+     WHERE pro.deactivated = 0 ORDER BY man.name, pro.name) AS sales_stadistics
+
+  WHERE manufacturer BETWEEN ? AND ? LIMIT ?, ?";
+
+  SET @p1 = inFirst;
+
+  SET @p2 = inLast;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_update`(IN inManufacturerId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -4062,7 +4192,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_count`(IN inDays INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_count`(IN inDate DATE, IN inDays INT)
 BEGIN
 
   SELECT COUNT(*) FROM (SELECT 1 FROM product pro
@@ -4081,7 +4211,7 @@ BEGIN
 
                     WHERE lot.product_id IN (SELECT product_id FROM product) AND inv.status = 1
 
-                      AND inv.date <= DATE_ADD(CURDATE(), INTERVAL -1 * inDays DAY)
+                      AND inv.date <= DATE_ADD(inDate, INTERVAL -1 * inDays DAY)
 
                     GROUP BY lot.product_id) AS last_inv
 
@@ -4091,7 +4221,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_get`(IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4116,7 +4246,7 @@ BEGIN
 
                      WHERE lot.product_id IN (SELECT product_id FROM product) AND inv.status = 1
 
-                         AND inv.date <= DATE_ADD(CURDATE(), INTERVAL -1 * ? DAY)
+                         AND inv.date <= DATE_ADD(?, INTERVAL -1 * ? DAY)
 
 			 GROUP BY lot.product_id) AS last_inv
 
@@ -4128,17 +4258,15 @@ BEGIN
 
      LIMIT ?, ?";
 
+  SET @p1 = inDate;
 
+  SET @p2 = inDays;
 
-  SET @p1 = inDays;
+  SET @p3 = inStartItem;
 
-  SET @p2 = inStartItem;
+  SET @p4 = inItemsPerPage;
 
-  SET @p3 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2, @p3;
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
 
 END$$
 
@@ -4291,12 +4419,106 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_purchases_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT * FROM (
+
+       SELECT IFNULL(SUM(rec.quantity), 0) AS purchases FROM 
+
+         (SELECT product_id, name, manufacturer FROM (SELECT pro.product_id, man.name AS manufacturer, pro.name FROM product pro INNER JOIN 
+
+          manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+          WHERE pro.deactivated = 0) AS product_sort WHERE name BETWEEN ? AND ?) AS pro
+
+       LEFT JOIN
+
+         (SELECT pro.product_id, rec_lot.quantity FROM product pro INNER JOIN lot ON pro.product_id = lot.product_id INNER JOIN receipt_lot 
+
+          rec_lot ON lot.lot_id = rec_lot.lot_id INNER JOIN receipt rec ON rec_lot.receipt_id = rec.receipt_id WHERE rec.status = 1 AND 
+
+          CAST(rec.date AS DATE) >= ? AND CAST(rec.date AS DATE) < ?) AS rec
+
+       ON pro.product_id = rec.product_id GROUP BY pro.product_id ORDER BY pro.name, pro.manufacturer
+
+     ) AS purchases_stadistics LIMIT ?, ?";
+    
+  SET @p1 = inFirst;
+
+  SET @p2 = inLast;
+
+  SET @p3 = inFirstDate;
+
+  SET @p4 = inLastDate;
+
+  SET @p5 = inStartItem;
+
+  SET @p6 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5, @p6;
+
+END$$
+
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_quantity_get`(IN inProductId INT)
 BEGIN
 
   SELECT quantity FROM product
 
     WHERE product_id = inProductId;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_sales_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT * FROM (
+
+       SELECT IFNULL(SUM(inv.quantity), 0) AS sales FROM 
+
+         (SELECT product_id, name, manufacturer FROM (SELECT pro.product_id, man.name AS manufacturer, pro.name FROM product pro INNER JOIN 
+
+          manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+          WHERE pro.deactivated = 0) AS product_sort WHERE name BETWEEN ? AND ?) AS pro
+
+       LEFT JOIN
+
+         (SELECT pro.product_id, inv_lot.quantity FROM product pro INNER JOIN lot ON pro.product_id = lot.product_id INNER JOIN invoice_lot 
+
+          inv_lot ON lot.lot_id = inv_lot.lot_id INNER JOIN invoice inv ON inv_lot.invoice_id = inv.invoice_id WHERE inv.status = 1 AND 
+
+          CAST(inv.date AS DATE) >= ? AND CAST(inv.date AS DATE) < ?) AS inv
+
+       ON pro.product_id = inv.product_id GROUP BY pro.product_id ORDER BY pro.name, pro.manufacturer
+
+     ) AS sales_stadistics LIMIT ?, ?";
+    
+  SET @p1 = inFirst;
+
+  SET @p2 = inLast;
+
+  SET @p3 = inFirstDate;
+
+  SET @p4 = inLastDate;
+
+  SET @p5 = inStartItem;
+
+  SET @p6 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5, @p6;
 
 END$$
 
@@ -4307,6 +4529,42 @@ BEGIN
 
     WHERE name LIKE CONCAT(inSearchString, '%') AND deactivated != 1
     ORDER BY name, packaging;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_count`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
+BEGIN
+
+       SELECT COUNT(*) FROM (SELECT pro.name FROM product pro INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+         WHERE pro.deactivated = 0 ORDER BY pro.name, man.name) AS sales_stadistics WHERE name BETWEEN inFirst AND inLast;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+  "SELECT * FROM
+
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
+
+      INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+     WHERE pro.deactivated = 0 ORDER BY pro.name, man.name) AS sales_stadistics
+
+  WHERE product BETWEEN ? AND ? LIMIT ?, ?";
+
+  SET @p1 = inFirst;
+
+  SET @p2 = inLast;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
 
 END$$
 
