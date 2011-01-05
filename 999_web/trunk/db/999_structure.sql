@@ -4989,7 +4989,7 @@ BEGIN
 
          lot.product_id = pro.product_id INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-         WHERE CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC) AS sales_ranking
+         WHERE CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS sales_ranking
 
       LIMIT ?, ?";
 
