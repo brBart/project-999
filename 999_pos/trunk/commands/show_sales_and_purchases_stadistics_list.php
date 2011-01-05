@@ -100,7 +100,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$previous_link = ($page == 1) ? '' : $link . ($page - 1);
 		$next_link = ($page == $total_pages) ? '' : $link . ($page + 1);
 		
-		$months_names = SalesAndPurchasesStadisticsList::buildMonthsNames($months);
+		$months_names = SalesAndPurchasesStadisticsList::buildMonthsNames($date, $months);
 		
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => 'index.php?cmd=show_report_menu_pos_admin', 'back_trace' => $back_trace,

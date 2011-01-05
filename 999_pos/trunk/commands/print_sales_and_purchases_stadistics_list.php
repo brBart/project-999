@@ -43,7 +43,7 @@ class PrintSalesAndPurchasesStadisticsListCommand extends Command{
 			$list =
 				SalesAndPurchasesStadisticsList::getListByManufacturer($first, $last, $date, $months);
 				
-		$months_names = SalesAndPurchasesStadisticsList::buildMonthsNames($months);
+		$months_names = SalesAndPurchasesStadisticsList::buildMonthsNames($date, $months);
 		
 		Page::display(array('total_items' => count($list), 'date' => $date, 'order' => $order,
 				'months' => $months, 'list' => $list, 'months_names' => $months_names),

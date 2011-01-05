@@ -384,9 +384,13 @@ class SalesAndPurchasesStadisticsList{
 	/**
 	 * Returns an array with the names of the months.
 	 * 
+	 * The date is from where the preceding months will be returned. And months are the number
+	 * of months. Date format dd/mm/yyyy.
+	 * @param string $date
 	 * @param int $months
+	 * @return array
 	 */
-	static public function buildMonthsNames($months){
+	static public function buildMonthsNames($date, $months){
 		$year_months = array('1' => 'Ene',
 							'2' => 'Feb',
 							'3' => 'Mar',
@@ -400,15 +404,15 @@ class SalesAndPurchasesStadisticsList{
 							'11' => 'Nov',
 							'12' => 'Dic');
 		
-		$date = new DateTime();
-		$date->modify('- ' . $months  . ' month');
+		$dateObj = new DateTime(Date::dbFormat($date));
+		$dateObj->modify('- ' . $months  . ' month');
 		
 		$names = array();
 		$i = 0;
 		
 		do{
-			$names[] = $year_months[$date->format('n')] . ' ' . $date->format('y');
-			$date->modify('+1 month');
+			$names[] = $year_months[$dateObj->format('n')] . ' ' . $dateObj->format('y');
+			$dateObj->modify('+1 month');
 			$i++;
 		}while($i < $months);
 		
