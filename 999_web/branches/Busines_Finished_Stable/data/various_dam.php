@@ -215,4 +215,118 @@ class SalesRankingListDAM{
 				'name' => 'Transformer', 'packaging' => 'Optimus.', 'quantity' => '27'));
 	}
 }
+
+
+/**
+ * Utility class for obtaining the sales and receipts stadistics from certain products.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesAndPurchasesStadisticsListDAM{
+/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, and packaging. If no page
+	 * argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getLabelsByProduct($first, $last, &$totalPages, &$totalItems, $page){
+		$totalPages = 1;
+		$totalItems = 2;
+		return array(array('one' => 'uno'), array('two' => 'dos'));
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, and packaging. If no page
+	 * argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getLabelsByManufacturer($first, $last, &$totalPages, &$totalItems, $page){
+		$totalPages = 1;
+		$totalItems = 2;
+		return array(array('one' => 'uno'), array('two' => 'dos'));
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getSalesListByProduct($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		return array('one' => 'uno', 'two' => 'dos');
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getPurchasesListByProduct($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		return array('one' => 'uno', 'two' => 'dos');
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getSalesListByManufacturer($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		return array('one' => 'uno', 'two' => 'dos');
+	}
+	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are sales and purchases. If no page
+	 * argument or cero is passed all the details are returned. Date format: 'dd/mm/yyyy'.
+	 * @param string $first
+	 * @param string $last
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer $totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getPurchasesListByManufacturer($first, $last, $firstDate, $lastDate, $totalItems, $page){
+		return array('one' => 'uno', 'two' => 'dos');
+	}
+}
 ?>

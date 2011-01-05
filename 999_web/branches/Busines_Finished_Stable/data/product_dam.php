@@ -1315,14 +1315,14 @@ class InactiveProductListDAM{
 	 *
 	 * The array fields are bar_code, manufacturer, name, packaging, quantity, last_sale and sale_quantity. If
 	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
-	 * arguments are necessary to return their respective values.
+	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
 	 * @param integer $days
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($days, &$total_pages, &$total_items, $page){
+	static public function getList($date, $days, &$total_pages, &$total_items, $page){
 		$total_pages = 1;
 		$total_items = 2;
 		return array(array('bar_code' => '438929', 'manufacturer' => 'Mattel', 'name' => 'Caperi',

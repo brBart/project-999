@@ -307,4 +307,176 @@ class SalesRankingList{
 		return SalesRankingListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
 	}
 }
+
+
+/**
+ * Utility class for obtaining the sales and receipts stadistics from certain products.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesAndPurchasesStadisticsList{
+	/**
+	 * Returns the stadistics for the range of products between first and last for the past number of months.
+	 * Date format in dd/mm/yyyy.
+	 * 
+	 * @param string $first
+	 * @param string $last
+	 * @param string $date
+	 * @param integer $numMonths
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByProduct($first, $last, $date, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		String::validateString($first, 'Seleccione el primer producto.');
+		String::validateString($last, 'Seleccione el segundo producto.');
+		
+		$labels = SalesAndPurchasesStadisticsListDAM::getLabelsByProduct($first, $last, $totalPages, $totalItems, $page);
+		
+		$sales_data = array();
+		$purchases_data = array();
+		
+		$date = Date::dbFormat($date);
+		
+		for($i = $numMonths; $i > 0 ; $i--){
+			self::getRangeDates($date, $i, $start_date, $end_date);
+			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
+			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByProduct($first, $last, $start_date, $end_date, $totalItems, $page);
+		}
+		
+		return self::prepareList($labels, $sales_data, $purchases_data);
+	}
+	
+	/**
+	 * Returns the stadistics for the range of manufacturers between first and last for the past number of months.
+	 * Date format in dd/mm/yyyy.
+	 * 
+	 * @param string $first
+	 * @param string $last
+	 * @param string $date
+	 * @param integer $numMonths
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByManufacturer($first, $last, $date, $numMonths, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		String::validateString($first, 'Seleccione la primera casa.');
+		String::validateString($last, 'Seleccione la segunda casa.');
+		
+		$labels = SalesAndPurchasesStadisticsListDAM::getLabelsByManufacturer($first, $last, $totalPages, $totalItems, $page);
+		
+		$sales_data = array();
+		$purchases_data = array();
+		
+		$date = Date::dbFormat($date);
+		
+		for($i = $numMonths; $i > 0 ; $i--){
+			self::getRangeDates($date, $i, $start_date, $end_date);
+			$sales_data[] = SalesAndPurchasesStadisticsListDAM::getSalesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
+			$purchases_data[] = SalesAndPurchasesStadisticsListDAM::getPurchasesListByManufacturer($first, $last, $start_date, $end_date, $totalItems, $page);
+		}
+		
+		return self::prepareList($labels, $sales_data, $purchases_data);
+	}
+	
+	/**
+	 * Returns an array with the names of the months.
+	 * 
+	 * @param int $months
+	 */
+	static public function buildMonthsNames($months){
+		$year_months = array('1' => 'Ene',
+							'2' => 'Feb',
+							'3' => 'Mar',
+							'4' => 'Abr',
+							'5' => 'May',
+							'6' => 'Jun',
+							'7' => 'Jul',
+							'8' => 'Ago',
+							'9' => 'Sep',
+							'10' => 'Oct',
+							'11' => 'Nov',
+							'12' => 'Dic');
+		
+		$date = new DateTime();
+		$date->modify('- ' . $months  . ' month');
+		
+		$names = array();
+		$i = 0;
+		
+		do{
+			$names[] = $year_months[$date->format('n')] . ' ' . $date->format('y');
+			$date->modify('+1 month');
+			$i++;
+		}while($i < $months);
+		
+		return $names;
+	}
+	
+	/**
+	 * Returns the dates in the format dd/mm/yyyy.
+	 * $date format in yyyy/mm/dd.
+	 * 
+	 * @param string $date
+	 * @param integer $numMonths
+	 * @param string &$startDate
+	 * @param string &$endDate
+	 * @return array
+	 */
+	static private function getRangeDates($date, $numMonths, &$startDate, &$endDate){
+		$dateObj = new DateTime($date);
+		
+		$dateObj->modify('-' . $numMonths . ' month');
+		$startDate = '01/' . $dateObj->format('m/Y');
+		
+		$dateObj->modify('+1 month');
+		$endDate = '01/' . $dateObj->format('m/Y');
+	}
+	
+	/**
+	 * Changes the list on the way is useful for constructing the report.
+	 * 
+	 * @param array labels
+	 * @param array $salesData
+	 * @param array $purchasesData
+	 * @return array
+	 */
+	static private function prepareList($labels, $salesData, $purchasesData){
+		$list = array();
+		
+		$rows = count($labels);
+		$months = count($salesData);
+		
+		for($y = 0; $y < $rows; $y++){
+			$row = $labels[$y];
+			
+			for($x = 0; $x < $months; $x++){
+				$sales[] = $salesData[$x][$y];
+				$purchases[] = $purchasesData[$x][$y];
+				
+				$sales_avg += $salesData[$x][$y]['sales'];
+				$purchases_avg += $purchasesData[$x][$y]['purchases'];
+			}
+			
+			$row['sales'] = $sales;
+			$row['purchases'] = $purchases;
+			
+			// Calculate the average.
+			$row['sales_average'] = $sales_avg / $months;
+			$row['purchases_average'] = $purchases_avg / $months;
+			
+			$list[] = $row;
+			
+			$sales = array();
+			$purchases = array();
+			
+			$sales_avg = 0;
+			$purchases_avg = 0;
+		}
+		
+		return $list;
+	}
+}
 ?>
