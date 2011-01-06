@@ -895,29 +895,31 @@ class ProductBonusListDAM{
  * @package ProductDAM
  * @author Roberto Oliveros
  */
-class NegativeBalanceProductListDAM{
+class ExpiredLotListDAM{
 	/**
-	 * Returns an array containging the data of the products which has a negative balance.
+	 * Returns an array containging the data of lots which had expired.
 	 *
-	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
-	 * and balance. If no page argument or cero is passed all the details are returned. The totalPages and
-	 * totalItems arguments are necessary to return their respective values.
+	 * The array contains the fields lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity
+	 * and available. If no page argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format dd/mm/yyyy.
+	 * @param string $date
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$totalPages, &$totalItems, $page){
-		$sql = 'CALL product_negative_balance_count()';
-		$totalItems = DatabaseHandler::getOne($sql);
+	static public function getList($date, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL lot_expired_count(:date)';
+		$params = array(':date' => Date::dbFormat($date));
+		$totalItems = DatabaseHandler::getOne($sql, $params);
 		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
 		if($page > 0)
-			$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+			$params = array_merge($params, array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
 		else
-			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
 		
-		$sql = 'CALL product_negative_balance_get(:start_item, :items_per_page)';
+		$sql = 'CALL lot_expired_get(:date, :start_item, :items_per_page)';
 		return DatabaseHandler::getAll($sql, $params);
 	}
 }
