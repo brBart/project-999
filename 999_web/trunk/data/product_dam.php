@@ -930,6 +930,43 @@ class ExpiredLotListDAM{
  * @package ProductDAM
  * @author Roberto Oliveros
  */
+class LotNearExpirationListDAM{
+	/**
+	 * Returns an array with the details of the lots which expiration date is between the date and the date + days.
+	 *
+	 * The array fields are lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity and available. If
+	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
+	 * @param string $date
+	 * @param integer $days
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($date, $days, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL lot_near_expiration_count(:date, :days)';
+		$params = array('date' => Date::dbFormat($date), ':days' => $days);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array_merge($params, array(':start_item' => ($page - 1) * ITEMS_PER_PAGE,
+					'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL lot_near_expiration_get(:date, :days, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+}
+
+
+/**
+ * Utility class for creating the report.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
 class InactiveProductListDAM{
 	/**
 	 * Returns an array with the details of the products which have not seen activity during the days provided.

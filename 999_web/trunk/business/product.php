@@ -1648,6 +1648,35 @@ class ExpiredLotList{
  * @package Product
  * @author Roberto Oliveros
  */
+class LotNearExpirationList{
+	/**
+	 * Returns an array with the details of the lots which expiration date is between the date and the date + days.
+	 *
+	 * The array fields are lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity and available. If
+	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
+	 * @param string $date
+	 * @param integer $days
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($date, $days, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($days, 'N&uacute;mero de dias inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return LotNearExpirationListDAM::getList($date, $days, $total_pages, $total_items, $page);
+	}
+}
+
+
+/**
+ * Utility class for creating the report.
+ * @package Product
+ * @author Roberto Oliveros
+ */
 class InactiveProductList{
 	/**
 	 * Returns an array with the details of the products which have not seen activity during the days provided.
