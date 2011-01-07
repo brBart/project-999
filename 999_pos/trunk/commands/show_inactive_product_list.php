@@ -35,7 +35,7 @@ class ShowInactiveProductListCommand extends Command{
 		if(is_null($request->getProperty('show_report'))){
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
-					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
+					'back_link' => 'index.php?cmd=show_report_menu_pos_admin', 'date' => date('d/m/Y'),
 					'content' => 'inactive_product_list_form_html.tpl', 'report_name' => 'Productos Sin Movimiento'),
 					'site_html.tpl');
 			return;
@@ -43,14 +43,14 @@ class ShowInactiveProductListCommand extends Command{
 		
 		$page = (int)$request->getProperty('page');
 		$days = (int)$request->getProperty('days');
-		$date = date('d/m/Y');
+		$date = $request->getProperty('date');
 		$list = InactiveProductList::getList($date, $days, $total_pages, $total_items, $page);
 		
 		if($total_items > 0){	
 			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
 			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 			
-			$link = 'index.php?cmd=show_inactive_product_list&show_report&days=' . $days . '&page=';
+			$link = 'index.php?cmd=show_inactive_product_list&show_report&days=' . $days . '&date='. $date . '&page=';
 			$previous_link = ($page == 1) ? '' : $link . ($page - 1);
 			$next_link = ($page == $total_pages) ? '' : $link . ($page + 1);
 			
