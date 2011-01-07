@@ -930,7 +930,7 @@ class ExpiredLotListDAM{
  * @package ProductDAM
  * @author Roberto Oliveros
  */
-class LotNearExpirationListDAM{
+class NearExpirationLotListDAM{
 	/**
 	 * Returns an array with the details of the lots which expiration date is between the date and the date + days.
 	 *
