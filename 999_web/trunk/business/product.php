@@ -1667,7 +1667,7 @@ class NearExpirationLotList{
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return LotNearExpirationListDAM::getList($date, $days, $total_pages, $total_items, $page);
+		return NearExpirationLotListDAM::getList($date, $days, $total_pages, $total_items, $page);
 	}
 }
 
