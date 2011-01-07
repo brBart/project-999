@@ -41,7 +41,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 			
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
-					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
+					'back_link' => 'index.php?cmd=show_report_menu_pos_admin', 'date' => date('d/m/Y'), 
 					'content' => 'sales_and_purchases_stadistics_list_form_html.tpl',
 					'months_list' => $months_list, 'months' => '6', 'order' => 'product',
 					'report_name' => 'Estad&iacute;sticas de Ventas y Compras', 'product_list' => $product_list,
@@ -52,7 +52,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$page = (int)$request->getProperty('page');
 		$months = (int)$request->getProperty('months');
 		$order = $request->getProperty('order');
-		$date = date('d/m/Y');
+		$date = $request->getProperty('date');
 		
 		try{
 			if($order == 'product'){
@@ -95,7 +95,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 		$link .= ($order == 'product') ? '&product_first=' . $first . '&product_last=' . $last :
 				'&manufacturer_first=' . $first . '&manufacturer_last=' . $last;
 		
-		$link .= '&page=';
+		$link .= '&date='. $date . '&page=';
 		
 		$previous_link = ($page == 1) ? '' : $link . ($page - 1);
 		$next_link = ($page == $total_pages) ? '' : $link . ($page + 1);
