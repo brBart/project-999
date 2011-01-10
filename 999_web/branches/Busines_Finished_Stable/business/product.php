@@ -1045,9 +1045,12 @@ class Bonus extends Persist{
 			Date::validateDate($createdDate, 'Fecha de creaci&oacute;n inv&aacute;lida.');
 			$this->_mCreatedDate = $createdDate;
 		}
+		else{
+			$this->_mCreatedDate = date('d/m/Y');
+		}
 			
 		if(!Date::compareDates($this->_mCreatedDate, $expirationDate))
-			throw new ValidateException('Fecha de vencimiento es igual o mas reciente que la fecha de creaci&oacute;n.', 'bonus');
+			throw new ValidateException('Fecha de vencimiento debe ser posterior al de dia hoy.', 'bonus');
 		
 		$this->_mId = $id;
 		$this->_mProduct = $product;
@@ -1622,22 +1625,52 @@ class ProductBonusList{
  * @package Product
  * @author Roberto Oliveros
  */
-class NegativeBalanceProductList{
+class ExpiredLotList{
 	/**
-	 * Returns an array containging the data of the products which has a negative balance.
+	 * Returns an array containging the data of lots which had expired.
 	 *
-	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
-	 * and balance. If no page argument or cero is passed all the details are returned. The total_pages and
-	 * total_items arguments are necessary to return their respective values.
+	 * The array contains the fields lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity
+	 * and available. If no page argument or cero is passed all the details are returned. The total_pages and
+	 * total_items arguments are necessary to return their respective values. Date format dd/mm/yyyy.
+	 * @param string $date
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($date, &$total_pages = 0, &$total_items = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
-			return NegativeBalanceProductListDAM::getList($total_pages, $total_items, $page);
+			return ExpiredLotListDAM::getList($date, $total_pages, $total_items, $page);
+	}
+}
+
+
+/**
+ * Utility class for creating the report.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class NearExpirationLotList{
+	/**
+	 * Returns an array with the details of the lots which expiration date is between the date and the date + days.
+	 *
+	 * The array fields are lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity and available. If
+	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
+	 * @param string $date
+	 * @param integer $days
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($date, $days, &$total_pages = 0, &$total_items = 0, $page = 0){
+		Number::validatePositiveInteger($days, 'N&uacute;mero de dias inv&aacute;lido.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return NearExpirationLotListDAM::getList($date, $days, $total_pages, $total_items, $page);
 	}
 }
 
