@@ -1281,25 +1281,50 @@ class ProductBonusListDAM{
  * @package ProductDAM
  * @author Roberto Oliveros
  */
-class NegativeBalanceProductListDAM{
+class ExpiredLotListDAM{
 	/**
-	 * Returns an array containging the data of the products which has a negative balance.
+	 * Returns an array containging the data of lots which had expired.
 	 *
-	 * The array contains the fields bar_code, manufacturer, name, packaging, general_quantity, lots_quantity
-	 * and balance. If no page argument or cero is passed all the details are returned. The total_pages and
-	 * total_items arguments are necessary to return their respective values.
-	 * @param integer &$total_pages
-	 * @param integer &$total_items
+	 * The array contains the fields lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity
+	 * and available. If no page argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format dd/mm/yyyy.
+	 * @param string $date
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total_pages, &$total_items, $page){
-		$total_pages = 1;
-		$total_items = 2;
-		return array(array('bar_code' => '47349292', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
-				'packaging' => 'caja', 'general_quantity' => 5, 'lots_quantity' => 6, 'balance' => -1),
-				array('bar_code' => '17846291', 'manufacturer' => 'Mattel', 'name' => 'Barby',
-				'packaging' => 'caja', 'general_quantity' => 0, 'lots_quantity' => -1, 'balance' => -1));
+	static public function getList($date, &$totalPages, &$totalItems, $page){
+		$totalPages = 1;
+		$totalItems = 2;
+		return array('uno' => 'one', 'dos' => 'two');
+	}
+}
+
+
+/**
+ * Utility class for creating the report.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class NearExpirationLotListDAM{
+	/**
+	 * Returns an array with the details of the lots which expiration date is between the date and the date + days.
+	 *
+	 * The array fields are lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity and available. If
+	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
+	 * @param string $date
+	 * @param integer $days
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($date, $days, &$totalPages, &$totalItems, $page){
+		$totalPages = 1;
+		$totalItems = 2;
+		return array('uno' => 'one', 'dos' => 'two');
 	}
 }
 
