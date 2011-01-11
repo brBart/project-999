@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-01-2011 a las 18:11:14
+-- Tiempo de generación: 11-01-2011 a las 12:50:11
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `action` (
   `action_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`action_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `bank` (
   `bank_id` int(11) NOT NULL auto_increment,
   `name` varchar(100) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`bank_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   `is_default` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`correlative_id`),
   UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -385,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`),
   KEY `idx_invoice_correlative_id` (`correlative_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -446,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -458,7 +458,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(100) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`manufacturer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -470,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `payment_card_brand` (
   `payment_card_brand_id` int(11) NOT NULL auto_increment,
   `name` varchar(100) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`payment_card_brand_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -482,7 +482,7 @@ CREATE TABLE IF NOT EXISTS `payment_card_type` (
   `payment_card_type_id` int(11) NOT NULL auto_increment,
   `name` varchar(100) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`payment_card_type_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -508,7 +508,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   KEY `idx_product_unit_of_measure_id` (`unit_of_measure_id`),
   KEY `idx_product_manufacturer_id` (`manufacturer_id`),
   KEY `idx_product_name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -589,7 +589,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -635,7 +635,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -647,7 +647,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   `role_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`role_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -684,7 +684,7 @@ CREATE TABLE IF NOT EXISTS `shift` (
   `name` varchar(15) collate utf8_unicode_ci NOT NULL,
   `time_table` varchar(30) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -744,7 +744,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`subject_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -761,7 +761,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `email` varchar(100) collate utf8_unicode_ci default NULL,
   `contact` varchar(100) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -773,7 +773,7 @@ CREATE TABLE IF NOT EXISTS `unit_of_measure` (
   `unit_of_measure_id` int(11) NOT NULL auto_increment,
   `name` varchar(100) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`unit_of_measure_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -3459,6 +3459,40 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expired_count`(IN inDate DATE)
+BEGIN
+
+  SELECT COUNT(*) FROM lot WHERE expiration_date <= inDate AND quantity > 0;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expired_get`(IN inDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT lot.lot_id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging, DATE_FORMAT(lot.expiration_date, '%d/%m/%Y') AS 
+
+          expiration_date, lot.quantity,
+
+         (lot.quantity - lot.reserved) AS available FROM lot INNER JOIN product pro ON lot.product_id = pro.product_id
+
+         INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+     WHERE lot.expiration_date <= ? AND lot.quantity > 0 ORDER BY lot.expiration_date, pro.name
+
+     LIMIT ?, ?";
+
+  SET @p1 = inDate;
+
+  SET @p2 = inStartItem;
+
+  SET @p3 = inItemsPerPage;
+
+  EXECUTE statement USING @p1, @p2, @p3;
+
+END$$
+
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_get`(IN inLotId INT)
 BEGIN
 
@@ -3500,6 +3534,46 @@ BEGIN
   INSERT INTO lot (product_id, entry_date, expiration_date, price, quantity)
 
     VALUES (inProductId, inEntryDate, inExpirationDate, inPrice, inQuantity);
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_near_expiration_count`(IN inDate DATE, IN inDays INT)
+BEGIN
+
+  SELECT COUNT(*) FROM lot WHERE expiration_date > inDate AND expiration_date <= DATE_ADD(inDate, INTERVAL inDays DAY) AND quantity > 0;
+
+END$$
+
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_near_expiration_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT lot.lot_id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging, DATE_FORMAT(lot.expiration_date, '%d/%m/%Y') AS 
+
+          expiration_date, lot.quantity,
+
+         (lot.quantity - lot.reserved) AS available FROM lot INNER JOIN product pro ON lot.product_id = pro.product_id
+
+         INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+     WHERE lot.expiration_date > ? AND lot.expiration_date <= DATE_ADD(?, INTERVAL ? DAY) AND lot.quantity > 0
+
+     ORDER BY lot.expiration_date, pro.name
+
+     LIMIT ?, ?";
+
+  SET @p1 = inDate;
+
+  SET @p2 = inDate;
+
+  SET @p3 = inDays;
+
+  SET @p4 = inStartItem;
+
+  SET @p5 = inItemsPerPage;
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5;
 
 END$$
 
@@ -4372,50 +4446,6 @@ BEGIN
   SELECT SUM(quantity) FROM lot
 
     WHERE quantity > 0 AND product_id = inProductId;
-
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_negative_balance_count`()
-BEGIN
-
-  SELECT COUNT(*) FROM product pro
-
-      INNER JOIN (SELECT product_id, SUM(quantity) AS sum_quantity FROM lot WHERE quantity > 0 GROUP BY product_id) AS lots
-
-      ON pro.product_id = lots.product_id WHERE pro.quantity - lots.sum_quantity < 0;
-
-END$$
-
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_negative_balance_get`(IN inStartItem INT, IN inItemsPerPage INT)
-BEGIN
-
-  PREPARE statement FROM
-
-    "SELECT pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging, pro.quantity AS general_quantity,
-
-         lots.sum_quantity AS lots_quantity, pro.quantity - lots.sum_quantity AS balance FROM product pro
-
-         INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
-
-         INNER JOIN (SELECT product_id, SUM(quantity) AS sum_quantity FROM lot
-
-     WHERE quantity > 0 GROUP BY product_id) AS lots ON pro.product_id = lots.product_id
-
-     WHERE pro.quantity - lots.sum_quantity < 0
-
-     ORDER BY pro.name
-
-     LIMIT ?, ?";
-
-
-
-  SET @p1 = inStartItem;
-
-  SET @p2 = inItemsPerPage;
-
-
-
-  EXECUTE statement USING @p1, @p2;
 
 END$$
 
