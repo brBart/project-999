@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-12-2010 a las 12:31:36
+-- Tiempo de generación: 17-01-2011 a las 16:49:07
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -37,6 +37,8 @@ INSERT INTO `bank` (`bank_id`, `name`) VALUES
 -- Volcar la base de datos para la tabla `bank_account`
 --
 
+INSERT INTO `bank_account` (`bank_account_number`, `bank_id`, `name`) VALUES
+('29-5000036-6', 1, 'Drogueria Jose Gil Jutiapa');
 
 --
 -- Volcar la base de datos para la tabla `bonus`
