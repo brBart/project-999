@@ -15,7 +15,6 @@
 #include "../registry.h"
 #include "../discount_dialog/discount_dialog.h"
 #include "cash_receipt_section.h"
-#include "../product_quantity_dialog/product_quantity_dialog.h"
 #include "../search_product_dialog/search_product_dialog.h"
 #include "../search_product/search_product_model.h"
 #include "../recordset/recordset_searcher_factory.h"
