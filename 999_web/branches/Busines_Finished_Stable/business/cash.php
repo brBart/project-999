@@ -1514,7 +1514,7 @@ class PaymentCard{
 	
 	/**
 	 * Creates a new payment card validating if the provided date has not expired. Date
-	 * format is mm/yyyy.
+	 * format is mm/yy.
 	 *
 	 * @param integer $number
 	 * @param PaymentCardType $type
@@ -1525,7 +1525,13 @@ class PaymentCard{
 	 * @throws Exception
 	 */
 	static public function create($number, PaymentCardType $type, PaymentCardBrand $brand, $holderName, $date){
-		$date = "01/" . $date;
+		$date_array = explode('/', $date);
+		
+		if($date_array[1] != ''){
+			$date_array[1] = ($date_array[1] >= 50 ? '19' : '20') . $date_array[1];
+		}
+		
+		$date = implode('/', array('01', $date_array[0], $date_array[1]));
 		
 		try{
 			Date::validateDate($date, '');
