@@ -1,6 +1,6 @@
 {* Smarty *}
 <div id="content">
-	<div id="frm" class="content_small">
+	<div id="frm" class="content_fit">
 		<form method="post" action="{$log_cmd}" onsubmit="return oSession.setIsLink(true);">
 			<fieldset>
 				<p>

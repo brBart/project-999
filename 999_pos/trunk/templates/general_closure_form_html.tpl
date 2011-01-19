@@ -12,7 +12,7 @@
 </script>
 {/literal}
 <div id="content">
-	<div id="frm" class="content_small">
+	<div id="frm" class="content_fit">
 		<form method="post" action="index.php?cmd=apply_general_closure" onsubmit="return oSession.setIsLink(true);">
 			{include file='header_data_task_html.tpl'}
 			<fieldset id="main_data">

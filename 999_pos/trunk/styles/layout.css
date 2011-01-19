@@ -60,6 +60,10 @@ input[type="text"], input[type="password"] {
 	width: 40%;
 }
 
+.content_fit {
+	width: 48%;
+}
+
 .content_medium {
 	width: 86%;
 	max-width: 780px;

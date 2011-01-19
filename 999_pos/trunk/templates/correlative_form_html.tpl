@@ -20,7 +20,7 @@
 	{/literal}
 </script>
 <div id="content">
-	<div id="frm" class="content_small">
+	<div id="frm" class="content_fit">
 		{include file='status_bar_html.tpl'}
 		<fieldset id="main_data">
 			<p>

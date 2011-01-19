@@ -1,6 +1,6 @@
 {* Smarty *}
 <div id="content">
-	<div id="frm" class="content_small">
+	<div id="frm" class="content_fit">
 		<form method="post" action="{$forward_link}" onsubmit="return oSession.setIsLink(true);">
 			<fieldset id="main_data">
 				<p><label>Usuario:</label><span>{$username}</span></p>

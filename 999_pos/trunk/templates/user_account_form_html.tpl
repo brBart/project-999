@@ -16,7 +16,7 @@
 	{/literal}
 </script>
 <div id="content">
-	<div id="frm" class="content_small">
+	<div id="frm" class="content_fit">
 		{include file='status_bar_html.tpl'}
 		<fieldset id="main_data">
 			<p>
@@ -63,6 +63,7 @@
 		  			onblur="oSetProperty.execute('set_password_user_account', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="password-failed" class="hidden">*</span>
+		  		<span class="hint">1-20 caracteres</span>
 		  	</p>
 		  	<p>
 		  		<label for="confirm_password">Confirmar:*</label>
