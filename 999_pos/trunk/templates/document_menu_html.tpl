@@ -22,8 +22,8 @@
 			    		<label for="end_date">Fecha final:</label>
 			    		<input name="end_date" id="end_date" type="text" value="{$end_date}" maxlength="10" />
 			    		<span class="hint">dd/mm/aaaa</span>
-			    		<input type="submit" value="Buscar" />
 		    		</div>
+		    		<input type="submit" value="Buscar" />
 		    	</form>
 	    	</div>
 	    </li>

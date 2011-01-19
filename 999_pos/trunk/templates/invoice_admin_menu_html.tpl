@@ -18,7 +18,7 @@
 	    	</div>
 	    </li>
 	    <li id="li_last">
-	    	<div id="dates_range">
+	    	<div id="dates_range" class="many_search">
 		    	<form method="post" action="index.php?cmd=search_invoice_by_working_day&page=1"
 		    			onsubmit="return oSession.setIsLink(true);">
 		    		<div>
@@ -30,8 +30,8 @@
 			    		<label for="end_date">Jornada final:</label>
 			    		<input name="end_date" id="end_date" type="text" value="{$end_date}" maxlength="10" />
 			    		<span class="hint">dd/mm/aaaa</span>
-			    		<input type="submit" value="Buscar" />
 		    		</div>
+		    		<input type="submit" value="Buscar" />
 		    	</form>
 	    	</div>
 	    </li>
