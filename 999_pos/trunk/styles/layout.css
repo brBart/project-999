@@ -265,7 +265,7 @@ input[type="text"], input[type="password"] {
 	margin: 1em auto;
 }
 
-#dates_range div, .working_day_search div {
+#dates_range div, .working_day_search div, #working_dates_range div {
 	float: left;
 	position: relative;
 }
@@ -416,7 +416,7 @@ input[type="text"], input[type="password"] {
 	float: left;
 }
 
-#bonus_tb div span, #dates_range div span {
+#bonus_tb div span, #dates_range div span, #working_dates_range div span {
 	position: absolute;
 	top: -1.2em;
 }
@@ -427,6 +427,10 @@ input[type="text"], input[type="password"] {
 
 #dates_range div span {
 	left: 12em;
+}
+
+#working_dates_range div span {
+	left: 10em;
 }
 
 #search_product input[type="text"] {

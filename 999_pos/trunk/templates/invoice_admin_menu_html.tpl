@@ -18,7 +18,7 @@
 	    	</div>
 	    </li>
 	    <li id="li_last">
-	    	<div id="dates_range" class="many_search">
+	    	<div id="working_dates_range" class="many_search">
 		    	<form method="post" action="index.php?cmd=search_invoice_by_working_day&page=1"
 		    			onsubmit="return oSession.setIsLink(true);">
 		    		<div>
