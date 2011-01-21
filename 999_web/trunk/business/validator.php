@@ -298,18 +298,18 @@ class Number{
 	}
 	
 	/**
-	 * Validates the provided number if it is between 0 to 100.
+	 * Validates the provided number if it is between 0 to 99.
 	 *
-	 * Must be greater or equal to cero and less or equal to 100. Otherwise it throws a validate exception.
+	 * Must be greater or equal to cero and less or equal to 99. Otherwise it throws a validate exception.
 	 * The msg parameter is for displaying the desire message.
 	 * @param string $number
 	 * @param string $msg
 	 * @param string $property
 	 * @throws ValidateException
 	 */
-	static public function validateBetweenCeroToOneHundredNumber($number, $msg, $property = NULL){
-		if(!is_numeric($number) || ($number < 0 || $number > 100))
-			throw new ValidateException($msg . ' Valor no debe ser menor que cero ni mayor que cien.',
+	static public function validateBetweenCeroToNinetyNineNumber($number, $msg, $property = NULL){
+		if(!is_numeric($number) || ($number < 0 || $number > 99))
+			throw new ValidateException($msg . ' Valor no debe ser menor que cero ni mayor que noventa y nueve.',
 					$property);
 	}
 }

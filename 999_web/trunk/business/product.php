@@ -639,7 +639,7 @@ class Product extends Identifier{
 	 */
 	public function setPrice($price){
 		$this->_mPrice = $price;
-		Number::validateUnsignedNumber($price, 'Precio inv&aacute;lido.');
+		Number::validatePositiveNumber($price, 'Precio inv&aacute;lido.');
 	}
 	
 	/**
@@ -859,7 +859,7 @@ class Product extends Identifier{
 		if(is_null($this->_mUM))
 			throw new ValidateException('Seleccione una unidad de medida.', 'um_id');
 		
-		Number::validateUnsignedNumber($this->_mPrice, 'Precio inv&aacute;lido.', 'price');
+		Number::validatePositiveNumber($this->_mPrice, 'Precio inv&aacute;lido.', 'price');
 		if(!$this->hasProductSuppliers())
 			throw new ValidateException('No hay ningun proveedor ingresado.', 'supplier_id');
 	}
@@ -1179,8 +1179,8 @@ class Bonus extends Persist{
 	 * @throws Exception
 	 */
 	private function validatePercentage($percentage){
-		if(!is_numeric($percentage) || ($percentage < 1 || $percentage > 100))
-			throw new ValidateException('Porcentaje inv&aacute;lido. No menor que 1 ni mayor que 100.',
+		if(!is_numeric($percentage) || ($percentage < 1 || $percentage > 99))
+			throw new ValidateException('Porcentaje inv&aacute;lido. No menor que 1 ni mayor que 99.',
 					'percentage');
 	}
 }
