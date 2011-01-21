@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-01-2011 a las 12:50:11
+-- Tiempo de generación: 21-01-2011 a las 13:47:08
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `bonus_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `percentage` decimal(5,2) NOT NULL,
+  `percentage` decimal(4,2) NOT NULL,
   `created_date` date NOT NULL,
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
@@ -312,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
 CREATE TABLE IF NOT EXISTS `discount` (
   `invoice_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `percentage` decimal(5,2) NOT NULL,
+  `percentage` decimal(4,2) NOT NULL,
   PRIMARY KEY  (`invoice_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -799,7 +799,7 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 --
 
 CREATE TABLE IF NOT EXISTS `vat` (
-  `percentage` decimal(5,2) NOT NULL
+  `percentage` decimal(4,2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
