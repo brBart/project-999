@@ -1333,7 +1333,7 @@ class Vat{
 	 */
 	public function setPercentage($value){
 		$this->_mPercentage = $value;
-		Number::validateBetweenCeroToOneHundredNumber($value,
+		Number::validateBetweenCeroToNinetyNineNumber($value,
 				'Porcentaje inv&aacute;lido.');
 	}
 	
@@ -1361,7 +1361,7 @@ class Vat{
 	 * Verifies that the V.A.T. percentage is set correctly. Otherwise it throws an exception.
 	 */
 	private function validateMainProperties(){
-		Number::validateBetweenCeroToOneHundredNumber($this->_mPercentage,
+		Number::validateBetweenCeroToNinetyNineNumber($this->_mPercentage,
 				'Porcentaje inv&aacute;lido.', 'percentage');
 	}
 }
@@ -1883,7 +1883,7 @@ class Discount extends Persist{
 	 */
 	public function setPercentage($value){
 		$this->_mPercentage = $value;
-		Number::validateBetweenCeroToOneHundredNumber($value,
+		Number::validateBetweenCeroToNinetyNineNumber($value,
 				'Porcentaje inv&aacute;lido.');
 	}
 	
@@ -1945,7 +1945,7 @@ class Discount extends Persist{
 		if(is_null($this->_mInvoice))
 			throw new Exception('Factura inv&aacute;lida.');
 			
-		Number::validateBetweenCeroToOneHundredNumber($this->_mPercentage,
+		Number::validateBetweenCeroToNinetyNineNumber($this->_mPercentage,
 				'Porcentage inv&aacute;lido.');
 	}
 }
