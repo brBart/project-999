@@ -22,7 +22,7 @@
 		  	<p>
 		  		<label for="percentage">Porcentage(%):*</label>
 		  		<input name="form_widget" id="percentage" type="text"
-		  			value="{$percentage}" maxlength="11"
+		  			value="{$percentage}" maxlength="5"
 		  			onblur="oSetProperty.execute('set_percentage_object', this.value, this.id);"
 		  			disabled="disabled" />
 		  		<span id="percentage-failed" class="hidden">*</span>

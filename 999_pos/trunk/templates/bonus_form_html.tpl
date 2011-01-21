@@ -39,7 +39,7 @@
 			  		<input name="form_widget" id="quantity" type="text" maxlength="11" />
 			  		<span id="quantity-failed" class="hidden">*</span>
 			  		<label for="percentage">Descuento(%):</label>
-			  		<input name="form_widget" id="percentage" type="text" maxlength="8" />
+			  		<input name="form_widget" id="percentage" type="text" maxlength="5" />
 			  		<span id="percentage-failed" class="hidden">*</span>
 			  		<label for="expiration_date">Vence:</label>
 			  		<div>

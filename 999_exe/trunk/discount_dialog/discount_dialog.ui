@@ -26,7 +26,7 @@
      <item>
       <widget class="LineEdit" name="percentageLineEdit">
        <property name="maxLength">
-        <number>6</number>
+        <number>5</number>
        </property>
       </widget>
      </item>
