@@ -1168,7 +1168,7 @@ class Bonus extends Persist{
 	static public function delete(Bonus $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!BonusDAM::delete($obj))
-			throw new Exception('Oferta tiene dependencias y no se puede eliminar.');
+			throw new Exception('Oferta tiene dependencias (facturas) y no se puede eliminar.');
 	}
 	
 	/**

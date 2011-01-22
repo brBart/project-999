@@ -48,7 +48,7 @@
 			  		</div>
 			  		<span id="expiration_date-failed" class="hidden">*</span>
 			  		<input name="form_widget" id="add_bonus" type="button" value="Crear Oferta"
-			  			onclick="oCreateBonus.execute();" />
+			  			onclick="if(confirm('Una vez utilizada la oferta en alguna factura no se podra eliminar. &iquest;Desea continuar?')) oCreateBonus.execute();" />
 			  		<span id="bonus-failed" class="hidden">*</span>
 			  	</div>
 			  	<div id="details" class="items"></div>
