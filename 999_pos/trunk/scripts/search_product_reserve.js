@@ -27,5 +27,5 @@ SearchProductReserve.prototype = new SearchProductDetails();
  */
 SearchProductReserve.prototype.doAction = function(oTr){
 	var crtBarCode = oTr.getElementsByTagName('TD')[1].id;
-	this._mSession.loadHref('index.php?cmd=get_reserve_product_by_bar_code&bar_code=' + crtBarCode);
+	this._mSession.loadHref('index.php?cmd=get_reserve_product_by_bar_code&bar_code=' + encodeURIComponent(crtBarCode));
 }
