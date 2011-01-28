@@ -13,7 +13,7 @@ header('Content-Type: text/xml');
 		{section name=i loop=$suppliers}
 		<row>
 			<product_supplier_id><![CDATA[{$suppliers[i].product_supplier_id}]]></product_supplier_id>
-			<supplier><![CDATA[{$suppliers[i].supplier}]]></supplier>
+			<supplier><![CDATA[{$suppliers[i].supplier|truncate:20:"...":true}]]></supplier>
 			<product_sku><![CDATA[{$suppliers[i].product_sku}]]></product_sku>
 		</row>
 		{/section}

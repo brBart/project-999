@@ -13,8 +13,8 @@ header('Content-Type: text/xml');
 		{section name=i loop=$products}
 		<row>
 			<product_id>{$products[i].id}</product_id>
-			<name><![CDATA[{$products[i].name}]]></name>
-			<packaging><![CDATA[{$products[i].packaging}]]></packaging>
+			<name><![CDATA[{$products[i].name|wordwrap:30:"\n":true}]]></name>
+			<packaging><![CDATA[{$products[i].packaging|wordwrap:30:"\n":true}]]></packaging>
 		</row>
 		{/section}
 	</grid>
