@@ -27,7 +27,7 @@ class EntryEvent{
 		Persist::validateNewObject($document);
 				
 		$lot = new Lot($product, $quantity, $price, $expirationDate);
-		$document->addDetail(new DocProductDetail($lot, new Entry(), $quantity, $price));
+		$document->addDetail(new DocProductDetail($lot, new Entry(), $quantity, $lot->getPrice()));
 	}
 	
 	/**

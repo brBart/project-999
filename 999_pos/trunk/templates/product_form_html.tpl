@@ -98,7 +98,7 @@
 			  	</p>
 			  	<p>
 			  		<label for="price">Precio:*</label>
-			  		<input name="form_widget" id="price" type="text" value="{$price}" maxlength="11"
+			  		<input name="form_widget" id="price" type="text" value="{$price}" maxlength="7"
 			  			onblur="oSetProperty.execute('set_price_product', this.value, this.id);"
 			  			{if $status eq 1}disabled="disabled"{/if} />
 			  		<span id="price-failed" class="hidden">*</span>

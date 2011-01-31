@@ -104,11 +104,11 @@ CREATE TABLE IF NOT EXISTS `branch` (
 
 CREATE TABLE IF NOT EXISTS `cash_receipt` (
   `cash_receipt_id` int(11) NOT NULL,
-  `change_amount` decimal(10,2) NOT NULL,
-  `cash` decimal(10,2) NOT NULL,
-  `total_vouchers` decimal(10,2) NOT NULL,
-  `reserved` decimal(10,2) NOT NULL default '0.00',
-  `deposited` decimal(10,2) NOT NULL default '0.00',
+  `change_amount` decimal(11,2) NOT NULL,
+  `cash` decimal(11,2) NOT NULL,
+  `total_vouchers` decimal(11,2) NOT NULL,
+  `reserved` decimal(11,2) NOT NULL default '0.00',
+  `deposited` decimal(11,2) NOT NULL default '0.00',
   PRIMARY KEY  (`cash_receipt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -138,8 +138,8 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `product_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `last_price` decimal(10,2) NOT NULL,
-  `new_price` decimal(10,2) NOT NULL,
+  `last_price` decimal(6,2) NOT NULL,
+  `new_price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `number` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(10,2) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`deposit_id`),
   KEY `idx_deposit_bank_account_number` (`bank_account_number`),
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `deposit_cash_receipt_id` int(11) NOT NULL auto_increment,
   `deposit_id` int(11) NOT NULL,
   `cash_receipt_id` int(11) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
+  `amount` decimal(11,2) NOT NULL,
   PRIMARY KEY  (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(10,2) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
@@ -357,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment_lot` (
   `lot_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`,`lot_id`),
   UNIQUE KEY `unique_entry_adjustment_id_number` (`entry_adjustment_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -376,8 +376,8 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   `date` datetime NOT NULL,
   `nit` varchar(15) collate utf8_unicode_ci NOT NULL,
   `name` varchar(100) collate utf8_unicode_ci default NULL,
-  `total` decimal(10,2) NOT NULL,
-  `vat` decimal(10,2) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
+  `vat` decimal(4,2) NOT NULL,
   `cash_register_id` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`invoice_id`),
@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `invoice_bonus` (
   `invoice_id` int(11) NOT NULL,
   `bonus_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`invoice_id`,`bonus_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -425,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `invoice_lot` (
   `lot_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`invoice_id`,`lot_id`),
   UNIQUE KEY `unique_invoice_id_number` (`invoice_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -441,7 +441,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `product_id` int(11) NOT NULL,
   `entry_date` date NOT NULL,
   `expiration_date` date default NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   `quantity` int(11) NOT NULL,
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
@@ -498,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `description` text collate utf8_unicode_ci,
   `unit_of_measure_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   `deactivated` tinyint(1) NOT NULL,
   `quantity` int(11) NOT NULL default '0',
   `reserved` int(11) NOT NULL default '0',
@@ -536,7 +536,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
   `date` datetime NOT NULL,
   `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
   `contact` varchar(100) collate utf8_unicode_ci default NULL,
-  `total` decimal(10,2) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
@@ -567,7 +567,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return_lot` (
   `lot_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`purchase_return_id`,`lot_id`),
   UNIQUE KEY `unique_purchase_return_id_number` (`purchase_return_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -584,7 +584,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   `supplier_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `shipment_number` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(10,2) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
@@ -615,7 +615,7 @@ CREATE TABLE IF NOT EXISTS `receipt_lot` (
   `lot_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`receipt_id`,`lot_id`),
   UNIQUE KEY `unique_receipt_id_number` (`receipt_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -698,7 +698,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
   `branch_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `contact` varchar(100) collate utf8_unicode_ci default NULL,
-  `total` decimal(10,2) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
@@ -729,7 +729,7 @@ CREATE TABLE IF NOT EXISTS `shipment_lot` (
   `lot_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`shipment_id`,`lot_id`),
   UNIQUE KEY `unique_shipment_id_number` (`shipment_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -812,7 +812,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `voucher_id` int(11) NOT NULL auto_increment,
   `cash_receipt_id` int(11) NOT NULL,
   `transaction` varchar(100) collate utf8_unicode_ci NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
+  `amount` decimal(11,2) NOT NULL,
   `payment_card_number` int(11) NOT NULL,
   `payment_card_type_id` int(11) NOT NULL,
   `payment_card_brand_id` int(11) NOT NULL,
@@ -835,7 +835,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(10,2) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -864,7 +864,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment_lot` (
   `lot_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`,`lot_id`),
   UNIQUE KEY `unique_withdraw_adjustment_id_number` (`withdraw_adjustment_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

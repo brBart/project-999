@@ -1280,7 +1280,7 @@ class Lot extends Persist{
 		
 		$this->_mProduct = $product;
 		$this->_mQuantity = round($quantity);
-		$this->_mPrice = round($price, 2);
+		$this->_mPrice = $price > MAX_PRICE ? MAX_PRICE : round($price, 2);
 		$this->_mExpirationDate = $expirationDate;
 		$this->_mId = $id;
 	}

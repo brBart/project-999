@@ -36,7 +36,7 @@
 			<div id="bonus">
 			  	<div id="bonus_tb">
 			  		<label for="quantity">Cantidad:</label>
-			  		<input name="form_widget" id="quantity" type="text" maxlength="11" />
+			  		<input name="form_widget" id="quantity" type="text" maxlength="4" />
 			  		<span id="quantity-failed" class="hidden">*</span>
 			  		<label for="percentage">Descuento(%):</label>
 			  		<input name="form_widget" id="percentage" type="text" maxlength="5" />
