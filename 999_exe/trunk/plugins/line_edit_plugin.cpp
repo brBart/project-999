@@ -26,5 +26,5 @@ LineEditPlugin::LineEditPlugin(QWidget *parent) : LineEdit(parent)
 void LineEditPlugin::init(const QStringList &argumentNames,
 		const QStringList &argumentValues)
 {
-
+	setMaxLength(50);
 }

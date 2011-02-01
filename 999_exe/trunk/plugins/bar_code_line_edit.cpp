@@ -35,6 +35,8 @@ void BarCodeLineEdit::init(const QStringList &argumentNames,
 	pale.setColor(QPalette::Disabled, QPalette::Base, Qt::white);
 	setPalette(pale);
 
+	setMaxLength(105);
+
 	QRegExp rx("[^\\*]+\\*?[^\\*]*");
 	QValidator *validator = new QRegExpValidator(rx, this);
 	setValidator(validator);
