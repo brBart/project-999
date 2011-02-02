@@ -425,7 +425,7 @@ abstract class Organization extends Identifier{
 	 * @throws Exception
 	 */
 	private function validateEmail($email){
-		$pattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,5}(\.[a-zA-Z]{2,5})?$/';
+		$pattern = '/^[a-zA-Z0-9._-]+@([a-zA-Z0-9-]+\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}(\.[a-zA-Z]{2,4})?$/';
 		if(!preg_match($pattern, $email))
 			throw new ValidateException('Email inv&aacute;lido. Ejemplo: fulano@dominio.com', 'email');
 	}
