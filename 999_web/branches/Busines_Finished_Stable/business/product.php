@@ -1168,7 +1168,7 @@ class Bonus extends Persist{
 	static public function delete(Bonus $obj){
 		self::validateObjectFromDatabase($obj);
 		if(!BonusDAM::delete($obj))
-			throw new Exception('Oferta tiene dependencias y no se puede eliminar.');
+			throw new Exception('Oferta tiene dependencias (facturas) y no se puede eliminar.');
 	}
 	
 	/**
@@ -1197,6 +1197,10 @@ class Bonus extends Persist{
  * @author Roberto Oliveros
  */
 class Lot extends Persist{
+	/**
+	 * The maximum value a lot's price can have.
+	 */
+	const MAX_PRICE = 9999.99;
 	/**
 	 * Holds the lot's id.
 	 *
@@ -1280,7 +1284,7 @@ class Lot extends Persist{
 		
 		$this->_mProduct = $product;
 		$this->_mQuantity = round($quantity);
-		$this->_mPrice = round($price, 2);
+		$this->_mPrice = $price > self::MAX_PRICE ? self::MAX_PRICE : round($price, 2);
 		$this->_mExpirationDate = $expirationDate;
 		$this->_mId = $id;
 	}
