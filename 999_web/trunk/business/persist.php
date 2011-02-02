@@ -16,7 +16,7 @@ require_once('business/validator.php');
  * @author Roberto Oliveros
  */
 abstract class Persist{
-/**
+	/**
 	 * Status type.
 	 * 
 	 * Indicates that the object's data has just been created and is not in the database.
