@@ -1198,6 +1198,10 @@ class Bonus extends Persist{
  */
 class Lot extends Persist{
 	/**
+	 * The maximum value a lot's price can have.
+	 */
+	const MAX_PRICE = 9999.99;
+	/**
 	 * Holds the lot's id.
 	 *
 	 * @var integer
@@ -1280,7 +1284,7 @@ class Lot extends Persist{
 		
 		$this->_mProduct = $product;
 		$this->_mQuantity = round($quantity);
-		$this->_mPrice = $price > MAX_PRICE ? MAX_PRICE : round($price, 2);
+		$this->_mPrice = $price > self::MAX_PRICE ? self::MAX_PRICE : round($price, 2);
 		$this->_mExpirationDate = $expirationDate;
 		$this->_mId = $id;
 	}

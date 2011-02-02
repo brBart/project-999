@@ -55,10 +55,6 @@ set_include_path(get_include_path() . ';' . LIBS_999 . ';' . SITE_ROOT);
  */
 define('ITEMS_PER_PAGE', 10);
 /**
- * The maximum value a price can have.
- */
-define('MAX_PRICE', 9999.99);
-/**
  * Database configuration.
  */ 
 define('DB_PERSISTENCY', 'true');
