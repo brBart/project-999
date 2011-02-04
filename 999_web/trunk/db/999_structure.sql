@@ -104,11 +104,11 @@ CREATE TABLE IF NOT EXISTS `branch` (
 
 CREATE TABLE IF NOT EXISTS `cash_receipt` (
   `cash_receipt_id` int(11) NOT NULL,
-  `change_amount` decimal(11,2) NOT NULL,
-  `cash` decimal(11,2) NOT NULL,
-  `total_vouchers` decimal(11,2) NOT NULL,
-  `reserved` decimal(11,2) NOT NULL default '0.00',
-  `deposited` decimal(11,2) NOT NULL default '0.00',
+  `change_amount` decimal(13,2) NOT NULL,
+  `cash` decimal(13,2) NOT NULL,
+  `total_vouchers` decimal(13,2) NOT NULL,
+  `reserved` decimal(13,2) NOT NULL default '0.00',
+  `deposited` decimal(13,2) NOT NULL default '0.00',
   PRIMARY KEY  (`cash_receipt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `number` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(11,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`deposit_id`),
   KEY `idx_deposit_bank_account_number` (`bank_account_number`),
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `deposit_cash_receipt_id` int(11) NOT NULL auto_increment,
   `deposit_id` int(11) NOT NULL,
   `cash_receipt_id` int(11) NOT NULL,
-  `amount` decimal(11,2) NOT NULL,
+  `amount` decimal(13,2) NOT NULL,
   PRIMARY KEY  (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(11,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
@@ -376,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   `date` datetime NOT NULL,
   `nit` varchar(15) collate utf8_unicode_ci NOT NULL,
   `name` varchar(100) collate utf8_unicode_ci default NULL,
-  `total` decimal(11,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `vat` decimal(4,2) NOT NULL,
   `cash_register_id` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL,
@@ -536,7 +536,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
   `date` datetime NOT NULL,
   `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
   `contact` varchar(100) collate utf8_unicode_ci default NULL,
-  `total` decimal(11,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
@@ -584,7 +584,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   `supplier_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `shipment_number` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(11,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
@@ -698,7 +698,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
   `branch_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `contact` varchar(100) collate utf8_unicode_ci default NULL,
-  `total` decimal(11,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
@@ -812,7 +812,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `voucher_id` int(11) NOT NULL auto_increment,
   `cash_receipt_id` int(11) NOT NULL,
   `transaction` varchar(100) collate utf8_unicode_ci NOT NULL,
-  `amount` decimal(11,2) NOT NULL,
+  `amount` decimal(13,2) NOT NULL,
   `payment_card_number` int(11) NOT NULL,
   `payment_card_type_id` int(11) NOT NULL,
   `payment_card_brand_id` int(11) NOT NULL,
@@ -835,7 +835,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `reason` varchar(150) collate utf8_unicode_ci NOT NULL,
-  `total` decimal(11,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -1184,7 +1184,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_insert`(IN inProductId INT, IN inQuantity INT, IN inPercentage DECIMAL(10, 2), IN inCreatedDate DATE,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_insert`(IN inProductId INT, IN inQuantity INT, IN inPercentage DECIMAL(4, 2), IN inCreatedDate DATE,
 
   IN inExpirationDate DATE)
 BEGIN
@@ -1523,7 +1523,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1534,7 +1534,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1554,7 +1554,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1565,7 +1565,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1576,9 +1576,9 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_insert`(IN inCashReceiptId INT, IN inChange DECIMAL(10, 2), IN inCash DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_insert`(IN inCashReceiptId INT, IN inChange DECIMAL(13, 2), IN inCash DECIMAL(13, 2),
 
-  IN inTotalVouchers DECIMAL(10, 2))
+  IN inTotalVouchers DECIMAL(13, 2))
 BEGIN
 
   INSERT INTO cash_receipt (cash_receipt_id, change_amount, cash, total_vouchers)
@@ -1680,7 +1680,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(50), IN inProductId INT, IN inDate DATETIME,
 
-  IN inLastPrice DECIMAL(10, 2), IN inNewPrice DECIMAL(10, 2))
+  IN inLastPrice DECIMAL(6, 2), IN inNewPrice DECIMAL(6, 2))
 BEGIN
 
   INSERT INTO change_price_log (user_account_username, product_id, date, last_price, new_price)
@@ -2468,7 +2468,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_insert`(IN inDepositId INT, IN inCashReceiptId INT, IN inAmount DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_insert`(IN inDepositId INT, IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   INSERT INTO deposit_cash_receipt (deposit_id, cash_receipt_id, amount)
@@ -2521,7 +2521,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(100), IN inCashRegisterId INT, IN inUserName VARCHAR(50),
 
-  IN inDate DATETIME, IN inNumber VARCHAR(50), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
+  IN inDate DATETIME, IN inNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO deposit (bank_account_number, cash_register_id, user_account_username, date, number, total, status)
@@ -2635,7 +2635,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_insert`(IN inInvoiceId INT, IN inUserName VARCHAR(50), IN inPercentage DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_insert`(IN inInvoiceId INT, IN inUserName VARCHAR(50), IN inPercentage DECIMAL(4, 2))
 BEGIN
 
   INSERT INTO discount (invoice_id, user_account_username, percentage)
@@ -2722,7 +2722,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME,
 
-  IN inReason VARCHAR(150), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
+  IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO entry_adjustment (user_account_username, date, reason, total, status)
@@ -2742,7 +2742,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -2883,7 +2883,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_bonus_insert`(IN inInvoiceId INT, IN inBonusId INT, IN inNumber INT, IN inPrice DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_bonus_insert`(IN inInvoiceId INT, IN inBonusId INT, IN inNumber INT, IN inPrice DECIMAL(13, 2))
 BEGIN
 
   INSERT INTO invoice_bonus (invoice_id, bonus_id, number, price)
@@ -2988,9 +2988,9 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_insert`(IN inCorrelativeId INT, IN inNumber BIGINT,
 
-  IN inUserName VARCHAR(50), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(100), IN inTotal DECIMAL(10, 2),
+  IN inUserName VARCHAR(50), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(100), IN inTotal DECIMAL(13, 2),
 
-  IN inVat DECIMAL(10, 2), IN inCashRegisterId INT, IN inStatus TINYINT)
+  IN inVat DECIMAL(4, 2), IN inCashRegisterId INT, IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO invoice (correlative_id, number, user_account_username, date, nit, name, total, vat, cash_register_id, status)
@@ -3025,7 +3025,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -3526,7 +3526,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_insert`(IN inProductId INT, IN inEntryDate DATE, IN inExpirationDate DATE, IN inPrice DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_insert`(IN inProductId INT, IN inEntryDate DATE, IN inExpirationDate DATE, IN inPrice DECIMAL(6, 2),
 
   IN inQuantity INT)
 BEGIN
@@ -3577,7 +3577,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_price_update`(IN inLotId INT, IN inPrice DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_price_update`(IN inLotId INT, IN inPrice DECIMAL(6, 2))
 BEGIN
 
   UPDATE lot
@@ -4370,7 +4370,7 @@ CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_insert`(IN inBarCode VA
 
   IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
-  IN inPrice DECIMAL(10, 2), IN inDeactivated TINYINT)
+  IN inPrice DECIMAL(6, 2), IN inDeactivated TINYINT)
 BEGIN
 
   INSERT INTO product (bar_code, name, packaging, description, unit_of_measure_id, manufacturer_id, price, deactivated)
@@ -4648,7 +4648,7 @@ CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_update`(IN inProductId 
 
   IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
-  IN inPrice DECIMAL(10, 2), IN inDeactivated TINYINT)
+  IN inPrice DECIMAL(6, 2), IN inDeactivated TINYINT)
 BEGIN
 
   UPDATE product
@@ -4691,7 +4691,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(50), IN inSupplierId INT, IN inDate DATETIME,
 
-  IN inReason VARCHAR(150), IN inContact VARCHAR(100), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
+  IN inReason VARCHAR(150), IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO purchase_return (user_account_username, supplier_id, date, reason, contact, total, status)
@@ -4711,7 +4711,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -4792,7 +4792,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_insert`(IN inUserName VARCHAR(50), IN inSupplierId INT, IN inDate DATETIME,
 
-  IN inShipmentNumber VARCHAR(50), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
+  IN inShipmentNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO receipt (user_account_username, supplier_id, date, shipment_number, total, status)
@@ -4812,7 +4812,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -5254,7 +5254,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_insert`(IN inUserName VARCHAR(50), IN inBranchId INT,
 
-  IN inDate DATETIME, IN inContact VARCHAR(100), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
+  IN inDate DATETIME, IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO shipment (user_account_username, branch_id, date, contact, total, status)
@@ -5274,7 +5274,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -5964,7 +5964,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `vat_update`(IN inPercentage DECIMAL(10, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `vat_update`(IN inPercentage DECIMAL(4, 2))
 BEGIN
 
   UPDATE vat
@@ -5986,7 +5986,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_insert`(IN inCashReceiptId INT, IN inTransaction VARCHAR(100), IN inAmount DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_insert`(IN inCashReceiptId INT, IN inTransaction VARCHAR(100), IN inAmount DECIMAL(13, 2),
 
   IN inPaymentCardNumber INT, IN inPaymentCardTypeId INT, IN inPaymentCardBrandId INT, IN inName VARCHAR(100),
 
@@ -6035,7 +6035,7 @@ END$$
 
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME,
 
-  IN inReason VARCHAR(150), IN inTotal DECIMAL(10, 2), IN inStatus TINYINT)
+  IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO withdraw_adjustment (user_account_username, date, reason, total, status)
@@ -6055,7 +6055,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(10, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
