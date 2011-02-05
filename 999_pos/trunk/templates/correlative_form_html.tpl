@@ -36,7 +36,7 @@
 		  	<p>
 		  		<label for="resolution_number">Resoluci&oacute;n No:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="resolution_number" type="text" maxlength="100"
+		  		<input name="form_widget" id="resolution_number" type="text" maxlength="50"
 		  			onblur="oSetProperty.execute('set_resolution_number_correlative', this.value, this.id);" />
 		  		<span id="resolution_number-failed" class="hidden">*</span>
 		  		{else}
@@ -57,7 +57,7 @@
 		  	<p>
 		  		<label for="regime">R&eacute;gimen:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="regime" type="text" maxlength="100"
+		  		<input name="form_widget" id="regime" type="text" maxlength="50"
 		  			onblur="oSetProperty.execute('set_regime_correlative', this.value, this.id);" />
 		  		<span id="regime-failed" class="hidden">*</span>
 		  		{else}

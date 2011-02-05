@@ -43,7 +43,7 @@
 			<p>
 		  		<label for="reason">Motivo:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="reason" type="text" maxlength="150" />
+		  		<input name="form_widget" id="reason" type="text" maxlength="100" />
 		  		<span id="reason-failed" class="hidden">*</span>
 		  		{else}
 		  		<span>{$reason|escape}</span>

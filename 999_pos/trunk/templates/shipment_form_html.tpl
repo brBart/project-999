@@ -57,7 +57,7 @@
 		  	<p>
 		  		<label for="contact">Contacto:</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="contact" type="text" maxlength="100"
+		  		<input name="form_widget" id="contact" type="text" maxlength="50"
 		  			onblur="oSetProperty.execute('set_contact_object', this.value, this.id);" />
 		  		<span id="contact-failed" class="hidden">*</span>
 		  		{else}

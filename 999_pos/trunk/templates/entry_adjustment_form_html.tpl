@@ -39,7 +39,7 @@
 		  	<p>
 		  		<label for="reason">Motivo:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="reason" type="text" maxlength="150"
+		  		<input name="form_widget" id="reason" type="text" maxlength="100"
 		  			onblur="oSetProperty.execute('set_reason_object', this.value, this.id);" />
 		  		<span id="reason-failed" class="hidden">*</span>
 		  		{else}

@@ -96,7 +96,7 @@
      <item row="1" column="1">
       <widget class="LineEdit" name="nameLineEdit">
        <property name="maxLength">
-        <number>100</number>
+        <number>50</number>
        </property>
       </widget>
      </item>
@@ -147,7 +147,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QWebView" name="webView">
+    <widget class="QWebView" name="webView" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -200,7 +200,7 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="url">
+     <property name="url" stdset="0">
       <url>
        <string>about:blank</string>
       </url>

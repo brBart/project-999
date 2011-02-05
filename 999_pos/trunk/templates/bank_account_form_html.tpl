@@ -22,7 +22,7 @@
 			<p>
 		  		<label for="number">N&uacute;mero:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="number" type="text" maxlength="100"
+		  		<input name="form_widget" id="number" type="text" maxlength="50"
 		  			onblur="oSetProperty.execute('set_number_object', this.value, this.id);" />
 		  		<span id="number-failed" class="hidden">*</span>
 		  		{else}
@@ -31,7 +31,7 @@
 		  	</p>
 		  	<p>
 		  		<label for="holder_name">Titular:*</label>
-		  		<input name="form_widget" id="holder_name" type="text" value="{$holder_name|escape}" maxlength="100"
+		  		<input name="form_widget" id="holder_name" type="text" value="{$holder_name|escape}" maxlength="50"
 		  			onblur="oSetProperty.execute('set_holder_name_bank_account', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="holder_name-failed" class="hidden">*</span>
