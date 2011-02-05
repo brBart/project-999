@@ -359,7 +359,7 @@ input[type="text"], input[type="password"] {
 
 #receipt_info p {
 	float: left;
-	margin-right: 7em;
+	margin-right: 3em;
 }
 
 #receipt_info label {
