@@ -34,10 +34,10 @@
 				<tr>
 					<td>{$list[i].logged_date}</td>
 					<td>{$list[i].username}</td>
-					<td>{$list[i].bar_code|escape}</td>
-					<td>{$list[i].manufacturer|escape}</td>
-					<td>{$list[i].name|escape}</td>
-					<td>{$list[i].packaging|escape}</td>
+					<td>{$list[i].bar_code|escape|wordwrap:16:"<br />":true}</td>
+					<td>{$list[i].manufacturer|escape|wordwrap:11:"<br />":true}</td>
+					<td>{$list[i].name|escape|wordwrap:11:"<br />":true}</td>
+					<td>{$list[i].packaging|escape|wordwrap:11:"<br />":true}</td>
 					<td>{$list[i].last_price|nf:2}</td>
 					<td>{$list[i].new_price|nf:2}</td>
 				</tr>
