@@ -11,7 +11,7 @@
 		<fieldset id="main_data">
 			<p>
 		  		<label>Motivo:</label>
-		  		<span>{$reason|escape}</span>
+		  		<span>{$reason|escape|wordwrap:50:"<br />":true}</span>
 		  	</p>
 		  	<p>
 		  		<label>General:</label>
