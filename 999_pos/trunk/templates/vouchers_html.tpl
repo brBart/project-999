@@ -16,11 +16,11 @@
        	<tbody>
        		{section name=i loop=$vouchers}
       			<tr>
-	       		<td>{$vouchers[i].transaction_number|escape}</td>
+	       		<td>{$vouchers[i].transaction_number|escape|wordwrap:16:"<br />":true}</td>
 	       		<td>{$vouchers[i].number}</td>
-			    <td>{$vouchers[i].type|escape}</td>
-			    <td>{$vouchers[i].brand|escape}</td>
-			    <td>{$vouchers[i].name|escape}</td>
+			    <td>{$vouchers[i].type|escape|wordwrap:11:"<br />":true}</td>
+			    <td>{$vouchers[i].brand|escape|wordwrap:11:"<br />":true}</td>
+			    <td>{$vouchers[i].name|escape|wordwrap:11:"<br />":true}</td>
 			    <td>{$vouchers[i].expiration_date}</td>
 			    <td class="total_col">{$vouchers[i].amount|nf:2}</td>
 			</tr>

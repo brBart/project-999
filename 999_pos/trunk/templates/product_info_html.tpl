@@ -36,7 +36,7 @@ body {
 			<p id="{$type}" class="{$type}">{$message}</p>
 		{/if}
 		</div>
-		<div id="frm" class="cash_receipt">
+		<div id="frm">
 			<fieldset id="main_data">
 				<div id="product_details">
 					<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
