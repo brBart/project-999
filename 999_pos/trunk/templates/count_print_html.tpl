@@ -31,11 +31,11 @@
 	       	<tbody>
        			{section name=i loop=$details}
 				<tr>
-					<td>{$details[i].bar_code|escape|wordwrap:16:"\n":true}</td>
-					<td>{$details[i].manufacturer|escape|wordwrap:11:"\n":true}</td>
-					<td>{$details[i].product|escape|wordwrap:11:"\n":true}</td>
-					<td>{$details[i].packaging|escape|wordwrap:11:"\n":true}</td>
-					<td>{$details[i].um|escape|wordwrap:8:"\n":true}</td>
+					<td>{$details[i].bar_code|escape|wordwrap:16:"<br />":true}</td>
+					<td>{$details[i].manufacturer|escape|wordwrap:11:"<br />":true}</td>
+					<td>{$details[i].product|escape|wordwrap:11:"<br />":true}</td>
+					<td>{$details[i].packaging|escape|wordwrap:11:"<br />":true}</td>
+					<td>{$details[i].um|escape|wordwrap:8:"<br />":true}</td>
 					<td class="total_col">{$details[i].quantity}</td>
 				</tr>
 				{/section}

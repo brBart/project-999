@@ -10,6 +10,6 @@
   	</p>
   	<p>
   		<label>Motivo:</label>
-  		<span>{$reason|escape}</span>
+  		<span>{$reason|escape|wordwrap:50:"<br />":true}</span>
   	</p>
 </fieldset>
