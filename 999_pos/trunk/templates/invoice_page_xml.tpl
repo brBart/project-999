@@ -29,16 +29,16 @@ header('Content-Type: text/xml');
 			{else}
 			<is_bonus>0</is_bonus>
 			<percentage>0</percentage>
-			<bar_code><![CDATA[{$details[i].bar_code}]]></bar_code>
-			<manufacturer><![CDATA[{$details[i].manufacturer}]]></manufacturer>
-			<um><![CDATA[{$details[i].um}]]></um>
+			<bar_code><![CDATA[{$details[i].bar_code|wordwrap:16:"\n":true}]]></bar_code>
+			<manufacturer><![CDATA[{$details[i].manufacturer|wordwrap:11:"\n":true}]]></manufacturer>
+			<um><![CDATA[{$details[i].um|wordwrap:8:"\n":true}]]></um>
 			<expiration_date>
 			{if $details[i].expiration_date neq ''}{$details[i].expiration_date}{else}N/A{/if}
 			</expiration_date>
 			{/if}
 			<detail_id>{$details[i].id}</detail_id>
-			<product><![CDATA[{$details[i].product}]]></product>
-			<packaging><![CDATA[{$details[i].packaging}]]></packaging>
+			<product><![CDATA[{$details[i].product|wordwrap:11:"\n":true}]]></product>
+			<packaging><![CDATA[{$details[i].packaging|wordwrap:11:"\n":true}]]></packaging>
 			<quantity>{$details[i].quantity}</quantity>
 			<price>{$details[i].price|nf:2}</price>
 			<total>{$details[i].total|nf:2}</total>
