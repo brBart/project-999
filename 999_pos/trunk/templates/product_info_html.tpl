@@ -42,19 +42,19 @@ body {
 					<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 				  	<p>
 				  		<label>Nombre:</label>
-				  		<span>{$name|escape}&nbsp;</span>
+				  		<span>{$name|escape|wordwrap:40:"<br />":true}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>C&oacute;digo barra:</label>
-				  		<span>{$bar_code|escape}&nbsp;</span>
+				  		<span>{$bar_code|escape|wordwrap:40:"<br />":true}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Presentaci&oacute;n:</label>
-				  		<span>{$packaging|escape}&nbsp;</span>
+				  		<span>{$packaging|escape|wordwrap:40:"<br />":true}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Descripci&oacute;n:</label>
-				  		<span>{$description|escape}&nbsp;</span>
+				  		<span>{$description|escape|wordwrap:40:"<br />":true}&nbsp;</span>
 				  	</p>
 				  	<p>
 				  		<label>Casa:</label>
@@ -90,7 +90,7 @@ body {
 					       	<tbody>
 				       			{section name=i loop=$suppliers}
 								<tr>
-									<td>{$suppliers[i].supplier}</td>
+									<td>{$suppliers[i].supplier|truncate:20:"...":true}</td>
 									<td>{$suppliers[i].product_sku}</td>
 								</tr>
 								{/section}
