@@ -726,8 +726,8 @@ void SalesSection::showCashReceipt()
 		window->setAttribute(Qt::WA_DeleteOnClose);
 		window->setWindowModality(Qt::WindowModal);
 		window->setWindowTitle("Recibo");
-		window->resize(width() - (width() / 3), height() - 150);
-		window->move(x() + (width() / 6), y() + 100);
+		window->resize(width() - ((width() / 3) - 30), height() - 150);
+		window->move(x() + ((width() / 6) - 15), y() + 100);
 
 		CashReceiptSection *section = new CashReceiptSection(
 				ui.webView->page()->networkAccessManager()->cookieJar(),
