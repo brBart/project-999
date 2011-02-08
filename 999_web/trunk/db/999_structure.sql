@@ -959,7 +959,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_account_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_delete`(IN inBankAccountNumber VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_delete`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   DELETE FROM bank_account
@@ -969,7 +969,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_account_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_dependencies`(IN inBankAccountNumber VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_dependencies`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   DECLARE bankAccountRowsCount INT;
@@ -1003,7 +1003,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_account_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_exists`(IN inBankAccountNumber VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_exists`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   SELECT COUNT(*) FROM bank_account
@@ -1013,7 +1013,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_account_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_get`(IN inBankAccountNumber VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_get`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   SELECT bank_id, name FROM bank_account
@@ -1023,7 +1023,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_account_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_insert`(IN inBankAccountNumber VARCHAR(100), IN inBankId INT, IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_insert`(IN inBankAccountNumber VARCHAR(50), IN inBankId INT, IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO bank_account (bank_account_number, bank_id, name)
@@ -1065,7 +1065,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_account_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_update`(IN inBankAccountNumber VARCHAR(100), IN inBankId INT, IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_update`(IN inBankAccountNumber VARCHAR(50), IN inBankId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE bank_account
@@ -1131,7 +1131,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_insert`(IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO bank (name)
@@ -1173,7 +1173,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `bank_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_update`(IN inBankId INT, IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_update`(IN inBankId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE bank
@@ -1329,9 +1329,9 @@ BEGIN
 END$$
 
 DROP PROCEDURE `branch_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_insert`(IN inName VARCHAR(100), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
-  IN inAddress VARCHAR(150), IN inEmail VARCHAR(100), IN inContact VARCHAR(100))
+  IN inAddress VARCHAR(150), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
 
   INSERT INTO branch (name, nit, telephone, address, email, contact)
@@ -1373,11 +1373,11 @@ BEGIN
 END$$
 
 DROP PROCEDURE `branch_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_update`(IN inBranchId INT, IN inName VARCHAR(100),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_update`(IN inBranchId INT, IN inName VARCHAR(50),
 
   IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(150),
 
-  IN inEmail VARCHAR(100), IN inContact VARCHAR(100))
+  IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
 
   UPDATE branch
@@ -1805,7 +1805,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `company_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `company_update`(IN inNit VARCHAR(10), IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `company_update`(IN inNit VARCHAR(10), IN inName VARCHAR(50))
 BEGIN
 
   UPDATE company
@@ -2042,7 +2042,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `correlative_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(100), IN inResolutionDate Date, IN inRegime VARCHAR(100),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(50), IN inResolutionDate Date, IN inRegime VARCHAR(50),
 
   IN inInitialNumber BIGINT, IN inFinalNumber BIGINT)
 BEGIN
@@ -2316,7 +2316,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `customer_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_insert`(IN inNit VARCHAR(15), IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_insert`(IN inNit VARCHAR(15), IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO customer (nit, name)
@@ -2326,7 +2326,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `customer_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_update`(IN inNit VARCHAR(15), IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_update`(IN inNit VARCHAR(15), IN inName VARCHAR(50))
 BEGIN
 
   UPDATE customer
@@ -2672,7 +2672,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `deposit_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(100), IN inCashRegisterId INT, IN inUserName VARCHAR(10),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(50), IN inCashRegisterId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME, IN inNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -3170,7 +3170,7 @@ END$$
 DROP PROCEDURE `invoice_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_insert`(IN inCorrelativeId INT, IN inNumber BIGINT,
 
-  IN inUserName VARCHAR(10), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(100), IN inTotal DECIMAL(13, 2),
+  IN inUserName VARCHAR(10), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(50), IN inTotal DECIMAL(13, 2),
 
   IN inVat DECIMAL(4, 2), IN inCashRegisterId INT, IN inStatus TINYINT)
 BEGIN
@@ -3804,7 +3804,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `manufacturer_counting_template_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_counting_template_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_counting_template_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
   SELECT * FROM
@@ -3884,7 +3884,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `manufacturer_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_insert`(IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO manufacturer (name)
@@ -3938,7 +3938,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `manufacturer_purchases_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_purchases_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_purchases_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -3986,7 +3986,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `manufacturer_sales_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_sales_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_sales_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4034,7 +4034,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `manufacturer_stadistics_labels_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_count`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_count`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
        SELECT COUNT(*) FROM (SELECT man.name FROM product pro INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
@@ -4044,7 +4044,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `manufacturer_stadistics_labels_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4072,7 +4072,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `manufacturer_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_update`(IN inManufacturerId INT, IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_update`(IN inManufacturerId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE manufacturer
@@ -4138,7 +4138,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `payment_card_brand_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_insert`(IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO payment_card_brand (name)
@@ -4180,7 +4180,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `payment_card_brand_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_update`(IN inPaymentCardBrandId INT, IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_update`(IN inPaymentCardBrandId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE payment_card_brand
@@ -4246,7 +4246,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `payment_card_type_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_insert`(IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO payment_card_type (name)
@@ -4288,7 +4288,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `payment_card_type_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_update`(IN inPaymentCardTypeId INT, IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_update`(IN inPaymentCardTypeId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE payment_card_type
@@ -4320,7 +4320,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_bar_code_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_exists`(IN inProductId INT, IN inBarCode VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_exists`(IN inProductId INT, IN inBarCode VARCHAR(50))
 BEGIN
 
   SELECT COUNT(*) FROM product
@@ -4330,7 +4330,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_bar_code_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_update`(IN inProductId INT, IN inBarCode VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_update`(IN inProductId INT, IN inBarCode VARCHAR(50))
 BEGIN
   UPDATE product
     SET bar_code = inBarCode
@@ -4352,7 +4352,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_counting_template_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_counting_template_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_counting_template_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
   SELECT * FROM
@@ -4504,7 +4504,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_id_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_id_get`(IN inBarCode VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_id_get`(IN inBarCode VARCHAR(50))
 BEGIN
 
   SELECT product_id FROM product
@@ -4618,7 +4618,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_insert`(IN inBarCode VARCHAR(100), IN inName VARCHAR(100),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_insert`(IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
   IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
@@ -4708,7 +4708,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_purchases_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_purchases_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_purchases_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4766,7 +4766,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_sales_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_sales_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_sales_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4825,7 +4825,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_stadistics_labels_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_count`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_count`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
        SELECT COUNT(*) FROM (SELECT pro.name FROM product pro INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
@@ -4835,7 +4835,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_stadistics_labels_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4914,7 +4914,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `product_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_update`(IN inProductId INT, IN inBarCode VARCHAR(100), IN inName VARCHAR(100),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_update`(IN inProductId INT, IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
   IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
@@ -4964,7 +4964,7 @@ END$$
 DROP PROCEDURE `purchase_return_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
 
-  IN inReason VARCHAR(150), IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
+  IN inReason VARCHAR(150), IN inContact VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO purchase_return (user_account_username, supplier_id, date, reason, contact, total, status)
@@ -5480,7 +5480,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `shift_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_insert`(IN inName VARCHAR(50), IN inTimeTable VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_insert`(IN inName VARCHAR(50), IN inTimeTable VARCHAR(50))
 BEGIN
 
   INSERT INTO shift (name, time_table)
@@ -5522,7 +5522,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `shift_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_update`(IN inShiftId INT, IN inName VARCHAR(50), IN inTimeTable VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_update`(IN inShiftId INT, IN inName VARCHAR(50), IN inTimeTable VARCHAR(50))
 BEGIN
 
   UPDATE shift
@@ -5568,7 +5568,7 @@ END$$
 DROP PROCEDURE `shipment_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_insert`(IN inUserName VARCHAR(10), IN inBranchId INT,
 
-  IN inDate DATETIME, IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
+  IN inDate DATETIME, IN inContact VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO shipment (user_account_username, branch_id, date, contact, total, status)
@@ -5727,9 +5727,9 @@ BEGIN
 END$$
 
 DROP PROCEDURE `supplier_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_insert`(IN inName VARCHAR(100), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
-  IN inAddress VARCHAR(150), IN inEmail VARCHAR(100), IN inContact VARCHAR(100))
+  IN inAddress VARCHAR(150), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
 
   INSERT INTO supplier (name, nit, telephone, address, email, contact)
@@ -5785,11 +5785,11 @@ BEGIN
 END$$
 
 DROP PROCEDURE `supplier_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_update`(IN inSupplierId INT, IN inName VARCHAR(100),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_update`(IN inSupplierId INT, IN inName VARCHAR(50),
 
   IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(150),
 
-  IN inEmail VARCHAR(100), IN inContact VARCHAR(100))
+  IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
 
   UPDATE supplier
@@ -5857,7 +5857,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `unit_of_measure_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_insert`(IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO unit_of_measure (name)
@@ -5899,7 +5899,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `unit_of_measure_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_update`(IN inUnitOfMeasureId INT, IN inName VARCHAR(100))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_update`(IN inUnitOfMeasureId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE unit_of_measure
@@ -6335,9 +6335,9 @@ BEGIN
 END$$
 
 DROP PROCEDURE `voucher_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_insert`(IN inCashReceiptId INT, IN inTransaction VARCHAR(100), IN inAmount DECIMAL(13, 2),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_insert`(IN inCashReceiptId INT, IN inTransaction VARCHAR(50), IN inAmount DECIMAL(13, 2),
 
-  IN inPaymentCardNumber INT, IN inPaymentCardTypeId INT, IN inPaymentCardBrandId INT, IN inName VARCHAR(100),
+  IN inPaymentCardNumber INT, IN inPaymentCardTypeId INT, IN inPaymentCardBrandId INT, IN inName VARCHAR(50),
 
   IN inExpirationDate DATE)
 BEGIN
