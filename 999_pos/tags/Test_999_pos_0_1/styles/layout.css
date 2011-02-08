@@ -1,0 +1,503 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+textarea, select {
+	width: 15em;
+}
+
+textarea {
+	height: 6em;
+}
+
+fieldset {
+	padding: 1em;
+	margin: 0;
+}
+
+fieldset p {
+	margin: 0.5em;
+}
+
+caption span {
+	float: left;
+}
+
+caption * + span {
+	float: right;
+}
+
+li form {
+	display: inline;
+}
+
+input[type="text"], input[type="password"] {
+	width: 15em;
+}
+
+.hidden {
+	display: none;
+}
+
+.failed {
+	display: inline;
+}
+
+.content_tiny {
+	width: 30%;
+}
+	
+.content_small, .content_small_menu {
+	width: 40%;
+}
+
+.content_fit {
+	width: 48%;
+}
+
+.content_medium {
+	width: 86%;
+	max-width: 780px;
+}
+
+.content_large {
+	width: 95%;
+}
+
+.large_tb {
+	width: 92.5%;
+}
+
+.small_tb {
+	width: 83%;
+}
+
+.modal_form {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+}
+
+.list_form, .list_form_large {
+	position: relative;
+	padding: 1em;
+	height: 80%;
+	top: 10%;
+	overflow: scroll;
+}
+
+.list_form {
+	width: 50%;
+	left: 25%;
+}
+
+.list_form_large {
+	width: 65%;
+	left: 20%;
+}
+
+.date_title {
+	margin-bottom: 3em;
+}
+
+.close_window {
+	float: right;
+}
+
+.widget_input {
+	height: 2em;
+	width: 20em;
+}
+
+.console_display {
+	height: 5em;
+	padding: 0;
+	overflow: auto;
+}
+
+.register {
+	height: 17em;
+	margin-bottom: 1em;
+	overflow: auto;
+}
+
+.console_display p {
+	width: 60%;
+	margin: 1em auto;
+	padding: 0.5em 0.5em 0.5em 2em;
+}
+
+.items table {
+	margin: 0 auto;
+}
+
+.items th {
+	padding: 0.5em 1em;
+}
+
+.items td {
+	/* Leave this because of anomaly */
+	padding: 0.5em 1em;
+}
+
+.many_search input[type="text"], .many_search select {
+	width: 9.5em;
+}
+
+.working_day_search div span {
+	position: absolute;
+	top: -1.2em;
+	left: 7em;
+}
+
+#authenticate_form {
+	position: relative;
+	padding: 1em;
+	width: 35%;
+	top: 35%;
+	left: 35%;
+}
+
+#wrapper {
+	margin: 0 auto;
+	width: 95%;
+	max-width: 1100px;
+	min-width: 90em;
+	min-height: 95%;
+}
+
+#header {
+	padding: 1em 0;
+}
+
+#main_menu {
+	height: 3em;
+}
+
+#deco_div {
+	height: 0.5em;
+}
+
+#second_menu {
+	float: left;
+	width: 25%;
+}
+
+#third_menu {
+	float: right;
+	width: 70%;
+	margin-bottom: 2em;
+}
+
+#content {
+	width: 100%;
+	margin-bottom: 2em;
+}
+
+#search_product {
+	height: 1.5em;
+	width: 29em;
+}
+
+#scroll {
+	position: absolute;
+	z-index: 1;
+	overflow: auto;
+	height: 18em;
+	width: 23em;
+}
+
+#footer {
+	clear: both;
+}
+
+#btn_col {
+	width: 1em;
+}
+
+#product_tb {
+	margin: 2em auto;
+	height: 2.5em;
+}
+
+#recordset {
+	height: 1.5em;
+}
+
+#product_details {
+	float: left;
+	width: 42%;
+}
+
+#product_suppliers {
+	float: right;
+	width: 56%;
+}
+
+#product_info {
+	float: left;
+	width: 35%;
+}
+
+#bar_code_input {
+	height: 1.5em;
+}
+
+#bonus, #reserve_items {
+	float: right;
+	width: 65%;
+}
+
+#bonus_tb {
+	height: 1.5em;
+	width: 46em;
+	margin: 1em auto;
+}
+
+#dates_range div, .working_day_search div, #working_dates_range div {
+	float: left;
+	position: relative;
+}
+
+#product_tb > div {
+	float: left;
+	padding: 0.5em 0.5em 0 0.5em;
+}
+
+#content > div, table {
+	margin: 0 auto;
+}
+
+#list th, #list td {
+	padding: 1em 2em;
+}
+
+#list_large th, #list_large td {
+	padding: 1em 0.5em;
+}
+
+#list_large th.data_col, #list_large td.data_col {
+	padding: 0;
+}
+
+#list_large th.data_separator, #list_large td.data_separator {
+	width: 0;
+}
+
+#header p, h1 {
+	display: inline;
+	margin: 0 1em;
+}
+
+#main_menu li {
+	float: left;
+}
+
+#main_menu a {
+	display: block;
+	padding: 0 1em;
+	line-height: 2.7em;
+}
+
+#second_menu a, #pos_menu a {
+	display: block;
+	padding: 1em;
+}
+
+#third_menu ul {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#third_menu li{
+	padding: 2em 1em;
+}
+
+#frm label {
+	float: left;
+	width: 12em;
+}
+
+#prod_supp_tb label {
+	float: none;
+}
+
+#prod_supp_tb select {
+	width: 10em;
+}
+
+#sub_menu p {
+	float: left;
+}
+
+#sub_menu a {
+	display: block;
+	float: left;
+	padding: 0 3em;
+}
+
+#header_data p {
+	float: left;
+	padding: 0 1.5em;
+}
+
+#header_data label {
+	width: auto;
+	margin-right: 1em;
+}
+
+#receipt_info p {
+	float: left;
+	margin-right: 3em;
+}
+
+#receipt_info label {
+	width: auto;
+	margin-right: 1em;
+}
+
+#cash_register p {
+	float: left;
+	padding: 0 3em;
+}
+
+#cash_register label {
+	width: auto;
+	margin-right: 1em;
+}
+
+#status_bar_invoice label {
+	width: auto;
+	margin-right: 3em;
+}
+
+#scroll table {
+	float: left;
+	width: 20em;
+}
+
+#scroll td {
+	padding: 0.2em 0.2em;
+}
+
+#status_bar_invoice {
+	float: left;
+	width: 18%;
+}
+
+#product_tb label, #bonus_tb label {
+	width: auto;
+}
+
+#bonus_tb > * {
+	float: left;
+}
+
+#bonus_tb div {
+	position: relative;
+}
+
+#search_product > * {
+	float: left;
+}
+
+#product_tb > div > * {
+	float: left;
+}
+
+#bonus_tb div span, #dates_range div span, #working_dates_range div span {
+	position: absolute;
+	top: -1.2em;
+}
+
+#bonus_tb div span {
+	left: 0;
+}
+
+#dates_range div span {
+	left: 12em;
+}
+
+#working_dates_range div span {
+	left: 10em;
+}
+
+#search_product input[type="text"] {
+	width: 21em;
+}
+
+#prod_supp_tb input[type="text"] {
+	width: 8em;
+}
+
+#bonus_tb input[type="text"] {
+	width: 3.5em;
+}
+
+.content_small_menu #status_bar {
+	float: left;
+	width: 50%;
+}
+
+.content_medium #status_bar {
+	float: left;
+	width: 50%;
+}
+
+.content_large #status_bar {
+	float: left;
+	width: 30%;
+}
+
+.content_large #details table {
+	width: 95%;
+}
+
+.cash_receipt #total_amounts {
+	width: 40%;
+	margin: 0 auto;
+}
+
+.cash_receipt #total_amounts label, #cash_input {
+	width: 45%;
+}
+
+.cash_receipt #total_amounts p {
+	margin: 1em 0;
+}
+
+#frm .pos {
+	height: 25em;
+}
+
+#frm #details {
+	width: 100%;
+	clear: both;
+}
+
+#product_tb #quantity, #price, #expiration_date {
+	width: 6em;
+}
+
+#bonus_tb #expiration_date {
+	width: 6em;
+}
+
+.content_medium #product_suppliers #details table {
+	width: 75%;
+}
+
+.content_medium #bonus #details table {
+	width: 90%;
+}
