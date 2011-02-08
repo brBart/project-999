@@ -1331,7 +1331,7 @@ END$$
 DROP PROCEDURE `branch_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
-  IN inAddress VARCHAR(150), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
+  IN inAddress VARCHAR(100), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
 
   INSERT INTO branch (name, nit, telephone, address, email, contact)
@@ -1375,7 +1375,7 @@ END$$
 DROP PROCEDURE `branch_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_update`(IN inBranchId INT, IN inName VARCHAR(50),
 
-  IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(150),
+  IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(100),
 
   IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
@@ -1827,7 +1827,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `comparison_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(150), IN inGeneral TINYINT,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(100), IN inGeneral TINYINT,
 
   IN inPhysicalTotal INT)
 BEGIN
@@ -2202,7 +2202,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `count_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(150), IN inTotal INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(100), IN inTotal INT)
 BEGIN
 
   INSERT INTO count (user_account_username, date, reason, total)
@@ -2888,7 +2888,7 @@ END$$
 DROP PROCEDURE `entry_adjustment_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
 
-  IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
+  IN inReason VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO entry_adjustment (user_account_username, date, reason, total, status)
@@ -4620,7 +4620,7 @@ END$$
 DROP PROCEDURE `product_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_insert`(IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
-  IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
+  IN inPackaging VARCHAR(100), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
   IN inPrice DECIMAL(6, 2), IN inDeactivated TINYINT)
 BEGIN
@@ -4916,7 +4916,7 @@ END$$
 DROP PROCEDURE `product_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_update`(IN inProductId INT, IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
-  IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
+  IN inPackaging VARCHAR(100), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
   IN inPrice DECIMAL(6, 2), IN inDeactivated TINYINT)
 BEGIN
@@ -4964,7 +4964,7 @@ END$$
 DROP PROCEDURE `purchase_return_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
 
-  IN inReason VARCHAR(150), IN inContact VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
+  IN inReason VARCHAR(100), IN inContact VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO purchase_return (user_account_username, supplier_id, date, reason, contact, total, status)
@@ -5729,7 +5729,7 @@ END$$
 DROP PROCEDURE `supplier_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
-  IN inAddress VARCHAR(150), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
+  IN inAddress VARCHAR(100), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
 
   INSERT INTO supplier (name, nit, telephone, address, email, contact)
@@ -5787,7 +5787,7 @@ END$$
 DROP PROCEDURE `supplier_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_update`(IN inSupplierId INT, IN inName VARCHAR(50),
 
-  IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(150),
+  IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(100),
 
   IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
@@ -6387,7 +6387,7 @@ END$$
 DROP PROCEDURE `withdraw_adjustment_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
 
-  IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
+  IN inReason VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
 
   INSERT INTO withdraw_adjustment (user_account_username, date, reason, total, status)
