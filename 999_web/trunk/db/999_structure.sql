@@ -1785,7 +1785,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `change_price_log_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(50), IN inProductId INT, IN inDate DATETIME,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(10), IN inProductId INT, IN inDate DATETIME,
 
   IN inLastPrice DECIMAL(6, 2), IN inNewPrice DECIMAL(6, 2))
 BEGIN
@@ -1827,7 +1827,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `comparison_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME, IN inReason VARCHAR(150), IN inGeneral TINYINT,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(150), IN inGeneral TINYINT,
 
   IN inPhysicalTotal INT)
 BEGIN
@@ -2202,7 +2202,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `count_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME, IN inReason VARCHAR(150), IN inTotal INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(150), IN inTotal INT)
 BEGIN
 
   INSERT INTO count (user_account_username, date, reason, total)
@@ -2550,7 +2550,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `deposit_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(50), IN inDate DATETIME)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(10), IN inDate DATETIME)
 BEGIN
 
   UPDATE deposit
@@ -2672,7 +2672,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `deposit_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(100), IN inCashRegisterId INT, IN inUserName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(100), IN inCashRegisterId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME, IN inNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -2796,7 +2796,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `discount_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_insert`(IN inInvoiceId INT, IN inUserName VARCHAR(50), IN inPercentage DECIMAL(4, 2))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_insert`(IN inInvoiceId INT, IN inUserName VARCHAR(10), IN inPercentage DECIMAL(4, 2))
 BEGIN
 
   INSERT INTO discount (invoice_id, user_account_username, percentage)
@@ -2854,7 +2854,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `entry_adjustment_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_cancel`(IN inEntryAdjustmentId INT, IN inUserName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_cancel`(IN inEntryAdjustmentId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -2886,7 +2886,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `entry_adjustment_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
 
   IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -3114,7 +3114,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `invoice_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -3170,7 +3170,7 @@ END$$
 DROP PROCEDURE `invoice_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_insert`(IN inCorrelativeId INT, IN inNumber BIGINT,
 
-  IN inUserName VARCHAR(50), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(100), IN inTotal DECIMAL(13, 2),
+  IN inUserName VARCHAR(10), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(100), IN inTotal DECIMAL(13, 2),
 
   IN inVat DECIMAL(4, 2), IN inCashRegisterId INT, IN inStatus TINYINT)
 BEGIN
@@ -4932,7 +4932,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `purchase_return_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_cancel`(IN inPurchaseReturnId INT, IN inUserName VARCHAR(50), IN inDate DATETIME)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_cancel`(IN inPurchaseReturnId INT, IN inUserName VARCHAR(10), IN inDate DATETIME)
 BEGIN
 
   UPDATE purchase_return
@@ -4962,7 +4962,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `purchase_return_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(50), IN inSupplierId INT, IN inDate DATETIME,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
 
   IN inReason VARCHAR(150), IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -5038,7 +5038,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `receipt_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_cancel`(IN inReceiptId INT, IN inUserName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_cancel`(IN inReceiptId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -5070,7 +5070,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `receipt_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_insert`(IN inUserName VARCHAR(50), IN inSupplierId INT, IN inDate DATETIME,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
 
   IN inShipmentNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -5178,7 +5178,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `reserve_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_insert`(IN inUserName VARCHAR(50), IN inLotId INT, IN inDate DATETIME, IN inQuantity INT)
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_insert`(IN inUserName VARCHAR(10), IN inLotId INT, IN inDate DATETIME, IN inQuantity INT)
 BEGIN
 
   INSERT INTO reserve (user_account_username, lot_id, date, quantity)
@@ -5534,7 +5534,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `shipment_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_cancel`(IN inShipmentId INT, IN inUserName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_cancel`(IN inShipmentId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -5566,7 +5566,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `shipment_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_insert`(IN inUserName VARCHAR(50), IN inBranchId INT,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_insert`(IN inUserName VARCHAR(10), IN inBranchId INT,
 
   IN inDate DATETIME, IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -5911,7 +5911,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_change_password`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_change_password`(IN inUserName VARCHAR(50), IN inPassword VARCHAR(50))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_change_password`(IN inUserName VARCHAR(10), IN inPassword VARCHAR(50))
 BEGIN
 
   UPDATE user_account
@@ -5923,7 +5923,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_delete`(IN inUserName VARCHAR(50))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_delete`(IN inUserName VARCHAR(10))
 BEGIN
 
   DELETE FROM user_account
@@ -5933,7 +5933,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_dependencies`(IN inUserName VARCHAR(50))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_dependencies`(IN inUserName VARCHAR(10))
 BEGIN
 
   DECLARE userAccountRowsCount INT;
@@ -6183,7 +6183,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_exists`(IN inUserName VARCHAR(50))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_exists`(IN inUserName VARCHAR(10))
 BEGIN
 
   SELECT COUNT(*) FROM user_account
@@ -6193,7 +6193,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_get`(IN inUserName VARCHAR(50))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_get`(IN inUserName VARCHAR(10))
 BEGIN
 
   SELECT role_id, first_name, last_name, deactivated FROM user_account
@@ -6203,7 +6203,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_insert`(IN inUserName VARCHAR(50), IN inRoleId INT, IN inFirstName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_insert`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inPassword VARCHAR(50), IN inDeactivated TINYINT)
 BEGIN
@@ -6215,7 +6215,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_is_valid`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_is_valid`(IN inUserName VARCHAR(50), IN inPassword VARCHAR(50))
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_is_valid`(IN inUserName VARCHAR(10), IN inPassword VARCHAR(50))
 BEGIN
 
   DECLARE userRowsCount INT;
@@ -6275,7 +6275,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_no_password_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_no_password_update`(IN inUserName VARCHAR(50), IN inRoleId INT, IN inFirstName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_no_password_update`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inDeactivated TINYINT)
 BEGIN
@@ -6289,7 +6289,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `user_account_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_update`(IN inUserName VARCHAR(50), IN inRoleId INT, IN inFirstName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_update`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inPassword VARCHAR(50), IN inDeactivated TINYINT)
 BEGIN
@@ -6353,7 +6353,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `withdraw_adjustment_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_cancel`(IN inWithdrawAdjustmentId INT, IN inUserName VARCHAR(50),
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_cancel`(IN inWithdrawAdjustmentId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -6385,7 +6385,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE `withdraw_adjustment_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME,
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
 
   IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
