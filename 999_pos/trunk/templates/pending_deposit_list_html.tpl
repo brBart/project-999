@@ -27,9 +27,9 @@
 			<tr>
 				<td>{$list[i].created_date}</td>
 				<td>{$list[i].id}</td>
-				<td>{$list[i].number|escape}</td>
-				<td>{$list[i].bank_account_number|escape}</td>
-				<td>{$list[i].bank|escape}</td>
+				<td>{$list[i].number|escape|wordwrap:16:"<br />":true}</td>
+				<td>{$list[i].bank_account_number|escape|wordwrap:16:"<br />":true}</td>
+				<td>{$list[i].bank|escape|wordwrap:11:"<br />":true}</td>
 				<td>{$list[i].total}</td>
 				<td>
 					<input type="button" value="Confirmar" onclick="if(confirm('Esta seguro que desea confirmar?'))oConfirmDeposit.execute({$list[i].id});" />

@@ -58,7 +58,7 @@ oDetails.init('../xsl/invoice_page.xsl', 'details', 'oDetails');
 oDetails.getLastPage();
 </script>
 <div id="vouchers_container" class="hidden">
-	<div class="list_form">
+	<div class="list_form_large">
 		<a class="close_window" href="#" onclick="oVouchersFrm.hide();">Cerrar[X]</a>
 		<br />
 		{include file='vouchers_html.tpl'}
