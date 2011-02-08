@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-02-2011 a las 11:21:24
+-- Tiempo de generación: 08-02-2011 a las 10:49:47
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -18,6 +18,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Estructura Stand-in para la vista `access_management`
 --
+DROP VIEW IF EXISTS `access_management`;
 CREATE TABLE IF NOT EXISTS `access_management` (
 `role` varchar(50)
 ,`subject` varchar(50)
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `access_management` (
 -- Estructura de tabla para la tabla `action`
 --
 
+DROP TABLE IF EXISTS `action`;
 CREATE TABLE IF NOT EXISTS `action` (
   `action_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -42,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `action` (
 -- Estructura de tabla para la tabla `bank`
 --
 
+DROP TABLE IF EXISTS `bank`;
 CREATE TABLE IF NOT EXISTS `bank` (
   `bank_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -54,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `bank` (
 -- Estructura de tabla para la tabla `bank_account`
 --
 
+DROP TABLE IF EXISTS `bank_account`;
 CREATE TABLE IF NOT EXISTS `bank_account` (
   `bank_account_number` varchar(50) collate utf8_unicode_ci NOT NULL,
   `bank_id` int(11) NOT NULL,
@@ -68,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `bank_account` (
 -- Estructura de tabla para la tabla `bonus`
 --
 
+DROP TABLE IF EXISTS `bonus`;
 CREATE TABLE IF NOT EXISTS `bonus` (
   `bonus_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
@@ -85,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
 -- Estructura de tabla para la tabla `branch`
 --
 
+DROP TABLE IF EXISTS `branch`;
 CREATE TABLE IF NOT EXISTS `branch` (
   `branch_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -102,6 +108,7 @@ CREATE TABLE IF NOT EXISTS `branch` (
 -- Estructura de tabla para la tabla `cash_receipt`
 --
 
+DROP TABLE IF EXISTS `cash_receipt`;
 CREATE TABLE IF NOT EXISTS `cash_receipt` (
   `cash_receipt_id` int(11) NOT NULL,
   `change_amount` decimal(13,2) NOT NULL,
@@ -118,6 +125,7 @@ CREATE TABLE IF NOT EXISTS `cash_receipt` (
 -- Estructura de tabla para la tabla `cash_register`
 --
 
+DROP TABLE IF EXISTS `cash_register`;
 CREATE TABLE IF NOT EXISTS `cash_register` (
   `cash_register_id` int(11) NOT NULL auto_increment,
   `working_day` date NOT NULL,
@@ -125,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -133,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
 -- Estructura de tabla para la tabla `change_price_log`
 --
 
+DROP TABLE IF EXISTS `change_price_log`;
 CREATE TABLE IF NOT EXISTS `change_price_log` (
   `entry_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -143,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -151,6 +160,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
 -- Estructura de tabla para la tabla `company`
 --
 
+DROP TABLE IF EXISTS `company`;
 CREATE TABLE IF NOT EXISTS `company` (
   `nit` varchar(10) collate utf8_unicode_ci NOT NULL,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL
@@ -162,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Estructura de tabla para la tabla `comparison`
 --
 
+DROP TABLE IF EXISTS `comparison`;
 CREATE TABLE IF NOT EXISTS `comparison` (
   `comparison_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -180,6 +191,7 @@ CREATE TABLE IF NOT EXISTS `comparison` (
 -- Estructura de tabla para la tabla `comparison_product`
 --
 
+DROP TABLE IF EXISTS `comparison_product`;
 CREATE TABLE IF NOT EXISTS `comparison_product` (
   `comparison_product_id` int(11) NOT NULL auto_increment,
   `comparison_id` int(11) NOT NULL,
@@ -196,6 +208,7 @@ CREATE TABLE IF NOT EXISTS `comparison_product` (
 -- Estructura de tabla para la tabla `correlative`
 --
 
+DROP TABLE IF EXISTS `correlative`;
 CREATE TABLE IF NOT EXISTS `correlative` (
   `correlative_id` int(11) NOT NULL auto_increment,
   `serial_number` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -208,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   `is_default` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`correlative_id`),
   UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -216,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
 -- Estructura de tabla para la tabla `count`
 --
 
+DROP TABLE IF EXISTS `count`;
 CREATE TABLE IF NOT EXISTS `count` (
   `count_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -232,6 +246,7 @@ CREATE TABLE IF NOT EXISTS `count` (
 -- Estructura de tabla para la tabla `count_product`
 --
 
+DROP TABLE IF EXISTS `count_product`;
 CREATE TABLE IF NOT EXISTS `count_product` (
   `count_product_id` int(11) NOT NULL auto_increment,
   `count_id` int(11) NOT NULL,
@@ -247,6 +262,7 @@ CREATE TABLE IF NOT EXISTS `count_product` (
 -- Estructura de tabla para la tabla `customer`
 --
 
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE IF NOT EXISTS `customer` (
   `nit` varchar(15) collate utf8_unicode_ci NOT NULL,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -259,6 +275,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
 -- Estructura de tabla para la tabla `deposit`
 --
 
+DROP TABLE IF EXISTS `deposit`;
 CREATE TABLE IF NOT EXISTS `deposit` (
   `deposit_id` int(11) NOT NULL auto_increment,
   `bank_account_number` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -281,6 +298,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
 -- Estructura de tabla para la tabla `deposit_cancelled`
 --
 
+DROP TABLE IF EXISTS `deposit_cancelled`;
 CREATE TABLE IF NOT EXISTS `deposit_cancelled` (
   `deposit_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -294,6 +312,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cancelled` (
 -- Estructura de tabla para la tabla `deposit_cash_receipt`
 --
 
+DROP TABLE IF EXISTS `deposit_cash_receipt`;
 CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `deposit_cash_receipt_id` int(11) NOT NULL auto_increment,
   `deposit_id` int(11) NOT NULL,
@@ -309,6 +328,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
 -- Estructura de tabla para la tabla `discount`
 --
 
+DROP TABLE IF EXISTS `discount`;
 CREATE TABLE IF NOT EXISTS `discount` (
   `invoice_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -322,6 +342,7 @@ CREATE TABLE IF NOT EXISTS `discount` (
 -- Estructura de tabla para la tabla `entry_adjustment`
 --
 
+DROP TABLE IF EXISTS `entry_adjustment`;
 CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `entry_adjustment_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -339,6 +360,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
 -- Estructura de tabla para la tabla `entry_adjustment_cancelled`
 --
 
+DROP TABLE IF EXISTS `entry_adjustment_cancelled`;
 CREATE TABLE IF NOT EXISTS `entry_adjustment_cancelled` (
   `entry_adjustment_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -352,6 +374,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment_cancelled` (
 -- Estructura de tabla para la tabla `entry_adjustment_lot`
 --
 
+DROP TABLE IF EXISTS `entry_adjustment_lot`;
 CREATE TABLE IF NOT EXISTS `entry_adjustment_lot` (
   `entry_adjustment_id` int(11) NOT NULL,
   `lot_id` int(11) NOT NULL,
@@ -368,6 +391,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment_lot` (
 -- Estructura de tabla para la tabla `invoice`
 --
 
+DROP TABLE IF EXISTS `invoice`;
 CREATE TABLE IF NOT EXISTS `invoice` (
   `invoice_id` int(11) NOT NULL auto_increment,
   `correlative_id` int(11) NOT NULL,
@@ -385,7 +409,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`),
   KEY `idx_invoice_correlative_id` (`correlative_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -393,6 +417,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
 -- Estructura de tabla para la tabla `invoice_bonus`
 --
 
+DROP TABLE IF EXISTS `invoice_bonus`;
 CREATE TABLE IF NOT EXISTS `invoice_bonus` (
   `invoice_id` int(11) NOT NULL,
   `bonus_id` int(11) NOT NULL,
@@ -407,6 +432,7 @@ CREATE TABLE IF NOT EXISTS `invoice_bonus` (
 -- Estructura de tabla para la tabla `invoice_cancelled`
 --
 
+DROP TABLE IF EXISTS `invoice_cancelled`;
 CREATE TABLE IF NOT EXISTS `invoice_cancelled` (
   `invoice_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -420,6 +446,7 @@ CREATE TABLE IF NOT EXISTS `invoice_cancelled` (
 -- Estructura de tabla para la tabla `invoice_lot`
 --
 
+DROP TABLE IF EXISTS `invoice_lot`;
 CREATE TABLE IF NOT EXISTS `invoice_lot` (
   `invoice_id` int(11) NOT NULL,
   `lot_id` int(11) NOT NULL,
@@ -436,6 +463,7 @@ CREATE TABLE IF NOT EXISTS `invoice_lot` (
 -- Estructura de tabla para la tabla `lot`
 --
 
+DROP TABLE IF EXISTS `lot`;
 CREATE TABLE IF NOT EXISTS `lot` (
   `lot_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
@@ -446,7 +474,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -454,11 +482,12 @@ CREATE TABLE IF NOT EXISTS `lot` (
 -- Estructura de tabla para la tabla `manufacturer`
 --
 
+DROP TABLE IF EXISTS `manufacturer`;
 CREATE TABLE IF NOT EXISTS `manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`manufacturer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -466,6 +495,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
 -- Estructura de tabla para la tabla `payment_card_brand`
 --
 
+DROP TABLE IF EXISTS `payment_card_brand`;
 CREATE TABLE IF NOT EXISTS `payment_card_brand` (
   `payment_card_brand_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -478,6 +508,7 @@ CREATE TABLE IF NOT EXISTS `payment_card_brand` (
 -- Estructura de tabla para la tabla `payment_card_type`
 --
 
+DROP TABLE IF EXISTS `payment_card_type`;
 CREATE TABLE IF NOT EXISTS `payment_card_type` (
   `payment_card_type_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -490,6 +521,7 @@ CREATE TABLE IF NOT EXISTS `payment_card_type` (
 -- Estructura de tabla para la tabla `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
   `product_id` int(11) NOT NULL auto_increment,
   `bar_code` varchar(50) collate utf8_unicode_ci default NULL,
@@ -508,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   KEY `idx_product_unit_of_measure_id` (`unit_of_measure_id`),
   KEY `idx_product_manufacturer_id` (`manufacturer_id`),
   KEY `idx_product_name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -516,6 +548,7 @@ CREATE TABLE IF NOT EXISTS `product` (
 -- Estructura de tabla para la tabla `product_supplier`
 --
 
+DROP TABLE IF EXISTS `product_supplier`;
 CREATE TABLE IF NOT EXISTS `product_supplier` (
   `product_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
@@ -529,6 +562,7 @@ CREATE TABLE IF NOT EXISTS `product_supplier` (
 -- Estructura de tabla para la tabla `purchase_return`
 --
 
+DROP TABLE IF EXISTS `purchase_return`;
 CREATE TABLE IF NOT EXISTS `purchase_return` (
   `purchase_return_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -549,6 +583,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
 -- Estructura de tabla para la tabla `purchase_return_cancelled`
 --
 
+DROP TABLE IF EXISTS `purchase_return_cancelled`;
 CREATE TABLE IF NOT EXISTS `purchase_return_cancelled` (
   `purchase_return_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -562,6 +597,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return_cancelled` (
 -- Estructura de tabla para la tabla `purchase_return_lot`
 --
 
+DROP TABLE IF EXISTS `purchase_return_lot`;
 CREATE TABLE IF NOT EXISTS `purchase_return_lot` (
   `purchase_return_id` int(11) NOT NULL,
   `lot_id` int(11) NOT NULL,
@@ -578,6 +614,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return_lot` (
 -- Estructura de tabla para la tabla `receipt`
 --
 
+DROP TABLE IF EXISTS `receipt`;
 CREATE TABLE IF NOT EXISTS `receipt` (
   `receipt_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -589,7 +626,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -597,6 +634,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
 -- Estructura de tabla para la tabla `receipt_cancelled`
 --
 
+DROP TABLE IF EXISTS `receipt_cancelled`;
 CREATE TABLE IF NOT EXISTS `receipt_cancelled` (
   `receipt_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -610,6 +648,7 @@ CREATE TABLE IF NOT EXISTS `receipt_cancelled` (
 -- Estructura de tabla para la tabla `receipt_lot`
 --
 
+DROP TABLE IF EXISTS `receipt_lot`;
 CREATE TABLE IF NOT EXISTS `receipt_lot` (
   `receipt_id` int(11) NOT NULL,
   `lot_id` int(11) NOT NULL,
@@ -626,6 +665,7 @@ CREATE TABLE IF NOT EXISTS `receipt_lot` (
 -- Estructura de tabla para la tabla `reserve`
 --
 
+DROP TABLE IF EXISTS `reserve`;
 CREATE TABLE IF NOT EXISTS `reserve` (
   `reserve_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -635,7 +675,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -643,6 +683,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
 -- Estructura de tabla para la tabla `role`
 --
 
+DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `role_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -655,6 +696,7 @@ CREATE TABLE IF NOT EXISTS `role` (
 -- Estructura de tabla para la tabla `role_subject_action`
 --
 
+DROP TABLE IF EXISTS `role_subject_action`;
 CREATE TABLE IF NOT EXISTS `role_subject_action` (
   `role_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
@@ -669,6 +711,7 @@ CREATE TABLE IF NOT EXISTS `role_subject_action` (
 -- Estructura de tabla para la tabla `root`
 --
 
+DROP TABLE IF EXISTS `root`;
 CREATE TABLE IF NOT EXISTS `root` (
   `password` varchar(50) collate utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -679,6 +722,7 @@ CREATE TABLE IF NOT EXISTS `root` (
 -- Estructura de tabla para la tabla `shift`
 --
 
+DROP TABLE IF EXISTS `shift`;
 CREATE TABLE IF NOT EXISTS `shift` (
   `shift_id` int(11) NOT NULL auto_increment,
   `name` varchar(15) collate utf8_unicode_ci NOT NULL,
@@ -692,6 +736,7 @@ CREATE TABLE IF NOT EXISTS `shift` (
 -- Estructura de tabla para la tabla `shipment`
 --
 
+DROP TABLE IF EXISTS `shipment`;
 CREATE TABLE IF NOT EXISTS `shipment` (
   `shipment_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -711,6 +756,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
 -- Estructura de tabla para la tabla `shipment_cancelled`
 --
 
+DROP TABLE IF EXISTS `shipment_cancelled`;
 CREATE TABLE IF NOT EXISTS `shipment_cancelled` (
   `shipment_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -724,6 +770,7 @@ CREATE TABLE IF NOT EXISTS `shipment_cancelled` (
 -- Estructura de tabla para la tabla `shipment_lot`
 --
 
+DROP TABLE IF EXISTS `shipment_lot`;
 CREATE TABLE IF NOT EXISTS `shipment_lot` (
   `shipment_id` int(11) NOT NULL,
   `lot_id` int(11) NOT NULL,
@@ -740,6 +787,7 @@ CREATE TABLE IF NOT EXISTS `shipment_lot` (
 -- Estructura de tabla para la tabla `subject`
 --
 
+DROP TABLE IF EXISTS `subject`;
 CREATE TABLE IF NOT EXISTS `subject` (
   `subject_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -752,6 +800,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
 -- Estructura de tabla para la tabla `supplier`
 --
 
+DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE IF NOT EXISTS `supplier` (
   `supplier_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -761,7 +810,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `email` varchar(50) collate utf8_unicode_ci default NULL,
   `contact` varchar(50) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -769,6 +818,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 -- Estructura de tabla para la tabla `unit_of_measure`
 --
 
+DROP TABLE IF EXISTS `unit_of_measure`;
 CREATE TABLE IF NOT EXISTS `unit_of_measure` (
   `unit_of_measure_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -781,6 +831,7 @@ CREATE TABLE IF NOT EXISTS `unit_of_measure` (
 -- Estructura de tabla para la tabla `user_account`
 --
 
+DROP TABLE IF EXISTS `user_account`;
 CREATE TABLE IF NOT EXISTS `user_account` (
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `role_id` int(11) NOT NULL,
@@ -798,6 +849,7 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 -- Estructura de tabla para la tabla `vat`
 --
 
+DROP TABLE IF EXISTS `vat`;
 CREATE TABLE IF NOT EXISTS `vat` (
   `percentage` decimal(4,2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -808,6 +860,7 @@ CREATE TABLE IF NOT EXISTS `vat` (
 -- Estructura de tabla para la tabla `voucher`
 --
 
+DROP TABLE IF EXISTS `voucher`;
 CREATE TABLE IF NOT EXISTS `voucher` (
   `voucher_id` int(11) NOT NULL auto_increment,
   `cash_receipt_id` int(11) NOT NULL,
@@ -822,7 +875,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   UNIQUE KEY `unique_cash_receipt_id_transaction` (`cash_receipt_id`,`transaction`),
   KEY `idx_voucher_payment_card_type_id` (`payment_card_type_id`),
   KEY `idx_voucher_payment_card_brand_id` (`payment_card_brand_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -830,6 +883,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
 -- Estructura de tabla para la tabla `withdraw_adjustment`
 --
 
+DROP TABLE IF EXISTS `withdraw_adjustment`;
 CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `withdraw_adjustment_id` int(11) NOT NULL auto_increment,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -846,6 +900,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
 -- Estructura de tabla para la tabla `withdraw_adjustment_cancelled`
 --
 
+DROP TABLE IF EXISTS `withdraw_adjustment_cancelled`;
 CREATE TABLE IF NOT EXISTS `withdraw_adjustment_cancelled` (
   `withdraw_adjustment_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
@@ -859,6 +914,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment_cancelled` (
 -- Estructura de tabla para la tabla `withdraw_adjustment_lot`
 --
 
+DROP TABLE IF EXISTS `withdraw_adjustment_lot`;
 CREATE TABLE IF NOT EXISTS `withdraw_adjustment_lot` (
   `withdraw_adjustment_id` int(11) NOT NULL,
   `lot_id` int(11) NOT NULL,
@@ -875,6 +931,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment_lot` (
 -- Estructura de tabla para la tabla `working_day`
 --
 
+DROP TABLE IF EXISTS `working_day`;
 CREATE TABLE IF NOT EXISTS `working_day` (
   `working_day` date NOT NULL,
   `open` tinyint(1) NOT NULL default '1',
@@ -894,12 +951,14 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE `action_id_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `action_id_get`(IN inName VARCHAR(50))
 BEGIN
   SELECT action_id FROM action
     WHERE name = inName;
 END$$
 
+DROP PROCEDURE `bank_account_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_delete`(IN inBankAccountNumber VARCHAR(100))
 BEGIN
 
@@ -909,6 +968,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_account_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_dependencies`(IN inBankAccountNumber VARCHAR(100))
 BEGIN
 
@@ -942,6 +1002,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_account_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_exists`(IN inBankAccountNumber VARCHAR(100))
 BEGIN
 
@@ -951,6 +1012,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_account_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_get`(IN inBankAccountNumber VARCHAR(100))
 BEGIN
 
@@ -960,6 +1022,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_account_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_insert`(IN inBankAccountNumber VARCHAR(100), IN inBankId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -969,6 +1032,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_account_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_list_count`()
 BEGIN
 
@@ -976,6 +1040,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_account_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -999,6 +1064,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_account_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_update`(IN inBankAccountNumber VARCHAR(100), IN inBankId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -1010,6 +1076,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_delete`(IN inBankId INT)
 BEGIN
 
@@ -1019,6 +1086,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_dependencies`(IN inBankId INT)
 BEGIN
 
@@ -1052,6 +1120,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_get`(IN inBankId INT)
 BEGIN
 
@@ -1061,6 +1130,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_insert`(IN inName VARCHAR(100))
 BEGIN
 
@@ -1070,6 +1140,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_list_count`()
 BEGIN
 
@@ -1077,6 +1148,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -1100,6 +1172,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bank_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_update`(IN inBankId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -1111,6 +1184,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bonus_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_delete`(IN inBonusId INT)
 BEGIN
 
@@ -1120,6 +1194,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bonus_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_dependencies`(IN inBonusId INT)
 BEGIN
 
@@ -1153,6 +1228,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bonus_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_exists`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
@@ -1162,6 +1238,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bonus_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_get`(IN inBonusId INT)
 BEGIN
 
@@ -1173,6 +1250,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bonus_id_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_id_get`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
@@ -1184,6 +1262,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `bonus_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_insert`(IN inProductId INT, IN inQuantity INT, IN inPercentage DECIMAL(4, 2), IN inCreatedDate DATE,
 
   IN inExpirationDate DATE)
@@ -1195,6 +1274,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `branch_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_delete`(IN inBranchId INT)
 BEGIN
 
@@ -1204,6 +1284,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `branch_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_dependencies`(IN inBranchId INT)
 BEGIN
 
@@ -1237,6 +1318,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `branch_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_get`(IN inBranchId INT)
 BEGIN
 
@@ -1246,6 +1328,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `branch_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_insert`(IN inName VARCHAR(100), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
   IN inAddress VARCHAR(150), IN inEmail VARCHAR(100), IN inContact VARCHAR(100))
@@ -1257,6 +1340,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `branch_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_list_count`()
 BEGIN
 
@@ -1264,6 +1348,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `branch_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -1287,6 +1372,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `branch_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_update`(IN inBranchId INT, IN inName VARCHAR(100),
 
   IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(150),
@@ -1304,6 +1390,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cancel_cash_document_log_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_cash_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
@@ -1321,6 +1408,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cancel_cash_document_log_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_cash_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -1361,6 +1449,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cancel_document_log_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
@@ -1402,6 +1491,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cancel_document_log_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -1490,6 +1580,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_available_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_available_list_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -1503,6 +1594,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_cash_available_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_cash_available_get`(IN inCashReceiptId INT)
 BEGIN
 
@@ -1512,6 +1604,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_cash_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_cash_get`(IN inCashReceiptId INT)
 BEGIN
 
@@ -1523,6 +1616,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_decrease_deposited`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
@@ -1534,6 +1628,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_decrease_reserved`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
@@ -1545,6 +1640,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_get`(IN inCashReceiptId INT)
 BEGIN
 
@@ -1554,6 +1650,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_increase_deposited`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
@@ -1565,6 +1662,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_increase_reserved`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
@@ -1576,6 +1674,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_receipt_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_insert`(IN inCashReceiptId INT, IN inChange DECIMAL(13, 2), IN inCash DECIMAL(13, 2),
 
   IN inTotalVouchers DECIMAL(13, 2))
@@ -1587,6 +1686,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_register_close`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_close`(IN inCashRegisterId INT)
 BEGIN
 
@@ -1598,6 +1698,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_register_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -1607,6 +1708,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_register_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_insert`(IN inWorkingDay DATE, IN inShiftId INT)
 BEGIN
 
@@ -1616,6 +1718,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_register_is_open`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_is_open`(IN inCashRegisterId INT)
 BEGIN
 
@@ -1625,6 +1728,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `cash_register_working_day_shift_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_working_day_shift_get`(IN inWorkingDay DATE, IN inShiftId INT)
 BEGIN
 
@@ -1634,6 +1738,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `change_price_log_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
@@ -1643,6 +1748,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `change_price_log_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -1678,6 +1784,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `change_price_log_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(50), IN inProductId INT, IN inDate DATETIME,
 
   IN inLastPrice DECIMAL(6, 2), IN inNewPrice DECIMAL(6, 2))
@@ -1689,6 +1796,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `company_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `company_get`()
 BEGIN
 
@@ -1696,6 +1804,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `company_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `company_update`(IN inNit VARCHAR(10), IN inName VARCHAR(100))
 BEGIN
 
@@ -1705,6 +1814,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `comparison_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_get`(IN inComparisonId INT)
 BEGIN
 
@@ -1716,6 +1826,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `comparison_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME, IN inReason VARCHAR(150), IN inGeneral TINYINT,
 
   IN inPhysicalTotal INT)
@@ -1727,6 +1838,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `comparison_product_general_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_general_insert`(IN inComparisonId INT, IN inCountId INT)
 BEGIN
 
@@ -1762,6 +1874,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `comparison_product_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_get`(IN inComparisonId INT)
 BEGIN
 
@@ -1773,6 +1886,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `comparison_product_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_insert`(IN inComparisonId INT, IN inCountId INT)
 BEGIN
 
@@ -1810,6 +1924,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `comparison_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -1819,6 +1934,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `comparison_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -1848,6 +1964,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_default_id`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_default_id`()
 BEGIN
 
@@ -1857,6 +1974,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_delete`(IN inCorrelativeId INT)
 BEGIN
 
@@ -1866,6 +1984,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_dependencies`(IN inCorrelativeId INT)
 BEGIN
 
@@ -1899,6 +2018,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_exists`(IN inSerialNumber VARCHAR(10), IN inInitialNumber BIGINT,
 IN inFinalNumber BIGINT)
 BEGIN
@@ -1909,6 +2029,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_get`(IN inCorrelativeId INT)
 BEGIN
 
@@ -1920,6 +2041,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(100), IN inResolutionDate Date, IN inRegime VARCHAR(100),
 
   IN inInitialNumber BIGINT, IN inFinalNumber BIGINT)
@@ -1931,6 +2053,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_is_empty`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_is_empty`()
 BEGIN
 
@@ -1956,6 +2079,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_list_count`()
 BEGIN
 
@@ -1963,6 +2087,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -1986,6 +2111,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_make_default`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_make_default`(IN inCorrelativeId INT)
 BEGIN
 
@@ -2003,6 +2129,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `correlative_next_number`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_next_number`(IN inCorrelativeId INT)
 BEGIN
 
@@ -2048,6 +2175,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_delete`(IN inCountId INT)
 BEGIN
 
@@ -2063,6 +2191,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_get`(IN inCountId INT)
 BEGIN
 
@@ -2072,6 +2201,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME, IN inReason VARCHAR(150), IN inTotal INT)
 BEGIN
 
@@ -2081,6 +2211,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_product_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_product_delete`(IN inCountId INT, IN inProductId INT)
 BEGIN
 
@@ -2090,6 +2221,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_product_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_product_get`(IN inCountId INT)
 BEGIN
 
@@ -2101,6 +2233,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_product_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_product_insert`(IN inCountId INT, IN inProductId INT, IN inQuantity INT)
 BEGIN
 
@@ -2110,6 +2243,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -2119,6 +2253,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -2148,6 +2283,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `count_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_update`(IN inCountId INT, IN inTotal INT)
 BEGIN
 
@@ -2159,6 +2295,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `customer_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_exists`(IN inNit VARCHAR(15))
 BEGIN
 
@@ -2168,6 +2305,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `customer_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_get`(IN inNit VARCHAR(15))
 BEGIN
 
@@ -2177,6 +2315,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `customer_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_insert`(IN inNit VARCHAR(15), IN inName VARCHAR(100))
 BEGIN
 
@@ -2186,6 +2325,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `customer_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_update`(IN inNit VARCHAR(15), IN inName VARCHAR(100))
 BEGIN
 
@@ -2197,6 +2337,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `delete_all_movements`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `delete_all_movements`(IN inDate DATE)
 BEGIN
 
@@ -2364,6 +2505,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_by_working_day_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -2375,6 +2517,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_by_working_day_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -2406,6 +2549,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_cancel`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(50), IN inDate DATETIME)
 BEGIN
 
@@ -2423,6 +2567,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_cash_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_list_get`(IN inCashReceiptId INT)
 BEGIN
 
@@ -2432,6 +2577,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_cash_receipt_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_count`(IN inDepositId INT)
 BEGIN
 
@@ -2441,6 +2587,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_cash_receipt_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_get`(IN inDepositId INT, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -2468,6 +2615,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_cash_receipt_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_insert`(IN inDepositId INT, IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
@@ -2477,6 +2625,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_confirm`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_confirm`(IN inDepositId INT)
 BEGIN
 
@@ -2488,6 +2637,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_get`(IN inDepositId INT)
 BEGIN
 
@@ -2499,6 +2649,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_id_get_by_working_day`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_id_get_by_working_day`(IN inWorkingDay DATE, IN inId INT)
 BEGIN
 
@@ -2508,6 +2659,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_id_get_by_working_day_slip`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_id_get_by_working_day_slip`(IN inWorkingDay DATE, IN inBankId INT, IN inNumber VARCHAR(50))
 BEGIN
 
@@ -2519,6 +2671,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(100), IN inCashRegisterId INT, IN inUserName VARCHAR(50),
 
   IN inDate DATETIME, IN inNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
@@ -2530,6 +2683,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_list_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -2539,6 +2693,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_number_bank_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_number_bank_exists`(IN inNumber VARCHAR(50), IN inBankId INT)
 BEGIN
 
@@ -2548,6 +2703,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_pending_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_pending_list_count`()
 BEGIN
 
@@ -2557,6 +2713,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_pending_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_pending_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -2588,6 +2745,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -2597,6 +2755,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `deposit_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -2626,6 +2785,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `discount_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_get`(IN inInvoiceId INT)
 BEGIN
 
@@ -2635,6 +2795,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `discount_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_insert`(IN inInvoiceId INT, IN inUserName VARCHAR(50), IN inPercentage DECIMAL(4, 2))
 BEGIN
 
@@ -2644,6 +2805,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `discount_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_list_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
@@ -2653,6 +2815,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `discount_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_list_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT,
 
   IN inItemsPerPage INT)
@@ -2690,6 +2853,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `entry_adjustment_cancel`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_cancel`(IN inEntryAdjustmentId INT, IN inUserName VARCHAR(50),
 
   IN inDate DATETIME)
@@ -2709,6 +2873,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `entry_adjustment_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_get`(IN inEntryAdjustmentId INT)
 BEGIN
 
@@ -2720,6 +2885,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `entry_adjustment_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME,
 
   IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
@@ -2731,6 +2897,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `entry_adjustment_lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_lot_get`(IN inEntryAdjustmentId INT)
 BEGIN
 
@@ -2742,6 +2909,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `entry_adjustment_lot_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
@@ -2753,6 +2921,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `entry_adjustment_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -2762,6 +2931,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `entry_adjustment_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -2791,6 +2961,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `general_closure`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `general_closure`(IN inDays INT)
 BEGIN
 
@@ -2844,6 +3015,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `general_sales_report_cash_registers_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `general_sales_report_cash_registers_get`(IN inWorkingDay DATE)
 BEGIN
 
@@ -2863,6 +3035,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `general_sales_report_total`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `general_sales_report_total`(IN inWorkingDay DATE)
 BEGIN
 
@@ -2876,6 +3049,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `get_last_insert_id`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `get_last_insert_id`()
 BEGIN
 
@@ -2883,6 +3057,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_bonus_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_bonus_insert`(IN inInvoiceId INT, IN inBonusId INT, IN inNumber INT, IN inPrice DECIMAL(13, 2))
 BEGIN
 
@@ -2892,6 +3067,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_by_working_day_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -2903,6 +3079,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_by_working_day_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -2936,6 +3113,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_cancel`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(50),
 
   IN inDate DATETIME)
@@ -2955,6 +3133,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_get`(IN inInvoiceId INT)
 BEGIN
 
@@ -2966,6 +3145,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_id_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_id_get`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
 BEGIN
 
@@ -2975,6 +3155,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_id_get_by_working_day`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_id_get_by_working_day`(IN inWorkingDay DATE, IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
 BEGIN
 
@@ -2986,6 +3167,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_insert`(IN inCorrelativeId INT, IN inNumber BIGINT,
 
   IN inUserName VARCHAR(50), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(100), IN inTotal DECIMAL(13, 2),
@@ -2999,6 +3181,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_items_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_items_get`(IN inInvoiceId INT)
 BEGIN
 
@@ -3016,6 +3199,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_list_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -3025,6 +3209,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_lot_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
@@ -3036,6 +3221,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -3045,6 +3231,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `invoice_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -3076,6 +3263,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `kardex_balance_forward_from_date_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_from_date_get`(IN inProductId INT, IN inBalanceForward INT,
 
   IN inDate DATE, OUT finalBalance INT)
@@ -3155,6 +3343,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `kardex_balance_forward_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_get`(IN inProductId INT, IN inLastItem INT,
 
   IN inBalanceForward INT)
@@ -3244,6 +3433,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `kardex_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_count`(IN inProductId INT)
 BEGIN
 
@@ -3297,6 +3487,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `kardex_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_get`(IN inProductId INT, IN inStartItem INT, IN inItemsPerPage INT,
 
   IN inBalanceForward INT)
@@ -3406,6 +3597,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_available_quantity_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_available_quantity_get`(IN inLotId INT)
 BEGIN
 
@@ -3415,6 +3607,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_deactivate`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_deactivate`(IN inLotId INT)
 BEGIN
 
@@ -3426,6 +3619,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_decrease_quantity`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_decrease_quantity`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
@@ -3437,6 +3631,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_decrease_reserved`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_decrease_reserved`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
@@ -3448,6 +3643,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_expiration_date_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expiration_date_update`(IN inLotId INT, IN inExpirationDate DATE)
 BEGIN
 
@@ -3459,6 +3655,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_expired_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expired_count`(IN inDate DATE)
 BEGIN
 
@@ -3466,6 +3663,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_expired_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expired_get`(IN inDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -3493,6 +3691,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_get`(IN inLotId INT)
 BEGIN
 
@@ -3504,6 +3703,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_increase_quantity`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_increase_quantity`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
@@ -3515,6 +3715,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_increase_reserved`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_increase_reserved`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
@@ -3526,6 +3727,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_insert`(IN inProductId INT, IN inEntryDate DATE, IN inExpirationDate DATE, IN inPrice DECIMAL(6, 2),
 
   IN inQuantity INT)
@@ -3537,6 +3739,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_near_expiration_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_near_expiration_count`(IN inDate DATE, IN inDays INT)
 BEGIN
 
@@ -3544,6 +3747,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_near_expiration_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_near_expiration_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -3577,6 +3781,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_price_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_price_update`(IN inLotId INT, IN inPrice DECIMAL(6, 2))
 BEGIN
 
@@ -3588,6 +3793,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `lot_quantity_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_quantity_get`(IN inLotId INT)
 BEGIN
 
@@ -3597,6 +3803,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_counting_template_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_counting_template_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
 BEGIN
 
@@ -3612,6 +3819,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_delete`(IN inManufacturerId INT)
 BEGIN
 
@@ -3621,6 +3829,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_dependencies`(IN inManufacturerId INT)
 BEGIN
 
@@ -3654,6 +3863,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_distinct_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_distinct_list_get`()
 BEGIN
 
@@ -3663,6 +3873,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_get`(IN inManufacturerId INT)
 BEGIN
 
@@ -3672,6 +3883,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_insert`(IN inName VARCHAR(100))
 BEGIN
 
@@ -3681,6 +3893,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_list_count`()
 BEGIN
 
@@ -3688,6 +3901,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -3711,6 +3925,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_product_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_product_list_get`(IN inManufacturerId INT)
 BEGIN
 
@@ -3722,6 +3937,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_purchases_stadistics_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_purchases_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
@@ -3769,6 +3985,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_sales_stadistics_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_sales_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
@@ -3816,6 +4033,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_stadistics_labels_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_count`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
 BEGIN
 
@@ -3825,6 +4043,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_stadistics_labels_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -3852,6 +4071,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `manufacturer_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_update`(IN inManufacturerId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -3863,6 +4083,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_brand_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_delete`(IN inPaymentCardBrandId INT)
 BEGIN
 
@@ -3872,6 +4093,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_brand_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_dependencies`(IN inPaymentCardBrandId INT)
 BEGIN
 
@@ -3905,6 +4127,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_brand_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_get`(IN inPaymentCardBrandId INT)
 BEGIN
 
@@ -3914,6 +4137,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_brand_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_insert`(IN inName VARCHAR(100))
 BEGIN
 
@@ -3923,6 +4147,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_brand_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_list_count`()
 BEGIN
 
@@ -3930,6 +4155,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_brand_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -3953,6 +4179,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_brand_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_update`(IN inPaymentCardBrandId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -3964,6 +4191,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_type_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_delete`(IN inPaymentCardTypeId INT)
 BEGIN
 
@@ -3973,6 +4201,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_type_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_dependencies`(IN inPaymentCardTypeId INT)
 BEGIN
 
@@ -4006,6 +4235,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_type_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_get`(IN inPaymentCardTypeId INT)
 BEGIN
 
@@ -4015,6 +4245,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_type_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_insert`(IN inName VARCHAR(100))
 BEGIN
 
@@ -4024,6 +4255,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_type_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_list_count`()
 BEGIN
 
@@ -4031,6 +4263,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_type_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4054,6 +4287,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `payment_card_type_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_update`(IN inPaymentCardTypeId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -4065,6 +4299,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_available_quantity_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_available_quantity_get`(IN inProductId INT)
 BEGIN
 
@@ -4074,6 +4309,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_balance_forward_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_balance_forward_get`(IN inProductId INT)
 BEGIN
 
@@ -4083,6 +4319,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_bar_code_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_exists`(IN inProductId INT, IN inBarCode VARCHAR(100))
 BEGIN
 
@@ -4092,6 +4329,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_bar_code_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_update`(IN inProductId INT, IN inBarCode VARCHAR(100))
 BEGIN
   UPDATE product
@@ -4099,6 +4337,7 @@ BEGIN
     WHERE product_id = inProductId;
 END$$
 
+DROP PROCEDURE `product_bonus_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bonus_list_get`(IN inProductId INT)
 BEGIN
 
@@ -4112,6 +4351,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_counting_template_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_counting_template_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
 BEGIN
 
@@ -4127,6 +4367,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_decrease_quantity`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_decrease_quantity`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
@@ -4138,6 +4379,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_decrease_reserved`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_decrease_reserved`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
@@ -4149,6 +4391,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_delete`(IN inProductId INT)
 BEGIN
 
@@ -4170,6 +4413,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_dependencies`(IN inProductId INT)
 BEGIN
 
@@ -4239,6 +4483,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_distinct_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_distinct_list_get`()
 BEGIN
 
@@ -4248,6 +4493,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_get`(IN inProductId INT)
 BEGIN
 
@@ -4257,6 +4503,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_id_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_id_get`(IN inBarCode VARCHAR(100))
 BEGIN
 
@@ -4266,6 +4513,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_inactive_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_count`(IN inDate DATE, IN inDays INT)
 BEGIN
 
@@ -4295,6 +4543,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_inactive_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4344,6 +4593,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_increase_quantity`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_increase_quantity`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
@@ -4355,6 +4605,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_increase_reserved`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_increase_reserved`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
@@ -4366,6 +4617,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_insert`(IN inBarCode VARCHAR(100), IN inName VARCHAR(100),
 
   IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
@@ -4379,6 +4631,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_list_count`()
 BEGIN
 
@@ -4386,6 +4639,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4409,6 +4663,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_lot_available_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_available_get`(IN inProductId INT)
 BEGIN
 
@@ -4420,6 +4675,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_get`(IN inProductId INT)
 BEGIN
 
@@ -4431,6 +4687,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_lot_total_available_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_total_available_get`(IN inProductId INT)
 BEGIN
 
@@ -4440,6 +4697,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_lot_total_quantity_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_total_quantity_get`(IN inProductId INT)
 BEGIN
 
@@ -4449,6 +4707,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_purchases_stadistics_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_purchases_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
@@ -4496,6 +4755,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_quantity_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_quantity_get`(IN inProductId INT)
 BEGIN
 
@@ -4505,6 +4765,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_sales_stadistics_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_sales_stadistics_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
@@ -4552,6 +4813,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_search`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search`(IN inSearchString VARCHAR(50))
 BEGIN
 
@@ -4562,6 +4824,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_stadistics_labels_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_count`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100))
 BEGIN
 
@@ -4571,6 +4834,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_stadistics_labels_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_get`(IN inFirst VARCHAR(100), IN inLast VARCHAR(100), IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4598,6 +4862,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_supplier_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_delete`(IN inProductId INT, IN inSupplierId INT,
 IN inSku VARCHAR(50))
 BEGIN
@@ -4608,6 +4873,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_supplier_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_exists`(IN inSupplierId INT, IN inSku VARCHAR(50))
 BEGIN
 
@@ -4617,6 +4883,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_supplier_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_get`(IN inProductId INT)
 BEGIN
 
@@ -4626,6 +4893,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_supplier_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_insert`(IN inProductId INT, IN inSupplierId INT, IN inSku VARCHAR(50))
 BEGIN
 
@@ -4635,6 +4903,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_supplier_product_id_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_product_id_get`(IN inSupplierId INT, IN inSku VARCHAR(50))
 BEGIN
 
@@ -4644,6 +4913,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_update`(IN inProductId INT, IN inBarCode VARCHAR(100), IN inName VARCHAR(100),
 
   IN inPackaging VARCHAR(150), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
@@ -4661,6 +4931,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `purchase_return_cancel`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_cancel`(IN inPurchaseReturnId INT, IN inUserName VARCHAR(50), IN inDate DATETIME)
 BEGIN
 
@@ -4678,6 +4949,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `purchase_return_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_get`(IN inPurchaseReturnId INT)
 BEGIN
 
@@ -4689,6 +4961,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `purchase_return_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(50), IN inSupplierId INT, IN inDate DATETIME,
 
   IN inReason VARCHAR(150), IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
@@ -4700,6 +4973,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `purchase_return_lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_get`(IN inPurchaseReturnId INT)
 BEGIN
 
@@ -4711,6 +4985,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `purchase_return_lot_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
@@ -4722,6 +4997,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `purchase_return_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -4731,6 +5007,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `purchase_return_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4760,6 +5037,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `receipt_cancel`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_cancel`(IN inReceiptId INT, IN inUserName VARCHAR(50),
 
   IN inDate DATETIME)
@@ -4779,6 +5057,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `receipt_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_get`(IN inReceiptId INT)
 BEGIN
 
@@ -4790,6 +5069,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `receipt_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_insert`(IN inUserName VARCHAR(50), IN inSupplierId INT, IN inDate DATETIME,
 
   IN inShipmentNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
@@ -4801,6 +5081,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `receipt_lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_get`(IN inReceiptId INT)
 BEGIN
 
@@ -4812,6 +5093,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `receipt_lot_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
@@ -4823,6 +5105,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `receipt_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -4832,6 +5115,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `receipt_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4861,6 +5145,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `reserve_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_delete`(IN inReserveId INT)
 BEGIN
 
@@ -4870,6 +5155,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `reserve_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_get`(IN inReserveId INT)
 BEGIN
 
@@ -4879,6 +5165,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `reserve_increase_quantity`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_increase_quantity`(IN inReserveId INT, IN inQuantity INT)
 BEGIN
 
@@ -4890,6 +5177,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `reserve_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_insert`(IN inUserName VARCHAR(50), IN inLotId INT, IN inDate DATETIME, IN inQuantity INT)
 BEGIN
 
@@ -4899,6 +5187,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `reserve_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_list_get`(IN inProductId INT)
 BEGIN
 
@@ -4910,6 +5199,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `role_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_get`(IN inRoleId INT)
 BEGIN
 
@@ -4919,6 +5209,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `role_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_list_count`()
 BEGIN
 
@@ -4926,6 +5217,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `role_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4949,12 +5241,14 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `role_subject_action_value_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_subject_action_value_get`(IN inRoleId INT, IN inSubjectId INT, IN inActionId INT)
 BEGIN
   SELECT value FROM role_subject_action
     WHERE role_id = inRoleId AND subject_id = inSubjectId AND action_id = inActionId;
 END$$
 
+DROP PROCEDURE `root_change_password`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `root_change_password`(IN inPassword VARCHAR(50))
 BEGIN
 
@@ -4964,6 +5258,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `root_is_valid`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `root_is_valid`(IN inPassword VARCHAR(50))
 BEGIN
 
@@ -4991,6 +5286,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_ranking_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ranking_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
@@ -5004,6 +5300,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_ranking_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ranking_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -5040,6 +5337,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_report_deposits_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_deposits_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -5049,6 +5347,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_report_invoices_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_invoices_get`(IN inCashRegisterId INT)
 BEGIN
 
@@ -5068,6 +5367,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_report_total_cash`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_cash`(IN inCashRegisterId INT)
 BEGIN
 
@@ -5079,6 +5379,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_report_total_deposits`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_deposits`(IN inCashRegisterId INT)
 BEGIN
 
@@ -5088,6 +5389,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_report_total_discount`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_discount`(IN inCashRegisterId INT)
 BEGIN
 
@@ -5099,6 +5401,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_report_total_vat`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_vat`(IN inCashRegisterId INT)
 BEGIN
 
@@ -5110,6 +5413,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `sales_report_total_vouchers`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_vouchers`(IN inCashRegisterId INT)
 BEGIN
 
@@ -5121,6 +5425,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shift_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_delete`(IN inShiftId INT)
 BEGIN
 
@@ -5130,6 +5435,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shift_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_dependencies`(IN inShiftId INT)
 BEGIN
 
@@ -5163,6 +5469,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shift_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_get`(IN inShiftId INT)
 BEGIN
 
@@ -5172,6 +5479,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shift_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_insert`(IN inName VARCHAR(50), IN inTimeTable VARCHAR(100))
 BEGIN
 
@@ -5181,6 +5489,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shift_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_list_count`()
 BEGIN
 
@@ -5188,6 +5497,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shift_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -5211,6 +5521,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shift_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_update`(IN inShiftId INT, IN inName VARCHAR(50), IN inTimeTable VARCHAR(100))
 BEGIN
 
@@ -5222,6 +5533,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shipment_cancel`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_cancel`(IN inShipmentId INT, IN inUserName VARCHAR(50),
 
   IN inDate DATETIME)
@@ -5241,6 +5553,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shipment_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_get`(IN inShipmentId INT)
 BEGIN
 
@@ -5252,6 +5565,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shipment_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_insert`(IN inUserName VARCHAR(50), IN inBranchId INT,
 
   IN inDate DATETIME, IN inContact VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
@@ -5263,6 +5577,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shipment_lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_get`(IN inShipmentId INT)
 BEGIN
 
@@ -5274,6 +5589,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shipment_lot_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
@@ -5285,6 +5601,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shipment_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -5294,6 +5611,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `shipment_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -5323,12 +5641,14 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `subject_id_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `subject_id_get`(IN inName VARCHAR(50))
 BEGIN
   SELECT subject_id FROM subject
     WHERE name = inName;
 END$$
 
+DROP PROCEDURE `supplier_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_delete`(IN inSupplierId INT)
 BEGIN
 
@@ -5338,6 +5658,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `supplier_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_dependencies`(IN inSupplierId INT)
 BEGIN
 
@@ -5395,6 +5716,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `supplier_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_get`(IN inSupplierId INT)
 BEGIN
 
@@ -5404,6 +5726,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `supplier_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_insert`(IN inName VARCHAR(100), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
   IN inAddress VARCHAR(150), IN inEmail VARCHAR(100), IN inContact VARCHAR(100))
@@ -5415,6 +5738,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `supplier_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_list_count`()
 BEGIN
 
@@ -5422,6 +5746,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `supplier_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -5445,6 +5770,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `supplier_product_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_product_list_get`(IN inSupplierId INT)
 BEGIN
 
@@ -5458,6 +5784,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `supplier_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_update`(IN inSupplierId INT, IN inName VARCHAR(100),
 
   IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(150),
@@ -5475,6 +5802,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `unit_of_measure_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_delete`(IN inUnitOfMeasureId INT)
 BEGIN
 
@@ -5484,6 +5812,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `unit_of_measure_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_dependencies`(IN inUnitOfMeasureId INT)
 BEGIN
 
@@ -5517,6 +5846,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `unit_of_measure_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_get`(IN inUnitOfMeasureId INT)
 BEGIN
 
@@ -5526,6 +5856,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `unit_of_measure_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_insert`(IN inName VARCHAR(100))
 BEGIN
 
@@ -5535,6 +5866,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `unit_of_measure_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_list_count`()
 BEGIN
 
@@ -5542,6 +5874,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `unit_of_measure_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -5565,6 +5898,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `unit_of_measure_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_update`(IN inUnitOfMeasureId INT, IN inName VARCHAR(100))
 BEGIN
 
@@ -5576,6 +5910,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_change_password`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_change_password`(IN inUserName VARCHAR(50), IN inPassword VARCHAR(50))
 BEGIN
 
@@ -5587,6 +5922,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_delete`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_delete`(IN inUserName VARCHAR(50))
 BEGIN
 
@@ -5596,6 +5932,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_dependencies`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_dependencies`(IN inUserName VARCHAR(50))
 BEGIN
 
@@ -5845,6 +6182,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_exists`(IN inUserName VARCHAR(50))
 BEGIN
 
@@ -5854,6 +6192,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_get`(IN inUserName VARCHAR(50))
 BEGIN
 
@@ -5863,6 +6202,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_insert`(IN inUserName VARCHAR(50), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inPassword VARCHAR(50), IN inDeactivated TINYINT)
@@ -5874,6 +6214,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_is_valid`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_is_valid`(IN inUserName VARCHAR(50), IN inPassword VARCHAR(50))
 BEGIN
 
@@ -5901,6 +6242,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_list_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_list_count`()
 BEGIN
 
@@ -5908,6 +6250,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -5931,6 +6274,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_no_password_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_no_password_update`(IN inUserName VARCHAR(50), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inDeactivated TINYINT)
@@ -5944,6 +6288,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `user_account_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_update`(IN inUserName VARCHAR(50), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inPassword VARCHAR(50), IN inDeactivated TINYINT)
@@ -5957,6 +6302,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `vat_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `vat_get`()
 BEGIN
 
@@ -5964,6 +6310,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `vat_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `vat_update`(IN inPercentage DECIMAL(4, 2))
 BEGIN
 
@@ -5973,6 +6320,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `voucher_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_get`(IN inCashReceiptId INT)
 BEGIN
 
@@ -5986,6 +6334,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `voucher_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_insert`(IN inCashReceiptId INT, IN inTransaction VARCHAR(100), IN inAmount DECIMAL(13, 2),
 
   IN inPaymentCardNumber INT, IN inPaymentCardTypeId INT, IN inPaymentCardBrandId INT, IN inName VARCHAR(100),
@@ -6003,6 +6352,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `withdraw_adjustment_cancel`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_cancel`(IN inWithdrawAdjustmentId INT, IN inUserName VARCHAR(50),
 
   IN inDate DATETIME)
@@ -6022,6 +6372,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `withdraw_adjustment_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_get`(IN inWithdrawAdjustmentId INT)
 BEGIN
 
@@ -6033,6 +6384,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `withdraw_adjustment_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_insert`(IN inUserName VARCHAR(50), IN inDate DATETIME,
 
   IN inReason VARCHAR(150), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
@@ -6044,6 +6396,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `withdraw_adjustment_lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_get`(IN inWithdrawAdjustmentId INT)
 BEGIN
 
@@ -6055,6 +6408,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `withdraw_adjustment_lot_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
@@ -6066,6 +6420,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `withdraw_adjustment_search_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
@@ -6075,6 +6430,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `withdraw_adjustment_search_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -6104,6 +6460,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `working_day_close`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_close`(IN inWorkingDay DATE)
 BEGIN
 
@@ -6115,6 +6472,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `working_day_close_cash_registers`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_close_cash_registers`(IN inWorkingDay DATE)
 BEGIN
 
@@ -6126,6 +6484,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `working_day_exists`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_exists`(IN inWorkingDay DATE)
 BEGIN
 
@@ -6135,6 +6494,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `working_day_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_insert`(IN inWorkingDay DATE)
 BEGIN
 
@@ -6144,6 +6504,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `working_day_is_open`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_is_open`(IN inWorkingDay DATE)
 BEGIN
 
