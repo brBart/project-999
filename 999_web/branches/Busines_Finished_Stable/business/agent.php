@@ -23,7 +23,7 @@ class Customer extends PersistObject{
 	 * Consumidor Final initials.
 	 *
 	 */
-	const CF = 'CF';
+	const CF = 'C.F.';
 	
 	/**
 	 * Holds the agent's nit (Numero de Identificacion Tributaria).

@@ -52,7 +52,7 @@ class CompanyDAM{
 	 * @return Company
 	 */
 	static public function getInstance(){
-		return new Company('1725045-5', 'Infodes');
+		return new Company('1725045-5', 'Infodes', 'Infodes S.A.', '32232332', 'zona 1');
 	}
 	
 	/**
