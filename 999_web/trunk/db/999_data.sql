@@ -69,8 +69,8 @@ INSERT INTO `bank_account` (`bank_account_number`, `bank_id`, `name`) VALUES
 -- Volcar la base de datos para la tabla `company`
 --
 
-INSERT INTO `company` (`nit`, `name`) VALUES
-('350682-7', 'Tienda 999');
+INSERT INTO `company` (`nit`, `name`, `corporate_name`, `telephone`, `address`) VALUES
+('350682-7', 'Tienda 999', 'Comercial y Drogueria Jose Gil', '24129900', 'zona 1, Chiquimula');
 
 --
 -- Volcar la base de datos para la tabla `comparison`
