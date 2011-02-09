@@ -25,6 +25,8 @@ body {
 	<div id="wrapper">
 		<p id="title">
 			{$company_name}<br />
+			{$corporate_name}<br />
+			{$address}. Tel: {$telephone}<br />
 			Nit: {$company_nit}<br />
 			Resoluci&oacute;n No: {$resolution_number}<br />
 			Fecha: {$resolution_date}<br />

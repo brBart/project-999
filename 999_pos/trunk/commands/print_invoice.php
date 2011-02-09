@@ -57,6 +57,8 @@ class PrintInvoiceCommand extends Command{
 		$user = $invoice->getUser();
 		
 		Page::display(array('company_name' => $company->getName(), 'company_nit' => $company->getNit(),
+				'corporate_name' => $company->getCorporateName(), 'telephone' => $company->getTelephone(),
+				'address' => $company->getAddress(),
 				'resolution_number' => $correlative->getResolutionNumber(),
 				'resolution_date' => $correlative->getResolutionDate(), 'regime' => $correlative->getRegime(),
 				'correlative_initial_number' => $correlative->getInitialNumber(),
