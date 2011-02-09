@@ -66,7 +66,8 @@ class CompanyDAM{
 	static public function getInstance(){
 		$sql = 'CALL company_get()';
 		$result = DatabaseHandler::getRow($sql);
-		return new Company($result['nit'], $result['name']);
+		return new Company($result['nit'], $result['name'], $result['corporate_name'],
+				$result['telephone'], $result['address']);
 	}
 	
 	/**
@@ -75,8 +76,10 @@ class CompanyDAM{
 	 * @param Company $obj
 	 */
 	static public function update(Company $obj){
-		$sql = 'CALL company_update(:nit, :name)';
-		$params = array(':nit' => $obj->getNit(), ':name' => $obj->getName());
+		$sql = 'CALL company_update(:nit, :name, :corporate_name, :telephone, :address)';
+		$params = array(':nit' => $obj->getNit(), ':name' => $obj->getName(),
+				':corporate_name' => $obj->getCorporateName(), ':telephone' => $obj->getTelephone(),
+				':address' => $obj->getAddress());
 		DatabaseHandler::execute($sql, $params);
 	}
 }

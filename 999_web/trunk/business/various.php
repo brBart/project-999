@@ -72,15 +72,39 @@ class Company{
 	private $_mName;
 	
 	/**
+	 * Holds the company's corporate name.
+	 *
+	 * @var string
+	 */
+	private $_mCorporateName;
+	
+	/**
+	 * Holds the company's telephone number.
+	 *
+	 * @var string
+	 */
+	private $_mTelephone;
+	
+	/**
+	 * Holds the company's address.
+	 *
+	 * @var string
+	 */
+	private $_mAddress;
+	
+	/**
 	 * Constructs the company with the provided data.
 	 *
 	 * @param string $nit
 	 * @param string $name
 	 */
-	public function __construct($nit, $name){
+	public function __construct($nit, $name, $corporateName, $telephone, $address){
 		try{
 			String::validateNit($nit, 'Nit inv&aacute;lido.');
 			String::validateString($name, 'Nombre inv&aacute;lido.');
+			String::validateString($corporateName, 'Raz&oacute;n social inv&aacute;lida.');
+			String::validateString($telephone, 'Telefono inv&aacute;lido.');
+			String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en Company con datos erroneos! ' .
 					$e->getMessage());
@@ -89,6 +113,9 @@ class Company{
 		
 		$this->_mNit = $nit;
 		$this->_mName = $name;
+		$this->_mCorporateName = $corporateName;
+		$this->_mTelephone = $telephone;
+		$this->_mAddress = $address;
 	}
 	
 	/**
@@ -110,6 +137,33 @@ class Company{
 	}
 	
 	/**
+	 * Returns the company's corporate name.
+	 *
+	 * @return string
+	 */
+	public function getCorporateName(){
+		return $this->_mCorporateName;
+	}
+	
+	/**
+	 * Returns the company's telephone number.
+	 *
+	 * @return string
+	 */
+	public function getTelephone(){
+		return $this->_mTelephone;
+	}
+	
+	/**
+	 * Returns the company's address.
+	 *
+	 * @return string
+	 */
+	public function getAddress(){
+		return $this->_mAddress;
+	}
+	
+	/**
 	 * Sets the company's nit.
 	 *
 	 * @param string $nit
@@ -127,6 +181,36 @@ class Company{
 	public function setName($name){
 		$this->_mName = $name;
 		String::validateString($name, 'Nombre inv&aacute;lido.');
+	}
+	
+	/**	
+	 * Sets the company's corporate name.
+	 *
+	 * @param string $name
+	 */
+	public function setCorporateName($name){
+		$this->_mCorporateName = $name;
+		String::validateString($name, 'Raz&oacute;n social inv&aacute;lida.');
+	}
+	
+	/**
+	 * Sets the company's telephone number.
+	 *
+	 * @param string $telephone
+	 */
+	public function setTelephone($telephone){
+		$this->_mTelephone = $telephone;
+		String::validateString($telephone, 'Telefono inv&aacute;lido.');
+	}
+	
+	/**
+	 * Sets the company's address.
+	 *
+	 * @param string $address
+	 */
+	public function setAddress($address){
+		$this->_mAddress = $address;
+		String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
 	}
 	
 	/**
@@ -150,11 +234,14 @@ class Company{
 	/**
 	 * Validates the object's main properties.
 	 * 
-	 * Verifies that the company's nit and name are set correctly. Otherwise it throws an exception.
+	 * Verifies that the company's values are set correctly. Otherwise it throws an exception.
 	 */
 	private function validateMainProperties(){
 		String::validateNit($this->_mNit, 'Nit inv&aacute;lido.', 'nit');
 		String::validateString($this->_mName, 'Nombre inv&aacute;lido.', 'name');
+		String::validateString($this->_mCorporateName, 'Raz&oacute;n social inv&aacute;lida.', 'corporate_name');
+		String::validateString($this->_mTelephone, 'Telefono inv&aacute;lido.', 'telephone');
+		String::validateString($this->_mAddress, 'Direcci&oacute;n inv&aacute;lida.', 'address');
 	}
 }
 
