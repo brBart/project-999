@@ -19,7 +19,7 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
   		<input name="form_widget" id="quantity" type="text" class="tb_input" value="1" maxlength="4" />
   		<span id="quantity-failed" class="hidden">*</span>
  		<label for="bar_code">Barra:</label>
-  		<input name="form_widget" id="bar_code" type="text" maxlength="100" />
+  		<input name="form_widget" id="bar_code" type="text" maxlength="50" />
   		<span id="bar_code-failed" class="hidden">*</span>
   		<div id="search_product">
 	    	<label for="product_name">Buscar:</label>

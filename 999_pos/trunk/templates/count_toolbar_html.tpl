@@ -21,7 +21,7 @@ var oSearchDetails = new SearchProductToolbar(oSession, oSearchProduct, {$event_
   			{if $status eq 1}disabled="disabled"{/if} />
   		<span id="quantity-failed" class="hidden">*</span>
  		<label for="bar_code">Barra:</label>
-  		<input name="form_widget" id="bar_code" type="text" maxlength="100"
+  		<input name="form_widget" id="bar_code" type="text" maxlength="50"
   			{if $status eq 1}disabled="disabled"{/if} />
   		<span id="bar_code-failed" class="hidden">*</span>
   		<div id="search_product">
