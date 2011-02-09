@@ -65,7 +65,7 @@
 		  	<p>
 		  		<label for="shipment_total">Total env&iacute;o:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
-		  		<input name="form_widget" id="shipment_total" type="text" maxlength="12"
+		  		<input name="form_widget" id="shipment_total" type="text" maxlength="14"
 		  			onblur="oSetProperty.execute('set_shipment_total_receipt', this.value, this.id);" />
 		  		<span id="shipment_total-failed" class="hidden">*</span>
 		  		{else}
