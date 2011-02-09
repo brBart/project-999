@@ -37,14 +37,14 @@
 		  	<p>
 		  		<label for="telephone">Telefono:*</label>
 		  		<input name="form_widget" id="telephone" type="text" value="{$telephone|escape}" maxlength="50"
-		  			onblur="oSetProperty.execute('set_telephone_organization', this.value, this.id);"
+		  			onblur="oSetProperty.execute('set_telephone_object', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="telephone-failed" class="hidden">*</span>
 		  	</p>
 		  	<p>
 		  		<label for="address">Direcci&oacute;n:*</label>
 		  		<input name="form_widget" id="address" type="text" value="{$address|escape}" maxlength="100"
-		  			onblur="oSetProperty.execute('set_address_organization', this.value, this.id);"
+		  			onblur="oSetProperty.execute('set_address_object', this.value, this.id);"
 		  			{if $status eq 1}disabled="disabled"{/if} />
 		  		<span id="address-failed" class="hidden">*</span>
 		  	</p>
