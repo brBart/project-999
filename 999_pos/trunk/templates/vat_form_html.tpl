@@ -20,7 +20,7 @@
 		{include file='status_bar_html.tpl' status='1'}
 		<fieldset id="main_data">
 		  	<p>
-		  		<label for="percentage">Porcentage(%):*</label>
+		  		<label for="percentage">Porcentaje(%):*</label>
 		  		<input name="form_widget" id="percentage" type="text"
 		  			value="{$percentage}" maxlength="5"
 		  			onblur="oSetProperty.execute('set_percentage_object', this.value, this.id);"
