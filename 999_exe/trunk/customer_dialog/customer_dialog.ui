@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>310</width>
-    <height>145</height>
+    <width>360</width>
+    <height>153</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -147,7 +147,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QWebView" name="webView" native="true">
+    <widget class="QWebView" name="webView">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -200,7 +200,7 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="url" stdset="0">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
