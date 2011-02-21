@@ -39,7 +39,7 @@ body {
 		</p>
 		<p id="customer">
 			Nit: {$customer_nit}<br />
-			Cliente: {$customer_name}
+			Cliente: {$customer_name|escape}
 		</p>
 		<table>
 	       	<tbody>

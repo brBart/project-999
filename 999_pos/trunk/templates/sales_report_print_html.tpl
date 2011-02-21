@@ -73,7 +73,7 @@ body {
 					<td>{$invoices[i].serial_number|cat:"-"|cat:$invoices[i].number}</td>
 					<td>
 						{if $invoices[i].name eq ""}
-							CF
+							C.F.
 						{else}
 							{$invoices[i].name|escape}
 						{/if}
