@@ -75,7 +75,7 @@ body {
 						{if $invoices[i].name eq ""}
 							C.F.
 						{else}
-							{$invoices[i].name|escape}
+							{$invoices[i].name|escape|wordwrap:11:"<br />":true}
 						{/if}
 					</td>
 					<td class="total_col">{$invoices[i].cash|nf:2}</td>
