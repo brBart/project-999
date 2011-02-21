@@ -180,7 +180,7 @@ void CashReceiptSection::showVoucherDialog()
 			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
 
 	dialog.init();
-	dialog.move(x() + 100, y() + 100);
+	dialog.move(x() + 60, y() + 60);
 
 	if (dialog.exec() == QDialog::Accepted) {
 		QString content = fetchVouchersData();
