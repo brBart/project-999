@@ -37,7 +37,7 @@ body {
 				<div id="total_amounts">
 					<p>
 				  		<label id="cash_label" class="total_display">Efectivo:</label>
-						<input id="cash_input" class="total_display" type="text" value="{$cash|nf:2}" onfocus="timerObj.start();" onblur="timerObj.stop();" />
+						<input id="cash_input" class="total_display" type="text" maxlength="12" value="{$cash|nf:2}" onfocus="timerObj.start();" onblur="timerObj.stop();" />
 				  		<span id="cash-failed" class="hidden">*</span>
 				  	</p>
 				  	<p>
