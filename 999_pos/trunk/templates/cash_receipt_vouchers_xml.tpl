@@ -13,7 +13,7 @@ header('Content-Type: text/xml');
 	<grid>
 		{section name=i loop=$details}
 		<row>
-			<transaction_number><![CDATA[{$details[i].transaction_number|wordwrap:16:"\n":true}]]></transaction_number>
+			<transaction_number><![CDATA[{$details[i].transaction_number}]]></transaction_number>
 			<number>{$details[i].number}</number>
 			<type><![CDATA[{$details[i].type|wordwrap:11:"\n":true}]]></type>
 			<brand><![CDATA[{$details[i].brand|wordwrap:11:"\n":true}]]></brand>
