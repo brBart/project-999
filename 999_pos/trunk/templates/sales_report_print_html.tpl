@@ -113,8 +113,8 @@ body {
 				{section name=i loop=$deposits}
 				<tr>
 					<td>{$deposits[i].id}</td>
-					<td>{$deposits[i].bank_account_number|escape}</td>
-					<td>{$deposits[i].number|escape}</td>
+					<td>{$deposits[i].bank_account_number|escape|wordwrap:16:"<br />":true}</td>
+					<td>{$deposits[i].number|escape|wordwrap:11:"<br />":true}</td>
 					<td class="total_col">{$deposits[i].total|nf:2}</td>
 					<td>{if $deposits[i].status eq 2}Anulado{/if}</td>
 				</tr>
