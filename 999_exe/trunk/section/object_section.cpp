@@ -192,7 +192,7 @@ void ObjectSection::setActions()
 	QSignalMapper *mapper = new QSignalMapper(this);
 
 	m_ViewPreliminaryReportAction = new QAction(m_PreliminaryReportName, this);
-	m_ViewPreliminaryReportAction->setShortcut(tr("Ctrl+I"));
+	m_ViewPreliminaryReportAction->setShortcut(tr("Ctrl+R"));
 	connect(m_ViewPreliminaryReportAction, SIGNAL(triggered()), mapper,
 			SLOT(map()));
 
