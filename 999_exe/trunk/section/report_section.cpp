@@ -9,6 +9,7 @@
 
 #include <QMenuBar>
 #include <QPrinter>
+#include <QPrintDialog>
 #include "../registry.h"
 
 /**
@@ -31,6 +32,19 @@ ReportSection::ReportSection(QNetworkCookieJar *jar,
 }
 
 /**
+ * Sends the report to the selected printer.
+ */
+void ReportSection::printReportWithOptions()
+{
+	QPrinter printer;
+
+	QPrintDialog dlg(&printer, this);
+	if (dlg.exec() == QDialog::Accepted) {
+		ui.webView->print(&printer);
+	}
+}
+
+/**
  * Sends the report to the printer.
  */
 void ReportSection::printReport()
@@ -45,6 +59,11 @@ void ReportSection::printReport()
  */
 void ReportSection::setActions()
 {
+	m_PrintOptionsAction = new QAction("Imprimir...", this);
+	m_PrintOptionsAction->setShortcut(tr("Ctrl+M"));
+	connect(m_PrintOptionsAction, SIGNAL(triggered()), this,
+			SLOT(printReportWithOptions()));
+
 	m_PrintAction = new QAction("Imprimir", this);
 	m_PrintAction->setShortcut(tr("Ctrl+P"));
 	connect(m_PrintAction, SIGNAL(triggered()), this, SLOT(printReport()));
@@ -62,6 +81,7 @@ void ReportSection::setMenu()
 	QMenu *menu;
 
 	menu = m_Window->menuBar()->addMenu("Archivo");
+	menu->addAction(m_PrintOptionsAction);
 	menu->addAction(m_PrintAction);
 	menu->addSeparator();
 	menu->addAction(m_ExitAction);

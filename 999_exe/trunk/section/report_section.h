@@ -22,12 +22,14 @@ public:
 	virtual ~ReportSection() {};
 
 public slots:
+	void printReportWithOptions();
 	void printReport();
 
 private:
 	QMainWindow *m_Window;
 
 	// File actions.
+	QAction *m_PrintOptionsAction;
 	QAction *m_PrintAction;
 	QAction *m_ExitAction;
 
