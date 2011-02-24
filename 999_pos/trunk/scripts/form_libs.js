@@ -112,7 +112,7 @@ function StateMachine(iStatus){
 StateMachine.setFocus = function(xValue){
 	var oElement = ((typeof xValue) == 'string') ? document.getElementById(xValue) : xValue;
 	
-	if(oElement.tagName == 'INPUT' && oElement.value != '')
+	if(oElement.tagName == 'INPUT' && oElement.getAttribute("type") != 'checkbox' && oElement.value != '')
 		TextRange.selectRange(oElement, 0, oElement.value.length);
 	
 	oElement.focus();
