@@ -382,6 +382,8 @@ class UserAccount extends PersistObject{
 		String::validateString($this->_mLastName, 'Apellido inv&aacute;lido.', 'last_name');
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			String::validateString($this->_mPassword, 'Contrase&ntilde;a inv&aacute;lida.', 'password');
+		if($this->_mDeactivated && $this->_mUserName == ActiveSession::getHelper()->getUser()->getUserName())
+			throw new ValidateException('Cuenta esta en uso, no se puede desactivar.', 'deactivated');
 	}
 	
 	/**
