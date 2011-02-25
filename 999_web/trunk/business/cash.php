@@ -2053,7 +2053,7 @@ class SalesReport{
 	 * @return float
 	 */
 	public function getTotal(){
-		return ($this->_mTotalVouchers + $this->_mTotalCash) - $this->_mTotalDiscount;
+		return $this->_mTotalVouchers + $this->_mTotalCash;
 	}
 	
 	/**

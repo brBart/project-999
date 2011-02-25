@@ -60,10 +60,11 @@ body {
 				<tr>
 					<th>No.</th>
 					<th>Consumidor</th>
+					<th>Sub-Total</th>
+					<th>Desc.</th>
+					<th>Total</th>
 					<th>Efectivo</th>
 					<th>Vouchers</th>
-					<th>Descuento</th>
-					<th>Total</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -78,21 +79,22 @@ body {
 							{$invoices[i].name|escape|wordwrap:11:"<br />":true}
 						{/if}
 					</td>
+					<td class="total_col">{$invoices[i].sub_total|nf:2}</td>
+					<td class="total_col">{$invoices[i].discount_value|nf:2}</td>
+					<td class="total_col">{$invoices[i].total|nf:2}</td>
 					<td class="total_col">{$invoices[i].cash|nf:2}</td>
 					<td class="total_col">{$invoices[i].total_vouchers|nf:2}</td>
-					<td class="total_col">{$invoices[i].discount|nf:2}</td>
-					<td class="total_col">{$invoices[i].total|nf:2}</td>
 					<td>{if $invoices[i].status eq 2}Anulado{/if}</td>
 				</tr>
 				{/section}
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-					<td colspan="2"></td>
-					<td class="total_col"d>{$total_cash|nf:2}</td>
-					<td class="total_col">{$total_vouchers|nf:2}</td>
+					<td colspan="3"></td>
 					<td class="total_col">{$total_discount|nf:2}</td>
 					<td class="total_col">{$total|nf:2}</td>
+					<td class="total_col"d>{$total_cash|nf:2}</td>
+					<td class="total_col">{$total_vouchers|nf:2}</td>
 					<td></td>
 				</tr>
 	       	</tfoot>
