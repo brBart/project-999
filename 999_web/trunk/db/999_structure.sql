@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-02-2011 a las 10:39:41
+-- Tiempo de generación: 25-02-2011 a las 11:19:20
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `branch` (
   `email` varchar(50) collate utf8_unicode_ci default NULL,
   `contact` varchar(50) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`branch_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   `is_default` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`correlative_id`),
   UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`),
   KEY `idx_invoice_correlative_id` (`correlative_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -477,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -490,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`manufacturer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -543,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   KEY `idx_product_unit_of_measure_id` (`unit_of_measure_id`),
   KEY `idx_product_manufacturer_id` (`manufacturer_id`),
   KEY `idx_product_name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -678,7 +678,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -813,7 +813,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `email` varchar(50) collate utf8_unicode_ci default NULL,
   `contact` varchar(50) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -5355,13 +5355,17 @@ DROP PROCEDURE `sales_report_invoices_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_invoices_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT cor.serial_number, inv.number, inv.name, IF(inv.status = 2, 0, cr.cash) AS cash,
+  SELECT cor.serial_number, inv.number, inv.name, inv.total AS sub_total,
 
-      IF(inv.status = 2, 0, cr.total_vouchers) as total_vouchers,
+      IF(inv.status = 2, 0, @discount_percentage := IFNULL(dis.percentage, 0)) AS discount_percentage,
 
-      IF(inv.status = 2, 0, @discount_percentage := IFNULL(dis.percentage, 0)) AS discount,
+      IF(inv.status = 2, 0, @discount_value := inv.total * (@discount_percentage / 100)) AS discount_value,
 
-      IF(inv.status = 2, 0, inv.total - inv.total * (@discount_percentage / 100)) AS total, status FROM invoice inv 
+      IF(inv.status = 2, 0, inv.total - @discount_value) AS total,
+
+      IF(inv.status = 2, 0, cr.cash) AS cash,
+
+      IF(inv.status = 2, 0, cr.total_vouchers) as total_vouchers, status FROM invoice inv 
 
       INNER JOIN cash_receipt cr ON inv.invoice_id = cr.cash_receipt_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
