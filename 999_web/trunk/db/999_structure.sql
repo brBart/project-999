@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-02-2011 a las 11:19:20
+-- Tiempo de generación: 25-02-2011 a las 19:06:42
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -5229,7 +5229,7 @@ BEGIN
 
     "SELECT role_id AS id, name FROM role
 
-      ORDER BY name
+      ORDER BY id
 
       LIMIT ?, ?";
 
