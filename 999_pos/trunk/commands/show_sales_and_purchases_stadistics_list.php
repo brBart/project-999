@@ -78,7 +78,7 @@ class ShowSalesAndPurchasesStadisticsListCommand extends Command{
 			$params = array_merge($params, array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
-					'content' => 'sales_and_purchases_stadistics_list_form_html.tpl',
+					'content' => 'sales_and_purchases_stadistics_list_form_html.tpl', 'date' => $date,
 					'months_list' => $months_list, 'months' => $months, 'order' => $order,
 					'report_name' => 'Estad&iacute;sticas de Ventas y Compras', 'product_list' => $product_list,
 					'manufacturer_list' => $manufacturer_list, 'notify' => '1', 'type' => 'error', 'message' => $msg));
