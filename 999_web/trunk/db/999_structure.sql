@@ -5355,7 +5355,9 @@ DROP PROCEDURE `sales_report_invoices_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_invoices_get`(IN inCashRegisterId INT)
 BEGIN
 
-  SELECT cor.serial_number, inv.number, inv.name, inv.total AS sub_total,
+  SELECT cor.serial_number, inv.number, inv.name,
+  
+      IF(inv.status = 2, 0, inv.total) AS sub_total,
 
       IF(inv.status = 2, 0, @discount_percentage := IFNULL(dis.percentage, 0)) AS discount_percentage,
 
@@ -5365,7 +5367,7 @@ BEGIN
 
       IF(inv.status = 2, 0, cr.cash) AS cash,
 
-      IF(inv.status = 2, 0, cr.total_vouchers) as total_vouchers, status FROM invoice inv 
+      IF(inv.status = 2, 0, cr.total_vouchers) AS total_vouchers, status FROM invoice inv 
 
       INNER JOIN cash_receipt cr ON inv.invoice_id = cr.cash_receipt_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
