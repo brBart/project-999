@@ -360,7 +360,7 @@ class String{
 	 * @throws ValidateException
 	 */
 	static public function validateNit($nit, $msg, $property = NULL){
-		if(!preg_match('/^[0-9]+[-][0-9]$/', $nit))
+		if(!preg_match('/^[0-9]+\-\w$/', $nit))
 			throw new ValidateException($msg . ' Formato debe ser ######-#', $property);
 	}
 }
