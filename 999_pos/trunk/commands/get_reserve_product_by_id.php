@@ -24,10 +24,14 @@ class GetReserveProductByIdCommand extends GetReserveProductCommand{
 		$id = $this->_mRequest->getProperty('id');
 		if(is_numeric($id)){
 			$product = Product::getInstance((int)$id);
-			if(!is_null($product))
+			if(!is_null($product)){
+				if($product->isDeactivated())
+					throw new Exception('Producto esta desactivado.');
+				
 				return $product;
+			}
 			else
-				throw new Exception('Product no existe.');
+				throw new Exception('Producto no existe.');
 		}
 		else
 			throw new Exception('C&oacute;digo inv&aacute;lido. Valor debe ser n&uacute;merico.');

@@ -23,11 +23,16 @@ class GetBonusProductByBarCodeCommand extends GetBonusProductCommand{
 	protected function getObject(){
 		$bar_code = $this->_mRequest->getProperty('bar_code');
 		if($bar_code != ''){
-			$id = Product::getProductIdByBarCode($bar_code);
-			if($id > 0)
-				return Product::getInstance($id);
+			$id = Product::getProductIdByBarCode($bar_code, true);
+			if($id > 0){
+				$product = Product::getInstance($id);
+				if($product->isDeactivated())
+					throw new Exception('Producto esta desactivado.');
+				
+				return $product;
+			}
 			else
-				throw new Exception('Product no existe.');
+				throw new Exception('Producto no existe.');
 		}
 		else
 			throw new Exception('C&oacute;digo de barra inv&aacute;lido. Valor no puede ser vac&iacute;o.');
