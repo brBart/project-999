@@ -118,8 +118,9 @@ function SearchProductDetails(oSession, oSearchProduct, oEventDelegator){
  * Sets the text input element where the user will enter the search query.
  * @param {String} sTxtWidget The id of the input element.
  * @param {String} sDetailsObj The name of the variable which holds the instance of this class.
+ * @param {Boolean} bIncludeDeactivated Include deactivated products.
  */
-SearchProductDetails.prototype.init = function(sTxtWidget, sDetailsObj){
+SearchProductDetails.prototype.init = function(sTxtWidget, sDetailsObj, bIncludeDeactivated){
 	// Register with the event delegator.
 	this._mEventDelegator.registerObject(this);
 	
@@ -138,7 +139,7 @@ SearchProductDetails.prototype.init = function(sTxtWidget, sDetailsObj){
 		oTemp.startListening();
 	}
 	
-	this._mSearchProduct.init(this);
+	this._mSearchProduct.init(this, bIncludeDeactivated);
 }
 
 /**

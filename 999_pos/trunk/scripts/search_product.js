@@ -21,6 +21,12 @@ function SearchProduct(oSession, oConsole, oRequest){
 	this._mCmd = 'search_product';
 	
 	/**
+	 * Holds if the search includes deactivated products also.
+	 * @type Boolean
+	 */
+	this._mIncludeDeactivated;
+	
+	/**
 	 * Holds the settimeout id.
 	 * @type Integer
 	 */
@@ -47,10 +53,12 @@ SearchProduct.prototype = new Command();
 /**
  * Initialize the object properties.
  * @param {SearchProductDetails} oSearchProductDetails
+ * @param {Boolean} bIncludeDeactivated
  */
-SearchProduct.prototype.init = function(oSearchProductDetails){
+SearchProduct.prototype.init = function(oSearchProductDetails, bIncludeDeactivated){
 	this._mCache = new Array();
 	this._mSearchProductDetails = oSearchProductDetails;
+	this._mIncludeDeactivated = (typeof bIncludeDeactivated == 'undefined') ? false : true;
 }
   
 /**
@@ -134,6 +142,7 @@ SearchProduct.prototype.sendRequest = function(sKeyword){
 	{
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', this._mCmd);
 		str = Url.addUrlParam(str, 'keyword', sKeyword);
+		str = Url.addUrlParam(str, 'include_deactivated', this._mIncludeDeactivated ? 1 : 0);
 		str = Url.addUrlParam(str, 'type', 'xml');
 		this._mRequest.open('GET', str, true);
 		
