@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-02-2011 a las 19:06:42
+-- Tiempo de generación: 08-03-2011 a las 17:27:29
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -477,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -490,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`manufacturer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -543,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   KEY `idx_product_unit_of_measure_id` (`unit_of_measure_id`),
   KEY `idx_product_manufacturer_id` (`manufacturer_id`),
   KEY `idx_product_name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -629,7 +629,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -678,7 +678,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -813,7 +813,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `email` varchar(50) collate utf8_unicode_ci default NULL,
   `contact` varchar(50) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`supplier_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -4517,6 +4517,16 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE `product_id_get_include_deactivated`$$
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_id_get_include_deactivated`(IN inBarCode VARCHAR(50))
+BEGIN
+
+  SELECT product_id FROM product
+
+    WHERE bar_code = inBarCode;
+
+END$$
+
 DROP PROCEDURE `product_inactive_count`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_count`(IN inDate DATE, IN inDays INT)
 BEGIN
@@ -4824,6 +4834,17 @@ BEGIN
   SELECT bar_code, name, packaging FROM product
 
     WHERE name LIKE CONCAT(inSearchString, '%') AND deactivated != 1
+    ORDER BY name, packaging;
+
+END$$
+
+DROP PROCEDURE `product_search_include_deactivated`$$
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search_include_deactivated`(IN inSearchString VARCHAR(50))
+BEGIN
+
+  SELECT bar_code, name, packaging FROM product
+
+    WHERE name LIKE CONCAT(inSearchString, '%')
     ORDER BY name, packaging;
 
 END$$
@@ -5356,7 +5377,7 @@ CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_invoices_get`(IN i
 BEGIN
 
   SELECT cor.serial_number, inv.number, inv.name,
-  
+
       IF(inv.status = 2, 0, inv.total) AS sub_total,
 
       IF(inv.status = 2, 0, @discount_percentage := IFNULL(dis.percentage, 0)) AS discount_percentage,
