@@ -207,3 +207,10 @@ SearchProduct.prototype.xmlToArray = function(resultsXml){
  	// return the node's content as an array
  	return resultsArray;
 }
+
+/**
+ * Returns true if deactivated were included on the search.
+ */
+SearchProduct.prototype.includeDeactivated = function(){
+	return this._mIncludeDeactivated;
+}

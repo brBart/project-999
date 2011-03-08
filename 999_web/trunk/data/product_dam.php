@@ -403,10 +403,15 @@ class ProductDAM{
 	 *
 	 * If not found returns 0.
 	 * @param string $barCode
+	 * @param boolean $includeDeactivated
 	 * @return integer
 	 */
-	static public function getIdByBarCode($barCode){
-		$sql = 'CALL product_id_get(:bar_code)';
+	static public function getIdByBarCode($barCode, $includeDeactivated){
+		if($includeDeactivated)
+			$sql = 'CALL product_id_get_include_deactivated(:bar_code)';
+		else
+			$sql = 'CALL product_id_get(:bar_code)';
+		
 		$params = array(':bar_code' => $barCode);
 		return (int)DatabaseHandler::getOne($sql, $params);
 	}

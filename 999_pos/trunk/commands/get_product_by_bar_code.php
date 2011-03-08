@@ -22,8 +22,10 @@ class GetProductByBarCodeCommand extends GetProductCommand{
 	 */
 	protected function getObject(){
 		$bar_code = $this->_mRequest->getProperty('bar_code');
+		$include_deactivated = (boolean)$this->_mRequest->getProperty('include_deactivated');
+		
 		if($bar_code != ''){
-			$id = Product::getProductIdByBarCode($bar_code);
+			$id = Product::getProductIdByBarCode($bar_code, $include_deactivated);
 			if($id > 0)
 				return Product::getInstance($id);
 			else
