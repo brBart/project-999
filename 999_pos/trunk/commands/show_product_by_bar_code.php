@@ -23,7 +23,7 @@ class ShowProductByBarCodeCommand extends ShowProductCommand{
 	protected function getProduct(){
 		$bar_code = $this->_mRequest->getProperty('bar_code');
 		if($bar_code != ''){
-			$id = Product::getProductIdByBarCode($bar_code);
+			$id = Product::getProductIdByBarCode($bar_code, true);
 			if($id > 0)
 				return Product::getInstance($id);
 			else

@@ -29,7 +29,7 @@ SearchProductLineEdit::SearchProductLineEdit(QWidget *parent) : QLineEdit(parent
  * Sets the necessary objects to communicate with the server.
  */
 void SearchProductLineEdit::init(QNetworkCookieJar *jar, QUrl *url,
-		Console *console, SearchProductModel *model)
+		Console *console, SearchProductModel *model, bool includeDeactivated)
 {
 	m_Request = new HttpRequest(jar, this);
 	m_Handler = new XmlResponseHandler(this);
@@ -43,6 +43,7 @@ void SearchProductLineEdit::init(QNetworkCookieJar *jar, QUrl *url,
 
 	m_Keywords = model->keywords();
 	m_Model = model;
+	m_IncludeDeactivated = includeDeactivated;
 
 	QTreeView *tree = new QTreeView(this);
 	tree->setHeaderHidden(true);
@@ -96,6 +97,7 @@ void SearchProductLineEdit::fetchProducts()
 		QUrl url(*m_ServerUrl);
 		url.addQueryItem("cmd", "search_product");
 		url.addQueryItem("keyword", m_NamesQueue.dequeue());
+		url.addQueryItem("include_deactivated", m_IncludeDeactivated ? "1" : "0");
 		url.addQueryItem("type", "xml");
 
 		m_Request->get(url, true);

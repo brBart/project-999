@@ -22,7 +22,7 @@ ConsultProductDialog::ConsultProductDialog(QNetworkCookieJar *jar, QUrl *url,
 				->createWidgetConsole(QMap<QString, QLabel*>());
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
-	ui.nameSearchProductLineEdit->init(jar, url, m_Console, model);
+	ui.nameSearchProductLineEdit->init(jar, url, m_Console, model, true);
 
 	EnterKeyEventFilter *filter = new EnterKeyEventFilter(this);
 	ui.barCodePushButton->installEventFilter(filter);

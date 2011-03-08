@@ -26,7 +26,7 @@ public:
 	SearchProductLineEdit(QWidget *parent = 0);
 	virtual ~SearchProductLineEdit() {};
 	void init(QNetworkCookieJar *jar, QUrl *url, Console *console,
-			SearchProductModel *model);
+			SearchProductModel *model, bool includeDeactivated = false);
 	QString barCode();
 
 public slots:
@@ -56,6 +56,7 @@ private:
 	QStringList *m_Keywords;
 
 	SearchProductModel *m_Model;
+	bool m_IncludeDeactivated;
 };
 
 #endif /* SEARCH_PRODUCT_LINE_EDIT_H_ */
