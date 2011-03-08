@@ -214,7 +214,7 @@ void SalesSection::finishInvoice(QString id)
 }
 
 /**
- * Searchs for a product's bar code by name and adds it to the invoice.
+ * Searches for a product's bar code by name and adds it to the invoice.
  */
 void SalesSection::searchProduct()
 {
