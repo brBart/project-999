@@ -785,10 +785,15 @@ class ProductSearchDAM{
 	 * The array returned contains the fields bar_code and name of the product which name is similar or exactly as
 	 * the search string provided.
 	 * @param string $searchString
+	 * @param boolean $includeDeactivated
 	 * @return array
 	 */
-	static public function getList($searchString){
-		$sql = 'CALL product_search(:search_string)';
+	static public function getList($searchString, $includeDeactivated){
+		if($includeDeactivated)
+			$sql = 'CALL product_search_include_deactivated(:search_string)';
+		else
+			$sql = 'CALL product_search(:search_string)';
+			
 		$params = array(':search_string' => $searchString);
 		return DatabaseHandler::getAll($sql, $params);
 	}

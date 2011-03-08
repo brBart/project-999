@@ -31,7 +31,9 @@ class SearchProductCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$keyword = $request->getProperty('keyword');
-		$list = ProductSearch::search($keyword);
+		$include_deactivated = (boolean)$request->getProperty('include_deactivated');
+		
+		$list = ProductSearch::search($keyword, $include_deactivated);
 		Page::display(array('list' => $list, 'keyword' => $keyword), 'search_product_list_xml.tpl');
 	}
 }

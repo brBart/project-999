@@ -1533,11 +1533,12 @@ class ProductSearch{
 	 * 
 	 * The array contains the fields bar_code, name.
 	 * @param string $searchString
+	 * @param boolean $includeDeactivated
 	 * @return array
 	 */
-	static public function search($searchString){
+	static public function search($searchString, $includeDeactivated = false){
 		String::validateString($searchString, 'Valor inv&aacute;lido.');
-		return ProductSearchDAM::getList($searchString);
+		return ProductSearchDAM::getList($searchString, $includeDeactivated);
 	}
 }
 
