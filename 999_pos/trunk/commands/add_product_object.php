@@ -37,11 +37,15 @@ abstract class AddProductObjectCommand extends Command{
 		
 		try{
 			if($bar_code != ''){
-				$id = Product::getProductIdByBarCode($bar_code);
-				if($id > 0)
+				$id = Product::getProductIdByBarCode($bar_code, true);
+				if($id > 0){
 					$product = Product::getInstance($id);
+					
+					if($product->isDeactivated())
+						throw new ValidateException('Producto esta desactivado.', 'bar_code');
+				}
 				else
-					throw new ValidateException('Product no existe.', 'bar_code');
+					throw new ValidateException('Producto no existe.', 'bar_code');
 			}
 			else
 				throw new ValidateException('C&oacute;digo de barra inv&aacute;lido. Valor no puede ser ' .
