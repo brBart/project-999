@@ -176,8 +176,11 @@ void MainWindow::loadWorkingDaySection()
  */
 void MainWindow::consultProduct()
 {
-	ConsultProductDialog dialog(&m_CookieJar, m_ServerUrl,
-			SearchProductModel::instance(), this, Qt::WindowTitleHint);
+	SearchProductModel model;
+
+	ConsultProductDialog dialog(&m_CookieJar, m_ServerUrl, &model, this,
+			Qt::WindowTitleHint);
+
 	dialog.exec();
 }
 

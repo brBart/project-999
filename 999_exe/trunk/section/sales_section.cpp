@@ -16,7 +16,6 @@
 #include "../discount_dialog/discount_dialog.h"
 #include "cash_receipt_section.h"
 #include "../search_product_dialog/search_product_dialog.h"
-#include "../search_product/search_product_model.h"
 #include "../recordset/recordset_searcher_factory.h"
 #include "../search_invoice_dialog/search_invoice_dialog.h"
 #include "../consult_product_dialog/consult_product_dialog.h"
@@ -218,8 +217,11 @@ void SalesSection::finishInvoice(QString id)
  */
 void SalesSection::searchProduct()
 {
+	if (m_ProductModel == 0)
+		m_ProductModel = new SearchProductModel(this);
+
 	SearchProductDialog dialog(m_Request->cookieJar(), m_ServerUrl,
-			SearchProductModel::instance(), this, Qt::WindowTitleHint);
+			m_ProductModel, this, Qt::WindowTitleHint);
 
 	connect(&dialog, SIGNAL(sessionStatusChanged(bool)), this,
 			SIGNAL(sessionStatusChanged(bool)), Qt::QueuedConnection);
@@ -261,8 +263,11 @@ void SalesSection::searchInvoice()
  */
 void SalesSection::consultProduct()
 {
-	ConsultProductDialog dialog(m_Request->cookieJar(), m_ServerUrl,
-			SearchProductModel::instance(), this, Qt::WindowTitleHint);
+	SearchProductModel model;
+
+	ConsultProductDialog dialog(m_Request->cookieJar(), m_ServerUrl, &model,
+			this, Qt::WindowTitleHint);
+
 	dialog.exec();
 }
 

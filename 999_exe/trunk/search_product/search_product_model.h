@@ -16,15 +16,12 @@ class SearchProductModel : public QStandardItemModel
 	Q_OBJECT
 
 public:
+	SearchProductModel(QObject *parent = 0);
 	virtual ~SearchProductModel() {};
 	QStringList* keywords();
-	static SearchProductModel* instance();
 
 private:
 	QStringList m_Keywords;
-	static SearchProductModel *m_Instance;
-
-	SearchProductModel(QObject *parent = 0);
 };
 
 #endif /* SEARCH_PRODUCT_MODEL_H_ */
