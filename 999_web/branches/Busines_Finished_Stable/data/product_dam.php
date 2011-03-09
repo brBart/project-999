@@ -511,9 +511,10 @@ class ProductDAM{
 	 *
 	 * Returns a product whick bar code matches the one provided. If not found returns NULL.
 	 * @param string $barCode
+	 * @param boolean $includeDeactivated
 	 * @return Product
 	 */
-	static public function getIdByBarCode($barCode){
+	static public function getIdByBarCode($barCode, $includeDeactivated){
 		if($barCode == '12345')
 			return 123;
 		else
@@ -1198,9 +1199,10 @@ class ProductSearchDAM{
 	 *
 	 * The array returned contains the fields bar_code, name.
 	 * @param string $searchString
+	 * @param boolean $includeDeactivated
 	 * @return array
 	 */
-	static public function getList($searchString){
+	static public function getList($searchString, $includeDeactivated){
 		return array(array('bar_code' => '3245325', 'name' => 'Aspirina Niños'), array('bar_code' => '3245325',
 				'name' => 'Aspirina Adultos'));
 	}

@@ -790,10 +790,11 @@ class Product extends Identifier{
 	 *
 	 * If not found returns 0.
 	 * @param string $barCode
+	 * @param boolean $includeDeactivated
 	 * @return integer
 	 */
-	static public function getProductIdByBarCode($barCode){
-		return ProductDAM::getIdByBarCode($barCode);
+	static public function getProductIdByBarCode($barCode, $includeDeactivated = false){
+		return ProductDAM::getIdByBarCode($barCode, $includeDeactivated);
 	}
 	
 	/**
@@ -1533,11 +1534,12 @@ class ProductSearch{
 	 * 
 	 * The array contains the fields bar_code, name.
 	 * @param string $searchString
+	 * @param boolean $includeDeactivated
 	 * @return array
 	 */
-	static public function search($searchString){
+	static public function search($searchString, $includeDeactivated = false){
 		String::validateString($searchString, 'Valor inv&aacute;lido.');
-		return ProductSearchDAM::getList($searchString);
+		return ProductSearchDAM::getList($searchString, $includeDeactivated);
 	}
 }
 
