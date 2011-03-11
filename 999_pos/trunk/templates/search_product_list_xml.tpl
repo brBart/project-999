@@ -11,6 +11,7 @@ header('Content-Type: text/xml');
 		<bar_code><![CDATA[{$list[i].bar_code}]]></bar_code>
 		<name><![CDATA[{$list[i].name}]]></name>
 		<packaging><![CDATA[{$list[i].packaging}]]></packaging>
+		<manufacturer><![CDATA[{$list[i].manufacturer}]]></manufacturer>
 	</result>
 	{/section}
 </response>

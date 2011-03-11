@@ -241,7 +241,7 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 				{
 					// bold the matching prefix of the product name and of the sKeyword
 					div += '<b>' + crtProductName.substring(0, sKeyword.length).htmlEntities() + '</b>' +
-							crtProductName.substring(sKeyword.length, crtProductName.length).htmlEntities() + '</td>';
+							crtProductName.substring(sKeyword.length, crtProductName.length).htmlEntities();
 				}
 				else
 				{
@@ -252,18 +252,19 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 						/* bold the matching prefix of the product name and that of the 
 	            		sKeyword */
 						div += '<b>' + crtProductName.substring(0, sKeyword.length).htmlEntities() + '</b>' +
-								crtProductName.substring(sKeyword.length, this._mSuggestionMaxLength).htmlEntities() + 
-								'</td>';
+								crtProductName.substring(sKeyword.length, this._mSuggestionMaxLength).htmlEntities();
 					}
 					else
 					{
 						// bold the entire product name
-						div += '<b>' + crtProductName.substring(0, this._mSuggestionMaxLength).htmlEntities() + '</b></td>';          
+						div += '<b>' + crtProductName.substring(0, this._mSuggestionMaxLength).htmlEntities() + '</b>';          
 					}
 				}
 				
 				// retrieve the packaging of the product
-				div += '<td id="' + crtProductBarCode.htmlEntities() + '">' + resultsArray[i]['packaging'].htmlEntities() + '</td></tr>';
+				div += '; ' + resultsArray[i]['packaging'].htmlEntities() + '; ' +
+						resultsArray[i]['manufacturer'].htmlEntities() +
+						'</td><td id="' + crtProductBarCode.htmlEntities() + '"></td></tr>';
 			}
 		}
 		// end building the HTML table
