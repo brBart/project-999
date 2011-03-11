@@ -7,8 +7,6 @@
 
 #include "search_product_model.h"
 
-#include <QApplication>
-
 /**
  * @class SearchProductModel
  * Extends the QStandardItemModel a sets the column count property to 3.
