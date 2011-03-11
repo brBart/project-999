@@ -134,7 +134,9 @@ void SearchProductLineEdit::updateProductModel(QString content)
 		for (int i = 1; i < list.size(); i++) {
 			map = list[i];
 
-			if ((m_Model->findItems(map->value("name"))).size() == 0) {
+			if ((m_Model
+					->findItems(map->value("bar_code"), Qt::MatchExactly, 3))
+					.size() == 0) {
 				itemList = new QList<QStandardItem*>;
 				itemList->append(new QStandardItem(map->value("name")));
 				itemList->append(new QStandardItem(map->value("packaging")));
