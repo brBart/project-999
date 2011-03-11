@@ -99,5 +99,6 @@ void ConsultProductDialog::fetchProduct(QString value, bool isBarCode)
 
 		layout->addWidget(&view);
 		dialog.exec();
+		close();
 	}
 }
