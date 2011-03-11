@@ -46,8 +46,8 @@ body {
        			{section name=i loop=$details}
 				<tr>
 					<td>{$details[i].quantity}</td>
-					<td>{$details[i].product|escape|truncate:18:"...":true}</td>
-					<td>{$details[i].packaging|escape|truncate:18:"...":true}</td>
+					<td>{$details[i].product|escape|truncate:21:"...":true}</td>
+					<td>{$details[i].packaging|escape|truncate:21:"...":true}</td>
 					<td></td>
 				</tr>
 				<tr>
@@ -59,18 +59,15 @@ body {
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="2"></td>
-	       			<td>Sub-Total:</td>
+	       			<td class="total_col" colspan="3">Sub-Total:</td>
 	       			<td class="total_col">{$sub_total|nf:2}</td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="2"></td>
-	       			<td>Descuento <span>({$discount_percentage}%)</span>: </td>
+	       			<td class="total_col" colspan="3">Descuento <span>({$discount_percentage}%)</span>: </td>
 	       			<td class="total_col">{$discount|nf:2}</td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="2"></td>
-	       			<td>Total:</td>
+	       			<td class="total_col" colspan="3">Total:</td>
 	       			<td class="total_col">{$total|nf:2}</td>
 	       		</tr>
 	       	</tfoot>
