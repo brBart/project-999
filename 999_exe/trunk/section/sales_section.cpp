@@ -33,7 +33,7 @@ SalesSection::SalesSection(QNetworkCookieJar *jar, QWebPluginFactory *factory,
 		QUrl *serverUrl, QString cashRegisterKey, QWidget *parent)
 		: DocumentSection(jar, factory, serverUrl, cashRegisterKey, parent)
 {
-
+	m_ProductModel = 0;
 }
 
 /**
