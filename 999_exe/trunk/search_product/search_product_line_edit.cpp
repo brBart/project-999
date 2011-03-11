@@ -55,7 +55,7 @@ void SearchProductLineEdit::init(QNetworkCookieJar *jar, QUrl *url,
 
 	setCompleter(completer);
 
-	tree->hideColumn(2);
+	tree->hideColumn(3);
 
 	connect(&m_CheckerTimer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
 	connect(&m_SenderTimer, SIGNAL(timeout()), this, SLOT(fetchProducts()));
@@ -137,6 +137,7 @@ void SearchProductLineEdit::updateProductModel(QString content)
 				itemList = new QList<QStandardItem*>;
 				itemList->append(new QStandardItem(map->value("name")));
 				itemList->append(new QStandardItem(map->value("packaging")));
+				itemList->append(new QStandardItem(map->value("manufacturer")));
 				itemList->append(new QStandardItem(map->value("bar_code")));
 
 				m_Model->appendRow(*itemList);
@@ -165,7 +166,7 @@ void SearchProductLineEdit::updateProductModel(QString content)
  */
 void SearchProductLineEdit::itemChose(const QModelIndex &index)
 {
-	m_BarCode = completer()->completionModel()->index(index.row(), 2)
+	m_BarCode = completer()->completionModel()->index(index.row(), 3)
 			.data().toString();
 
 	emit activated();

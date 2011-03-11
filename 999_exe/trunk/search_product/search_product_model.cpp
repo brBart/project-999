@@ -17,7 +17,7 @@
  */
 SearchProductModel::SearchProductModel(QObject *parent) : QStandardItemModel(parent)
 {
-	setColumnCount(3);
+	setColumnCount(4);
 }
 
 /**
