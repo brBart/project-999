@@ -55,6 +55,7 @@ void SearchProductLineEdit::init(QNetworkCookieJar *jar, QUrl *url,
 
 	setCompleter(completer);
 
+	tree->setColumnWidth(0, 150);
 	tree->hideColumn(3);
 
 	connect(&m_CheckerTimer, SIGNAL(timeout()), this, SLOT(checkForChanges()));
