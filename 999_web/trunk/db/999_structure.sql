@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-03-2011 a las 17:27:29
+-- Tiempo de generación: 12-03-2011 a las 08:24:04
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   `is_default` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`correlative_id`),
   UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`),
   KEY `idx_invoice_correlative_id` (`correlative_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -477,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -629,7 +629,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -678,7 +678,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=54 ;
 
 -- --------------------------------------------------------
 
@@ -4659,9 +4659,11 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT product_id AS id, name, packaging FROM product
+    "SELECT pro.product_id AS id, pro.name, pro.packaging, man.name AS manufacturer FROM product pro
 
-      ORDER BY name
+      INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+      ORDER BY pro.name, pro.packaging, man.name
 
       LIMIT ?, ?";
 
@@ -4831,10 +4833,13 @@ DROP PROCEDURE `product_search`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search`(IN inSearchString VARCHAR(50))
 BEGIN
 
-  SELECT bar_code, name, packaging FROM product
+  SELECT pro.bar_code, pro.name, pro.packaging, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
 
-    WHERE name LIKE CONCAT(inSearchString, '%') AND deactivated != 1
-    ORDER BY name, packaging;
+    ON pro.manufacturer_id = man.manufacturer_id
+
+    WHERE pro.name LIKE CONCAT(inSearchString, '%') AND deactivated != 1
+
+    ORDER BY pro.name, packaging, man.name;
 
 END$$
 
@@ -4842,10 +4847,13 @@ DROP PROCEDURE `product_search_include_deactivated`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search_include_deactivated`(IN inSearchString VARCHAR(50))
 BEGIN
 
-  SELECT bar_code, name, packaging FROM product
+  SELECT pro.bar_code, pro.name, pro.packaging, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
 
-    WHERE name LIKE CONCAT(inSearchString, '%')
-    ORDER BY name, packaging;
+    ON pro.manufacturer_id = man.manufacturer_id
+
+    WHERE pro.name LIKE CONCAT(inSearchString, '%')
+
+    ORDER BY pro.name, packaging, man.name;
 
 END$$
 
@@ -5805,13 +5813,13 @@ DROP PROCEDURE `supplier_product_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_product_list_get`(IN inSupplierId INT)
 BEGIN
 
-  SELECT DISTINCT pro_sup.product_id AS id, pro.name, pro.packaging FROM product_supplier pro_sup INNER JOIN product pro
+  SELECT DISTINCT pro_sup.product_id AS id, pro.name, pro.packaging, man.name AS manufacturer FROM product_supplier pro_sup INNER JOIN product pro
 
-         ON pro_sup.product_id = pro.product_id
+         ON pro_sup.product_id = pro.product_id INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
      WHERE pro_sup.supplier_id = inSupplierId
 
-     ORDER BY pro.name;
+     ORDER BY pro.name, pro.packaging, man.name;
 
 END$$
 
