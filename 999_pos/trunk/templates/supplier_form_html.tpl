@@ -87,7 +87,7 @@ StateMachine.setFocus('name');
 <script type="text/javascript" src="../scripts/modal_form.js"></script>
 <script type="text/javascript" src="../scripts/modal_list.js"></script>
 <div id="products_container" class="hidden">
-	<div class="list_form">
+	<div class="list_form_large">
 		<a class="close_window" href="#" onclick="oProductList.hideForm();">Cerrar[X]</a>
 		<div id="products_console" class="console_display"></div>
 		<div id="products" class="items"></div>
@@ -99,7 +99,7 @@ oEventDelegator.init();
 var oProductsFrm = new ModalForm('products_container');
 var oProductsConsole = new Console('products_console');
 var oManufacturerProducts = new ObjectDetails(oSession, oProductsConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_supplier_products');
-oManufacturerProducts.init('../xsl/product_list.xsl', 'products', 'oManufacturerProducts');
+oManufacturerProducts.init('../xsl/supplier_product_list.xsl', 'products', 'oManufacturerProducts');
 var oProductList = new ModalList(oManufacturerProducts, oProductsFrm);
 </script>
 {/if}

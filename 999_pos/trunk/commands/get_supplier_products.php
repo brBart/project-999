@@ -36,7 +36,7 @@ class GetSupplierProductsCommand extends Command{
 		$page = ($page_items > 0) ? 1 : 0;
 		
 		Page::display(array('products' => $products, 'page_items' => $page_items, 'page' => $page),
-				'product_list_xml.tpl');
+				'supplier_product_list_xml.tpl');
 	}
 }
 ?>

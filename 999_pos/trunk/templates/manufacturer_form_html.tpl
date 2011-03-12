@@ -62,7 +62,7 @@ oEventDelegator.init();
 var oProductsFrm = new ModalForm('products_container');
 var oProductsConsole = new Console('products_console');
 var oManufacturerProducts = new ObjectDetails(oSession, oProductsConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator, 'get_manufacturer_products');
-oManufacturerProducts.init('../xsl/product_list.xsl', 'products', 'oManufacturerProducts');
+oManufacturerProducts.init('../xsl/manufacturer_product_list.xsl', 'products', 'oManufacturerProducts');
 var oProductList = new ModalList(oManufacturerProducts, oProductsFrm);
 </script>
 {/if}
