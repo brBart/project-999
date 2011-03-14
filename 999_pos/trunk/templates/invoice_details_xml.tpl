@@ -25,8 +25,7 @@ header('Content-Type: text/xml');
 			<percentage>0</percentage>
 			{/if}
 			<detail_id>{$details[i].id}</detail_id>
-			<product><![CDATA[{$details[i].product|truncate:21:"...":true}]]></product>
-			<packaging><![CDATA[{$details[i].packaging|truncate:21:"...":true}]]></packaging>
+			<product><![CDATA[{$details[i].product|truncate:42:"...":true}]]></product>
 			<quantity>{$details[i].quantity}</quantity>
 			<price>{$details[i].price|nf:2}</price>
 			<total>{$details[i].total|nf:2}</total>

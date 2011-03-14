@@ -261,9 +261,8 @@ SearchProductDetails.prototype.displayResults = function(sKeyword, resultsArray)
 					}
 				}
 				
-				// retrieve the packaging of the product
-				div += '; ' + resultsArray[i]['packaging'].htmlEntities() + '; ' +
-						resultsArray[i]['manufacturer'].htmlEntities() +
+				// retrieve the manufacturer of the product
+				div += '; ' + resultsArray[i]['manufacturer'].htmlEntities() +
 						'</td><td id="' + crtProductBarCode.htmlEntities() + '"></td></tr>';
 			}
 		}

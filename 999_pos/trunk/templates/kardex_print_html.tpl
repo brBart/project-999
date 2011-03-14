@@ -25,10 +25,6 @@
 		  		<label>C&oacute;digo barra:</label>
 		  		<span>{$bar_code}</span>
 		  	</p>
-		  	<p>
-		  		<label>Presentaci&oacute;n:</label>
-		  		<span>{$packaging}</span>
-		  	</p>
 		</fieldset>
 		<p id="separator">&nbsp;</p>
 		<table>

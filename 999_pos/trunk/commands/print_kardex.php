@@ -30,9 +30,8 @@ class PrintKardexCommand extends Command{
 		$kardex = Kardex::showPage($product, $balance);
 		
 		Page::display(array('id' => $product->getId(), 'name' => $product->getName(),
-				'bar_code' => $product->getBarCode(), 'packaging' => $product->getPackaging(),
-				'balance' => $balance, 'total_items' => count($kardex), 'kardex' => $kardex),
-				'kardex_print_html.tpl');
+				'bar_code' => $product->getBarCode(), 'balance' => $balance,
+				'total_items' => count($kardex), 'kardex' => $kardex), 'kardex_print_html.tpl');
 	}
 }
 ?>

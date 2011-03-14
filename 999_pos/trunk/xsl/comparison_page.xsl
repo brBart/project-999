@@ -13,7 +13,6 @@
 	        		<th>Barra</th> 
 	         		<th>Casa</th>
 	         		<th>Nombre</th>
-	         		<th>Presentacion</th>
 	         		<th>UM</th>
 	         		<th>Fisico</th>
 	         		<th>Sistema</th>
@@ -78,7 +77,6 @@
 	       		<td><xsl:value-of select="bar_code" /></td>
 	       		<td><xsl:value-of select="manufacturer" /></td>
 	       		<td><xsl:value-of select="product" /></td>
-	       		<td><xsl:value-of select="packaging" /></td>
 	       		<td><xsl:value-of select="um" /></td>
 	       		<td class="total_col"><xsl:value-of select="physical" /></td>
 	       		<td class="total_col"><xsl:value-of select="system" /></td>

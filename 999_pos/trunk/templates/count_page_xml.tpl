@@ -22,8 +22,7 @@ header('Content-Type: text/xml');
 			<detail_id>{$details[i].id}</detail_id>
 			<bar_code><![CDATA[{$details[i].bar_code|wordwrap:24:"\n":true}]]></bar_code>
 			<manufacturer><![CDATA[{$details[i].manufacturer|wordwrap:19:"\n":true}]]></manufacturer>
-			<product><![CDATA[{$details[i].product|wordwrap:19:"\n":true}]]></product>
-			<packaging><![CDATA[{$details[i].packaging|wordwrap:19:"\n":true}]]></packaging>
+			<product><![CDATA[{$details[i].product|wordwrap:38:"\n":true}]]></product>
 			<um><![CDATA[{$details[i].um|wordwrap:10:"\n":true}]]></um>
 			<quantity>{$details[i].quantity}</quantity>
 		</row>

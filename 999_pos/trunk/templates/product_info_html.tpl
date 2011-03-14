@@ -49,10 +49,6 @@ body {
 				  		<span>{$bar_code|escape|wordwrap:40:"<br />":true}&nbsp;</span>
 				  	</p>
 				  	<p>
-				  		<label>Presentaci&oacute;n:</label>
-				  		<span>{$packaging|escape|wordwrap:40:"<br />":true}&nbsp;</span>
-				  	</p>
-				  	<p>
 				  		<label>Descripci&oacute;n:</label>
 				  		<span>{$description|escape|wordwrap:40:"<br />":true}&nbsp;</span>
 				  	</p>

@@ -58,11 +58,11 @@ abstract class GetProductCommand extends GetObjectCommand{
 				'back_link' => $back_link, 'forward_link' => $forward_link,
 				'manufacturer_list' => $manufacturer_list, 'um_list' => $um_list,
 				'supplier_list' => $supplier_list, 'id' => $id, 'name' => $obj->getName(),
-				'bar_code' => $obj->getBarCode(), 'packaging' => $obj->getPackaging(),
-				'description' => $obj->getDescription(), 'manufacturer_id' => $manufacturer->getId(),
-				'um_id' => $um->getId(), 'price' => $obj->getPrice(),
-				'deactivated' => (int)$obj->isDeactivated(), 'quantity' => Inventory::getQuantity($obj),
-				'available' => Inventory::getAvailable($obj)), 'site_html.tpl');
+				'bar_code' => $obj->getBarCode(), 'description' => $obj->getDescription(),
+				'manufacturer_id' => $manufacturer->getId(), 'um_id' => $um->getId(),
+				'price' => $obj->getPrice(), 'deactivated' => (int)$obj->isDeactivated(),
+				'quantity' => Inventory::getQuantity($obj), 'available' => Inventory::getAvailable($obj)),
+				'site_html.tpl');
 	}
 }
 ?>

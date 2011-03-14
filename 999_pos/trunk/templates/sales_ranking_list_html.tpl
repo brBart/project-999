@@ -32,8 +32,7 @@
 						<td>{$list[i].rank}</td>
 						<td>{$list[i].bar_code|escape|wordwrap:24:"<br />":true}</td>
 						<td>{$list[i].manufacturer|escape|wordwrap:19:"<br />":true}</td>
-						<td>{$list[i].name|escape|wordwrap:19:"<br />":true}</td>
-						<td>{$list[i].packaging|escape|wordwrap:19:"<br />":true}</td>
+						<td>{$list[i].name|escape|wordwrap:38:"<br />":true}</td>
 						<td>{$list[i].quantity}</td>
 					</tr>
 				{/section}

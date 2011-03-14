@@ -45,9 +45,8 @@ abstract class ShowProductCommand extends Command{
 			$um = $product->getUnitOfMeasure();
 			
 			Page::display(array('id' => $product->getId(), 'name' => $product->getName(),
-					'bar_code' => $product->getBarCode(), 'packaging' => $product->getPackaging(),
-					'description' => $product->getDescription(), 'manufacturer' => $manufacturer->getName(),
-					'um' => $um->getName(), 'price' => $product->getPrice(),
+					'bar_code' => $product->getBarCode(), 'description' => $product->getDescription(),
+					'manufacturer' => $manufacturer->getName(), 'um' => $um->getName(), 'price' => $product->getPrice(),
 					'deactivated' => (int)$product->isDeactivated(), 'quantity' => Inventory::getQuantity($product),
 					'available' => Inventory::getAvailable($product), 'suppliers' => $product->showProductSuppliers(),
 					'lots' => Inventory::showLots($product, $x, $y), 'reserves' => ReserveList::getList($product)),

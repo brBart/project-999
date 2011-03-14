@@ -15,10 +15,9 @@
 				<td>
 					<a href="{$item_link|cat:$list[i].id|cat:'&last_cmd='|cat:$actual_cmd|cat:'&page='|cat:$page}"
 						onclick="oSession.setIsLink(true);">
-						{$list[i].name|escape|wordwrap:38:"<br />":true}
+						{$list[i].name|escape|wordwrap:76:"<br />":true}
 					</a>
 				</td>
-				<td>{$list[i].packaging|escape|wordwrap:38:"<br />":true}</td>
 				<td>{$list[i].manufacturer|escape|wordwrap:38:"<br />":true}</td>
 			</tr>
 		{/section}

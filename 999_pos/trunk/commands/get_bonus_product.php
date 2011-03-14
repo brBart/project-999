@@ -34,9 +34,9 @@ abstract class GetBonusProductCommand extends GetObjectCommand{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'bonus_form_html.tpl', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_bonus_menu', 'id' => $id, 'name' => $obj->getName(),
-				'bar_code' => $obj->getBarCode(), 'packaging' => $obj->getPackaging(),
-				'price' => $obj->getPrice(), 'quantity' => Inventory::getQuantity($obj),
-				'available' => Inventory::getAvailable($obj)), 'site_html.tpl');
+				'bar_code' => $obj->getBarCode(), 'price' => $obj->getPrice(),
+				'quantity' => Inventory::getQuantity($obj), 'available' => Inventory::getAvailable($obj)),
+				'site_html.tpl');
 	}
 }
 ?>

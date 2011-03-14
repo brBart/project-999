@@ -46,8 +46,7 @@ body {
        			{section name=i loop=$details}
 				<tr>
 					<td>{$details[i].quantity}</td>
-					<td>{$details[i].product|escape|truncate:21:"...":true}</td>
-					<td>{$details[i].packaging|escape|truncate:21:"...":true}</td>
+					<td>{$details[i].product|escape|truncate:42:"...":true}</td>
 					<td></td>
 				</tr>
 				<tr>

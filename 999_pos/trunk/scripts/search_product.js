@@ -202,7 +202,6 @@ SearchProduct.prototype.xmlToArray = function(resultsXml){
  		resultsArray[i] = new Array();
  		resultsArray[i]['bar_code'] = resultsXml.item(i).getElementsByTagName('bar_code')[0].firstChild.data;
  		resultsArray[i]['name'] = resultsXml.item(i).getElementsByTagName('name')[0].firstChild.data;
- 		resultsArray[i]['packaging'] = resultsXml.item(i).getElementsByTagName('packaging')[0].firstChild.data;
  		resultsArray[i]['manufacturer'] = resultsXml.item(i).getElementsByTagName('manufacturer')[0].firstChild.data;
  	}
  	// return the node's content as an array

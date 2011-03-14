@@ -36,7 +36,6 @@
 	        		<th>Barra</th> 
 	         		<th>Casa</th>
 	         		<th>Nombre</th>
-	         		<th>Presentacion</th>
 	         		<th>Contado</th>
 	         	</tr>
 	       	</thead>
@@ -46,8 +45,7 @@
 					<td>{$details[i].id}</td>
 					<td>{$details[i].bar_code|escape|wordwrap:24:"<br />":true}</td>
 					<td>{$details[i].manufacturer|escape|wordwrap:19:"<br />":true}</td>
-					<td>{$details[i].product|escape|wordwrap:19:"<br />":true}</td>
-					<td>{$details[i].packaging|escape|wordwrap:19:"<br />":true}</td>
+					<td>{$details[i].product|escape|wordwrap:38:"<br />":true}</td>
 					<td>__________</td>
 				</tr>
 				{/section}

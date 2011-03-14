@@ -37,8 +37,7 @@ header('Content-Type: text/xml');
 			</expiration_date>
 			{/if}
 			<detail_id>{$details[i].id}</detail_id>
-			<product><![CDATA[{$details[i].product|wordwrap:11:"\n":true}]]></product>
-			<packaging><![CDATA[{$details[i].packaging|wordwrap:11:"\n":true}]]></packaging>
+			<product><![CDATA[{$details[i].product|wordwrap:22:"\n":true}]]></product>
 			<quantity>{$details[i].quantity}</quantity>
 			<price>{$details[i].price|nf:2}</price>
 			<total>{$details[i].total|nf:2}</total>

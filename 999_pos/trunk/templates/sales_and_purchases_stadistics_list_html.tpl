@@ -47,8 +47,7 @@
 					<tr>
 						<td>{$list[i].bar_code|escape|wordwrap:16:"<br />":true}</td>
 						<td>{$list[i].manufacturer|escape|wordwrap:11:"<br />":true}</td>
-						<td>{$list[i].product|escape|wordwrap:11:"<br />":true}</td>
-						<td>{$list[i].packaging|escape|wordwrap:11:"<br />":true}</td>
+						<td>{$list[i].product|escape|wordwrap:22:"<br />":true}</td>
 						{section name=x loop="$months"}
 							<td class="data_col data_left">{$list[i].sales[x].sales}</td>
 							<td class="data_col data_separator">|</td>

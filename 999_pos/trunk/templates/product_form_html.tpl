@@ -55,13 +55,6 @@
 			  		<span id="bar_code-failed" class="hidden">*</span>
 			  	</p>
 			  	<p>
-			  		<label for="packaging">Presentaci&oacute;n:*</label>
-			  		<input name="form_widget" id="packaging" type="text" value="{$packaging|escape}" maxlength="100"
-			  			onblur="oSetProperty.execute('set_packaging_product', this.value, this.id);"
-			  			{if $status eq 1}disabled="disabled"{/if} />
-			  		<span id="packaging-failed" class="hidden">*</span>
-			  	</p>
-			  	<p>
 			  		<label for="description">Descripci&oacute;n:</label>
 			  		<textarea name="form_widget" id="description" rows="5" cols="30"
 			  			onblur="oSetProperty.execute('set_description_product', this.value, this.id);"

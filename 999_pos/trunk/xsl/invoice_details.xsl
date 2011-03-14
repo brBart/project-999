@@ -56,7 +56,6 @@
 			       			<xsl:value-of select="quantity" />
 		       			</td>
 		       			<td><xsl:value-of select="product" /></td>
-	       				<td><xsl:value-of select="packaging" /></td>
 	       				<td><xsl:value-of select="price" /></td>
 	       				<td class="total_col"><xsl:value-of select="total" /></td>
 	       				<td><xsl:value-of select="row_pos" /></td>
@@ -72,7 +71,6 @@
 						</xsl:choose>
 			           	<td></td>
 			           	<td><xsl:value-of select="product" /></td>
-	       				<td><xsl:value-of select="packaging" /></td>
 	       				<td class="percentages"><xsl:value-of select="percentage" /></td>
 	       				<td class="total_col"><xsl:value-of select="total" /></td>
 	       				<td></td>

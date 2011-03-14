@@ -19,7 +19,6 @@
 	        		<th>Barra</th> 
 	         		<th>Casa</th>
 	         		<th>Nombre</th>
-	         		<th>Presentacion</th>
 	         		<th>UM</th>
 	         		<th>Cantidad</th>
 	         		<th>Precio</th>
@@ -32,8 +31,7 @@
 				<tr>
 					<td>{$details[i].bar_code|escape|wordwrap:16:"<br />":true}</td>
 					<td>{$details[i].manufacturer|escape|wordwrap:11:"<br />":true}</td>
-					<td>{$details[i].product|escape|wordwrap:11:"<br />":true}</td>
-					<td>{$details[i].packaging|escape|wordwrap:11:"<br />":true}</td>
+					<td>{$details[i].product|escape|wordwrap:22:"<br />":true}</td>
 					<td>{$details[i].um|escape|wordwrap:8:"<br />":true}</td>
 					<td>{$details[i].quantity}</td>
 					<td>{$details[i].price|nf:2}</td>

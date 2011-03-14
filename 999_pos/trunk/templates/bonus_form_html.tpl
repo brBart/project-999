@@ -28,7 +28,6 @@
 				<p><label>C&oacute;digo:</label><span>{$id}&nbsp;</span></p>
 			  	<p><label>Nombre:</label><span>{$name|escape|wordwrap:40:"<br />":true}</span></p>
 			  	<p><label>C&oacute;digo barra:</label><span>{$bar_code|escape|wordwrap:40:"<br />":true}</span></p>
-			  	<p><label>Presentaci&oacute;n:</label><span>{$packaging|escape|wordwrap:40:"<br />":true}</span></p>
 			  	<p><label>Precio:</label><span>{$price}</span></p>
 			  	<p><label>Cantidad:</label><span>{$quantity}&nbsp;</span></p>
 			  	<p><label>Disponible:</label><span>{$available}&nbsp;</span></p>

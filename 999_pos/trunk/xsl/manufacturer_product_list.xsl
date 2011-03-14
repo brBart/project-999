@@ -11,8 +11,7 @@
 	      	<thead>
 	      		<tr>
 	      			<th>Codigo</th>
-	      			<th>Nombre</th> 
-	         		<th>Presentacion</th>
+	      			<th>Nombre</th>
 	      		</tr>
 	       	</thead>
 	       	<tbody>
@@ -32,7 +31,6 @@
 			<tr>
 				<td><xsl:value-of select="product_id" /></td>
 				<td><xsl:value-of select="name" /></td>
-				<td><xsl:value-of select="packaging" /></td>
 			</tr>
         </xsl:for-each>
 	</xsl:template>

@@ -27,7 +27,6 @@
 	        		<th>Barra</th> 
 	         		<th>Casa</th>
 	         		<th>Nombre</th>
-	         		<th>Presentacion</th>
 	         		<th>UM</th>
 	         		<th>Fisico</th>
 	         		<th>Sistema</th>
@@ -39,8 +38,7 @@
 				<tr>
 					<td>{$details[i].bar_code|escape|wordwrap:20:"<br />":true}</td>
 					<td>{$details[i].manufacturer|escape|wordwrap:15:"<br />":true}</td>
-					<td>{$details[i].product|escape|wordwrap:15:"<br />":true}</td>
-					<td>{$details[i].packaging|escape|wordwrap:15:"<br />":true}</td>
+					<td>{$details[i].product|escape|wordwrap:30:"<br />":true}</td>
 					<td>{$details[i].um|escape|wordwrap:10:"<br />":true}</td>
 					<td class="total_col">{$details[i].physical}</td>
 					<td class="total_col">{$details[i].system}</td>

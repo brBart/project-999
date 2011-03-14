@@ -11,7 +11,6 @@
 	        		<th>Barra</th> 
 	         		<th>Casa</th>
 	         		<th>Nombre</th>
-	         		<th>Presentacion</th>
 	         		<th>UM</th>
 	         		<th>Cantidad</th>
 	         		<th>Precio</th>
@@ -104,7 +103,6 @@
 			       		<td><xsl:value-of select="bar_code" /></td>
 			       		<td><xsl:value-of select="manufacturer" /></td>
 			       		<td><xsl:value-of select="product" /></td>
-			       		<td><xsl:value-of select="packaging" /></td>
 			       		<td><xsl:value-of select="um" /></td>
 			       		<td><xsl:value-of select="quantity" /></td>
 			       		<td><xsl:value-of select="price" /></td>
@@ -117,7 +115,6 @@
 						<td></td>
 			       		<td><xsl:value-of select="manufacturer" /></td>
 			       		<td><xsl:value-of select="product" /></td>
-			       		<td><xsl:value-of select="packaging" /></td>
 			       		<td></td>
 			       		<td><xsl:value-of select="quantity" /></td>
 			       		<td><xsl:value-of select="percentage" /></td>

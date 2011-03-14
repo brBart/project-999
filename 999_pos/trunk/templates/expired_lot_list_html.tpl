@@ -31,8 +31,7 @@
 						<td>{$list[i].lot_id}</td>
 						<td>{$list[i].bar_code|escape|wordwrap:16:"<br />":true}</td>
 						<td>{$list[i].manufacturer|escape|wordwrap:11:"<br />":true}</td>
-						<td>{$list[i].name|escape|wordwrap:11:"<br />":true}</td>
-						<td>{$list[i].packaging|escape|wordwrap:11:"<br />":true}</td>
+						<td>{$list[i].name|escape|wordwrap:22:"<br />":true}</td>
 						<td>{$list[i].expiration_date}</td>
 						<td>{$list[i].quantity}</td>
 						<td>{$list[i].available}</td>
