@@ -9,19 +9,19 @@
 		  			</xsl:when>
 		  			<xsl:otherwise>
 		  				<tr>
-			       			<td colspan="5"></td>
+			       			<td colspan="4"></td>
 			       		</tr>
 		  			</xsl:otherwise>
 		  		</xsl:choose>
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td class="total_col" colspan="4">Sub-Total:</td>
+	       			<td class="total_col" colspan="3">Sub-Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/sub_total" /></td>
 	       			<td></td>
 	       		</tr>
 	       		<tr>
-	       			<td class="total_col" colspan="4">
+	       			<td class="total_col" colspan="3">
 	       				Descuento
 	       				<span class="percentages">
 	       					(<xsl:value-of select="response/params/discount_percentage" />%)
@@ -31,7 +31,7 @@
 	       			<td></td>
 	       		</tr>
 	       		<tr>
-	       			<td class="total_col" colspan="4">Total:</td>
+	       			<td class="total_col" colspan="3">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
 	       			<td></td>
 	       		</tr>

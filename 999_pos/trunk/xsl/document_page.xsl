@@ -49,14 +49,14 @@
 		  			</xsl:when>
 		  			<xsl:otherwise>
 		  				<tr>
-			       			<td colspan="10"></td>
+			       			<td colspan="9"></td>
 			       		</tr>
 		  			</xsl:otherwise>
 		  		</xsl:choose>
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="5"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
 	       			<td colspan="2"></td>

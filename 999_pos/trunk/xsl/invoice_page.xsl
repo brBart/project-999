@@ -32,13 +32,13 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="5"></td>
 	       			<td class="total_col">Sub-Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/sub_total" /></td>
 	       			<td></td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="5"></td>
 	       			<td class="total_col">
 	       				Descuento
 	       				<span class="percentages">
@@ -49,7 +49,7 @@
 	       			<td></td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="5"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
 	       			<td></td>

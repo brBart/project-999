@@ -24,7 +24,7 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="4"></td>
+	       			<td colspan="3"></td>
 	       			<td class="total_col">Totales:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/physical_total" /></td>
 	       			<td class="total_col"><xsl:value-of select="response/params/system_total" /></td>
