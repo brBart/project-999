@@ -255,7 +255,7 @@ class ChangePriceList{
 	/**
 	 * Retuns an array with the report information.
 	 *
-	 * The array's fields are date, username, bar_code, manufacturer, name, packaging, last_price and new_price.
+	 * The array's fields are date, username, bar_code, manufacturer, name, last_price and new_price.
 	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
@@ -375,7 +375,7 @@ class SalesRankingList{
 	/**
 	 * Retuns an array with the report information.
 	 *
-	 * The array's fields are rank, bar_code, manufacturer, name, packaging and quantity.
+	 * The array's fields are rank, bar_code, manufacturer, name and quantity.
 	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate

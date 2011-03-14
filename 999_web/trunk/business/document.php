@@ -474,7 +474,7 @@ class DocBonusDetail extends DocumentDetail{
 	/**
 	 * Returns an array with the detail's data.
 	 *
-	 * The array contains the fields id, product, packaging, quantity, price, total. All the others fields
+	 * The array contains the fields id, product, quantity, price, total. All the others fields
 	 * are blank.
 	 * @return array
 	 */
@@ -482,8 +482,8 @@ class DocBonusDetail extends DocumentDetail{
 		$product = $this->_mBonus->getProduct();
 		
 		return array('id' => $this->getId(), 'bar_code' => '', 'manufacturer' => '',
-				'product' => $product->getName(), 'packaging' => $product->getPackaging(),
-				'um' => '', 'quantity' => $this->_mQuantity, 'price' => $this->_mPrice,
+				'product' => $product->getName(), 'um' => '',
+				'quantity' => $this->_mQuantity, 'price' => $this->_mPrice,
 				'total' => $this->getTotal(), 'expiration_date' => '', 'is_bonus' => '1',
 				'percentage' => $this->_mBonus->getPercentage());
 	}
@@ -620,7 +620,7 @@ class DocProductDetail extends DocumentDetail{
 	/**
 	 * Returns an array with the detail's data.
 	 *
-	 * The array contains the fields id, bar_code, manufacturer, product, packaging, unit of measure,
+	 * The array contains the fields id, bar_code, manufacturer, product, unit of measure,
 	 * quantity, price, total, expiration_date.
 	 * @return array
 	 */
@@ -633,8 +633,8 @@ class DocProductDetail extends DocumentDetail{
 
 		return array('id' => $this->getId(), 'bar_code' => $product->getBarCode(),
 				'manufacturer' => $manufacturer->getName(), 'product' => $product->getName(),
-				'packaging' => $product->getPackaging(), 'um' => $um->getName(),
-				'quantity' => $this->_mQuantity, 'price' => $this->_mPrice, 'total' => $this->getTotal(),
+				'um' => $um->getName(), 'quantity' => $this->_mQuantity,
+				'price' => $this->_mPrice, 'total' => $this->getTotal(),
 				'expiration_date' => $expiration_date);
 	}
 	

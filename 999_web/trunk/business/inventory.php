@@ -73,7 +73,7 @@ class ComparisonDetail{
 	/**
 	 * Returns an array with the detail's data.
 	 *
-	 * The fields in the array are bar_code, manufacturer, name, packaging, um, physical, system and diference.
+	 * The fields in the array are bar_code, manufacturer, name, um, physical, system and diference.
 	 * @return array
 	 */
 	public function show(){
@@ -82,8 +82,8 @@ class ComparisonDetail{
 		$diference = $this->_mPhysical - $this->_mSystem;
 		
 		return array('bar_code' => $this->_mProduct->getBarCode(), 'manufacturer' => $manufacturer->getName(),
-				'product' => $this->_mProduct->getName(), 'packaging' => $this->_mProduct->getPackaging(),
-				'um' => $um->getName(), 'physical' => $this->_mPhysical, 'system' => $this->_mSystem,
+				'product' => $this->_mProduct->getName(), 'um' => $um->getName(),
+				'physical' => $this->_mPhysical, 'system' => $this->_mSystem,
 				'diference' => ($diference == 0) ? '0' : sprintf('%+d', ($diference)));
 	}
 }
@@ -373,7 +373,7 @@ class CountDetail extends Persist{
 	/**
 	 * Returns an array with the detail's data.
 	 *
-	 * The array's fields are bar_code, manufacturer, name, packaging, um and quantity.
+	 * The array's fields are bar_code, manufacturer, name, um and quantity.
 	 * @return array
 	 */
 	public function show(){
@@ -382,8 +382,7 @@ class CountDetail extends Persist{
 		
 		return array('id' => $this->getId(), 'bar_code' => $this->_mProduct->getBarCode(),
 				'manufacturer' => $manufacturer->getName(), 'product' => $this->_mProduct->getName(),
-				'packaging' => $this->_mProduct->getPackaging(), 'um' => $um->getName(),
-				'quantity' => $this->_mQuantity);
+				'um' => $um->getName(), 'quantity' => $this->_mQuantity);
 	}
 	
 	/**
@@ -893,7 +892,7 @@ class CountingTemplate{
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by product name.
 	 *
-	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * The array's fields are id, bar_code, manufacturer and name.
 	 * @param string $first
 	 * @param string $last
 	 * @return array
@@ -908,7 +907,7 @@ class CountingTemplate{
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
 	 *
-	 * The array's fields are id, bar_code, manufacturer, name and packaging.
+	 * The array's fields are id, bar_code, manufacturer and name.
 	 * @param string $first
 	 * @param string $last
 	 * @return array
