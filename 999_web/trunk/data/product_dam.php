@@ -390,7 +390,7 @@ class ProductDAM{
 				$details[] = new ProductSupplier($supplier, $detail['sku'], Persist::CREATED);
 			}
 			
-			$product->setData($result['bar_code'], $result['name'], $result['packaging'], $um, $manufacturer,
+			$product->setData($result['bar_code'], $result['name'], $um, $manufacturer,
 					$result['price'], (boolean)$result['deactivated'], $details, $result['description']);
 			return $product;
 		}
@@ -438,14 +438,14 @@ class ProductDAM{
 	 * @return integer
 	 */
 	static public function insert(Product $obj){
-		$sql = 'CALL product_insert(:bar_code, :name, :packaging, :description, :unit_of_measure_id, ' .
+		$sql = 'CALL product_insert(:bar_code, :name, :description, :unit_of_measure_id, ' .
 				':manufacturer_id, :price, :deactivated)';
 		$um = $obj->getUnitOfMeasure();
 		$manufacturer = $obj->getManufacturer();
 		$params = array(':bar_code' => $obj->getBarCode(), ':name' => $obj->getName(),
-				':packaging' => $obj->getPackaging(), ':description' => $obj->getDescription(),
-				':unit_of_measure_id' => $um->getId(), ':manufacturer_id' => $manufacturer->getId(),
-				':price' => $obj->getPrice(), ':deactivated' => (int)$obj->isDeactivated());
+				':description' => $obj->getDescription(), ':unit_of_measure_id' => $um->getId(),
+				':manufacturer_id' => $manufacturer->getId(), ':price' => $obj->getPrice(),
+				':deactivated' => (int)$obj->isDeactivated());
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
@@ -458,15 +458,14 @@ class ProductDAM{
 	 * @param Product $obj
 	 */
 	static public function update(Product $obj){
-		$sql = 'CALL product_update(:product_id, :bar_code, :name, :packaging, :description, ' .
+		$sql = 'CALL product_update(:product_id, :bar_code, :name, :description, ' .
 				':unit_of_measure_id, :manufacturer_id, :price, :deactivated)';
 		$um = $obj->getUnitOfMeasure();
 		$manufacturer = $obj->getManufacturer();
 		$params = array(':product_id' => $obj->getId(), ':bar_code' => $obj->getBarCode(),
-				':name' => $obj->getName(), ':packaging' => $obj->getPackaging(),
-				':description' => $obj->getDescription(), ':unit_of_measure_id' => $um->getId(),
-				':manufacturer_id' => $manufacturer->getId(), ':price' => $obj->getPrice(),
-				':deactivated' => (int)$obj->isDeactivated());
+				':name' => $obj->getName(), ':description' => $obj->getDescription(),
+				':unit_of_measure_id' => $um->getId(), ':manufacturer_id' => $manufacturer->getId(),
+				':price' => $obj->getPrice(), ':deactivated' => (int)$obj->isDeactivated());
 		DatabaseHandler::execute($sql, $params);
 	}
 	
@@ -812,7 +811,7 @@ class ProductSearchDAM{
  */
 class ManufacturerProductListDAM{
 	/**
-	 * Returns an array with the fields product_id, name and packaging of the product that belongs to the
+	 * Returns an array with the fields product_id and name of the product that belongs to the
 	 * provided manufacturer.
 	 *
 	 * @param Manufacturer $obj
@@ -909,7 +908,7 @@ class ExpiredLotListDAM{
 	/**
 	 * Returns an array containging the data of lots which had expired.
 	 *
-	 * The array contains the fields lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity
+	 * The array contains the fields lot_id, bar_code, manufacturer, name, expiration_date, quantity
 	 * and available. If no page argument or cero is passed all the details are returned. The totalPages and
 	 * totalItems arguments are necessary to return their respective values. Date format dd/mm/yyyy.
 	 * @param string $date
@@ -944,7 +943,7 @@ class NearExpirationLotListDAM{
 	/**
 	 * Returns an array with the details of the lots which expiration date is between the date and the date + days.
 	 *
-	 * The array fields are lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity and available. If
+	 * The array fields are lot_id, bar_code, manufacturer, name, expiration_date, quantity and available. If
 	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
 	 * @param string $date
@@ -981,7 +980,7 @@ class InactiveProductListDAM{
 	/**
 	 * Returns an array with the details of the products which have not seen activity during the days provided.
 	 *
-	 * The array fields are bar_code, manufacturer, name, packaging, quantity, last_sale and sale_quantity. If
+	 * The array fields are bar_code, manufacturer, name, quantity, last_sale and sale_quantity. If
 	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
 	 * @param string $date
@@ -1016,7 +1015,7 @@ class InactiveProductListDAM{
  */
 class SupplierProductListDAM{
 	/**
-	 * Returns an array with the fields product_id, name and packaging of all the products that belongs to
+	 * Returns an array with the fields product_id and name of all the products that belongs to
 	 * the provided supplier.
 	 *
 	 * @param Supplier $obj

@@ -285,7 +285,7 @@ class PaymentCardBrandListDAM{
  */
 class ProductListDAM{
 	/**
-	 * Returns an array with the fields product_id, name and packaging from all the products in the database.
+	 * Returns an array with the fields product_id and name from all the products in the database.
 	 *
 	 * The totalPages and totalItems parameters are necessary to return their respective values.
 	 * @param integer &$totalPages

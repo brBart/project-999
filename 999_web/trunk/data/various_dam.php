@@ -94,7 +94,7 @@ class ChangePriceListDAM{
 	/**
 	 * Returns an array with data regarding price changes that ocurred between the provided dates.
 	 *
-	 * The array's fields are logged_date, user_account_username, bar_code, manufacturer, name, packaging,
+	 * The array's fields are logged_date, user_account_username, bar_code, manufacturer, name,
 	 * last_price and new_price. If no page argument or cero is passed all the details are returned. The
 	 * totalPages and totalItems arguments are necessary to return their respective values.
 	 * @param string $firstDate
@@ -246,7 +246,7 @@ class SalesRankingListDAM{
 	/**
 	 * Retuns an array with data.
 	 *
-	 * The array's fields are rank, bar_code, manufacturer, name, packaging and quantity. If no page
+	 * The array's fields are rank, bar_code, manufacturer, name and quantity. If no page
 	 * argument or cero is passed all the details are returned. The totalPages and
 	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
@@ -285,7 +285,7 @@ class SalesAndPurchasesStadisticsListDAM{
 	/**
 	 * Retuns an array with data.
 	 *
-	 * The array's fields are bar_code, manufacturer, name, and packaging. If no page
+	 * The array's fields are bar_code, manufacturer and name. If no page
 	 * argument or cero is passed all the details are returned. The totalPages and
 	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $first
@@ -315,7 +315,7 @@ class SalesAndPurchasesStadisticsListDAM{
 	/**
 	 * Retuns an array with data.
 	 *
-	 * The array's fields are bar_code, manufacturer, name, and packaging. If no page
+	 * The array's fields are bar_code, manufacturer and name. If no page
 	 * argument or cero is passed all the details are returned. The totalPages and
 	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $first

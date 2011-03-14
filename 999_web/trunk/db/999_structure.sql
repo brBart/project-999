@@ -529,7 +529,6 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_id` int(11) NOT NULL auto_increment,
   `bar_code` varchar(50) collate utf8_unicode_ci default NULL,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `packaging` varchar(100) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci,
   `unit_of_measure_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,
@@ -1759,9 +1758,7 @@ BEGIN
 
     "SELECT DATE_FORMAT(log.date, '%d/%m/%Y %H:%i:%s') AS logged_date, log.user_account_username AS username, pro.bar_code, man.name AS
 
-         manufacturer, pro.name,
-
-         pro.packaging, log.last_price, log.new_price FROM change_price_log log INNER JOIN product pro ON log.product_id = pro.product_id
+         manufacturer, pro.name, log.last_price, log.new_price FROM change_price_log log INNER JOIN product pro ON log.product_id = pro.product_id
 
          INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
@@ -3673,7 +3670,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT lot.lot_id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging, DATE_FORMAT(lot.expiration_date, '%d/%m/%Y') AS 
+    "SELECT lot.lot_id, pro.bar_code, man.name AS manufacturer, pro.name, DATE_FORMAT(lot.expiration_date, '%d/%m/%Y') AS 
 
           expiration_date, lot.quantity,
 
@@ -3757,7 +3754,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT lot.lot_id, pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging, DATE_FORMAT(lot.expiration_date, '%d/%m/%Y') AS 
+    "SELECT lot.lot_id, pro.bar_code, man.name AS manufacturer, pro.name, DATE_FORMAT(lot.expiration_date, '%d/%m/%Y') AS 
 
           expiration_date, lot.quantity,
 
@@ -3813,7 +3810,7 @@ BEGIN
 
   SELECT * FROM
 
-    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product FROM product pro
 
       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
@@ -3933,7 +3930,7 @@ DROP PROCEDURE `manufacturer_product_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_product_list_get`(IN inManufacturerId INT)
 BEGIN
 
-  SELECT product_id AS id, name, packaging FROM product
+  SELECT product_id AS id, name FROM product
 
       WHERE manufacturer_id = inManufacturerId
 
@@ -4055,7 +4052,7 @@ BEGIN
 
   "SELECT * FROM
 
-    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product FROM product pro
 
       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
@@ -4361,7 +4358,7 @@ BEGIN
 
   SELECT * FROM
 
-    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product FROM product pro
 
       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
@@ -4501,7 +4498,7 @@ DROP PROCEDURE `product_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_get`(IN inProductId INT)
 BEGIN
 
-  SELECT bar_code, name, packaging, description, unit_of_measure_id, manufacturer_id, price, deactivated FROM product
+  SELECT bar_code, name, description, unit_of_measure_id, manufacturer_id, price, deactivated FROM product
 
     WHERE product_id = inProductId;
 
@@ -4563,7 +4560,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT pro.bar_code, man.name AS manufacturer, pro.name, pro.packaging, pro.quantity,
+    "SELECT pro.bar_code, man.name AS manufacturer, pro.name, pro.quantity,
 
          DATE_FORMAT(inv.date, '%d/%m/%Y %H:%i:%s') AS last_sale, SUM(inv_lot.quantity) AS sale_quantity FROM product pro
 
@@ -4634,14 +4631,14 @@ END$$
 DROP PROCEDURE `product_insert`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_insert`(IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
-  IN inPackaging VARCHAR(100), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
+  IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
   IN inPrice DECIMAL(6, 2), IN inDeactivated TINYINT)
 BEGIN
 
-  INSERT INTO product (bar_code, name, packaging, description, unit_of_measure_id, manufacturer_id, price, deactivated)
+  INSERT INTO product (bar_code, name, description, unit_of_measure_id, manufacturer_id, price, deactivated)
 
-    VALUES (inBarCode, inName, inPackaging, inDescription, inUnitOfMeasureId, inManufacturerId, inPrice, inDeactivated);
+    VALUES (inBarCode, inName, inDescription, inUnitOfMeasureId, inManufacturerId, inPrice, inDeactivated);
 
 END$$
 
@@ -4659,11 +4656,11 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT pro.product_id AS id, pro.name, pro.packaging, man.name AS manufacturer FROM product pro
+    "SELECT pro.product_id AS id, pro.name, man.name AS manufacturer FROM product pro
 
       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-      ORDER BY pro.name, pro.packaging, man.name
+      ORDER BY pro.name, man.name
 
       LIMIT ?, ?";
 
@@ -4833,13 +4830,13 @@ DROP PROCEDURE `product_search`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search`(IN inSearchString VARCHAR(50))
 BEGIN
 
-  SELECT pro.bar_code, pro.name, pro.packaging, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
+  SELECT pro.bar_code, pro.name, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
 
     ON pro.manufacturer_id = man.manufacturer_id
 
     WHERE pro.name LIKE CONCAT(inSearchString, '%') AND deactivated != 1
 
-    ORDER BY pro.name, packaging, man.name;
+    ORDER BY pro.name, man.name;
 
 END$$
 
@@ -4847,13 +4844,13 @@ DROP PROCEDURE `product_search_include_deactivated`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search_include_deactivated`(IN inSearchString VARCHAR(50))
 BEGIN
 
-  SELECT pro.bar_code, pro.name, pro.packaging, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
+  SELECT pro.bar_code, pro.name, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
 
     ON pro.manufacturer_id = man.manufacturer_id
 
     WHERE pro.name LIKE CONCAT(inSearchString, '%')
 
-    ORDER BY pro.name, packaging, man.name;
+    ORDER BY pro.name, man.name;
 
 END$$
 
@@ -4875,7 +4872,7 @@ BEGIN
 
   "SELECT * FROM
 
-    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product, pro.packaging FROM product pro
+    (SELECT pro.product_id AS id, pro.bar_code, man.name AS manufacturer, pro.name AS product FROM product pro
 
       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
@@ -4949,14 +4946,14 @@ END$$
 DROP PROCEDURE `product_update`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_update`(IN inProductId INT, IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
-  IN inPackaging VARCHAR(100), IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
+  IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
   IN inPrice DECIMAL(6, 2), IN inDeactivated TINYINT)
 BEGIN
 
   UPDATE product
 
-    SET bar_code = inBarCode, name = inName, packaging = inPackaging, description = inDescription,
+    SET bar_code = inBarCode, name = inName, description = inDescription,
 
       unit_of_measure_id = inUnitOfMeasureId, manufacturer_id = inManufacturerId, price = inPrice, deactivated = inDeactivated
 
@@ -5341,7 +5338,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT * FROM (SELECT @rank := @rank + 1 AS rank, pro.bar_code, man.name AS manufacturer, pro.name AS name, pro.packaging,
+    "SELECT * FROM (SELECT @rank := @rank + 1 AS rank, pro.bar_code, man.name AS manufacturer, pro.name AS name,
 
          SUM(inv_lot.quantity) AS quantity
 
@@ -5813,13 +5810,13 @@ DROP PROCEDURE `supplier_product_list_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_product_list_get`(IN inSupplierId INT)
 BEGIN
 
-  SELECT DISTINCT pro_sup.product_id AS id, pro.name, pro.packaging, man.name AS manufacturer FROM product_supplier pro_sup INNER JOIN product pro
+  SELECT DISTINCT pro_sup.product_id AS id, pro.name, man.name AS manufacturer FROM product_supplier pro_sup INNER JOIN product pro
 
          ON pro_sup.product_id = pro.product_id INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
      WHERE pro_sup.supplier_id = inSupplierId
 
-     ORDER BY pro.name, pro.packaging, man.name;
+     ORDER BY pro.name, man.name;
 
 END$$
 

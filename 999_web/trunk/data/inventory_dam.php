@@ -207,7 +207,7 @@ class CountingTemplateDAM{
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by product name.
 	 *
-	 * The array's fields are product_id, bar_code, manufacturer, name and packaging.
+	 * The array's fields are product_id, bar_code, manufacturer and name.
 	 * @param string $first
 	 * @param string $last
 	 * @return array
@@ -221,7 +221,7 @@ class CountingTemplateDAM{
 	/**
 	 * Returns an array with the necessary data for printing the template ordered by manufacturer name.
 	 *
-	 * The array's fields are product_id, bar_code, manufacturer, name and packaging.
+	 * The array's fields are product_id, bar_code, manufacturer and name.
 	 * @param string $first
 	 * @param string $last
 	 * @return array
