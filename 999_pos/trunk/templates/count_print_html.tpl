@@ -40,7 +40,7 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="4"></td>
+	       			<td colspan="3"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col">{$total}</td>
 	       		</tr>

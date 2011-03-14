@@ -58,15 +58,15 @@ body {
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td class="total_col" colspan="3">Sub-Total:</td>
+	       			<td class="total_col" colspan="2">Sub-Total:</td>
 	       			<td class="total_col">{$sub_total|nf:2}</td>
 	       		</tr>
 	       		<tr>
-	       			<td class="total_col" colspan="3">Descuento <span>({$discount_percentage}%)</span>: </td>
+	       			<td class="total_col" colspan="2">Descuento <span>({$discount_percentage}%)</span>: </td>
 	       			<td class="total_col">{$discount|nf:2}</td>
 	       		</tr>
 	       		<tr>
-	       			<td class="total_col" colspan="3">Total:</td>
+	       			<td class="total_col" colspan="2">Total:</td>
 	       			<td class="total_col">{$total|nf:2}</td>
 	       		</tr>
 	       	</tfoot>

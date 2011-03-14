@@ -48,7 +48,7 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="4"></td>
+	       			<td colspan="3"></td>
 	       			<td class="total_col">Totales:</td>
 	       			<td class="total_col">{$physical_total}</td>
 	       			<td class="total_col">{$system_total}</td>

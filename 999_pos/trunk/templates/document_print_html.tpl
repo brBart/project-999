@@ -44,7 +44,7 @@
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="6"></td>
+	       			<td colspan="5"></td>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col">{$total|nf:2}</td>
 	       		</tr>
