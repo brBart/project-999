@@ -420,13 +420,6 @@ class Product extends Identifier{
 	private $_mBarCode;
 	
 	/**
-	 * Holds the product's packaging.
-	 *
-	 * @var string
-	 */
-	private $_mPackaging;
-	
-	/**
 	 * Holds the product's description.
 	 *
 	 * @var string
@@ -493,15 +486,6 @@ class Product extends Identifier{
 	 */
 	public function getBarCode(){
 		return $this->_mBarCode;
-	}
-	
-	/**
-	 * Returns the product's packaging.
-	 *
-	 * @return string
-	 */
-	public function getPackaging(){
-		return $this->_mPackaging;
 	}
 	
 	/**
@@ -592,16 +576,6 @@ class Product extends Identifier{
 	}
 	
 	/**
-	 * Sets the product's packaging
-	 *
-	 * @param string $packaging
-	 */
-	public function setPackaging($packaging){
-		$this->_mPackaging = $packaging;
-		String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
-	}
-	
-	/**
 	 * Sets the product's description.
 	 *
 	 * @param string $description
@@ -657,7 +631,6 @@ class Product extends Identifier{
 	 * Must be called only from the database layer corresponding class. The object's status must be set to
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $barCode
-	 * @param string $packaging
 	 * @param string $description
 	 * @param UnitOfMeasure $um
 	 * @param Manufacturer $manufacturer
@@ -666,13 +639,12 @@ class Product extends Identifier{
 	 * @param array<ProductSupplier> $details
 	 * @throws Exception
 	 */
-	public function setData($barCode, $name, $packaging, UnitOfMeasure $um, Manufacturer $manufacturer, $price,
+	public function setData($barCode, $name, UnitOfMeasure $um, Manufacturer $manufacturer, $price,
 			$deactivated, $details, $description = NULL){
 		parent::setData($name);
 		
 		try{
 			String::validateString($barCode, 'C&oacute;digo de barra inv&aacute;lido.');
-			String::validateString($packaging, 'Presentaci&oacute;n inv&aacute;lida.');
 			self::validateObjectFromDatabase($um);
 			self::validateObjectFromDatabase($manufacturer);
 			Number::validateUnsignedNumber($price, 'Precio inv&aacute;lido.');
@@ -685,7 +657,6 @@ class Product extends Identifier{
 		}
 		
 		$this->_mBarCode = $barCode;
-		$this->_mPackaging = $packaging;
 		$this->_mDescription = $description;
 		$this->_mUM = $um;
 		$this->_mManufacturer = $manufacturer;
@@ -851,8 +822,6 @@ class Product extends Identifier{
 			$this->validateBarCode($this->_mBarCode);
 			$this->verifyBarCode($this->_mBarCode);
 		}
-		
-		String::validateString($this->_mPackaging, 'Presentaci&oacute;n inv&aacute;lida.', 'packaging');
 		
 		if(is_null($this->_mManufacturer))
 			throw new ValidateException('Seleccione una casa.', 'manufacturer_id');
@@ -1551,7 +1520,7 @@ class ProductSearch{
  */
 class ManufacturerProductList{
 	/**
-	 * Returns an array with the products' id, name and packaging that belongs to the provided manufacturer.
+	 * Returns an array with the products' id and name that belongs to the provided manufacturer.
 	 *
 	 * @param Manufacturer $obj
 	 * @return array
@@ -1638,7 +1607,7 @@ class ExpiredLotList{
 	/**
 	 * Returns an array containging the data of lots which had expired.
 	 *
-	 * The array contains the fields lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity
+	 * The array contains the fields lot_id, bar_code, manufacturer, name, expiration_date, quantity
 	 * and available. If no page argument or cero is passed all the details are returned. The total_pages and
 	 * total_items arguments are necessary to return their respective values. Date format dd/mm/yyyy.
 	 * @param string $date
@@ -1664,7 +1633,7 @@ class NearExpirationLotList{
 	/**
 	 * Returns an array with the details of the lots which expiration date is between the date and the date + days.
 	 *
-	 * The array fields are lot_id, bar_code, manufacturer, name, packaging, expiration_date, quantity and available. If
+	 * The array fields are lot_id, bar_code, manufacturer, name, expiration_date, quantity and available. If
 	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
 	 * @param string $date
@@ -1693,7 +1662,7 @@ class InactiveProductList{
 	/**
 	 * Returns an array with the details of the products which have not seen activity during the days provided.
 	 *
-	 * The array fields are bar_code, manufacturer, name, packaging, quantity, last_sale and sale_quantity. If
+	 * The array fields are bar_code, manufacturer, name, quantity, last_sale and sale_quantity. If
 	 * no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values. Date format dd/mm/yyyy.
 	 * @param string $date
@@ -1720,7 +1689,7 @@ class InactiveProductList{
  */
 class SupplierProductList{
 	/**
-	 * Returns an array with the products' id, name and packaging that belongs to the provided supplier.
+	 * Returns an array with the products' id and name that belongs to the provided supplier.
 	 *
 	 * @param Supplier $obj
 	 * @return array

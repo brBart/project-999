@@ -421,8 +421,6 @@ class ProductSupplierDAM{
  * @author Roberto Oliveros
  */
 class ProductDAM{
-	static private $_mPackaging = '120 ml';
-	
 	/**
 	 * Returns true if a product already uses the bar code in the database.
 	 *
@@ -474,8 +472,8 @@ class ProductDAM{
 				$manufacturer = Manufacturer::getInstance(123);
 				$details = array();
 				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Abb213', Persist::CREATED);
-				$product->setData('12345', 'Pepto Bismol', self::$_mPackaging, $um,
-						$manufacturer, 12.65, false, $details, 'Para dolores de estomagol.');
+				$product->setData('12345', 'Pepto Bismol', $um, $manufacturer, 12.65, false,
+						$details, 'Para dolores de estomagol.');
 				return $product;
 				break;
 				
@@ -485,8 +483,8 @@ class ProductDAM{
 				$manufacturer = Manufacturer::getInstance(123);
 				$details = array();
 				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Bom214', Persist::CREATED);
-				$product->setData('65432', 'Aspirina', self::$_mPackaging, $um,
-						$manufacturer, 7.90, false, $details, 'Para dolores de cabeza.');
+				$product->setData('65432', 'Aspirina', $um, $manufacturer, 7.90, false,
+						$details, 'Para dolores de cabeza.');
 				return $product;
 				break;
 				
@@ -496,8 +494,8 @@ class ProductDAM{
 				$manufacturer = Manufacturer::getInstance(123);
 				$details = array();
 				$details[] = new ProductSupplier(Supplier::getInstance(123), 'Raf214', Persist::CREATED);
-				$product->setData('35138', 'Pharmaton', self::$_mPackaging, $um,
-						$manufacturer, 65.73, false, $details, 'Puras vitaminas.');
+				$product->setData('35138', 'Pharmaton', $um, $manufacturer, 65.73, false,
+						$details, 'Puras vitaminas.');
 				return $product;
 				break;
 				
@@ -553,7 +551,7 @@ class ProductDAM{
 	 * @param Product $obj
 	 */
 	static public function update(Product $obj){
-		self::$_mPackaging = $obj->getPackaging();
+		
 	}
 	
 	/**
