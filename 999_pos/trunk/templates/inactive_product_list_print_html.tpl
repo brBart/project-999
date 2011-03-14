@@ -27,7 +27,6 @@
 					<th>Barra</th>
 					<th>Casa</th>
 					<th>Nombre</th>
-					<th>Presentaci&oacute;n</th>
 					<th>En Stock</th>
 					<th>Ultima Venta</th>
 					<th>Salieron</th>

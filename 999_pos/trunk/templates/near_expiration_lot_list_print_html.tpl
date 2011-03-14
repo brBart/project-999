@@ -28,7 +28,6 @@
 					<th>Barra</th>
 					<th>Casa</th>
 					<th>Nombre</th>
-					<th>Presentaci&oacute;n</th>
 					<th>Vence</th>
 					<th>Cantidad</th>
 					<th>Disponible</th>

@@ -24,7 +24,6 @@
 					<th>Barra</th>
 					<th>Casa</th>
 					<th>Nombre</th>
-					<th>Presentaci&oacute;n</th>
 					<th>Anterior</th>
 					<th>Nuevo</th>
 				</tr>

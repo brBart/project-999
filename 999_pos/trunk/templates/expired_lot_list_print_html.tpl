@@ -25,7 +25,6 @@
 					<th>Barra</th>
 					<th>Casa</th>
 					<th>Nombre</th>
-					<th>Presentaci&oacute;n</th>
 					<th>Vencio</th>
 					<th>Cantidad</th>
 					<th>Disponible</th>

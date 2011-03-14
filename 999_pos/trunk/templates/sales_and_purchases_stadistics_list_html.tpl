@@ -24,7 +24,6 @@
 						<th>Barra</th>
 						<th>Casa</th>
 						<th>Nombre</th>
-						<th>Presentaci&oacute;n</th>
 						{section name=i loop=$months_names}
 							<th class="data_title" colspan="3">{$months_names[i]}</th>
 						{/section}

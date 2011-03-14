@@ -5,7 +5,6 @@
 		<thead>
 			<tr>
 				<th>Nombre</th>
-				<th>Presentaci&oacute;n</th>
 				<th>Casa</th>
 			</tr>
 		</thead>

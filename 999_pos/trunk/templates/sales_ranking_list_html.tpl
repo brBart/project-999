@@ -22,7 +22,6 @@
 						<th>Barra</th>
 						<th>Casa</th>
 						<th>Nombre</th>
-						<th>Presentaci&oacute;n</th>
 						<th>Vendidos</th>
 					</tr>
 				</thead>
