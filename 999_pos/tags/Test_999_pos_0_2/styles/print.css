@@ -1,0 +1,115 @@
+body {
+	font-size: 12px;
+}
+
+fieldset {
+	width: 25em;
+}
+
+label {
+	float: left;
+	width: 10em;
+	font-weight: bold;
+}
+
+table {
+	margin: 0 auto;
+	width: 95%;
+}
+
+th {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: black;
+}
+
+td {
+	padding: 0.2em 1em;
+}
+
+fieldset p {
+	margin: 0.5em;
+}
+
+.total_col {
+	text-align: right;
+}
+
+.error {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	background-color: #FFB5B5;
+	background-image: url(../images/error.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.console_display {
+	height: 5em;
+	padding: 0;
+	overflow: auto;
+}
+
+.console_display p {
+	width: 60%;
+	margin: 1em auto;
+	padding: 0.5em 0.5em 0.5em 2em;
+}
+
+tfoot .total_col {
+	font-weight: bold;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: black;
+}
+
+#wrapper {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 900px;
+}
+
+#status_bar, #header_data {
+	float: right;
+}
+
+#header_data {
+	clear: right;
+}
+
+#main_data {
+	float: left;
+}
+
+#separator {
+	clear: both;
+}
+
+#list_large th, #list_large td {
+	font-size: 0.8em;
+}
+
+#list_large th.data_left, #list_large td.data_left {
+	text-align: right;
+}
+
+#list_large th.data_right {
+	text-align: left;
+}
+
+#list_large th.data_separator, #list_large td.data_separator {
+	text-align: center;
+}
+
+#list_large th, #list_large td {
+	padding: 1em 0.5em;
+}
+
+#list_large th.data_col, #list_large td.data_col {
+	padding: 0;
+}
+
+#list_large th.data_separator, #list_large td.data_separator {
+	width: 0;
+}
