@@ -528,7 +528,7 @@ DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
   `product_id` int(11) NOT NULL auto_increment,
   `bar_code` varchar(50) collate utf8_unicode_ci default NULL,
-  `name` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(100) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci,
   `unit_of_measure_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,

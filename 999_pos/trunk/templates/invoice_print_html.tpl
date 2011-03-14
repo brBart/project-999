@@ -50,7 +50,7 @@ body {
 					<td></td>
 				</tr>
 				<tr>
-					<td colspan="2"></td>
+					<td></td>
 					<td>{$details[i].price|nf:2}</td>
 					<td class="total_col">{$details[i].total|nf:2}</td>
 				</tr>
