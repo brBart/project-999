@@ -383,6 +383,10 @@ SearchProductDetails.prototype.handleKeyDown = function(oEvent){
 		// If the tab key was pressed.
 		if(code == 9)
 			this.stopListening();
+		
+		// If Esc key, hide suggestions.
+		if(code == 27)
+			this.hideSuggestions();
 	}
 }
 
