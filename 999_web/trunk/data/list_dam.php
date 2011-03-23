@@ -298,10 +298,10 @@ class ProductListDAM{
 		$totalItems = (int)DatabaseHandler::getOne($sql);
 		
 		if($totalItems > 0){
-			$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+			$totalPages = ceil($totalItems / PRODUCTS_PER_PAGE);
 			
 			if($page > 0)
-				$params = array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE);
+				$params = array(':start_item' => ($page - 1) * PRODUCTS_PER_PAGE, 'items_per_page' => PRODUCTS_PER_PAGE);
 			else
 				$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
 			

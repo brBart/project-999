@@ -54,6 +54,10 @@ set_include_path(get_include_path() . ';' . LIBS_999 . ';' . SITE_ROOT);
  * How many items per page will be show for the documents.
  */
 define('ITEMS_PER_PAGE', 10);
+/** 
+ * How many products per page will be show for the product list.
+ */
+define('PRODUCTS_PER_PAGE', 50);
 /**
  * Database configuration.
  */ 
