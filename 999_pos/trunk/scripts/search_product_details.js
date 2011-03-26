@@ -87,13 +87,13 @@ function SearchProductDetails(oSession, oSearchProduct, oEventDelegator){
 	 * The minimum position of the visible suggestions.
 	 * @type Integer
 	 */
-	this._mMinVisiblePosition = 1;
+	this._mMinVisiblePosition = 2;
 	
 	/**
 	 * The maximum position of the visible suggestions.
 	 * @type Integer
 	 */
-	this._mMaxVisiblePosition = 10;
+	this._mMaxVisiblePosition = 6;
 	
 	/**
 	 * Holds the actual minimum position of the visible suggestions.
@@ -448,14 +448,14 @@ SearchProductDetails.prototype.updateScroll = function(){
 	// scroll up if the current window is no longer valid
 	else if(this._mSelectedRow < this._mActualMinVisiblePosition)
 	{
-		this._mScrollDiv.scrollTop -= 18;
+		this._mScrollDiv.scrollTop -= 33;
 		this._mActualMaxVisiblePosition -= 1;
 		this._mActualMinVisiblePosition -= 1;
 	}
 	// scroll down if the current window is no longer valid
 	else if(this._mSelectedRow > this._mActualMaxVisiblePosition)
 	{   
-		this._mScrollDiv.scrollTop += 18;
+		this._mScrollDiv.scrollTop += 33;
 		this._mActualMaxVisiblePosition += 1;
 		this._mActualMinVisiblePosition += 1;
 	}
