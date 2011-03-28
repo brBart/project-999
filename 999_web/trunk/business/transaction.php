@@ -101,7 +101,6 @@ class Entry extends Transaction{
 	public function apply(DocProductDetail $detail){
 		$lot = $detail->getLot();
 		$product = $lot->getProduct();
-		$available = Inventory::getAvailable($product);
 		$lot->save();
 		Inventory::increase($product, $detail->getQuantity());
 		$new_price = $detail->getPrice();
