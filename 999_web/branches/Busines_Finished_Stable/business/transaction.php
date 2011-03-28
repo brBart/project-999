@@ -105,7 +105,7 @@ class Entry extends Transaction{
 		$lot->save();
 		Inventory::increase($product, $detail->getQuantity());
 		$new_price = $detail->getPrice();
-		if($available <= 0 || $new_price > $product->getPrice()){
+		if($new_price != $product->getPrice()){
 			$product->setPrice($new_price);
 			$product->save();
 		}
