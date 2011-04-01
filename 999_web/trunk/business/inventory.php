@@ -841,11 +841,14 @@ class Parser{
 			
 			if(count($line) < 2)
 				throw new Exception('Formato inv&aacute;lido en linea: ' . ($i + 1));
+				
+			$detail[0] = trim($line[0]);
+			$detail[1] = trim($line[1]);
 			
-			String::validateString(trim($line[0]), 'Barra inv&aacute;lida en linea: ' . ($i + 1));
-			Number::validateUnsignedNumber(trim($line[1]), 'Cantidad inv&aacute;lida en linea: ' . ($i + 1));
+			String::validateString($detail[0], 'Barra inv&aacute;lida en linea: ' . ($i + 1));
+			Number::validateUnsignedNumber($detail[1], 'Cantidad inv&aacute;lida en linea: ' . ($i + 1));
 			
-			$newDetails[] = $line;
+			$newDetails[] = $detail;
 		}
 		
 		self::addDetails($count, $newDetails);
