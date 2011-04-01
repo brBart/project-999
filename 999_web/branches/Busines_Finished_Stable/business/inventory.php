@@ -839,18 +839,14 @@ class Parser{
 		for($i = 0; $i < count($data); $i++){
 			$line = explode(',', $data[$i]);
 			
-			if(count($line) != 2)
+			if(count($line) < 2)
 				throw new Exception('Formato inv&aacute;lido en linea: ' . ($i + 1));
+				
+			$detail[0] = trim($line[0]);
+			$detail[1] = trim($line[1]);
 			
-			if(!is_numeric(trim($line[0])))
-				throw new Exception('Valor no n&uacute;merico. Id inv&aacute;lido en linea: ' . ($i + 1));
-			if(!is_numeric(trim($line[1])))
-				throw new Exception('Valor no n&uacute;merico. Cantidad inv&aacute;lida en linea: ' . ($i + 1));
-			
-			$detail[0] = (int)$line[0];
-			$detail[1] = (int)$line[1];
- 			Number::validatePositiveInteger($detail[0], 'Id inv&aacute;lido en linea: ' . ($i + 1));
-			Number::validateUnsignedInteger($detail[1], 'Cantidad inv&aacute;lida en linea: ' . ($i + 1));
+			String::validateString($detail[0], 'Barra inv&aacute;lida en linea: ' . ($i + 1));
+			Number::validateUnsignedNumber($detail[1], 'Cantidad inv&aacute;lida en linea: ' . ($i + 1));
 			
 			$newDetails[] = $detail;
 		}
@@ -869,10 +865,12 @@ class Parser{
 		$details = array();
 		
 		for($i = 0; $i < count($newDetails); $i++){
-			$product = Product::getInstance($newDetails[$i][0]);
-			if(is_null($product))
-				throw new Exception('Codigo de producto no existe: ' . $newDetails[$i][0] . ' . Linea: ' .
+			$id = Product::getProductIdByBarCode($newDetails[$i][0]);
+			if($id == 0)
+				throw new Exception('Codigo barra de producto no existe: ' . $newDetails[$i][0] . ' . Linea: ' .
 						($i + 1));
+			else
+				$product = Product::getInstance($id);
 						
 			$details[] = new CountDetail($product, $newDetails[$i][1]);
 		}

@@ -515,6 +515,10 @@ class ProductDAM{
 	static public function getIdByBarCode($barCode, $includeDeactivated){
 		if($barCode == '12345')
 			return 123;
+		elseif($barCode == '12346')
+			return 124;
+		elseif($barCode == '12347')
+			return 125;
 		else
 			return 0;
 	}
