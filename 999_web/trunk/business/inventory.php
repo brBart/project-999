@@ -652,8 +652,10 @@ class Count extends PersistObject implements Itemized{
 			if($detail->getId() != $newDetail->getId())
 				$temp_details[] = $detail;
 			elseif($detail->_mStatus == Persist::CREATED){
-				$newDetail->increase($detail->getQuantity());
-				$detail->delete();
+				if(!$detail->isDeleted()){
+					$newDetail->increase($detail->getQuantity());
+					$detail->delete();
+				}
 				$temp_details[] = $detail;
 			}
 			else
@@ -676,10 +678,11 @@ class Count extends PersistObject implements Itemized{
 				$temp_details[] = $detail;
 			elseif($detail->getStatus() == Persist::CREATED){
 				// In case it was already deleted.
-				if(!$detail->isDeleted())
+				if(!$detail->isDeleted()){
 					$this->_mTotal -= $detail->getQuantity();
+					$detail->delete();
+				}
 				$temp_details[] = $detail;
-				$detail->delete();
 			}
 			else
 				$this->_mTotal -= $detail->getQuantity();
