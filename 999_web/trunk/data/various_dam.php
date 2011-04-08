@@ -36,7 +36,7 @@ class ClosingEventDAM{
  */
 class BackupEventDAM{
 	/**
-	 * It makes a backup of the database till the actual date. It returns the name of the backup file that
+	 * It makes a backup of the database till the actual date. It returns the url of the backup file that
 	 * is stored in the BACKUP_DIR constant directory value.
 	 * @return string
 	 */
@@ -448,6 +448,79 @@ class SalesAndPurchasesStadisticsListDAM{
 		
 		$sql = 'CALL manufacturer_purchases_stadistics_get(:first, :last, :first_date, :last_date, :start_item, :items_per_page)';
 		return DatabaseHandler::getAll($sql, $params);
+	}
+}
+
+
+/**
+ * Utility class for generating the sales ledger from the database.
+ * @package VariousDAM
+ * @author Roberto Oliveros
+ */
+class SalesLedgerDAM{
+	/**
+	 * Generates the sales ledger from $firstDate to $lastDate.
+	 * Returns the url of the generated file.
+	 *
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @return string
+	 */
+	static public function generate($firstDate, $lastDate){
+		$data = array();
+		
+		$sql = 'CALL sales_ledger_dates_get(:first_date, :last_date)';
+		$params = array(':first_date' => Date::dbFormat($firstDate), ':last_date' => Date::dbFormat($lastDate));
+		$dates = DatabaseHandler::getAll($sql, $params);
+		
+		for($i = 0; $i < count($dates); $i++){
+			$date = $dates[$i]['date'];
+			
+			$sql = 'CALL sales_ledger_correlatives_get(:date)';
+			$params = array(':date' => $date);
+			$correlatives = DatabaseHandler::getAll($sql, $params);
+			
+			for($y = 0; $y < count($correlatives); $y++){
+				$correlative_id = $correlatives[$y]['correlative_id'];
+				
+				$sql = 'CALL sales_ledger_min_get(:date, :correlative_id)';
+				$params = array(':date' => $date, ':correlative_id' => $correlative_id);
+				$min = DatabaseHandler::getOne($sql, $params);
+				
+				$sql = 'CALL sales_ledger_max_get(:date, :correlative_id)';
+				$max = DatabaseHandler::getOne($sql, $params);
+				
+				$sql = 'CALL sales_ledger_sum_get(:correlative_id, :min, :max)';
+				$params = array(':correlative_id' => $correlative_id, ':min' => $min,
+						':max' => $max);
+				$sum = DatabaseHandler::getOne($sql, $params);
+				
+				$data[] = array($date, $correlatives[$y]['serial_number'], $min, $max, $sum);
+			}
+		}
+		
+		if(count($data) > 0)
+			return self::createCVSFile($data);
+		else
+			return '';
+	}
+	
+	/**
+	 * Helper function to generate and return the url file just created.
+	 * 
+	 * @param array $data
+	 * @return string
+	 */
+	static private function createCVSFile($data){
+		$url = SALES_LEDGER_DIR . date('Y-m-d-H-i-s')  . '.txt';
+		
+		$fp = fopen($url, 'w');
+		
+		fputcvs($fp, $data);
+		
+		fclose($fp);
+		
+		return $url;
 	}
 }
 ?>
