@@ -41,24 +41,32 @@ class GetSalesLedgerCommand extends Command{
 			return;
 		}
 		
+		$start_date = $request->getProperty('start_date');
+		$end_date = $request->getProperty('end_date');
+		
 		try{
-			$file_url = BackupEvent::apply();
-			$file_url = '..' . BACKUP_DIR_NAME . $file_url;
+			$file_url = SalesLedger::generate($start_date, $end_date);
+			
+			if($file_url == '')
+				throw new Exception('No hubieron ventas en esas fechas.');
+			
+			$file_url = '..' . SALES_LEDGER_DIR_NAME . $file_url;
 			
 			$back_trace = array('Inicio');
-			$msg = 'El backup se realizo exitosamente.';
-			Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'back_link.tpl', 'status' => '1',
-					'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'backup_form_html.tpl',
-					'back_link' => 'index.php?cmd=show_task_menu_admin', 'task_name' => 'Backup',
+			$msg = 'El libro de ventas se genero exitosamente.';
+			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl', 'status' => '1',
+					'back_trace' => $back_trace, 'second_menu' => 'none', 'content' => 'sales_ledger_form_html.tpl',
+					'back_link' => 'index.php?cmd=show_task_menu_pos_admin', 'task_name' => 'Libro de Ventas',
 					'file_url' => $file_url, 'notify' => '1', 'type' => 'success', 'message' => $msg),
 					'site_html.tpl');
 		} catch(Exception $e){
 			$msg = $e->getMessage();
-			Page::display(array('module_title' => ADMIN_TITLE, 'main_menu' => 'blank.tpl',
+			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
-					'back_link' => 'index.php?cmd=show_task_menu_admin', 'status' => '0',
-					'content' => 'backup_form_html.tpl', 'task_name' => 'Backup', 'notify' => '1',
-					'type' => 'error', 'message' => $msg), 'site_html.tpl');
+					'back_link' => 'index.php?cmd=show_task_menu_pos_admin', 'status' => '0',
+					'content' => 'sales_ledger_form_html.tpl', 'task_name' => 'Libro de Ventas', 'notify' => '1',
+					'type' => 'error', 'message' => $msg, 'start_date' => $start_date, 'end_date' => $end_date),
+					'site_html.tpl');
 		}
 	}
 }

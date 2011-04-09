@@ -22,6 +22,14 @@ define('BACKUP_DIR_NAME', '/backup/');
  * Backup directory path.
  */ 
 define('BACKUP_DIR', SITE_ROOT . BACKUP_DIR_NAME);
+/**
+ * Sales ledger directory name.
+ */ 
+define('SALES_LEDGER_DIR_NAME', '/sales_ledger/');
+/**
+ * Sales ledger directory path.
+ */ 
+define('SALES_LEDGER_DIR', SITE_ROOT . SALES_LEDGER_DIR_NAME);
 /** 
  * Command directory (where all the commands reside) path.
  */
