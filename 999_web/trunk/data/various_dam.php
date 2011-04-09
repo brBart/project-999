@@ -496,7 +496,7 @@ class SalesLedgerDAM{
 				$sum = DatabaseHandler::getOne($sql, $params);
 				
 				$data[] = array($dates[$i]['formatted_date'], $correlatives[$y]['serial_number'],
-						$min, $max, $sum);
+						$min, $max, number_format($sum, 2));
 			}
 		}
 		
@@ -517,7 +517,8 @@ class SalesLedgerDAM{
 		
 		$fp = fopen(SALES_LEDGER_DIR . $url, 'w');
 		
-		fputcsv($fp, $data);
+		foreach ($data as $fields)
+			fputcsv($fp, $fields);
 		
 		fclose($fp);
 		
