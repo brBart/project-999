@@ -495,7 +495,8 @@ class SalesLedgerDAM{
 						':max' => $max);
 				$sum = DatabaseHandler::getOne($sql, $params);
 				
-				$data[] = array($date, $correlatives[$y]['serial_number'], $min, $max, $sum);
+				$data[] = array($dates[$i]['formatted_date'], $correlatives[$y]['serial_number'],
+						$min, $max, $sum);
 			}
 		}
 		
@@ -512,11 +513,11 @@ class SalesLedgerDAM{
 	 * @return string
 	 */
 	static private function createCVSFile($data){
-		$url = SALES_LEDGER_DIR . date('Y-m-d-H-i-s')  . '.txt';
+		$url = date('Y-m-d-H-i-s')  . '.txt';
 		
-		$fp = fopen($url, 'w');
+		$fp = fopen(SALES_LEDGER_DIR . $url, 'w');
 		
-		fputcvs($fp, $data);
+		fputcsv($fp, $data);
 		
 		fclose($fp);
 		
