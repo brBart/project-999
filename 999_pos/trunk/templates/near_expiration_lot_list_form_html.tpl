@@ -19,8 +19,7 @@
 				</p>
 			</fieldset>
 			<fieldset id="controls">
-				<input name="show_report" type="submit"  value="Aceptar"
-					onclick="return confirmSubmit();" />
+				<input name="show_report" type="submit"  value="Aceptar" />
 			    <input type="button"  value="Cancelar" onclick="oSession.loadHref('{$back_link}');" />
 			</fieldset>
 		</form>
