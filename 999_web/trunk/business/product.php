@@ -1755,6 +1755,7 @@ class ManufacturerDistinctList{
 	}
 }
 
+
 /**
  * Utility class for generating the report.
  * @package Product
