@@ -1108,16 +1108,16 @@ class InStockListDAM{
 	 */
 	static public function getList(&$total, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL product_stock_count()';
-		$totalItems = DatabaseHandler::getOne($sql, $params);
+		$totalItems = DatabaseHandler::getOne($sql);
 		$totalPages = ceil($totalItems / PRODUCTS_PER_PAGE);
 		
 		$sql = 'CALL product_stock_total_get()';
-		$total = DatabaseHandler::getOne($sql, $params);
+		$total = DatabaseHandler::getOne($sql);
 		
 		if($page > 0)
-			$params = array_merge($params, array(':start_item' => ($page - 1) * PRODUCTS_PER_PAGE, 'items_per_page' => PRODUCTS_PER_PAGE));
+			$params = array(':start_item' => ($page - 1) * PRODUCTS_PER_PAGE, 'items_per_page' => PRODUCTS_PER_PAGE);
 		else
-			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
 		
 		$sql = 'CALL product_stock_get(:start_item, :items_per_page)';
 		return DatabaseHandler::getAll($sql, $params);
