@@ -1550,12 +1550,12 @@ class Kardex{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function showPage(Product $product, &$balance, &$total_pages = 0,
-			&$total_items = 0, $page = 0){
+	static public function showPage(Product $product, &$balance, &$totalPages = 0,
+			&$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
 			
-		return KardexDAM::getList($product, $balance, $total_pages, $total_items, $page);
+		return KardexDAM::getList($product, $balance, $totalPages, $totalItems, $page);
 	}
 	
 	/**
@@ -1571,9 +1571,9 @@ class Kardex{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function showLastPage(Product $product, &$balance, &$total_pages = 0,
-			&$total_items = 0){
-		return KardexDAM::getList($product, $balance, $total_pages, $total_items, -1);
+	static public function showLastPage(Product $product, &$balance, &$totalPages = 0,
+			&$totalItems = 0){
+		return KardexDAM::getList($product, $balance, $totalPages, $totalItems, -1);
 	}
 }
 
@@ -1616,10 +1616,10 @@ class ExpiredLotList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($date, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($date, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
-			return ExpiredLotListDAM::getList($date, $total_pages, $total_items, $page);
+			return ExpiredLotListDAM::getList($date, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -1643,12 +1643,12 @@ class NearExpirationLotList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($date, $days, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($date, $days, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Number::validatePositiveInteger($days, 'N&uacute;mero de dias inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return NearExpirationLotListDAM::getList($date, $days, $total_pages, $total_items, $page);
+		return NearExpirationLotListDAM::getList($date, $days, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -1672,12 +1672,12 @@ class InactiveProductList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($date, $days, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($date, $days, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Number::validatePositiveInteger($days, 'N&uacute;mero de dias inv&aacute;lido.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return InactiveProductListDAM::getList($date, $days, $total_pages, $total_items, $page);
+		return InactiveProductListDAM::getList($date, $days, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -1774,10 +1774,10 @@ class InStockList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList(&$total, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
-			return InStockListDAM::getList($total, $total_pages, $total_items, $page);
+			return InStockListDAM::getList($total, $totalPages, $totalItems, $page);
 	}
 }
 ?>
