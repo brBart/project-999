@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QTranslator translator;
-    translator.load("qt_es");
+    translator.load(":/resources/qt_es.qm");
     a.installTranslator(&translator);
 
     MainWindow w;
