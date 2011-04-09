@@ -19,7 +19,7 @@ require_once('presentation/page.php');
 require_once('business/product.php');
 
 /**
- * Defines functionality for the showing the expired lot list.
+ * Defines functionality for showing the expired lot list.
  * @package Command
  * @author Roberto Oliveros
  */
