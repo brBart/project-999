@@ -1435,4 +1435,31 @@ class ManufacturerDistinctListDAM{
 		return array(array('name' => 'Aqua'), array('name' => 'Barco'), array('name' => 'Carro'));
 	}
 }
+
+
+/**
+ * Utility class for generating the report.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class InStockListDAM{
+	/**
+	 * Returns an array containging the data of products with stock.
+	 *
+	 * The array contains the fields bar_code, manufacturer, name, available, price and total.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and
+	 * total_items arguments are necessary to return their respective values.
+	 * @param float &$total
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList(&$total, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		$total = 100.00;
+		$totalPages = 1;
+		$totalItems = 2;
+		return array('uno' => 'one', 'dos' => 'two');
+	}
+}
 ?>
