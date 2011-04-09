@@ -329,4 +329,24 @@ class SalesAndPurchasesStadisticsListDAM{
 		return array('one' => 'uno', 'two' => 'dos');
 	}
 }
+
+
+/**
+ * Class to generate a sales ledger file.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesLedgerDAM{
+	/**
+	 * Generates a file with the sales ledger data. It returns the url of the file
+	 * created. Date params in dd/mm/yyyy format.
+	 * 
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @return string
+	 */
+	static public function generate($firstDate, $lastDate){
+		return 'file.txt';
+	}
+}
 ?>

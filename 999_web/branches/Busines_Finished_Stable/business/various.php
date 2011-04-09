@@ -570,4 +570,26 @@ class SalesAndPurchasesStadisticsList{
 		return $list;
 	}
 }
+
+
+/**
+ * Class to generate a sales ledger file.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesLedger{
+	/**
+	 * Generates a file with the sales ledger data. It returns the url of the file
+	 * created. Date params in dd/mm/yyyy format.
+	 * 
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @return string
+	 */
+	static public function generate($firstDate, $lastDate){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		return SalesLedgerDAM::generate($firstDate, $lastDate);
+	}
+}
 ?>
