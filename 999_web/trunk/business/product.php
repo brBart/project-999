@@ -1768,16 +1768,17 @@ class InStockList{
 	 * The array contains the fields bar_code, manufacturer, name, available, price and total.
 	 * If no page argument or cero is passed all the details are returned. The total_pages and
 	 * total_items arguments are necessary to return their respective values.
+	 * @param boolean $includeMonetary
 	 * @param float &$total
 	 * @param integer &$total_pages
 	 * @param integer &$total_items
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total, &$totalPages = 0, &$totalItems = 0, $page = 0){
+	static public function getList($includeMonetary = false, &$total = 0, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&accute;lida.');
-			return InStockListDAM::getList($total, $totalPages, $totalItems, $page);
+			return InStockListDAM::getList($includeMonetary, $total, $totalPages, $totalItems, $page);
 	}
 }
 ?>

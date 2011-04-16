@@ -1100,26 +1100,33 @@ class InStockListDAM{
 	 * The array contains the fields bar_code, manufacturer, name, available, price and total.
 	 * If no page argument or cero is passed all the details are returned. The totalPages and
 	 * totalItems arguments are necessary to return their respective values.
+	 * @param boolean $includeMonetary
 	 * @param float &$total
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList(&$total, &$totalPages, &$totalItems, $page){
+	static public function getList($includeMonetary, &$total, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL product_stock_count()';
 		$totalItems = DatabaseHandler::getOne($sql);
 		$totalPages = ceil($totalItems / PRODUCTS_PER_PAGE);
 		
-		$sql = 'CALL product_stock_total_get()';
-		$total = DatabaseHandler::getOne($sql);
+		if($includeMonetary){
+			$sql = 'CALL product_stock_total_get()';
+			$total = DatabaseHandler::getOne($sql);
+		}
 		
 		if($page > 0)
 			$params = array(':start_item' => ($page - 1) * PRODUCTS_PER_PAGE, 'items_per_page' => PRODUCTS_PER_PAGE);
 		else
 			$params = array(':start_item' => 0, ':items_per_page' => $totalItems);
 		
-		$sql = 'CALL product_stock_get(:start_item, :items_per_page)';
+		if($includeMonetary)
+			$sql = 'CALL product_stock_include_monetary_get(:start_item, :items_per_page)';
+		else
+			$sql = 'CALL product_stock_get(:start_item, :items_per_page)';
+			
 		return DatabaseHandler::getAll($sql, $params);
 	}
 }
