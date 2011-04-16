@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-04-2011 a las 17:33:09
+-- Tiempo de generación: 16-04-2011 a las 10:02:47
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `count_product` (
   `quantity` int(11) NOT NULL,
   PRIMARY KEY  (`count_product_id`),
   UNIQUE KEY `unique_count_id_product_id` (`count_id`,`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -577,7 +577,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
   PRIMARY KEY  (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
   KEY `idx_purchase_return_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -628,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -750,7 +750,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
   PRIMARY KEY  (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
   KEY `idx_shipment_branch_id` (`branch_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -894,7 +894,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -4692,7 +4692,9 @@ DROP PROCEDURE IF EXISTS `product_lot_get`$$
 CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_get`(IN inProductId INT)
 BEGIN
 
-  SELECT lot_id AS id, entry_date, expiration_date, price, quantity, (quantity - reserved) AS available FROM lot
+  SELECT lot_id AS id, DATE_FORMAT(entry_date, '%d/%m/%Y') AS entry_date, DATE_FORMAT(expiration_date, '%d/%m/%Y') AS expiration_date, price, 
+
+      quantity, (quantity - reserved) AS available FROM lot
 
     WHERE quantity > 0 AND product_id = inProductId
 
