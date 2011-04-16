@@ -53,7 +53,7 @@ body {
 				</tr>
 			</tbody>
 		</table>
-		<p>Iva: {$vat_total}</p>
+		<p>Total Iva: {$vat_total|nf:2}</p>
 		<table>
 			<caption>Facturas Contado: {$count_invoices}</caption>
 			<thead>
