@@ -25,8 +25,6 @@
 					<th>Casa</th>
 					<th>Nombre</th>
 					<th>Disponible</th>
-					<th>Precio</th>
-					<th>Sub-Total</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -36,18 +34,9 @@
 					<td>{$list[i].manufacturer|escape|wordwrap:11:"<br />":true}</td>
 					<td>{$list[i].name|escape|wordwrap:22:"<br />":true}</td>
 					<td>{$list[i].available}</td>
-					<td>{$list[i].price|nf:2}</td>
-					<td class="total_col">{$list[i].total|nf:2}</td>
 				</tr>
 			{/section}
 			</tbody>
-			<tfoot>
-	       		<tr>
-	       			<td colspan="4"></td>
-	       			<td class="total_col">Total:</td>
-	       			<td class="total_col">{$total|nf:2}</td>
-	       		</tr>
-	       	</tfoot>
 		</table>
 	</div>
 </body>

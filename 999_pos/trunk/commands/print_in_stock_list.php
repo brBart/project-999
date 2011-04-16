@@ -30,11 +30,10 @@ class PrintInStockListCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$list = InStockList::getList($total);
+		$list = InStockList::getList();
 		
-		Page::display(array('total_items' => count($list),
-				'date' => date('d/m/Y'), 'total' => $total, 'list' => $list),
-				'product_stock_list_print_html.tpl');
+		Page::display(array('total_items' => count($list), 'date' => date('d/m/Y'),
+				'list' => $list), 'product_stock_list_print_html.tpl');
 	}
 }
 ?>
