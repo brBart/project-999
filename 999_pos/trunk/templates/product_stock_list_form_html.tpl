@@ -1,7 +1,7 @@
 {* Smarty *}
 <div id="content">
 	<div id="frm" class="content_small">
-		<form method="post" action="index.php?cmd=show_in_stock_list&page=1" onsubmit="return oSession.setIsLink(true);">
+		<form method="post" action="index.php?cmd={$cmd}&page=1" onsubmit="return oSession.setIsLink(true);">
 			{include file='header_data_report_html.tpl'}
 			<fieldset id="main_data">
 				<p>

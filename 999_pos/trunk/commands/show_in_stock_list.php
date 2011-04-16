@@ -42,7 +42,7 @@ class ShowInStockListCommand extends Command{
 		}
 		
 		$page = (int)$request->getProperty('page');
-		$list = InStockList::getList($total, $total_pages, $total_items, $page);
+		$list = InStockList::getList(false, $t, $total_pages, $total_items, $page);
 		
 		if($total_items > 0){	
 			$first_item = (($page - 1) * PRODUCTS_PER_PAGE) + 1;
