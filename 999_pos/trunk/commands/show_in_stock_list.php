@@ -34,7 +34,7 @@ class ShowInStockListCommand extends Command{
 		
 		if(is_null($request->getProperty('show_report'))){
 			Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
-					'back_trace' => $back_trace, 'second_menu' => 'none',
+					'back_trace' => $back_trace, 'second_menu' => 'none', 'cmd' => 'show_in_stock_list',
 					'back_link' => 'index.php?cmd=show_report_menu_inventory',
 					'content' => 'product_stock_list_form_html.tpl', 'report_name' => 'En Stock'),
 					'site_html.tpl');
@@ -57,7 +57,7 @@ class ShowInStockListCommand extends Command{
 					'second_menu' => 'none', 'content' => 'product_stock_list_html.tpl', 'list' => $list,
 					'total_items' => $total_items, 'total_pages' => $total_pages, 'page' => $page,
 					'first_item' => $first_item, 'last_item' => $last_item, 'previous_link' => $previous_link,
-					'next_link' => $next_link, 'total' => $total, 'date' => date('d/m/Y')), 'site_html.tpl');
+					'next_link' => $next_link, 'date' => date('d/m/Y')), 'site_html.tpl');
 		}
 		else {
 			$msg = 'No hay stock en el inventario.';
