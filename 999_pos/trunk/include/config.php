@@ -67,6 +67,10 @@ define('ITEMS_PER_PAGE', 10);
  */
 define('PRODUCTS_PER_PAGE', 50);
 /**
+ * MySQL path.
+ */ 
+define('MYSQL_DIR', 'C:/xampp/mysql/bin/');
+/**
  * Database configuration.
  */ 
 define('DB_PERSISTENCY', 'true');
