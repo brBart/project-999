@@ -278,7 +278,7 @@ class Number{
 	 * @throws ValidateException
 	 */
 	static public function validatePositiveNumber($number, $msg, $property = NULL){
-		if(!is_numeric($number) || $number < 1)
+		if(!is_numeric($number) || !($number > 0))
 			throw new ValidateException($msg . ' Valor debe ser mayor que cero.', $property);
 	}
 	
