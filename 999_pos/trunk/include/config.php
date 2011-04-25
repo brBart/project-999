@@ -13,7 +13,7 @@ define('SITE_ROOT', dirname(dirname(__FILE__)));
 /**
  * 999 libraries path.
  */
-define('LIBS_999', 'C:\\Users\\pc\\999_project\\999_middle\\');
+define('LIBS_999', 'C:/Users/pc/999_project/999_middle/');
 /**
  * Backup directory name.
  */ 
@@ -37,7 +37,7 @@ define('COMMANDS_DIR', SITE_ROOT . '/commands/');
 /**
  * Smarty paths.
  */ 
-define('SMARTY_DIR', 'C:\\xampp\\php\\Smarty-2.6.26\\libs\\');
+define('SMARTY_DIR', 'C:/xampp/php/Smarty-2.6.26/libs/');
 /**
  * Smarty paths.
  */
