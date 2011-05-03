@@ -30,7 +30,7 @@ abstract class GetBonusProductCommand extends GetObjectCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Ofertas');
 		$id = $obj->getId();
 		
-		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'back_link.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'bonus_form_html.tpl', 'key' => $key,
 				'back_link' => 'index.php?cmd=show_bonus_menu', 'id' => $id, 'name' => $obj->getName(),

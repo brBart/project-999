@@ -27,8 +27,8 @@ class ShowBonusMenuCommand extends Command{
 	 */
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio', 'Mantenimiento', 'Ofertas');
-		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_inventory_html.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'main_menu_pos_admin_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_pos_admin_html.tpl',
 				'content' => 'bonus_menu_html.tpl'), 'site_html.tpl');
 	}
 }

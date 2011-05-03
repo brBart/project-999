@@ -45,8 +45,8 @@ class GetBonusProductByIdCommand extends GetBonusProductCommand{
 		$back_trace = array('Inicio', 'Mantenimiento', 'Ofertas');
 		$id = $this->_mRequest->getProperty('id');
 		
-		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
-				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_inventory_html.tpl',
+		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'main_menu_pos_admin_html.tpl',
+				'back_trace' => $back_trace, 'second_menu' => 'maintenance_menu_pos_admin_html.tpl',
 				'content' => 'bonus_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'id' => $id), 'site_html.tpl');
 	}
