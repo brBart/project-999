@@ -36,7 +36,7 @@
 					<th  class="data_title" colspan="3">Promedio</th>
 				</tr>
 				<tr>
-					<th colspan="4"></th>
+					<th colspan="3"></th>
 					{section name=i loop=$months_names}
 						<th class="data_col data_left">V</th>
 						<th class="data_col data_separator">|</th>
