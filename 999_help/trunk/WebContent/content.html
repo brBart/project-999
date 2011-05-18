@@ -1,0 +1,1074 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Guía de Referencia</h1>
+<h2>PARTE I: Generalidades</h2>
+<h3>Seguridad</h3>
+<p>La seguridad del modulo esta implementada a nivel de subsección, sección y modulo. Para esto maneja un nivel de jerarquías a la cual los usuarios pertenecen. Dependiendo a que jerarquía el usuario pertenezca este tendrá los privilegios suficientes para realizar ciertas acciones dentro del sistema.</p>
+<h4>Contraseñas</h4>
+<p>Contraseña se refiere a la clave que el usuario utiliza para identificarse ante el sistema a la hora de ingresar algún modulo.</p>
+<h5>Cambio de contraseña</h5>
+<p>Se puede cambiar la contraseña ingresando a “Cambio Contraseña” en la sección de “Inicio” dentro de los módulos de “Inventario” o “POS Admin”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la contraseña actual en el campo “Contraseña actual”.</li>
+	<li>Ingrese la nueva contraseña en el campo “Contraseña nueva”.</li>
+	<li>Vuelva a ingresar la nueva contraseña en el campo “Confirmar”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h4>Privilegios</h4>
+<p>El sistema maneja un nivel de jerarquías en forma de roles en los cuales cada usuario con su nombre de usuario pertenece a dicho rol, todo esto para el control de los módulos, secciones y subsecciones.</p>
+<h5>Roles y sus privilegios</h5>
+<p>Los roles en los cuales los usuarios se pueden clasificar son los siguientes (ordenados del más privilegiado al menos privilegiado):</p>
+<ol>
+	<li>Administrador</li>
+	<li>Auditor</li>
+	<li>Supervisor</li>
+	<li>Operador</li>
+	<li>Contador</li>
+</ol>
+<p>Las siguientes matrices muestran los privilegios para cada rol:</p>
+<p>(Administrador)</p>
+<iframe class="roles_priv" src="administrator_priv.html" ></iframe>
+<p>(Auditor)</p>
+<iframe class="roles_priv" src="auditor_priv.html" ></iframe>
+<p>(Supervisor)</p>
+<iframe class="roles_priv" src="supervisor_priv.html" ></iframe>
+<p>(Operador)</p>
+<iframe class="roles_priv" src="operator_priv.html" ></iframe>
+<p>(Contador)</p>
+<iframe class="roles_priv" src="accountant_priv.html" ></iframe>
+<h2>PARTE II: Modulo de Inventario</h2>
+<h3>Mantenimiento</h3>
+<p>En la sección de “Mantenimiento” dentro del modulo de “Inventario” se parametrizan los valores necesarios para el funcionamiento del sistema.</p>
+<h4>Productos</h4>
+<p>Siendo productos en lo que la mayor parte del sistema gira, su información esta interrelacionada con la mayoría de módulos, secciones y subsecciones. En este capítulo se tratara únicamente como crear, consultar, editar y eliminar información relacionada a un producto.</p>
+<h5>Crear un producto</h5>
+<p>Los requisitos para poder crear un producto son tener al menos una casa, una unidad de medida y un proveedor creados en el sistema (véase “Crear una unidad de medida”, “Crear una casa” y “Crear un proveedor”).
+Estando en la página de inicio del modulo, diríjase a la subsección de “Productos” en la sección de “Mantenimiento” y haga click en el link “Crear” y a continuación se desplegara el formulario.
+El formulario se divide en dos partes, la parte del lado izquierdo contiene los campos que definen la información de un producto. Y la parte del lado derecho contiene una tabla con los proveedores que distribuyen este producto.
+Para crear un producto los pasos a seguir son los siguientes:</p>
+<ol>
+	<li>Ingrese el nombre del producto.</li>
+	<li>Ingrese el código de barra. En caso de que el producto no tenga un código de barra, dejar en blanco y el sistema le creara uno automáticamente.</li>
+	<li>Ingrese la descripción del producto. Este paso es opcional.</li>
+	<li>Seleccione la casa.</li>
+	<li>Selecciona la unidad de medida.</li>
+	<li>Ingrese el precio público del producto.</li>
+	<li>Deje la casilla de desactivado vacía.</li>
+	<li>Ingrese al menos un proveedor que distribuya este producto junto con el código interno con la cual lo maneja. La manera en que se ingresa el proveedor se describe más adelante en “Agregar o quitar un proveedor a un producto”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un producto por orden alfabético</h5>
+<p>Para consultar un producto buscando su nombre en una lista con todos los nombres de los productos ordenados alfabéticamente diríjase a la subsección de “Productos” en la sección de “Mantenimiento” y haga click en el link “Consultar (Orden Alfabético)”. A continuación la lista se desplegara. Solo busque el link con el nombre del producto que está buscando y haga click en el.</p>
+<h5>Consultar un producto por búsqueda de nombre</h5>
+<p>Para consultar un producto buscando su nombre utilizando la herramienta de búsqueda diríjase a la subsección de “Productos” en la sección de “Mantenimiento” y posicione el cursor en el campo “Buscar”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Empiece a escribir el nombre del producto. Y el sistema le desplegara todos los nombres similares de los productos.</li>
+	<li>Utilice las teclas de arriba y abajo para navegar la lista y presione ENTER cuando el nombre deseado este seleccionado. O haga click con el mouse sobre el nombre deseado.</li>
+</ol>
+<h5>Consultar un producto por código</h5>
+<p>Para consultar un producto utilizando el código interno diríjase a la subsección de “Productos” en la sección de “Mantenimiento” y posicione el cursor en el campo “Código”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código interno del producto.</li>
+	<li>Presione el botón “Consultar” que se encuentra adjunto al lado derecho.</li>
+</ol>
+<h5>Consultar un producto por código de barras</h5>
+<p>Para consultar un producto utilizando su código de barras diríjase a la subsección “Productos” en la sección de “Mantenimiento” y posicione el cursor en el campo “Código barra”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código de barras del producto.</li>
+	<li>Presione el botón “Consultar que se encuentra adjunto al lado derecho.</li>
+</ol>
+<h5>Consultar un producto por el código interno del sistema del proveedor</h5>
+<p>Para consultar un producto utilizando el código interno del sistema del proveedor diríjase a la subsección de “Productos” en la sección de “Mantenimiento” y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Seleccione al proveedor en el campo “Proveedor”.</li>
+	<li>Ingrese el código interno del proveedor en el campo “Código” que se encuentra justo al lado derecho.</li>
+	<li>Presione el botón “Consultar” que se encuentra adjunto al lado derecho.</li>
+</ol>
+<h5>Consultar el kardex de un producto</h5>
+<p>Consulte el producto utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado hacer click en el link “Kardex” que se encuentra en la parte superior derecha del formulario.</p>
+<h5>Consultar los lotes de un producto</h5>
+<p>Consulte el producto utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado hacer click en el link “Lotes” que se encuentra en la parte superior derecha del formulario.</p>
+<h5>Consultar los reservados de un producto</h5>
+<p>Consulte el producto utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado hacer click en el link “Reservados” que se encuentra en la parte superior derecha del formulario.</p>
+<h5>Editar un producto</h5>
+<p>Consulte el producto utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar” en la parte inferior del formulario.</li>
+	<li>Edite los campos que desee. O agregue o quite los proveedores que desee pero siempre dejar al menos uno. Esto se explica más adelante en “Agregar o quitar un proveedor a un producto”.</li>
+	<li>Al finalizar presione el botón “Guardar”.</li>
+</ol>
+<h5>Agregar o quitar un proveedor a un producto</h5>
+<p>Para ingresar un proveedor y su código de producto interno se debe de estar creando o editando un producto (leer arriba). Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Seleccione al proveedor.</li>
+	<li>Ingrese el código interno del producto en el campo “Código” que está justo al lado derecho.</li>
+	<li>Presione el botón “Agregar” que esta adjunto al lado derecho.</li>
+	<li>Repita el paso 1 al 3 en caso sea necesario ingresar más proveedores.</li>
+</ol>
+<p>Para quitar un proveedor y su código de producto interno haga lo siguiente:</p>
+<ol>
+	<li>Seleccione la tabla de proveedores.</li>
+	<li>Seleccione al proveedor deseado ya sea utilizando las teclas de arriba y abajo o haciendo click con el mouse.</li>
+	<li>Presione la tecla SUPR o haga click en el botón “Quitar” que se encuentra en la parte superior izquierda de la tabla.</li>
+	<li>Repita el paso 2 y 3 en caso desee quitar mas proveedores.</li>
+</ol>
+<h5>Eliminar un producto</h5>
+<p>Consulte el producto utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h5>Consultar lista de productos pertenecientes a una casa</h5>
+<p>Consulte la casa a la cual el producto pertenece (véase “Consultar casa”). Haga click en el link “Productos” en la parte superior derecha del formulario.</p>
+<h5>Consultar lista de productos pertenecientes a un proveedor</h5>
+<p>Consulte el proveedor que distribuye este producto (véase “Consultar proveedor”). Haga click en el link “Productos” en la parte superior derecha del formulario.</p>
+<h4>Unidades de Medida</h4>
+<p>Es la unidad con la que se mide cada producto.  Ej.: unidad, metro, yarda, etc., dependiendo de su presentación física.</p>
+<h5>Crear una unidad de medida</h5>
+<p>Diríjase a la subsección de “Unidades de Medida” en la sección de “Mantenimiento” y haga click sobre el link “Crear” y a continuación un formulario aparecerá. Haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre de la unidad de medida.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar una unidad de medida</h5>
+<p>Para consultar una unidad de medida diríjase a la subsección de “Unidades de Medida” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista con todos los nombres de las unidades de medida ordenada alfabéticamente aparecerá. Busque la unidad de medida deseada y haga click en el link con su nombre.</p>
+<h5>Editar una unidad de medida</h5>
+<p>Consulte la unidad de medida utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el nombre.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar una unidad de medida</h5>
+<p>Consulte la unidad de medida utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Casas</h4>
+<p>Se refiere al fabricante del producto.</p>
+<h5>Crear una casa</h5>
+<p>Para crear una casa diríjase a la subsección “Casas” en la sección de “Mantenimiento” y haga click sobre el link “Crear”. Cuando aparezca el formulario haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre de la casa.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar una casa</h5>
+<p>Para consultar una casa diríjase a la subsección “Casas” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista ordenada alfabéticamente con todos los nombres de las casas aparecerá. Haga click sobre el link con el nombre de la casa que busca.</p>
+<h5>Editar una casa</h5>
+<p>Consulte la casa utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el nombre.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar una casa</h5>
+<p>Consulte la casa utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Proveedores</h4>
+<p>Se refiere a los distribuidores que nos proveen dichos productos.</p>
+<h5>Crear un proveedor</h5>
+<p>Para crear un proveedor diríjase a la subsección de “Proveedores” en la sección de “Mantenimiento” y haga click en el link “Crear”. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre del proveedor.</li>
+	<li>Ingrese el nit.</li>
+	<li>Ingrese el teléfono.</li>
+	<li>Ingrese la dirección.</li>
+	<li>Ingrese el email. Este campo es opcional.</li>
+	<li>Ingrese el contacto. Este campo es opcional.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un proveedor</h5>
+<p>Para consultar un proveedor diríjase a la subsección de “Proveedores” en la sección de “Mantenimiento” y haga click en el link “Consultar”. A continuación una lista ordenada alfabéticamente conteniendo todos los nombres de los proveedores aparecerá. Busque el nombre del proveedor deseado y haga click en el link con su nombre.</p>
+<h5>Editar un proveedor</h5>
+<p>Consulte el proveedor utilizando cualquiera de los métodos mencionados anteriormente. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite los campos que desee.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar un proveedor</h5>
+<p>Consulte el proveedor utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Sucursales</h4>
+<p>Se necesita tener un registro que represente a una sucursal para que el sistema pueda registrar los envíos de mercadería hacia ellas.</p>
+<h5>Crear una sucursal</h5>
+<p>Para crear una sucursal diríjase a la subsección de “Sucursales” en la sección de “Mantenimiento” y haga click en el link “Crear”. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre de la sucursal.</li>
+	<li>Ingrese el nit.</li>
+	<li>Ingrese el teléfono.</li>
+	<li>Ingrese la dirección.</li>
+	<li>Ingrese el email. Este campo es opcional.</li>
+	<li>Ingrese el contacto. Este campo es opcional.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar una sucursal</h5>
+<p>Para consultar una sucursal diríjase a la subsección de “Sucursales” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista ordena alfabéticamente conteniendo todos los nombres de las sucursales aparecerá. Haga click sobre el link que contenga el nombre de la sucursal que busca.</p>
+<h5>Editar una sucursal</h5>
+<p>Consulte la sucursal utilizando cualquiera de los métodos antes mencionados. A continuación ya con el formulario desplegado haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite los campos que desee.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar una sucursal</h5>
+<p>Consulte la sucursal utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h3>Movimientos</h3>
+<p>Para ingresar o egresar producto del inventario y que sea reflejado en el sistema, se utilizan una variedad de documentos que se encuentran en la sección de “Movimientos” en el modulo de “Inventario”.</p>
+<h4>Recibos (Compras)</h4>
+<p>Para todo producto que se ingresa el inventario como consecuencia de una compra hecha anteriormente se utiliza el documento de recibo de compras.</p>
+<h5>Crear un recibo</h5>
+<p>Para crear un recibo diríjase a la subsección de “Recibos (Compras)” en la sección de “Movimientos” y haga click sobre el link “Crear”. A continuación el formulario se desplegara y haga lo siguiente:</p>
+<ol>
+	<li>Seleccione al proveedor.</li>
+	<li>Ingrese el numero de envió o el numero de la factura del proveedor.</li>
+	<li>Ingrese el total monetario del envió o de la factura del proveedor.</li>
+	<li>Agregue o quite detalles al recibo, al menos debe de haber un detalle. Para más información lea el tutorial “Manual de la barra de ingresos”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un recibo por su número</h5>
+<p>Para consultar un recibo utilizando su número diríjase a la subsección de “Recibos (Compras)” en la sección de “Movimientos” y posicione el cursor en el campo “Recibo No.”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del recibo que desea consultar.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar un recibo en un rango de fechas</h5>
+<p>Para consultar un recibo que fue creado entre un rango de fechas diríjase a la subsección de “Recibos (Compras)” en la sección “Movimientos” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon recibos en esas fechas, una lista con todos sus números se desplegara en orden por fecha.</li>
+	<li>Haga click en el número del recibo con la fecha que busca.</li>
+</ol>
+<h5>Imprimir un recibo</h5>
+<p>Consulte el recibo utilizando cualquier método antes explicados. Con el formulario del recibo en pantalla haga click en el botón “Imprimir” en la parte inferior de este.</p>
+<h5>Anular un recibo</h5>
+<p>Consulte el recibo utilizando cualquier método antes explicados. Con el formulario del recibo en pantalla haga click en el botón “Anular” en la parte inferior de este.</p>
+<h4>Vales de Entrada</h4>
+<p>Los documentos de vale de entrada son para ingresar producto al inventario caso haya un sobrante.</p>
+<h5>Crear un vale de entrada</h5>
+<p>Para crear un vale de entrada diríjase a la subsección de “Vales de Entrada” en la sección de “Movimiento” y haga click en el link “Crear”. A continuación el formulario aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el motivo.</li>
+	<li>Agregue o quite detalles al vale de entrada, al menos debe de haber un detalle. Para más información lea el tutorial “Manual de la barra de ingresos”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un vale de entrada por su número</h5>
+<p>Para consultar un vale de entrada utilizando su número diríjase a la subsección de “Vales de Entrada” en la sección de “Movimientos” y posicione el cursor en el campo “Vale de Entrada No.”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del vale de entrada que desea consultar.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar un vale de entrada en un rango de fechas</h5>
+<p>Para consultar un vale de entrada que fue creado entre un rango de fechas diríjase a la subsección de “Vales de Entrada” en la sección “Movimientos” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon vales de entrada en esas fechas, una lista con todos sus números se desplegara ordenada por fecha.</li>
+	<li>Haga click en el número del vale de entrada con la fecha que busca.</li>
+</ol>
+<h5>Imprimir un vale de entrada</h5>
+<p>Consulte el vale de entrada utilizando cualquier método antes explicados. Con el formulario del vale de entrada en pantalla haga click en el botón “Imprimir” en la parte inferior de este.</p>
+<h5>Anular un vale de entrada</h5>
+<p>Consulte el vale de entrada utilizando cualquier método antes explicados. Con el formulario del vale de entrada en pantalla haga click en el botón “Anular” en la parte inferior de este.</p>
+<h4>Vales de Salida</h4>
+<p>Los documentos de vale de salida sirven para egresar producto del inventario en caso haya un faltante.</p>
+<h5>Crear un vale de salida</h5>
+<p>Para crear un vale de salida diríjase a la subsección de “Vales de Salida” en la sección de “Movimiento” y haga click en el link “Crear”. A continuación el formulario aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el motivo.</li>
+	<li>Agregue o quite detalles al vale de salida, al menos debe de quedar un detalle. Para más información lea el tutorial “Manual de la barra de egresos”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un vale de salida por su número</h5>
+<p>Para consultar un vale de salida utilizando su número diríjase a la subsección de “Vales de Salida” en la sección de “Movimientos” y posicione el cursor en el campo “Vale de Salida No.”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del vale de salida que desea consultar.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar un vale de salida en un rango de fechas</h5>
+<p>Para consultar un vale de salida que fue creado entre un rango de fechas diríjase a la subsección de “Vales de Salida” en la sección “Movimientos” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon vales de salida en esas fechas, una lista con todos sus números se desplegara ordenada por fecha.</li>
+	<li>Haga click en el número del vale de salida con la fecha que busca.</li>
+</ol>
+<h5>Imprimir un vale de salida</h5>
+<p>Consulte el vale de salida utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Imprimir” en la parte inferior de este.</p>
+<h5>Anular un vale de salida</h5>
+<p>Consulte el vale de salida utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Anular” en la parte inferior de este.</p>
+<h4>Envíos</h4>
+<p>Este documento se utiliza para enviar producto a otra sucursal.</p>
+<h5>Crear un envío</h5>
+<p>Para crear un envío diríjase a la subsección de “Envíos” en la sección de “Movimientos” y haga click en el link “Crear”. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Seleccione la sucursal. Si en caso la sucursal tiene registrado un contacto este aparecerá automáticamente en el campo siguiente.</li>
+	<li>Ingrese el contacto. Este campo es opcional.</li>
+	<li>Agregue o quite detalles al envío, al menos debe de quedar un detalle. Para más información lea el tutorial “Manual de la barra de egresos”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un envío por su número</h5>
+<p>Para consultar un envío utilizando su número diríjase a la subsección de “Envíos” en la sección de “Movimientos” y posicione el cursor en el campo “Envío No.”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del envío que desea consultar.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar un envío en un rango de fechas</h5>
+<p>Para consultar un envío que fue creado entre un rango de fechas diríjase a la subsección de “Envíos” en la sección “Movimientos” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon envíos en esas fechas, una lista con todos sus números se desplegara ordenada por fecha.</li>
+	<li>Haga click en el número del envío de salida con la fecha que busca.</li>
+</ol>
+<h5>Imprimir un envío</h5>
+<p>Consulte el envío utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Imprimir” en la parte inferior de este.</p>
+<h5>Anular un envío</h5>
+<p>Consulte el envío utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Anular” en la parte inferior de este.</p>
+<h4>Devoluciones</h4>
+<p>El producto en mal estado o próxima a vencer debe de devolverse al proveedor. Para esto están el documento de devolución.</p>
+<h5>Crear una devolución</h5>
+<p>Para crear una devolución diríjase a la subsección de “Devoluciones” en la sección de “Movimientos” y haga click sobre el link “Crear”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Seleccione al proveedor. Si el proveedor tiene registrado un contacto este aparecerá automáticamente en el campo siguiente.</li>
+	<li>Ingrese el contacto. Este campo es opcional.</li>
+	<li>Ingrese el motivo.</li>
+	<li>Agregue o quite detalles a la devolución, al menos debe de quedar un detalle. Para más información lea el tutorial “Manual de la barra de egresos”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar una devolución por su número</h5>
+<p>Para consultar una devolución utilizando su número diríjase a la subsección de “Devoluciones” en la sección de “Movimientos” y posicione el cursor en el campo “Devolución No.”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número de la devolución que desea consultar.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar una devolución en un rango de fechas</h5>
+<p>Para consultar una devolución que fue creada entre un rango de fechas diríjase a la subsección de “Devoluciones” en la sección “Movimientos” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon devoluciones en esas fechas, una lista con todos sus números se desplegara ordenada por fecha.</li>
+	<li>Haga click en el número de la devolución con la fecha que busca.</li>
+</ol>
+<h5>Imprimir una devolución</h5>
+<p>Consulte la devolución utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Imprimir” en la parte inferior de este.</p>
+<h5>Anular una devolución</h5>
+<p>Consulte la devolución utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Anular” en la parte inferior de este.</p>
+<h4>Facturas</h4>
+<p>Las facturas no pueden ser creadas en este modulo solo en el modulo del P.O.S. pero si pueden ser visualizadas.</p>
+<h5>Consultar una factura por su serie y número</h5>
+<p>Para consultar una factura utilizando su serie y su número diríjase a la subsección de “Facturas” en la sección de “Movimientos” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la serie de la factura en el campo “Serie”.</li>
+	<li>Ingrese el numero de la factura en el campo “No.”.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar una factura en un rango de fechas</h5>
+<p>Para consultar una factura que fue creada entre un rango de fechas diríjase a la subsección de “Facturas” en la sección “Movimientos” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon facturas en esas fechas, una lista con todas sus series y números se desplegara ordenada por fecha.</li>
+	<li>Haga click en la serie y número de la factura con la fecha que busca.</li>
+</ol>
+<h3>Inventariados</h3>
+<p>El término “inventariados” se refiere a la acción de llevar a cabo un inventario o conteo físico del producto. Para auxiliar este procedimiento esta la sección de “Inventariados” en el modulo de “Inventario”. Para más información lea el tutorial “Manual de Inventariados”.</p>
+<h4>Selectivos</h4>
+<p>Los selectivos son de gran ayuda cuando se lleva a cabo un inventario a mano, es decir sin la ayuda de recolectores de barras. En esta sección se explica cómo imprimir un selectivo.</p>
+<h5>Imprimir un selectivo ordenado por producto</h5>
+<p>Parar imprimir un selectivo ordenado por producto diríjase a la subsección de “Selectivos” en la sección de “Inventariados”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Seleccione el nombre del producto inicial en el campo “De Producto”.</li>
+	<li>Seleccione el nombre del producto final en el campo “A” adjunto a la derecha.</li>
+	<li>Presione el botón “Imprimir”.</li>
+</ol>
+<h5>Imprimir un selectivo ordenado por casa</h5>
+<p>Parar imprimir un selectivo ordenado por casa diríjase a la subsección de “Selectivos” en la sección de “Inventariados”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Seleccione el nombre de la casa inicial en el campo “De Casa”.</li>
+	<li>Seleccione el nombre de la casa final en el campo “A” adjunto a la derecha.</li>
+	<li>Presione el botón “Imprimir”.</li>
+</ol>
+<h4>Conteos</h4>
+<p>Después de haber realizado el conteo físico ya sea a través de un selectivo o un recolector de barras. Es necesario ingresarlo al sistema para hacer una comparación. Para esto está el documento de conteo.</p>
+<h5>Crear un conteo</h5>
+<p>Para crear un conteo diríjase a la subsección de “Conteos” en la sección de “Inventariados” y haga click en el link “Crear”. Con el formulario ya en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el motivo.</li>
+	<li>Agregue o quite detalles al conteo, al menos debe de quedar un detalle. Para más información lea el tutorial “Manual de la barra de conteo”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un conteo por su número</h5>
+<p>Para consultar un conteo utilizando su número, diríjase a la subsección de “Conteos” en la sección de “Inventariados” y posicione el cursor en el campo “Conteo No.”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del conteo.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar un conteo en un rango de fechas</h5>
+<p>Para consultar un conteo que fue creado entre un rango de fechas diríjase a la subsección de “Conteos” en la sección “Inventariados” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon conteos en esas fechas, una lista con todos sus números se desplegara ordenada por fecha.</li>
+	<li>Haga click en el número del conteo con la fecha que busca.</li>
+</ol>
+<h5>Imprimir un conteo</h5>
+<p>Consulte el conteo utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Imprimir” en la parte inferior de este.</p>
+<h5>Editar un conteo</h5>
+<p>Consulte el conteo utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Editar” y haga lo siguiente:</p>
+<ol>
+	<li>Agregue o quite detalles al conteo, al menos debe de quedar un detalle. Para más información lea el tutorial “Manual de la barra de conteo”.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar un conteo</h5>
+<p>Consulte el conteo utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Comparaciones</h4>
+<p>Antes de poder hacer una comparación en el sistema es necesario haber creado un conteo.</p>
+<h5>Crear una comparación</h5>
+<p>Para crear una comparación diríjase a la subsección “Comparaciones” en la sección de “Inventariados” y haga click en el link “Crear”. Con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número de conteo que desea comparar.</li>
+	<li>Ingrese el motivo.</li>
+	<li>Seleccione la casilla “General” si desea que la comparación sea contra de todo el inventario en general o déjela vacía si solo quiere comparar los productos contados.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar una comparación por su número</h5>
+<p>Para consultar una comparación utilizando su número, diríjase a la subsección de “Comparaciones” en la sección de “Inventariados” y posicione el cursor en el campo “Comparación No.”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número de la comparación.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar una comparación en un rango de fechas</h5>
+<p>Para consultar una comparación que fue creada entre un rango de fechas diríjase a la subsección de “Comparaciones” en la sección “Inventariados” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial en el campo “Fecha inicial”.</li>
+	<li>Ingrese la fecha final en el campo “Fecha final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon comparaciones en esas fechas, una lista con todos sus números se desplegara ordenada por fecha.</li>
+	<li>Haga click en el número de la comparación con la fecha que busca.</li>
+</ol>
+<h5>Imprimir una comparación</h5>
+<p>Consulte la comparación utilizando cualquier método antes explicados. Con el formulario en pantalla haga click en el botón “Imprimir” en la parte inferior de este.</p>
+<h3>Herramientas</h3>
+<p>La sección de “Herramientas” dentro del modulo de “Inventario” cuenta con una variedad de utilidades como reportes y bitácoras para un mejor manejo de información del sistema.</p>
+<h4>Lotes Vencidos</h4>
+<p>Este reporte es útil para localizar los lotes que su fecha de caducidad ya paso. A continuación se explica cómo consultarlo.</p>
+<h5>Consultar el reporte de lotes vencidos</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click en el link “Lotes Vencidos”. En el formulario siguiente presione el botón “Aceptar”.</p>
+<h5>Imprimir el reporte de lotes vencidos</h5>
+<p>Consulte el reporte utilizando el método explicado anteriormente. Ya con el reporte en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Lotes Próximos a Vencer</h4>
+<p>Este reporte informa sobre los lotes que van a vencer dentro de la cantidad de días que el usuario le especifique.</p>
+<h5>Consultar el reporte de lotes próximos a vencer</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click en el link “Lotes Próximos a Vencer”. En el formulario haga lo siguiente:</p>
+<ol>
+	<li>Seleccione la cantidad de días en que los lotes van a vencer en el campo “Próximos”.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir el reporte de lotes próximos a vencer</h5>
+<p>Consulte el reporte utilizando el método explicado anteriormente. Ya con el reporte en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>En Stock</h4>
+<p>Para saber cuánta cantidad de producto hay en el inventario este reporte puede ser útil.</p>
+<h5>Consultar el reporte de productos en stock</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click en el link “En Stock”. En el formulario siguiente presione el botón “Aceptar”.</p>
+<h5>Imprimir el reporte de productos en stock</h5>
+<p>Consulte el reporte utilizando el método explicado anteriormente. Ya con el reporte en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Cambio de Precios a Productos</h4>
+<p>Esta bitácora muestra todo el historial con respecto a cambio de precio a todos los productos.</p>
+<h5>Consultar la bitácora de cambio de precios a productos</h5>
+<p>Para consultar la bitácora diríjase a la subsección de “Bitácoras” en la sección de “Herramientas” y haga click sobre el link “Cambio de Precios a Productos”. Ya con el formulario haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial.</li>
+	<li>Ingrese la fecha final.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir la bitácora de cambio de precios a productos</h5>
+<p>Consulte la bitácora utilizando el método explicado anteriormente. Ya con la bitácora en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Documentos Anulados</h4>
+<p>Esta bitácora muestra todos los documentos que han sido anulados en un periodo de tiempo.</p>
+<h5>Consultar la bitácora de documentos anulados</h5>
+<p>Para consultar la bitácora diríjase a la subsección de “Bitácoras” en la sección de “Herramientas” y haga click sobre el link “Documentos Anulados”. Ya con el formulario haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial.</li>
+	<li>Ingrese la fecha final.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir la bitácora de documentos anulados</h5>
+<p>Consulte la bitácora utilizando el método explicado anteriormente. Ya con la bitácora en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h2>PARTE III: Modulo de POS Admin</h2>
+<h3>Mantenimiento</h3>
+<p>En esta sección del modulo se parametrizan todos los valores necesarios para la buena operación del sistema.</p>
+<h4>I.V.A.</h4>
+<p>Es necesario llevar un registro del valor del impuesto al valor agregado por factura para el beneficio de la contabilidad.</p>
+<h5>Consultar el porcentaje del I.V.A.</h5>
+<p>Para consultar el porcentaje del I.V.A. diríjase a la subsección de “I.V.A.” en la sección de “Mantenimiento”.</p>
+<h5>Editar el porcentaje del I.V.A.</h5>
+<p>Consulte el porcentaje del I.V.A. utilizando el método explicado anteriormente. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el porcentaje.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h4>Correlativos para Facturas</h4>
+<p>El sistema provee la herramienta para facilitar la asignación de correlativos para poder realizar la facturación.</p>
+<h5>Crear un correlativo</h5>
+<p>Para crear un correlativo diríjase a la subsección de “Correlativos para Facturas” en la sección de “Mantenimiento” y haga click sobre el link “Crear”. Con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número de serie.</li>
+	<li>Ingrese el número de resolución.</li>
+	<li>Ingrese la fecha de la resolución.</li>
+	<li>Ingrese el régimen.</li>
+	<li>Ingrese el número inicial del correlativo.</li>
+	<li>Ingrese el número final del correlativo.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un correlativo</h5>
+<p>Para consultar un correlativo diríjase a la subsección de “Correlativos” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista ordenada alfabéticamente conteniendo todos los números de series aparecerá. Haga click sobre el link con el número de serie que está buscando.</p>
+<h5>Convertir un correlativo como predeterminado</h5>
+<p>Consulte el correlativo utilizando el método anteriormente explicado. Ya con el formulario en pantalla presione sobre el botón de “Predeterminado”.</p>
+<h5>Eliminar un correlativo</h5>
+<p>Consulte el correlativo utilizando el método anteriormente explicado. Ya con el formulario en pantalla presione sobre el botón de “Eliminar”.</p>
+<h4>Turnos de Caja</h4>
+<p>Son los turnos que operan la caja en el modulo de P.O.S.</p>
+<h5>Crear un turno de caja</h5>
+<p>Diríjase a la subsección de “Turnos de Caja” en la sección de “Mantenimiento” y haga click sobre el link “Crear” y a continuación un formulario aparecerá. Haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre del turno.</li>
+	<li>Ingrese el horario.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un turno de caja</h5>
+<p>Para consultar un turno de caja diríjase a la subsección de “Turnos de Caja” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista con todos los nombres de los turnos de caja ordenada alfabéticamente aparecerá. Busque el turno deseado y haga click en el link con su nombre.</p>
+<h5>Editar un turno de caja</h5>
+<p>Consulte el turno de caja utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el nombre.</li>
+	<li>Edite el horario.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar un turno de caja</h5>
+<p>Consulte el turno de caja utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Bancos</h4>
+<p>Los depósitos registrados en el P.O.S. necesitan identificar en que bancos han sido depositados.</p>
+<h5>Crear un banco</h5>
+<p>Diríjase a la subsección de “Bancos” en la sección de “Mantenimiento” y haga click sobre el link “Crear” y a continuación un formulario aparecerá. Haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre del banco.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un banco</h5>
+<p>Para consultar un banco diríjase a la subsección de “Bancos” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista con todos los nombres de los bancos ordenados alfabéticamente aparecerá. Busque el banco deseado y haga click en el link con su nombre.</p>
+<h5>Editar un banco</h5>
+<p>Consulte el banco utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el nombre.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar un banco</h5>
+<p>Consulte el banco utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Cuentas Bancarias</h4>
+<p>Cuentas bancarias donde son hechos los depósitos realizados en el P.O.S.</p>
+<h5>Crear una cuenta bancaria</h5>
+<p>Para crear una cuenta bancaria diríjase a la subsección “Cuentas Bancarias” en la sección de “Mantenimiento” y haga click sobre el link “Crear”. Cuando aparezca el formulario haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número de la cuenta bancaria.</li>
+	<li>Ingrese el nombre del titular.</li>
+	<li>Seleccione el banco al cual la cuenta pertenece.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar una cuenta bancaria</h5>
+<p>Para consultar una cuenta bancaria diríjase a la subsección “Cuentas Bancarias” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista ordenada alfabéticamente con todos los nombres de las cuentas bancarias aparecerá. Haga click sobre el link con el número de la cuenta que busca.</p>
+<h5>Editar una cuenta bancaria</h5>
+<p>Consulte la cuenta bancaria utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el nombre del titular.</li>
+	<li>Cambie el banco al cual la cuenta pertenece.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar una cuenta bancaria</h5>
+<p>Consulte la cuenta bancaria utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Tipos de Tarjeta</h4>
+<p>A la hora de pagar una factura, el cliente puede utilizar efectivo o algún tipo de tarjeta ya sea crédito, debito o algún otro.</p>
+<h5>Crear un tipo de tarjeta</h5>
+<p>Diríjase a la subsección de “Tipos de Tarjeta” en la sección de “Mantenimiento” y haga click sobre el link “Crear” y a continuación un formulario aparecerá. Haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre del tipo de tarjeta.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar un tipo de tarjeta</h5>
+<p>Para consultar un tipo de tarjeta diríjase a la subsección de “Tipos de Tarjeta” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista con todos los nombres de los tipos de tarjeta ordenados alfabéticamente aparecerá. Busque el tipo de tarjeta deseado y haga click en el link con su nombre.</p>
+<h5>Editar un tipo de tarjeta</h5>
+<p>Consulte el tipo de tarjeta utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el nombre.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar un tipo de tarjeta</h5>
+<p>Consulte el tipo de tarjeta utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Marcas de Tarjeta</h4>
+<p>Al igual que los tipos de tarjeta, las tarjetas pertenecen a una marca, ej.: Visa, MasterCard, etc.</p>
+<h5>Crear una marca de tarjeta</h5>
+<p>Para crear una marca de tarjeta diríjase a la subsección “Marcas de Tarjeta” en la sección de “Mantenimiento” y haga click sobre el link “Crear”. Cuando aparezca el formulario haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre de la marca.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Consultar una marca de tarjeta</h5>
+<p>Para consultar una marca de tarjeta diríjase a la subsección “Marcas de Tarjeta” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista ordenada alfabéticamente con todos los nombres de las marcas aparecerá. Haga click sobre el link con el nombre de la marca que busca.</p>
+<h5>Editar una marca de tarjeta</h5>
+<p>Consulte la marca de tarjeta utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite el nombre.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar una marca de tarjeta</h5>
+<p>Consulte la marca de tarjeta utilizando cualquiera de los métodos explicados anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Ofertas</h4>
+<p>Se refiere a los descuentos a nivel de línea en una factura que cumple con la condición o cantidad de artículos necesarios de cierto producto.</p>
+<h5>Consultar las ofertas de un producto por búsqueda de nombre</h5>
+<p>Para consultar las ofertas de un producto utilizando la herramienta de búsqueda de nombres diríjase a la subsección de “Ofertas” en la sección de “Mantenimiento” y posicione el cursor en el campo “Buscar”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Empiece a escribir el nombre del producto. Y el sistema le desplegara todos los nombres similares de los productos.</li>
+	<li>Utilice las teclas de arriba y abajo para navegar la lista y presione ENTER cuando el nombre deseado este seleccionado. O haga click con el mouse sobre el nombre deseado.</li>
+</ol>
+<h5>Consultar las ofertas de un producto por código</h5>
+<p>Para consultar las ofertas de un producto utilizando el código interno diríjase a la subsección de “Ofertas” en la sección de “Mantenimiento” y posicione el cursor en el campo “Código”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código interno del producto.</li>
+	<li>Presione el botón “Consultar” que se encuentra adjunto al lado derecho.</li>
+</ol>
+<h5>Consultar las ofertas de un producto por código de barras</h5>
+<p>Para consultar las ofertas de un producto utilizando su código de barras diríjase a la subsección “Ofertas” en la sección de “Mantenimiento” y posicione el cursor en el campo “Código barra”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código de barras del producto.</li>
+	<li>Presione el botón “Consultar” que se encuentra adjunto al lado derecho.</li>
+</ol>
+<h5>Crear una oferta</h5>
+<p>Para crear una oferta primero consulte las ofertas del producto utilizando cualquiera de los métodos antes explicados. Con el formulario desplegado haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la cantidad que el cliente tiene que llevar para que se cumpla la oferta.</li>
+	<li>Ingrese el descuento de la oferta.</li>
+	<li>Ingrese la fecha de vencimiento para la oferta.</li>
+	<li>Presione el botón “Crear Oferta”.</li>
+</ol>
+<h5>Eliminar una oferta</h5>
+<p>Para eliminar una oferta primero consulte las ofertas del producto utilizando cualquiera de los métodos antes mencionados. Con las ofertas desplegadas seleccione la oferta que busca y a continuación presione el botón “Eliminar” que se encuentra adjunto a la derecha de esta.</p>
+<h3>Caja</h3>
+<p>Al igual que el modulo de “Inventario” en el modulo de “POS Admin” también se pueden visualizar las facturas creadas, a diferencia que en este modulo se detalla mas información con respecto a la caja. Además también se pueden visualizar los depósitos realizados.</p>
+<h4>Facturas</h4>
+<p>La diferencia en consultar una factura en este modulo y en el modulo de “Inventario” es que se solicita la fecha de la jornada. Esto para que se pueda desplegar información de la caja en la cual la factura se opero y detalles de cómo fue pagada.</p>
+<h5>Consultar una factura por jornada, por su serie y número</h5>
+<p>Para consultar una factura diríjase a la subsección de “Facturas” en la sección de “Caja” y posicione el cursor en el campo “Jornada”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha de la jornada en la que se creó la factura.</li>
+	<li>Ingrese el número de serie.</li>
+	<li>Ingrese el número.</li>
+	<li>Presione el botón “Consultar”.</li>
+</ol>
+<h5>Consultar una factura en un rango de fechas de jornadas</h5>
+<p>Para consultar una factura que fue creada entre un rango de fechas de las jornadas diríjase a la subsección de “Facturas” en la sección “Caja” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha de la jornada inicial en el campo “Jornada inicial”.</li>
+	<li>Ingrese la fecha  de la jornada final en el campo “Jornada final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon facturas en esas jornadas, una lista con todas sus series y números se desplegara ordenada por fecha.</li>
+	<li>Haga click en la serie y número de la factura con la jornada que busca.</li>
+</ol>
+<h5>Consultar las tarjetas de una factura</h5>
+<p>Consulte la factura utilizando cualquiera de los métodos anteriormente explicados. Ya con la factura en pantalla haga click en el link “Ver…” a la par de la etiqueta “Tarjetas”.</p>
+<h4>Depósitos</h4>
+<p>En esta subsección se pueden visualizar todos los depósitos realizados en el P.O.S.</p>
+<h5>Consultar un depósito por jornada y por su número</h5>
+<p>Para consultar un depósito diríjase a la subsección de “Depósitos” en la sección de “Caja” y posicione el cursor en el campo “Jornada”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha de la jornada en la que se creó el depósito.</li>
+	<li>Ingrese el número del depósito.</li>
+	<li>Presione el botón “Consultar” adjunto a la derecha.</li>
+</ol>
+<h5>Consultar un depósito por jornada y por su número de boleta</h5>
+<p>Para consultar un depósito por su número de boleta diríjase a la subsección de “Depósitos” en la sección de “Caja” y posicione el cursor en el campo “Jornada”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha de la jornada en la se creó el depósito.</li>
+	<li>Seleccione el banco a donde se hizo el depósito.</li>
+	<li>Ingrese el número de la boleta que se utilizo.</li>
+	<li>Presione el botón “Consultar” adjunto a la derecha.</li>
+</ol>
+<h5>Consultar un depósito en un rango de fechas de jornadas</h5>
+<p>Para consultar un depósito que fue creado entre un rango de fechas de las jornadas diríjase a la subsección de “Depósitos” en la sección “Caja” y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha de la jornada inicial en el campo “Jornada inicial”.</li>
+	<li>Ingrese la fecha  de la jornada final en el campo “Jornada final”.</li>
+	<li>Presione el botón “Buscar”. Si se crearon depósitos en esas jornadas, una lista con todos sus números se desplegara ordenada por fecha.</li>
+	<li>Haga click en el número del depósito con la jornada que busca.</li>
+</ol>
+<h5>Confirmar un depósito</h5>
+<p>Para confirmar un depósito diríjase a la subsección de “Depósitos” en la sección de “Caja” y haga click sobre el link “Depósitos sin Confirmar”. A continuación se desplegara una lista de depósitos sin confirmar busque la que desee y presione el botón “Confirmar” que está al lado derecho.</p>
+<h3>Herramientas</h3>
+<p>La sección de “Herramientas” dentro del modulo de “POS Admin” cuenta con una variedad de utilidades como reportes, bitácoras y tareas para un mejor manejo de información del sistema.</p>
+<h4>Productos Sin Movimiento</h4>
+<p>Este reporte indica cuales son los productos que han tenido venta alguna vez pero se ha dejado de vender en un lapso de tiempo determinado.</p>
+<h5>Consultar el reporte de productos sin movimiento</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click sobre el link “Productos Sin Movimiento”. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Seleccione la cantidad de días que los productos no ha tenido movimiento.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir el reporte de productos sin movimiento</h5>
+<p>Consulte el reporte utilizando el método anteriormente explicado. Ya con el reporte en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Ranking de Ventas por Producto</h4>
+<p>Este reporte se puede consultar para identificar que productos se venden más que otros en determinados lapsos de tiempo.</p>
+<h5>Consultar el reporte de ranking de ventas por producto</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click sobre el link “Ranking de Ventas por Producto”. A continuación un formulario se desplegara y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial.</li>
+	<li>Ingrese la fecha final.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir el reporte de ranking de ventas por producto</h5>
+<p>Consulte el reporte utilizando el método anteriormente explicado. Ya con el reporte en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Estadísticas de Ventas y Compras</h4>
+<p>Con este reporte se puede medir de qué manera se vende y se compra cada mes.</p>
+<h5>Consultar el reporte de estadísticas de ventas y compras ordenado por producto</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click sobre el link “Estadísticas de Ventas y Compras”. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Seleccione cuantos meses desea visualizar.</li>
+	<li>Seleccione el botón de opción que esta adjunto al campo “De producto”.</li>
+	<li>Seleccione el nombre del producto inicial en el campo “De producto”.</li>
+	<li>Seleccione el nombre del producto final en el campo “A” adjunto a la derecha.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Consultar el reporte de estadísticas de ventas y compras ordenado por casa</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click sobre el link “Estadísticas de Ventas y Compras”. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Seleccione cuantos meses desea visualizar.</li>
+	<li>Seleccione el botón de opción que esta adjunto al campo “De casa”.</li>
+	<li>Seleccione el nombre de la casa inicial en el campo “De casa”.</li>
+	<li>Seleccione el nombre de la casa final en el campo “A” adjunto a la derecha.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir el reporte de estadísticas de ventas y compras</h5>
+<p>Consulte el reporte utilizando cualquier  método anteriormente explicado. Ya con el reporte en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>En Stock (Monetario)</h4>
+<p>A diferencia del reporte del modulo de “Inventario” este reporte muestra valores monetarios del inventario.</p>
+<h5>Consultar el reporte de productos en stock</h5>
+<p>Para consultar el reporte diríjase a la subsección de “Reportes” en la sección de “Herramientas” y haga click en el link “En Stock (Monetario)”. En el formulario siguiente presione el botón “Aceptar”.</p>
+<h5>Imprimir el reporte de productos en stock</h5>
+<p>Consulte el reporte utilizando el método explicado anteriormente. Ya con el reporte en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Descuentos a Facturas</h4>
+<p>Esta bitácora muestra que usuarios han realizado descuentos a nivel de factura en un periodo de tiempo determinado.</p>
+<h5>Consultar la bitácora de descuentos a facturas</h5>
+<p>Para consultar la bitácora diríjase a la subsección de “Bitácoras” en la sección de “Herramientas” y haga click sobre el link “Descuentos a Facturas”. Ya con el formulario haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial.</li>
+	<li>Ingrese la fecha final.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir la bitácora de descuentos a facturas</h5>
+<p>Consulte la bitácora utilizando el método explicado anteriormente. Ya con la bitácora en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Documentos Anulados (Caja)</h4>
+<p>A diferencia de la bitácora del modulo de “Inventario” esta bitácora solo muestra los documentos que se operan en caja, es decir el P.O.S.</p>
+<h5>Consultar la bitácora de documentos anulados</h5>
+<p>Para consultar la bitácora diríjase a la subsección de “Bitácoras” en la sección de “Herramientas” y haga click sobre el link “Documentos Anulados (Caja)”. Ya con el formulario haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial.</li>
+	<li>Ingrese la fecha final.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Imprimir la bitácora de documentos anulados</h5>
+<p>Consulte la bitácora utilizando el método explicado anteriormente. Ya con la bitácora en pantalla presione sobre el botón “Imprimir” en la parte inferior de este.</p>
+<h4>Libro de Ventas</h4>
+<p>El libro de ventas se puede obtener en formato de texto delimitado por un lapso de tiempo determinado por el usuario.</p>
+<h5>Obtener libro de ventas</h5>
+<p>Para obtener el libro de ventas diríjase a la subsección de “Tareas” en la sección de “Herramientas” y haga click sobre el link “Libro de Ventas”. A continuación el formulario se desplegara y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la fecha inicial.</li>
+	<li>Ingrese la fecha final.</li>
+	<li>Presione el botón “Aceptar”. El sistema generara un archivo y si no hay ningún inconveniente otro formulario conteniendo el link para descargarlo se desplegara.</li>
+	<li>Haga click sobre el link “aquí” para descargar.</li>
+</ol>
+<h2>PARTE IV: Modulo de Administración</h2>
+<h3>Mantenimiento</h3>
+<p>En esta sección del modulo se parametrizan todos los valores necesarios para la buena operación del sistema.</p>
+<h4>Cuentas de Usuario</h4>
+<p>En esta subsección de crean y editan las cuentas que los usuarios utilizan para identificarse al sistema.</p>
+<h5>Crear una cuenta de usuario</h5>
+<p>Para crear una cuenta de usuario diríjase a la subsección de “Cuentas de Usuario” en la sección de “Mantenimiento” y haga click sobre el link “Crear”. A continuación un formulario se desplegara y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el nombre de la cuenta.</li>
+	<li>Seleccione el rol a la cual la cuenta va a pertenecer.</li>
+	<li>Ingrese los nombres del usuario.</li>
+	<li>Ingrese los apellidos del usuario.</li>
+	<li>Ingrese la contraseña.</li>
+	<li>Reingrese la contraseña en el campo “Confirmar”.</li>
+	<li>Deje la casilla “Desactivado” en blanco.</li>
+	<li>Presione el botón “Guardar”.</li>	
+</ol>
+<h5>Consultar una cuenta de usuario</h5>
+<p>Para consultar una cuenta de usuario diríjase a la subsección de “Cuentas de Usuario” en la sección de “Mantenimiento” y haga click sobre el link “Consultar”. A continuación una lista ordenada alfabéticamente conteniendo los nombres, apellidos y cuentas de usuario aparecerá, haga click sobre el link conteniendo la cuenta de usuario que busca.</p>
+<h5>Editar una cuenta de usuario</h5>
+<p>Consulte la cuenta utilizando el método anteriormente explicado. Ya con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite los campos que necesite.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h5>Eliminar una cuenta de usuario</h5>
+<p>Consulte la cuenta utilizando el método explicado anteriormente. Ya con el formulario desplegado haga click en el botón “Eliminar” en la parte inferior de este.</p>
+<h4>Empresa</h4>
+<p>En esta subsección del modulo solo se mantienen los datos de la empresa como el nombre, dirección, etc.</p>
+<h5>Consultar los datos de la empresa</h5>
+<p>Para consultar los datos de la empresa diríjase a la subsección de “Empresa” en la sección de “Mantenimiento”.</p>
+<h5>Editar los datos de la empresa</h5>
+<p>Consulte los datos de la empresa utilizando el método anteriormente explicado. Con el formulario en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Presione el botón “Editar”.</li>
+	<li>Edite los campos que desee.</li>
+	<li>Presione el botón “Guardar”.</li>
+</ol>
+<h4>Reservados</h4>
+<p>Se refiere a los reservados creados por el mal egreso del sistema de parte de los usuarios. Esto sucede cuando se está creando un documento de salida (ej.: un vale de salida) y el usuario cierra la ventana del explorador sin haberse deslogueado.</p>
+<h5>Consultar los reservados de un producto por búsqueda de nombre</h5>
+<p>Para consultar los reservados de un producto utilizando la herramienta de búsqueda de nombres diríjase a la subsección de “Reservados” en la sección de “Mantenimiento” y posicione el cursor en el campo “Buscar”. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Empiece a escribir el nombre del producto. Y el sistema le desplegara todos los nombres similares de los productos.</li>
+	<li>Utilice las teclas de arriba y abajo para navegar la lista y presione ENTER cuando el nombre deseado este seleccionado. O haga click con el mouse sobre el nombre deseado.</li>
+</ol>
+<h5>Consultar los reservados de un producto por código</h5>
+<p>Para consultar los reservados de un producto utilizando el código interno diríjase a la subsección de “Reservados” en la sección de “Mantenimiento” y posicione el cursor en el campo “Código”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código interno del producto.</li>
+	<li>Presione el botón “Consultar” que se encuentra adjunto al lado derecho.</li>
+</ol>
+<h5>Consultar los reservados de un producto por código de barras</h5>
+<p>Para consultar los reservados de un producto utilizando su código de barras diríjase a la subsección “Reservados” en la sección de “Mantenimiento” y posicione el cursor en el campo “Código barra”. Y a continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código de barras del producto.</li>
+	<li>Presione el botón “Consultar” que se encuentra adjunto al lado derecho.</li>
+</ol>
+<h5>Eliminar un reservado</h5>
+<p>Para eliminar un reservado primero consulte los reservados del producto utilizando cualquiera de los métodos antes mencionados. Con los reservados desplegados seleccione el reservado que busca y a continuación presione el botón “Eliminar” que se encuentra adjunto a la derecha de este.</p>
+<h3>Herramientas</h3>
+<p>La sección de “Herramientas” dentro del modulo de “Administración” cuenta con una variedad de utilidades como tareas para una optimización de la información para un mejor manejo del sistema.</p>
+<h4>Backup</h4>
+<p>El sistema da la facilidad de realizar backup cuando los administradores lo deseen.</p>
+<h5>Obtener un backup</h5>
+<p>Para obtener una copia de la base de datos o backup diríjase a la subsección de “Tareas” en la sección de “Mantenimiento” y haga click en el link “Backup”. A continuación aparecerá un formulario y presione el botón “Aceptar”.</p>
+<h4>Cierre General</h4>
+<p>Conforme pasa el tiempo y se opera el sistema la base de datos de este irá creciendo. Para optimizar el rendimiento es necesario quitar la información antigua que ya no es necesario tenerla. Para esto se hace un cierre general.</p>
+<h5>Realizar el cierre general</h5>
+<p>Para realizar el cierre general diríjase a la subsección “Tareas” en la sección de “Mantenimiento” y haga click en el link “Cierre General”. En el siguiente formulario haga lo siguiente:</p>
+<ol>
+	<li>Seleccione los días de información que desea dejar en el sistema.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h2>PARTE V: Modulo de P.O.S.</h2>
+<h3>P.O.S. (Punto de Venta)</h3>
+<p>La actividad más importante de la empresa es la facturación. Por ende el modulo de P.O.S. está diseñado diferente que al resto de los módulos del sistema, esto para una operación más ágil y eficaz. Este modulo cuenta con cuatro secciones que son “Facturación”, “Depósitos”, “Caja Opciones” y “Jornada Opciones” que contienen las funcionalidades necesarias para operar una caja registradora.</p>
+<h4>Facturación</h4>
+<p>En esta sección se pueden crear, anular y consultar facturas al igual que consultar productos.</p>
+<h5>Ingresar a la sección de “Facturación”</h5>
+<p>Para ingresar a la sección es necesario indicar bajo que turno de caja se va operar. Para seleccionar el turno diríjase a la sección de “Facturación”. Con el formulario de turnos de caja en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Seleccione el turno de caja que desea operar.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Crear una factura</h5>
+<p>Crear una factura con lleva realizar varios pasos. El primer paso es ingresar a la sección de “Facturación” utilizando el método anteriormente explicado. Ya dentro de la sección de facturación haga click en la opción “Crear” dentro del menú de “Archivo” en la parte superior de la ventana. O usando el atajo de teclas presione la tecla INS.</p>
+<h6>Ingresar los datos del cliente</h6>
+<p>Una vez se empieza a crear la factura el formulario para ingresar los datos del cliente aparecerá. A continuación haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número de nit del cliente o si no hay nit ingrese “CF”.</li>
+	<li>Ingrese el nombre del cliente o si es CF déjelo en blanco.</li>
+	<li>Presione la el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h6>Cambiar los datos del cliente</h6>
+<p>Cuando se está creando una factura el sistema entra en modo de escucha, o sea que esta lista para  recibir códigos de barra. Si se desea cambiar los datos del cliente haga click en la opción “Cliente” en el menú “Editar” o usando el atajo de teclas presione la secuencia de teclas CTRL + E, a continuación el formulario volverá aparecer.</p>
+<h6>Agregar un detalle por código de barra del producto</h6>
+<p>En la creación de una factura el sistema entra en modo de escucha, esto significa que está esperando a que el usuario ingrese los códigos de barra. Para esto se puede utilizar un lector de barras o en caso de no tener uno digite el código de barras y presione la tecla ENTER.</p>
+<h6>Agregar un detalle por búsqueda de nombre del producto</h6>
+<p>Si no se tiene el código de barra del producto, este se puede agregar buscando su nombre. Para esto haga click sobre la opción “Buscar producto” en el menú “Editar” o usando el atajo de teclas presione la tecla F5. A continuación el formulario para buscar el nombre del producto aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la cantidad que el cliente se desea llevar en el campo “Cantidad”.</li>
+	<li>Posicione el cursor en el campo “Buscar”.</li>
+	<li>Empiece a escribir el nombre del producto. Y el sistema le desplegara todos los nombres similares de los productos.</li>
+	<li>Utilice las teclas de arriba y abajo para navegar la lista y presione ENTER cuando el nombre deseado este seleccionado. O haga click con el mouse sobre el nombre deseado.</li>
+</ol>
+<h6>Quitar un detalle</h6>
+<p>Para quitar un detalle haga click sobre la opción “Quitar producto” en el menú “Editar” o usando el atajo de teclas presione la secuencia de teclas CTRL + D. A continuación el formulario para quitar el detalle aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del detalle que desea quitar.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h6>Hacer un descuento a la factura</h6>
+<p>Para hacer un descuento adicional a la factura haga click sobre la opción “Descuento” en el menú “Editar” o usando el atajo de teclas presione la tecla F7. A continuación el formulario de autenticación aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese su cuenta de usuario.</li>
+	<li>Ingrese su contraseña.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER. Si es autenticado correctamente y si tiene los privilegios suficientes, el formulario para ingresar el porcentaje del descuento aparecerá.</li>
+	<li>Ingrese el porcentaje del descuento.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h6>Crear un recibo de caja (Guardar factura)</h6>
+<p>Una vez se termine de ingresar los detalles necesarios es hora de guardar la factura o más bien dicho crear el recibo de caja para aceptar el pago del cliente. Para esto haga click en la opción “Guardar” en el menú “Archivo” o usando el atajo de teclas presione la secuencia de teclas CTRL + S. A continuación el formulario del recibo de caja aparecerá.</p>
+<h6>Ingresar efectivo al recibo de caja</h6>
+<p>Con el formulario del recibo de caja en pantalla es solo de digitar el monto en efectivo que se está recibiendo de parte del cliente en campo “Efectivo”.</p>
+<h6>Agregar un voucher al recibo de caja (Tarjeta de Crédito/Debito)</h6>
+<p>Con el formulario del recibo de caja en pantalla haga click sobre la opción “Agregar voucher” en el menú “Editar” en la parte superior de esa ventana o usando el atajo de teclas presione la secuencia de teclas CTRL + I. A continuación el formulario para ingresar el voucher aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número de transacción del voucher.</li>
+	<li>Ingrese últimos cuatro dígitos de la tarjeta.</li>
+	<li>Seleccione el tipo de la tarjeta.</li>
+	<li>Seleccione la marca de la tarjeta.</li>
+	<li>Ingrese el nombre del titular de la tarjeta.</li>
+	<li>Ingrese la fecha de vencimiento de la tarjeta.</li>
+	<li>Ingrese el monto del voucher.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h6>Quitar un voucher al recibo de caja (Tarjeta de Crédito/Debito)</h6>
+<p>Para quitar un voucher del recibo de caja haga click sobre la opción “Quitar voucher” en el menú “Editar” o usando el atajo de teclas presione la secuencia de teclas CTRL + D. A continuación el formulario para quitar el voucher aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del voucher que desea quitar.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h6>Guardar el recibo de caja</h6>
+<p>Después de haber ingresado el efectivo o vouchers necesarios se puede guardar el recibo de caja y a la vez la factura. Para esto haga click en la opción “Guardar” en el menú “Archivo” o usando el atajo de teclas presione la secuencia de teclas CTRL + S.</p>
+<h5>Consultar una factura por navegación</h5>
+<p>Si se desea consultar una factura pero no se cuenta con su serie ni su número pero se sabe en qué caja fue operada es cuestión de solo ingresar al modulo y a la sección de “Facturación” utilizando la fecha de la jornada y el turno de la caja (si solo se cuenta con la fecha de creación es mejor utilizar los módulos de “Inventario” o “POS Admin”). Ya dentro de la sección es posible navegar por cada factura creada en esa caja utilizando las siguientes opciones (todas ellas en el menú “Ver”):</p>
+<ul>
+	<li>“Primero”: Navega directamente hacia la primera factura creada en la caja. El atajo de teclas es la tecla INICIO.</li>
+	<li>“Anterior”: Navega a la factura que se encuentra en una posición anterior a la que se está consultando actualmente. El atajo de teclas es la tecla RE PAG.</li>
+	<li>“Siguiente”: Navega hacia la siguiente factura a la que se está consultando actualmente. El atajo de teclas es la tecla AV PAG.</li>
+	<li>“Ultimo”: Navega directamente hacia la ultima factura creada en la caja. El atajo de teclas es la tecla FIN.</li>
+</ul>
+<h5>Consultar una factura por serie y número</h5>
+<p>Si se desea consultar una factura y se cuenta con su serie y número solo se debe de ingresar al modulo y a la sección de “Facturación” utilizando la fecha de la jornada y turno de la caja en la que se opero (si solo se cuenta con la fecha de creación es mejor utilizar los módulos de “Inventario” o “POS Admin”). Una vez dentro de la sección haga click sobre la opción “Buscar” en el menú “Ver” o utilizando el atajo de teclas presione la tecla F1. A continuación el formulario para la búsqueda de facturas aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese la serie de la factura.</li>
+	<li>Ingrese el número de la factura.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h5>Consultar las tarjetas de una factura</h5>
+<p>Consulte la factura utilizando cualquiera de los métodos anteriormente explicados. Ya con la factura en pantalla haga click en la opción “Tarjetas” en el menú “Ver” o utilizando el atajo de teclas presione la secuencia de teclas CTRL + T.</p>
+<h5>Consultar un producto por código de barra</h5>
+<p>Dentro de la sección de “Facturación” es posible consultar la información de un producto. Para esto haga click sobre la opción “Consultar producto” en el menú “Ver” o usando el atajo de teclas presione la tecla F6. A continuación el formulario para buscar un producto aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código de barra en el campo “Código barra”.</li>
+	<li>Presione el botón “Consultar” adjunto a la derecha.</li>
+</ol>
+<h5>Consultar un producto por código</h5>
+<p>Dentro de la sección de “Facturación” es posible consultar la información de un producto. Para esto haga click sobre la opción “Consultar producto” en el menú “Ver” o usando el atajo de teclas presione la tecla F6. A continuación el formulario para buscar un producto aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código de barra en el campo “Código”.</li>
+	<li>Presione el botón “Consultar” adjunto a la derecha.</li>
+</ol>
+<h5>Consultar un producto por búsqueda de nombre</h5>
+<p>Dentro de la sección de “Facturación” es posible consultar la información de un producto. Para esto haga click sobre la opción “Consultar producto” en el menú “Ver” o usando el atajo de teclas presione la tecla F6. A continuación el formulario para buscar un producto aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Posicione el cursor en el campo “Buscar”.</li>
+	<li>Empiece a escribir el nombre del producto. Y el sistema le desplegara todos los nombres similares de los productos.</li>
+	<li>Utilice las teclas de arriba y abajo para navegar la lista y presione ENTER cuando el nombre deseado este seleccionado. O haga click con el mouse sobre el nombre deseado.</li>
+</ol>
+<h4>Depósitos</h4>
+<p>En esta sección se crean, consultan y anulan los depósitos realizados por el cajero.</p>
+<h5>Ingresar a la sección de “Depósitos”</h5>
+<p>Para ingresar a la sección es necesario indicar bajo que turno de caja se va operar. Para seleccionar el turno diríjase a la sección de “Depósitos”. Con el formulario de turnos de caja en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Seleccione el turno de caja que desea operar.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Crear un depósito</h5>
+<p>Crear un deposito con lleva realizar varios pasos. El primer paso es ingresar a la sección de “Depósitos” utilizando el método anteriormente explicado. Ya dentro de la sección haga click en la opción “Crear” dentro del menú de “Archivo” en la parte superior de la ventana. O usando el atajo de teclas presione la tecla INS.</p>
+<h6>Ingresar los datos de la boleta</h6>
+<p>Una vez se empieza a crear el depósito, en el formulario aparecen los campos necesarios para ingresar los datos de la boleta. Para ingresar estos datos haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el numero de la boleta en el campo “Boleta No”.</li>
+	<li>Seleccione la cuenta bancaria en el campo “Cuenta bancaria”.</li>
+</ol>
+<h6>Agregar efectivo</h6>
+<p>Para agregar efectivo al depósito presione la opción “Agregar efectivo” en el menú “Editar” o usando el atajo de teclas presione la secuencia de teclas CTRL + I. A continuación el formulario con el efectivo disponible de la caja aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Seleccione cualquiera de las facturas con efectivo disponible del listado.</li>
+	<li>Ingrese cuanto de efectivo de la factura seleccionada desea depositar en el campo “A depositar”.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h6>Quitar efectivo</h6>
+<p>Para quitar efectivo de un deposito haga click sobre la opción “Quitar efectivo” o usando el atajo de teclas presione la secuencia de teclas CTRL + D. A continuación el formulario para quitar el efectivo aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del detalle que contiene el efectivo que desea quitar.</li>
+	<li>Presione el botón “Aceptar” o presione la tecla ENTER.</li>
+</ol>
+<h6>Guardar el depósito</h6>
+<p>Después de haber ingresado el efectivo necesario se puede guardar el deposito, para esto haga click en la opción “Guardar” en el menú “Archivo” o usando el atajo de teclas presione la secuencia de teclas CTRL + S.</p>
+<h5>Consultar un depósito por navegación</h5>
+<p>Si se desea consultar un deposito pero no se cuenta con su número ni su número de boleta pero se sabe en qué caja fue operada es cuestión de solo ingresar al modulo y a la sección de “Depósitos” utilizando la fecha de la jornada y el turno de la caja (si solo se cuenta con la fecha de creación es mejor utilizar los módulos de “Inventario” o “POS Admin”). Ya dentro de la sección es posible navegar por cada depósito creado en esa caja utilizando las siguientes opciones (todas ellas en el menú “Ver”):</p>
+<ul>
+	<li>“Primero”: Navega directamente hacia el primer deposito creado en la caja. El atajo de teclas es la tecla INICIO.</li>
+	<li>“Anterior”: Navega al depósito que se encuentra en una posición anterior al que se está consultando actualmente. El atajo de teclas es la tecla RE PAG.</li>
+	<li>“Siguiente”: Navega hacia el siguiente deposito al que se está consultando actualmente. El atajo de teclas es la tecla AV PAG.</li>
+	<li>“Ultimo”: Navega directamente hacia el ultimo deposito creado en la caja. El atajo de teclas es la tecla FIN.</li>
+</ul>
+<h5>Consultar un depósito por número</h5>
+<p>Si se desea consultar un deposito y se cuenta con su número solo se debe de ingresar al modulo y a la sección de “Depósitos” utilizando la fecha de la jornada y turno de la caja en la que se opero (si solo se cuenta con la fecha de creación es mejor utilizar los módulos de “Inventario” o “POS Admin”). Una vez dentro de la sección haga click sobre la opción “Buscar” en el menú “Ver” o utilizando el atajo de teclas presione la tecla F1. A continuación el formulario para la búsqueda de depósitos aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el número del depósito en el campo “Deposito No”.</li>	
+	<li>Presione el botón “Buscar” que esta adjunto a la derecha.</li>
+</ol>
+<h5>Consultar un depósito por número de boleta</h5>
+<p>Si se desea consultar un deposito y se cuenta con su número de boleta solo se debe de ingresar al modulo y a la sección de “Depósitos” utilizando la fecha de la jornada y turno de la caja en la que se opero (si solo se cuenta con la fecha de creación es mejor utilizar los módulos de “Inventario” o “POS Admin”). Una vez dentro de la sección haga click sobre la opción “Buscar” en el menú “Ver” o utilizando el atajo de teclas presione la tecla F1. A continuación el formulario para la búsqueda de depósitos aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Seleccione el banco donde se hizo el depósito.</li>
+	<li>Ingrese el número de la boleta en el campo “Boleta No”.</li>	
+	<li>Presione el botón “Buscar” que esta adjunto a la derecha.</li>
+</ol>
+<h4>Caja Opciones</h4>
+<p>En esta sección se cierra la caja y se consultan los cortes de caja.</p>
+<h5>Ingresar a la sección de “Caja Opciones”</h5>
+<p>Para ingresar a la sección es necesario indicar que turno de caja se va operar. Para seleccionar el turno diríjase a la sección de “Caja Opciones”. Con el formulario de turnos de caja en pantalla haga lo siguiente:</p>
+<ol>
+	<li>Seleccione el turno de caja que desea operar.</li>
+	<li>Presione el botón “Aceptar”.</li>
+</ol>
+<h5>Cerrar una caja</h5>
+<p>Una vez dentro de la sección de “Caja Opciones” se puede manipular la caja en la cual se está operando. Para cerrarla haga click sobre la opción “Cerrar” en el menú “Editar” o usando el atajo de teclas presione la secuencia de teclas CTRL + C.</p>
+<h5>Consultar un corte de caja preliminar</h5>
+<p>Es necesario que la caja aun este abierta. Ya dentro de la sección de “Caja Opciones” haga click sobre la opción “Corte de caja preliminar” en el menú “Ver” o usando el atajo de teclas presione la secuencia CTRL + R.</p>
+<h5>Consultar un corte de caja</h5>
+<p>Es necesario que la caja este cerrada. Ya dentro de la sección de “Caja Opciones” haga click sobre la opción “Corte de caja” en el menú “Ver” o usando el atajo de teclas presione la secuencia CTRL + A.</p>
+<h5>Imprimir un corte de caja</h5>
+<p>Consulte el corte de caja utilizando cualquiera de los métodos explicados anteriormente. Ya con la ventana del corte de caja en pantalla haga click sobre la opción “Imprimir…” (si desea seleccionar la impresora a la cual imprimir) o “Imprimir” (si quiere mandar imprimir directamente a la impresora predeterminada) en el menú de “Archivo”.</p>
+<h4>Jornada Opciones</h4>
+<p>En esta sección es donde se cierra la jornada de trabajo para no poder facturar más. También para visualizar los reportes de ventas.</p>
+<h5>Ingresar a la sección de “Jornada Opciones”</h5>
+<p>A diferencia de las demás secciones esta no requiere identificar bajo que turno de caja se va operar puesto que la jornada que se está operando es la fecha que se ingreso al entrar al modulo. Para entrar solo diríjase a la sección “Jornada Opciones”.</p>
+<h5>Cerrar una jornada</h5>
+<p>Una vez dentro de la sección de “Jornada Opciones” se puede manipular la jornada en la cual se está operando. Para cerrarla haga click sobre la opción “Cerrar” en el menú “Editar” o usando el atajo de teclas presione la secuencia de teclas CTRL + C.</p>
+<h5>Consultar un reporte de ventas preliminar</h5>
+<p>Es necesario que la jornada aun este abierta. Ya dentro de la sección de “Jornada Opciones” haga click sobre la opción “Reporte de ventas preliminar” en el menú “Ver” o usando el atajo de teclas presione la secuencia CTRL + R.</p>
+<h5>Consultar un reporte de ventas</h5>
+<p>Es necesario que la jornada este cerrada. Ya dentro de la sección de “Jornada Opciones” haga click sobre la opción “Reporte de ventas” en el menú “Ver” o usando el atajo de teclas presione la secuencia CTRL + A.</p>
+<h5>Imprimir un reporte de ventas</h5>
+<p>Consulte el reporte de ventas utilizando cualquiera de los métodos explicados anteriormente. Ya con la ventana del reporte en pantalla haga click sobre la opción “Imprimir…” (si desea seleccionar la impresora a la cual imprimir) o “Imprimir” (si quiere mandar imprimir directamente a la impresora predeterminada) en el menú de “Archivo”.</p>
+<h4>Productos</h4>
+<p>Es posible consultar información de algún producto sin necesidad de entrar a la sección de “Facturación”. A continuación se explica cómo.</p>
+<h5>Consultar un producto por código de barra</h5>
+<p>Ingrese a la opción “Consultar Producto” en el menú principal del modulo. A continuación el formulario para buscar un producto aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código de barra en el campo “Código barra”.</li>
+	<li>Presione el botón “Consultar” adjunto a la derecha.</li>
+</ol>
+<h5>Consultar un producto por código</h5>
+<p>Ingrese a la opción “Consultar Producto” en el menú principal del modulo. A continuación el formulario para buscar un producto aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Ingrese el código de barra en el campo “Código”.</li>
+	<li>Presione el botón “Consultar” adjunto a la derecha.</li>
+</ol>
+<h5>Consultar un producto por búsqueda de nombre</h5>
+<p>Ingrese a la opción “Consultar Producto” en el menú principal del modulo. A continuación el formulario para buscar un producto aparecerá y haga lo siguiente:</p>
+<ol>
+	<li>Posicione el cursor en el campo “Buscar”.</li>
+	<li>Empiece a escribir el nombre del producto. Y el sistema le desplegara todos los nombres similares de los productos.</li>
+	<li>Utilice las teclas de arriba y abajo para navegar la lista y presione ENTER cuando el nombre deseado este seleccionado. O haga click con el mouse sobre el nombre deseado.</li>
+</ol>
+</body>
+</html>
