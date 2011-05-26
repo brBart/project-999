@@ -50,6 +50,11 @@ table.specifications {
 	border-width: 0.1em;
 }
 
+hr.footer {
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+
 div.img_example span {
 	font-size: 0.83em;
 	font-style: italic;
