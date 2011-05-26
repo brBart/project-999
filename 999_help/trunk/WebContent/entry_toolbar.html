@@ -6,35 +6,72 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<h4>Introducción</h4>
-El sistema trabaja las existencias de los productos en lotes. Puede haber 20 existencias de un solo producto pero puede que estén divididos en 2 lotes, un lote de 5 y otro de 15. Los lotes se difieren entre sí en la fecha de vencimiento  y el precio. Si 2 existencias tienen la misma fecha de vencimiento y el mismo precio en el mismo documento estas pertenecen al mismo lote.
-Para ingresar producto o un lote en documentos como Recibos o Vales de Entrada, se utiliza la barra de ingreso que se encuentra en medio del formulario del documento como se muestra a continuación en la figura 1:
-
- Figura 1.
-
-Especificaciones
-A continuación un cuadro con las especificaciones de cada campo de la barra:
-Nombre	Descripción	Tipo	Requerido
-Cantidad	Indica cuantas existencias va tener el lote.	Numérico entero mayor a cero. Ej.: 1, 10, 99.	Si
-Precio	Indica el precio público del producto del lote. Si este precio es mayor al precio actual del sistema, el sistema automáticamente actualizara el precio del producto a la hora de guardar el documento.	Numérico real mayor a cero. Ej.: 1.00, 10.15, 99.99.	Si
-Vence	Es la fecha de vencimiento del lote, en caso el producto no es perecedero se deja en blanco.	Fecha, formato dd/mm/yyyy. Ej.: 24/11/2012.	No
-Barra	Es el código de barra del producto y se utiliza para identificar el producto ya sea utilizando el teclado o un lector de barras.	Alfanumérico. Ej.: 123, 21AB323C.	Si
-Buscar	Se utiliza para buscar al producto por su nombre en caso no se cuente con un código de barra. Los productos desactivados no aparecerán en la lista de resultados.	Alfanumérico. Ej.: Aspirina, Leche.	N/A
-
-
-Modo de Empleo
-Para navegar la barra de ingreso se utiliza la tecla Tab o en algunos campos la tecla Enter, un indicio de esto es que el fondo del campo se torna de color amarillo. La tecla Enter no funciona en todos los campos de la misma manera, en los campo "Cantidad", "Precio" y "Vence" simplemente avanza hacia al siguiente campo. En el campo "Barra" no acepta la tecla Enter si no hasta que tenga un valor ingresado cambiando también el color de texto del botón "Agregar" (al final de la barra, ver figura 2) indicando que al presionar Enter el botón se presionara automáticamente, le dará ingreso al lote y posicionara el cursor en el campo “Cantidad” listo para ingresar otro lote.
-
- Figura 2.
-
-Si en caso no se cuenta con el código de barra, se avanza al campo “Buscar” utilizando la tecla Tab y se ingresa el nombre del producto. El buscador desplegara una lista de resultados, se selecciona el resultado deseado ya sea utilizando el mouse o el teclado y el código de barra del producto seleccionado aparecerá en el campo “Barra” listo para presionar la tecla Enter. Ver figura 3 y 4.
-
- Figura 3.
-
- Figura 4.
-
-La intención del uso de la barra de ingresos es maximizar el uso del teclado para una mayor rapidez a la hora de ingresar demasiados productos. Vale mencionar que la barra de ingreso no reconocerá a los productos que se encuentran desactivados.
-
-
+	<h4>Introducción</h4>
+	<p>El sistema trabaja las existencias de los productos en lotes. Puede haber 20 existencias de un solo producto pero puede que estén divididos en 2 lotes, un lote de 5 y otro de 15. Los lotes se difieren entre sí en la fecha de vencimiento  y el precio. Si 2 existencias tienen la misma fecha de vencimiento y el mismo precio en el mismo documento estas pertenecen al mismo lote.
+	Para ingresar producto o un lote en documentos como Recibos o Vales de Entrada, se utiliza la barra de ingreso que se encuentra en medio del formulario del documento como se muestra a continuación en la figura 1:</p>
+	<div class="img_example">
+		<img alt="entry_toolbar" src="images/entry_toolbar.jpg" /><br />
+		<span>Figura 1.</span>
+	</div>
+	<h4>Especificaciones</h4>
+	<p>A continuación un cuadro con las especificaciones de cada campo de la barra:</p>
+	<table class="specifications">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Descripción</th>
+				<th>Tipo</th>
+				<th>Requerido</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Cantidad</td>
+				<td>Indica cuantas existencias va tener el lote.</td>
+				<td>Numérico entero mayor a cero. Ej.: 1, 10, 99.</td>
+				<td>Si</td>
+			</tr>
+			<tr>
+				<td>Precio</td>
+				<td>Indica el precio público del producto del lote. Si este precio es mayor al precio actual del sistema, el sistema automáticamente actualizara el precio del producto a la hora de guardar el documento.</td>
+				<td>Numérico real mayor a cero. Ej.: 1.00, 10.15, 99.99.</td>
+				<td>Si</td>
+			</tr>
+			<tr>
+				<td>Vence</td>
+				<td>Es la fecha de vencimiento del lote, en caso el producto no es perecedero se deja en blanco.</td>
+				<td>Fecha, formato dd/mm/yyyy. Ej.: 24/11/2012.</td>
+				<td>No</td>
+			</tr>
+			<tr>
+				<td>Barra</td>
+				<td>Es el código de barra del producto y se utiliza para identificar el producto ya sea utilizando el teclado o un lector de barras.</td>
+				<td>Alfanumérico. Ej.: 123, 21AB323C.</td>
+				<td>Si</td>
+			</tr>
+			<tr>
+				<td>Buscar</td>
+				<td>Se utiliza para buscar al producto por su nombre en caso no se cuente con un código de barra. Los productos desactivados no aparecerán en la lista de resultados.</td>
+				<td>Alfanumérico. Ej.: Aspirina, Leche.</td>
+				<td>N/A</td>
+			</tr>
+		</tbody>
+	</table>
+	<h4>Modo de Empleo</h4>
+	<p>Para navegar la barra de ingreso se utiliza la tecla Tab o en algunos campos la tecla Enter, un indicio de esto es que el fondo del campo se torna de color amarillo. La tecla Enter no funciona en todos los campos de la misma manera, en los campo "Cantidad", "Precio" y "Vence" simplemente avanza hacia al siguiente campo. En el campo "Barra" no acepta la tecla Enter si no hasta que tenga un valor ingresado cambiando también el color de texto del botón "Agregar" (al final de la barra, ver figura 2) indicando que al presionar Enter el botón se presionara automáticamente, le dará ingreso al lote y posicionara el cursor en el campo “Cantidad” listo para ingresar otro lote.</p>
+	<div class="img_example">
+		<img alt="entry_toolbar" src="images/entry_toolbar_ready.jpg" /><br />
+		<span>Figura 2.</span>
+	</div>
+	<p>Si en caso no se cuenta con el código de barra, se avanza al campo “Buscar” utilizando la tecla Tab y se ingresa el nombre del producto. El buscador desplegara una lista de resultados, se selecciona el resultado deseado ya sea utilizando el mouse o el teclado y el código de barra del producto seleccionado aparecerá en el campo “Barra” listo para presionar la tecla Enter. Ver figura 3 y 4.</p>
+	<div class="img_example">
+		<img alt="entry_toolbar" src="images/entry_toolbar_search.jpg" /><br />
+		<span>Figura 3.</span>
+	</div>
+	<div class="img_example">
+		<img alt="entry_toolbar" src="images/entry_toolbar_search_ready.jpg" /><br />
+		<span>Figura 4.</span>
+	</div>
+	<p>La intención del uso de la barra de ingresos es maximizar el uso del teclado para una mayor rapidez a la hora de ingresar demasiados productos. Vale mencionar que la barra de ingreso no reconocerá a los productos que se encuentran desactivados.</p>
 </body>
 </html>

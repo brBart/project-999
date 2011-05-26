@@ -38,3 +38,24 @@ h5 {
 h6 {
 	font-size: 0.83em;
 }
+
+div.img_example {
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+
+table.specifications {
+	margin: 3em;
+	border-style: solid;
+	border-width: 0.1em;
+}
+
+div.img_example span {
+	font-size: 0.83em;
+	font-style: italic;
+}
+
+table.specifications td {
+	border-style: solid;
+	border-width: 0.1em;
+}
