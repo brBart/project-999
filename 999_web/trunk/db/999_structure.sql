@@ -5390,7 +5390,7 @@ CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ledger_dates_get`(IN inSt
 BEGIN
 
   SELECT DISTINCT DATE_FORMAT(inv.date, '%Y-%m-%d') AS date, DATE_FORMAT(inv.date, '%d/%m/%Y') AS formatted_date FROM invoice inv
-      WHERE inv.date BETWEEN inStartDate AND inEndDate
+      WHERE DATE_FORMAT(inv.date, '%Y-%m-%d') >= inStartDate AND DATE_FORMAT(inv.date, '%Y-%m-%d') <= inEndDate
     GROUP BY inv.date
     ORDER BY inv.date;
 
