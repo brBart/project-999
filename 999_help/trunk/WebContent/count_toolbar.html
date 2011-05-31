@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Documentaci&oacute;n BOBS Retail</title>
+<link href="styles/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Barra de Conteo</h1>
+<h4>Introducción</h4>
+<p>La barra de conteo es utilizada dentro del formulario de un Conteo (léase manual de inventariados) para ingresar los detalles, en este caso son conteos físicos de ciertos productos. Ver figura 1.</p>
+
+ Figura 1.
+
+Especificaciones
+A continuación un cuadro con las especificaciones de cada campo de la barra:
+Nombre	Descripción	Tipo	Requerido
+Cantidad	Indica cuantas existencias fueron contadas.	Numérico entero mayor a cero. Ej.: 1, 10, 99.	Si
+Barra	Es el código de barra del producto y se utiliza para identificar el producto ya sea utilizando el teclado o un lector de barras.	Alfanumérico. Ej.: 123, 21AB323C.	Si
+Buscar	Se utiliza para buscar al producto por su nombre en caso no se cuente con un código de barra. Los productos desactivados no aparecerán en la lista de resultados.	Alfanumérico. Ej.: Aspirina, Leche.	N/A
+
+Modo de Uso (manual)
+Su navegación son con las teclas Tab o Enter dependiendo del campo, un indicio de esto es que el fondo del campo se torna de color amarillo. La tecla Enter no funciona en todos los campos de la misma manera, en el campo "Cantidad" simplemente avanza hacia al siguiente campo. En el campo "Barra" no acepta la tecla Enter si no hasta que tenga un valor ingresado cambiando también el color de texto del botón "Agregar" (al final de la barra, ver figura 2) indicando que al presionar Enter el botón se presionara automáticamente, le dará ingreso al detalle y posicionara el cursor en el campo “Barra” listo para ingresar el siguiente detalle. No está de más mencionar que el campo cantidad siempre se mantiene con una cantidad igual 1 con el propósito de que si se utiliza el lector de barras se podrá ingresar producto por producto leyendo su código sin utilizar el teclado ni el mouse.
+
+ Figura 2.
+
+Si en caso no se cuenta con el código de barra, se avanza al campo “Buscar” utilizando la tecla Tab y se ingresa el nombre del producto. El buscador desplegara una lista de resultados, se selecciona el resultado deseado ya sea utilizando el mouse o el teclado y el código de barra del producto seleccionado aparecerá en el campo “Barra” listo para presionar la tecla Enter. Ver figura 3 y 4.
+
+ Figura 3.
+
+ Figura 4.
+
+Modo de Uso (recolector de barras)
+Si se cuenta con un aparato recolector de barras, el archivo de texto con todos los productos recolectados se puede subir al sistema a través de la barra de conteo presionando el botón “Subir archivo…”. Ver figura 5.
+
+ Figura 5.
+
+El archivo a subir debe de estar en formato cvs (comma separated values o valores separados por comas) y con extensión .txt con 2 valores por línea; el 1ero es el código de barra y el 2do la cantidad recolectada. Ej.: Un archivo productos.txt con el siguiente contenido:
+32233,10
+15223,20
+Significa que el producto con código de barra 32233 se contaron 10 existencias y del producto con código de barra 15223 se contaron 20.
+Después de presionar el botón “Subir archivo…” el dialogo para subir el archivo de texto aparecerá en pantalla. Ver figura 6.
+
+ Figura 6.
+
+En el dialogo se ingresa la ruta donde se encuentra el archivo de texto actualmente o se presiona el botón “Examinar…” para abrir el dialogo de explorador de archivos para buscar y seleccionar el archivo. Ver figura 7.
+
+ Figura 7.
+
+Una vez ingresado la ruta o seleccionado el archivo utilizando el explorador de archivos se presiona el botón “Subir archivo” para mandarlo al servidor. Ver figura 8.
+
+ Figura 8.
+
+Si no se encuentra ningún error en el archivo, el sistema creara automáticamente cada detalle por todas las líneas encontradas y las ingresara en el Conteo.
+
+</body>
+</html>
