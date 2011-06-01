@@ -55,6 +55,10 @@ define('CONFIG_DIR', SITE_ROOT . '/include/configs');
  */
 define('PLUGINS_DIR', SITE_ROOT . '/smarty_plugins');
 /**
+ * Help dir url.
+ */
+define('HELP_URL', 'http://localhost/999_help/');
+/**
  * Indicate where all the system libraries reside.
  */
 set_include_path(get_include_path() . ';' . LIBS_999 . ';' . SITE_ROOT);
