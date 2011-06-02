@@ -28,6 +28,7 @@ Registry::Registry(QObject *parent) : QObject(parent)
 {
 	QString serverUrl;
 	QString xslUrl;
+	QString helpUrl;
 	QString printerName;
 	bool isTMUPrinter = IS_TMU_PRINTER;
 
@@ -55,6 +56,11 @@ Registry::Registry(QObject *parent) : QObject(parent)
 					values[0] = ((values[0] == "localhost" || values[0] == "") ?
 								"127.0.0.1" : values[0]);
 					xslUrl = values.join("/");
+				} else if (params[0].trimmed() == "help_address") {
+					QStringList values = params[1].trimmed().split("/");
+					values[0] = ((values[0] == "localhost" || values[0] == "") ?
+								"127.0.0.1" : values[0]);
+					helpUrl = values.join("/");
 				} else if (params[0].trimmed() == "printer_name") {
 					printerName = params[1].trimmed();
 				} else if (params[0].trimmed() == "is_tmu_printer") {
@@ -68,9 +74,11 @@ Registry::Registry(QObject *parent) : QObject(parent)
 
 	serverUrl = (serverUrl != "") ? serverUrl : SERVER_URL;
 	xslUrl = (xslUrl != "") ? xslUrl : XSL_URL;
+	helpUrl = (helpUrl != "") ? helpUrl : HELP_URL;
 
 	m_ServerUrl = new QUrl("http://" + serverUrl);
 	m_XslUrl = new QUrl("http://" + xslUrl);
+	m_HelpUrl = new QUrl("http://" + helpUrl);
 	m_PrinterName = (printerName != "") ? printerName : PRINTER_NAME;
 	m_IsTMUPrinter = isTMUPrinter;
 }
@@ -82,6 +90,7 @@ Registry::~Registry()
 {
 	delete m_ServerUrl;
 	delete m_XslUrl;
+	delete m_HelpUrl;
 }
 
 /**
@@ -109,6 +118,14 @@ QUrl* Registry::serverUrl()
 QUrl* Registry::xslUrl()
 {
 	return m_XslUrl;
+}
+
+/**
+ * Returns the QUrl with the system's help directory address.
+ */
+QUrl* Registry::helpUrl()
+{
+	return m_HelpUrl;
 }
 
 /**

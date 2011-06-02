@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QUrl>
 #include <QCloseEvent>
+#include <QDesktopServices>
 #include "registry.h"
 #include "section/main_section.h"
 #include "cash_register_dialog/cash_register_dialog.h"
@@ -182,6 +183,14 @@ void MainWindow::consultProduct()
 			Qt::WindowTitleHint);
 
 	dialog.exec();
+}
+
+/**
+ * Opens the default browser with the system's help url.
+ */
+void MainWindow::openHelp()
+{
+	QDesktopServices::openUrl(*(Registry::instance()->helpUrl()));
 }
 
 /**
