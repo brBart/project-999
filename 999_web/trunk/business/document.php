@@ -1097,6 +1097,7 @@ class Correlative extends Persist{
 	public function setResolutionDate($date){
 		$this->_mResolutionDate = $date;
 		Date::validateDate($date, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
+		$this->verifyResolutionDate($date);
 	}
 	
 	/**
@@ -1169,7 +1170,6 @@ class Correlative extends Persist{
 	public function save(){
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->validateMainProperties();
-			$this->validateRangeNumbers($this->_mInitialNumber, $this->_mFinalNumber);
 			
 			// Verify if there are records in the database.
 			$no_records = CorrelativeDAM::isEmpty();
@@ -1251,11 +1251,13 @@ class Correlative extends Persist{
 				'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.', 'resolution_number');
 		Date::validateDate($this->_mResolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.',
 				'resolution_date');
+		$this->verifyResolutionDate($this->_mResolutionDate);
 		String::validateString($this->_mRegime, 'R&eacute;gimen inv&aacute;lido.', 'regime');
 		Number::validatePositiveNumber($this->_mInitialNumber, 'N&uacute;mero inicial inv&aacute;lido.',
 				'initial_number');
 		Number::validatePositiveNumber($this->_mFinalNumber, 'N&uacute;mero final inv&aacute;lido.',
 				'final_number');
+		$this->validateRangeNumbers($this->_mInitialNumber, $this->_mFinalNumber);
 	}
 	
 	/**
@@ -1296,6 +1298,19 @@ class Correlative extends Persist{
 	private function verifyResolutionNumber($resultionNumber){
 		if(CorrelativeDAM::existsResolutionNumber($resultionNumber))
 			throw new ValidateException('N&uacute;mero de resoluci&oacute;n ya existe.', 'resolution_number');
+	}
+	
+	/**
+	 * Checks if the date provided has not passed the 10 days availble according to SAT norms.
+	 * 
+	 * @param string $date
+	 */
+	private function verifyResolutionDate($date){
+		$dateObj = new DateTime(Date::dbFormat($date));
+		$dateObj->modify('+10 day');
+		
+		if(Date::compareDates($dateObj->format('d/m/Y'), date('d/m/Y')))
+			throw new ValidateException('Los 10 dias de vigencia para registrar correlativo ya caducaron.', 'resolution_date');
 	}
 }
 
