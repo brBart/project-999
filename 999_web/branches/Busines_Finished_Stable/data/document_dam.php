@@ -144,6 +144,23 @@ class CorrelativeDAM{
 	}
 	
 	/**
+	 * Returns true if the resolution number exists in the database.
+	 *
+	 * @param string $resolutionNumber
+	 * @return boolean
+	 */
+	static public function existsResolutionNumber($resolutionNumber){
+		switch($resolutionNumber){
+			case '123':
+				return true;
+				break;
+				
+			default:
+				return false;
+		}
+	}
+	
+	/**
 	 * Returns true if there are no correlatives in the database.
 	 *
 	 * @return boolean
