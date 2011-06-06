@@ -1086,6 +1086,7 @@ class Correlative extends Persist{
 	public function setResolutionNumber($number){
 		$this->_mResolutionNumber = $number;
 		String::validateString($number, 'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
+		$this->verifyResolutionNumber($number);
 	}
 	
 	/**
@@ -1281,6 +1282,18 @@ class Correlative extends Persist{
 		if(CorrelativeDAM::exists($serialNumber, $initialNumber, $finalNumber))
 			throw new ValidateException('N&uacute;mero de serie con ese correlativo ya existe o se traslapa.',
 					'serial_number');
+	}
+	
+	/**
+	 * Verifies if the resolution number already exists in the database.
+	 * 
+	 * Throws an exception if it does.
+	 * @param string $resolutionNumber
+	 * @throws Exception
+	 */
+	private function verifyResolutionNumber($resultionNumber){
+		if(CorrelativeDAM::existsResolutionNumber($resultionNumber))
+			throw new ValidateException('N&uacute;mero de resoluci&oacute;n ya existe.', 'resolution_number');
 	}
 }
 

@@ -172,6 +172,18 @@ class CorrelativeDAM{
 	}
 	
 	/**
+	 * Verifies if the resolution number already exists in the database.
+	 *
+	 * @param string $resolutionNumber
+	 * @return boolean
+	 */
+	static public function existsResolutionNumber($resolutionNumber){
+		$sql = 'CALL correlative_resolution_number_exists(:resolution_number)';
+		$params = array(':resolution_number' => $resolutionNumber);
+		return (boolean)DatabaseHandler::getOne($sql, $params);
+	}
+	
+	/**
 	 * Returns true if there are no correlatives in the database.
 	 *
 	 * @return boolean
