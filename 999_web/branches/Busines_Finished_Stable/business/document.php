@@ -1173,9 +1173,11 @@ class Correlative extends Persist{
 			
 			// Verify if there are records in the database.
 			$no_records = CorrelativeDAM::isEmpty();
-			if(!$no_records)
+			if(!$no_records){
+				$this->verifyResolutionNumber($this->_mResolutionNumber);
 				$this->verifySerialNumber($this->_mSerialNumber,
 						$this->_mInitialNumber, $this->_mFinalNumber);
+			}
 				
 			$this->_mId = CorrelativeDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
