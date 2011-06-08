@@ -719,4 +719,25 @@ class WithdrawIADAM{
 		return 123;
 	}
 }
+
+
+/**
+ * Utility class to register the invoice transactions to the database.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class InvoiceTransactionLogDAM{
+	/**
+	 * Register the event in the database.
+	 *
+	 * @param string $serial_number
+	 * @param integer $number
+	 * @param string $dateTime
+	 * @param float $total
+	 * @param integer $state
+	 */
+	static public function insert($serial_number, $number, $dateTime, $total, $state){
+		// Code here...
+	}
+}
 ?>

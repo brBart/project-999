@@ -1714,6 +1714,10 @@ class Invoice extends Document{
 				$detail->save($this, $i++);
 			if(!is_null($this->_mDiscount))
 				$this->_mDiscount->save();
+				
+			InvoiceTransactionLog::write($this->getCorrelative()->getSerialNumber(), $this->getNumber(),
+					$this->getDateTime(), $this->getTotal(), InvoiceTransactionLog::CREATED);
+				
 			return $this->_mId;
 		}
 	}
@@ -1824,7 +1828,10 @@ class Invoice extends Document{
 	 * @param UserAccount $user
 	 */
 	protected function updateToCancelled(UserAccount $user){
-		InvoiceDAM::cancel($this, $user, date('d/m/Y H:i:s'));
+		$date = date('d/m/Y H:i:s');
+		InvoiceDAM::cancel($this, $user, $date);
+		InvoiceTransactionLog::write($this->getCorrelative()->getSerialNumber(), $this->getNumber(),
+				$date, $this->getTotal(), InvoiceTransactionLog::CANCELLED);
 	}
 }
 
@@ -2631,6 +2638,41 @@ class WithdrawIA extends AdjustmentDocument{
 	 */
 	protected function updateToCancelled(UserAccount $user){
 		WithdrawIADAM::cancel($this, $user, date('d/m/Y H:i:s'));
+	}
+}
+
+
+/**
+ * Utility class to register the invoice transactions.
+ * @package Product
+ * @author Roberto Oliveros
+ */
+class InvoiceTransactionLog{
+	/**
+	 * State type.
+	 * 
+	 * Indicates in which state the document is.
+	 */
+	const CREATED = 'EMITIDO';
+	
+	/**
+	 * State type.
+	 * 
+	 * Indicates in which state the document is.
+	 */
+	const CANCELLED = 'ANULADO';
+	
+	/**
+	 * Register the event in the database.
+	 *
+	 * @param string $serial_number
+	 * @param integer $number
+	 * @param string $dateTime
+	 * @param float $total
+	 * @param integer $state
+	 */
+	static public function write($serial_number, $number, $dateTime, $total, $state){
+		InvoiceTransactionLogDAM::insert($serial_number, $number, $dateTime, $total, $state);
 	}
 }
 ?>
