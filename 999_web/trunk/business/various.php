@@ -295,13 +295,13 @@ class DiscountList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
 			
-		return DiscountListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
+		return DiscountListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -325,13 +325,13 @@ class CancelDocumentList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
 			
-		return CancelDocumentListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
+		return CancelDocumentListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -355,13 +355,13 @@ class CancelCashDocumentList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
 			
-		return CancelCashDocumentListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
+		return CancelCashDocumentListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
 	}
 }
 
@@ -385,13 +385,13 @@ class SalesRankingList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($firstDate, $lastDate, &$total_pages = 0, &$total_items = 0, $page = 0){
+	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
 			
-		return SalesRankingListDAM::getList($firstDate, $lastDate, $total_pages, $total_items, $page);
+		return SalesRankingListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
 	}
 }
 
