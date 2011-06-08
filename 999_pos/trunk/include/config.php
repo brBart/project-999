@@ -99,6 +99,10 @@ define('DB_DATABASE', '999_store');
  */
 define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
 /**
+ * Correlative limit percentage for create a usage warning.
+ */
+define('CORRELATIVE_CONSUME_WARNING', 75);
+/**
  * Title of the inventory module.
  */
 define('INVENTORY_TITLE', 'Inventario');

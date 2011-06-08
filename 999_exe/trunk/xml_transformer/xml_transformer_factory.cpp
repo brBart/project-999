@@ -27,6 +27,7 @@
 #include "available_cash_receipt_list_xml_transformer.h"
 #include "bank_list_xml_transformer.h"
 #include "deposit_list_xml_transformer.h"
+#include "correlative_warning_xml_transformer.h"
 
 /**
  * @class XmlTransformerFactory
@@ -97,6 +98,8 @@ XmlTransformer* XmlTransformerFactory::create(QString name)
 		return new BankListXmlTransformer();
 	} else if (name == "deposit_list") {
 		return new DepositListXmlTransformer();
+	} else if (name == "correlative_warning") {
+			return new CorrelativeWarningXmlTransformer();
 	} else {
 		return 0;
 	}
