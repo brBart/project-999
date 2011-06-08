@@ -869,4 +869,28 @@ class WithdrawIADAM{
 		return (int)DatabaseHandler::getOne($sql);
 	}
 }
+
+
+/**
+ * Utility class for logging in the database the invoice transactions.
+ * @package ProductDAM
+ * @author Roberto Oliveros
+ */
+class InvoiceTransactionLogDAM{
+	/**
+	 * Logs the event in the database.
+	 *
+	 * @param string $serial_number
+	 * @param integer $number
+	 * @param string $dateTime
+	 * @param float $total
+	 * @param integer $state
+	 */
+	static public function insert($serial_number, $number, $dateTime, $total, $state){
+		$sql = 'CALL invoice_transaction_log_insert(:serial_number, :number, :date, :total, :state)';
+		$params = array(':serial_number' => $serial_number, ':number' => $number,
+				':date' => Date::dbDateTimeFormat($dateTime), ':total' => $total, ':state' => $state);
+		DatabaseHandler::execute($sql, $params);
+	}
+}
 ?>
