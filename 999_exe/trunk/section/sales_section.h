@@ -66,7 +66,6 @@ private:
 	void setDiscountInvoice(QString discountKey);
 	void showCashReceipt();
 	void printInvoice(QString id);
-	void checkCorrelativeWarning();
 };
 
 #endif /* SALES_SECTION_H_ */

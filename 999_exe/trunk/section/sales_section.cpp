@@ -718,9 +718,6 @@ void SalesSection::showCashReceipt()
 			m_CashReceiptKey = params->value("key");
 			m_Console->reset();
 
-			// Check the correlative status.
-			checkCorrelativeWarning();
-
 		} else {
 			m_Console->displayError(errorMsg);
 			errorFree = false;
@@ -772,32 +769,4 @@ void SalesSection::printInvoice(QString id)
 	QPrinter printer;
 	printer.setPrinterName(Registry::instance()->printerName());
 	webView.print(&printer);
-}
-
-/**
- * Fetchs for the correlative status.
- */
-void SalesSection::checkCorrelativeWarning()
-{
-	QUrl url(*m_ServerUrl);
-	url.addQueryItem("cmd", "get_correlative_warning");
-	url.addQueryItem("type", "xml");
-
-	QString content = m_Request->get(url);
-
-	XmlTransformer *transformer = XmlTransformerFactory::instance()
-			->create("correlative_warning");
-
-	QString errorMsg;
-	if (m_Handler->handle(content,
-			transformer, &errorMsg) == XmlResponseHandler::Success) {
-
-		QList<QMap<QString, QString>*> list = transformer->content();
-		QMap<QString, QString> *params = list[0];
-
-		if (params->value("status") == "1")
-			QMessageBox::warning(this, "Correlativo", params->value("message"));
-	}
-
-	delete transformer;
 }

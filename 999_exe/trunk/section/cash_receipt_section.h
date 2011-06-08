@@ -77,6 +77,7 @@ private:
 	QString fetchVouchersData();
 	void updateVouchers(QString content);
 	void updateVouchersTotal(QString content);
+	void checkCorrelativeWarning();
 };
 
 #endif /* CASH_RECEIPT_SECTION_H_ */

@@ -76,6 +76,9 @@ void CashReceiptSection::loadFinished(bool ok)
 	m_Console->setFrame(ui.webView->page()->mainFrame());
 
 	updateVouchers(fetchVouchersData());
+
+	// Check the correlative status.
+	checkCorrelativeWarning();
 }
 
 /**
@@ -421,6 +424,34 @@ void CashReceiptSection::updateVouchersTotal(QString content)
 		element.setInnerXml(total->value("total"));
 	} else {
 		m_Console->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
+ * Fetches for the correlative status.
+ */
+void CashReceiptSection::checkCorrelativeWarning()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "get_correlative_warning");
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()
+			->create("correlative_warning");
+
+	QString errorMsg;
+	if (m_Handler->handle(content,
+			transformer, &errorMsg) == XmlResponseHandler::Success) {
+
+		QList<QMap<QString, QString>*> list = transformer->content();
+		QMap<QString, QString> *params = list[0];
+
+		if (params->value("status") == "1")
+			m_Console->displayFailure(params->value("message"), "correlative");
 	}
 
 	delete transformer;
