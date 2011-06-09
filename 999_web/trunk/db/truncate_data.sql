@@ -24,6 +24,7 @@ TRUNCATE TABLE invoice;
 TRUNCATE TABLE invoice_bonus;
 TRUNCATE TABLE invoice_cancelled;
 TRUNCATE TABLE invoice_lot;
+TRUNCATE TABLE invoice_transaction_log;
 TRUNCATE TABLE lot;
 TRUNCATE TABLE manufacturer;
 TRUNCATE TABLE payment_card_brand;

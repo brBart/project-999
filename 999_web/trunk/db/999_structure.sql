@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-06-2011 a las 10:44:33
+-- Tiempo de generación: 08-06-2011 a las 18:37:44
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -460,6 +460,23 @@ CREATE TABLE IF NOT EXISTS `invoice_lot` (
   PRIMARY KEY  (`invoice_id`,`lot_id`),
   UNIQUE KEY `unique_invoice_id_number` (`invoice_id`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `invoice_transaction_log`
+--
+
+DROP TABLE IF EXISTS `invoice_transaction_log`;
+CREATE TABLE IF NOT EXISTS `invoice_transaction_log` (
+  `entry_id` int(11) NOT NULL auto_increment,
+  `serial_number` varchar(10) NOT NULL,
+  `number` bigint(20) NOT NULL,
+  `date` date NOT NULL,
+  `total` decimal(13,2) NOT NULL,
+  `state` varchar(10) NOT NULL,
+  PRIMARY KEY  (`entry_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -3217,7 +3234,7 @@ BEGIN
 
   SELECT invoice_id AS id, serial_number, number  FROM invoice inv INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
-    WHERE cash_register_id = inCashRegisterId;
+    WHERE cash_register_id = inCashRegisterId ORDER BY invoice_id;
 
 END$$
 
@@ -3272,6 +3289,18 @@ BEGIN
 
 
   EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `invoice_transaction_log_insert`$$
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_transaction_log_insert`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT, IN inDate DATE,
+
+  IN inTotal DECIMAL(13, 2), IN inState VARCHAR(10))
+BEGIN
+
+  INSERT INTO invoice_transaction_log (serial_number, number, date, total, state)
+
+    VALUES (inSerialNumber, inNumber, inDate, inTotal, inState);
 
 END$$
 
