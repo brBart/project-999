@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-06-2011 a las 18:37:44
+-- Tiempo de generación: 09-06-2011 a las 12:02:56
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -696,6 +696,25 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `resolution_log`
+--
+
+DROP TABLE IF EXISTS `resolution_log`;
+CREATE TABLE IF NOT EXISTS `resolution_log` (
+  `entry_id` int(11) NOT NULL auto_increment,
+  `resolution_number` varchar(50) NOT NULL,
+  `resolution_date` date NOT NULL,
+  `serial_number` varchar(10) NOT NULL,
+  `initial_number` bigint(20) NOT NULL,
+  `final_number` bigint(20) NOT NULL,
+  `created_date` date NOT NULL,
+  `document_type` varchar(10) NOT NULL,
+  PRIMARY KEY  (`entry_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -5323,6 +5342,16 @@ BEGIN
       res.quantity FROM reserve res INNER JOIN lot ON res.lot_id = lot.lot_id
 
     WHERE lot.product_id = inProductId;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `resolution_log_insert`$$
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `resolution_log_insert`(IN inResolutionNumber VARCHAR(50), IN inResolutionDate DATE, IN inSerialNumber VARCHAR(10), IN inInitialNumber BIGINT, IN inFinalNumber BIGINT, IN inCreatedDate DATE, IN inDocumentType VARCHAR(10))
+BEGIN
+
+  INSERT INTO resolution_log (resolution_number, resolution_date, serial_number, initial_number, final_number, created_date, document_type)
+
+    VALUES (inResolutionNumber, inResolutionDate, inSerialNumber, inInitialNumber, inFinalNumber, inCreatedDate, inDocumentType);
 
 END$$
 

@@ -38,6 +38,7 @@ TRUNCATE TABLE receipt;
 TRUNCATE TABLE receipt_cancelled;
 TRUNCATE TABLE receipt_lot;
 TRUNCATE TABLE reserve;
+TRUNCATE TABLE resolution_log;
 TRUNCATE TABLE role;
 TRUNCATE TABLE role_subject_action;
 TRUNCATE TABLE root;
