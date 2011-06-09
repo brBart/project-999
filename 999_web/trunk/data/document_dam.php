@@ -873,7 +873,7 @@ class WithdrawIADAM{
 
 /**
  * Utility class for logging in the database the invoice transactions.
- * @package ProductDAM
+ * @package DocumentDAM
  * @author Roberto Oliveros
  */
 class InvoiceTransactionLogDAM{
@@ -890,6 +890,30 @@ class InvoiceTransactionLogDAM{
 		$sql = 'CALL invoice_transaction_log_insert(:serial_number, :number, :date, :total, :state)';
 		$params = array(':serial_number' => $serial_number, ':number' => $number,
 				':date' => Date::dbDateTimeFormat($dateTime), ':total' => $total, ':state' => $state);
+		DatabaseHandler::execute($sql, $params);
+	}
+}
+
+
+/**
+ * Utility class for logging in the database the resolutions activation.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class ResolutionLogDAM{
+	/**
+	 * Logs the event in the database.
+	 *
+	 * @param Correlative $correlative
+	 * @param string $dateTime
+	 * @param string $documentType
+	 */
+	static public function insert(Correlative $correlative, $dateTime, $documentType){
+		$sql = 'CALL resolution_log_insert(:resolution_number, :resolution_date, :serial_number, :initial_number, :final_number,' .
+				':created_date, :document_type)';
+		$params = array(':resolution_number' => $correlative->getResolutionNumber(), ':resolution_date' => Date::dbFormat($correlative->getResolutionDate()),
+				':serial_number' => $correlative->getSerialNumber(), ':initial_number' => $correlative->getInitialNumber(),
+				':final_number' => $correlative->getFinalNumber(), ':created_date' => Date::dbDateTimeFormat($dateTime), ':document_type' => $documentType);
 		DatabaseHandler::execute($sql, $params);
 	}
 }
