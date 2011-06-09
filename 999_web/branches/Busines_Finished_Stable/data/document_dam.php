@@ -723,7 +723,7 @@ class WithdrawIADAM{
 
 /**
  * Utility class to register the invoice transactions to the database.
- * @package Product
+ * @package DocumentDAM
  * @author Roberto Oliveros
  */
 class InvoiceTransactionLogDAM{
@@ -737,6 +737,25 @@ class InvoiceTransactionLogDAM{
 	 * @param integer $state
 	 */
 	static public function insert($serial_number, $number, $dateTime, $total, $state){
+		// Code here...
+	}
+}
+
+
+/**
+ * Utility class to register the correlatives activation in the database.
+ * @package DocumentDAM
+ * @author Roberto Oliveros
+ */
+class ResolutionLogDAM{
+	/**
+	 * Register the event in the database.
+	 *
+	 * @param Correlative $correlative
+	 * @param string $dateTime
+	 * @param string $documentType
+	 */
+	static public function insert(Correlative $correlative, $dateTime, $documentType){
 		// Code here...
 	}
 }

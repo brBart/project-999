@@ -1185,6 +1185,8 @@ class Correlative extends Persist{
 			// If there were no records, make this one the default.
 			if($no_records)
 				self::makeDefault($this);
+				
+			ResolutionLog::write($this);
 			
 			// For presentation purposes.
 			return $this->_mId;
@@ -2644,7 +2646,7 @@ class WithdrawIA extends AdjustmentDocument{
 
 /**
  * Utility class to register the invoice transactions.
- * @package Product
+ * @package Document
  * @author Roberto Oliveros
  */
 class InvoiceTransactionLog{
@@ -2673,6 +2675,30 @@ class InvoiceTransactionLog{
 	 */
 	static public function write($serial_number, $number, $dateTime, $total, $state){
 		InvoiceTransactionLogDAM::insert($serial_number, $number, $dateTime, $total, $state);
+	}
+}
+
+
+/**
+ * Utility class to register the correlatives activation.
+ * @package Document
+ * @author Roberto Oliveros
+ */
+class ResolutionLog{
+	/**
+	 * Document type.
+	 * 
+	 * Indicates which type of document the resolution belongs to.
+	 */
+	const INVOICE = 'FACTURA';
+	
+	/**
+	 * Register the event in the database.
+	 *
+	 * @param Correlative $correlative
+	 */
+	static public function write(Correlative $correlative){
+		ResolutionLogDAM::insert($correlative, date('d/m/Y H:i:s'), self::INVOICE);
 	}
 }
 ?>
