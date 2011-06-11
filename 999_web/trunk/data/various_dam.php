@@ -563,4 +563,42 @@ class InvoiceTransactionListDAM{
 		return DatabaseHandler::getAll($sql, $params);
 	}
 }
+
+
+/**
+ * Utility class for accessing database information regarding the correlative resolution log.
+ * @package VariousDAM
+ * @author Roberto Oliveros
+ */
+class ResolutionListDAM{
+	/**
+	 * Returns an array with data regarding correlative resolutions that ocurred between the provided dates.
+	 *
+	 * The array's fields are resolution_number, resolution_date, serial_number, initial_number, final_number,
+	 * created_date and document_type. If no page argument or cero is passed all the details are returned. The
+	 * totalPages and totalItems arguments are necessary to return their respective values.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL resolution_log_count(:first_date, :last_date)';
+		$params = array(':first_date' => Date::dbFormat($firstDate), ':last_date' => Date::dbFormat($lastDate));
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL resolution_log_get(:first_date, :last_date, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+}
 ?>
