@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-06-2011 a las 10:47:09
+-- Tiempo de generación: 11-06-2011 a las 16:52:27
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -714,7 +714,7 @@ CREATE TABLE IF NOT EXISTS `resolution_log` (
   `created_date` date NOT NULL,
   `document_type` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -5377,6 +5377,43 @@ BEGIN
       res.quantity FROM reserve res INNER JOIN lot ON res.lot_id = lot.lot_id
 
     WHERE lot.product_id = inProductId;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `resolution_log_count`$$
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `resolution_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+    SELECT SUM(count_rows) FROM
+
+       (SELECT COUNT(*) AS count_rows FROM resolution_log WHERE created_date BETWEEN inFirstDate AND inLastDate) AS resolution_log;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `resolution_log_get`$$
+CREATE DEFINER=`999_user`@`localhost` PROCEDURE `resolution_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT resolution_number, DATE_FORMAT(resolution_date, '%d/%m/%Y') AS resolution_date, serial_number, initial_number, final_number,
+
+       DATE_FORMAT(created_date, '%d/%m/%Y') AS created_date, document_type FROM resolution_log
+
+       WHERE created_date BETWEEN ? AND ? ORDER BY entry_id
+
+      LIMIT ?, ?";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
 
 END$$
 
