@@ -622,4 +622,35 @@ class InvoiceTransactionList{
 		return InvoiceTransactionListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
 	}
 }
+
+
+/**
+ * Utility class for obtaining the history of correlative's resolutions.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class ResolutionList{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are resolution_number, resolution_date, serial_number, initial_number, final_number,
+	 * created_date and document_type. If no page argument or cero is passed all the details are returned.
+	 * The total_pages and total_items arguments are necessary to return their respective values.
+	 * Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return ResolutionListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
+	}
+}
 ?>
