@@ -349,4 +349,31 @@ class SalesLedgerDAM{
 		return 'file.txt';
 	}
 }
+
+
+/**
+ * Utility class for obtaining the history of invoice transactions.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class InvoiceTransactionListDAM{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are serail_number, number, date, total and state.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		$totalPages = 1;
+		$totalItems = 2;
+		return array(array('one' => 'uno'), array('two' => 'dos'));
+	}
+}
 ?>
