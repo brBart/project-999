@@ -473,7 +473,12 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (2, 39, 6, 1),
 (3, 39, 6, 0),
 (4, 39, 6, 0),
-(5, 39, 6, 0);
+(5, 39, 6, 0)
+(1, 40, 6, 1),
+(2, 40, 6, 1),
+(3, 40, 6, 1),
+(4, 40, 6, 0),
+(5, 40, 6, 1);
 
 --
 -- Volcar la base de datos para la tabla `root`
@@ -546,7 +551,8 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (36, 'document_cancel_log'),
 (37, 'cash_document_cancel_log'),
 (38, 'general_closure'),
-(39, 'product_stock_monetary_report');
+(39, 'product_stock_monetary_report')
+(40, 'invoice_transaction_log');
 
 --
 -- Volcar la base de datos para la tabla `supplier`
