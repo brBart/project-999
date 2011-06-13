@@ -21,7 +21,7 @@
 						<td>{$list[i].number}</td>
 						<td>{$list[i].date}</td>
 						<td>{$list[i].total|nf:2}</td>
-						<td>{$list[i].state}</td>
+						<td>{$list[i].state|escape}</td>
 					</tr>
 				{/section}
 				</tbody>
