@@ -63,6 +63,6 @@
 		{/if}
 		<div id="footer"></div>
 	</div>
-	<p id="copyright">{#system_copyright#}</p>
+	<p id="copyright">{#system_name#} {#system_version#}</p>
 </body>
 </html>
