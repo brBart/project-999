@@ -13,7 +13,7 @@ define('SITE_ROOT', dirname(dirname(__FILE__)));
 /**
  * 999 libraries path.
  */
-define('LIBS_999', 'C:/Users/pc/999_project/999_middle/');
+define('LIBS_999', '@install_dir@/middle/');
 /**
  * Backup directory name.
  */ 
@@ -37,7 +37,7 @@ define('COMMANDS_DIR', SITE_ROOT . '/commands/');
 /**
  * Smarty paths.
  */ 
-define('SMARTY_DIR', 'C:/xampp/php/Smarty-2.6.26/libs/');
+define('SMARTY_DIR', '@smarty_dir@');
 /**
  * Smarty paths.
  */
@@ -57,7 +57,7 @@ define('PLUGINS_DIR', SITE_ROOT . '/smarty_plugins');
 /**
  * Help dir url.
  */
-define('HELP_URL', 'http://localhost/999_help/');
+define('HELP_URL', '@help_url@');
 /**
  * Indicate where all the system libraries reside.
  */
@@ -73,7 +73,7 @@ define('PRODUCTS_PER_PAGE', 50);
 /**
  * MySQL path.
  */ 
-define('MYSQL_DIR', 'C:/xampp/mysql/bin/');
+define('MYSQL_DIR', '@mysql_dir@');
 /**
  * Database configuration.
  */ 
@@ -81,19 +81,19 @@ define('DB_PERSISTENCY', 'true');
 /**
  * Database configuration.
  */
-define('DB_SERVER', '127.0.0.1');
+define('DB_SERVER', '@db_server@');
 /**
  * @ignore
  */
-define('DB_USERNAME', '999_user');
+define('DB_USERNAME', '@db_user@');
 /**
  * @ignore
  */
-define('DB_PASSWORD', '999_user');
+define('DB_PASSWORD', '@db_password@');
 /**
  * Database configuration.
  */
-define('DB_DATABASE', '999_store');
+define('DB_DATABASE', '@db_database@');
 /**
  * Database configuration.
  */
