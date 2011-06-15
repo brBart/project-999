@@ -1,6 +1,5 @@
 TEMPLATE = app
-TARGET = _99_exe
-CONFIG += console
+TARGET = bobs_pos
 QT += core \
     gui \
     xml \
