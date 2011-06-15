@@ -10,7 +10,7 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Base de datos: `999_store`
+-- Base de datos: `@db_database@`
 --
 
 -- --------------------------------------------------------
@@ -984,21 +984,21 @@ CREATE TABLE IF NOT EXISTS `working_day` (
 --
 DROP TABLE IF EXISTS `access_management`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`999_user`@`localhost` SQL SECURITY DEFINER VIEW `999_store`.`access_management` AS select `rol`.`name` AS `role`,`sub`.`name` AS `subject`,`act`.`name` AS `action`,`rsa`.`value` AS `value` from (((`999_store`.`role_subject_action` `rsa` join `999_store`.`role` `rol` on((`rsa`.`role_id` = `rol`.`role_id`))) join `999_store`.`subject` `sub` on((`rsa`.`subject_id` = `sub`.`subject_id`))) join `999_store`.`action` `act` on((`rsa`.`action_id` = `act`.`action_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`@db_user@`@`localhost` SQL SECURITY DEFINER VIEW `@db_database@`.`access_management` AS select `rol`.`name` AS `role`,`sub`.`name` AS `subject`,`act`.`name` AS `action`,`rsa`.`value` AS `value` from (((`@db_database@`.`role_subject_action` `rsa` join `@db_database@`.`role` `rol` on((`rsa`.`role_id` = `rol`.`role_id`))) join `@db_database@`.`subject` `sub` on((`rsa`.`subject_id` = `sub`.`subject_id`))) join `@db_database@`.`action` `act` on((`rsa`.`action_id` = `act`.`action_id`)));
 
 DELIMITER $$
 --
 -- Procedimientos
 --
 DROP PROCEDURE IF EXISTS `action_id_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `action_id_get`(IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `action_id_get`(IN inName VARCHAR(50))
 BEGIN
   SELECT action_id FROM action
     WHERE name = inName;
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_delete`(IN inBankAccountNumber VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_delete`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   DELETE FROM bank_account
@@ -1008,7 +1008,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_dependencies`(IN inBankAccountNumber VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_dependencies`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   DECLARE bankAccountRowsCount INT;
@@ -1042,7 +1042,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_exists`(IN inBankAccountNumber VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_exists`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   SELECT COUNT(*) FROM bank_account
@@ -1052,7 +1052,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_get`(IN inBankAccountNumber VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_get`(IN inBankAccountNumber VARCHAR(50))
 BEGIN
 
   SELECT bank_id, name FROM bank_account
@@ -1062,7 +1062,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_insert`(IN inBankAccountNumber VARCHAR(50), IN inBankId INT, IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_insert`(IN inBankAccountNumber VARCHAR(50), IN inBankId INT, IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO bank_account (bank_account_number, bank_id, name)
@@ -1072,7 +1072,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM bank_account;
@@ -1080,7 +1080,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -1104,7 +1104,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_account_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_account_update`(IN inBankAccountNumber VARCHAR(50), IN inBankId INT, IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_account_update`(IN inBankAccountNumber VARCHAR(50), IN inBankId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE bank_account
@@ -1116,7 +1116,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_delete`(IN inBankId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_delete`(IN inBankId INT)
 BEGIN
 
   DELETE FROM bank
@@ -1126,7 +1126,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_dependencies`(IN inBankId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_dependencies`(IN inBankId INT)
 BEGIN
 
   DECLARE bankRowsCount INT;
@@ -1160,7 +1160,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_get`(IN inBankId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_get`(IN inBankId INT)
 BEGIN
 
   SELECT name FROM bank
@@ -1170,7 +1170,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_insert`(IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO bank (name)
@@ -1180,7 +1180,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM bank;
@@ -1188,7 +1188,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -1212,7 +1212,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bank_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bank_update`(IN inBankId INT, IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bank_update`(IN inBankId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE bank
@@ -1224,7 +1224,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bonus_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_delete`(IN inBonusId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_delete`(IN inBonusId INT)
 BEGIN
 
   DELETE FROM bonus
@@ -1234,7 +1234,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bonus_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_dependencies`(IN inBonusId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_dependencies`(IN inBonusId INT)
 BEGIN
 
   DECLARE bonusRowsCount INT;
@@ -1268,7 +1268,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bonus_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_exists`(IN inProductId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_exists`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
   SELECT COUNT(*) FROM bonus
@@ -1278,7 +1278,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bonus_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_get`(IN inBonusId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_get`(IN inBonusId INT)
 BEGIN
 
   SELECT product_id, quantity, percentage, DATE_FORMAT(created_date, '%d/%m/%Y') AS created_date,
@@ -1290,7 +1290,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bonus_id_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_id_get`(IN inProductId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_id_get`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
   SELECT bonus_id FROM bonus
@@ -1302,7 +1302,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bonus_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `bonus_insert`(IN inProductId INT, IN inQuantity INT, IN inPercentage DECIMAL(4, 2), IN inCreatedDate DATE,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_insert`(IN inProductId INT, IN inQuantity INT, IN inPercentage DECIMAL(4, 2), IN inCreatedDate DATE,
 
   IN inExpirationDate DATE)
 BEGIN
@@ -1314,7 +1314,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `branch_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_delete`(IN inBranchId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `branch_delete`(IN inBranchId INT)
 BEGIN
 
   DELETE FROM branch
@@ -1324,7 +1324,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `branch_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_dependencies`(IN inBranchId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `branch_dependencies`(IN inBranchId INT)
 BEGIN
 
   DECLARE branchRowsCount INT;
@@ -1358,7 +1358,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `branch_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_get`(IN inBranchId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `branch_get`(IN inBranchId INT)
 BEGIN
 
   SELECT name, nit, telephone, address, email, contact FROM branch
@@ -1368,7 +1368,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `branch_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `branch_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
   IN inAddress VARCHAR(100), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
@@ -1380,7 +1380,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `branch_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `branch_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM branch;
@@ -1388,7 +1388,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `branch_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `branch_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -1412,7 +1412,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `branch_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `branch_update`(IN inBranchId INT, IN inName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `branch_update`(IN inBranchId INT, IN inName VARCHAR(50),
 
   IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(100),
 
@@ -1430,7 +1430,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cancel_cash_document_log_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_cash_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cancel_cash_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
     SELECT SUM(count_rows) FROM
@@ -1448,7 +1448,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cancel_cash_document_log_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_cash_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cancel_cash_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -1489,7 +1489,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cancel_document_log_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cancel_document_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
     SELECT SUM(count_rows) FROM
@@ -1531,7 +1531,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cancel_document_log_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cancel_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cancel_document_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -1620,7 +1620,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_available_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_available_list_get`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_available_list_get`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT cr.cash_receipt_id AS id, cor.serial_number, inv.number, cr.cash AS received_cash,
@@ -1634,7 +1634,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_cash_available_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_cash_available_get`(IN inCashReceiptId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_cash_available_get`(IN inCashReceiptId INT)
 BEGIN
 
   SELECT (cash - (reserved + deposited)) AS available FROM cash_receipt
@@ -1644,7 +1644,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_cash_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_cash_get`(IN inCashReceiptId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_cash_get`(IN inCashReceiptId INT)
 BEGIN
 
   SELECT cr.cash, cor.serial_number, inv.number FROM cash_receipt cr INNER JOIN invoice inv ON cr.cash_receipt_id = inv.invoice_id
@@ -1656,7 +1656,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_decrease_deposited`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_decrease_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1668,7 +1668,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_decrease_reserved`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_decrease_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_decrease_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1680,7 +1680,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_get`(IN inCashReceiptId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_get`(IN inCashReceiptId INT)
 BEGIN
 
   SELECT cash, change_amount, total_vouchers FROM cash_receipt
@@ -1690,7 +1690,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_increase_deposited`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_increase_deposited`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1702,7 +1702,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_increase_reserved`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_increase_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_increase_reserved`(IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   UPDATE cash_receipt
@@ -1714,7 +1714,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_receipt_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_receipt_insert`(IN inCashReceiptId INT, IN inChange DECIMAL(13, 2), IN inCash DECIMAL(13, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_receipt_insert`(IN inCashReceiptId INT, IN inChange DECIMAL(13, 2), IN inCash DECIMAL(13, 2),
 
   IN inTotalVouchers DECIMAL(13, 2))
 BEGIN
@@ -1726,7 +1726,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_register_close`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_close`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_register_close`(IN inCashRegisterId INT)
 BEGIN
 
   UPDATE cash_register
@@ -1738,7 +1738,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_register_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_get`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_register_get`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT shift_id FROM cash_register
@@ -1748,7 +1748,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_register_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_insert`(IN inWorkingDay DATE, IN inShiftId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_register_insert`(IN inWorkingDay DATE, IN inShiftId INT)
 BEGIN
 
   INSERT INTO cash_register (working_day, shift_id)
@@ -1758,7 +1758,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_register_is_open`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_is_open`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_register_is_open`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT open FROM cash_register
@@ -1768,7 +1768,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `cash_register_working_day_shift_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `cash_register_working_day_shift_get`(IN inWorkingDay DATE, IN inShiftId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `cash_register_working_day_shift_get`(IN inWorkingDay DATE, IN inShiftId INT)
 BEGIN
 
   SELECT cash_register_id FROM cash_register
@@ -1778,7 +1778,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `change_price_log_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `change_price_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM change_price_log
@@ -1788,7 +1788,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `change_price_log_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `change_price_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -1822,7 +1822,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `change_price_log_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(10), IN inProductId INT, IN inDate DATETIME,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `change_price_log_insert`(IN inUserName VARCHAR(10), IN inProductId INT, IN inDate DATETIME,
 
   IN inLastPrice DECIMAL(6, 2), IN inNewPrice DECIMAL(6, 2))
 BEGIN
@@ -1834,7 +1834,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `company_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `company_get`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `company_get`()
 BEGIN
 
   SELECT nit, name, corporate_name, telephone, address FROM company;
@@ -1842,7 +1842,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `company_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `company_update`(IN inNit VARCHAR(10), IN inName VARCHAR(50), IN inCorporateName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `company_update`(IN inNit VARCHAR(10), IN inName VARCHAR(50), IN inCorporateName VARCHAR(50),
   IN inTelephone VARCHAR(50), IN inAddress VARCHAR(100))
 BEGIN
 
@@ -1853,7 +1853,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `comparison_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_get`(IN inComparisonId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_get`(IN inComparisonId INT)
 BEGIN
 
   SELECT user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, reason, general, physical_total, system_total
@@ -1865,7 +1865,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `comparison_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(100), IN inGeneral TINYINT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(100), IN inGeneral TINYINT,
 
   IN inPhysicalTotal INT)
 BEGIN
@@ -1877,7 +1877,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `comparison_product_general_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_general_insert`(IN inComparisonId INT, IN inCountId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_product_general_insert`(IN inComparisonId INT, IN inCountId INT)
 BEGIN
 
   DECLARE totalSystem INT;
@@ -1913,7 +1913,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `comparison_product_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_get`(IN inComparisonId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_product_get`(IN inComparisonId INT)
 BEGIN
 
   SELECT product_id, physical, system FROM comparison_product
@@ -1925,7 +1925,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `comparison_product_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_product_insert`(IN inComparisonId INT, IN inCountId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_product_insert`(IN inComparisonId INT, IN inCountId INT)
 BEGIN
 
   DECLARE totalSystem INT;
@@ -1963,7 +1963,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `comparison_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM comparison
@@ -1973,7 +1973,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `comparison_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `comparison_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -2003,7 +2003,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_default_id`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_default_id`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_default_id`()
 BEGIN
 
   SELECT correlative_id FROM correlative
@@ -2013,7 +2013,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_delete`(IN inCorrelativeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_delete`(IN inCorrelativeId INT)
 BEGIN
 
   DELETE FROM correlative
@@ -2023,7 +2023,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_dependencies`(IN inCorrelativeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_dependencies`(IN inCorrelativeId INT)
 BEGIN
 
   DECLARE correlativeRowsCount INT;
@@ -2057,7 +2057,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_exists`(IN inSerialNumber VARCHAR(10), IN inInitialNumber BIGINT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_exists`(IN inSerialNumber VARCHAR(10), IN inInitialNumber BIGINT,
 IN inFinalNumber BIGINT)
 BEGIN
 
@@ -2068,7 +2068,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_get`(IN inCorrelativeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_get`(IN inCorrelativeId INT)
 BEGIN
 
   SELECT serial_number, resolution_number, DATE_FORMAT(resolution_date, '%d/%m/%Y') AS resolution_date, regime, initial_number, final_number,
@@ -2080,7 +2080,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(50), IN inResolutionDate Date, IN inRegime VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(50), IN inResolutionDate Date, IN inRegime VARCHAR(50),
 
   IN inInitialNumber BIGINT, IN inFinalNumber BIGINT)
 BEGIN
@@ -2092,7 +2092,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_is_empty`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_is_empty`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_is_empty`()
 BEGIN
 
   DECLARE rowsCount INT;
@@ -2118,7 +2118,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM correlative;
@@ -2126,7 +2126,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -2150,7 +2150,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_make_default`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_make_default`(IN inCorrelativeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_make_default`(IN inCorrelativeId INT)
 BEGIN
 
   UPDATE correlative
@@ -2168,7 +2168,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_next_number`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_next_number`(IN inCorrelativeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_next_number`(IN inCorrelativeId INT)
 BEGIN
 
   DECLARE initialNumber BIGINT;
@@ -2214,7 +2214,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `correlative_resolution_number_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `correlative_resolution_number_exists`(IN inResolutionNumber VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_resolution_number_exists`(IN inResolutionNumber VARCHAR(50))
 BEGIN
 
   SELECT COUNT(*) FROM correlative
@@ -2224,7 +2224,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_delete`(IN inCountId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_delete`(IN inCountId INT)
 BEGIN
 
   DELETE FROM count_product
@@ -2240,7 +2240,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_get`(IN inCountId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_get`(IN inCountId INT)
 BEGIN
 
   SELECT user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, reason, total FROM count
@@ -2250,7 +2250,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(100), IN inTotal INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME, IN inReason VARCHAR(100), IN inTotal INT)
 BEGIN
 
   INSERT INTO count (user_account_username, date, reason, total)
@@ -2260,7 +2260,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_product_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_product_delete`(IN inCountId INT, IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_product_delete`(IN inCountId INT, IN inProductId INT)
 BEGIN
 
   DELETE FROM count_product
@@ -2270,7 +2270,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_product_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_product_get`(IN inCountId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_product_get`(IN inCountId INT)
 BEGIN
 
   SELECT product_id, quantity FROM count_product
@@ -2282,7 +2282,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_product_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_product_insert`(IN inCountId INT, IN inProductId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_product_insert`(IN inCountId INT, IN inProductId INT, IN inQuantity INT)
 BEGIN
 
   INSERT INTO count_product (count_id, product_id, quantity)
@@ -2292,7 +2292,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM count
@@ -2302,7 +2302,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -2332,7 +2332,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `count_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `count_update`(IN inCountId INT, IN inTotal INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `count_update`(IN inCountId INT, IN inTotal INT)
 BEGIN
 
   UPDATE count
@@ -2344,7 +2344,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `customer_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_exists`(IN inNit VARCHAR(15))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `customer_exists`(IN inNit VARCHAR(15))
 BEGIN
 
   SELECT COUNT(*) FROM customer
@@ -2354,7 +2354,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `customer_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_get`(IN inNit VARCHAR(15))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `customer_get`(IN inNit VARCHAR(15))
 BEGIN
 
   SELECT name FROM customer
@@ -2364,7 +2364,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `customer_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_insert`(IN inNit VARCHAR(15), IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `customer_insert`(IN inNit VARCHAR(15), IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO customer (nit, name)
@@ -2374,7 +2374,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `customer_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `customer_update`(IN inNit VARCHAR(15), IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `customer_update`(IN inNit VARCHAR(15), IN inName VARCHAR(50))
 BEGIN
 
   UPDATE customer
@@ -2386,7 +2386,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `delete_all_movements`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `delete_all_movements`(IN inDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `delete_all_movements`(IN inDate DATE)
 BEGIN
 
   DELETE FROM deposit_cancelled
@@ -2554,7 +2554,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_by_working_day_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM deposit dep
@@ -2566,7 +2566,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_by_working_day_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -2598,7 +2598,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(10), IN inDate DATETIME)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_cancel`(IN inDepositId INT, IN inUserName VARCHAR(10), IN inDate DATETIME)
 BEGIN
 
   UPDATE deposit
@@ -2616,7 +2616,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_cash_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_list_get`(IN inCashReceiptId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_cash_list_get`(IN inCashReceiptId INT)
 BEGIN
 
   SELECT deposit_id FROM deposit_cash_receipt
@@ -2626,7 +2626,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_cash_receipt_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_count`(IN inDepositId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_cash_receipt_count`(IN inDepositId INT)
 BEGIN
 
   SELECT COUNT(*) FROM deposit_cash_receipt
@@ -2636,7 +2636,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_cash_receipt_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_get`(IN inDepositId INT, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_cash_receipt_get`(IN inDepositId INT, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -2664,7 +2664,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_cash_receipt_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_cash_receipt_insert`(IN inDepositId INT, IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_cash_receipt_insert`(IN inDepositId INT, IN inCashReceiptId INT, IN inAmount DECIMAL(13, 2))
 BEGIN
 
   INSERT INTO deposit_cash_receipt (deposit_id, cash_receipt_id, amount)
@@ -2674,7 +2674,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_confirm`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_confirm`(IN inDepositId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_confirm`(IN inDepositId INT)
 BEGIN
 
   UPDATE deposit
@@ -2686,7 +2686,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_get`(IN inDepositId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_get`(IN inDepositId INT)
 BEGIN
 
   SELECT bank_account_number, cash_register_id, user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, number,
@@ -2698,7 +2698,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_id_get_by_working_day`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_id_get_by_working_day`(IN inWorkingDay DATE, IN inId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_id_get_by_working_day`(IN inWorkingDay DATE, IN inId INT)
 BEGIN
 
   SELECT deposit_id FROM deposit dep INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
@@ -2708,7 +2708,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_id_get_by_working_day_slip`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_id_get_by_working_day_slip`(IN inWorkingDay DATE, IN inBankId INT, IN inNumber VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_id_get_by_working_day_slip`(IN inWorkingDay DATE, IN inBankId INT, IN inNumber VARCHAR(50))
 BEGIN
 
   SELECT deposit_id FROM deposit dep INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
@@ -2720,7 +2720,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(50), IN inCashRegisterId INT, IN inUserName VARCHAR(10),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_insert`(IN inBankAccountNumber VARCHAR(50), IN inCashRegisterId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME, IN inNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -2732,7 +2732,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_list_get`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_list_get`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT deposit_id AS id, bank_id, number, status FROM deposit dep INNER JOIN bank_account ba ON dep.bank_account_number = ba.bank_account_number
@@ -2742,7 +2742,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_number_bank_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_number_bank_exists`(IN inNumber VARCHAR(50), IN inBankId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_number_bank_exists`(IN inNumber VARCHAR(50), IN inBankId INT)
 BEGIN
 
   SELECT COUNT(*) FROM deposit dep INNER JOIN bank_account ba ON dep.bank_account_number = ba.bank_account_number
@@ -2752,7 +2752,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_pending_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_pending_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_pending_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM deposit
@@ -2762,7 +2762,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_pending_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_pending_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_pending_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -2794,7 +2794,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM deposit
@@ -2804,7 +2804,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deposit_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `deposit_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `deposit_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -2834,7 +2834,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `discount_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_get`(IN inInvoiceId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `discount_get`(IN inInvoiceId INT)
 BEGIN
 
   SELECT user_account_username, percentage FROM discount
@@ -2844,7 +2844,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `discount_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_insert`(IN inInvoiceId INT, IN inUserName VARCHAR(10), IN inPercentage DECIMAL(4, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `discount_insert`(IN inInvoiceId INT, IN inUserName VARCHAR(10), IN inPercentage DECIMAL(4, 2))
 BEGIN
 
   INSERT INTO discount (invoice_id, user_account_username, percentage)
@@ -2854,7 +2854,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `discount_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_list_count`(IN inFirstDate DATE, IN inLastDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `discount_list_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM discount dis INNER JOIN invoice inv ON dis.invoice_id = inv.invoice_id
@@ -2864,7 +2864,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `discount_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `discount_list_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `discount_list_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT,
 
   IN inItemsPerPage INT)
 BEGIN
@@ -2902,7 +2902,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `entry_adjustment_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_cancel`(IN inEntryAdjustmentId INT, IN inUserName VARCHAR(10),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `entry_adjustment_cancel`(IN inEntryAdjustmentId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -2922,7 +2922,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `entry_adjustment_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_get`(IN inEntryAdjustmentId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `entry_adjustment_get`(IN inEntryAdjustmentId INT)
 BEGIN
 
   SELECT user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, reason, total, status
@@ -2934,7 +2934,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `entry_adjustment_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `entry_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
 
   IN inReason VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -2946,7 +2946,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `entry_adjustment_lot_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_lot_get`(IN inEntryAdjustmentId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `entry_adjustment_lot_get`(IN inEntryAdjustmentId INT)
 BEGIN
 
   SELECT lot_id, quantity, price FROM entry_adjustment_lot
@@ -2958,7 +2958,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `entry_adjustment_lot_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `entry_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -2970,7 +2970,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `entry_adjustment_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `entry_adjustment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM entry_adjustment
@@ -2980,7 +2980,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `entry_adjustment_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `entry_adjustment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `entry_adjustment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -3010,7 +3010,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `general_closure`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `general_closure`(IN inDays INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `general_closure`(IN inDays INT)
 BEGIN
 
   DECLARE productId INT;
@@ -3064,7 +3064,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `general_sales_report_cash_registers_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `general_sales_report_cash_registers_get`(IN inWorkingDay DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `general_sales_report_cash_registers_get`(IN inWorkingDay DATE)
 BEGIN
 
   SELECT cr.cash_register_id AS id, sf.name, sf.time_table,
@@ -3084,7 +3084,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `general_sales_report_total`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `general_sales_report_total`(IN inWorkingDay DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `general_sales_report_total`(IN inWorkingDay DATE)
 BEGIN
 
   SELECT SUM(inv.total - inv.total * (IFNULL(dis.percentage, 0) / 100)) FROM invoice inv
@@ -3098,7 +3098,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `get_last_insert_id`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `get_last_insert_id`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `get_last_insert_id`()
 BEGIN
 
   SELECT LAST_INSERT_ID();
@@ -3106,7 +3106,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_bonus_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_bonus_insert`(IN inInvoiceId INT, IN inBonusId INT, IN inNumber INT, IN inPrice DECIMAL(13, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_bonus_insert`(IN inInvoiceId INT, IN inBonusId INT, IN inNumber INT, IN inPrice DECIMAL(13, 2))
 BEGIN
 
   INSERT INTO invoice_bonus (invoice_id, bonus_id, number, price)
@@ -3116,7 +3116,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_by_working_day_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_by_working_day_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM invoice inv
@@ -3128,7 +3128,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_by_working_day_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_by_working_day_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -3162,7 +3162,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(10),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -3182,7 +3182,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_get`(IN inInvoiceId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_get`(IN inInvoiceId INT)
 BEGIN
 
   SELECT correlative_id, number, user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, nit, name, total, vat,
@@ -3194,7 +3194,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_id_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_id_get`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_id_get`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
 BEGIN
 
   SELECT invoice_id FROM invoice inv INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
@@ -3204,7 +3204,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_id_get_by_working_day`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_id_get_by_working_day`(IN inWorkingDay DATE, IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_id_get_by_working_day`(IN inWorkingDay DATE, IN inSerialNumber VARCHAR(10), IN inNumber BIGINT)
 BEGIN
 
   SELECT invoice_id FROM invoice inv INNER JOIN cash_register cr ON inv.cash_register_id = cr.cash_register_id
@@ -3216,7 +3216,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_insert`(IN inCorrelativeId INT, IN inNumber BIGINT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_insert`(IN inCorrelativeId INT, IN inNumber BIGINT,
 
   IN inUserName VARCHAR(10), IN inDate DATETIME, IN inNit VARCHAR(15), IN inName VARCHAR(50), IN inTotal DECIMAL(13, 2),
 
@@ -3230,7 +3230,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_items_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_items_get`(IN inInvoiceId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_items_get`(IN inInvoiceId INT)
 BEGIN
 
   (SELECT invoice_id, lot_id, NULL AS bonus_id, number, quantity, price FROM invoice_lot
@@ -3248,7 +3248,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_list_get`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_list_get`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT invoice_id AS id, serial_number, number  FROM invoice inv INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
@@ -3258,7 +3258,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_lot_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -3270,7 +3270,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM invoice
@@ -3280,7 +3280,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -3312,7 +3312,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_transaction_log_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_transaction_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_transaction_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
     SELECT SUM(count_rows) FROM
@@ -3322,7 +3322,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_transaction_log_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_transaction_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_transaction_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -3347,7 +3347,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `invoice_transaction_log_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `invoice_transaction_log_insert`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT, IN inDate DATE,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_transaction_log_insert`(IN inSerialNumber VARCHAR(10), IN inNumber BIGINT, IN inDate DATE,
 
   IN inTotal DECIMAL(13, 2), IN inState VARCHAR(10))
 BEGIN
@@ -3359,7 +3359,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `kardex_balance_forward_from_date_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_from_date_get`(IN inProductId INT, IN inBalanceForward INT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `kardex_balance_forward_from_date_get`(IN inProductId INT, IN inBalanceForward INT,
 
   IN inDate DATE, OUT finalBalance INT)
 BEGIN
@@ -3439,7 +3439,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `kardex_balance_forward_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_balance_forward_get`(IN inProductId INT, IN inLastItem INT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `kardex_balance_forward_get`(IN inProductId INT, IN inLastItem INT,
 
   IN inBalanceForward INT)
 BEGIN
@@ -3529,7 +3529,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `kardex_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_count`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `kardex_count`(IN inProductId INT)
 BEGIN
 
   SELECT SUM(count_rows) FROM (SELECT COUNT(*) AS count_rows FROM invoice inv INNER JOIN invoice_lot inv_lot
@@ -3583,7 +3583,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `kardex_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `kardex_get`(IN inProductId INT, IN inStartItem INT, IN inItemsPerPage INT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `kardex_get`(IN inProductId INT, IN inStartItem INT, IN inItemsPerPage INT,
 
   IN inBalanceForward INT)
 BEGIN
@@ -3693,7 +3693,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_available_quantity_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_available_quantity_get`(IN inLotId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_available_quantity_get`(IN inLotId INT)
 BEGIN
 
   SELECT quantity - reserved FROM lot
@@ -3703,7 +3703,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_deactivate`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_deactivate`(IN inLotId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_deactivate`(IN inLotId INT)
 BEGIN
 
   UPDATE lot
@@ -3715,7 +3715,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_decrease_quantity`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_decrease_quantity`(IN inLotId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_decrease_quantity`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE lot
@@ -3727,7 +3727,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_decrease_reserved`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_decrease_reserved`(IN inLotId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_decrease_reserved`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE lot
@@ -3739,7 +3739,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_expiration_date_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expiration_date_update`(IN inLotId INT, IN inExpirationDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_expiration_date_update`(IN inLotId INT, IN inExpirationDate DATE)
 BEGIN
 
   UPDATE lot
@@ -3751,7 +3751,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_expired_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expired_count`(IN inDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_expired_count`(IN inDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM lot WHERE expiration_date <= inDate AND quantity > 0;
@@ -3759,7 +3759,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_expired_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_expired_get`(IN inDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_expired_get`(IN inDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -3787,7 +3787,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_get`(IN inLotId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_get`(IN inLotId INT)
 BEGIN
 
   SELECT product_id, DATE_FORMAT(expiration_date, '%d/%m/%Y') AS expiration_date,
@@ -3799,7 +3799,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_increase_quantity`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_increase_quantity`(IN inLotId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_increase_quantity`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE lot
@@ -3811,7 +3811,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_increase_reserved`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_increase_reserved`(IN inLotId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_increase_reserved`(IN inLotId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE lot
@@ -3823,7 +3823,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_insert`(IN inProductId INT, IN inEntryDate DATE, IN inExpirationDate DATE, IN inPrice DECIMAL(6, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_insert`(IN inProductId INT, IN inEntryDate DATE, IN inExpirationDate DATE, IN inPrice DECIMAL(6, 2),
 
   IN inQuantity INT)
 BEGIN
@@ -3835,7 +3835,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_near_expiration_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_near_expiration_count`(IN inDate DATE, IN inDays INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_near_expiration_count`(IN inDate DATE, IN inDays INT)
 BEGIN
 
   SELECT COUNT(*) FROM lot WHERE expiration_date > inDate AND expiration_date <= DATE_ADD(inDate, INTERVAL inDays DAY) AND quantity > 0;
@@ -3843,7 +3843,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_near_expiration_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_near_expiration_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_near_expiration_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -3877,7 +3877,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_price_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_price_update`(IN inLotId INT, IN inPrice DECIMAL(6, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_price_update`(IN inLotId INT, IN inPrice DECIMAL(6, 2))
 BEGIN
 
   UPDATE lot
@@ -3889,7 +3889,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `lot_quantity_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `lot_quantity_get`(IN inLotId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `lot_quantity_get`(IN inLotId INT)
 BEGIN
 
   SELECT quantity FROM lot
@@ -3899,7 +3899,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_counting_template_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_counting_template_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_counting_template_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
   SELECT * FROM
@@ -3915,7 +3915,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_delete`(IN inManufacturerId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_delete`(IN inManufacturerId INT)
 BEGIN
 
   DELETE FROM manufacturer
@@ -3925,7 +3925,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_dependencies`(IN inManufacturerId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_dependencies`(IN inManufacturerId INT)
 BEGIN
 
   DECLARE manufacturerRowsCount INT;
@@ -3959,7 +3959,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_distinct_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_distinct_list_get`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_distinct_list_get`()
 BEGIN
 
     SELECT DISTINCT name FROM manufacturer
@@ -3969,7 +3969,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_get`(IN inManufacturerId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_get`(IN inManufacturerId INT)
 BEGIN
 
   SELECT name FROM manufacturer
@@ -3979,7 +3979,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_insert`(IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO manufacturer (name)
@@ -3989,7 +3989,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM manufacturer;
@@ -3997,7 +3997,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4021,7 +4021,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_product_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_product_list_get`(IN inManufacturerId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_product_list_get`(IN inManufacturerId INT)
 BEGIN
 
   SELECT product_id AS id, name FROM product
@@ -4033,7 +4033,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_purchases_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_purchases_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_purchases_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4081,7 +4081,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_sales_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_sales_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_sales_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4129,7 +4129,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_stadistics_labels_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_count`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_stadistics_labels_count`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
        SELECT COUNT(*) FROM (SELECT man.name FROM product pro INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
@@ -4139,7 +4139,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_stadistics_labels_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_stadistics_labels_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_stadistics_labels_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4167,7 +4167,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `manufacturer_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `manufacturer_update`(IN inManufacturerId INT, IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `manufacturer_update`(IN inManufacturerId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE manufacturer
@@ -4179,7 +4179,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_brand_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_delete`(IN inPaymentCardBrandId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_brand_delete`(IN inPaymentCardBrandId INT)
 BEGIN
 
   DELETE FROM payment_card_brand
@@ -4189,7 +4189,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_brand_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_dependencies`(IN inPaymentCardBrandId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_brand_dependencies`(IN inPaymentCardBrandId INT)
 BEGIN
 
   DECLARE paymentCardBrandRowsCount INT;
@@ -4223,7 +4223,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_brand_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_get`(IN inPaymentCardBrandId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_brand_get`(IN inPaymentCardBrandId INT)
 BEGIN
 
   SELECT name FROM payment_card_brand
@@ -4233,7 +4233,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_brand_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_insert`(IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_brand_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO payment_card_brand (name)
@@ -4243,7 +4243,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_brand_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_brand_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM payment_card_brand;
@@ -4251,7 +4251,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_brand_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_brand_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4275,7 +4275,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_brand_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_brand_update`(IN inPaymentCardBrandId INT, IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_brand_update`(IN inPaymentCardBrandId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE payment_card_brand
@@ -4287,7 +4287,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_type_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_delete`(IN inPaymentCardTypeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_type_delete`(IN inPaymentCardTypeId INT)
 BEGIN
 
   DELETE FROM payment_card_type
@@ -4297,7 +4297,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_type_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_dependencies`(IN inPaymentCardTypeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_type_dependencies`(IN inPaymentCardTypeId INT)
 BEGIN
 
   DECLARE paymentCardTypeRowsCount INT;
@@ -4331,7 +4331,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_type_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_get`(IN inPaymentCardTypeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_type_get`(IN inPaymentCardTypeId INT)
 BEGIN
 
   SELECT name FROM payment_card_type
@@ -4341,7 +4341,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_type_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_insert`(IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_type_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO payment_card_type (name)
@@ -4351,7 +4351,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_type_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_type_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM payment_card_type;
@@ -4359,7 +4359,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_type_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_type_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4383,7 +4383,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `payment_card_type_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `payment_card_type_update`(IN inPaymentCardTypeId INT, IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `payment_card_type_update`(IN inPaymentCardTypeId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE payment_card_type
@@ -4395,7 +4395,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_available_quantity_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_available_quantity_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_available_quantity_get`(IN inProductId INT)
 BEGIN
 
   SELECT quantity - reserved FROM product
@@ -4405,7 +4405,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_balance_forward_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_balance_forward_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_balance_forward_get`(IN inProductId INT)
 BEGIN
 
   SELECT balance_forward FROM product
@@ -4415,7 +4415,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_bar_code_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_exists`(IN inProductId INT, IN inBarCode VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_bar_code_exists`(IN inProductId INT, IN inBarCode VARCHAR(50))
 BEGIN
 
   SELECT COUNT(*) FROM product
@@ -4425,7 +4425,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_bar_code_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bar_code_update`(IN inProductId INT, IN inBarCode VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_bar_code_update`(IN inProductId INT, IN inBarCode VARCHAR(50))
 BEGIN
   UPDATE product
     SET bar_code = inBarCode
@@ -4433,7 +4433,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_bonus_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_bonus_list_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_bonus_list_get`(IN inProductId INT)
 BEGIN
 
   SELECT bonus_id AS id, quantity, percentage, DATE_FORMAT(created_date, '%d/%m/%Y') AS created_date,
@@ -4447,7 +4447,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_counting_template_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_counting_template_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_counting_template_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
   SELECT * FROM
@@ -4463,7 +4463,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_decrease_quantity`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_decrease_quantity`(IN inProductId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_decrease_quantity`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE product
@@ -4475,7 +4475,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_decrease_reserved`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_decrease_reserved`(IN inProductId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_decrease_reserved`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE product
@@ -4487,7 +4487,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_delete`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_delete`(IN inProductId INT)
 BEGIN
 
   DELETE FROM change_price_log
@@ -4509,7 +4509,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_dependencies`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_dependencies`(IN inProductId INT)
 BEGIN
 
   DECLARE productRowsCount INT;
@@ -4579,7 +4579,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_distinct_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_distinct_list_get`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_distinct_list_get`()
 BEGIN
 
     SELECT DISTINCT name FROM product
@@ -4589,7 +4589,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_get`(IN inProductId INT)
 BEGIN
 
   SELECT bar_code, name, description, unit_of_measure_id, manufacturer_id, price, deactivated FROM product
@@ -4599,7 +4599,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_id_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_id_get`(IN inBarCode VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_id_get`(IN inBarCode VARCHAR(50))
 BEGIN
 
   SELECT product_id FROM product
@@ -4609,7 +4609,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_id_get_include_deactivated`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_id_get_include_deactivated`(IN inBarCode VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_id_get_include_deactivated`(IN inBarCode VARCHAR(50))
 BEGIN
 
   SELECT product_id FROM product
@@ -4619,7 +4619,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_inactive_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_count`(IN inDate DATE, IN inDays INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_inactive_count`(IN inDate DATE, IN inDays INT)
 BEGIN
 
   SELECT COUNT(*) FROM (SELECT 1 FROM product pro
@@ -4649,7 +4649,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_inactive_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_inactive_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_inactive_get`(IN inDate DATE, IN inDays INT, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4699,7 +4699,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_increase_quantity`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_increase_quantity`(IN inProductId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_increase_quantity`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE product
@@ -4711,7 +4711,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_increase_reserved`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_increase_reserved`(IN inProductId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_increase_reserved`(IN inProductId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE product
@@ -4723,7 +4723,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_insert`(IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_insert`(IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
   IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
@@ -4737,7 +4737,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM product;
@@ -4745,7 +4745,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4771,7 +4771,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_lot_available_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_available_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_lot_available_get`(IN inProductId INT)
 BEGIN
 
   SELECT lot_id, IFNULL(expiration_date, '9999-12-31') AS expiration_date FROM lot
@@ -4783,7 +4783,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_lot_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_lot_get`(IN inProductId INT)
 BEGIN
 
   SELECT lot_id AS id, DATE_FORMAT(entry_date, '%d/%m/%Y') AS entry_date, DATE_FORMAT(expiration_date, '%d/%m/%Y') AS expiration_date, price, 
@@ -4797,7 +4797,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_lot_total_available_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_total_available_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_lot_total_available_get`(IN inProductId INT)
 BEGIN
 
   SELECT SUM(quantity - reserved) FROM lot
@@ -4807,7 +4807,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_lot_total_quantity_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_lot_total_quantity_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_lot_total_quantity_get`(IN inProductId INT)
 BEGIN
 
   SELECT SUM(quantity) FROM lot
@@ -4817,7 +4817,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_purchases_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_purchases_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_purchases_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4865,7 +4865,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_quantity_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_quantity_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_quantity_get`(IN inProductId INT)
 BEGIN
 
   SELECT quantity FROM product
@@ -4875,7 +4875,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_sales_stadistics_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_sales_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_sales_stadistics_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inFirstDate DATE, IN inLastDate DATE,
 IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
@@ -4923,7 +4923,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_search`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search`(IN inSearchString VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_search`(IN inSearchString VARCHAR(50))
 BEGIN
 
   SELECT pro.bar_code, pro.name, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
@@ -4937,7 +4937,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_search_include_deactivated`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_search_include_deactivated`(IN inSearchString VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_search_include_deactivated`(IN inSearchString VARCHAR(50))
 BEGIN
 
   SELECT pro.bar_code, pro.name, man.name AS manufacturer FROM product pro INNER JOIN manufacturer man
@@ -4951,7 +4951,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_stadistics_labels_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_count`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_stadistics_labels_count`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50))
 BEGIN
 
        SELECT COUNT(*) FROM (SELECT pro.name FROM product pro INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
@@ -4961,7 +4961,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_stadistics_labels_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stadistics_labels_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_stadistics_labels_get`(IN inFirst VARCHAR(50), IN inLast VARCHAR(50), IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -4989,7 +4989,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_stock_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stock_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_stock_count`()
 BEGIN
 
   SELECT COUNT(*) FROM product WHERE (quantity - reserved) > 0;
@@ -4997,7 +4997,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_stock_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stock_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_stock_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5016,7 +5016,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_stock_include_monetary_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stock_include_monetary_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_stock_include_monetary_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5036,7 +5036,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_stock_total_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_stock_total_get`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_stock_total_get`()
 BEGIN
 
   SELECT SUM((quantity - reserved) * price) AS total FROM product WHERE (quantity - reserved) > 0;
@@ -5044,7 +5044,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_supplier_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_delete`(IN inProductId INT, IN inSupplierId INT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_supplier_delete`(IN inProductId INT, IN inSupplierId INT,
 IN inSku VARCHAR(50))
 BEGIN
 
@@ -5055,7 +5055,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_supplier_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_exists`(IN inSupplierId INT, IN inSku VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_supplier_exists`(IN inSupplierId INT, IN inSku VARCHAR(50))
 BEGIN
 
   SELECT COUNT(*) FROM product_supplier
@@ -5065,7 +5065,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_supplier_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_supplier_get`(IN inProductId INT)
 BEGIN
 
   SELECT supplier_id, sku FROM product_supplier
@@ -5075,7 +5075,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_supplier_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_insert`(IN inProductId INT, IN inSupplierId INT, IN inSku VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_supplier_insert`(IN inProductId INT, IN inSupplierId INT, IN inSku VARCHAR(50))
 BEGIN
 
   INSERT INTO product_supplier (product_id, supplier_id, sku)
@@ -5085,7 +5085,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_supplier_product_id_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_supplier_product_id_get`(IN inSupplierId INT, IN inSku VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_supplier_product_id_get`(IN inSupplierId INT, IN inSku VARCHAR(50))
 BEGIN
 
   SELECT product_id FROM product_supplier
@@ -5095,7 +5095,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `product_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `product_update`(IN inProductId INT, IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `product_update`(IN inProductId INT, IN inBarCode VARCHAR(50), IN inName VARCHAR(50),
 
   IN inDescription TEXT, IN inUnitOfMeasureId INT, IN inManufacturerId INT,
 
@@ -5113,7 +5113,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `purchase_return_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_cancel`(IN inPurchaseReturnId INT, IN inUserName VARCHAR(10), IN inDate DATETIME)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchase_return_cancel`(IN inPurchaseReturnId INT, IN inUserName VARCHAR(10), IN inDate DATETIME)
 BEGIN
 
   UPDATE purchase_return
@@ -5131,7 +5131,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `purchase_return_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_get`(IN inPurchaseReturnId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchase_return_get`(IN inPurchaseReturnId INT)
 BEGIN
 
   SELECT user_account_username, supplier_id, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, reason, contact, total, status
@@ -5143,7 +5143,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `purchase_return_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchase_return_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
 
   IN inReason VARCHAR(100), IN inContact VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -5155,7 +5155,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `purchase_return_lot_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_get`(IN inPurchaseReturnId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchase_return_lot_get`(IN inPurchaseReturnId INT)
 BEGIN
 
   SELECT lot_id, quantity, price FROM purchase_return_lot
@@ -5167,7 +5167,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `purchase_return_lot_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchase_return_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -5179,7 +5179,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `purchase_return_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchase_return_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM purchase_return
@@ -5189,7 +5189,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `purchase_return_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `purchase_return_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchase_return_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5219,7 +5219,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `receipt_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_cancel`(IN inReceiptId INT, IN inUserName VARCHAR(10),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_cancel`(IN inReceiptId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -5239,7 +5239,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `receipt_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_get`(IN inReceiptId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_get`(IN inReceiptId INT)
 BEGIN
 
   SELECT user_account_username, supplier_id, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, shipment_number, total, status
@@ -5251,7 +5251,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `receipt_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_insert`(IN inUserName VARCHAR(10), IN inSupplierId INT, IN inDate DATETIME,
 
   IN inShipmentNumber VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -5263,7 +5263,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `receipt_lot_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_get`(IN inReceiptId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_lot_get`(IN inReceiptId INT)
 BEGIN
 
   SELECT lot_id, quantity, price FROM receipt_lot
@@ -5275,7 +5275,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `receipt_lot_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -5287,7 +5287,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `receipt_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM receipt
@@ -5297,7 +5297,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `receipt_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `receipt_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5327,7 +5327,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `reserve_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_delete`(IN inReserveId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `reserve_delete`(IN inReserveId INT)
 BEGIN
 
   DELETE FROM reserve
@@ -5337,7 +5337,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `reserve_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_get`(IN inReserveId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `reserve_get`(IN inReserveId INT)
 BEGIN
 
   SELECT user_account_username, lot_id, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, quantity FROM reserve
@@ -5347,7 +5347,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `reserve_increase_quantity`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_increase_quantity`(IN inReserveId INT, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `reserve_increase_quantity`(IN inReserveId INT, IN inQuantity INT)
 BEGIN
 
   UPDATE reserve
@@ -5359,7 +5359,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `reserve_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_insert`(IN inUserName VARCHAR(10), IN inLotId INT, IN inDate DATETIME, IN inQuantity INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `reserve_insert`(IN inUserName VARCHAR(10), IN inLotId INT, IN inDate DATETIME, IN inQuantity INT)
 BEGIN
 
   INSERT INTO reserve (user_account_username, lot_id, date, quantity)
@@ -5369,7 +5369,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `reserve_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `reserve_list_get`(IN inProductId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `reserve_list_get`(IN inProductId INT)
 BEGIN
 
   SELECT res.reserve_id AS id, DATE_FORMAT(res.date, '%d/%m/%Y %H:%i:%s') AS created_date, res.user_account_username AS username, lot.lot_id,
@@ -5381,7 +5381,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `resolution_log_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `resolution_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `resolution_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
     SELECT SUM(count_rows) FROM
@@ -5391,7 +5391,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `resolution_log_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `resolution_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `resolution_log_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5418,7 +5418,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `resolution_log_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `resolution_log_insert`(IN inResolutionNumber VARCHAR(50), IN inResolutionDate DATE, IN inSerialNumber VARCHAR(10), IN inInitialNumber BIGINT, IN inFinalNumber BIGINT, IN inCreatedDate DATE, IN inDocumentType VARCHAR(10))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `resolution_log_insert`(IN inResolutionNumber VARCHAR(50), IN inResolutionDate DATE, IN inSerialNumber VARCHAR(10), IN inInitialNumber BIGINT, IN inFinalNumber BIGINT, IN inCreatedDate DATE, IN inDocumentType VARCHAR(10))
 BEGIN
 
   INSERT INTO resolution_log (resolution_number, resolution_date, serial_number, initial_number, final_number, created_date, document_type)
@@ -5428,7 +5428,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `role_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_get`(IN inRoleId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `role_get`(IN inRoleId INT)
 BEGIN
 
   SELECT name FROM role
@@ -5438,7 +5438,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `role_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `role_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM role;
@@ -5446,7 +5446,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `role_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `role_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5470,14 +5470,14 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `role_subject_action_value_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `role_subject_action_value_get`(IN inRoleId INT, IN inSubjectId INT, IN inActionId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `role_subject_action_value_get`(IN inRoleId INT, IN inSubjectId INT, IN inActionId INT)
 BEGIN
   SELECT value FROM role_subject_action
     WHERE role_id = inRoleId AND subject_id = inSubjectId AND action_id = inActionId;
 END$$
 
 DROP PROCEDURE IF EXISTS `root_change_password`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `root_change_password`(IN inPassword VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `root_change_password`(IN inPassword VARCHAR(50))
 BEGIN
 
   UPDATE root
@@ -5487,7 +5487,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `root_is_valid`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `root_is_valid`(IN inPassword VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `root_is_valid`(IN inPassword VARCHAR(50))
 BEGIN
 
   DECLARE rootRowsCount INT;
@@ -5515,7 +5515,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_ledger_correlatives_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ledger_correlatives_get`(IN inDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ledger_correlatives_get`(IN inDate DATE)
 BEGIN
 
   SELECT inv.correlative_id, cor.serial_number FROM invoice inv INNER JOIN correlative cor
@@ -5527,7 +5527,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_ledger_dates_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ledger_dates_get`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ledger_dates_get`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT DISTINCT DATE_FORMAT(inv.date, '%Y-%m-%d') AS date, DATE_FORMAT(inv.date, '%d/%m/%Y') AS formatted_date FROM invoice inv
@@ -5538,7 +5538,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_ledger_max_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ledger_max_get`(IN inDate DATE, IN inCorrelativeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ledger_max_get`(IN inDate DATE, IN inCorrelativeId INT)
 BEGIN
 
   SELECT MAX(number) FROM invoice
@@ -5547,7 +5547,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_ledger_min_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ledger_min_get`(IN inDate DATE, IN inCorrelativeId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ledger_min_get`(IN inDate DATE, IN inCorrelativeId INT)
 BEGIN
 
   SELECT MIN(number) FROM invoice
@@ -5556,7 +5556,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_ledger_sum_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ledger_sum_get`(IN inCorrelativeId INT, IN inFirstNumber BIGINT, IN inLastNumber BIGINT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ledger_sum_get`(IN inCorrelativeId INT, IN inFirstNumber BIGINT, IN inLastNumber BIGINT)
 BEGIN
 
   SELECT SUM(inv.total - (inv.total * (IFNULL(dis.percentage, 0) / 100))) AS total FROM invoice inv LEFT JOIN discount dis
@@ -5566,7 +5566,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_ranking_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ranking_count`(IN inFirstDate DATE, IN inLastDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ranking_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
        SELECT COUNT(*) FROM (SELECT 1 FROM invoice inv INNER JOIN invoice_lot inv_lot
@@ -5580,7 +5580,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_ranking_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_ranking_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ranking_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   SET @rank := 0;
@@ -5617,7 +5617,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_report_deposits_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_deposits_get`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_report_deposits_get`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT deposit_id AS id, bank_account_number, number, IF(status = 2, 0, total) as total, status FROM deposit
@@ -5627,7 +5627,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_report_invoices_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_invoices_get`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_report_invoices_get`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT cor.serial_number, inv.number, inv.name,
@@ -5653,7 +5653,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_report_total_cash`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_cash`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_report_total_cash`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT SUM(cash) FROM cash_receipt cr
@@ -5665,7 +5665,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_report_total_deposits`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_deposits`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_report_total_deposits`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT SUM(total) FROM deposit
@@ -5675,7 +5675,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_report_total_discount`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_discount`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_report_total_discount`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT SUM(inv.total * (dis.percentage / 100)) FROM invoice inv
@@ -5687,7 +5687,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_report_total_vat`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_vat`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_report_total_vat`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT SUM((inv.total - inv.total * (IFNULL(dis.percentage, 0) / 100)) * (inv.vat / 100)) FROM invoice inv
@@ -5699,7 +5699,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sales_report_total_vouchers`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `sales_report_total_vouchers`(IN inCashRegisterId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_report_total_vouchers`(IN inCashRegisterId INT)
 BEGIN
 
   SELECT SUM(total_vouchers) FROM cash_receipt cr
@@ -5711,7 +5711,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shift_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_delete`(IN inShiftId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shift_delete`(IN inShiftId INT)
 BEGIN
 
   DELETE FROM shift
@@ -5721,7 +5721,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shift_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_dependencies`(IN inShiftId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shift_dependencies`(IN inShiftId INT)
 BEGIN
 
   DECLARE shiftRowsCount INT;
@@ -5755,7 +5755,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shift_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_get`(IN inShiftId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shift_get`(IN inShiftId INT)
 BEGIN
 
   SELECT name, time_table FROM shift
@@ -5765,7 +5765,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shift_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_insert`(IN inName VARCHAR(50), IN inTimeTable VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shift_insert`(IN inName VARCHAR(50), IN inTimeTable VARCHAR(50))
 BEGIN
 
   INSERT INTO shift (name, time_table)
@@ -5775,7 +5775,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shift_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shift_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM shift;
@@ -5783,7 +5783,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shift_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shift_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5807,7 +5807,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shift_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shift_update`(IN inShiftId INT, IN inName VARCHAR(50), IN inTimeTable VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shift_update`(IN inShiftId INT, IN inName VARCHAR(50), IN inTimeTable VARCHAR(50))
 BEGIN
 
   UPDATE shift
@@ -5819,7 +5819,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shipment_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_cancel`(IN inShipmentId INT, IN inUserName VARCHAR(10),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shipment_cancel`(IN inShipmentId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -5839,7 +5839,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shipment_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_get`(IN inShipmentId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shipment_get`(IN inShipmentId INT)
 BEGIN
 
   SELECT user_account_username, branch_id, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, contact, total, status
@@ -5851,7 +5851,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shipment_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_insert`(IN inUserName VARCHAR(10), IN inBranchId INT,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shipment_insert`(IN inUserName VARCHAR(10), IN inBranchId INT,
 
   IN inDate DATETIME, IN inContact VARCHAR(50), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -5863,7 +5863,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shipment_lot_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_get`(IN inShipmentId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shipment_lot_get`(IN inShipmentId INT)
 BEGIN
 
   SELECT lot_id, quantity, price FROM shipment_lot
@@ -5875,7 +5875,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shipment_lot_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shipment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -5887,7 +5887,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shipment_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shipment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM shipment
@@ -5897,7 +5897,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `shipment_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `shipment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `shipment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -5927,14 +5927,14 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `subject_id_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `subject_id_get`(IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `subject_id_get`(IN inName VARCHAR(50))
 BEGIN
   SELECT subject_id FROM subject
     WHERE name = inName;
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_delete`(IN inSupplierId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_delete`(IN inSupplierId INT)
 BEGIN
 
   DELETE FROM supplier
@@ -5944,7 +5944,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_dependencies`(IN inSupplierId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_dependencies`(IN inSupplierId INT)
 BEGIN
 
   DECLARE supplierRowsCount INT;
@@ -6002,7 +6002,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_get`(IN inSupplierId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_get`(IN inSupplierId INT)
 BEGIN
 
   SELECT name, nit, telephone, address, email, contact FROM supplier
@@ -6012,7 +6012,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_insert`(IN inName VARCHAR(50), IN inNit VARCHAR(15), IN inTelephone VARCHAR(50),
 
   IN inAddress VARCHAR(100), IN inEmail VARCHAR(50), IN inContact VARCHAR(50))
 BEGIN
@@ -6024,7 +6024,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM supplier;
@@ -6032,7 +6032,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -6056,7 +6056,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_product_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_product_list_get`(IN inSupplierId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_product_list_get`(IN inSupplierId INT)
 BEGIN
 
   SELECT DISTINCT pro_sup.product_id AS id, pro.name, man.name AS manufacturer FROM product_supplier pro_sup INNER JOIN product pro
@@ -6070,7 +6070,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `supplier_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `supplier_update`(IN inSupplierId INT, IN inName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `supplier_update`(IN inSupplierId INT, IN inName VARCHAR(50),
 
   IN inNit VARCHAR(15), IN inTelephone VARCHAR(50), IN inAddress VARCHAR(100),
 
@@ -6088,7 +6088,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `unit_of_measure_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_delete`(IN inUnitOfMeasureId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `unit_of_measure_delete`(IN inUnitOfMeasureId INT)
 BEGIN
 
   DELETE FROM unit_of_measure
@@ -6098,7 +6098,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `unit_of_measure_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_dependencies`(IN inUnitOfMeasureId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `unit_of_measure_dependencies`(IN inUnitOfMeasureId INT)
 BEGIN
 
   DECLARE unitOfMeasureRowsCount INT;
@@ -6132,7 +6132,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `unit_of_measure_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_get`(IN inUnitOfMeasureId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `unit_of_measure_get`(IN inUnitOfMeasureId INT)
 BEGIN
 
   SELECT name FROM unit_of_measure
@@ -6142,7 +6142,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `unit_of_measure_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_insert`(IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `unit_of_measure_insert`(IN inName VARCHAR(50))
 BEGIN
 
   INSERT INTO unit_of_measure (name)
@@ -6152,7 +6152,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `unit_of_measure_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `unit_of_measure_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM unit_of_measure;
@@ -6160,7 +6160,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `unit_of_measure_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `unit_of_measure_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -6184,7 +6184,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `unit_of_measure_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `unit_of_measure_update`(IN inUnitOfMeasureId INT, IN inName VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `unit_of_measure_update`(IN inUnitOfMeasureId INT, IN inName VARCHAR(50))
 BEGIN
 
   UPDATE unit_of_measure
@@ -6196,7 +6196,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_change_password`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_change_password`(IN inUserName VARCHAR(10), IN inPassword VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_change_password`(IN inUserName VARCHAR(10), IN inPassword VARCHAR(50))
 BEGIN
 
   UPDATE user_account
@@ -6208,7 +6208,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_delete`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_delete`(IN inUserName VARCHAR(10))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_delete`(IN inUserName VARCHAR(10))
 BEGIN
 
   DELETE FROM user_account
@@ -6218,7 +6218,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_dependencies`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_dependencies`(IN inUserName VARCHAR(10))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_dependencies`(IN inUserName VARCHAR(10))
 BEGIN
 
   DECLARE userAccountRowsCount INT;
@@ -6468,7 +6468,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_exists`(IN inUserName VARCHAR(10))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_exists`(IN inUserName VARCHAR(10))
 BEGIN
 
   SELECT COUNT(*) FROM user_account
@@ -6478,7 +6478,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_get`(IN inUserName VARCHAR(10))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_get`(IN inUserName VARCHAR(10))
 BEGIN
 
   SELECT role_id, first_name, last_name, deactivated FROM user_account
@@ -6488,7 +6488,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_insert`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_insert`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inPassword VARCHAR(50), IN inDeactivated TINYINT)
 BEGIN
@@ -6500,7 +6500,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_is_valid`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_is_valid`(IN inUserName VARCHAR(10), IN inPassword VARCHAR(50))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_is_valid`(IN inUserName VARCHAR(10), IN inPassword VARCHAR(50))
 BEGIN
 
   DECLARE userRowsCount INT;
@@ -6528,7 +6528,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_list_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_list_count`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_list_count`()
 BEGIN
 
   SELECT COUNT(*) FROM user_account;
@@ -6536,7 +6536,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_list_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_list_get`(IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -6560,7 +6560,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_no_password_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_no_password_update`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_no_password_update`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inDeactivated TINYINT)
 BEGIN
@@ -6574,7 +6574,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `user_account_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `user_account_update`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `user_account_update`(IN inUserName VARCHAR(10), IN inRoleId INT, IN inFirstName VARCHAR(50),
 
   IN inLastName VARCHAR(50), IN inPassword VARCHAR(50), IN inDeactivated TINYINT)
 BEGIN
@@ -6588,7 +6588,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `vat_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `vat_get`()
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `vat_get`()
 BEGIN
 
   SELECT percentage FROM vat;
@@ -6596,7 +6596,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `vat_update`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `vat_update`(IN inPercentage DECIMAL(4, 2))
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `vat_update`(IN inPercentage DECIMAL(4, 2))
 BEGIN
 
   UPDATE vat
@@ -6606,7 +6606,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `voucher_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_get`(IN inCashReceiptId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `voucher_get`(IN inCashReceiptId INT)
 BEGIN
 
   SELECT transaction, amount, payment_card_number, payment_card_type_id, payment_card_brand_id, name,
@@ -6620,7 +6620,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `voucher_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `voucher_insert`(IN inCashReceiptId INT, IN inTransaction VARCHAR(50), IN inAmount DECIMAL(13, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `voucher_insert`(IN inCashReceiptId INT, IN inTransaction VARCHAR(50), IN inAmount DECIMAL(13, 2),
 
   IN inPaymentCardNumber INT, IN inPaymentCardTypeId INT, IN inPaymentCardBrandId INT, IN inName VARCHAR(50),
 
@@ -6638,7 +6638,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `withdraw_adjustment_cancel`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_cancel`(IN inWithdrawAdjustmentId INT, IN inUserName VARCHAR(10),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `withdraw_adjustment_cancel`(IN inWithdrawAdjustmentId INT, IN inUserName VARCHAR(10),
 
   IN inDate DATETIME)
 BEGIN
@@ -6658,7 +6658,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `withdraw_adjustment_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_get`(IN inWithdrawAdjustmentId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `withdraw_adjustment_get`(IN inWithdrawAdjustmentId INT)
 BEGIN
 
   SELECT user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, reason, total, status
@@ -6670,7 +6670,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `withdraw_adjustment_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `withdraw_adjustment_insert`(IN inUserName VARCHAR(10), IN inDate DATETIME,
 
   IN inReason VARCHAR(100), IN inTotal DECIMAL(13, 2), IN inStatus TINYINT)
 BEGIN
@@ -6682,7 +6682,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `withdraw_adjustment_lot_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_get`(IN inWithdrawAdjustmentId INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `withdraw_adjustment_lot_get`(IN inWithdrawAdjustmentId INT)
 BEGIN
 
   SELECT lot_id, quantity, price FROM withdraw_adjustment_lot
@@ -6694,7 +6694,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `withdraw_adjustment_lot_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `withdraw_adjustment_lot_insert`(IN inDocumentId INT, IN inLotId INT, IN inQuantity INT, IN inPrice DECIMAL(6, 2),
 
   IN inNumber INT)
 BEGIN
@@ -6706,7 +6706,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `withdraw_adjustment_search_count`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `withdraw_adjustment_search_count`(IN inStartDate DATE, IN inEndDate DATE)
 BEGIN
 
   SELECT COUNT(*) FROM withdraw_adjustment
@@ -6716,7 +6716,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `withdraw_adjustment_search_get`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `withdraw_adjustment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `withdraw_adjustment_search_get`(IN inStartDate DATE, IN inEndDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
 
   PREPARE statement FROM
@@ -6746,7 +6746,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `working_day_close`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_close`(IN inWorkingDay DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `working_day_close`(IN inWorkingDay DATE)
 BEGIN
 
   UPDATE working_day
@@ -6758,7 +6758,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `working_day_close_cash_registers`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_close_cash_registers`(IN inWorkingDay DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `working_day_close_cash_registers`(IN inWorkingDay DATE)
 BEGIN
 
   UPDATE cash_register
@@ -6770,7 +6770,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `working_day_exists`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_exists`(IN inWorkingDay DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `working_day_exists`(IN inWorkingDay DATE)
 BEGIN
 
   SELECT COUNT(*) FROM working_day
@@ -6780,7 +6780,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `working_day_insert`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_insert`(IN inWorkingDay DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `working_day_insert`(IN inWorkingDay DATE)
 BEGIN
 
   INSERT INTO working_day (working_day)
@@ -6790,7 +6790,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `working_day_is_open`$$
-CREATE DEFINER=`999_user`@`localhost` PROCEDURE `working_day_is_open`(IN inWorkingDay DATE)
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `working_day_is_open`(IN inWorkingDay DATE)
 BEGIN
 
   SELECT open FROM working_day

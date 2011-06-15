@@ -1,14 +1,14 @@
 --
--- Base de datos: `999_store`
+-- Base de datos: `@db_database@`
 --
-CREATE DATABASE `999_store` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `999_store`;
+CREATE DATABASE `@db_database@` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `@db_database@`;
 
 --
--- Create 999_user
+-- Create @db_user@
 --
-GRANT ALL PRIVILEGES ON `999_store`.*
+GRANT ALL PRIVILEGES ON `@db_database@`.*
 
-      TO '999_user'@'localhost' IDENTIFIED BY '999_user'
+      TO '@db_user@'@'localhost' IDENTIFIED BY '@db_password@'
 
       WITH GRANT OPTION;
