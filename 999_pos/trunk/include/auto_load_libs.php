@@ -1,7 +1,7 @@
 <?php
 /**
  * Library with the __autoload function for the session stored objects that need to instantiate.
- * @package 999_pos
+ * @package Pos
  * @author Roberto Oliveros
  */
 

@@ -1,1 +1,1 @@
-ErrorDocument 404 /999_project/pos/not_found.html
+ErrorDocument 404 /@alias_dir@/pos/not_found.html

@@ -2,7 +2,7 @@
 /**
  * PHP file with all the configuration variables for the system to run properly. The database user and password
  * constants are ignored in this documentation for security reasons.
- * @package 999_pos
+ * @package Pos
  * @author Roberto Oliveros
  */
 

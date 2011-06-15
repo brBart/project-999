@@ -1,7 +1,7 @@
 <?php
 /**
  * Smarty plugin for getting the company's name.
- * @package 999_pos
+ * @package Pos
  * @author Roberto Oliveros
  */
 

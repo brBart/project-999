@@ -1,7 +1,7 @@
 <?php
 /**
  * Smarty plugin for getting the actual username.
- * @package 999_pos
+ * @package Pos
  * @author Roberto Oliveros
  */
 

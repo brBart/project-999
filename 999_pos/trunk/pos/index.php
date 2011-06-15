@@ -1,7 +1,7 @@
 <?php
 /**
  * Point of departure for the 999 POS system.
- * @package 999_pos
+ * @package Pos
  * @author Roberto Oliveros
  */
 

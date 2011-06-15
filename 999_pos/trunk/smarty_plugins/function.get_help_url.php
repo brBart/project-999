@@ -1,7 +1,7 @@
 <?php
 /**
  * Smarty plugin for getting the system's help url.
- * @package 999_pos
+ * @package Pos
  * @author Roberto Oliveros
  */
 
