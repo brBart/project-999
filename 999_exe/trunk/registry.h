@@ -11,9 +11,9 @@
 #include <QObject>
 #include <QUrl>
 
-const QString SERVER_URL = "127.0.0.1/999_project/pos/";
-const QString XSL_URL = "127.0.0.1/999_project/xsl/";
-const QString HELP_URL = "127.0.0.1/999_help/";
+const QString SERVER_URL = "127.0.0.1/bobs/pos/";
+const QString XSL_URL = "127.0.0.1/bobs/xsl/";
+const QString HELP_URL = "127.0.0.1/bobs/";
 const QString PRINTER_NAME = "EPSON TM-U220 Receipt";
 const bool IS_TMU_PRINTER = true;
 
