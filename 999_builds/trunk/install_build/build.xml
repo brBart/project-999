@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="install_database">
+		<echo>Recolectando informacion para instalar la base de datos...</echo>
+		
+		<input message="Ingrese el DSN del servidor"
+			   defaultValue="localhost"
+			   propertyName="db_server"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre del usuario para conectarse"
+			   propertyName="db_install_user"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el password"
+			   propertyName="db_install_password"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre que desea asignarle a la base de datos"
+			   defaultValue="bobs_store"
+			   propertyName="db_database"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre del usuario con que Bobs se conectara a la base de datos"
+			   defaultValue="bobs_user"
+			   propertyName="db_user"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el password"
+			   defaultValue="r5obu999es_db"
+			   propertyName="db_password"
+			   promptChar=" >" />
+			   
+		<echo>Instalando base de datos...</echo>
+		
+		<copy todir="tmp">
+			<fileset dir="middle/db">
+				<exclude name="truncate_data.sql" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="db_password" value="${db_password}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		
+		<pdosqlexec url="mysql:host=${db_server}" userid="${db_install_user}" password="${db_install_password}" delimiter="$$">
+			<filelist dir="tmp/" files="create_base_and_user.sql,999_structure.sql,999_data.sql"/>
+		</pdosqlexec>
+	</target>
+
+	<target name="install_middle" depends="install_database">
+		<echo>Instalando librerias (middle)...</echo>
+	</target>
+	
+	<target name="install_front" depends="install_middle" />
+	
+	<target name="install_pos" depends="install_front" />
+	
+	<target name="main" depends="install_pos" />
+	
+	<target name="clean">
+		<delete dir="tmp" verbose="true" />
+	</target>
+</project>
