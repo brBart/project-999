@@ -7,7 +7,9 @@
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- DELIMITER $$
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO"$$
 
 --
 -- Base de datos: `@db_database@`
@@ -23,7 +25,7 @@ INSERT INTO `action` (`action_id`, `name`) VALUES
 (3, 'cancel'),
 (4, 'close'),
 (5, 'confirm'),
-(6, 'read');
+(6, 'read')$$
 
 --
 -- Volcar la base de datos para la tabla `bank`
@@ -31,14 +33,14 @@ INSERT INTO `action` (`action_id`, `name`) VALUES
 
 INSERT INTO `bank` (`bank_id`, `name`) VALUES
 (1, 'GyT Continental'),
-(2, 'Industrial');
+(2, 'Industrial')$$
 
 --
 -- Volcar la base de datos para la tabla `bank_account`
 --
 
 INSERT INTO `bank_account` (`bank_account_number`, `bank_id`, `name`) VALUES
-('29-5000036-6', 1, 'Drogueria Jose Gil Jutiapa');
+('29-5000036-6', 1, 'Drogueria Jose Gil Jutiapa')$$
 
 --
 -- Volcar la base de datos para la tabla `bonus`
@@ -70,7 +72,7 @@ INSERT INTO `bank_account` (`bank_account_number`, `bank_id`, `name`) VALUES
 --
 
 INSERT INTO `company` (`nit`, `name`, `corporate_name`, `telephone`, `address`) VALUES
-('350682-7', 'Tienda 999', 'Comercial y Drogueria Jose Gil', '24129900', 'zona 1, Chiquimula');
+('350682-7', 'Tienda 999', 'Comercial y Drogueria Jose Gil', '24129900', 'zona 1, Chiquimula')$$
 
 --
 -- Volcar la base de datos para la tabla `comparison`
@@ -173,7 +175,7 @@ INSERT INTO `company` (`nit`, `name`, `corporate_name`, `telephone`, `address`) 
 
 INSERT INTO `payment_card_brand` (`payment_card_brand_id`, `name`) VALUES
 (1, 'Visa'),
-(2, 'MasterCard');
+(2, 'MasterCard')$$
 
 --
 -- Volcar la base de datos para la tabla `payment_card_type`
@@ -181,7 +183,7 @@ INSERT INTO `payment_card_brand` (`payment_card_brand_id`, `name`) VALUES
 
 INSERT INTO `payment_card_type` (`payment_card_type_id`, `name`) VALUES
 (1, 'Credito'),
-(2, 'Debito');
+(2, 'Debito')$$
 
 --
 -- Volcar la base de datos para la tabla `product`
@@ -237,7 +239,7 @@ INSERT INTO `role` (`role_id`, `name`) VALUES
 (2, 'Auditor'),
 (3, 'Supervisor'),
 (4, 'Operador'),
-(5, 'Contador');
+(5, 'Contador')$$
 
 --
 -- Volcar la base de datos para la tabla `role_subject_action`
@@ -483,21 +485,21 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (2, 41, 6, 1),
 (3, 41, 6, 1),
 (4, 41, 6, 0),
-(5, 41, 6, 1);
+(5, 41, 6, 1)$$
 
 --
 -- Volcar la base de datos para la tabla `root`
 --
 
 INSERT INTO `root` (`password`) VALUES
-('4ba8ee3256001cc06025ac392d9b1c98051bff09');
+('4ba8ee3256001cc06025ac392d9b1c98051bff09')$$
 
 --
 -- Volcar la base de datos para la tabla `shift`
 --
 
 INSERT INTO `shift` (`shift_id`, `name`, `time_table`) VALUES
-(1, 'Diurno', '8 am - 6 pm');
+(1, 'Diurno', '8 am - 6 pm')$$
 
 --
 -- Volcar la base de datos para la tabla `shipment`
@@ -558,7 +560,7 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (38, 'general_closure'),
 (39, 'product_stock_monetary_report'),
 (40, 'invoice_transaction_log'),
-(41, 'resolution_log');
+(41, 'resolution_log')$$
 
 --
 -- Volcar la base de datos para la tabla `supplier`
@@ -574,21 +576,21 @@ INSERT INTO `unit_of_measure` (`unit_of_measure_id`, `name`) VALUES
 (10, '1/2 Docena'),
 (11, 'Docena'),
 (12, 'Metro'),
-(13, 'Yarda');
+(13, 'Yarda')$$
 
 --
 -- Volcar la base de datos para la tabla `user_account`
 --
 
 INSERT INTO `user_account` (`user_account_username`, `role_id`, `first_name`, `last_name`, `password`, `deactivated`) VALUES
-('roboli', 1, 'Roberto', 'Oliveros', '36a9fc86e20ec727f782d1e27f877303d866fbbd', 0);
+('roboli', 1, 'Roberto', 'Oliveros', '36a9fc86e20ec727f782d1e27f877303d866fbbd', 0)$$
 
 --
 -- Volcar la base de datos para la tabla `vat`
 --
 
 INSERT INTO `vat` (`percentage`) VALUES
-(12.00);
+(12.00)$$
 
 --
 -- Volcar la base de datos para la tabla `voucher`
