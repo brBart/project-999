@@ -22,7 +22,7 @@
 			   propertyName="db_database"
 			   promptChar=" >" />
 			   
-		<input message="Ingrese el nombre del usuario con que Bobs se conectara a la base de datos"
+		<input message="Ingrese el nombre que desea asignarle al usuario con que Bobs se conectara a la base de datos"
 			   defaultValue="bobs_user"
 			   propertyName="db_user"
 			   promptChar=" >" />
@@ -32,11 +32,12 @@
 			   propertyName="db_password"
 			   promptChar=" >" />
 			   
-		<echo>Instalando base de datos...</echo>
+		<echo>Instalando la base de datos...</echo>
 		
 		<copy todir="tmp">
 			<fileset dir="middle/db">
 				<exclude name="truncate_data.sql" />
+				<exclude name="uninstall_base_and_user.sql" />
 			</fileset>
 			<filterchain>
 				<replacetokens>
@@ -51,16 +52,53 @@
 			<filelist dir="tmp/" files="create_base_and_user.sql,999_structure.sql,999_data.sql"/>
 		</pdosqlexec>
 	</target>
+	
+	<target name="create_directories" depends="install_database">
+		<input message="Ingrese la ruta donde desea que se instale Bobs"
+			   defaultValue="C:\Program Files\Bobs"
+			   propertyName="install_dir"
+			   promptChar=" >" />
+			   
+		<mkdir dir="${install_dir}" />
+	</target>
 
-	<target name="install_middle" depends="install_database">
-		<echo>Instalando librerias (middle)...</echo>
+	<target name="install_middle" depends="create_directories">
+		<echo>Instalando las librerias (middle)...</echo>
 	</target>
 	
-	<target name="install_front" depends="install_middle" />
+	<target name="install_front" depends="install_middle">
+		<echo>Instalando los archivos web (front)...</echo>
+	</target>
 	
-	<target name="install_pos" depends="install_front" />
+	<target name="install_pos" depends="install_front">
+		<echo>Instalando el POS...</echo>
+	</target>
 	
-	<target name="main" depends="install_pos" />
+	
+	<target name="install_uninstall" depends="install_pos">
+		<echo>Instalando los archivos necesarios para la desinstalacion...</echo>
+		
+		<copy todir="${install_dir}/uninstall">
+			<fileset dir="uninstall">
+				<include name="build.xml" />
+			</fileset>
+			<fileset dir="middle/db">
+				<include name="uninstall_base_and_user.sql" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="db_server" value="${db_server}" />
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="install_dir" value="${install_dir}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+	
+	<target name="main" depends="install_uninstall">
+		
+	</target>
 	
 	<target name="clean">
 		<delete dir="tmp" verbose="true" />
