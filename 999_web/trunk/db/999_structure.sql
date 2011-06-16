@@ -6800,5 +6800,3 @@ BEGIN
     WHERE working_day = inWorkingDay;
 
 END$$
-
-DELIMITER ;
