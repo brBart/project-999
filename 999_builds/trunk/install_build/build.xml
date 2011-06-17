@@ -75,6 +75,16 @@
 	
 	<target name="install_front" depends="install_middle">
 		<echo>Instalando los archivos web (front)...</echo>
+		
+		<copy todir="${install_dir}/front">
+			<fileset dir="front">
+				<exclude name=".cvsignore" />
+			</fileset>
+		</copy>
+		
+		<mkdir dir="${install_dir}/front/backup" />
+		<mkdir dir="${install_dir}/front/sales_ledger" />
+		<mkdir dir="${install_dir}/front/templates_c" />
 	</target>
 	
 	<target name="install_pos" depends="install_front">
