@@ -64,6 +64,13 @@
 
 	<target name="install_middle" depends="create_directories">
 		<echo>Instalando las librerias (middle)...</echo>
+		
+		<copy todir="${install_dir}/middle">
+			<fileset dir="middle">
+				<exclude name="db/" />
+				<exclude name=".cvsignore" />
+			</fileset>
+		</copy>
 	</target>
 	
 	<target name="install_front" depends="install_middle">

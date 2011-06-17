@@ -29,7 +29,13 @@
 		</if>
 	</target>
 	
-	<target name="main" depends="uninstall_database">
+	<target name="remove_middle" depends="uninstall_database">
+		<echo>Removiendo librerias (middle)...</echo>
+		
+		<delete dir="../middle" verbose="true" />
+	</target>
+	
+	<target name="main" depends="remove_middle">
 		<echo>Ya puede eliminar la carpeta @install_dir@.</echo>
 	</target>
 </project>
