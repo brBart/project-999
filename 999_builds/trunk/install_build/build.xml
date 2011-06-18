@@ -35,7 +35,7 @@
 		<echo>Instalando la base de datos...</echo>
 		
 		<copy todir="tmp">
-			<fileset dir="middle/db">
+			<fileset dir="db">
 				<exclude name="truncate_data.sql" />
 				<exclude name="uninstall_base_and_user.sql" />
 			</fileset>
@@ -66,10 +66,7 @@
 		<echo>Instalando las librerias (middle)...</echo>
 		
 		<copy todir="${install_dir}/middle">
-			<fileset dir="middle">
-				<exclude name="db/" />
-				<exclude name=".cvsignore" />
-			</fileset>
+			<fileset dir="middle" />
 		</copy>
 	</target>
 	
@@ -77,9 +74,7 @@
 		<echo>Instalando los archivos web (front)...</echo>
 		
 		<copy todir="${install_dir}/front">
-			<fileset dir="front">
-				<exclude name=".cvsignore" />
-			</fileset>
+			<fileset dir="front" />
 		</copy>
 		
 		<mkdir dir="${install_dir}/front/backup" />
