@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="copy_files">
+		<input message="Ingrese la ruta donde se encuentran los archivos"
+			   propertyName="files_dir"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la version de Bobs que se va a distribuir"
+			   propertyName="bobs_version"
+			   promptChar=" >" />
+			   
+		<mkdir dir="bobs-${bobs_version}" />
+		
+		<copy todir="bobs-${bobs_version}">
+			<fileset dir="${files_dir}">
+				<exclude name=".cvsignore" />
+			</fileset>
+			
+			<fileset dir="../">
+				<exclude name="deploy_build/" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="main" depends="copy_files" />
+</project>
