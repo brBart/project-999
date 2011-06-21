@@ -82,7 +82,33 @@
 		<mkdir dir="${install_dir}/front/templates_c" />
 	</target>
 	
-	<target name="install_pos" depends="install_front">
+	<target name="configure_httpdconf" depends="install_front">
+		<input message="Ingrese la ruta donde se encuentra httpd.conf"
+			   defaultValue="C:\xampp\apache\conf"
+			   propertyName="httpdconf_dir"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el alias que Bobs utilizara en el servidor web"
+			   defaultValue="bobs"
+			   propertyName="alias"
+			   promptChar=" >" />
+			   
+		<php function="rtrim" returnProperty="trim_install_dir">
+			<param value="${install_dir}"/>
+			<param value="/"/>
+		</php>
+			   
+		<append destFile="${httpdconf_dir}/httpd.conf" file="httpd.conf">
+			<filterchain>
+				<replacetokens>
+					<token key="alias" value="${alias}" />
+					<token key="install_dir" value="${trim_install_dir}" />
+				</replacetokens>
+			</filterchain>
+		</append>
+	</target>
+	
+	<target name="install_pos" depends="configure_httpdconf">
 		<echo>Instalando el POS...</echo>
 	</target>
 	

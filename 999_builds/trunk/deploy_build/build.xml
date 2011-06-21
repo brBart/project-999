@@ -138,6 +138,8 @@
 		<copy file="../uninstall_build/build.xml" tofile="bobs-${bobs_version}/uninstall/build.xml" />
 		
 		<copy file="../install_build/build.xml" tofile="bobs-${bobs_version}/build.xml" />
+		
+		<copy file="../install_build/httpd.conf" tofile="bobs-${bobs_version}/httpd.conf" />
 	</target>
 	
 	<target name="update_version" depends="copy_install_files">
