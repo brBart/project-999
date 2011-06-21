@@ -1,0 +1,5 @@
+bobs_version=@bobs_version@
+front_version=@front_version@
+pos_version=@pos_version@
+middle_version=@middle_version@
+help_version=@help_version@
