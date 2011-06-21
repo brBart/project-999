@@ -34,10 +34,6 @@
 			<fileset dir="${web_files_dir}">
 				<exclude name=".cvsignore" />
 			</fileset>
-			
-			<fileset dir="../">
-				<exclude name="deploy_build/" />
-			</fileset>
 		</copy>
 	</target>
 	
@@ -134,7 +130,18 @@
 		<copy file="${dll_file_dir}/${qtxmlpatternsdll}" tofile="bobs-${bobs_version}/pos/${qtxmlpatternsdll}" />
 	</target>
 	
-	<target name="update_version" depends="copy_exe_files">
+	<target name="copy_install_files" depends="copy_exe_files">
+		<copy todir="bobs-${bobs_version}">			
+			<fileset dir="../">
+				<include name="db/" />
+				<include name="uninstall_build/" />
+			</fileset>
+		</copy>
+		
+		<copy file="../install_build/build.xml" tofile="bobs-${bobs_version}/build.xml" />
+	</target>
+	
+	<target name="update_version" depends="copy_install_files">
 		<copy todir="bobs-${bobs_version}">
 			<fileset dir=".">
 				<include name="version.txt" />
