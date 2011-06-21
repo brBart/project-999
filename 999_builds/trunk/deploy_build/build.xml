@@ -131,12 +131,11 @@
 	</target>
 	
 	<target name="copy_install_files" depends="copy_exe_files">
-		<copy todir="bobs-${bobs_version}">			
-			<fileset dir="../">
-				<include name="db/" />
-				<include name="uninstall_build/" />
-			</fileset>
+		<copy todir="bobs-${bobs_version}/db/">
+			<fileset dir="../db/" />
 		</copy>
+		
+		<copy file="../uninstall_build/build.xml" tofile="bobs-${bobs_version}/uninstall/build.xml" />
 		
 		<copy file="../install_build/build.xml" tofile="bobs-${bobs_version}/build.xml" />
 	</target>

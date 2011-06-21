@@ -94,7 +94,7 @@
 			<fileset dir="uninstall">
 				<include name="build.xml" />
 			</fileset>
-			<fileset dir="middle/db">
+			<fileset dir="db">
 				<include name="uninstall_base_and_user.sql" />
 			</fileset>
 			<filterchain>
