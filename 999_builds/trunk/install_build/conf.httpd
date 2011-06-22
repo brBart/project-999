@@ -1,8 +1,8 @@
 
 #BOBS_INSTALL
 <IfModule alias_module>
-    Alias /@alias@/ @install_dir@/
-    Alias /@alias@ @install_dir@
+    Alias /@alias@/ "@install_dir@/"
+    Alias /@alias@ "@install_dir@"
 </IfModule>
 <Directory "@install_dir@">
     Options Indexes FollowSymLinks

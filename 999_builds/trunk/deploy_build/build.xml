@@ -35,6 +35,14 @@
 				<exclude name=".cvsignore" />
 			</fileset>
 		</copy>
+		
+		<copy file="${web_files_dir}/front/include/configs/site.conf" tofile="bobs-${bobs_version}/front/include/configs/site.conf" overwrite="true">
+			<filterchain>
+				<replacetokens>
+					<token key="bobs_version" value="${bobs_version}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
 	</target>
 	
 	<property name="preferencestxt" value="preferences.txt" />
