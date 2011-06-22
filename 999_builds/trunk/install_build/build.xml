@@ -95,10 +95,16 @@
 			   
 		<php function="rtrim" returnProperty="trim_install_dir">
 			<param value="${install_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="trim_install_dir">
+			<param value="\"/>
 			<param value="/"/>
+			<param value="${trim_install_dir}"/>
 		</php>
 			   
-		<append destFile="${httpdconf_dir}/httpd.conf" file="httpd.conf">
+		<append destFile="${httpdconf_dir}/httpd.conf" file="conf.httpd">
 			<filterchain>
 				<replacetokens>
 					<token key="alias" value="${alias}" />
