@@ -1,0 +1,13 @@
+
+#BOBS_INSTALL
+<IfModule alias_module>
+    Alias /@alias@/ @install_dir@/
+    Alias /@alias@ @install_dir@
+</IfModule>
+<Directory "@install_dir@">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+</Directory>
+#BOBS_INSTALL

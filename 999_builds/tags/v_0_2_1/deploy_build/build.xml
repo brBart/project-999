@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="bobs_version">
+		<input message="Ingrese la version de Bobs que se distribuira"
+			   propertyName="bobs_version"
+			   promptChar=" >" />
+				   
+		<input message="Ingrese la version del Front que se utiliza"
+			   propertyName="front_version"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la version del POS que se utiliza"
+			   propertyName="pos_version"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la version del Middle que se utiliza"
+			   propertyName="middle_version"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la version del Help que se utiliza"
+			   propertyName="help_version"
+			   promptChar=" >" />
+	</target>
+
+	<target name="copy_web_files" depends="bobs_version">
+		<input message="Ingrese la ruta donde se encuentran los archivos web"
+			   propertyName="web_files_dir"
+			   promptChar=" >" />
+			   
+		<mkdir dir="bobs-${bobs_version}" />
+		
+		<copy todir="bobs-${bobs_version}">
+			<fileset dir="${web_files_dir}">
+				<exclude name=".cvsignore" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<property name="preferencestxt" value="preferences.txt" />
+	<property name="libgccdll" value="libgcc_s_dw2-1.dll" />
+	<property name="mingwdll" value="mingwm10.dll" />
+	<property name="phonondll" value="phonon4.dll" />
+	<property name="qtcoredll" value="QtCore4.dll" />
+	<property name="qtguidll" value="QtGui4.dll" />
+	<property name="qtnetworkdll" value="QtNetwork4.dll" />
+	<property name="qtwebkitdll" value="QtWebKit4.dll" />
+	<property name="qtxmldll" value="QtXml4.dll" />
+	<property name="qtxmlpatternsdll" value="QtXmlPatterns4.dll" />
+	
+	<target name="copy_exe_files" depends="copy_web_files">
+		<input message="Ingrese el nombre del ejecutable"
+			   defaultValue="bobs_pos.exe"
+			   propertyName="exe_file"
+			   promptChar=" >" />
+	
+		<input message="Ingrese la ruta donde se encuentra el archivo ejecutable"
+			   propertyName="exe_file_dir"
+			   promptChar=" >" />
+			   
+		<copy file="${exe_file_dir}/${exe_file}" tofile="bobs-${bobs_version}/pos/bobs_pos.exe" />
+		
+		<input message="Ingrese la ruta donde se encuentra el archivo ${preferencestxt}"
+			   defaultValue="${exe_file_dir}"
+			   propertyName="txt_file_dir"
+			   promptChar=" >" />
+			   
+		<copy file="${txt_file_dir}/${preferencestxt}" tofile="bobs-${bobs_version}/pos/${preferencestxt}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${libgccdll}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${libgccdll}" tofile="bobs-${bobs_version}/pos/${libgccdll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${mingwdll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${mingwdll}" tofile="bobs-${bobs_version}/pos/${mingwdll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${phonondll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${phonondll}" tofile="bobs-${bobs_version}/pos/${phonondll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${qtcoredll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${qtcoredll}" tofile="bobs-${bobs_version}/pos/${qtcoredll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${qtguidll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${qtguidll}" tofile="bobs-${bobs_version}/pos/${qtguidll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${qtnetworkdll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${qtnetworkdll}" tofile="bobs-${bobs_version}/pos/${qtnetworkdll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${qtwebkitdll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${qtwebkitdll}" tofile="bobs-${bobs_version}/pos/${qtwebkitdll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${qtxmldll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${qtxmldll}" tofile="bobs-${bobs_version}/pos/${qtxmldll}" />
+		
+		<input message="Ingrese la ruta donde se encuentra la libreria ${qtxmlpatternsdll}"
+			   defaultValue="${dll_file_dir}"
+			   propertyName="dll_file_dir"
+			   promptChar=" >" />
+		
+		<copy file="${dll_file_dir}/${qtxmlpatternsdll}" tofile="bobs-${bobs_version}/pos/${qtxmlpatternsdll}" />
+	</target>
+	
+	<target name="copy_install_files" depends="copy_exe_files">
+		<copy todir="bobs-${bobs_version}/db/">
+			<fileset dir="../db/" />
+		</copy>
+		
+		<copy file="../uninstall_build/build.xml" tofile="bobs-${bobs_version}/uninstall/build.xml" />
+		
+		<copy file="../install_build/build.xml" tofile="bobs-${bobs_version}/build.xml" />
+		
+		<copy file="../install_build/conf.httpd" tofile="bobs-${bobs_version}/conf.httpd" />
+	</target>
+	
+	<target name="update_version" depends="copy_install_files">
+		<copy todir="bobs-${bobs_version}">
+			<fileset dir=".">
+				<include name="version.txt" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="bobs_version" value="${bobs_version}" />
+					<token key="front_version" value="${front_version}" />
+					<token key="pos_version" value="${pos_version}" />
+					<token key="middle_version" value="${middle_version}" />
+					<token key="help_version" value="${help_version}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+	
+	<target name="main" depends="update_version" />
+</project>
