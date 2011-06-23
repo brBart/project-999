@@ -144,8 +144,16 @@
 		<echo>Instalando el POS...</echo>
 	</target>
 	
+	<target name="install_help" depends="install_pos">
+		<echo>Instalando los archivos para el soporte (ayuda)...</echo>
 	
-	<target name="install_uninstall" depends="install_pos">
+		<copy todir="${install_dir}/help">
+			<fileset dir="help" />
+		</copy>
+	</target>
+	
+	
+	<target name="install_uninstall" depends="install_help">
 		<echo>Instalando los archivos necesarios para la desinstalacion...</echo>
 		
 		<copy todir="${install_dir}/uninstall">

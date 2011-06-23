@@ -1,13 +1,13 @@
 
 #BOBS_INSTALL
 <IfModule alias_module>
-    Alias /@alias@/ "@install_dir@/"
-    Alias /@alias@ "@install_dir@"
+    Alias /@alias@/ "@install_dir@/front/"
+    Alias /@alias@ "@install_dir@/front"
     
     Alias /@help_alias@/ "@install_dir@/help/WebContent/"
     Alias /@help_alias@ "@install_dir@/help/WebContent"
 </IfModule>
-<Directory "@install_dir@">
+<Directory "@install_dir@/front">
     Options Indexes FollowSymLinks
     AllowOverride All
     Order allow,deny
