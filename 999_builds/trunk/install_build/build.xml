@@ -75,7 +75,7 @@
 	<target name="install_front" depends="install_middle">
 		<echo>Instalando los archivos web (front)...</echo>
 		
-		<input message="Ingrese la ruta donde se encuentra Smarty"
+		<input message="Ingrese la ruta donde se encuentran las librerias de Smarty"
 			   propertyName="smarty_dir"
 			   promptChar=" >" />
 			   
