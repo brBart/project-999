@@ -133,6 +133,7 @@
 			<filterchain>
 				<replacetokens>
 					<token key="alias" value="${alias}" />
+					<token key="help_alias" value="${help_alias}" />
 					<token key="install_dir" value="${trim_install_dir}" />
 				</replacetokens>
 			</filterchain>
