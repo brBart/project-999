@@ -72,6 +72,17 @@
 	
 	<property name="help_alias" value="bobs_help" />
 	
+	<php function="rtrim" returnProperty="fixed_install_dir">
+		<param value="${install_dir}"/>
+		<param value="\"/>
+	</php>
+	
+	<php function="str_replace" returnProperty="fixed_install_dir">
+		<param value="\"/>
+		<param value="/"/>
+		<param value="${fixed_install_dir}"/>
+	</php>
+	
 	<target name="install_front" depends="install_middle">
 		<echo>Instalando los archivos web (front)...</echo>
 		
@@ -87,13 +98,35 @@
 			<fileset dir="front" />
 		</copy>
 		
+		<php function="rtrim" returnProperty="smarty_dir">
+			<param value="${smarty_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="smarty_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${smarty_dir}"/>
+		</php>
+		
+		<php function="rtrim" returnProperty="mysql_dir">
+			<param value="${mysql_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="mysql_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${mysql_dir}"/>
+		</php>
+		
 		<copy file="front/include/config.php" tofile="${install_dir}/front/include/config.php" overwrite="true">
 			<filterchain>
 				<replacetokens>
-					<token key="install_dir" value="${install_dir}" />
-					<token key="smarty_dir" value="${smarty_dir}" />
+					<token key="install_dir" value="${fixed_install_dir}/" />
+					<token key="smarty_dir" value="${smarty_dir}/" />
 					<token key="help_alias" value="${help_alias}" />
-					<token key="mysql_dir" value="${mysql_dir}" />
+					<token key="mysql_dir" value="${mysql_dir}/" />
 					<token key="db_server" value="${db_server}" />
 					<token key="db_database" value="${db_database}" />
 					<token key="db_user" value="${db_user}" />
@@ -118,23 +151,12 @@
 			   propertyName="alias"
 			   promptChar=" >" />
 			   
-		<php function="rtrim" returnProperty="trim_install_dir">
-			<param value="${install_dir}"/>
-			<param value="\"/>
-		</php>
-		
-		<php function="str_replace" returnProperty="trim_install_dir">
-			<param value="\"/>
-			<param value="/"/>
-			<param value="${trim_install_dir}"/>
-		</php>
-			   
 		<append destFile="${httpdconf_dir}/httpd.conf" file="conf.httpd">
 			<filterchain>
 				<replacetokens>
 					<token key="alias" value="${alias}" />
 					<token key="help_alias" value="${help_alias}" />
-					<token key="install_dir" value="${trim_install_dir}" />
+					<token key="install_dir" value="${fixed_install_dir}" />
 				</replacetokens>
 			</filterchain>
 		</append>
