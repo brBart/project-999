@@ -167,7 +167,7 @@
 	</target>
 	
 	<target name="install_help" depends="install_pos">
-		<echo>Instalando los archivos para el soporte (ayuda)...</echo>
+		<echo>Instalando los archivos para el soporte (help)...</echo>
 	
 		<copy todir="${install_dir}/help">
 			<fileset dir="help" />
