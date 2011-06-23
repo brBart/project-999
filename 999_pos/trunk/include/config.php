@@ -57,7 +57,7 @@ define('PLUGINS_DIR', SITE_ROOT . '/smarty_plugins');
 /**
  * Help dir url.
  */
-define('HELP_URL', '@help_url@');
+define('HELP_URL', 'http://' . $_SERVER['SERVER_ADDR'] . '/@help_alias@');
 /**
  * Indicate where all the system libraries reside.
  */
