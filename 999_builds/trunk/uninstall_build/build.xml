@@ -29,7 +29,20 @@
 		</if>
 	</target>
 	
-	<target name="remove_middle" depends="uninstall_database">
+	<target name="configure_httpdconf" depends="uninstall_database">
+		<echo>Removiendo las configuraciones...</echo>
+		
+		<reflexive file="@httpdconf_dir@/httpd.conf">
+			<filterchain>
+				<regexp pattern="# Bobs specific settings" replace="" />
+				<regexp pattern="Include conf/extra/httpd-bobs.conf" replace="" />
+			</filterchain>
+		</reflexive>
+		
+		<delete file="@httpdconf_dir@/extra/httpd-bobs.conf" verbose="true" />
+	</target>
+	
+	<target name="remove_middle" depends="configure_httpdconf">
 		<echo>Removiendo las librerias (middle)...</echo>
 		
 		<delete dir="../middle" />
