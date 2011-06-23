@@ -32,16 +32,22 @@
 	<target name="remove_middle" depends="uninstall_database">
 		<echo>Removiendo las librerias (middle)...</echo>
 		
-		<delete dir="../middle" verbose="true" />
+		<delete dir="../middle" />
 	</target>
 	
 	<target name="remove_front" depends="remove_middle">
 		<echo>Removiendo los archivos web (front)...</echo>
 		
-		<delete dir="../front" verbose="true" />
+		<delete dir="../front" />
 	</target>
 	
-	<target name="main" depends="remove_front">
+	<target name="remove_help" depends="remove_front">
+		<echo>Removiendo los archivos de soporte (help)...</echo>
+		
+		<delete dir="../help" />
+	</target>
+	
+	<target name="main" depends="remove_help">
 		<echo>Ya puede eliminar la carpeta @install_dir@.</echo>
 	</target>
 </project>
