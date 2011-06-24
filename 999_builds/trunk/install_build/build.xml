@@ -151,13 +151,13 @@
 			   propertyName="alias"
 			   promptChar=" >" />
 			   
-		<append destFile="${httpdconf_dir}/httpd.conf" file="httpd-bobs.conf">
+		<append destFile="${httpdconf_dir}/httpd.conf" file="conf.httpd">
 			<filterchain>
 				<headfilter lines="4" />
 			</filterchain>
 		</append>
 			   
-		<copy file="httpd-bobs.conf" tofile="${httpdconf_dir}/extra/httpd-bobs.conf">
+		<copy file="conf.httpd" tofile="${httpdconf_dir}/extra/httpd-bobs.conf">
 			<filterchain>
 				<tailfilter lines="25" />
 				<replacetokens>

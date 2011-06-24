@@ -34,8 +34,10 @@
 		
 		<reflexive file="@httpdconf_dir@/httpd.conf">
 			<filterchain>
-				<regexp pattern="# Bobs specific settings" replace="" />
-				<regexp pattern="Include conf/extra/httpd-bobs.conf" replace="" />
+				<replaceregexp>
+					<regexp pattern="# Bobs specific settings" replace="" />
+					<regexp pattern="Include conf/extra/httpd-bobs.conf" replace="" />
+				</replaceregexp>
 			</filterchain>
 		</reflexive>
 		
