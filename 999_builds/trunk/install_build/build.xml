@@ -80,6 +80,7 @@
 			   promptChar=" >" />
 			   
 		<input message="Ingrese la ruta donde se encuentran los ejecutables de MySQL"
+			   defaultValue="C:\xampp\mysql\bin"
 			   propertyName="mysql_dir"
 			   promptChar=" >" />
 		
