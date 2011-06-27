@@ -256,7 +256,7 @@
 	</target>
 	
 	<target name="main" depends="install_uninstall">
-		
+		<echo>Instalacion terminada. Reinicie el servidor web.</echo>
 	</target>
 	
 	<target name="clean">
