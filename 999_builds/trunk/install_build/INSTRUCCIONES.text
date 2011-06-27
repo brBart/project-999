@@ -1,0 +1,19 @@
+REQUERIMIENTOS:
+
+1. Xampp 1.6 o mayor.
+2. Libreria PHP PDO modificada (php_pdo_mysql.dll) en ruta_a_php\ext\.
+3. Phing 2.4 o mayor.
+4. Smarty 2.6 o mayor.
+5. APD4 (Drivers para la impresora Epson TM-U).
+6. Navegador web (Firefox 3.5 o mayor, Internet Explorer 7 o mayor).
+7. Impresora PDF (opcional).
+
+
+INSTRUCCIONES:
+
+Para instalar se utiliza la herramienta Phing. Abra la consola DOS e ingrese a la
+carpeta donde estan los archivos de instalacion. Ejecute: phing.
+
+ATENCION: Si se instala en Windows Vista procure hacerlo en otra carpeta que no sea
+"Archivos de programa" o "Programs files" debido a las restricciones que Vista
+implementa.
