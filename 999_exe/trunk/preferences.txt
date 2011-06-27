@@ -8,7 +8,7 @@ xsl_address = 127.0.0.1/@alias_dir@/xsl/
 
 # Nombre de la impresora que se va usar.
 # Ej: Epson TM-U220 Receipt
-printer_name = Epson TM-U220 Receipt
+printer_name = @printer_name@
 
-# Si la impresora a usar es una Epson TM-U220 (yes o no).
-is_tmu_printer = yes
+# Si la impresora a usar es una Epson TM-U220 (true o false).
+is_tmu_printer = @is_tmu_printer@

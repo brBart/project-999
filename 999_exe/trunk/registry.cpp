@@ -64,7 +64,7 @@ Registry::Registry(QObject *parent) : QObject(parent)
 				} else if (params[0].trimmed() == "printer_name") {
 					printerName = params[1].trimmed();
 				} else if (params[0].trimmed() == "is_tmu_printer") {
-					isTMUPrinter = (params[1].trimmed() == "yes");
+					isTMUPrinter = (params[1].trimmed() == "true");
 				}
 			}
 		}
