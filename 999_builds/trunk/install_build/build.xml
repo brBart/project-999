@@ -199,7 +199,7 @@
 		<echo>Instalando el POS...</echo>
 		
 		<input message="Ingrese la ruta donde desea que se instale el POS"
-			   defaultValue="${install_dir}/pos"
+			   defaultValue="${install_dir}\pos"
 			   propertyName="pos_install_dir"
 			   promptChar=" >" />
 			   
