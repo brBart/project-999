@@ -153,7 +153,7 @@
 	</target>
 	
 	<target name="update_version" depends="copy_install_files">
-		<copy file="version.text" tofile="bobs-${bobs_version}/version.txt" />
+		<copy file="version.text" tofile="bobs-${bobs_version}/version.txt">
 			<filterchain>
 				<replacetokens>
 					<token key="bobs_version" value="${bobs_version}" />
