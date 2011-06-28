@@ -198,7 +198,14 @@
 	<target name="install_pos" depends="configure_httpdconf">
 		<echo>Instalando el POS...</echo>
 		
-		<copy todir="${install_dir}/pos">
+		<input message="Ingrese la ruta donde desea que se instale el POS"
+			   defaultValue="${install_dir}/pos"
+			   propertyName="pos_install_dir"
+			   promptChar=" >" />
+			   
+		<mkdir dir="${pos_install_dir}" />
+		
+		<copy todir="${pos_install_dir}/">
 			<fileset dir="pos">
 				<exclude name="preferences.txt" />
 			</fileset>
@@ -220,7 +227,7 @@
 			<equals arg1="${is_tmu_printer}" arg2="si" />
 			<then>
 			
-				<copy file="pos/preferences.txt" tofile="${install_dir}/pos/preferences.txt">
+				<copy file="pos/preferences.txt" tofile="${pos_install_dir}/preferences.txt">
 					<filterchain>
 						<replacetokens>
 							<token key="alias_dir" value="${alias}" />
@@ -233,7 +240,7 @@
 			</then>
 			<else>
 			
-				<copy file="pos/preferences.txt" tofile="${install_dir}/pos/preferences.txt">
+				<copy file="pos/preferences.txt" tofile="${pos_install_dir}/preferences.txt">
 					<filterchain>
 						<replacetokens>
 							<token key="alias_dir" value="${alias}" />
@@ -279,6 +286,7 @@
 					<token key="db_database" value="${db_database}" />
 					<token key="db_user" value="${db_user}" />
 					<token key="install_dir" value="${install_dir}" />
+					<token key="pos_install_dir" value="${pos_install_dir}" />
 				</replacetokens>
 			</filterchain>
 		</copy>

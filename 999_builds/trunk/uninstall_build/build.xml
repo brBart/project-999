@@ -60,7 +60,7 @@
 	<target name="remove_pos" depends="remove_front">
 		<echo>Removiendo los archivos POS...</echo>
 		
-		<delete dir="../pos" />
+		<delete dir="@pos_install_dir@" />
 	</target>
 	
 	<target name="remove_help" depends="remove_pos">
