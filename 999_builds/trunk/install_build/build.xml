@@ -232,8 +232,12 @@
 		</copy>
 	</target>
 	
+	<target name="copy_version" depends="install_help">
+		<copy file="version.txt" tofile="${install_dir}/version.txt" />
+	</target>
 	
-	<target name="install_uninstall" depends="install_help">
+	
+	<target name="install_uninstall" depends="copy_version">
 		<echo>Instalando los archivos necesarios para la desinstalacion...</echo>
 		
 		<copy todir="${install_dir}/uninstall">
