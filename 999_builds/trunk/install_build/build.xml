@@ -32,6 +32,26 @@
 			   propertyName="db_password"
 			   promptChar=" >" />
 			   
+		<input message="Ingrese el nombre de la empresa en donde el Bobs sera instalado"
+			   propertyName="company_name"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nit de la empresa"
+			   propertyName="nit"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la razon social de la empresa"
+			   propertyName="corporate_name"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el telefono de la empresa"
+			   propertyName="telephone"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la direccion de la empresa"
+			   propertyName="address"
+			   promptChar=" >" />
+			   
 		<echo>Instalando la base de datos...</echo>
 		
 		<copy todir="tmp">
@@ -44,6 +64,11 @@
 					<token key="db_database" value="${db_database}" />
 					<token key="db_user" value="${db_user}" />
 					<token key="db_password" value="${db_password}" />
+					<token key="nit" value="${nit}" />
+					<token key="company_name" value="${company_name}" />
+					<token key="corporate_name" value="${corporate_name}" />
+					<token key="telephone" value="${telephone}" />
+					<token key="address" value="${address}" />
 				</replacetokens>
 			</filterchain>
 		</copy>
