@@ -292,7 +292,7 @@
 	</target>
 	
 	<target name="main" depends="install_uninstall">
-		<echo>Instalacion terminada. Reinicie el servidor web.</echo>
+		<echo>Instalacion terminada. Reinicie el servidor web y entre a http:://localhost/${alias}</echo>
 	</target>
 	
 	<target name="clean">
