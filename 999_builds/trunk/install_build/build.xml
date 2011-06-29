@@ -111,6 +111,17 @@
 				<headfilter lines="4" />
 			</filterchain>
 		</append>
+		
+		<php function="rtrim" returnProperty="fixed_install_dir">
+			<param value="${install_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_install_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_install_dir}"/>
+		</php>
 			   
 		<copy file="conf.httpd" tofile="${httpdconf_dir}/extra/httpd-bobs.conf">
 			<filterchain>
@@ -139,17 +150,6 @@
 		<copy todir="${install_dir}/front">
 			<fileset dir="front" />
 		</copy>
-		
-		<php function="rtrim" returnProperty="fixed_install_dir">
-			<param value="${install_dir}"/>
-			<param value="\"/>
-		</php>
-		
-		<php function="str_replace" returnProperty="fixed_install_dir">
-			<param value="\"/>
-			<param value="/"/>
-			<param value="${fixed_install_dir}"/>
-		</php>
 		
 		<php function="rtrim" returnProperty="fixed_smarty_dir">
 			<param value="${smarty_dir}"/>
