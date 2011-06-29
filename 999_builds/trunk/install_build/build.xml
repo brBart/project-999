@@ -80,7 +80,7 @@
 	
 	<target name="create_directories" depends="install_database">
 		<input message="Ingrese la ruta donde desea que se instale Bobs"
-			   defaultValue="C:\Program Files\Bobs"
+			   defaultValue="C:\Bobs"
 			   propertyName="install_dir"
 			   promptChar=" >" />
 			   
