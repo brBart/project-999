@@ -95,7 +95,7 @@
 		</copy>
 	</target>
 	
-	<target name="configure_httpdconf" depends="install_front">
+	<target name="configure_httpdconf" depends="install_middle">
 		<input message="Ingrese la ruta donde se encuentra httpd.conf"
 			   defaultValue="C:\xampp\apache\conf"
 			   propertyName="httpdconf_dir"
@@ -124,7 +124,7 @@
 		</copy>
 	</target>
 	
-	<target name="install_front" depends="install_middle">
+	<target name="install_front" depends="configure_httpdconf">
 		<echo>Instalando los archivos web (front)...</echo>
 		
 		<input message="Ingrese la ruta donde se encuentran las librerias de Smarty"
@@ -193,7 +193,7 @@
 		<mkdir dir="${install_dir}/front/templates_c" />
 	</target>
 	
-	<target name="install_pos" depends="configure_httpdconf">
+	<target name="install_pos" depends="install_front">
 		<echo>Instalando el POS...</echo>
 		
 		<input message="Ingrese la ruta donde desea que se instale el POS"
