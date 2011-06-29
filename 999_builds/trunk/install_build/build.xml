@@ -95,7 +95,34 @@
 		</copy>
 	</target>
 	
-	<property name="help_alias" value="bobs_help" />
+	<target name="configure_httpdconf" depends="install_front">
+		<input message="Ingrese la ruta donde se encuentra httpd.conf"
+			   defaultValue="C:\xampp\apache\conf"
+			   propertyName="httpdconf_dir"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el alias que Bobs utilizara en el servidor web"
+			   defaultValue="bobs"
+			   propertyName="alias"
+			   promptChar=" >" />
+			   
+		<append destFile="${httpdconf_dir}/httpd.conf" file="conf.httpd">
+			<filterchain>
+				<headfilter lines="4" />
+			</filterchain>
+		</append>
+			   
+		<copy file="conf.httpd" tofile="${httpdconf_dir}/extra/httpd-bobs.conf">
+			<filterchain>
+				<tailfilter lines="25" />
+				<replacetokens>
+					<token key="alias" value="${alias}" />
+					<token key="help_alias" value="help_${alias}" />
+					<token key="install_dir" value="${fixed_install_dir}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
 	
 	<target name="install_front" depends="install_middle">
 		<echo>Instalando los archivos web (front)...</echo>
@@ -151,7 +178,7 @@
 				<replacetokens>
 					<token key="install_dir" value="${fixed_install_dir}" />
 					<token key="smarty_dir" value="${fixed_smarty_dir}/" />
-					<token key="help_alias" value="${help_alias}" />
+					<token key="help_alias" value="help_${alias}" />
 					<token key="mysql_dir" value="${fixed_mysql_dir}/" />
 					<token key="db_server" value="${db_server}" />
 					<token key="db_database" value="${db_database}" />
@@ -164,35 +191,6 @@
 		<mkdir dir="${install_dir}/front/backup" />
 		<mkdir dir="${install_dir}/front/sales_ledger" />
 		<mkdir dir="${install_dir}/front/templates_c" />
-	</target>
-	
-	<target name="configure_httpdconf" depends="install_front">
-		<input message="Ingrese la ruta donde se encuentra httpd.conf"
-			   defaultValue="C:\xampp\apache\conf"
-			   propertyName="httpdconf_dir"
-			   promptChar=" >" />
-			   
-		<input message="Ingrese el alias que Bobs utilizara en el servidor web"
-			   defaultValue="bobs"
-			   propertyName="alias"
-			   promptChar=" >" />
-			   
-		<append destFile="${httpdconf_dir}/httpd.conf" file="conf.httpd">
-			<filterchain>
-				<headfilter lines="4" />
-			</filterchain>
-		</append>
-			   
-		<copy file="conf.httpd" tofile="${httpdconf_dir}/extra/httpd-bobs.conf">
-			<filterchain>
-				<tailfilter lines="25" />
-				<replacetokens>
-					<token key="alias" value="${alias}" />
-					<token key="help_alias" value="${help_alias}" />
-					<token key="install_dir" value="${fixed_install_dir}" />
-				</replacetokens>
-			</filterchain>
-		</copy>
 	</target>
 	
 	<target name="install_pos" depends="configure_httpdconf">
@@ -231,6 +229,7 @@
 					<filterchain>
 						<replacetokens>
 							<token key="alias_dir" value="${alias}" />
+							<token key="help_alias" value="help_${alias}" />
 							<token key="printer_name" value="${printer_name}" />
 							<token key="is_tmu_printer" value="true" />
 						</replacetokens>
