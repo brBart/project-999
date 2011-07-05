@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="gather_info">
+		<input message="Enter database server DSN"
+			   defaultValue="localhost"
+			   propertyName="db_server"
+			   promptChar=" >" />
+			   
+		<input message="Enter database name"
+			   propertyName="db_database"
+			   promptChar=" >" />
+			   
+		<input message="Enter username to connect to database server"
+			   propertyName="db_user"
+			   promptChar=" >" />
+			   
+		<input message="Enter password"
+			   propertyName="db_password"
+			   promptChar=" >" />
+		
+		<input message="Enter path for the front files"
+			   propertyName="install_dir"
+			   promptChar=" >" />
+		
+		<input message="Enter the help web dir alias"
+			   propertyName="help_alias"
+			   promptChar=" >" />
+		
+		<input message="Enter path for the Smarty libs files"
+			   propertyName="smarty_dir"
+			   promptChar=" >" />
+			   
+		<input message="Enter path for MySQL bin files"
+			   defaultValue="C:\xampp\mysql\bin"
+			   propertyName="mysql_dir"
+			   promptChar=" >" />
+			   
+		<php function="rtrim" returnProperty="fixed_install_dir">
+			<param value="${install_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_install_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_install_dir}"/>
+		</php>
+		
+		<php function="rtrim" returnProperty="fixed_smarty_dir">
+			<param value="${smarty_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_smarty_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_smarty_dir}"/>
+		</php>
+		
+		<php function="rtrim" returnProperty="fixed_mysql_dir">
+			<param value="${mysql_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_mysql_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_mysql_dir}"/>
+		</php>
+	</target>
+
+	<target name="build" depends="gather_info">
+		<copy todir="../include">
+			<fileset dir=".">
+				<exclude name="build.xml" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="install_dir" value="${fixed_install_dir}" />
+					<token key="smarty_dir" value="${fixed_smarty_dir}/" />
+					<token key="help_alias" value="${help_alias}" />
+					<token key="mysql_dir" value="${fixed_mysql_dir}/" />
+					<token key="db_server" value="${db_server}" />
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="db_password" value="${db_password}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		
+		<mkdir dir="../backup" />
+		<mkdir dir="../sales_ledger" />
+		<mkdir dir="../templates_c" />
+	</target>
+	
+	<target name="main" depends="build">
+		<echo>Build completed.</echo>
+	</target>
+	
+	<target name="clean">
+		<delete dir="../include" verbose="true" />
+		<delete dir="../backup" verbose="true" />
+		<delete dir="../sales_ledger" verbose="true" />
+		<delete dir="../templates_c" verbose="true" />
+	</target>
+</project>
