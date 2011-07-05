@@ -77,7 +77,7 @@
 			</fileset>
 			<filterchain>
 				<replacetokens>
-					<token key="install_dir" value="${fixed_libs_dir}/" />
+					<token key="libs_dir" value="${fixed_libs_dir}/" />
 					<token key="smarty_dir" value="${fixed_smarty_dir}/" />
 					<token key="help_alias" value="${help_alias}" />
 					<token key="mysql_dir" value="${fixed_mysql_dir}/" />
