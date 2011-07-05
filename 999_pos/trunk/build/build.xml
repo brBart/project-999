@@ -19,7 +19,7 @@
 			   propertyName="db_password"
 			   promptChar=" >" />
 		
-		<input message="Enter path for the front files"
+		<input message="Enter path for the lib (middle) files"
 			   propertyName="install_dir"
 			   promptChar=" >" />
 		
