@@ -1,4 +1,4 @@
--- DELIMITER $$
+DELIMITER $$
 
 --
 -- Base de datos: `@db_database@`

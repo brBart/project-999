@@ -1,4 +1,4 @@
--- DELIMITER $$
+DELIMITER $$
 
 TRUNCATE TABLE action$$
 TRUNCATE TABLE bank$$

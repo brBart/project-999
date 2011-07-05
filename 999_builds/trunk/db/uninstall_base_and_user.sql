@@ -1,4 +1,4 @@
--- DELIMITER $$
+DELIMITER $$
 
 DROP DATABASE `@db_database@`$$
 

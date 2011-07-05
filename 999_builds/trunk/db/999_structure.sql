@@ -7,7 +7,7 @@
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
---DELIMITER $$
+DELIMITER $$
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO"$$
 
@@ -988,7 +988,7 @@ DROP TABLE IF EXISTS `access_management`$$
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`@db_user@`@`localhost` SQL SECURITY DEFINER VIEW `@db_database@`.`access_management` AS select `rol`.`name` AS `role`,`sub`.`name` AS `subject`,`act`.`name` AS `action`,`rsa`.`value` AS `value` from (((`@db_database@`.`role_subject_action` `rsa` join `@db_database@`.`role` `rol` on((`rsa`.`role_id` = `rol`.`role_id`))) join `@db_database@`.`subject` `sub` on((`rsa`.`subject_id` = `sub`.`subject_id`))) join `@db_database@`.`action` `act` on((`rsa`.`action_id` = `act`.`action_id`)))$$
 
---DELIMITER $$
+DELIMITER $$
 --
 -- Procedimientos
 --

@@ -7,7 +7,7 @@
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
--- DELIMITER $$
+DELIMITER $$
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO"$$
 
