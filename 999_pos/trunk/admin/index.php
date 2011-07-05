@@ -8,7 +8,7 @@
 /**
  * Load the system configuration.
  */
-require_once('../include/config.php');
+require_once('../config/config.php');
 /**
  * Load the autoload function.
  */

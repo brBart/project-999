@@ -71,7 +71,7 @@
 	</target>
 
 	<target name="build" depends="gather_info">
-		<copy todir="../include">
+		<copy todir="../config">
 			<fileset dir=".">
 				<exclude name="build.xml" />
 			</fileset>
@@ -99,7 +99,7 @@
 	</target>
 	
 	<target name="clean">
-		<delete dir="../include" verbose="true" />
+		<delete dir="../config" verbose="true" />
 		<delete dir="../backup" verbose="true" />
 		<delete dir="../sales_ledger" verbose="true" />
 		<delete dir="../templates_c" verbose="true" />

@@ -49,7 +49,7 @@ define('COMPILE_DIR', SITE_ROOT . '/templates_c/');
 /**
  * Smarty paths.
  */
-define('CONFIG_DIR', SITE_ROOT . '/include/configs');
+define('CONFIG_DIR', SITE_ROOT . '/config');
 /**
  * Smarty paths.
  */
