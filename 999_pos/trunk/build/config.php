@@ -13,7 +13,7 @@ define('SITE_ROOT', dirname(dirname(__FILE__)));
 /**
  * 999 libraries path.
  */
-define('LIBS_999', '@install_dir@/middle/');
+define('LIBS_999', '@libs_dir@');
 /**
  * Backup directory name.
  */ 
