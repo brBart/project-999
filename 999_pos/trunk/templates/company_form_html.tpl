@@ -34,7 +34,7 @@
 		  	</p>
 		  	<p>
 		  		<label for="corporate_name">Raz&oacute;n social:*</label>
-		  		<input name="form_widget" id="corporate_name" type="text" value="{$corporate_name|escape}" maxlength="50"
+		  		<input name="form_widget" id="corporate_name" type="text" value="{$corporate_name|escape}" maxlength="80"
 		  			onblur="oSetProperty.execute('set_corporate_name_company', this.value, this.id);" disabled="disabled" />
 		  		<span id="corporate_name-failed" class="hidden">*</span>
 		  	</p>

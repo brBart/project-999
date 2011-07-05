@@ -166,7 +166,7 @@ DROP TABLE IF EXISTS `company`$$
 CREATE TABLE IF NOT EXISTS `company` (
   `nit` varchar(10) collate utf8_unicode_ci NOT NULL,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `corporate_name` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `corporate_name` varchar(80) collate utf8_unicode_ci NOT NULL,
   `telephone` varchar(50) collate utf8_unicode_ci NOT NULL,
   `address` varchar(100) collate utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
