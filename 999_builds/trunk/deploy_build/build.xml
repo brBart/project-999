@@ -32,13 +32,15 @@
 		
 		<copy todir="bobs-${bobs_version}">
 			<fileset dir="${web_files_dir}">
-				<exclude name="build/" />
+				<exclude name="front/build/" />
 				<exclude name=".cvsignore" />
 			</fileset>
 		</copy>
 		
 		<copy todir="bobs-${bobs_version}/front/config/">
-			<fileset dir="${web_files_dir}/front/build/" />
+			<fileset dir="${web_files_dir}/front/build/">
+				<exclude name="build.xml" />
+			</fileset>
 			<filterchain>
 				<replacetokens>
 					<token key="bobs_version" value="${bobs_version}" />
