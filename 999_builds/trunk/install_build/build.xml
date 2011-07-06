@@ -148,7 +148,9 @@
 			   promptChar=" >" />
 		
 		<copy todir="${install_dir}/front">
-			<fileset dir="front" />
+			<fileset dir="front">
+				<exclude name="config/config.php" />
+			</fileset>
 		</copy>
 		
 		<php function="rtrim" returnProperty="fixed_smarty_dir">
@@ -173,7 +175,7 @@
 			<param value="${fixed_mysql_dir}"/>
 		</php>
 		
-		<copy file="front/config/config.php" tofile="${install_dir}/front/config/config.php" overwrite="true">
+		<copy file="front/config/config.php" tofile="${install_dir}/front/config/config.php">
 			<filterchain>
 				<replacetokens>
 					<token key="install_dir" value="${fixed_install_dir}" />
