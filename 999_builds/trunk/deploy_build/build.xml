@@ -143,8 +143,13 @@
 	</target>
 	
 	<target name="copy_install_files" depends="copy_exe_files">
-		<copy todir="bobs-${bobs_version}/db/">
-			<fileset dir="../db/" />
+		<copy todir="bobs-${bobs_version}/db">
+			<fileset dir="../db" />
+			<filterchain>
+				<replaceregexp>
+					<regexp pattern="DELIMITER \$\$" replace="-- DELIMITER $$" />
+				</replaceregexp>
+			</filterchain>
 		</copy>
 		
 		<copy file="../uninstall_build/build.xml" tofile="bobs-${bobs_version}/uninstall/build.xml" />
