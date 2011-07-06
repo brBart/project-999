@@ -217,14 +217,14 @@ class CorrelativeDAM{
 			case 1:
 				$correlative = new Correlative($id, 'A021', self::$_mDefault1,
 						self::$_mCurrent1, Persist::CREATED);
-				$correlative->setData('2008-10', '15/01/2008', 'Sujeto pagos', 100, 5000);
+				$correlative->setData('2008-10', '15/01/2008', '15/01/2009', 'Sujeto pagos', 100, 5000);
 				return $correlative;
 				break;
 				
 			case 2:
 				$correlative = new Correlative($id, 'A022', self::$_mDefault2,
 						self::$_mCurrent2, Persist::CREATED);
-				$correlative->setData('2008-05', '15/01/2008', 'Sujeto pagos', 5000, 10000);
+				$correlative->setData('2008-05', '15/01/2008', '15/01/2009', 'Sujeto pagos', 5000, 10000);
 				return $correlative;
 				break;
 			
@@ -752,10 +752,9 @@ class ResolutionLogDAM{
 	 * Register the event in the database.
 	 *
 	 * @param Correlative $correlative
-	 * @param string $dateTime
 	 * @param string $documentType
 	 */
-	static public function insert(Correlative $correlative, $dateTime, $documentType){
+	static public function insert(Correlative $correlative, $documentType){
 		// Code here...
 	}
 }
