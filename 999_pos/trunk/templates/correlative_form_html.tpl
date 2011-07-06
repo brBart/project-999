@@ -23,6 +23,10 @@
 	<div id="frm" class="content_fit">
 		{include file='status_bar_html.tpl'}
 		<fieldset id="main_data">
+		  	<p>
+		  		<label>Fecha Ingreso:</label>
+		  		<span>{$created_date}&nbsp;</span>
+		  	</p>
 			<p>
 		  		<label for="serial_number">Serie No:{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}

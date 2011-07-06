@@ -231,8 +231,8 @@ class CorrelativeDAM{
 		if(!empty($result)){
 			$correlative = new Correlative($id, $result['serial_number'], (boolean)$result['is_default'],
 					(int)$result['current'], Persist::CREATED);
-			$correlative->setData($result['resolution_number'], $result['resolution_date'], $result['regime'],
-					(int)$result['initial_number'], (int)$result['final_number']);
+			$correlative->setData($result['resolution_number'], $result['resolution_date'], $result['created_date'],
+					$result['regime'], (int)$result['initial_number'], (int)$result['final_number']);
 			return $correlative;
 		}
 		else
@@ -257,11 +257,13 @@ class CorrelativeDAM{
 	 * @return integer
 	 */
 	static public function insert(Correlative $obj){
-		$sql = 'CALL correlative_insert(:serial_number, :resolution_number, :resolution_date, :regime, ' .
-				':initial_number, :final_number)';
+		$sql = 'CALL correlative_insert(:serial_number, :resolution_number, :resolution_date, :created_date, ' .
+				':regime, :initial_number, :final_number)';
 		$params = array(':serial_number' => $obj->getSerialNumber(),
 				':resolution_number' => $obj->getResolutionNumber(),
-				':resolution_date' => Date::dbFormat($obj->getResolutionDate()), ':regime' => $obj->getRegime(),
+				':resolution_date' => Date::dbFormat($obj->getResolutionDate()),
+				':created_date' => Date::dbFormat($obj->getCreatedDate()),
+				':regime' => $obj->getRegime(),
 				':initial_number' => $obj->getInitialNumber(), ':final_number' => $obj->getFinalNumber());
 		DatabaseHandler::execute($sql, $params);
 		
@@ -905,15 +907,14 @@ class ResolutionLogDAM{
 	 * Logs the event in the database.
 	 *
 	 * @param Correlative $correlative
-	 * @param string $dateTime
 	 * @param string $documentType
 	 */
-	static public function insert(Correlative $correlative, $dateTime, $documentType){
+	static public function insert(Correlative $correlative, $documentType){
 		$sql = 'CALL resolution_log_insert(:resolution_number, :resolution_date, :serial_number, :initial_number, :final_number,' .
 				':created_date, :document_type)';
 		$params = array(':resolution_number' => $correlative->getResolutionNumber(), ':resolution_date' => Date::dbFormat($correlative->getResolutionDate()),
 				':serial_number' => $correlative->getSerialNumber(), ':initial_number' => $correlative->getInitialNumber(),
-				':final_number' => $correlative->getFinalNumber(), ':created_date' => Date::dbDateTimeFormat($dateTime), ':document_type' => $documentType);
+				':final_number' => $correlative->getFinalNumber(), ':created_date' => Date::dbDateTimeFormat($correlative->getCreatedDate()), ':document_type' => $documentType);
 		DatabaseHandler::execute($sql, $params);
 	}
 }

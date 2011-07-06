@@ -895,6 +895,14 @@ class Correlative extends Persist{
 	private $_mResolutionDate;
 	
 	/**
+	 * Holds the entry date of the correlative.
+	 *
+	 * Date format: 'dd/mm/yyyy'.
+	 * @var string
+	 */
+	private $_mCreatedDate;
+	
+	/**
 	 * Holds the correlative's regime policy.
 	 *
 	 * @var string
@@ -1014,6 +1022,15 @@ class Correlative extends Persist{
 	 */
 	public function getResolutionDate(){
 		return $this->_mResolutionDate;
+	}
+	
+	/**
+	 * Returns the correlative's entry date.
+	 *
+	 * @return string
+	 */
+	public function getCreatedDate(){
+		return $this->_mCreatedDate;
 	}
 	
 	/**
@@ -1137,14 +1154,16 @@ class Correlative extends Persist{
 	 * Persist::CREATED in the constructor method too.
 	 * @param string $resolutionNumber
 	 * @param string $resolutionDate
+	 * @param string $createdDate
 	 * @param integer $initialNumber
 	 * @param integer $finalNumber
 	 * @throws Exception
 	 */
-	public function setData($resolutionNumber, $resolutionDate, $regime, $initialNumber, $finalNumber){
+	public function setData($resolutionNumber, $resolutionDate, $createdDate, $regime, $initialNumber, $finalNumber){
 		try{
 			String::validateString($resolutionNumber, 'N&uacute;mero de resoluci&oacute;n inv&aacute;lido.');
 			Date::validateDate($resolutionDate, 'Fecha de resoluci&oacute;n inv&aacute;lida.');
+			Date::validateDate($createdDate, 'Fecha de ingreso inv&aacute;lida.');
 			String::validateString($regime, 'R&eacute;gimen inv&aacute;lido.');
 			Number::validatePositiveInteger($initialNumber, 'N&uacute;mero inicial inv&aacute;lido.');
 			Number::validatePositiveInteger($finalNumber, 'N&uacute;mero final inv&aacute;lido.');
@@ -1156,6 +1175,7 @@ class Correlative extends Persist{
 		
 		$this->_mResolutionNumber = $resolutionNumber;
 		$this->_mResolutionDate = $resolutionDate;
+		$this->_mCreatedDate = $createdDate;
 		$this->_mRegime = $regime;
 		$this->_mInitialNumber = $initialNumber;
 		$this->_mFinalNumber = $finalNumber;
@@ -1178,6 +1198,8 @@ class Correlative extends Persist{
 				$this->verifySerialNumber($this->_mSerialNumber,
 						$this->_mInitialNumber, $this->_mFinalNumber);
 			}
+			
+			$this->_mCreatedDate = date('d/m/Y');
 				
 			$this->_mId = CorrelativeDAM::insert($this);
 			$this->_mStatus = Persist::CREATED;
@@ -2698,7 +2720,7 @@ class ResolutionLog{
 	 * @param Correlative $correlative
 	 */
 	static public function write(Correlative $correlative){
-		ResolutionLogDAM::insert($correlative, date('d/m/Y H:i:s'), self::INVOICE);
+		ResolutionLogDAM::insert($correlative, self::INVOICE);
 	}
 }
 ?>
