@@ -173,7 +173,7 @@
 			<param value="${fixed_mysql_dir}"/>
 		</php>
 		
-		<copy file="front/include/config.php" tofile="${install_dir}/front/include/config.php" overwrite="true">
+		<copy file="front/config/config.php" tofile="${install_dir}/front/config/config.php" overwrite="true">
 			<filterchain>
 				<replacetokens>
 					<token key="install_dir" value="${fixed_install_dir}" />

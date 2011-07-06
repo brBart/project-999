@@ -24,7 +24,7 @@
 	</target>
 
 	<target name="copy_web_files" depends="bobs_version">
-		<input message="Ingrese la ruta donde se encuentran los archivos web"
+		<input message="Ingrese la ruta donde se encuentran los archivos (front, middle y help)"
 			   propertyName="web_files_dir"
 			   promptChar=" >" />
 			   
@@ -32,11 +32,13 @@
 		
 		<copy todir="bobs-${bobs_version}">
 			<fileset dir="${web_files_dir}">
+				<exclude name="build/" />
 				<exclude name=".cvsignore" />
 			</fileset>
 		</copy>
 		
-		<copy file="${web_files_dir}/front/include/configs/site.conf" tofile="bobs-${bobs_version}/front/include/configs/site.conf" overwrite="true">
+		<copy todir="bobs-${bobs_version}/front/config/">
+			<fileset dir="${web_files_dir}/front/build/" />
 			<filterchain>
 				<replacetokens>
 					<token key="bobs_version" value="${bobs_version}" />
