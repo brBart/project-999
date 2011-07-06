@@ -65,7 +65,7 @@
 		  		{/if}
 		  	</p>
 		  	<p>
-		  		<label for="initial_number">No. Inicial:{if $status eq 0}*{/if}</label>
+		  		<label for="initial_number">No. Inicial (Del):{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
 		  		<input name="form_widget" id="initial_number" type="text" maxlength="20"
 		  			onblur="oSetProperty.execute('set_initial_number_correlative', this.value, this.id);" />
@@ -75,7 +75,7 @@
 		  		{/if}
 		  	</p>
 		  	<p>
-		  		<label for="final_number">No. Final:{if $status eq 0}*{/if}</label>
+		  		<label for="final_number">No. Final (Al):{if $status eq 0}*{/if}</label>
 		  		{if $status eq 0}
 		  		<input name="form_widget" id="final_number" type="text" maxlength="20"
 		  			onblur="oSetProperty.execute('set_final_number_correlative', this.value, this.id);" />

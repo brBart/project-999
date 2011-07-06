@@ -1117,7 +1117,7 @@ class Correlative extends Persist{
 	 */
 	public function setInitialNumber($number){
 		$this->_mInitialNumber = $number;
-		Number::validatePositiveNumber($number, 'N&uacute;mero inv&aacute;lido.');
+		Number::validatePositiveNumber($number, 'N&uacute;mero inicial inv&aacute;lido.');
 	}
 	
 	/**
@@ -1127,7 +1127,7 @@ class Correlative extends Persist{
 	 */
 	public function setFinalNumber($number){
 		$this->_mFinalNumber = $number;
-		Number::validatePositiveNumber($number, 'N&uacute;mero inv&aacute;lido.');
+		Number::validatePositiveNumber($number, 'N&uacute;mero final inv&aacute;lido.');
 	}
 	
 	/**
