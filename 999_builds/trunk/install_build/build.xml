@@ -178,7 +178,7 @@
 		<copy file="front/config/config.php" tofile="${install_dir}/front/config/config.php">
 			<filterchain>
 				<replacetokens>
-					<token key="install_dir" value="${fixed_install_dir}" />
+					<token key="libs_dir" value="${fixed_install_dir}/middle/" />
 					<token key="smarty_dir" value="${fixed_smarty_dir}/" />
 					<token key="help_alias" value="help_${alias}" />
 					<token key="mysql_dir" value="${fixed_mysql_dir}/" />
