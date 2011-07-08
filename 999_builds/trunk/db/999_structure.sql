@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-07-2011 a las 13:49:30
+-- Tiempo de generación: 08-07-2011 a las 10:40:28
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -717,7 +717,7 @@ CREATE TABLE IF NOT EXISTS `resolution_log` (
   `created_date` date NOT NULL,
   `document_type` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1$$
+) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
 
 -- --------------------------------------------------------
 
@@ -989,7 +989,6 @@ DROP TABLE IF EXISTS `access_management`$$
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`@db_user@`@`localhost` SQL SECURITY DEFINER VIEW `@db_database@`.`access_management` AS select `rol`.`name` AS `role`,`sub`.`name` AS `subject`,`act`.`name` AS `action`,`rsa`.`value` AS `value` from (((`@db_database@`.`role_subject_action` `rsa` join `@db_database@`.`role` `rol` on((`rsa`.`role_id` = `rol`.`role_id`))) join `@db_database@`.`subject` `sub` on((`rsa`.`subject_id` = `sub`.`subject_id`))) join `@db_database@`.`action` `act` on((`rsa`.`action_id` = `act`.`action_id`)))$$
 
-DELIMITER $$
 --
 -- Procedimientos
 --
@@ -2067,6 +2066,14 @@ BEGIN
   SELECT COUNT(*) FROM (SELECT * FROM correlative WHERE serial_number = inSerialNumber) cor
       WHERE (inInitialNumber BETWEEN cor.initial_number AND cor.final_number OR inFinalNumber BETWEEN cor.initial_number AND cor.final_number)
           OR (cor.initial_number BETWEEN inInitialNumber AND inFinalNumber OR cor.final_number BETWEEN inInitialNumber AND inFinalNumber);
+
+END$$
+
+DROP PROCEDURE IF EXISTS `correlative_final_number_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_final_number_get`(IN inSerialNumber VARCHAR(10))
+BEGIN
+
+  SELECT IFNULL(MAX(final_number), 0) FROM correlative WHERE serial_number = inSerialNumber;
 
 END$$
 
