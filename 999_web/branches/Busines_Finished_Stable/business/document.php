@@ -1092,6 +1092,13 @@ class Correlative extends Persist{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->_mSerialNumber = strtoupper($serialNumber);
 			String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
+			
+			$final_number =	$this->getSerialFinalNumber($this->_mSerialNumber);
+					
+			if($final_number == 0)
+				$this->_mInitialNumber = 1;
+			else
+				$this->_mInitialNumber = $final_number + 1;
 		}
 	}
 	
@@ -1125,16 +1132,6 @@ class Correlative extends Persist{
 	public function setRegime($regime){
 		$this->_mRegime = $regime;
 		String::validateString($regime, 'R&eacute;gimen inv&aacute;lido.');
-	}
-	
-	/**
-	 * Sets the first of the correlative's range of numbers.
-	 *
-	 * @param integer $number
-	 */
-	public function setInitialNumber($number){
-		$this->_mInitialNumber = $number;
-		Number::validatePositiveNumber($number, 'N&uacute;mero inicial inv&aacute;lido.');
 	}
 	
 	/**
@@ -1310,6 +1307,18 @@ class Correlative extends Persist{
 		if(CorrelativeDAM::exists($serialNumber, $initialNumber, $finalNumber))
 			throw new ValidateException('N&uacute;mero de serie con ese correlativo ya existe o se traslapa.',
 					'serial_number');
+	}
+	
+	/**
+	 * Fetches the serial number final number.
+	 *
+	 * If exists, it returns the final number of the last serial number created. If does not
+	 * exists it returns cero.
+	 * @param string $serialNumber
+	 * @return integer
+	 */
+	private function getSerialFinalNumber($serialNumber){
+		return CorrelativeDAM::getSerialFinalNumber($serialNumber);
 	}
 	
 	/**

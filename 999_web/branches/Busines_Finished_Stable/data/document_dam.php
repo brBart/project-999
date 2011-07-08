@@ -144,6 +144,29 @@ class CorrelativeDAM{
 	}
 	
 	/**
+	 * Fetches the serial number final number.
+	 *
+	 * If exists, it returns the final number of the last serial number created. If does not
+	 * exists it returns cero.
+	 * @param string $serialNumber
+	 * @return integer
+	 */
+	static public function getSerialFinalNumber($serialNumber){
+		switch($serialNumber){
+			case 'A021':
+				return 101;
+				break;
+				
+			case 'A022':
+				return 51;
+				break;
+				
+			default:
+				return 0;
+		}
+	}
+	
+	/**
 	 * Returns true if the resolution number exists in the database.
 	 *
 	 * @param string $resolutionNumber
