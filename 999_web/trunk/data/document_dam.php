@@ -170,6 +170,20 @@ class CorrelativeDAM{
 		else
 			return false;
 	}
+
+	/**
+	 * Fetches the serial number final number.
+	 *
+	 * If exists, it returns the final number of the last serial number created. If does not
+	 * exists it returns cero.
+	 * @param string $serialNumber
+	 * @return integer
+	 */
+	static public function getSerialFinalNumber($serialNumber){
+		$sql = 'CALL correlative_final_number_get(:serial_number)';
+		$params = array(':serial_number' => $serialNumber);
+		return (int)DatabaseHandler::getOne($sql, $params);
+	}
 	
 	/**
 	 * Verifies if the resolution number already exists in the database.
