@@ -1092,13 +1092,7 @@ class Correlative extends Persist{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->_mSerialNumber = strtoupper($serialNumber);
 			String::validateString($serialNumber, 'N&uacute;mero de serie inv&aacute;lido.');
-			
-			$final_number =	$this->getSerialFinalNumber($this->_mSerialNumber);
-					
-			if($final_number == 0)
-				$this->_mInitialNumber = 1;
-			else
-				$this->_mInitialNumber = $final_number + 1;
+			$this->_mInitialNumber = $this->getSerialFinalNumber($this->_mSerialNumber) + 1;
 		}
 	}
 	
