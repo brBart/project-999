@@ -5,10 +5,8 @@
 var oSave = new SaveCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 </script>
 {else}
-<script type="text/javascript" src="../scripts/make_default_correlative.js"></script>
 <script type="text/javascript" src="../scripts/delete.js"></script>
 <script type="text/javascript">
-var oMakeDefault = new MakeDefaultCorrelativeCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 </script>
 {/if}
@@ -19,14 +17,8 @@ var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequest
   	<input name="form_widget" id="undo" type="button" value="Cancelar"
   		onclick="oSession.loadHref('{$back_link}');" />
   	{else}
-  	<input name="form_widget" id="default" type="button" value="Predeterminado"
-  		{if $is_default eq 0}onclick="oMakeDefault.execute();"{else}disabled="disabled"{/if} />
   	<input name="form_widget" id="delete" type="button" value="Eliminar"
-  		onclick="if(confirm('&iquest;Esta seguro que desea eliminar?')) oDelete.execute('{$delete_cmd}', '{$back_link}');" />
+  		onclick="if(confirm('&iquest;Esta seguro que desea eliminar?')) oDelete.execute('{$delete_cmd}', '{$back_link}');"
+  		{if $status neq 1}disabled="disabled"{/if} />
   	{/if}
 </fieldset>
-{if $status eq 1}
-<script type="text/javascript">
-oMakeDefault.init('{$serial_number_span}', 'default');
-</script>
-{/if}

@@ -60,13 +60,12 @@ class GetCorrelativeCommand extends GetObjectCommand{
 		
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 				'back_link' => $back_link, 'back_trace' => $back_trace, 'second_menu' => 'none',
-				'content' => 'correlative_form_html.tpl', 'status' => '1', 'key' => $key,
-				'serial_number' => $obj->getSerialNumber(), 'is_default' => $obj->isDefault(),
-				'resolution_number' => $obj->getResolutionNumber(), 'regime' => $obj->getRegime(),
-				'resolution_date' => $obj->getResolutionDate(), 'created_date' => $obj->getCreatedDate(),
-				'initial_number' => $obj->getInitialNumber(), 'final_number' => $obj->getFinalNumber(),
-				'actual_number' => $obj->getCurrentNumber(), 'delete_cmd' => 'delete_correlative'),
-				'site_html.tpl');
+				'content' => 'correlative_form_html.tpl', 'status' => $obj->getStatus(), 'key' => $key,
+				'serial_number' => $obj->getSerialNumber(), 'resolution_number' => $obj->getResolutionNumber(),
+				'regime' => $obj->getRegime(), 'resolution_date' => $obj->getResolutionDate(),
+				'created_date' => $obj->getCreatedDate(), 'initial_number' => $obj->getInitialNumber(),
+				'final_number' => $obj->getFinalNumber(), 'actual_number' => $obj->getCurrentNumber(),
+				'delete_cmd' => 'delete_correlative'), 'site_html.tpl');
 	}
 }
 ?>

@@ -23,7 +23,24 @@
 </script>
 <div id="content">
 	<div id="frm" class="content_fit">
-		{include file='status_bar_html.tpl'}
+		<fieldset id="status_bar">
+			<p>
+				<label>Status:</label>
+				<span id="status_label" {if $status eq 2 or $status eq 4}class="cancel_status"{/if}>
+					{if $status eq 0}
+						Creando...
+					{elseif $status eq 1}
+						Inactivo
+					{elseif $status eq 2}
+						Vencido
+					{elseif $status eq 3}
+						Activo
+					{else}
+						Agotado
+					{/if}
+				</span>
+			</p>
+		</fieldset>
 		<fieldset id="main_data">
 		  	<p>
 		  		<label>Fecha Ingreso:</label>
@@ -36,7 +53,7 @@
 		  			onblur="oSetSerialNumber.execute(this.value, this.id);" />
 		  		<span id="serial_number-failed" class="hidden">*</span>
 		  		{else}
-		  		<span id="serial_number">{$serial_number|escape}{if $is_default eq 1} (Predeterminado){/if}</span>
+		  		<span id="serial_number">{$serial_number|escape}</span>
 		  		{/if}
 		  	</p>
 		  	<p>
