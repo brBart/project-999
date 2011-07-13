@@ -30,7 +30,7 @@ class GetCorrelativeWarningCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		$id = Correlative::getDefaultCorrelativeId();
+		$id = Correlative::getCurrentCorrelativeId();
 		
 		if(!is_null($id)){
 			$correlative = Correlative::getInstance($id);

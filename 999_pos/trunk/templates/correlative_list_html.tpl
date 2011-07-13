@@ -16,7 +16,7 @@
 				<td>
 					<a href="{$item_link|cat:$id|cat:'&last_cmd='|cat:$actual_cmd|cat:'&page='|cat:$page}"
 						onclick="oSession.setIsLink(true);">
-						{$list[i].serial_number}{if $list[i].is_default eq 3} (Activo){/if}
+						{$list[i].serial_number}{if $list[i].status eq 3} (Activo){/if}
 					</a>
 				</td>
 				<td>{$list[i].initial_number}</td>
