@@ -110,7 +110,11 @@ class Date{
 	static public function dbFormat($date){
 		$date_array = explode('/', $date);
 		
-		$db_date_array = array($date_array[2], $date_array[1], $date_array[0]);
+		$db_date_array = array(
+						str_pad($date_array[2], 4, "0", STR_PAD_LEFT),
+						str_pad($date_array[1], 2, "0", STR_PAD_LEFT),
+						str_pad($date_array[0], 2, "0", STR_PAD_LEFT)
+						);
 		
 		return implode('/', $db_date_array);
 	}
