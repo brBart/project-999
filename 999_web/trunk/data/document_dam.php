@@ -220,24 +220,14 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Makes the provided correlative current.
+	 * Updates the correlative's status.
 	 *
 	 * @param Correlative $obj
+	 * @param int status
 	 */
-	static public function makeCurrent(Correlative $obj){
-		$sql = 'CALL correlative_make_current(:correlative_id)';
-		$params = array(':correlative_id' => $obj->getId());
-		DatabaseHandler::execute($sql, $params);
-	}
-	
-	/**
-	 * Updates the correlative's status to expired.
-	 *
-	 * @param Correlative $obj
-	 */
-	static public function updateToExpired(Correlative $obj){
-		$sql = 'CALL correlative_update_expired(:correlative_id)';
-		$params = array(':correlative_id' => $obj->getId());
+	static public function updateStatus(Correlative $obj, $status){
+		$sql = 'CALL correlative_update_status(:correlative_id, :status)';
+		$params = array(':correlative_id' => $obj->getId(), ':status' => $status);
 		DatabaseHandler::execute($sql, $params);
 	}
 	

@@ -1082,7 +1082,7 @@ class Correlative extends Persist{
 			$number = CorrelativeDAM::getNextNumber($this);
 			
 			if($this->_mStatus == Correlative::CREATED){
-				CorrelativeDAM::makeCurrent($this);
+				CorrelativeDAM::updateStatus($this, Correlative::CURRENT);
 				ResolutionLog::write($this);
 				$this->_mStatus = Correlative::CURRENT;
 			}
@@ -1218,10 +1218,15 @@ class Correlative extends Persist{
 		$correlative = CorrelativeDAM::getInstance($id);
 		
 		if($correlative->isExpired($correlative->getResolutionDate())){
-			CorrelativeDAM::updateToExpired($correlative);
+			CorrelativeDAM::updateStatus($correlative, Correlative::EXPIRED);
 			$correlative->_mStatus = Correlative::EXPIRED;
 		}
-			
+		
+		if($correlative->getFinalNumber() == $correlative->getCurrentNumber()){
+			CorrelativeDAM::updateStatus($correlative, Correlative::USED_UP);
+			$correlative->_mStatus = Correlative::USED_UP;
+		}
+		
 		return $correlative;
 	}
 	
@@ -1258,7 +1263,7 @@ class Correlative extends Persist{
 		if(CorrelativeDAM::isQueueEmpty())
 			return new Correlative();
 		else
-			throw new Exception('No es posible crear correlativo, ya hay uno pendiente de uso.');
+			throw new Exception('No es posible crear otro correlativo, ya existe uno pendiente de uso.');
 	}
 	
 	/**
@@ -1720,15 +1725,17 @@ class Invoice extends Document{
 	 * @return CashReceipt
 	 */
 	public function createCashReceipt(){
-		$correlative_id = Correlative::getDefaultCorrelativeId();
+		$correlative_id = Correlative::getCurrentCorrelativeId();
 		
 		if(is_null($correlative_id))
-			throw new Exception('No hay correlativo predeterminado.');
+			throw new Exception('No hay correlativo disponible. Revise que exista alguno, si lo hay, revise que no haya alcanzado el final de la numeraci&oacute;n o que no este vencido.');
 			
 		$this->_mCorrelative = Correlative::getInstance($correlative_id);
 		
-		if($this->_mCorrelative->getFinalNumber()
-				== $this->_mCorrelative->getCurrentNumber())
+		if($this->_mCorrelative->getStatus() == Correlative::EXPIRED)
+			throw new Exception('El correlativo disponible ya esta vencido.');
+		
+		if($this->_mCorrelative->getStatus() == Correlative::USED_UP)
 			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
 		
 		return new CashReceipt($this);
