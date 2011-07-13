@@ -1728,15 +1728,12 @@ class Invoice extends Document{
 		$correlative_id = Correlative::getCurrentCorrelativeId();
 		
 		if(is_null($correlative_id))
-			throw new Exception('No hay correlativo disponible. Revise que exista alguno, si lo hay, revise que no haya alcanzado el final de la numeraci&oacute;n o que no este vencido.');
+			throw new Exception('No hay correlativo disponible. Revise que exista alguno o si lo hay, verifique que no haya alcanzado el final de su numeraci&oacute;n.');
 			
 		$this->_mCorrelative = Correlative::getInstance($correlative_id);
 		
 		if($this->_mCorrelative->getStatus() == Correlative::EXPIRED)
-			throw new Exception('El correlativo disponible ya esta vencido.');
-		
-		if($this->_mCorrelative->getStatus() == Correlative::USED_UP)
-			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
+			throw new Exception('El correlativo disponible ya vencio debido a que nunca se utilizo dentro de los' . CORRELATIVE_VALID_DAYS . ' dias despues de su autorizaci&oacute;n.');
 		
 		return new CashReceipt($this);
 	}
