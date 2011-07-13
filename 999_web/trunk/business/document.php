@@ -1733,7 +1733,7 @@ class Invoice extends Document{
 		$this->_mCorrelative = Correlative::getInstance($correlative_id);
 		
 		if($this->_mCorrelative->getStatus() == Correlative::EXPIRED)
-			throw new Exception('El correlativo disponible ya vencio debido a que nunca se utilizo dentro de los' . CORRELATIVE_VALID_DAYS . ' dias despues de su autorizaci&oacute;n.');
+			throw new Exception('El correlativo disponible ya vencio debido a que nunca se utilizo dentro de los ' . CORRELATIVE_VALID_DAYS . ' dias despues de su autorizaci&oacute;n.');
 		
 		return new CashReceipt($this);
 	}

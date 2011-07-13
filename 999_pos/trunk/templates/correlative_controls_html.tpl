@@ -19,6 +19,6 @@ var oDelete = new DeleteCommand(oSession, oConsole, Request.createXmlHttpRequest
   	{else}
   	<input name="form_widget" id="delete" type="button" value="Eliminar"
   		onclick="if(confirm('&iquest;Esta seguro que desea eliminar?')) oDelete.execute('{$delete_cmd}', '{$back_link}');"
-  		{if $status neq 1}disabled="disabled"{/if} />
+  		{if $status eq 3 or $status eq 4}disabled="disabled"{/if} />
   	{/if}
 </fieldset>
