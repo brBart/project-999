@@ -55,12 +55,17 @@ class Date{
 	static public function validateDate($date, $msg, $property = NULL){
 		$date_array = explode('/', $date);
 		
-		$day = (int)$date_array[0];
-		$month = (int)$date_array[1];
-		$year = (int)$date_array[2];
-		
-		if(!checkdate($month, $day, $year))
-			throw new ValidateException($msg . ' No existe o debe ser en formato \'dd/mm/aaaa\'.', $property);
+		if((ctype_digit($date_array[0]) && ctype_digit($date_array[1])
+				&& ctype_digit($date_array[2]))) {
+			$day = (int)$date_array[0];
+			$month = (int)$date_array[1];
+			$year = (int)$date_array[2];
+			
+			if(checkdate($month, $day, $year))
+				return;
+		}
+			
+		throw new ValidateException($msg . ' No existe o debe ser en formato \'dd/mm/aaaa\'.', $property);
 	}
 	
 	/**
