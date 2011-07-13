@@ -198,12 +198,12 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Returns true if there are no correlatives in the database.
+	 * Returns true if there are no inactive correlatives in the database.
 	 *
 	 * @return boolean
 	 */
-	static public function isEmpty(){
-		$sql = 'CALL correlative_is_empty()';
+	static public function isQueueEmpty(){
+		$sql = 'CALL correlative_is_queue_empty()';
 		return (boolean)DatabaseHandler::getOne($sql);
 	}
 	
@@ -220,12 +220,23 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Makes default the provided correlative.
+	 * Makes the provided correlative current.
 	 *
 	 * @param Correlative $obj
 	 */
-	static public function makeDefault(Correlative $obj){
-		$sql = 'CALL correlative_make_default(:correlative_id)';
+	static public function makeCurrent(Correlative $obj){
+		$sql = 'CALL correlative_make_current(:correlative_id)';
+		$params = array(':correlative_id' => $obj->getId());
+		DatabaseHandler::execute($sql, $params);
+	}
+	
+	/**
+	 * Updates the correlative's status to expired.
+	 *
+	 * @param Correlative $obj
+	 */
+	static public function updateToExpired(Correlative $obj){
+		$sql = 'CALL correlative_update_expired(:correlative_id)';
 		$params = array(':correlative_id' => $obj->getId());
 		DatabaseHandler::execute($sql, $params);
 	}
@@ -243,8 +254,8 @@ class CorrelativeDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
-			$correlative = new Correlative($id, $result['serial_number'], (boolean)$result['is_default'],
-					(int)$result['current'], Persist::CREATED);
+			$correlative = new Correlative($id, $result['serial_number'],(int)$result['current'],
+					(int)$result['status']);
 			$correlative->setData($result['resolution_number'], $result['resolution_date'], $result['created_date'],
 					$result['regime'], (int)$result['initial_number'], (int)$result['final_number']);
 			return $correlative;
@@ -254,12 +265,12 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Returns the integer of the default correlative.
+	 * Returns the integer of the current correlative.
 	 *
 	 * @return integer
 	 */
-	static public function getDefaultCorrelativeId(){
-		$sql = 'CALL correlative_default_id()';
+	static public function getCurrentCorrelativeId(){
+		$sql = 'CALL correlative_current_id()';
 		return DatabaseHandler::getOne($sql);
 	}
 	
@@ -272,13 +283,13 @@ class CorrelativeDAM{
 	 */
 	static public function insert(Correlative $obj){
 		$sql = 'CALL correlative_insert(:serial_number, :resolution_number, :resolution_date, :created_date, ' .
-				':regime, :initial_number, :final_number)';
+				':regime, :initial_number, :final_number, :status)';
 		$params = array(':serial_number' => $obj->getSerialNumber(),
 				':resolution_number' => $obj->getResolutionNumber(),
 				':resolution_date' => Date::dbFormat($obj->getResolutionDate()),
 				':created_date' => Date::dbFormat($obj->getCreatedDate()),
-				':regime' => $obj->getRegime(),
-				':initial_number' => $obj->getInitialNumber(), ':final_number' => $obj->getFinalNumber());
+				':regime' => $obj->getRegime(), ':initial_number' => $obj->getInitialNumber(),
+				':final_number' => $obj->getFinalNumber(), ':status' => Correlative::CREATED);
 		DatabaseHandler::execute($sql, $params);
 		
 		$sql = 'CALL get_last_insert_id()';
