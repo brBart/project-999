@@ -114,9 +114,13 @@ class ReserveDAM{
  * @author Roberto Oliveros
  */
 class CorrelativeDAM{
+	static private $_Initial1 = 1;
+	static private $_Final1 = 999;
 	static private $_mCurrent1 = 457;
 	static private $_mStatus1 = Correlative::CURRENT;
 	
+	static private $_Initial2 = 1000;
+	static private $_Final2 = 1999;
 	static private $_mCurrent2 = 0;
 	static private $_mStatus2 = Correlative::CREATED;
 	
@@ -189,7 +193,7 @@ class CorrelativeDAM{
 	 * @return boolean
 	 */
 	static public function isQueueEmpty(){
-		return false;
+		return !(self::$_mStatus2 == Correlative::CREATED);
 	}
 	
 	
@@ -238,13 +242,19 @@ class CorrelativeDAM{
 		switch($id){
 			case 1:
 				$correlative = new Correlative($id, 'A021', self::$_mCurrent1, self::$_mStatus1);
-				$correlative->setData('2008-10', '15/01/2008', '15/01/2009', 'Sujeto pagos', 100, 5000);
+				$correlative->setData('2008-10', '15/01/2008', '15/01/2009', 'Sujeto pagos', self::$_Initial1, self::$_Final1);
 				return $correlative;
 				break;
 				
 			case 2:
 				$correlative = new Correlative($id, 'A022', self::$_mCurrent2, self::$_mStatus2);
-				$correlative->setData('2008-05', '15/01/2008', '15/01/2009', 'Sujeto pagos', 5001, 10000);
+				$correlative->setData('2008-05', '15/01/2008', '15/01/2009', 'Sujeto pagos', self::$_Initial2, self::$_Final2);
+				return $correlative;
+				break;
+				
+			case 3:
+				$correlative = new Correlative($id, 'C322', 11999, Correlative::CURRENT);
+				$correlative->setData('2008-05', '15/01/2008', '15/01/2009', 'Sujeto pagos', 11001, 11999);
 				return $correlative;
 				break;
 			
@@ -259,11 +269,9 @@ class CorrelativeDAM{
 	 * @return String
 	 */
 	static public function getCurrentCorrelativeId(){
-		echo 'status 1: ' . self::$_mStatus1 . '\n';
-		echo 'status 2: ' . self::$_mStatus2 . '\n';
-		if(self::$_mStatus1 == Correlative::CURRENT)
+		if(self::$_mCurrent1 < self::$_Final1)
 			return 1;
-		elseif(self::$_mStatus2 == Correlative::CURRENT)
+		elseif(self::$_mCurrent2 < self::$_Final2)
 			return 2;
 		else
 			return NULL;
