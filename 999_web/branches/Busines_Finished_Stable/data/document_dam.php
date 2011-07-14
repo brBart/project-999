@@ -114,11 +114,11 @@ class ReserveDAM{
  * @author Roberto Oliveros
  */
 class CorrelativeDAM{
-	static private $_mDefault1 = false;
 	static private $_mCurrent1 = 457;
+	static private $_mStatus1 = Correlative::CURRENT;
 	
-	static private $_mDefault2 = true;
 	static private $_mCurrent2 = 0;
+	static private $_mStatus2 = Correlative::CREATED;
 	
 	/**
 	 * Returns true if a a correlative with the provided serial number exists in the database.
@@ -188,7 +188,7 @@ class CorrelativeDAM{
 	 *
 	 * @return boolean
 	 */
-	static public function isEmpty(){
+	static public function isQueueEmpty(){
 		return false;
 	}
 	
@@ -208,20 +208,19 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Makes default the provided correlative.
+	 * Updates the correlative's status.
 	 *
 	 * @param Correlative $obj
+	 * @param int $status
 	 */
-	static public function makeDefault(Correlative $obj){
+	static public function updateStatus(Correlative $obj, $status){
 		switch($obj->getId()){
 			case 1:
-				self::$_mDefault1 = true;
-				self::$_mDefault2 = false;
+				self::$_mStatus1 = $status;
 				break;
 			
 			case 2:
-				self::$_mDefault1 = false;
-				self::$_mDefault2 = true;
+				self::$_mStatus2 = $status;
 				break;
 				
 			default:
@@ -238,16 +237,14 @@ class CorrelativeDAM{
 	static public function getInstance($id){
 		switch($id){
 			case 1:
-				$correlative = new Correlative($id, 'A021', self::$_mDefault1,
-						self::$_mCurrent1, Persist::CREATED);
+				$correlative = new Correlative($id, 'A021', self::$_mCurrent1, self::$_mStatus1);
 				$correlative->setData('2008-10', '15/01/2008', '15/01/2009', 'Sujeto pagos', 100, 5000);
 				return $correlative;
 				break;
 				
 			case 2:
-				$correlative = new Correlative($id, 'A022', self::$_mDefault2,
-						self::$_mCurrent2, Persist::CREATED);
-				$correlative->setData('2008-05', '15/01/2008', '15/01/2009', 'Sujeto pagos', 5000, 10000);
+				$correlative = new Correlative($id, 'A022', self::$_mCurrent2, self::$_mStatus2);
+				$correlative->setData('2008-05', '15/01/2008', '15/01/2009', 'Sujeto pagos', 5001, 10000);
 				return $correlative;
 				break;
 			
@@ -257,14 +254,16 @@ class CorrelativeDAM{
 	}
 	
 	/**
-	 * Returns the serial number of the default correlative.
+	 * Returns the serial number of the current correlative.
 	 *
 	 * @return String
 	 */
-	static public function getDefaultCorrelativeId(){
-		if(self::$_mDefault1)
+	static public function getCurrentCorrelativeId(){
+		echo 'status 1: ' . self::$_mStatus1 . '\n';
+		echo 'status 2: ' . self::$_mStatus2 . '\n';
+		if(self::$_mStatus1 == Correlative::CURRENT)
 			return 1;
-		elseif(self::$_mDefault2)
+		elseif(self::$_mStatus2 == Correlative::CURRENT)
 			return 2;
 		else
 			return NULL;

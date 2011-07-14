@@ -860,6 +860,27 @@ class Reserve extends Persist{
  */
 class Correlative extends Persist{
 	/**
+	 * Status type.
+	 * 
+	 * Indicates that the correlative was never used before its expiration date.
+	 */
+	const EXPIRED = 2;
+	
+	/**
+	 * Status type.
+	 * 
+	 * Indicates that this correlative is the current one in use.
+	 */
+	const CURRENT = 3;
+	
+	/**
+	 * Status type.
+	 * 
+	 * Indicates that all the correlative's numbers have been used.
+	 */
+	const USED_UP = 4;
+	
+	/**
 	 * Holds the correlative's id.
 	 * @var integer
 	 */
@@ -871,13 +892,6 @@ class Correlative extends Persist{
 	 * @var string
 	 */
 	private $_mSerialNumber;
-	
-	/**
-	 * Flag that indicates if the correlative is the default one.
-	 *
-	 * @var boolean
-	 */
-	private $_mDefault;
 	
 	/**
 	 * Holds the correlative's resolution number.
@@ -936,13 +950,11 @@ class Correlative extends Persist{
 	 * Parameters must be set only if called from the database layer.
 	 * @param integer $id
 	 * @param string $serialNumber
-	 * @param boolean $default
 	 * @param integer $currentNumber
 	 * @param integer $status
 	 * @throws Exception
 	 */
-	public function __construct($id = NULL, $serialNumber = NULL, $default = false, $currentNumber = 0,
-			$status = Persist::IN_PROGRESS){
+	public function __construct($id = NULL, $serialNumber = NULL, $currentNumber = 0, $status = Correlative::IN_PROGRESS){
 		parent::__construct($status);
 		
 		if(!is_null($id))
@@ -974,7 +986,6 @@ class Correlative extends Persist{
 			
 		$this->_mId = $id;
 		$this->_mSerialNumber = $serialNumber;
-		$this->_mDefault = (boolean)$default;
 		$this->_mCurrentNumber = $currentNumber;
 	}
 	
@@ -994,16 +1005,6 @@ class Correlative extends Persist{
 	 */
 	public function getSerialNumber(){
 		return $this->_mSerialNumber;
-	}
-	
-	/**
-	 * Returns the default flag value.
-	 *
-	 * Returns true if this is the default correlative.
-	 * @return boolean
-	 */
-	public function isDefault(){
-		return $this->_mDefault;
 	}
 	
 	/**
@@ -1072,12 +1073,22 @@ class Correlative extends Persist{
 	/**
 	 * Returns the next to be used in the correlative's range of numbers.
 	 *
-	 * Only applies when the object's status property is set to Persist::CREATED.
+	 * Only applies when the object's status property is set to Correlative::CREATED
+	 * or Correlative::CURRENT.
 	 * @return integer
 	 */
 	public function getNextNumber(){
-		if($this->_mStatus == Persist::CREATED)
-			return CorrelativeDAM::getNextNumber($this);
+		if($this->_mStatus == Correlative::CREATED || $this->_mStatus == Correlative::CURRENT){
+			$number = CorrelativeDAM::getNextNumber($this);
+			
+			if($this->_mStatus == Correlative::CREATED){
+				CorrelativeDAM::updateStatus($this, Correlative::CURRENT);
+				ResolutionLog::write($this);
+				$this->_mStatus = Correlative::CURRENT;
+			}
+			
+			return $number; 
+		}
 		else
 			return 0;
 	}
@@ -1182,24 +1193,14 @@ class Correlative extends Persist{
 		if($this->_mStatus == Persist::IN_PROGRESS){
 			$this->validateMainProperties();
 			
-			// Verify if there are records in the database.
-			$no_records = CorrelativeDAM::isEmpty();
-			if(!$no_records){
-				$this->verifyResolutionNumber($this->_mResolutionNumber);
-				$this->verifySerialNumber($this->_mSerialNumber,
-						$this->_mInitialNumber, $this->_mFinalNumber);
-			}
+			$this->verifyResolutionNumber($this->_mResolutionNumber);
+			$this->verifySerialNumber($this->_mSerialNumber,
+					$this->_mInitialNumber, $this->_mFinalNumber);
 			
 			$this->_mCreatedDate = date('d/m/Y');
 				
 			$this->_mId = CorrelativeDAM::insert($this);
-			$this->_mStatus = Persist::CREATED;
-			
-			// If there were no records, make this one the default.
-			if($no_records)
-				self::makeDefault($this);
-				
-			ResolutionLog::write($this);
+			$this->_mStatus = Correlative::CREATED;
 			
 			// For presentation purposes.
 			return $this->_mId;
@@ -1214,43 +1215,55 @@ class Correlative extends Persist{
 	 * @return Correlative
 	 */
 	static public function getInstance($id){
-		return CorrelativeDAM::getInstance($id);
+		$correlative = CorrelativeDAM::getInstance($id);
+		
+		if($correlative->isExpired($correlative->getResolutionDate())){
+			CorrelativeDAM::updateStatus($correlative, Correlative::EXPIRED);
+			$correlative->_mStatus = Correlative::EXPIRED;
+		}
+		
+		if($correlative->getFinalNumber() == $correlative->getCurrentNumber()){
+			CorrelativeDAM::updateStatus($correlative, Correlative::USED_UP);
+			$correlative->_mStatus = Correlative::USED_UP;
+		}
+		
+		return $correlative;
 	}
 	
 	/**
-	 * Returns the id of the default correlative.
+	 * Returns the id of the current correlative.
 	 *
 	 * @return integer
 	 */
-	static public function getDefaultCorrelativeId(){
-		return CorrelativeDAM::getDefaultCorrelativeId();
-	}
-	
-	/**
-	 * Makes default the provided correlative.
-	 *
-	 * @param Correlative $obj
-	 */
-	static public function makeDefault(Correlative $obj){
-		Persist::validateObjectFromDatabase($obj);
-		CorrelativeDAM::makeDefault($obj);
+	static public function getCurrentCorrelativeId(){
+		return CorrelativeDAM::getCurrentCorrelativeId();
 	}
 	
 	/**
 	 * Deletes the correlative from the database.
 	 *
-	 * Throws an exception due dependencies. Can't be deleted if it is the default correlative.
+	 * Throws an exception due dependencies..
 	 * @param Correlative $obj
 	 * @return boolean
 	 * @throws Exception
 	 */
 	static public function delete(Correlative $obj){
-		self::validateObjectFromDatabase($obj);
-		if($obj->isDefault())
-			throw new Exception('Correlativo predeterminado, no se puede eliminar.');
-		
 		if(!CorrelativeDAM::delete($obj))
 			throw new Exception('Correlativo tiene dependencias (facturas) y no se puede eliminar.');
+	}
+	
+	/**
+	 * Returns a new correlative object.
+	 * 
+	 * Throws an exception if there is no more room for creating another correlative.
+	 * @return Correlative
+	 * @throws Exception
+	 */
+	static public function create(){
+		if(CorrelativeDAM::isQueueEmpty())
+			return new Correlative();
+		else
+			throw new Exception('No es posible crear otro correlativo, ya existe uno pendiente de uso.');
 	}
 	
 	/**
@@ -1328,16 +1341,27 @@ class Correlative extends Persist{
 	}
 	
 	/**
+	 * Throws an exception if the date provided has expired according to SAT norms.
+	 * 
+	 * @param string $date
+	 * @throws ValidateException
+	 */
+	private function verifyResolutionDate($date){
+		if(self::isExpired($date))
+			throw new ValidateException('Los '. CORRELATIVE_VALID_DAYS . ' dias de vigencia para registrar correlativo ya caducaron.', 'resolution_date');
+	}
+	
+	/**
 	 * Checks if the date provided has not passed the 10 days availble according to SAT norms.
 	 * 
 	 * @param string $date
+	 * @return boolean
 	 */
-	private function verifyResolutionDate($date){
+	static private function isExpired($date){
 		$dateObj = new DateTime(Date::dbFormat($date));
-		$dateObj->modify('+10 day');
+		$dateObj->modify('+'. CORRELATIVE_VALID_DAYS . ' day');
 		
-		if(Date::compareDates($dateObj->format('d/m/Y'), date('d/m/Y')))
-			throw new ValidateException('Los 10 dias de vigencia para registrar correlativo ya caducaron.', 'resolution_date');
+		return Date::compareDates($dateObj->format('d/m/Y'), date('d/m/Y'));
 	}
 }
 
@@ -1701,16 +1725,15 @@ class Invoice extends Document{
 	 * @return CashReceipt
 	 */
 	public function createCashReceipt(){
-		$correlative_id = Correlative::getDefaultCorrelativeId();
+		$correlative_id = Correlative::getCurrentCorrelativeId();
 		
 		if(is_null($correlative_id))
-			throw new Exception('No hay correlativo predeterminado.');
+			throw new Exception('No hay correlativo disponible. Revise que exista alguno o si lo hay, verifique que no haya alcanzado el final de su numeraci&oacute;n.');
 			
 		$this->_mCorrelative = Correlative::getInstance($correlative_id);
 		
-		if($this->_mCorrelative->getFinalNumber()
-				== $this->_mCorrelative->getCurrentNumber())
-			throw new Exception('Se alcanzo el final del correlativo, favor de cambiarlo.');
+		if($this->_mCorrelative->getStatus() == Correlative::EXPIRED)
+			throw new Exception('El correlativo disponible ya vencio debido a que nunca se utilizo dentro de los ' . CORRELATIVE_VALID_DAYS . ' dias despues de su autorizaci&oacute;n.');
 		
 		return new CashReceipt($this);
 	}
