@@ -1217,15 +1217,17 @@ class Correlative extends Persist{
 	static public function getInstance($id){
 		$correlative = CorrelativeDAM::getInstance($id);
 		
-		if($correlative->isExpired($correlative->getResolutionDate())){
-			CorrelativeDAM::updateStatus($correlative, Correlative::EXPIRED);
-			$correlative->_mStatus = Correlative::EXPIRED;
-		}
+		if($correlative->getStatus() == Correlative::CREATED)
+			if($correlative->isExpired($correlative->getResolutionDate())){
+				CorrelativeDAM::updateStatus($correlative, Correlative::EXPIRED);
+				$correlative->_mStatus = Correlative::EXPIRED;
+			}
 		
-		if($correlative->getFinalNumber() == $correlative->getCurrentNumber()){
-			CorrelativeDAM::updateStatus($correlative, Correlative::USED_UP);
-			$correlative->_mStatus = Correlative::USED_UP;
-		}
+		if($correlative->getStatus() == Correlative::CURRENT)
+			if($correlative->getFinalNumber() == $correlative->getCurrentNumber()){
+				CorrelativeDAM::updateStatus($correlative, Correlative::USED_UP);
+				$correlative->_mStatus = Correlative::USED_UP;
+			}
 		
 		return $correlative;
 	}
