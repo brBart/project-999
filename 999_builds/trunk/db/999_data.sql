@@ -175,7 +175,9 @@ INSERT INTO `company` (`nit`, `name`, `corporate_name`, `telephone`, `address`) 
 
 INSERT INTO `payment_card_brand` (`payment_card_brand_id`, `name`) VALUES
 (1, 'Visa'),
-(2, 'MasterCard')$$
+(2, 'MasterCard')
+(3, 'American Express')
+(4, 'Dinners Club')$$
 
 --
 -- Volcar la base de datos para la tabla `payment_card_type`
