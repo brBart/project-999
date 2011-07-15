@@ -5,6 +5,7 @@
 		<thead>
 			<tr>
 				<th>Serie No.</th>
+				<th>Status</th>
 				<th>Inicial</th>
 				<th>Final</th>
 			</tr>
@@ -16,8 +17,19 @@
 				<td>
 					<a href="{$item_link|cat:$id|cat:'&last_cmd='|cat:$actual_cmd|cat:'&page='|cat:$page}"
 						onclick="oSession.setIsLink(true);">
-						{$list[i].serial_number}{if $list[i].status eq 3} (Activo){/if}
+						{$list[i].serial_number}
 					</a>
+				</td>
+				<td>
+					{if $list[i].status eq 1}
+						Inactivo
+					{elseif $list[i].status eq 2}
+						Vencido
+					{elseif $list[i].status eq 3}
+						Activo
+					{elseif $list[i].status eq 4}
+						Agotado
+					{/if}
 				</td>
 				<td>{$list[i].initial_number}</td>
 				<td>{$list[i].final_number}</td>

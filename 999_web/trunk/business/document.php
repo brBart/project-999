@@ -1265,7 +1265,7 @@ class Correlative extends Persist{
 		if(CorrelativeDAM::isQueueEmpty())
 			return new Correlative();
 		else
-			throw new Exception('No es posible crear otro correlativo, ya existe uno pendiente de uso.');
+			throw new Exception('No es posible crear otro correlativo, ya existe uno (inactivo) pendiente de uso.');
 	}
 	
 	/**
