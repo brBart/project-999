@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-07-2011 a las 10:40:28
+-- Tiempo de generación: 14-07-2011 a las 16:01:32
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   `initial_number` bigint(20) NOT NULL,
   `final_number` bigint(20) NOT NULL,
   `current` bigint(20) NOT NULL default '0',
-  `is_default` tinyint(1) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL,
   PRIMARY KEY  (`correlative_id`),
   UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`),
   UNIQUE KEY `unique_resolution_number` (`resolution_number`)
@@ -416,7 +416,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`),
   KEY `idx_invoice_correlative_id` (`correlative_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -479,7 +479,7 @@ CREATE TABLE IF NOT EXISTS `invoice_transaction_log` (
   `total` decimal(13,2) NOT NULL,
   `state` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1$$
 
 -- --------------------------------------------------------
 
@@ -498,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -511,7 +511,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`manufacturer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -563,7 +563,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   KEY `idx_product_unit_of_measure_id` (`unit_of_measure_id`),
   KEY `idx_product_manufacturer_id` (`manufacturer_id`),
   KEY `idx_product_name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -649,7 +649,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -698,7 +698,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -717,7 +717,7 @@ CREATE TABLE IF NOT EXISTS `resolution_log` (
   `created_date` date NOT NULL,
   `document_type` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1$$
 
 -- --------------------------------------------------------
 
@@ -852,7 +852,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `email` varchar(50) collate utf8_unicode_ci default NULL,
   `contact` varchar(50) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`supplier_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -2004,13 +2004,11 @@ BEGIN
 
 END$$
 
-DROP PROCEDURE IF EXISTS `correlative_default_id`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_default_id`()
+DROP PROCEDURE IF EXISTS `correlative_current_id`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_current_id`()
 BEGIN
 
-  SELECT correlative_id FROM correlative
-
-    WHERE is_default = 1;
+  SELECT MIN(correlative_id) FROM correlative WHERE current < final_number;
 
 END$$
 
@@ -2085,7 +2083,7 @@ BEGIN
 
     DATE_FORMAT(created_date, '%d/%m/%Y') AS created_date, regime, initial_number, final_number,
 
-      current, is_default FROM correlative
+      current, status FROM correlative
 
     WHERE correlative_id = inCorrelativeId;
 
@@ -2094,36 +2092,34 @@ END$$
 DROP PROCEDURE IF EXISTS `correlative_insert`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_insert`(IN inSerialNumber VARCHAR(10), IN inResolutionNumber VARCHAR(50), IN inResolutionDate Date, IN inCreatedDate Date, IN inRegime VARCHAR(50),
 
-  IN inInitialNumber BIGINT, IN inFinalNumber BIGINT)
+  IN inInitialNumber BIGINT, IN inFinalNumber BIGINT, IN inStatus TINYINT)
 BEGIN
 
-  INSERT INTO correlative (serial_number, resolution_number, resolution_date, created_date, regime, initial_number, final_number)
+  INSERT INTO correlative (serial_number, resolution_number, resolution_date, created_date, regime, initial_number, final_number, status)
 
-    VALUES (inSerialNumber, inResolutionNumber, inResolutionDate, inCreatedDate, inRegime, inInitialNumber, inFinalNumber);
+    VALUES (inSerialNumber, inResolutionNumber, inResolutionDate, inCreatedDate, inRegime, inInitialNumber, inFinalNumber, inStatus);
 
 END$$
 
-DROP PROCEDURE IF EXISTS `correlative_is_empty`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_is_empty`()
+DROP PROCEDURE IF EXISTS `correlative_is_queue_empty`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_is_queue_empty`()
 BEGIN
 
-  DECLARE rowsCount INT;
+  DECLARE correlativeId INT;
 
 
+  SELECT MAX(correlative_id) FROM correlative
 
-  SELECT COUNT(*) FROM correlative
-
-    INTO rowsCount;
-
+    INTO correlativeId;
 
 
-  IF rowsCount > 0 THEN
+  IF correlativeId IS NULL THEN
 
-    SELECT 0;
+    SELECT 1;
 
   ELSE
 
-    SELECT 1;
+    SELECT IF(current > 0, 1, 0) FROM correlative WHERE correlative_id = correlativeId;
 
   END IF;
 
@@ -2143,7 +2139,7 @@ BEGIN
 
   PREPARE statement FROM
 
-    "SELECT correlative_id AS id, serial_number, is_default, initial_number, final_number FROM correlative
+    "SELECT correlative_id AS id, serial_number, initial_number, final_number, status FROM correlative
 
       ORDER BY serial_number, initial_number
 
@@ -2158,24 +2154,6 @@ BEGIN
 
 
   EXECUTE statement USING @p1, @p2;
-
-END$$
-
-DROP PROCEDURE IF EXISTS `correlative_make_default`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_make_default`(IN inCorrelativeId INT)
-BEGIN
-
-  UPDATE correlative
-
-    SET is_default = 0;
-
-
-
-  UPDATE correlative
-
-    SET is_default = 1
-
-    WHERE correlative_id = inCorrelativeId;
 
 END$$
 
@@ -2232,6 +2210,18 @@ BEGIN
   SELECT COUNT(*) FROM correlative
 
   WHERE resolution_number = inResolutionNumber;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `correlative_update_status`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `correlative_update_status`(IN inCorrelativeId INT, IN inStatus TINYINT)
+BEGIN
+
+  UPDATE correlative
+
+    SET status = inStatus
+
+    WHERE correlative_id = inCorrelativeId;
 
 END$$
 
@@ -5654,7 +5644,7 @@ BEGIN
 
       IF(inv.status = 2, 0, cr.cash) AS cash,
 
-      IF(inv.status = 2, 0, cr.total_vouchers) AS total_vouchers, status FROM invoice inv 
+      IF(inv.status = 2, 0, cr.total_vouchers) AS total_vouchers, inv.status FROM invoice inv 
 
       INNER JOIN cash_receipt cr ON inv.invoice_id = cr.cash_receipt_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
