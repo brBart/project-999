@@ -40,7 +40,6 @@ public:
 	void setGetDocumentCmd(QString cmd);
 	void setCreateDocumentCmd(QString cmd);
 	void setDeleteItemDocumentCmd(QString cmd);
-	void setCanceDocumentCmd(QString cmd);
 
 	void setCreateDocumentTransformerName(QString name);
 	void setDocumentListTransformerName(QString name);
@@ -56,8 +55,6 @@ public slots:
 	void discardDocument();
 	void scrollUp();
 	void scrollDown();
-	void showAuthenticationDialogForCancel();
-	void cancelDocument();
 	void deleteItemDocument();
 
 protected:
@@ -110,7 +107,6 @@ protected:
 
 	virtual void createDocumentEvent(bool ok,
 			QList<QMap<QString, QString>*> *list = 0);
-	virtual void cancelDocumentEvent(bool ok);
 
 	virtual void setActions() = 0;
 	virtual void setMenu() = 0;
@@ -125,7 +121,6 @@ private:
 	QString m_GetDocumentCmd;
 	QString m_CreateDocumentCmd;
 	QString m_DeleteItemDocumentCmd;
-	QString m_CancelDocumentCmd;
 
 	QString m_CreateDocumentTransformer;
 	QString m_DocumentListTransformer;

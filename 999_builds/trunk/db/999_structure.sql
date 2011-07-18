@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-07-2011 a las 16:01:32
+-- Tiempo de generación: 18-07-2011 a las 11:12:08
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -297,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   KEY `idx_deposit_cash_register_id` (`cash_register_id`),
   KEY `idx_deposit_user_account_username` (`user_account_username`),
   KEY `idx_deposit_date` (`date`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `amount` decimal(13,2) NOT NULL,
   PRIMARY KEY  (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -444,6 +444,7 @@ CREATE TABLE IF NOT EXISTS `invoice_cancelled` (
   `invoice_id` int(11) NOT NULL,
   `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
+  `reason` varchar(100) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`invoice_id`,`user_account_username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
@@ -3166,7 +3167,7 @@ END$$
 DROP PROCEDURE IF EXISTS `invoice_cancel`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_cancel`(IN inInvoiceId INT, IN inUserName VARCHAR(10),
 
-  IN inDate DATETIME)
+  IN inDate DATETIME, IN inReason VARCHAR(100))
 BEGIN
 
   UPDATE invoice
@@ -3177,9 +3178,9 @@ BEGIN
 
 
 
-  INSERT INTO invoice_cancelled (invoice_id, user_account_username, date)
+  INSERT INTO invoice_cancelled (invoice_id, user_account_username, date, reason)
 
-    VALUES (inInvoiceId, inUserName, inDate);
+    VALUES (inInvoiceId, inUserName, inDate, inReason);
 
 END$$
 

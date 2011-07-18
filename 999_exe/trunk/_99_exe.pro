@@ -1,12 +1,13 @@
 TEMPLATE = app
-TARGET = bobs_pos_0_4_1
+TARGET = bobs_pos_0_5_0
 QT += core \
     gui \
     xml \
     xmlpatterns \
     network \
     webkit
-HEADERS += xml_transformer/correlative_warning_xml_transformer.h \
+HEADERS += cancel_invoice_dialog/cancel_invoice_dialog.h \
+    xml_transformer/correlative_warning_xml_transformer.h \
     section/working_day_section.h \
     section/report_section.h \
     section/object_section.h \
@@ -79,7 +80,8 @@ HEADERS += xml_transformer/correlative_warning_xml_transformer.h \
     console/console.h \
     xml_response_handler/xml_response_handler.h \
     http_request/http_request.h
-SOURCES += xml_transformer/correlative_warning_xml_transformer.cpp \
+SOURCES += cancel_invoice_dialog/cancel_invoice_dialog.cpp \
+    xml_transformer/correlative_warning_xml_transformer.cpp \
     section/working_day_section.cpp \
     section/report_section.cpp \
     section/object_section.cpp \
@@ -151,7 +153,8 @@ SOURCES += xml_transformer/correlative_warning_xml_transformer.cpp \
     xml_response_handler/xml_response_handler.cpp \
     http_request/http_request.cpp \
     main.cpp
-FORMS += search_deposit_dialog/search_deposit_dialog.ui \
+FORMS += cancel_invoice_dialog/cancel_invoice_dialog.ui \
+    search_deposit_dialog/search_deposit_dialog.ui \
     available_cash_dialog/available_cash_dialog.ui \
     consult_product_dialog/consult_product_dialog.ui \
     search_invoice_dialog/search_invoice_dialog.ui \

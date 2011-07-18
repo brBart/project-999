@@ -233,6 +233,59 @@ void DepositSection::searchDeposit()
 }
 
 /**
+ * Shows the authentication dialog to cancel a document.
+ */
+void DepositSection::showAuthenticationDialogForCancel()
+{
+	m_AuthenticationDlg = new AuthenticationDialog(this, Qt::WindowTitleHint);
+	m_AuthenticationDlg->setAttribute(Qt::WA_DeleteOnClose);
+	m_AuthenticationDlg->setModal(true);
+
+	connect(m_AuthenticationDlg, SIGNAL(okClicked()), this, SLOT(cancelDocument()));
+
+	m_AuthenticationDlg->show();
+}
+
+/**
+ * Cancels a document on the server.
+ */
+void DepositSection::cancelDocument()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "cancel_deposit");
+	url.addQueryItem("username", m_AuthenticationDlg->usernameLineEdit()->text());
+	url.addQueryItem("password", m_AuthenticationDlg->passwordLineEdit()->text());
+	url.addQueryItem("key", m_DocumentKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()->create("stub");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+
+		m_AuthenticationDlg->close();
+
+		QWebFrame *frame = ui.webView->page()->mainFrame();
+		QWebElement element = frame->findFirstElement("#status_label");
+		element.setInnerXml("Anulado");
+		element.addClass("cancel_status");
+
+		m_DocumentStatus = Cancelled;
+		updateActions();
+	} else {
+		m_AuthenticationDlg->passwordLineEdit()->setText("");
+		m_AuthenticationDlg->usernameLineEdit()->selectAll();
+		m_AuthenticationDlg->usernameLineEdit()->setFocus();
+		m_AuthenticationDlg->console()->displayError(errorMsg);
+	}
+
+	delete transformer;
+}
+
+/**
  * Creates the QActions for the menu bar.
  */
 void DepositSection::setActions()

@@ -30,6 +30,8 @@ public slots:
 	void addCashDeposit();
 	void saveDeposit();
 	void searchDeposit();
+	void showAuthenticationDialogForCancel();
+	void cancelDocument();
 
 protected:
 	// Edit actions.

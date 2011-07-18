@@ -144,6 +144,7 @@ void SalesSection::createDiscount()
 		QList<QMap<QString, QString>*> list = transformer->content();
 		QMap<QString, QString> *params = list[0];
 		QString discountKey = params->value("key");
+
 		m_AuthenticationDlg->close();
 
 		DiscountDialog dlg(m_Request->cookieJar(), m_ServerUrl, discountKey, this,
@@ -318,6 +319,48 @@ void SalesSection::checkPrinterForCancel()
 	}
 
 	showAuthenticationDialogForCancel();
+}
+
+/**
+ * Cancels a document on the server.
+ */
+void SalesSection::cancelDocument()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "cancel_invoice");
+	url.addQueryItem("username", m_CancelInvoiceDlg->usernameLineEdit()->text());
+	url.addQueryItem("password", m_CancelInvoiceDlg->passwordLineEdit()->text());
+	url.addQueryItem("reason", m_CancelInvoiceDlg->reasonLineEdit()->text());
+	url.addQueryItem("key", m_DocumentKey);
+	url.addQueryItem("type", "xml");
+
+	QString content = m_Request->get(url);
+
+	XmlTransformer *transformer = XmlTransformerFactory::instance()->create("stub");
+
+	QString errorMsg;
+	if (m_Handler->handle(content, transformer, &errorMsg) ==
+			XmlResponseHandler::Success) {
+
+		m_CancelInvoiceDlg->close();
+
+		QWebFrame *frame = ui.webView->page()->mainFrame();
+		QWebElement element = frame->findFirstElement("#status_label");
+		element.setInnerXml("Anulado");
+		element.addClass("cancel_status");
+
+		m_DocumentStatus = Cancelled;
+		updateActions();
+
+		printCancelInvoice();
+	} else {
+		m_CancelInvoiceDlg->passwordLineEdit()->setText("");
+		m_CancelInvoiceDlg->usernameLineEdit()->selectAll();
+		m_CancelInvoiceDlg->usernameLineEdit()->setFocus();
+		m_CancelInvoiceDlg->console()->displayError(errorMsg);
+	}
+
+	delete transformer;
 }
 
 /**
@@ -606,28 +649,6 @@ void SalesSection::createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *
 }
 
 /**
- * Extends functionality after the event.
- */
-void SalesSection::cancelDocumentEvent(bool ok)
-{
-	if (ok) {
-		QUrl url(*m_ServerUrl);
-		url.addQueryItem("cmd", "print_cancelled_invoice");
-		url.addQueryItem("key", m_DocumentKey);
-
-		QString content = m_Request->get(url);
-
-		QWebView webView;
-
-		webView.setHtml(content);
-
-		QPrinter printer;
-		printer.setPrinterName(Registry::instance()->printerName());
-		webView.print(&printer);
-	}
-}
-
-/**
  * Auxiliary method for updating the QActions related to the recordset.
  */
 QString SalesSection::navigateValues()
@@ -759,6 +780,40 @@ void SalesSection::printInvoice(QString id)
 	QUrl url(*m_ServerUrl);
 	url.addQueryItem("cmd", "print_invoice");
 	url.addQueryItem("id", id);
+
+	QString content = m_Request->get(url);
+
+	QWebView webView;
+
+	webView.setHtml(content);
+
+	QPrinter printer;
+	printer.setPrinterName(Registry::instance()->printerName());
+	webView.print(&printer);
+}
+
+/**
+ * Shows the authentication dialog to cancel a document.
+ */
+void SalesSection::showAuthenticationDialogForCancel()
+{
+	m_CancelInvoiceDlg = new CancelInvoiceDialog(this, Qt::WindowTitleHint);
+	m_CancelInvoiceDlg->setAttribute(Qt::WA_DeleteOnClose);
+	m_CancelInvoiceDlg->setModal(true);
+
+	connect(m_CancelInvoiceDlg, SIGNAL(okClicked()), this, SLOT(cancelDocument()));
+
+	m_CancelInvoiceDlg->show();
+}
+
+/**
+ * Prints the cancel invoice ticket.
+ */
+void SalesSection::printCancelInvoice()
+{
+	QUrl url(*m_ServerUrl);
+	url.addQueryItem("cmd", "print_cancelled_invoice");
+	url.addQueryItem("key", m_DocumentKey);
 
 	QString content = m_Request->get(url);
 

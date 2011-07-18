@@ -132,14 +132,6 @@ void DocumentSection::setDeleteItemDocumentCmd(QString cmd)
 /**
  * Sets the name of the transformer to use.
  */
-void DocumentSection::setCanceDocumentCmd(QString cmd)
-{
-	m_CancelDocumentCmd = cmd;
-}
-
-/**
- * Sets the name of the transformer to use.
- */
 void DocumentSection::setCreateDocumentTransformerName(QString name)
 {
 	m_CreateDocumentTransformer = name;
@@ -354,61 +346,6 @@ void DocumentSection::scrollDown()
 }
 
 /**
- * Shows the authentication dialog to cancel a document.
- */
-void DocumentSection::showAuthenticationDialogForCancel()
-{
-	m_AuthenticationDlg = new AuthenticationDialog(this, Qt::WindowTitleHint);
-	m_AuthenticationDlg->setAttribute(Qt::WA_DeleteOnClose);
-	m_AuthenticationDlg->setModal(true);
-
-	connect(m_AuthenticationDlg, SIGNAL(okClicked()), this, SLOT(cancelDocument()));
-
-	m_AuthenticationDlg->show();
-}
-
-/**
- * Cancels a document on the server.
- */
-void DocumentSection::cancelDocument()
-{
-	QUrl url(*m_ServerUrl);
-	url.addQueryItem("cmd", m_CancelDocumentCmd);
-	url.addQueryItem("username", m_AuthenticationDlg->usernameLineEdit()->text());
-	url.addQueryItem("password", m_AuthenticationDlg->passwordLineEdit()->text());
-	url.addQueryItem("key", m_DocumentKey);
-	url.addQueryItem("type", "xml");
-
-	QString content = m_Request->get(url);
-
-	XmlTransformer *transformer = XmlTransformerFactory::instance()->create("stub");
-
-	QString errorMsg;
-	if (m_Handler->handle(content, transformer, &errorMsg) ==
-			XmlResponseHandler::Success) {
-
-		m_AuthenticationDlg->close();
-
-		QWebFrame *frame = ui.webView->page()->mainFrame();
-		QWebElement element = frame->findFirstElement("#status_label");
-		element.setInnerXml("Anulado");
-		element.addClass("cancel_status");
-
-		m_DocumentStatus = Cancelled;
-		updateActions();
-
-		cancelDocumentEvent(true);
-	} else {
-		m_AuthenticationDlg->passwordLineEdit()->setText("");
-		m_AuthenticationDlg->usernameLineEdit()->selectAll();
-		m_AuthenticationDlg->usernameLineEdit()->setFocus();
-		m_AuthenticationDlg->console()->displayError(errorMsg);
-	}
-
-	delete transformer;
-}
-
-/**
  * Deletes the row from the document details on the server.
  */
 void DocumentSection::deleteItemDocument()
@@ -583,14 +520,6 @@ void DocumentSection::setPlugins()
  */
 void DocumentSection::createDocumentEvent(bool ok,
 		QList<QMap<QString, QString>*> *list)
-{
-
-}
-
-/**
- * Reimplement this method for extending functionality.
- */
-void DocumentSection::cancelDocumentEvent(bool ok)
 {
 
 }

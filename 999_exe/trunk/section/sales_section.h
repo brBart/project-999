@@ -12,6 +12,7 @@
 
 #include "../plugins/bar_code_line_edit.h"
 #include "../search_product/search_product_model.h"
+#include "../cancel_invoice_dialog/cancel_invoice_dialog.h"
 
 class SalesSection: public DocumentSection
 {
@@ -34,8 +35,11 @@ public slots:
 	void consultProduct();
 	void showVouchers();
 	void checkPrinterForCancel();
+	void cancelDocument();
 
 protected:
+	CancelInvoiceDialog *m_CancelInvoiceDlg;
+
 	// Edit actions.
 	QAction *m_ClientAction;
 	QAction *m_DiscountAction;
@@ -54,7 +58,6 @@ protected:
 	void prepareDocumentForm(QString username);
 
 	void createDocumentEvent(bool ok, QList<QMap<QString, QString>*> *list = 0);
-	void cancelDocumentEvent(bool ok);
 
 private:
 	BarCodeLineEdit *m_BarCodeLineEdit;
@@ -66,6 +69,8 @@ private:
 	void setDiscountInvoice(QString discountKey);
 	void showCashReceipt();
 	void printInvoice(QString id);
+	void showAuthenticationDialogForCancel();
+	void printCancelInvoice();
 };
 
 #endif /* SALES_SECTION_H_ */
