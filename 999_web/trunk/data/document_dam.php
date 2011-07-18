@@ -395,11 +395,12 @@ class InvoiceDAM{
 	 * @param Invoice $invoice
 	 * @param UserAccount $user
 	 * @param string $dateTime
+	 * @param string $reason
 	 */
-	static public function cancel(Invoice $invoice, UserAccount $user, $dateTime){
-		$sql = 'CALL invoice_cancel(:invoice_id, :username, :date)';
+	static public function cancel(Invoice $invoice, UserAccount $user, $dateTime, $reason){
+		$sql = 'CALL invoice_cancel(:invoice_id, :username, :date, :reason)';
 		$params = array(':invoice_id' => $invoice->getId(), ':username' => $user->getUserName(),
-				':date' => Date::dbDateTimeFormat($dateTime));
+				':date' => Date::dbDateTimeFormat($dateTime), ':reason' => $reason);
 		DatabaseHandler::execute($sql, $params);
 	}
 	

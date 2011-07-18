@@ -259,8 +259,9 @@ abstract class Document extends PersistDocument implements Itemized{
 	 * The user argument registers who authorized the action. Only applies if the document status property is
 	 * set to PersistDocument::CREATED.
 	 * @param UserAccount $user
+	 * @@param string $reason
 	 */
-	public function cancel(UserAccount $user){
+	public function cancel(UserAccount $user, $reason = NULL){
 		if($this->_mStatus == PersistDocument::CREATED){
 			self::validateObjectFromDatabase($user);
 			
@@ -304,7 +305,12 @@ abstract class Document extends PersistDocument implements Itemized{
 			$detail->cancel();
 	}
 	
-	abstract protected function updateToCancelled(UserAccount $user);
+	/**
+	 * Method for calling database layer.
+	 * @param UserAccount $user
+	 * @param string $reason
+	 */
+	abstract protected function updateToCancelled(UserAccount $user, $reason = NULL);
 }
 
 
@@ -1506,6 +1512,12 @@ class Invoice extends Document{
 	private $_mDiscount;
 	
 	/**
+	 * Holds the reason why the invoice was cancelled.
+	 * @var string
+	 */
+	private $_mCancelledReason;
+	
+	/**
 	 * Constructs the invoice with the provided data.
 	 *
 	 * Arguments must be passed only when called from the database layer correponding class. If a new Invoice
@@ -1656,6 +1668,16 @@ class Invoice extends Document{
 	}
 	
 	/**
+	 * Returns the reason why the invoice was cancelled.
+	 * 
+	 * Use only inmediately after the cancelation.
+	 * @return string
+	 */
+	public function getCancelledReason(){
+		return $this->_mCancelledReason;
+	}
+	
+	/**
 	 * Sets the invoice customer's nit and name.
 	 *
 	 * @param Customer $obj
@@ -1795,11 +1817,12 @@ class Invoice extends Document{
 	 * The user argument registers who authorized the action. Only applies if the document status property is
 	 * set to PersistDocument::CREATED.
 	 * @param UserAccount $user
+	 * @param string $reason
 	 * @throws Exception
 	 */
-	public function cancel(UserAccount $user){
+	public function cancel(UserAccount $user, $reason = NULL){
 		if($this->_mStatus == PersistDocument::CREATED){
-			self::validateObjectFromDatabase($user);
+			String::validateString($reason, 'Motivo inv&aacute;lido.', 'reason');
 			
 			if(!$this->_mCashRegister->isOpen())
 				throw new Exception('Caja ya esta cerrada, no se puede anular.');
@@ -1807,8 +1830,10 @@ class Invoice extends Document{
 			$this->cancelDetails();
 			$receipt = CashReceipt::getInstance($this);
 			$receipt->cancel($user);
-			$this->updateToCancelled($user);
+			$this->updateToCancelled($user, $reason);
 			$this->_mStatus = PersistDocument::CANCELLED;
+			
+			$this->_mCancelledReason = $reason;
 		}
 	}
 	
@@ -1878,10 +1903,11 @@ class Invoice extends Document{
 	 * Updates the document to cancelled in the database.
 	 *
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	protected function updateToCancelled(UserAccount $user){
+	protected function updateToCancelled(UserAccount $user, $reason = NULL){
 		$date = date('d/m/Y H:i:s');
-		InvoiceDAM::cancel($this, $user, $date);
+		InvoiceDAM::cancel($this, $user, $date, $reason);
 		InvoiceTransactionLog::write($this->getCorrelative()->getSerialNumber(), $this->getNumber(),
 				$date, $this->getTotal(), InvoiceTransactionLog::CANCELLED);
 	}
@@ -2205,8 +2231,9 @@ class PurchaseReturn extends Document{
 	 * Updates the document to cancelled in the database.
 	 * 
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	protected function updateToCancelled(UserAccount $user){
+	protected function updateToCancelled(UserAccount $user, $reason = NULL){
 		PurchaseReturnDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
@@ -2346,8 +2373,9 @@ class Shipment extends Document{
 	 * Updates the document to cancelled in the database.
 	 * 
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	protected function updateToCancelled(UserAccount $user){
+	protected function updateToCancelled(UserAccount $user, $reason = NULL){
 		ShipmentDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
@@ -2522,8 +2550,9 @@ class Receipt extends Document{
 	 * Updates the document to cancelled in the database.
 	 * 
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	protected function updateToCancelled(UserAccount $user){
+	protected function updateToCancelled(UserAccount $user, $reason = NULL){
 		ReceiptDAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
@@ -2639,8 +2668,9 @@ class EntryIA extends AdjustmentDocument{
 	 * Updates the document to cancelled in the database.
 	 * 
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	protected function updateToCancelled(UserAccount $user){
+	protected function updateToCancelled(UserAccount $user, $reason = NULL){
 		EntryIADAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
@@ -2687,8 +2717,9 @@ class WithdrawIA extends AdjustmentDocument{
 	 * Updates the document to cancelled in the database.
 	 * 
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	protected function updateToCancelled(UserAccount $user){
+	protected function updateToCancelled(UserAccount $user, $reason = NULL){
 		WithdrawIADAM::cancel($this, $user, date('d/m/Y H:i:s'));
 	}
 }
