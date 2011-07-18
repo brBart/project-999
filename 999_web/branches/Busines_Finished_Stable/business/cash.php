@@ -404,9 +404,10 @@ class Deposit extends PersistDocument implements Itemized{
 	 *
 	 * The user argument registers who authorized the action.
 	 * @param UserAccount $user
+	 * @param string $reason
 	 * @throws Exception
 	 */
-	public function cancel(UserAccount $user){
+	public function cancel(UserAccount $user, $reason = NULL){
 		if($this->_mStatus == self::CREATED){
 			self::validateObjectFromDatabase($user);
 			
@@ -1218,8 +1219,9 @@ class CashReceipt extends PersistDocument{
 	 * The user argument registers who authorized the action. Note that you must cancel the receipt's invoice
 	 * first in order to cancel the receipt. Call the invoice cancel method instead.
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	public function cancel(UserAccount $user){
+	public function cancel(UserAccount $user, $reason = NULL){
 		if($this->_mStatus == PersistDocument::CREATED){
 			$deposit_ids = DepositDetailList::getList($this->_mCash);
 			if(!empty($deposit_ids))

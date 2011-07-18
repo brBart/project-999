@@ -308,8 +308,9 @@ abstract class PersistDocument extends Persist{
 	 *
 	 * The user argument tells who authorized the action.
 	 * @param UserAccount $user
+	 * @param string $reason
 	 */
-	abstract public function cancel(UserAccount $user);
+	abstract public function cancel(UserAccount $user, $reason = NULL);
 	
 	/**
 	 * Inserts the document's data into the database.

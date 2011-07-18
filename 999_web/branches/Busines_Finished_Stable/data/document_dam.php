@@ -376,8 +376,9 @@ class InvoiceDAM{
 	 * @param Invoice $invoice
 	 * @param UserAccount $user
 	 * @param string $date
+	 * @param string reason
 	 */
-	static public function cancel(Invoice $invoice, UserAccount $user, $date){
+	static public function cancel(Invoice $invoice, UserAccount $user, $date, $reason){
 		// Code here...
 	}
 	
