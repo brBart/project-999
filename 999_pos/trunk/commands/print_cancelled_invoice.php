@@ -30,8 +30,8 @@ class PrintCancelledInvoiceCommand extends Command{
 		$correlative = $invoice->getCorrelative();
 		
 		Page::display(array('serial_number' => $correlative->getSerialNumber(), 'number' => $invoice->getNumber(),
-				'total' => $invoice->getTotal(), 'date_time' => date('d/m/Y H:i:s')),
-				'invoice_cancelled_print_html.tpl');
+				'total' => $invoice->getTotal(), 'date_time' => date('d/m/Y H:i:s'),
+				'reason' => $invoice->getCancelledReason()), 'invoice_cancelled_print_html.tpl');
 	}
 }
 ?>
