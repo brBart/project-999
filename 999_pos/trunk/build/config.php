@@ -103,6 +103,10 @@ define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
  */
 define('CORRELATIVE_CONSUME_WARNING', 75);
 /**
+ * Correlative valid days for using before it expire.
+ */
+define('CORRELATIVE_VALID_DAYS', 10);
+/**
  * Title of the inventory module.
  */
 define('INVENTORY_TITLE', 'Inventario');
