@@ -1,0 +1,254 @@
+a {
+	color: blue;
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table th {
+	background-color: #00067F;
+	border-bottom-style: solid;
+	border-color: #AED9FF;
+	border-width: 3px;
+	color: white;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.success {
+	border-style: solid;
+	border-color: green;
+	border-width: 1px;
+	background-color: #CCFFC4;
+	background-image: url(../images/success.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.error {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	background-color: #FFB5B5;
+	background-image: url(../images/error.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.failure {
+	border-style: solid;
+	border-color: orange;
+	border-width: 1px;
+	background-color: #FFCAA6;
+	background-image: url(../images/warning.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.info {
+	border-style: solid;
+	border-color: blue;
+	border-width: 1px;
+	background-color: #C6CCFF;
+	background-image: url(../images/info.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.failed {
+	color: orange;
+}
+
+.disabled {
+	color: gray;
+}
+
+.cancel_status, .pos_closed_status {
+	color: red;
+}
+
+.pos_open_status {
+	color: green;
+}
+
+.modal_form {
+	background-image: url(../images/translucent_bg.png);
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+.input_focus {
+	background-color: #FFFDC0;
+}
+
+.button_focus {
+	color: #FFFDC0;
+}
+
+.hint {
+	color: gray;
+}
+
+.bonus {
+	color: #1ADF00;
+}
+
+.disabled th {
+	color: gray;
+}
+
+.modal_form div {
+	background-color: #EEEEEE;
+}
+
+.items tr {
+	background-color: white;
+}
+
+.tb_input:focus {
+	background-color: #FFFDC0;
+}
+
+.items .even {
+	background-color: #EFFEFE;
+}
+
+.items .hightlightrow {
+	background-color: blue;
+	color: white;
+}
+
+.items .has_focus {
+	border-style: solid;
+	border-color: #AED9FF;
+	border-width: 2px;
+}
+
+.items .read_only tr {
+	background-color: #EEEEEE;
+}
+
+.items .read_only tbody td {
+	border-bottom-style: solid;
+	border-color: #00067F;
+	border-width: 1px;
+}
+
+#wrapper {
+	background-color: #EEEEEE;
+}
+
+#wrapper {
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
+}
+
+#header {
+	background-color: #FFFDC0;
+}
+
+#main_menu, #deco_div {
+	background-color: #E93737;
+}
+
+#li_last {
+	border-bottom-style: solid;
+	border-color: white;
+	border-width: 1px;
+}
+
+#scroll {
+	visibility: hidden;
+	background-color: white;
+	border-style: solid;
+	border-collapse: collapse;
+	border-color: #000000;
+	border-width: 1px;
+}
+
+#copyright {
+	color: gray;
+}
+
+#list td, #list_large td {
+	border-bottom-style: solid;
+	border-color: #00067F;
+	border-width: 1px;
+}
+
+#main_menu a {
+	color: #2A3373;
+}
+
+#second_menu a {
+	color: white;
+	background-color: #00067F;
+}
+
+#third_menu li {
+	border-top-style: solid;
+	border-color: white;
+	border-width: 1px;
+}
+
+#product_tb > div, .cash_receipt #total_amounts {
+	border-style: solid;
+	border-color: white;
+	border-width: 1px;
+}
+
+#main_menu a:hover {
+	background-color: #E87171;
+	text-decoration: none;
+}
+
+#second_menu a:hover {
+	background-color: #4B62A1;
+	text-decoration: none;
+}
+
+#pos_menu a:hover, a:focus {
+	color: white;
+	text-decoration: none;
+}
+
+#pos_menu a:hover {
+	background-color: #B2B2B2;
+}
+
+#pos_menu a:focus {
+	background-color: #CDCDCD;
+}
+
+#scroll .highlightrow {
+	background-color: blue;
+	color: white;
+}
+
+#authenticate_form .error {
+	color: red;
+	border-style: none;
+	background-image: none;
+	background-color: #EEEEEE;
+}
+
+#frm .pos {
+	background-color: white;
+}
+
+.cash_receipt #total_amounts p {
+	border-bottom-style: solid;
+	border-top-style: solid;
+	border-color: white;
+	border-width: 1px;
+}
