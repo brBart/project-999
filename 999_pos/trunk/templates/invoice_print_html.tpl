@@ -58,7 +58,7 @@ body {
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td class="total_col" colspan="2">Sub-Total:</td>
+	       			<td class="total_col" colspan="2">Total:</td>
 	       			<td class="total_col">{$sub_total|nf:2}</td>
 	       		</tr>
 	       		<tr>
@@ -66,7 +66,7 @@ body {
 	       			<td class="total_col">{$discount|nf:2}</td>
 	       		</tr>
 	       		<tr>
-	       			<td class="total_col" colspan="2">Total:</td>
+	       			<td class="total_col" colspan="2">Total a Pagar:</td>
 	       			<td class="total_col">{$total|nf:2}</td>
 	       		</tr>
 	       	</tfoot>
