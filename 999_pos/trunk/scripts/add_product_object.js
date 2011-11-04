@@ -101,4 +101,5 @@ AddProductObjectCommand.prototype.displayFailure = function(xmlDoc, strMsg){
 	this._mConsole.cleanFailure('quantity');
 	this._mConsole.cleanFailure('bar_code');
 	this._mConsole.displayFailure(strMsg, elementId);
+	StateMachine.setFocus(elementId);
 }
