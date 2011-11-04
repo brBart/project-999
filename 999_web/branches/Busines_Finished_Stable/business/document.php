@@ -2014,7 +2014,7 @@ class Discount extends Persist{
 	public function setData(Invoice $invoice, $percentage){
 		try{
 			self::validateObjectFromDatabase($invoice);
-			Number::validatePositiveFloat($percentage, 'Porcentage inv&aacute;lido.');
+			Number::validateBetweenCeroToNinetyNineNumber($percentage, 'Porcentage inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Discount con datos erroneos! ' .
 					$e->getMessage());
