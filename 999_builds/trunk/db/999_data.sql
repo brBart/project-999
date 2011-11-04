@@ -71,8 +71,8 @@ INSERT INTO `bank_account` (`bank_account_number`, `bank_id`, `name`) VALUES
 -- Volcar la base de datos para la tabla `company`
 --
 
-INSERT INTO `company` (`nit`, `name`, `corporate_name`, `telephone`, `address`) VALUES
-('@nit@', '@company_name@', '@corporate_name@', '@telephone@', '@address@')$$
+INSERT INTO `company` (`nit`, `name`, `corporate_name`, `telephone`, `address`, `warehouse_name`) VALUES
+('@nit@', '@company_name@', '@corporate_name@', '@telephone@', '@address@', '@warehouse_name@')$$
 
 --
 -- Volcar la base de datos para la tabla `comparison`
