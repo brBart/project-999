@@ -149,7 +149,7 @@ class UserAccount extends PersistObject{
 		
 		if(!is_null($userName))
 			try{
-				String::validateAlphanum($userName, 'Usuario inv&aacute;lido.');
+				String::validateString($userName, 'Usuario inv&aacute;lido.');
 			} catch(Exception $e){
 				$et = new Exception('Interno: Llamando al metodo construct en UserAccount con datos erroneos! ' .
 						$e->getMessage());
