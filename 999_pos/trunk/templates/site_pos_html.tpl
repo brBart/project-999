@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>{get_company_name} - {$module_title}</title>
+<title>{get_warehouse_name} - {$module_title}</title>
 <link href="../styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="../styles/typography.css" rel="stylesheet" type="text/css" />
 <link href="../styles/decoration.css" rel="stylesheet" type="text/css" />
@@ -25,7 +25,7 @@
 	{/literal}
 	<div id="wrapper">
 		<div id="header">
-			<h1>{get_company_name} - {$module_title}</h1>
+			<h1>{get_warehouse_name} - {$module_title}</h1>
 			<p>
 				Usuario: {get_username}
 			</p>
