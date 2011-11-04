@@ -1845,7 +1845,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `company_update`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `company_update`(IN inNit VARCHAR(10), IN inName VARCHAR(50), IN inCorporateName VARCHAR(50),
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `company_update`(IN inNit VARCHAR(10), IN inName VARCHAR(50), IN inCorporateName VARCHAR(80),
   IN inTelephone VARCHAR(50), IN inAddress VARCHAR(100))
 BEGIN
 
