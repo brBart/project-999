@@ -50,6 +50,12 @@
 		  			onblur="oSetProperty.execute('set_address_object', this.value, this.id);" disabled="disabled" />
 		  		<span id="address-failed" class="hidden">*</span>
 		  	</p>
+		  	<p>
+		  		<label for="warehouse_name">Nombre bodega:*</label>
+		  		<input name="form_widget" id="warehouse_name" type="text" value="{$warehouse_name|escape}" maxlength="20"
+		  			onblur="oSetProperty.execute('set_warehouse_name_company', this.value, this.id);" disabled="disabled" />
+		  		<span id="warehouse_name-failed" class="hidden">*</span>
+		  	</p>
 		</fieldset>
 		{include file='unique_object_controls_html.tpl' edit_cmd=$edit_cmd focus_on_edit='name'}
 	</div>

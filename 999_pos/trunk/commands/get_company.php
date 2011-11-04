@@ -55,8 +55,8 @@ class GetCompanyCommand extends GetUniqueObjectCommand{
 				'content' => 'company_form_html.tpl', 'key' => $key, 'name' => $obj->getName(),
 				'nit' => $obj->getNit(), 'corporate_name' => $obj->getCorporateName(),
 				'telephone' => $obj->getTelephone(), 'address' => $obj->getAddress(),
-				'forward_link' => $forward_link, 'edit_cmd' => 'edit_company'),
-				'site_html.tpl');
+				'warehouse_name' => $obj->getWarehouseName(), 'forward_link' => $forward_link,
+				'edit_cmd' => 'edit_company'), 'site_html.tpl');
 	}
 }
 ?>
