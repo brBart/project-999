@@ -93,18 +93,30 @@ class Company{
 	private $_mAddress;
 	
 	/**
+	 * Holds the warehouse's name.
+	 *
+	 * @var string
+	 */
+	private $_mWarehouseName;
+	
+	/**
 	 * Constructs the company with the provided data.
 	 *
 	 * @param string $nit
 	 * @param string $name
+	 * @param string $corporateName
+	 * @param string $telephone
+	 * @param string $address
+	 * @param string $warehouseName
 	 */
-	public function __construct($nit, $name, $corporateName, $telephone, $address){
+	public function __construct($nit, $name, $corporateName, $telephone, $address, $warehouseName){
 		try{
 			String::validateNit($nit, 'Nit inv&aacute;lido.');
 			String::validateString($name, 'Nombre inv&aacute;lido.');
 			String::validateString($corporateName, 'Raz&oacute;n social inv&aacute;lida.');
 			String::validateString($telephone, 'Telefono inv&aacute;lido.');
 			String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
+			String::validateString($warehouseName, 'Nombre de bodega inv&aacute;lida.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en Company con datos erroneos! ' .
 					$e->getMessage());
@@ -116,6 +128,7 @@ class Company{
 		$this->_mCorporateName = $corporateName;
 		$this->_mTelephone = $telephone;
 		$this->_mAddress = $address;
+		$this->_mWarehouseName = $warehouseName;
 	}
 	
 	/**
@@ -161,6 +174,15 @@ class Company{
 	 */
 	public function getAddress(){
 		return $this->_mAddress;
+	}
+	
+	/**
+	 * Returns the warehouse's name.
+	 *
+	 * @return string
+	 */
+	public function getWarehouseName(){
+		return $this->_mWarehouseName;
 	}
 	
 	/**
@@ -213,6 +235,16 @@ class Company{
 		String::validateString($address, 'Direcci&oacute;n inv&aacute;lida.');
 	}
 	
+	/**	
+	 * Sets the warehouse's name.
+	 *
+	 * @param string $name
+	 */
+	public function setWarehouseName($name){
+		$this->_mWarehouseName = $name;
+		String::validateString($name, 'Nombre de bodega inv&aacute;lida.');
+	}
+	
 	/**
 	 * Saves the company's data in the database.
 	 *
@@ -242,6 +274,7 @@ class Company{
 		String::validateString($this->_mCorporateName, 'Raz&oacute;n social inv&aacute;lida.', 'corporate_name');
 		String::validateString($this->_mTelephone, 'Telefono inv&aacute;lido.', 'telephone');
 		String::validateString($this->_mAddress, 'Direcci&oacute;n inv&aacute;lida.', 'address');
+		String::validateString($this->_mWarehouseName, 'Nombre de bodega inv&aacute;lida.', 'warehouse_name');
 	}
 }
 
