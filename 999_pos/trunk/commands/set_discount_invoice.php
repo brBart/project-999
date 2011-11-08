@@ -29,14 +29,15 @@ class SetDiscountInvoiceCommand extends Command{
 		$invoice = $helper->getObject((int)$request->getProperty('key'));
 		$discount = $helper->getObject((int)$request->getProperty('discount_key'));
 		
-		try{
+		if($discount->getPercentage() != 0){
 			$invoice->setDiscount($discount);
-		} catch(Exception $e){
-			$msg = $e->getMessage();
-			Page::display(array('message' => $msg), 'error_xml.tpl');
-			return;
 		}
-			
+		else{
+			// If percentage is cero, then set it as NULL and remove it from memory.
+			$invoice->setDiscount(NULL);
+			$helper->removeObject((int)$request->getProperty('discount_key'));
+		}
+		
 		Page::display(array(), 'success_xml.tpl');
 	}
 }
