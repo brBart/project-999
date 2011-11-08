@@ -1692,10 +1692,11 @@ class Invoice extends Document{
 	 *
 	 * @param Discount $obj
 	 */
-	public function setDiscount(Discount $obj){
-		self::validateNewObject($obj);		
+	public function setDiscount(Discount $obj = NULL){
 		$this->_mDiscount = $obj;
-		$obj->setInvoice($this);
+		
+		if(!is_null($obj))
+			$obj->setInvoice($this);
 	}
 	
 	/**
@@ -1987,7 +1988,6 @@ class Discount extends Persist{
 	 * @param Invoice $obj
 	 */
 	public function setInvoice(Invoice $obj){
-		self::validateNewObject($obj);
 		$this->_mInvoice = $obj;
 	}
 	
