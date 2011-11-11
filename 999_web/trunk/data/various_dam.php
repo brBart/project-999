@@ -257,7 +257,7 @@ class SalesRankingListDAM{
 	 * @return array
 	 */
 	static public function getList($firstDate, $lastDate, &$totalPages, &$totalItems, $page){
-		$sql = 'CALL sales_ranking_count(:first_date, :last_date)';
+		$sql = 'CALL sales_ranking_summary_product_count(:first_date, :last_date)';
 		$params = array(':first_date' => Date::dbFormat($firstDate), ':last_date' => Date::dbFormat($lastDate));
 		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
@@ -612,7 +612,7 @@ class SalesSummaryListDAM{
 	/**
 	 * Retuns an array with data.
 	 *
-	 * The array's fields are rank, bar_code, manufacturer, name, quantity, price, subtotal, bonus_total and total. If no page
+	 * The array's fields are rank, bar_code, manufacturer, name, actual_price, avg_price, quantity, price, subtotal, bonus_total and total. If no page
 	 * argument or cero is passed all the details are returned. The totalPages and
 	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
@@ -626,7 +626,7 @@ class SalesSummaryListDAM{
 	 * @return array
 	 */
 	static public function getListByProduct($firstDate, $lastDate, &$subtotal, &$discountTotal, &$total, &$totalPages, &$totalItems, $page){
-		$sql = 'CALL sales_ranking_count(:first_date, :last_date)';
+		$sql = 'CALL sales_ranking_summary_product_count(:first_date, :last_date)';
 		$params = array(':first_date' => Date::dbFormat($firstDate), ':last_date' => Date::dbFormat($lastDate));
 		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
@@ -635,7 +635,7 @@ class SalesSummaryListDAM{
 		$sql = 'CALL sales_summary_product_subtotal_get(:first_date, :last_date)';
 		$subtotal = DatabaseHandler::getOne($sql, $params);
 		
-		$sql = 'CALL sales_summary_discount_get(:first_date, :last_date)';
+		$sql = 'CALL sales_summary_discount_total_get(:first_date, :last_date)';
 		$discountTotal = DatabaseHandler::getOne($sql, $params);
 		
 		$sql = 'CALL sales_summary_total_get(:first_date, :last_date)';

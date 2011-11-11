@@ -697,7 +697,7 @@ class SalesSummaryList{
 	/**
 	 * Retuns an array with the report information.
 	 *
-	 * The array's fields are rank, bar_code, manufacturer, name, quantity, price, subtotal, bonus_total and total.
+	 * The array's fields are rank, bar_code, manufacturer, name, actual_price, avg_price, quantity, subtotal, bonus_total and total.
 	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
 	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
