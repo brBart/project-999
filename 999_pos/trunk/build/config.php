@@ -122,4 +122,12 @@ define('POS_TITLE', 'POS');
  * Title of the POS Admin module.
  */
 define('POS_ADMIN_TITLE', 'POS Admin');
+/**
+ * Name for the log type reference list.
+ */
+define('LOG_TYPE', 'Bitacora');
+/**
+ * Name for the list type reference list.
+ */
+define('LIST_TYPE', 'Reporte');
 ?>
