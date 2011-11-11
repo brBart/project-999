@@ -32,11 +32,13 @@ class ShowSalesRankingListCommand extends Command{
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio', 'Herramientas', 'Reportes');
 		
-		if(is_null($request->getProperty('show_report'))){
+		if(is_null($request->getProperty('show_reference'))){
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
-					'content' => 'sales_ranking_list_form_html.tpl', 'report_name' => 'Ranking de Ventas por Producto'),
+					'content' => 'reference_form_html.tpl', 'reference_type' => LIST_TYPE,
+					'reference_name' => 'Ranking de Ventas por Producto',
+					'reference_cmd' => 'index.php?cmd=show_sales_ranking_list&page=1'),
 					'site_html.tpl');
 			return;
 		}
@@ -53,9 +55,10 @@ class ShowSalesRankingListCommand extends Command{
 			$back_trace = array('Inicio', 'Herramientas', 'Reportes');
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
-					'report_name' => 'Ranking de Ventas por Producto',
+					'reference_type' => LIST_TYPE, 'reference_name' => 'Ranking de Ventas por Producto',
+					'reference_cmd' => 'index.php?cmd=show_sales_ranking_list&page=1',
 					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
-					'content' => 'sales_ranking_list_form_html.tpl', 'notify' => '1', 'type' => 'error',
+					'content' => 'reference_form_html.tpl', 'notify' => '1', 'type' => 'error',
 					'message' => $msg, 'start_date' => $start_date, 'end_date' => $end_date),
 					'site_html.tpl');
 			
@@ -66,7 +69,7 @@ class ShowSalesRankingListCommand extends Command{
 			$first_item = (($page - 1) * ITEMS_PER_PAGE) + 1;
 			$last_item = ($page == $total_pages) ? $total_items : $page * ITEMS_PER_PAGE;
 			
-			$link = 'index.php?cmd=show_sales_ranking_list&show_report&page=';
+			$link = 'index.php?cmd=show_sales_ranking_list&show_reference&page=';
 			$dates = '&start_date=' . urlencode($start_date) . '&end_date=' . urlencode($end_date);
 			$previous_link = ($page == 1) ? '' : $link . ($page - 1) . $dates;
 			$next_link = ($page == $total_pages) ? '' : $link . ($page + 1) . $dates;

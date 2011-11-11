@@ -40,7 +40,7 @@ abstract class ShowLogCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		if(is_null($request->getProperty('show_log'))){
+		if(is_null($request->getProperty('show_reference'))){
 			$this->showForm();				
 			return;
 		}	
@@ -66,7 +66,7 @@ abstract class ShowLogCommand extends Command{
 				// For back link purposes.
 				$actual_cmd = $request->getProperty('cmd');
 				
-				$link = 'index.php?cmd=' . $actual_cmd . '&show_log&page=';
+				$link = 'index.php?cmd=' . $actual_cmd . '&show_reference&page=';
 				$dates = '&start_date=' . urlencode($start_date) . '&end_date=' . urlencode($end_date);
 				$previous_link = ($page == 1) ? '' : $link . ($page - 1) . $dates;
 				$next_link = ($page == $total_pages) ? '' : $link . ($page + 1) . $dates;

@@ -23,10 +23,10 @@ class ShowResolutionLogCommand extends ShowLogCommand{
 		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'log_name' => 'Resoluciones',
-				'log_cmd' => 'index.php?cmd=show_resolution_log&page=1',
+				'reference_type' => LOG_TYPE, 'reference_name' => 'Resoluciones',
+				'reference_cmd' => 'index.php?cmd=show_resolution_log&page=1',
 				'back_link' => 'index.php?cmd=show_log_menu_pos_admin',
-				'content' => 'log_form_html.tpl'), 'site_html.tpl');
+				'content' => 'reference_form_html.tpl'), 'site_html.tpl');
 	}
 	
 	/**
@@ -61,10 +61,10 @@ class ShowResolutionLogCommand extends ShowLogCommand{
 		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
 		Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'log_name' => 'Resoluciones',
-				'log_cmd' => 'index.php?cmd=show_resolution_log&page=1',
+				'reference_type' => LOG_TYPE, 'reference_name' => 'Resoluciones',
+				'reference_cmd' => 'index.php?cmd=show_resolution_log&page=1',
 				'back_link' => 'index.php?cmd=show_log_menu_pos_admin',
-				'content' => 'log_form_html.tpl', 'notify' => '1', 'type' => 'error',
+				'content' => 'reference_form_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'start_date' => $startDate, 'end_date' => $endDate),
 				'site_html.tpl');
 	}

@@ -1,10 +1,10 @@
 {* Smarty *}
 <div id="content">
 	<div id="frm" class="content_fit">
-		<form method="post" action="{$log_cmd}" onsubmit="return oSession.setIsLink(true);">
+		<form method="post" action="{$reference_cmd}" onsubmit="return oSession.setIsLink(true);">
 			<fieldset>
 				<p>
-					<label>Bitacora:</label><span>{$log_name}</span>
+					<label>{$reference_type}:</label><span>{$reference_name}</span>
 				</p>
 			</fieldset>
 			<fieldset id="main_data">
@@ -20,7 +20,7 @@
 	    		</p>
 			</fieldset>
 			<fieldset id="controls">
-				<input name="show_log" type="submit"  value="Aceptar" />
+				<input name="show_reference" type="submit"  value="Aceptar" />
 			    <input type="button"  value="Cancelar" onclick="oSession.loadHref('{$back_link}');" />
 			</fieldset>
 		</form>

@@ -23,10 +23,10 @@ class ShowDocumentCancelLogCommand extends ShowLogCommand{
 		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'log_name' => 'Documentos Anulados',
-				'log_cmd' => 'index.php?cmd=show_document_cancel_log&page=1',
+				'reference_type' => LOG_TYPE, 'reference_name' => 'Documentos Anulados',
+				'reference_cmd' => 'index.php?cmd=show_document_cancel_log&page=1',
 				'back_link' => 'index.php?cmd=show_log_menu_inventory',
-				'content' => 'log_form_html.tpl'), 'site_html.tpl');
+				'content' => 'reference_form_html.tpl'), 'site_html.tpl');
 	}
 	
 	/**
@@ -61,10 +61,10 @@ class ShowDocumentCancelLogCommand extends ShowLogCommand{
 		$back_trace = array('Inicio', 'Herramientas', 'Bitacoras');
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'blank.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'none',
-				'log_name' => 'Documentos Anulados',
-				'log_cmd' => 'index.php?cmd=show_document_cancel_log&page=1',
+				'reference_type' => LOG_TYPE, 'reference_name' => 'Documentos Anulados',
+				'reference_cmd' => 'index.php?cmd=show_document_cancel_log&page=1',
 				'back_link' => 'index.php?cmd=show_log_menu_inventory',
-				'content' => 'log_form_html.tpl', 'notify' => '1', 'type' => 'error',
+				'content' => 'reference_form_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'start_date' => $startDate, 'end_date' => $endDate),
 				'site_html.tpl');
 	}
