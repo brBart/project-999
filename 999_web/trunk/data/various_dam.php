@@ -617,27 +617,29 @@ class SalesSummaryListDAM{
 	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
 	 * @param string $firstDate
 	 * @param string $lastDate
+	 * @param float &$subtotal
+	 * @param float &$discountTotal
 	 * @param float &$total
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getListByProduct($firstDate, $lastDate, &$total, &$totalPages, &$totalItems, $page){
+	static public function getListByProduct($firstDate, $lastDate, &$subtotal, &$discountTotal, &$total, &$totalPages, &$totalItems, $page){
 		$sql = 'CALL sales_ranking_count(:first_date, :last_date)';
 		$params = array(':first_date' => Date::dbFormat($firstDate), ':last_date' => Date::dbFormat($lastDate));
 		$totalItems = DatabaseHandler::getOne($sql, $params);
 		
 		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
 		
-		$sql = 'CALL sales_summary_product_subtotal_get()';
-		$total = DatabaseHandler::getOne($sql);
+		$sql = 'CALL sales_summary_product_subtotal_get(:first_date, :last_date)';
+		$subtotal = DatabaseHandler::getOne($sql, $params);
 		
-		$sql = 'CALL sales_summary_discount_get()';
-		$total = DatabaseHandler::getOne($sql);
+		$sql = 'CALL sales_summary_discount_get(:first_date, :last_date)';
+		$discountTotal = DatabaseHandler::getOne($sql, $params);
 		
-		$sql = 'CALL sales_summary_total_get()';
-		$total = DatabaseHandler::getOne($sql);
+		$sql = 'CALL sales_summary_total_get(:first_date, :last_date)';
+		$total = DatabaseHandler::getOne($sql, $params);
 		
 		if($page > 0)
 			$params = array_merge($params, 
