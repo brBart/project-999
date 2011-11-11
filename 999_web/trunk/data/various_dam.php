@@ -601,4 +601,53 @@ class ResolutionListDAM{
 		return DatabaseHandler::getAll($sql, $params);
 	}
 }
+
+
+/**
+ * Utility class for obtaing the list of sales summary from the database.
+ * @package VariousDAM
+ * @author Roberto Oliveros
+ */
+class SalesSummaryListDAM{
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are rank, bar_code, manufacturer, name, quantity, price, subtotal, bonus_total and total. If no page
+	 * argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param float &$total
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByProduct($firstDate, $lastDate, &$total, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL sales_ranking_count(:first_date, :last_date)';
+		$params = array(':first_date' => Date::dbFormat($firstDate), ':last_date' => Date::dbFormat($lastDate));
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		$sql = 'CALL sales_summary_product_subtotal_get()';
+		$total = DatabaseHandler::getOne($sql);
+		
+		$sql = 'CALL sales_summary_discount_get()';
+		$total = DatabaseHandler::getOne($sql);
+		
+		$sql = 'CALL sales_summary_total_get()';
+		$total = DatabaseHandler::getOne($sql);
+		
+		if($page > 0)
+			$params = array_merge($params, 
+					array(':start_item' => ($page - 1) * ITEMS_PER_PAGE, 'items_per_page' => ITEMS_PER_PAGE));
+		else
+			$params = array_merge($params, array(':start_item' => 0, ':items_per_page' => $totalItems));
+		
+		$sql = 'CALL sales_summary_product_get(:first_date, :last_date, :start_item, :items_per_page)';
+		return DatabaseHandler::getAll($sql, $params);
+	}
+	
+}
 ?>
