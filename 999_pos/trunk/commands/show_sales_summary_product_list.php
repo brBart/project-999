@@ -32,7 +32,7 @@ class ShowSalesSummaryProductListCommand extends Command{
 	public function execute(Request $request, SessionHelper $helper){
 		$back_trace = array('Inicio', 'Herramientas', 'Reportes');
 		
-		if(is_null($request->getProperty('show_refence'))){
+		if(is_null($request->getProperty('show_reference'))){
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
 					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
@@ -61,7 +61,7 @@ class ShowSalesSummaryProductListCommand extends Command{
 		$end_date = $request->getProperty('end_date');
 		
 		try{
-			$list = SalesSummaryProductList::getList($start_date, $end_date, $subtotal, $discount_total, $total, $total_pages, $total_items, $page);
+			$list = SalesSummaryList::getListByProduct($start_date, $end_date, $subtotal, $discount_total, $total, $total_pages, $total_items, $page);
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			
