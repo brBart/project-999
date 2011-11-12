@@ -404,4 +404,38 @@ class ResolutionListDAM{
 		return array(array('one' => 'uno'), array('two' => 'dos'));
 	}
 }
+
+
+/**
+ * Utility class for obtaing the list of sales summary from the database.
+ * @package VariousDAM
+ * @author Roberto Oliveros
+ */
+class SalesSummaryListDAM{
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are rank, bar_code, manufacturer, name, actual_price, avg_price, quantity, price, subtotal, bonus_total and total. If no page
+	 * argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param float &$subtotal
+	 * @param float &$discountTotal
+	 * @param float &$total
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByProduct($firstDate, $lastDate, &$subtotal, &$discountTotal, &$total, &$totalPages, &$totalItems, $page){
+		$subtotal = 120.00;
+		$discountTotal = 20.00; 
+		$total = 100.00;
+		$totalPages = 1;
+		$totalItems = 2;
+		return array('uno' => 'one', 'dos' => 'two');
+	}
+	
+}
 ?>

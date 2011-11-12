@@ -686,4 +686,37 @@ class ResolutionList{
 		return ResolutionListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
 	}
 }
+
+
+/**
+ * Utility class for obtaining the sales summary list.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class SalesSummaryList{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are rank, bar_code, manufacturer, name, actual_price, avg_price, quantity, subtotal, bonus_total and total.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param float &$subtotal
+	 * @param float &$discountTotal
+	 * @param float &$total
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByProduct($firstDate, $lastDate, &$subtotal = 0, &$discountTotal = 0, &$total = 0, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
+			
+		return SalesSummaryListDAM::getListByProduct($firstDate, $lastDate, $subtotal, $discountTotal, $total, $totalPages, $totalItems, $page);
+	}
+}
 ?>
