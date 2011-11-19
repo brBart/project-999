@@ -422,16 +422,14 @@ class SalesSummaryListDAM{
 	 * @param string $lastDate
 	 * @param float &$subtotal
 	 * @param float &$discountTotal
-	 * @param float &$total
 	 * @param integer &$totalPages
 	 * @param integer &$totalItems
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getListByProduct($firstDate, $lastDate, &$subtotal, &$discountTotal, &$total, &$totalPages, &$totalItems, $page){
+	static public function getListByProduct($firstDate, $lastDate, &$subtotal, &$discountTotal, &$totalPages, &$totalItems, $page){
 		$subtotal = 120.00;
 		$discountTotal = 20.00; 
-		$total = 100.00;
 		$totalPages = 1;
 		$totalItems = 2;
 		return array('uno' => 'one', 'dos' => 'two');

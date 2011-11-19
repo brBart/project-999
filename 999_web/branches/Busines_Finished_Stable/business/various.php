@@ -716,7 +716,10 @@ class SalesSummaryList{
 		if($page !== 0)
 			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
 			
-		return SalesSummaryListDAM::getListByProduct($firstDate, $lastDate, $subtotal, $discountTotal, $total, $totalPages, $totalItems, $page);
+		$list = SalesSummaryListDAM::getListByProduct($firstDate, $lastDate, $subtotal, $discountTotal, $totalPages, $totalItems, $page);
+		$total = $subtotal - $discountTotal;
+		
+		return $list;
 	}
 }
 ?>
