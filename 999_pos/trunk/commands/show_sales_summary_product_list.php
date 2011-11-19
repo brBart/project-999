@@ -92,7 +92,7 @@ class ShowSalesSummaryProductListCommand extends Command{
 					'second_menu' => 'none', 'content' => 'sales_summary_product_list_html.tpl', 'list' => $list,
 					'total_items' => $total_items, 'total_pages' => $total_pages, 'page' => $page,
 					'first_item' => $first_item, 'last_item' => $last_item, 'previous_link' => $previous_link,
-					'next_link' => $next_link, 'start_date' => $start_date, 'end_date' => $end_date,
+					'next_link' => $next_link, 'start_date' => $start_date, 'end_date' => $end_date, 'date' => date('d/m/Y'),
 					'subtotal' => $subtotal, 'discount_total' => $discount_total, 'total' => $total), 'site_html.tpl');
 		}
 		else {

@@ -6,6 +6,9 @@
 				<label>Reporte:</label><span>Resumen de Ventas por Producto</span>
 			</p>
 			<p>
+				<label>Fecha:</label><span>{$date}</span>
+			</p>
+			<p>
 				<label>Fecha Inicial:</label><span>{$start_date}</span>
 			</p>
 			<p>

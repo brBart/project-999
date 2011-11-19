@@ -35,7 +35,7 @@ class PrintSalesSummaryProductListCommand extends Command{
 			$end_date = $request->getProperty('end_date');
 			$list = SalesSummaryList::getListByProduct($start_date, $end_date, $subtotal, $discount_total, $total);
 			
-			Page::display(array('total_items' => count($list), 'start_date' => $start_date,
+			Page::display(array('total_items' => count($list), 'start_date' => $start_date, 'date' => date('d/m/Y'),
 					'end_date' => $end_date, 'list' => $list, 'subtotal' => $subtotal, 'discount_total' => $discount_total,
 					'total' => $total), 'sales_summary_product_list_print_html.tpl');
 		} 
