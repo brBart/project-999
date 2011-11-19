@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-11-2011 a las 17:17:55
+-- Tiempo de generación: 12-11-2011 a las 11:23:13
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `comparison` (
   `system_total` int(11) NOT NULL default '0',
   PRIMARY KEY  (`comparison_id`),
   KEY `idx_comparison_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `comparison_product` (
   `system` int(11) NOT NULL,
   PRIMARY KEY  (`comparison_product_id`),
   UNIQUE KEY `unique_comparison_id_product_id` (`comparison_id`,`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `count` (
   `total` int(11) NOT NULL,
   PRIMARY KEY  (`count_id`),
   KEY `idx_count_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `count_product` (
   `quantity` int(11) NOT NULL,
   PRIMARY KEY  (`count_product_id`),
   UNIQUE KEY `unique_count_id_product_id` (`count_id`,`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
   PRIMARY KEY  (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
   KEY `idx_purchase_return_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -792,7 +792,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
   PRIMARY KEY  (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
   KEY `idx_shipment_branch_id` (`branch_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -919,7 +919,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   UNIQUE KEY `unique_cash_receipt_id_transaction` (`cash_receipt_id`,`transaction`),
   KEY `idx_voucher_payment_card_type_id` (`payment_card_type_id`),
   KEY `idx_voucher_payment_card_brand_id` (`payment_card_brand_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -936,7 +936,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -5571,20 +5571,6 @@ BEGIN
 
 END$$
 
-DROP PROCEDURE IF EXISTS `sales_ranking_count`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ranking_count`(IN inFirstDate DATE, IN inLastDate DATE)
-BEGIN
-
-       SELECT COUNT(*) FROM (SELECT 1 FROM invoice inv INNER JOIN invoice_lot inv_lot
-
-         ON inv.invoice_id = inv_lot.invoice_id INNER JOIN lot ON inv_lot.lot_id = lot.lot_id INNER JOIN product pro ON
-
-         lot.product_id = pro.product_id WHERE inv.status = 1 AND pro.deactivated = 0 AND
-
-       CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
-
-END$$
-
 DROP PROCEDURE IF EXISTS `sales_ranking_get`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ranking_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
 BEGIN
@@ -5619,6 +5605,20 @@ BEGIN
 
 
   EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `sales_ranking_summary_product_count`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ranking_summary_product_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+       SELECT COUNT(*) FROM (SELECT 1 FROM invoice inv INNER JOIN invoice_lot inv_lot
+
+         ON inv.invoice_id = inv_lot.invoice_id INNER JOIN lot ON inv_lot.lot_id = lot.lot_id INNER JOIN product pro ON
+
+         lot.product_id = pro.product_id WHERE inv.status = 1 AND pro.deactivated = 0 AND
+
+       CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
 
 END$$
 
@@ -5713,6 +5713,119 @@ BEGIN
     INNER JOIN invoice inv ON cr.cash_receipt_id = inv.invoice_id
 
     WHERE inv.cash_register_id = inCashRegisterId AND inv.status = 1;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `sales_summary_discount_total_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_summary_discount_total_get`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+  SELECT IFNULL(SUM(inv.total * (dis.percentage / 100)), 0) FROM invoice inv INNER JOIN discount dis
+
+    ON inv.invoice_id = dis.invoice_id WHERE inv.date BETWEEN inFirstDate AND inLastDate AND inv.status = 1;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `sales_summary_product_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_summary_product_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT * FROM (
+
+  SELECT @rank := @rank + 1 AS rank, bar_code, manufacturer, name, actual_price, avg_price, quantity, subtotal,
+  
+      IFNULL(bonus_total, 0) AS bonus_total, subtotal + IFNULL(bonus_total, 0) AS total FROM
+
+    (SELECT pro.bar_code, man.name AS manufacturer, pro.name AS name, pro.product_id, pro.price AS actual_price,
+
+         AVG(inv_lot.price) AS avg_price,  SUM(inv_lot.quantity) AS quantity, SUM(inv_lot.quantity * inv_lot.price) AS subtotal
+
+         FROM invoice inv
+
+       INNER JOIN invoice_lot inv_lot ON inv.invoice_id = inv_lot.invoice_id
+
+       INNER JOIN lot ON inv_lot.lot_id = lot.lot_id
+
+       INNER JOIN product pro ON lot.product_id = pro.product_id
+
+       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id) AS pro_sum
+
+  LEFT JOIN
+
+    (SELECT bon.product_id, SUM(IFNULL(inv_bon.price, 0)) AS bonus_total FROM invoice_bonus inv_bon
+
+       INNER JOIN bonus bon ON inv_bon.bonus_id = bon.bonus_id
+
+       INNER JOIN invoice inv ON inv_bon.invoice_id = inv.invoice_id
+
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY bon.product_id) AS bon_sum
+
+  ON pro_sum.product_id = bon_sum.product_id ORDER BY quantity DESC, name
+
+) AS sales_summary_product LIMIT ?, ?;";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inFirstDate;
+
+  SET @p4 = inLastDate;
+
+  SET @p5 = inStartItem;
+
+  SET @p6 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5, @p6;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `sales_summary_product_subtotal_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_summary_product_subtotal_get`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+  SELECT SUM(subtotal + IFNULL(bonus_total, 0)) FROM
+
+    (SELECT pro.product_id, SUM(inv_lot.quantity * inv_lot.price) AS subtotal
+
+         FROM invoice inv
+
+       INNER JOIN invoice_lot inv_lot ON inv.invoice_id = inv_lot.invoice_id
+
+       INNER JOIN lot ON inv_lot.lot_id = lot.lot_id
+
+       INNER JOIN product pro ON lot.product_id = pro.product_id
+
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS pro_sum
+
+  LEFT JOIN
+
+    (SELECT bon.product_id, SUM(IFNULL(inv_bon.price, 0)) AS bonus_total FROM invoice_bonus inv_bon
+
+       INNER JOIN bonus bon ON inv_bon.bonus_id = bon.bonus_id
+
+       INNER JOIN invoice inv ON inv_bon.invoice_id = inv.invoice_id
+
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY bon.product_id) AS bon_sum
+
+  ON pro_sum.product_id = bon_sum.product_id;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `sales_summary_total_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_summary_total_get`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+  SELECT SUM(inv.total - (inv.total * (IFNULL(dis.percentage, 0) / 100))) FROM invoice inv LEFT JOIN discount dis
+
+    ON inv.invoice_id = dis.invoice_id WHERE inv.date BETWEEN inFirstDate AND inLastDate AND inv.status = 1;
 
 END$$
 
