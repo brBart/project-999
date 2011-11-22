@@ -30,7 +30,7 @@ class PrintSalesSummaryProductListCommand extends Command{
 	 * @param SessionHelper $helper
 	 */
 	public function execute(Request $request, SessionHelper $helper){
-		if(AccessManager::isAllowed($helper->getUser(), 'product_stock_monetary_report', 'read')){
+		if(AccessManager::isAllowed($helper->getUser(), 'sales_summary_product_report', 'read')){
 			$start_date = $request->getProperty('start_date');
 			$end_date = $request->getProperty('end_date');
 			$list = SalesSummaryList::getListByProduct($start_date, $end_date, $subtotal, $discount_total, $total);
