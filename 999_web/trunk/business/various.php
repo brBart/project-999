@@ -721,5 +721,28 @@ class SalesSummaryList{
 		
 		return $list;
 	}
+	
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are rank, username, name, subtotal, discount_total and total.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param float &$total
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByUserAccount($firstDate, $lastDate, &$total = 0, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveNumber($page, 'Pagina inv&aacute;lida.');
+			
+		return SalesSummaryListDAM::getListByUserAccount($firstDate, $lastDate, $total, $totalPages, $totalItems, $page);
+	}
 }
 ?>
