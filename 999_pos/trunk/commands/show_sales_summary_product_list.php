@@ -46,7 +46,7 @@ class ShowSalesSummaryProductListCommand extends Command{
 		if(!AccessManager::isAllowed($helper->getUser(), 'sales_summary_product_report', 'read')){
 			$msg = 'Insuficientes privilegios.';
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'blank.tpl',
-					'back_trace' => $back_trace, 'second_menu' => 'none', 'cmd' => 'show_sales_summary_product_list',
+					'back_trace' => $back_trace, 'second_menu' => 'none',
 					'back_link' => 'index.php?cmd=show_report_menu_pos_admin',
 					'content' => 'reference_form_html.tpl', 'reference_type' => LIST_TYPE,
 					'reference_name' => 'Resumen de Ventas por Producto',
