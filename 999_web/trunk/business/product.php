@@ -54,7 +54,6 @@ class UnitOfMeasure extends Identifier{
 	 * @throws Exception
 	 */
 	static public function delete(UnitOfMeasure $obj){
-		self::validateObjectFromDatabase($obj);
 		if(!UnitOfMeasureDAM::delete($obj))
 			throw new Exception('Unidad de Medida tiene dependencias (productos) y no se puede eliminar.');
 	}
@@ -115,7 +114,6 @@ class Manufacturer extends Identifier{
 	 * @throws Exception
 	 */
 	static public function delete(Manufacturer $obj){
-		self::validateObjectFromDatabase($obj);
 		if(!ManufacturerDAM::delete($obj))
 			throw new Exception('Casa tiene dependencias (productos) y no se puede eliminar.');
 	}
@@ -153,7 +151,6 @@ class Inventory{
 	 * @return integer
 	 */
 	static public function getAvailable(Product $product){
-		Persist::validateObjectFromDatabase($product);
 		return InventoryDAM::getAvailable($product);
 	}
 	
@@ -164,7 +161,6 @@ class Inventory{
 	 * @return integer
 	 */
 	static public function getQuantity(Product $product){
-		Persist::validateObjectFromDatabase($product);
 		return InventoryDAM::getQuantity($product);
 	}
 	
@@ -178,7 +174,6 @@ class Inventory{
 	 * @return array<Lot>
 	 */
 	static public function getLots(Product $product, $reqUnitsQuantity){
-		Persist::validateObjectFromDatabase($product);
 		Number::validatePositiveNumber($reqUnitsQuantity, 'Cantidad inv&aacute;lida.');
 		
 		// Get the lots from the database with available stock.
@@ -228,7 +223,6 @@ class Inventory{
 	 * @return array
 	 */
 	static public function showLots(Product $product, &$quantity, &$available){
-		Persist::validateObjectFromDatabase($product);
 		return InventoryDAM::getLotsList($product, $quantity, $available);
 	}
 	
@@ -239,7 +233,6 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function increase(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product);
 		InventoryDAM::increase($product, $quantity);
 	}
 	
@@ -250,7 +243,6 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function decrease(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product);
 		InventoryDAM::decrease($product, $quantity);
 	}
 	
@@ -261,7 +253,6 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function reserve(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product);
 		InventoryDAM::reserve($product, $quantity);
 	}
 	
@@ -272,7 +263,6 @@ class Inventory{
 	 * @param integer $quantity
 	 */
 	static public function decreaseReserve(Product $product, $quantity){
-		Persist::validateObjectFromDatabase($product);
 		InventoryDAM::decreaseReserve($product, $quantity);
 	}
 }
@@ -316,7 +306,6 @@ class ProductSupplier extends Persist{
 	public function __construct(Supplier $supplier, $productSKU, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		self::validateObjectFromDatabase($supplier);
 		String::validateString($productSKU, 'Codigo inv&aacute;lido.', 'product_sku');
 		
 		$this->_mSupplier = $supplier;
@@ -396,8 +385,6 @@ class ProductSupplier extends Persist{
 	 * @param Product $product
 	 */
 	public function commit(Product $product){
-		self::validateObjectFromDatabase($product);
-		
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			ProductSupplierDAM::insert($product, $this);
 		elseif($this->_mStatus == Persist::CREATED && $this->_mDeleted)
@@ -645,8 +632,6 @@ class Product extends Identifier{
 		
 		try{
 			String::validateString($barCode, 'C&oacute;digo de barra inv&aacute;lido.');
-			self::validateObjectFromDatabase($um);
-			self::validateObjectFromDatabase($manufacturer);
 			Number::validateUnsignedNumber($price, 'Precio inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
@@ -788,7 +773,6 @@ class Product extends Identifier{
 	 * @throws Exception
 	 */
 	static public function delete(Product $obj){
-		self::validateObjectFromDatabase($obj);
 		if(!ProductDAM::delete($obj))
 			throw new Exception('Producto tiene dependencias y no se puede eliminar.');
 	}
@@ -1006,7 +990,6 @@ class Bonus extends Persist{
 		
 		if(!is_null($id))
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-		self::validateObjectFromDatabase($product);
 		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.', 'quantity');
 		$this->validatePercentage($percentage);
 		Date::validateDate($expirationDate, 'Fecha de vencimiento inv&aacute;lida.', 'expiration_date');
@@ -1124,7 +1107,6 @@ class Bonus extends Persist{
 	 * @return integer
 	 */
 	static public function getBonusIdByProduct(Product $product, $quantity){
-		self::validateObjectFromDatabase($product);
 		return BonusDAM::getId($product, $quantity);
 	}
 	
@@ -1136,7 +1118,6 @@ class Bonus extends Persist{
 	 * @throws Exception
 	 */
 	static public function delete(Bonus $obj){
-		self::validateObjectFromDatabase($obj);
 		if(!BonusDAM::delete($obj))
 			throw new Exception('Oferta tiene dependencias (facturas) y no se puede eliminar.');
 	}
@@ -1229,8 +1210,6 @@ class Lot extends Persist{
 	public function __construct(Product $product, $quantity = 0, $price = 0.00, $expirationDate = NULL,
 			$entryDate = NULL, $id = 0, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
-		
-		self::validateObjectFromDatabase($product);
 		
 		if($quantity !== 0)
 			Number::validateNumber($quantity, 'Cantidad inv&aacute;lida.', 'quantity');
@@ -1481,7 +1460,6 @@ class ChangePriceLog{
 	 * @param float $newPrice
 	 */
 	static public function write(Product $product, $lastPrice, $newPrice){
-		Persist::validateObjectFromDatabase($product);
 		Number::validateUnsignedNumber($lastPrice, 'Precio antiguo inv&aacute;lido.');
 		Number::validateUnsignedNumber($newPrice, 'Nuevo precio inv&aacute;lido.');
 		
@@ -1592,7 +1570,6 @@ class ProductBonusList{
 	 * @return array
 	 */
 	static public function getList(Product $product){
-		Persist::validateObjectFromDatabase($product);
 		return ProductBonusListDAM::getList($product);
 	}
 }
@@ -1714,7 +1691,6 @@ class ReserveList{
 	 * @return array
 	 */
 	static public function getList(Product $product){
-		Persist::validateObjectFromDatabase($product);
 		return ReserveListDAM::getList($product);
 	}
 }

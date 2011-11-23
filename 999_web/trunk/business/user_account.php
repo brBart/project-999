@@ -362,7 +362,6 @@ class UserAccount extends PersistObject{
 	 * @throws Exception
 	 */
 	static public function delete(UserAccount $obj){
-		self::validateObjectFromDatabase($obj);			
 		if(!UserAccountDAM::delete($obj))
 			throw new Exception('Cuenta de Usuario tiene dependencias y no se puede eliminar.');
 	}
@@ -515,7 +514,6 @@ class AccessManager{
 	 * @throws Exception
 	 */
 	static public function isAllowed(UserAccount $account, $subject, $action){
-		Persist::validateObjectFromDatabase($account);
 		String::validateString($subject, 'Subject inv&aacute;lido.');
 		String::validateString($action, 'Action inv&aacute;lido.');
 		

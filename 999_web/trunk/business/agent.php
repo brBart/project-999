@@ -458,7 +458,6 @@ class Supplier extends Organization{
 	 * @throws Exception
 	 */
 	static public function delete(Supplier $obj){
-		self::validateObjectFromDatabase($obj);
 		if(!SupplierDAM::delete($obj))
 			throw new Exception('Proveedor tiene dependencias (recibos, devoluciones o productos) y no se ' .
 					'puede eliminar.');
@@ -509,7 +508,6 @@ class Branch extends Organization{
 	 * @throws Exception
 	 */
 	static public function delete(Branch $obj){
-		self::validateObjectFromDatabase($obj);
 		if(!BranchDAM::delete($obj))
 			throw new Exception('Sucursal tiene dependencias (envios) y no se puede eliminar.');
 	}
