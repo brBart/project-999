@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-11-2011 a las 11:23:13
+-- Tiempo de generación: 23-11-2011 a las 10:09:13
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   KEY `idx_deposit_cash_register_id` (`cash_register_id`),
   KEY `idx_deposit_user_account_username` (`user_account_username`),
   KEY `idx_deposit_date` (`date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -328,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `amount` decimal(13,2) NOT NULL,
   PRIMARY KEY  (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -5736,9 +5736,9 @@ BEGIN
 
     "SELECT * FROM (
 
-  SELECT @rank := @rank + 1 AS rank, bar_code, manufacturer, name, actual_price, avg_price, quantity, subtotal,
-  
-      IFNULL(bonus_total, 0) AS bonus_total, subtotal + IFNULL(bonus_total, 0) AS total FROM
+  SELECT @rank := @rank + 1 AS rank, bar_code, manufacturer, name, actual_price, avg_price, quantity, subtotal, IFNULL(bonus_total, 0) AS 
+
+      bonus_total, subtotal + IFNULL(bonus_total, 0) AS total FROM
 
     (SELECT pro.bar_code, man.name AS manufacturer, pro.name AS name, pro.product_id, pro.price AS actual_price,
 
@@ -5826,6 +5826,53 @@ BEGIN
   SELECT SUM(inv.total - (inv.total * (IFNULL(dis.percentage, 0) / 100))) FROM invoice inv LEFT JOIN discount dis
 
     ON inv.invoice_id = dis.invoice_id WHERE inv.date BETWEEN inFirstDate AND inLastDate AND inv.status = 1;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `sales_summary_user_account_count`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_summary_user_account_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+       SELECT COUNT(*) FROM (SELECT 1 FROM invoice inv INNER JOIN user_account use_acc ON inv.user_account_username = use_acc.user_account_username
+
+         WHERE inv.status = 1 AND inv.date BETWEEN inFirstDate AND inLastDate GROUP BY inv.user_account_username) AS sales_summary;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `sales_summary_user_account_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_summary_user_account_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT * FROM (SELECT @rank := @rank + 1 AS rank, inv.user_account_username AS username,
+
+         CONCAT(use_acc.first_name, ' ', use_acc.last_name) AS name,
+
+         SUM(inv.total) AS subtotal, SUM(inv.total * (IFNULL(dis.percentage, 0) / 100)) AS discount_total,
+
+         SUM(inv.total - (inv.total * (IFNULL(dis.percentage, 0) / 100))) AS total FROM invoice inv
+
+       INNER JOIN user_account use_acc ON inv.user_account_username = use_acc.user_account_username 
+
+       LEFT JOIN discount dis ON inv.invoice_id = dis.invoice_id
+
+     WHERE inv.date BETWEEN ? AND ? AND inv.status = 1 GROUP BY inv.user_account_username ORDER BY total DESC, username) AS sales_summary
+
+      LIMIT ?, ?";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
 
 END$$
 
