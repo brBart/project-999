@@ -435,5 +435,26 @@ class SalesSummaryListDAM{
 		return array('uno' => 'one', 'dos' => 'two');
 	}
 	
+	/**
+	 * Retuns an array with data.
+	 *
+	 * The array's fields are rank, username, name, subtotal, discount_total and total. If no page
+	 * argument or cero is passed all the details are returned. The totalPages and
+	 * totalItems arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param float &$total
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getListByUserAccount($firstDate, $lastDate, &$total, &$totalPages, &$totalItems, $page){
+		$total = 120.00; 
+		$totalPages = 1;
+		$totalItems = 2;
+		return array('uno' => 'one', 'dos' => 'two');
+	}
+	
 }
 ?>
