@@ -8,6 +8,11 @@
 </head>
 <body onload="print();">
 	<div id="wrapper">
+		<div id="console" class="console_display">
+		{if $notify eq 1}
+			<p class="{$type}">{$message}</p>
+		{/if}
+		</div>
 		<fieldset id="header_data">
 			<p>
 				<label>Reporte:</label><span>Resumen de Ventas por Producto</span>
