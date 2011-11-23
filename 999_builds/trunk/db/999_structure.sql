@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-11-2011 a las 10:09:13
+-- Tiempo de generación: 23-11-2011 a las 16:40:47
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `comparison` (
   `system_total` int(11) NOT NULL default '0',
   PRIMARY KEY  (`comparison_id`),
   KEY `idx_comparison_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `comparison_product` (
   `system` int(11) NOT NULL,
   PRIMARY KEY  (`comparison_product_id`),
   UNIQUE KEY `unique_comparison_id_product_id` (`comparison_id`,`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `count` (
   `total` int(11) NOT NULL,
   PRIMARY KEY  (`count_id`),
   KEY `idx_count_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `count_product` (
   `quantity` int(11) NOT NULL,
   PRIMARY KEY  (`count_product_id`),
   UNIQUE KEY `unique_count_id_product_id` (`count_id`,`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   KEY `idx_deposit_cash_register_id` (`cash_register_id`),
   KEY `idx_deposit_user_account_username` (`user_account_username`),
   KEY `idx_deposit_date` (`date`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -328,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `amount` decimal(13,2) NOT NULL,
   PRIMARY KEY  (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
   PRIMARY KEY  (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
   KEY `idx_purchase_return_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -792,7 +792,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
   PRIMARY KEY  (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
   KEY `idx_shipment_branch_id` (`branch_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -919,7 +919,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   UNIQUE KEY `unique_cash_receipt_id_transaction` (`cash_receipt_id`,`transaction`),
   KEY `idx_voucher_payment_card_type_id` (`payment_card_type_id`),
   KEY `idx_voucher_payment_card_brand_id` (`payment_card_brand_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -936,7 +936,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -1441,13 +1441,13 @@ BEGIN
 
        (SELECT COUNT(*) AS count_rows FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id WHERE CAST(inv_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+            ON inv.invoice_id = inv_can.invoice_id WHERE inv_can.date BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM deposit dep INNER JOIN deposit_cancelled dep_can ON dep.deposit_id = dep_can.deposit_id
 
-            WHERE CAST(dep_can.date AS DATE) BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
+            WHERE dep_can.date BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
 
 END$$
 
@@ -1463,7 +1463,7 @@ BEGIN
 
             CONCAT(cor.serial_number, '-', inv.number) AS number, inv.total FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE CAST(inv_can.date AS DATE) BETWEEN ? AND ?
+            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE inv_can.date BETWEEN ? AND ?
 
         UNION
 
@@ -1471,7 +1471,7 @@ BEGIN
 
             dep.deposit_id AS number, dep.total FROM deposit dep INNER JOIN deposit_cancelled dep_can ON dep.deposit_id = dep_can.deposit_id
 
-            WHERE CAST(dep_can.date AS DATE) BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
+            WHERE dep_can.date BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
 
       LIMIT ?, ?";
 
@@ -1500,37 +1500,37 @@ BEGIN
 
        (SELECT COUNT(*) AS count_rows FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id WHERE CAST(inv_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+            ON inv.invoice_id = inv_can.invoice_id WHERE inv_can.date BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM receipt rec INNER JOIN receipt_cancelled rec_can ON rec.receipt_id = rec_can.receipt_id
 
-            WHERE CAST(rec_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+            WHERE rec_can.date BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM purchase_return pur INNER JOIN purchase_return_cancelled pur_can
 
-            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE CAST(pur_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE pur_can.date BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM shipment shi INNER JOIN shipment_cancelled shi_can ON shi.shipment_id = shi_can.shipment_id
 
-            WHERE CAST(shi_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+            WHERE shi_can.date BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM entry_adjustment ent INNER JOIN entry_adjustment_cancelled ent_can ON
 
-            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE CAST(ent_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
+            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE ent_can.date BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM withdraw_adjustment wit INNER JOIN withdraw_adjustment_cancelled wit_can
 
-            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE CAST(wit_can.date AS DATE) BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
+            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE wit_can.date BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
 
 END$$
 
@@ -1546,7 +1546,7 @@ BEGIN
 
             CONCAT(cor.serial_number, '-', inv.number) AS number, inv.total FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE CAST(inv_can.date AS DATE) BETWEEN ? AND ?
+            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE inv_can.date BETWEEN ? AND ?
 
         UNION
 
@@ -1554,7 +1554,7 @@ BEGIN
 
             rec.receipt_id AS number, rec.total FROM receipt rec INNER JOIN receipt_cancelled rec_can ON rec.receipt_id = rec_can.receipt_id
 
-            WHERE CAST(rec_can.date AS DATE) BETWEEN ? AND ?
+            WHERE rec_can.date BETWEEN ? AND ?
 
         UNION
 
@@ -1562,7 +1562,7 @@ BEGIN
 
             pur.purchase_return_id AS number, pur.total FROM purchase_return pur INNER JOIN purchase_return_cancelled pur_can
 
-            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE CAST(pur_can.date AS DATE) BETWEEN ? AND ?
+            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE pur_can.date BETWEEN ? AND ?
 
         UNION
 
@@ -1570,7 +1570,7 @@ BEGIN
 
             shi.shipment_id AS number, shi.total FROM shipment shi INNER JOIN shipment_cancelled shi_can ON shi.shipment_id = shi_can.shipment_id
 
-            WHERE CAST(shi_can.date AS DATE) BETWEEN ? AND ?
+            WHERE shi_can.date BETWEEN ? AND ?
 
         UNION
 
@@ -1578,7 +1578,7 @@ BEGIN
 
             ent.entry_adjustment_id AS number, ent.total FROM entry_adjustment ent INNER JOIN entry_adjustment_cancelled ent_can ON
 
-            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE CAST(ent_can.date AS DATE) BETWEEN ? AND ?
+            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE ent_can.date BETWEEN ? AND ?
 
         UNION
 
@@ -1586,7 +1586,7 @@ BEGIN
 
             wit.withdraw_adjustment_id AS number, wit.total FROM withdraw_adjustment wit INNER JOIN withdraw_adjustment_cancelled wit_can
 
-            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE CAST(wit_can.date AS DATE) BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
+            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE wit_can.date BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
 
       LIMIT ?, ?";
 
@@ -1787,7 +1787,7 @@ BEGIN
 
   SELECT COUNT(*) FROM change_price_log
 
-    WHERE CAST(date AS DATE) BETWEEN inFirstDate AND inLastDate;
+    WHERE date BETWEEN inFirstDate AND inLastDate;
 
 END$$
 
@@ -1803,7 +1803,7 @@ BEGIN
 
          INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-     WHERE CAST(date AS DATE) BETWEEN ? AND ?
+     WHERE date BETWEEN ? AND ?
 
      ORDER BY log.entry_id
 
@@ -1974,7 +1974,7 @@ BEGIN
 
   SELECT COUNT(*) FROM comparison
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -1986,7 +1986,7 @@ BEGIN
 
     "SELECT comparison_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM comparison
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -2303,7 +2303,7 @@ BEGIN
 
   SELECT COUNT(*) FROM count
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2315,7 +2315,7 @@ BEGIN
 
     "SELECT count_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM count
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -2567,7 +2567,7 @@ BEGIN
 
       INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
 
-    WHERE CAST(working_day AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE working_day BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2581,9 +2581,9 @@ BEGIN
 
       INNER JOIN cash_register cr ON dep.cash_register_id = cr.cash_register_id
 
-      WHERE CAST(working_day AS DATE) BETWEEN ? AND ?
+      WHERE working_day BETWEEN ? AND ?
 
-      ORDER BY CAST(working_day AS DATE), deposit_id
+      ORDER BY deposit_id
 
       LIMIT ?, ?";
 
@@ -2981,7 +2981,7 @@ BEGIN
 
   SELECT COUNT(*) FROM entry_adjustment
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2993,7 +2993,7 @@ BEGIN
 
     "SELECT entry_adjustment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM entry_adjustment
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -3129,7 +3129,7 @@ BEGIN
 
       INNER JOIN cash_register cr ON inv.cash_register_id = cr.cash_register_id
 
-    WHERE CAST(working_day AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE working_day BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -3145,9 +3145,9 @@ BEGIN
 
       INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
-      WHERE CAST(working_day AS DATE) BETWEEN ? AND ?
+      WHERE working_day BETWEEN ? AND ?
 
-      ORDER BY CAST(working_day AS DATE), invoice_id
+      ORDER BY invoice_id
 
       LIMIT ?, ?";
 
@@ -3281,7 +3281,7 @@ BEGIN
 
   SELECT COUNT(*) FROM invoice
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -3295,7 +3295,7 @@ BEGIN
 
       INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -4063,7 +4063,7 @@ BEGIN
 
           rec_lot ON lot.lot_id = rec_lot.lot_id INNER JOIN receipt rec ON rec_lot.receipt_id = rec.receipt_id WHERE rec.status = 1 AND 
 
-          CAST(rec.date AS DATE) >= ? AND CAST(rec.date AS DATE) < ?) AS rec
+          rec.date >= ? AND rec.date < ?) AS rec
 
        ON pro.product_id = rec.product_id GROUP BY pro.product_id ORDER BY pro.manufacturer, pro.name
 
@@ -4111,7 +4111,7 @@ BEGIN
 
           inv_lot ON lot.lot_id = inv_lot.lot_id INNER JOIN invoice inv ON inv_lot.invoice_id = inv.invoice_id WHERE inv.status = 1 AND 
 
-          CAST(inv.date AS DATE) >= ? AND CAST(inv.date AS DATE) < ?) AS inv
+          inv.date >= ? AND inv.date < ?) AS inv
 
        ON pro.product_id = inv.product_id GROUP BY pro.product_id ORDER BY pro.manufacturer, pro.name
 
@@ -4847,7 +4847,7 @@ BEGIN
 
           rec_lot ON lot.lot_id = rec_lot.lot_id INNER JOIN receipt rec ON rec_lot.receipt_id = rec.receipt_id WHERE rec.status = 1 AND 
 
-          CAST(rec.date AS DATE) >= ? AND CAST(rec.date AS DATE) < ?) AS rec
+          rec.date >= ? AND rec.date < ?) AS rec
 
        ON pro.product_id = rec.product_id GROUP BY pro.product_id ORDER BY pro.name, pro.manufacturer
 
@@ -4905,7 +4905,7 @@ BEGIN
 
           inv_lot ON lot.lot_id = inv_lot.lot_id INNER JOIN invoice inv ON inv_lot.invoice_id = inv.invoice_id WHERE inv.status = 1 AND 
 
-          CAST(inv.date AS DATE) >= ? AND CAST(inv.date AS DATE) < ?) AS inv
+          inv.date >= ? AND inv.date < ?) AS inv
 
        ON pro.product_id = inv.product_id GROUP BY pro.product_id ORDER BY pro.name, pro.manufacturer
 
@@ -5190,7 +5190,7 @@ BEGIN
 
   SELECT COUNT(*) FROM purchase_return
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -5202,7 +5202,7 @@ BEGIN
 
     "SELECT purchase_return_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM purchase_return
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -5298,7 +5298,7 @@ BEGIN
 
   SELECT COUNT(*) FROM receipt
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -5310,7 +5310,7 @@ BEGIN
 
     "SELECT receipt_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM receipt
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -5591,7 +5591,7 @@ BEGIN
 
          WHERE inv.status = 1 AND pro.deactivated = 0 AND
 
-         CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS sales_ranking
+         inv.date BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS sales_ranking
 
       LIMIT ?, ?";
 
@@ -5618,7 +5618,7 @@ BEGIN
 
          lot.product_id = pro.product_id WHERE inv.status = 1 AND pro.deactivated = 0 AND
 
-       CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
+       inv.date BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
 
 END$$
 
@@ -5754,7 +5754,7 @@ BEGIN
 
        INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id) AS pro_sum
+     WHERE inv.status = 1 AND inv.date BETWEEN ? AND ? GROUP BY pro.product_id) AS pro_sum
 
   LEFT JOIN
 
@@ -5764,7 +5764,7 @@ BEGIN
 
        INNER JOIN invoice inv ON inv_bon.invoice_id = inv.invoice_id
 
-     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY bon.product_id) AS bon_sum
+     WHERE inv.status = 1 AND inv.date BETWEEN ? AND ? GROUP BY bon.product_id) AS bon_sum
 
   ON pro_sum.product_id = bon_sum.product_id ORDER BY quantity DESC, name
 
@@ -5803,7 +5803,7 @@ BEGIN
 
        INNER JOIN product pro ON lot.product_id = pro.product_id
 
-     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS pro_sum
+     WHERE inv.status = 1 AND inv.date BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS pro_sum
 
   LEFT JOIN
 
@@ -5813,7 +5813,7 @@ BEGIN
 
        INNER JOIN invoice inv ON inv_bon.invoice_id = inv.invoice_id
 
-     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY bon.product_id) AS bon_sum
+     WHERE inv.status = 1 AND inv.date BETWEEN inFirstDate AND inLastDate GROUP BY bon.product_id) AS bon_sum
 
   ON pro_sum.product_id = bon_sum.product_id;
 
@@ -6058,7 +6058,7 @@ BEGIN
 
   SELECT COUNT(*) FROM shipment
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -6070,7 +6070,7 @@ BEGIN
 
     "SELECT shipment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM shipment
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -6877,7 +6877,7 @@ BEGIN
 
   SELECT COUNT(*) FROM withdraw_adjustment
 
-    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
+    WHERE date BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -6889,7 +6889,7 @@ BEGIN
 
     "SELECT withdraw_adjustment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM withdraw_adjustment
 
-      WHERE CAST(date AS DATE) BETWEEN ? AND ?
+      WHERE date BETWEEN ? AND ?
 
       ORDER BY date
 
