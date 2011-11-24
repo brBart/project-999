@@ -5654,9 +5654,7 @@ BEGIN
 
          lot.product_id = pro.product_id INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-         WHERE inv.status = 1 AND pro.deactivated = 0 AND
-
-         inv.date BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS sales_ranking
+         WHERE inv.status = 1 AND inv.date BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS sales_ranking
 
       LIMIT ?, ?";
 
@@ -5681,7 +5679,7 @@ BEGIN
 
          ON inv.invoice_id = inv_lot.invoice_id INNER JOIN lot ON inv_lot.lot_id = lot.lot_id INNER JOIN product pro ON
 
-         lot.product_id = pro.product_id WHERE inv.status = 1 AND pro.deactivated = 0 AND
+         lot.product_id = pro.product_id WHERE inv.status = 1 AND
 
        inv.date BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
 
