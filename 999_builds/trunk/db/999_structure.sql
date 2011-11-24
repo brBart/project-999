@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-11-2011 a las 16:40:47
+-- Tiempo de generación: 24-11-2011 a las 11:14:11
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `comparison` (
   `system_total` int(11) NOT NULL default '0',
   PRIMARY KEY  (`comparison_id`),
   KEY `idx_comparison_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `comparison_product` (
   `system` int(11) NOT NULL,
   PRIMARY KEY  (`comparison_product_id`),
   UNIQUE KEY `unique_comparison_id_product_id` (`comparison_id`,`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `count` (
   `total` int(11) NOT NULL,
   PRIMARY KEY  (`count_id`),
   KEY `idx_count_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `count_product` (
   `quantity` int(11) NOT NULL,
   PRIMARY KEY  (`count_product_id`),
   UNIQUE KEY `unique_count_id_product_id` (`count_id`,`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   KEY `idx_deposit_cash_register_id` (`cash_register_id`),
   KEY `idx_deposit_user_account_username` (`user_account_username`),
   KEY `idx_deposit_date` (`date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -328,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `amount` decimal(13,2) NOT NULL,
   PRIMARY KEY  (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
   PRIMARY KEY  (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
   KEY `idx_purchase_return_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -792,7 +792,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
   PRIMARY KEY  (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
   KEY `idx_shipment_branch_id` (`branch_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -919,7 +919,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   UNIQUE KEY `unique_cash_receipt_id_transaction` (`cash_receipt_id`,`transaction`),
   KEY `idx_voucher_payment_card_type_id` (`payment_card_type_id`),
   KEY `idx_voucher_payment_card_brand_id` (`payment_card_brand_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -936,7 +936,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -5115,6 +5115,71 @@ BEGIN
       unit_of_measure_id = inUnitOfMeasureId, manufacturer_id = inManufacturerId, price = inPrice, deactivated = inDeactivated
 
     WHERE product_id = inProductId;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `purchases_summary_product_count`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchases_summary_product_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+  SELECT COUNT(*) FROM (
+
+    SELECT 1 FROM receipt rec
+
+        INNER JOIN receipt_lot rec_lot ON rec.receipt_id = rec_lot.receipt_id
+
+        INNER JOIN lot ON rec_lot.lot_id = lot.lot_id
+
+        INNER JOIN product pro ON lot.product_id = pro.product_id
+
+    WHERE rec.status = 1 AND rec.date BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS purchases_summary;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `purchases_summary_product_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchases_summary_product_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  SET @rank := 0;
+
+  PREPARE statement FROM
+
+    "SELECT * FROM (
+
+       SELECT @rank := @rank + 1 AS rank, pro.bar_code, man.name AS manufacturer, pro.name AS name, pro.price AS actual_price,
+
+           AVG(rec_lot.price) AS avg_price,  SUM(rec_lot.quantity) AS quantity, SUM(rec_lot.quantity * rec_lot.price) AS total FROM receipt rec
+
+         INNER JOIN receipt_lot rec_lot ON rec.receipt_id = rec_lot.receipt_id
+
+         INNER JOIN lot ON rec_lot.lot_id = lot.lot_id
+
+         INNER JOIN product pro ON lot.product_id = pro.product_id
+
+         INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+       WHERE rec.status = 1 AND rec.date BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS purchases_summary
+
+  LIMIT ?, ?;";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `purchases_summary_total_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchases_summary_total_get`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+  SELECT SUM(total) FROM receipt WHERE date BETWEEN inFirstDate AND inLastDate AND status = 1;
 
 END$$
 
