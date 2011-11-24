@@ -24,8 +24,6 @@ class EntryEvent{
 	 */
 	static public function apply(Product $product, Document $document, $quantity, $price,
 			$expirationDate = NULL){
-		Persist::validateNewObject($document);
-				
 		$lot = new Lot($product, $quantity, $price, $expirationDate);
 		$document->addDetail(new DocProductDetail($lot, new Entry(), $quantity, $lot->getPrice()));
 	}
@@ -58,8 +56,6 @@ class WithdrawEvent{
 	 * @param integer $quantity
 	 */
 	static public function apply(Product $product, Document $document, $quantity){
-		Persist::validateNewObject($document);
-		
 		if(Inventory::getAvailable($product) < $quantity)
 			throw new ValidateException('No hay suficiente cantidad disponible.', 'quantity');
 		

@@ -56,36 +56,6 @@ abstract class Persist{
 	public function getStatus(){
 		return $this->_mStatus;
 	}
-	
-	/**
-	 * Validates if the object's data is already stored in the database.
-	 * 
-	 * The object's status must be diferent than Persist::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param PersistObject $obj
-	 * @param string $objectName
-	 * @throws Exception
-	 */
-	static public function validateObjectFromDatabase(Persist $obj){
-		if ($obj->_mStatus == self::IN_PROGRESS)
-			throw new Exception('Objeto inv&aacute;lido: ' . get_class($obj) . '. La propiedad status ' .
-					'debe ser igual a Persist::CREATED.');
-	}
-	
-	/**
-	 * Validates if the object's is new and has no data in the database.
-	 * 
-	 * The object's status must be equal to Persist::IN_PROGRESS. Otherwise it throws an
-	 * exception.
-	 * @param PersistObject $obj
-	 * @param string $objectName
-	 * @throws Exception
-	 */
-	static public function validateNewObject(Persist $obj){
-		if ($obj->_mStatus != self::IN_PROGRESS)
-			throw new Exception('Objeto inv&aacute;lido: ' . get_class($obj) . '. La propiedad status ' .
-					'debe ser igual a Persist::IN_PROGRESS.');
-	}
 }
 
 

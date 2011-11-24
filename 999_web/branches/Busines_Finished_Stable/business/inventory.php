@@ -56,7 +56,6 @@ class ComparisonDetail{
 	 */
 	public function __construct(Product $product, $physical, $system){
 		try{
-			Persist::validateObjectFromDatabase($product);
 			Number::validateUnsignedInteger($physical, 'Valor fisico inv&aacute;lido.');
 			Number::validateUnsignedInteger($system, 'Valor del sistema inv&aacute;lido.');
 		} catch(Exception $e){
@@ -170,7 +169,6 @@ class Comparison implements Itemized{
 		try{
 			Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
 			Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
-			Persist::validateObjectFromDatabase($user);
 			String::validateString($reason, 'Motivo inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
@@ -327,7 +325,6 @@ class CountDetail extends Persist{
 	public function __construct(Product $product, $quantity, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		self::validateObjectFromDatabase($product);
 		Number::validateUnsignedNumber($quantity, 'Cantidad inv&aacute;lida.');
 		
 		$this->_mProduct = $product;
@@ -412,8 +409,6 @@ class CountDetail extends Persist{
 	 * @param Count $count
 	 */
 	public function commit(Count $count){
-		self::validateObjectFromDatabase($count);
-		
 		if($this->_mStatus == Persist::IN_PROGRESS)
 			CountDetailDAM::insert($count, $this);
 		elseif($this->_mStatus == Persist::CREATED && $this->_mDeleted)
@@ -504,13 +499,6 @@ class Count extends PersistObject implements Itemized{
 		}
 		
 		if(!is_null($user)){
-			try{
-				Persist::validateObjectFromDatabase($user);
-			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
-						$e->getMessage());
-				throw $et;
-			}
 			$this->_mUser = $user;
 		}
 		else{
@@ -729,7 +717,6 @@ class Count extends PersistObject implements Itemized{
 	 * @param Count $obj
 	 */
 	static public function delete(Count $obj){
-		self::validateObjectFromDatabase($obj);
 		CountDAM::delete($obj);
 	}
 	
@@ -802,7 +789,6 @@ class ComparisonEvent{
 	 * @return integer
 	 */
 	static public function apply(Count $count, $reason, $general = false){
-		Persist::validateObjectFromDatabase($count);
 		String::validateString($reason, 'Motivo inv&aacute;lido.', 'reason');
 		
 		$date = date('d/m/Y H:i:s');

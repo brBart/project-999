@@ -100,7 +100,6 @@ abstract class SessionHelper{
 	 * @param UserAccount $user
 	 */
 	public function setUser(UserAccount $user){
-		Persist::validateObjectFromDatabase($user, 'UserAccount');
 		$_SESSION[$this->_mModuleName]['user'] = $user;
 	}
 	

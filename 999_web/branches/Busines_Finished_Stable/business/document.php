@@ -83,13 +83,6 @@ abstract class Document extends PersistDocument implements Itemized{
 		}
 		
 		if(!is_null($user)){
-			try{
-				Persist::validateObjectFromDatabase($user);
-			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
-						$e->getMessage());
-				throw $et;
-			}
 			$this->_mUser = $user;
 		}
 		else{
@@ -263,8 +256,6 @@ abstract class Document extends PersistDocument implements Itemized{
 	 */
 	public function cancel(UserAccount $user, $reason = NULL){
 		if($this->_mStatus == PersistDocument::CREATED){
-			self::validateObjectFromDatabase($user);
-			
 			$this->cancelDetails();
 			$this->updateToCancelled($user);
 			$this->_mStatus = PersistDocument::CANCELLED;
@@ -385,7 +376,6 @@ abstract class DocumentDetail{
 	 * @param integer $number
 	 */
 	public function save(Document $doc, $number){
-		Persist::validateObjectFromDatabase($doc);
 		Number::validatePositiveInteger($number, 'N&uacute;mero de pagina inv&aacute;lido.');
 		$this->insert($doc, $number);
 	}
@@ -455,7 +445,6 @@ class DocBonusDetail extends DocumentDetail{
 	public function __construct(Bonus $bonus, $price){
 		parent::__construct(1, $price);
 		
-		Persist::validateObjectFromDatabase($bonus);
 		$this->_mBonus = $bonus;
 	}
 	
@@ -576,9 +565,6 @@ class DocProductDetail extends DocumentDetail{
 	 */
 	public function __construct(Lot $lot, Transaction $transaction, $quantity, $price, Reserve $reserve = NULL){
 		parent::__construct($quantity, $price);
-		
-		if(!is_null($reserve))
-			Persist::validateObjectFromDatabase($reserve);
 			
 		$this->_mLot = $lot;
 		$this->_mTransaction = $transaction;
@@ -750,9 +736,7 @@ class Reserve extends Persist{
 				
 		try{
 			Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
-			Persist::validateObjectFromDatabase($lot);
 			Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
-			Persist::validateObjectFromDatabase($user);
 			Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo construct en Reserve con datos erroneos! ' .
@@ -802,7 +786,6 @@ class Reserve extends Persist{
 	 * @param Reserve $obj
 	 */
 	public function merge(Reserve $obj){
-		self::validateObjectFromDatabase($obj);
 		$this->_mQuantity += $obj->getQuantity();
 		ReserveDAM::increase($this, $obj->getQuantity());
 		ReserveDAM::delete($obj);
@@ -817,7 +800,6 @@ class Reserve extends Persist{
 	 * @return Reserve
 	 */
 	static public function create(Lot $lot, $quantity){
-		Persist::validateObjectFromDatabase($lot);
 		Number::validatePositiveNumber($quantity, 'Cantidad inv&aacute;lida.');
 		
 		$lot->reserve($quantity);
@@ -846,8 +828,6 @@ class Reserve extends Persist{
 	 * @param Reserve $obj
 	 */
 	static public function delete(Reserve $obj){
-		self::validateObjectFromDatabase($obj);
-		
 		$quantity = $obj->getQuantity();
 		$lot = $obj->getLot();
 		$lot->decreaseReserve($quantity);
@@ -1721,8 +1701,6 @@ class Invoice extends Document{
 		try{
 			Number::validatePositiveInteger($number, 'N&uacute;mero de factura inv&aacute;lido.');
 			Number::validatePositiveFloat($vatPercentage, 'Porcentage Iva inv&aacute;lido.');
-			if(!is_null($discount))
-				self::validateObjectFromDatabase($discount);
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Invoice con datos erroneos! ' .
 					$e->getMessage());
@@ -1951,7 +1929,6 @@ class Discount extends Persist{
 	public function __construct(UserAccount $user, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		self::validateObjectFromDatabase($user);
 		$this->_mUser = $user;
 	}
 	
@@ -2013,7 +1990,6 @@ class Discount extends Persist{
 	 */
 	public function setData(Invoice $invoice, $percentage){
 		try{
-			self::validateObjectFromDatabase($invoice);
 			Number::validateBetweenCeroToNinetyNineNumber($percentage, 'Porcentage inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Discount con datos erroneos! ' .
@@ -2046,7 +2022,6 @@ class Discount extends Persist{
 	 * @return Discount
 	 */
 	static public function getInstance(Invoice $obj){
-		self::validateObjectFromDatabase($obj);
 		return DiscountDAM::getInstance($obj);
 	}
 	
@@ -2168,7 +2143,6 @@ class PurchaseReturn extends Document{
 		parent::setData($total, $details);
 		
 		try{
-			self::validateObjectFromDatabase($supplier);
 			String::validateString($reason, 'Motivo inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en PurchaseReturn con datos erroneos! ' .
@@ -2312,14 +2286,6 @@ class Shipment extends Document{
 	 */
 	public function setData(Branch $branch, $total, $details, $contact = NULL){
 		parent::setData($total, $details);
-		
-		try{
-			self::validateObjectFromDatabase($branch);
-		} catch(Exception $e){
-			$et = new Exception('Interno: Llamando al metodo setData en Shipment con datos erroneos! ' .
-					$e->getMessage());
-			throw $et;
-		}
 		
 		$this->_mBranch = $branch;
 		$this->_mContact = $contact;
@@ -2482,7 +2448,6 @@ class Receipt extends Document{
 		parent::setData($total, $details);
 		
 		try{
-			self::validateObjectFromDatabase($supplier);
 			String::validateString($shipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.');
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en Receipt con datos erroneos! ' .

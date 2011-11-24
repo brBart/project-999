@@ -53,8 +53,7 @@ class Bank extends Identifier{
 	 * @param Bank $obj
 	 * @throws Exception
 	 */
-	static public function delete(Bank $obj){
-		self::validateObjectFromDatabase($obj);		
+	static public function delete(Bank $obj){	
 		if(!BankDAM::delete($obj))
 			throw new Exception('Banco tiene dependencias y no se puede eliminar.');
 	}
@@ -174,13 +173,6 @@ class Deposit extends PersistDocument implements Itemized{
 		}
 		
 		if(!is_null($user)){
-			try{
-				Persist::validateObjectFromDatabase($user);
-			} catch(Exception $e){
-				$et = new Exception('Internal error, calling Document constructor method with bad data! ' .
-						$e->getMessage());
-				throw $et;
-			}
 			$this->_mUser = $user;
 		}
 		else{
@@ -306,7 +298,6 @@ class Deposit extends PersistDocument implements Itemized{
 	public function setData($number, BankAccount $bankAccount, $total, $details){
 		try{
 			String::validateString($number, 'N&uacute;mero de deposito inv&aacute;lido.');
-			self::validateObjectFromDatabase($bankAccount);
 			Number::validatePositiveFloat($total, 'Total inv&aacute;lido.');
 			if(empty($details))
 				throw new Exception('No hay ningun detalle.');
@@ -409,8 +400,6 @@ class Deposit extends PersistDocument implements Itemized{
 	 */
 	public function cancel(UserAccount $user, $reason = NULL){
 		if($this->_mStatus == self::CREATED){
-			self::validateObjectFromDatabase($user);
-			
 			if(!$this->_mCashRegister->isOpen())
 				throw new Exception('Caja ya esta cerrada, no se puede anular.');
 				
@@ -639,7 +628,6 @@ class BankAccount extends PersistObject{
 	public function setData($holderName, Bank $bank){
 		try{
 			String::validateString($holderName, 'Nombre inv&aacute;lido.');
-			self::validateObjectFromDatabase($bank);
 		} catch(Exception $e){
 			$et = new Exception('Interno: Llamando al metodo setData en BankAccount con datos erroneos! ' .
 					$e->getMessage());
@@ -690,8 +678,7 @@ class BankAccount extends PersistObject{
 	 * @param BankAccount $obj
 	 * @throws Exception
 	 */
-	static public function delete(BankAccount $obj){
-		self::validateObjectFromDatabase($obj);			
+	static public function delete(BankAccount $obj){		
 		if(!BankAccountDAM::delete($obj))
 			throw new Exception('Cuenta Bancaria tiene dependencias (depositos) y no se puede eliminar.');
 	}
@@ -827,7 +814,6 @@ class Shift extends Identifier{
 	 * @throws Exception
 	 */
 	static public function delete(Shift $obj){
-		self::validateObjectFromDatabase($obj);
 		if(!ShiftDAM::delete($obj))
 			throw new Exception('Turno tiene dependencias (cajas) y no se puede eliminar.');
 	}
@@ -897,7 +883,6 @@ class CashRegister extends Persist{
 	public function __construct(Shift $shift, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);
 		
-		PersistObject::validateObjectFromDatabase($shift);
 		if(!is_null($id))
 			try{
 				Number::validatePositiveInteger($id, 'Id inv&aacute;lido.');
@@ -1105,7 +1090,6 @@ class CashReceipt extends PersistDocument{
 	 * @param Cash $obj
 	 */
 	public function setCash(Cash $obj){
-		self::validateNewObject($obj);
 		$this->_mCash = $obj;
 	}
 	
@@ -1130,9 +1114,7 @@ class CashReceipt extends PersistDocument{
 	 * @param array<Voucher> $vouchers
 	 */
 	public function setData(Cash $cash, $totalVouchers = 0.0, $change = 0.0, $vouchers = NULL){
-		try{
-			self::validateObjectFromDatabase($cash);
-				
+		try{	
 			if($totalVouchers !== 0.0){
 				Number::validatePositiveFloat($totalVouchers, 'Total inv&aacute;lido.');
 				if(empty($vouchers))
@@ -1242,7 +1224,6 @@ class CashReceipt extends PersistDocument{
 	 * @return CashReceipt
 	 */
 	static public function getInstance(Invoice $obj){
-		self::validateObjectFromDatabase($obj);
 		return CashReceiptDAM::getInstance($obj);
 	}
 	
@@ -1316,8 +1297,7 @@ class PaymentCardType extends Identifier{
 	 * @param PaymentCardType $obj
 	 * @throws Exception
 	 */
-	static public function delete(PaymentCardType $obj){
-		self::validateObjectFromDatabase($obj);		
+	static public function delete(PaymentCardType $obj){	
 		if(!PaymentCardTypeDAM::delete($obj))
 			throw new Exception('Tipo de Tarjeta tiene dependencias (vouchers) y no se puede eliminar.');
 	}
@@ -1379,8 +1359,7 @@ class PaymentCardBrand extends Identifier{
 	 * @param PaymentCardBrand $obj
 	 * @throws Exception
 	 */
-	static public function delete(PaymentCardBrand $obj){
-		self::validateObjectFromDatabase($obj);		
+	static public function delete(PaymentCardBrand $obj){	
 		if(!PaymentCardBrandDAM::delete($obj))
 			throw new Exception('Marca de Tarjeta tiene dependencias (vouchers) y no se puede eliminar.');
 	}
@@ -1819,7 +1798,6 @@ class DepositDetailList{
 	 * @return array
 	 */
 	static public function getList(Cash $obj){
-		Persist::validateObjectFromDatabase($obj);
 		return DepositDetailListDAM::getList($obj);
 	}
 }
@@ -1852,7 +1830,6 @@ class DepositDetail{
 	 * @param integer $amount
 	 */
 	public function __construct(Cash $cash, $amount){
-		Persist::validateObjectFromDatabase($cash);
 		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.');
 		
 		$this->_mCash = $cash;
@@ -2201,7 +2178,6 @@ class VoucherEntryEvent{
 	static public function apply($transaction, PaymentCard $card, Invoice $invoice, CashReceipt $receipt,
 			$amount){
 		Number::validatePositiveNumber($amount, 'Monto inv&aacute;lido.', 'amount');
-		Persist::validateNewObject($receipt);
 		
 		if(bccomp($invoice->getTotal(), ($receipt->getTotal() + $amount), 2) == -1)
 			throw new ValidateException('Voucher excede el total de la factura.', 'amount');
@@ -2289,7 +2265,6 @@ class WorkingDay extends Persist{
 	 */
 	public function getCashRegister(Shift $shift){
 		if($this->_mStatus == Persist::CREATED){
-			self::validateObjectFromDatabase($shift);
 			$register = WorkingDayDAM::getCashRegister($this, $shift);
 			
 			if(!is_null($register))
@@ -2435,7 +2410,6 @@ class DepositList{
 	 * @return array
 	 */
 	static public function getList(CashRegister $obj){
-		Persist::validateObjectFromDatabase($obj);
 		return DepositListDAM::getList($obj);
 	}
 }
@@ -2454,7 +2428,6 @@ class InvoiceList{
 	 * @return array
 	 */
 	static public function getList(CashRegister $obj){
-		Persist::validateObjectFromDatabase($obj);
 		return InvoiceListDAM::getList($obj);
 	}
 }
@@ -2474,7 +2447,6 @@ class AvailableCashReceiptList{
 	 * @return array
 	 */
 	static public function getList(CashRegister $obj){
-		Persist::validateObjectFromDatabase($obj);
 		return AvailableCashReceiptListDAM::getList($obj);
 	}
 }
