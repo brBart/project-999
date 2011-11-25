@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2011 a las 11:14:11
+-- Tiempo de generación: 25-11-2011 a las 11:52:28
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `bank_account` (
 DROP TABLE IF EXISTS `bonus`$$
 CREATE TABLE IF NOT EXISTS `bonus` (
   `bonus_id` int(11) NOT NULL auto_increment,
+  `user_account_username` varchar(10) collate utf8_unicode_ci NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `percentage` decimal(4,2) NOT NULL,
@@ -84,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -135,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -154,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -229,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   PRIMARY KEY  (`correlative_id`),
   UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`),
   UNIQUE KEY `unique_resolution_number` (`resolution_number`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -360,7 +361,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -417,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`),
   KEY `idx_invoice_correlative_id` (`correlative_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -481,7 +482,7 @@ CREATE TABLE IF NOT EXISTS `invoice_transaction_log` (
   `total` decimal(13,2) NOT NULL,
   `state` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1$$
+) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
 
 -- --------------------------------------------------------
 
@@ -500,7 +501,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `reserved` int(11) NOT NULL default '0',
   PRIMARY KEY  (`lot_id`),
   KEY `idx_lot_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -651,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `receipt` (
   PRIMARY KEY  (`receipt_id`),
   KEY `idx_receipt_user_account_username` (`user_account_username`),
   KEY `idx_receipt_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -700,7 +701,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -719,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `resolution_log` (
   `created_date` date NOT NULL,
   `document_type` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1$$
+) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
 
 -- --------------------------------------------------------
 
@@ -1285,7 +1286,7 @@ DROP PROCEDURE IF EXISTS `bonus_get`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_get`(IN inBonusId INT)
 BEGIN
 
-  SELECT product_id, quantity, percentage, DATE_FORMAT(created_date, '%d/%m/%Y') AS created_date,
+  SELECT user_account_username, product_id, quantity, percentage, DATE_FORMAT(created_date, '%d/%m/%Y') AS created_date,
 
       DATE_FORMAT(expiration_date, '%d/%m/%Y') AS expiration_date FROM bonus
 
@@ -1306,14 +1307,14 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `bonus_insert`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_insert`(IN inProductId INT, IN inQuantity INT, IN inPercentage DECIMAL(4, 2), IN inCreatedDate DATE,
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_insert`(IN inUserName VARCHAR(10), IN inProductId INT, IN inQuantity INT, IN inPercentage DECIMAL(4, 2), IN inCreatedDate DATE,
 
   IN inExpirationDate DATE)
 BEGIN
 
-  INSERT INTO bonus (product_id, quantity, percentage, created_date, expiration_date)
+  INSERT INTO bonus (user_account_username, product_id, quantity, percentage, created_date, expiration_date)
 
-    VALUES (inProductId, inQuantity, inPercentage, inCreatedDate, inExpirationDate);
+    VALUES (inUserName, inProductId, inQuantity, inPercentage, inCreatedDate, inExpirationDate);
 
 END$$
 
