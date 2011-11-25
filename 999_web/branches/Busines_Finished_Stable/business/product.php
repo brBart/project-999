@@ -972,6 +972,13 @@ class Bonus extends Persist{
 	private $_mCreatedDate;
 	
 	/**
+	 * Holds the user who created the bonus.
+	 *
+	 * @var UserAccount
+	 */
+	private $_mUser;
+	
+	/**
 	 * Constructs the bonus with the provided data.
 	 *
 	 * Note that expiration date must be greater than the created date.
@@ -985,7 +992,7 @@ class Bonus extends Persist{
 	 * @throws Exception
 	 */
 	public function __construct(Product $product, $quantity, $percentage, $expirationDate,
-			$createdDate = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
+			$createdDate = NULL, UserAccount $user = NULL, $id = NULL, $status = Persist::IN_PROGRESS){
 		parent::__construct($status);		
 		
 		if(!is_null($id))
@@ -1008,6 +1015,14 @@ class Bonus extends Persist{
 				throw new ValidateException('Fecha de vencimiento debe ser posterior al de dia hoy.', 'bonus');
 		}
 		
+		if(!is_null($user)){
+			$this->_mUser = $user;
+		}
+		else{
+			$helper = ActiveSession::getHelper();
+			$this->_mUser = $helper->getUser();
+		}
+		
 		$this->_mId = $id;
 		$this->_mProduct = $product;
 		$this->_mQuantity = $quantity;
@@ -1022,6 +1037,15 @@ class Bonus extends Persist{
 	 */
 	public function getId(){
 		return $this->_mId;
+	}
+	
+	/**
+	 * Returns the bonu's user.
+	 *
+	 * @return UserAccount
+	 */
+	public function getUser(){
+		return $this->_mUser;
 	}
 	
 	/**
