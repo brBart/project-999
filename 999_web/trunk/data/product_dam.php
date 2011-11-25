@@ -524,9 +524,10 @@ class BonusDAM{
 		$result = DatabaseHandler::getRow($sql, $params);
 		
 		if(!empty($result)){
+			$user = UserAccount::getInstance($result['user_account_username']);
 			$product = Product::getInstance((int)$result['product_id']);
 			$bonus = new Bonus($product, (int)$result['quantity'], (float)$result['percentage'],
-					$result['expiration_date'], $result['created_date'], $id, Persist::CREATED);
+					$result['expiration_date'], $result['created_date'], $user, $id, Persist::CREATED);
 			return $bonus;
 		}
 		else
@@ -555,9 +556,10 @@ class BonusDAM{
 	 * @return integer
 	 */
 	static public function insert(Bonus $obj){
-		$sql = 'CALL bonus_insert(:product_id, :quantity, :percentage, :created_date, :expiration_date)';
+		$sql = 'CALL bonus_insert(:username, :product_id, :quantity, :percentage, :created_date, :expiration_date)';
+		$user = $obj->getUser();
 		$product = $obj->getProduct();
-		$params = array(':product_id' => $product->getId(), ':quantity' => $obj->getQuantity(),
+		$params = array(':username' => $user->getUserName(), ':product_id' => $product->getId(), ':quantity' => $obj->getQuantity(),
 				':percentage' => $obj->getPercentage(), ':created_date' => Date::dbFormat($obj->getCreatedDate()),
 				':expiration_date' => Date::dbFormat($obj->getExpirationDate()));
 		DatabaseHandler::execute($sql, $params);
