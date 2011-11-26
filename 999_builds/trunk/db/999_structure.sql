@@ -3322,9 +3322,7 @@ DROP PROCEDURE IF EXISTS `invoice_transaction_log_count`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `invoice_transaction_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
-    SELECT SUM(count_rows) FROM
-
-       (SELECT COUNT(*) AS count_rows FROM invoice_transaction_log WHERE date BETWEEN inFirstDate AND inLastDate) AS invoice_log;
+    SELECT COUNT(*) FROM invoice_transaction_log WHERE date BETWEEN inFirstDate AND inLastDate;
 
 END$$
 
@@ -5456,9 +5454,7 @@ DROP PROCEDURE IF EXISTS `resolution_log_count`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `resolution_log_count`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
-    SELECT SUM(count_rows) FROM
-
-       (SELECT COUNT(*) AS count_rows FROM resolution_log WHERE created_date BETWEEN inFirstDate AND inLastDate) AS resolution_log;
+    SELECT COUNT(*) FROM resolution_log WHERE created_date BETWEEN inFirstDate AND inLastDate;
 
 END$$
 
