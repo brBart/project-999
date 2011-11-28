@@ -776,4 +776,34 @@ class PurchasesSummaryList{
 		return PurchasesSummaryListDAM::getListByProduct($firstDate, $lastDate, $total, $totalPages, $totalItems, $page);
 	}
 }
+
+
+/**
+ * Utility class for obtaining the history of bonus creation.
+ * @package Various
+ * @author Roberto Oliveros
+ */
+class BonusCreatedList{
+	/**
+	 * Retuns an array with the report information.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, quantity, percentage, created_date, expiration_date and username.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return BonusCreatedListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
+	}
+}
 ?>
