@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-11-2011 a las 11:52:28
+-- Tiempo de generación: 28-11-2011 a las 18:26:46
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -1225,6 +1225,45 @@ BEGIN
     SET name = inName
 
     WHERE bank_id = inBankId;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `bonus_created_count`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_created_count`(IN inFirstDate DATE, IN inLastDate DATE)
+BEGIN
+
+    SELECT COUNT(*) FROM bonus WHERE created_date BETWEEN inFirstDate AND inLastDate;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `bonus_created_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `bonus_created_get`(IN inFirstDate DATE, IN inLastDate DATE, IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT pro.bar_code, man.name AS manufacturer, pro.name, bon.quantity, bon.percentage,
+
+         DATE_FORMAT(bon.created_date, '%d/%m/%Y') AS created_date, DATE_FORMAT(bon.expiration_date, '%d/%m/%Y') AS expiration_date, 
+
+         bon.user_account_username AS username FROM bonus bon
+
+       INNER JOIN product pro ON bon.product_id = pro.product_id
+
+       INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
+
+     WHERE created_date BETWEEN ? AND ? ORDER BY bonus_id LIMIT ?, ?";
+
+  SET @p1 = inFirstDate;
+
+  SET @p2 = inLastDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
 
 END$$
 
