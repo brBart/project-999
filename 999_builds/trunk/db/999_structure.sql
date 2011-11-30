@@ -5666,9 +5666,9 @@ DROP PROCEDURE IF EXISTS `sales_ledger_sum_get`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `sales_ledger_sum_get`(IN inCorrelativeId INT, IN inFirstNumber BIGINT, IN inLastNumber BIGINT)
 BEGIN
 
-  SELECT SUM(inv.total - (inv.total * (IFNULL(dis.percentage, 0) / 100))) AS total FROM invoice inv LEFT JOIN discount dis
+  SELECT IFNULL(SUM(inv.total - (inv.total * (IFNULL(dis.percentage, 0) / 100))), 0) AS total FROM invoice inv LEFT JOIN discount dis
       ON inv.invoice_id = dis.invoice_id
-    WHERE inv.correlative_id = inCorrelativeId AND inv.number BETWEEN inFirstNumber AND inLastNumber;
+    WHERE inv.correlative_id = inCorrelativeId AND inv.number BETWEEN inFirstNumber AND inLastNumber AND inv.status = 1;
 
 END$$
 
