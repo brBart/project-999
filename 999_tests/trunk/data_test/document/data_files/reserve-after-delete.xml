@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="reserve">
+		<column>reserve_id</column>
+		<column>user_account_username</column>
+		<column>lot_id</column>
+		<column>date</column>
+		<column>quantity</column>
+	</table>
+</dataset>

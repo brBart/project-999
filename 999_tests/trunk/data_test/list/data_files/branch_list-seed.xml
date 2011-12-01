@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="branch">
+		<column>branch_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+		
+		<row>
+			<value>1</value>
+			<value>Xela</value>
+			<value>3512-56</value>
+			<value>2334455</value>
+			<value>3a calle</value>
+			<null />
+			<null />
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Central</value>
+			<value>3512-56</value>
+			<value>2334455</value>
+			<value>3a calle</value>
+			<null />
+			<null />
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>Coatepeque</value>
+			<value>3512-56</value>
+			<value>2334455</value>
+			<value>3a calle</value>
+			<null />
+			<null />
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>Zona 18</value>
+			<value>3512-56</value>
+			<value>2334455</value>
+			<value>3a calle</value>
+			<null />
+			<null />
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Jutiapa</value>
+			<value>3512-56</value>
+			<value>2334455</value>
+			<value>3a calle</value>
+			<null />
+			<null />
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>Barberena</value>
+			<value>3512-56</value>
+			<value>2334455</value>
+			<value>3a calle</value>
+			<null />
+			<null />
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="branch">
+		<column>branch_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+	</table>
+</dataset>

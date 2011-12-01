@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="cash_receipt">
+		<column>cash_receipt_id</column>
+		<column>change_amount</column>
+		<column>cash</column>
+		<column>total_vouchers</column>
+		<column>reserved</column>
+		<column>deposited</column>
+		
+		<row>
+			<value>1</value>
+			<value>1.50</value>
+			<value>30.00</value>
+			<value>21.50</value>
+			<value>0.00</value>
+			<value>0.00</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>0.00</value>
+			<value>123.45</value>
+			<value>0.00</value>
+			<value>0.00</value>
+			<value>0.00</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>0.00</value>
+			<value>0.00</value>
+			<value>114.90</value>
+			<value>0.00</value>
+			<value>0.00</value>
+		</row>
+	</table>
+	
+	<table name="voucher">
+		<column>voucher_id</column>
+		<column>cash_receipt_id</column>
+		<column>transaction</column>
+		<column>amount</column>
+		<column>payment_card_number</column>
+		<column>payment_card_type_id</column>
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		<column>expiration_date</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>65432</value>
+			<value>11.50</value>
+			<value>4321</value>
+			<value>1</value>
+			<value>1</value>
+			<value>Carlos</value>
+			<value>2010-06-01</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>54321</value>
+			<value>10.00</value>
+			<value>4321</value>
+			<value>1</value>
+			<value>1</value>
+			<value>Carlos</value>
+			<value>2010-06-01</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>3</value>
+			<value>76543</value>
+			<value>114.90</value>
+			<value>1234</value>
+			<value>1</value>
+			<value>1</value>
+			<value>John</value>
+			<value>2010-07-01</value>
+		</row>
+	</table>
+	
+	<table name="bonus">
+		<column>bonus_id</column>
+		<column>user_account_username</column>
+		<column>product_id</column>
+		<column>quantity</column>
+		<column>percentage</column>
+		<column>created_date</column>
+		<column>expiration_date</column>
+	</table>
+	
+	<table name="change_price_log">
+		<column>entry_id</column>
+		<column>user_account_username</column>
+		<column>product_id</column>
+		<column>date</column>
+		<column>last_price</column>
+		<column>new_price</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-18 00:00:00</value>
+			<value>12.12</value>
+			<value>23.23</value>
+		</row>
+	</table>
+	
+	<table name="comparison">
+		<column>comparison_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>general</column>
+		<column>physical_total</column>
+		<column>system_total</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-19 00:00:00</value>
+			<value>pq simoncho.</value>
+			<value>0</value>
+			<value>48</value>
+			<value>47</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-20 00:00:00</value>
+			<value>simonchosito.</value>
+			<value>0</value>
+			<value>6</value>
+			<value>74</value>
+		</row>
+	</table>
+	
+	<table name="comparison_product">
+		<column>comparison_product_id</column>
+		<column>comparison_id</column>
+		<column>product_id</column>
+		<column>physical</column>
+		<column>system</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>10</value>
+			<value>5</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>2</value>
+			<value>7</value>
+			<value>11</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>15</value>
+			<value>19</value>
+			<value>34</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>2</value>
+			<value>21</value>
+			<value>17</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>2</value>
+			<value>30</value>
+			<value>5</value>
+			<value>74</value>
+		</row>
+	</table>
+	
+	<table name="count">
+		<column>count_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-19 00:00:00</value>
+			<value>simoncho.</value>
+			<value>23</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-20 00:00:00</value>
+			<value>yeah!!</value>
+			<value>65</value>
+		</row>
+	</table>
+	
+	<table name="count_product">
+		<column>count_product_id</column>
+		<column>count_id</column>
+		<column>product_id</column>
+		<column>quantity</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>5</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>2</value>
+			<value>2</value>
+			<value>7</value>
+		</row>
+	</table>
+	
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>3</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-20 00:00:00</value>
+			<value>456</value>
+			<value>500.00</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="deposit_cash_receipt">
+		<column>deposit_cash_receipt_id</column>
+		<column>deposit_id</column>
+		<column>cash_receipt_id</column>
+		<column>amount</column>
+		
+		<row>
+			<value>3</value>
+			<value>3</value>
+			<value>3</value>
+			<value>300.00</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>3</value>
+			<value>4</value>
+			<value>400.00</value>
+		</row>
+	</table>
+	
+	<table name="deposit_cancelled">
+		<column>deposit_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+	</table>
+
+	<table name="purchase_return">
+		<column>purchase_return_id</column>
+		<column>user_account_username</column>
+		<column>supplier_id</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>contact</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-19 08:08:08</value>
+			<value>pq no.</value>
+			<null />
+			<value>33.44</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-21 08:08:08</value>
+			<value>pq no.</value>
+			<null />
+			<value>33.44</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="purchase_return_lot">
+		<column>purchase_return_id</column>
+		<column>lot_id</column>
+		<column>number</column>
+		<column>quantity</column>
+		<column>price</column>
+		
+		<row>
+			<value>3</value>
+			<value>7</value>
+			<value>4</value>
+			<value>2</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>3</value>
+			<value>4</value>
+			<value>2</value>
+			<value>45.23</value>
+		</row>
+	</table>
+	
+	<table name="purchase_return_cancelled">
+		<column>purchase_return_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+	</table>
+	
+	<table name="entry_adjustment">
+		<column>entry_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-16 08:08:11</value>
+			<value>pq no.</value>
+			<value>33.44</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2009-06-19 09:09:10</value>
+			<value>pq si.</value>
+			<value>23.45</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>roboli</value>
+			<value>2009-06-21 08:08:11</value>
+			<value>pq no.</value>
+			<value>33.44</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="entry_adjustment_lot">
+		<column>entry_adjustment_id</column>
+		<column>lot_id</column>
+		<column>number</column>
+		<column>quantity</column>
+		<column>price</column>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>20</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>5</value>
+			<value>1</value>
+			<value>20</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>7</value>
+			<value>1</value>
+			<value>20</value>
+			<value>45.23</value>
+		</row>
+	</table>
+	
+	<table name="entry_adjustment_cancelled">
+		<column>entry_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-17 00:00:00</value>
+		</row>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>12345</value>
+			<value>roboli</value>
+			<value>2009-06-17 09:09:12</value>
+			<value>1725-5</value>
+			<value>Robs</value>
+			<value>321.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>12346</value>
+			<value>roboli</value>
+			<value>2009-06-18 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>14230</value>
+			<value>roboli</value>
+			<value>2009-06-19 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>1230</value>
+			<value>roboli</value>
+			<value>2009-06-25 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="invoice_lot">
+		<column>invoice_id</column>
+		<column>lot_id</column>
+		<column>number</column>
+		<column>quantity</column>
+		<column>price</column>
+		
+		<row>
+			<value>1</value>
+			<value>2</value>
+			<value>2</value>
+			<value>1</value>
+			<value>32.45</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>3</value>
+			<value>4</value>
+			<value>6</value>
+			<value>10</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>2</value>
+			<value>2</value>
+			<value>1</value>
+			<value>32.45</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>1</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>7</value>
+			<value>2</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+	</table>
+	
+	<table name="invoice_bonus">
+		<column>invoice_id</column>
+		<column>bonus_id</column>
+		<column>number</column>
+		<column>price</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>23.45</value>
+		</row>
+	</table>
+	
+	<table name="invoice_cancelled">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2009-06-19 00:00:00</value>
+			<value>prueba</value>
+		</row>
+	</table>
+	
+	<table name="discount">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>percentage</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>25.00</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>15.00</value>
+		</row>
+	</table>
+	
+	<table name="receipt">
+		<column>receipt_id</column>
+		<column>user_account_username</column>
+		<column>supplier_id</column>
+		<column>date</column>
+		<column>shipment_number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-16 08:08:16</value>
+			<value>65432</value>
+			<value>33.44</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-19 07:09:15</value>
+			<value>54321</value>
+			<value>23.45</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-21 08:08:16</value>
+			<value>65432</value>
+			<value>33.44</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="receipt_lot">
+		<column>receipt_id</column>
+		<column>lot_id</column>
+		<column>number</column>
+		<column>quantity</column>
+		<column>price</column>
+		
+		<row>
+			<value>2</value>
+			<value>6</value>
+			<value>6</value>
+			<value>1</value>
+			<value>60</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>1</value>
+			<value>15</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>6</value>
+			<value>1</value>
+			<value>15</value>
+			<value>45.23</value>
+		</row>
+	</table>
+	
+	<table name="receipt_cancelled">
+		<column>receipt_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-17 00:00:00</value>
+		</row>
+	</table>
+	
+	<table name="shipment">
+		<column>shipment_id</column>
+		<column>user_account_username</column>
+		<column>branch_id</column>
+		<column>date</column>
+		<column>contact</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-16 08:08:18</value>
+			<null />
+			<value>33.44</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-19 09:09:17</value>
+			<value>Robs</value>
+			<value>23.45</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-21 08:08:18</value>
+			<null />
+			<value>33.44</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="shipment_lot">
+		<column>shipment_id</column>
+		<column>lot_id</column>
+		<column>number</column>
+		<column>quantity</column>
+		<column>price</column>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>3</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>7</value>
+			<value>4</value>
+			<value>1</value>
+			<value>32.45</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>2</value>
+			<value>1</value>
+			<value>3</value>
+			<value>45.23</value>
+		</row>
+	</table>
+	
+	<table name="shipment_cancelled">
+		<column>shipment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-17 00:00:00</value>
+		</row>
+	</table>
+	
+	<table name="withdraw_adjustment">
+		<column>withdraw_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-16 08:08:20</value>
+			<value>pq no.</value>
+			<value>33.44</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2009-06-19 09:09:19</value>
+			<value>pq si.</value>
+			<value>23.45</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>roboli</value>
+			<value>2009-06-21 08:08:20</value>
+			<value>pq no.</value>
+			<value>33.44</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="withdraw_adjustment_lot">
+		<column>withdraw_adjustment_id</column>
+		<column>lot_id</column>
+		<column>number</column>
+		<column>quantity</column>
+		<column>price</column>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>3</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>7</value>
+			<value>6</value>
+			<value>1</value>
+			<value>60</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>5</value>
+			<value>1</value>
+			<value>3</value>
+			<value>45.23</value>
+		</row>
+	</table>
+	
+	<table name="withdraw_adjustment_cancelled">
+		<column>withdraw_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-17 00:00:00</value>
+		</row>
+	</table>
+	
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+		
+		<row>
+			<value>1</value>
+			<value>54321</value>
+			<value>Barby</value>
+			<value>Muneca para nina.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>15</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>5433221</value>
+			<value>Barby</value>
+			<value>Muneca para nina.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>21</value>
+		</row>
+	</table>
+</dataset>

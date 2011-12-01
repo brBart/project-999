@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="lot">
+		<column>lot_id</column>
+		<column>product_id</column>
+		<column>entry_date</column>
+		<column>expiration_date</column>
+		<column>price</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>2009-06-17</value>
+			<value>2010-01-01</value>
+			<value>31.50</value>
+			<value>10</value>
+			<value>5</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>2009-06-18</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>-5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>2009-06-20</value>
+			<null/>
+			<value>31.50</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>1</value>
+			<value>2009-06-25</value>
+			<value>2009-12-01</value>
+			<value>11.50</value>
+			<value>15</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>2</value>
+			<value>2009-06-20</value>
+			<null/>
+			<value>31.50</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>1</value>
+			<value>2009-06-20</value>
+			<null/>
+			<value>31.50</value>
+			<value>10</value>
+			<value>0</value>
+		</row>
+	</table>
+</dataset>

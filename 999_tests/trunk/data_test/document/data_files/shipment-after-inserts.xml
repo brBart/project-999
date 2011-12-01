@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="shipment">
+		<column>user_account_username</column>
+		<column>branch_id</column>
+		<column>date</column>
+		<column>contact</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-15 09:09:09</value>
+			<value>Robs</value>
+			<value>23.45</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-16 08:08:08</value>
+			<null />
+			<value>33.44</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

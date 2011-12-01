@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="shift">
+		<column>shift_id</column>
+		<column>name</column>
+		<column>time_table</column>
+		
+		<row>
+			<value>1</value>
+			<value>Diurno</value>
+			<value>1 am - 2 am</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Nocturno</value>
+			<value>1 am - 2 am</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>Matutino</value>
+			<value>1 am - 2 am</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>Almuerzo</value>
+			<value>1 am - 2 am</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Refa</value>
+			<value>1 am - 2 am</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>Feriado</value>
+			<value>1 am - 2 am</value>
+		</row>
+	</table>
+</dataset>

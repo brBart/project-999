@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+	</table>
+	
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+	</table>
+	
+	<table name="change_price_log">
+		<column>entry_id</column>
+		<column>user_account_username</column>
+		<column>product_id</column>
+		<column>date</column>
+		<column>last_price</column>
+		<column>new_price</column>
+	</table>
+</dataset>

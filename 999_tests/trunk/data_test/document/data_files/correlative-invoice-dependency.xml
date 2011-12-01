@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>created_date</column>
+		<column>resolution_date</column>
+		<column>regime</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>current</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A031</value>
+			<value>2009-100</value>
+			<value>2008-06-05</value>
+			<value>2008-06-01</value>
+			<value>Sujeto pagos</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+			<value>3</value>
+		</row>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>438832</value>
+			<value>roboli</value>
+			<value>2009-06-03</value>
+			<value>35323-9</value>
+			<value>Jose</value>
+			<value>32.43</value>
+			<value>12.00</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

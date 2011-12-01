@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>2</value>
+			<value>Carlos</value>
+			<value>Gonzalez</value>
+			<value>baa3559aa4bf24bc1494d3f505c3bd25cc3800cf</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="change_price_log">
+		<column>entry_id</column>
+		<column>user_account_username</column>
+		<column>product_id</column>
+		<column>date</column>
+		<column>last_price</column>
+		<column>new_price</column>
+	</table>
+	
+	<table name="purchase_return">
+		<column>purchase_return_id</column>
+		<column>user_account_username</column>
+		<column>supplier_id</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>contact</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+	
+	<table name="shipment">
+		<column>shipment_id</column>
+		<column>user_account_username</column>
+		<column>branch_id</column>
+		<column>date</column>
+		<column>contact</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>438832</value>
+			<value>roboli</value>
+			<value>2009-06-03</value>
+			<value>35323-9</value>
+			<value>Jose</value>
+			<value>32.43</value>
+			<value>12.00</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="count">
+		<column>count_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+	</table>
+	
+	<table name="reserve">
+		<column>reserve_id</column>
+		<column>user_account_username</column>
+		<column>lot_id</column>
+		<column>date</column>
+		<column>quantity</column>
+	</table>
+	
+	<table name="comparison">
+		<column>comparison_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>general</column>
+		<column>physical_total</column>
+		<column>system_total</column>
+	</table>
+	
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+	
+	<table name="entry_adjustment">
+		<column>entry_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+	
+	<table name="receipt">
+		<column>receipt_id</column>
+		<column>user_account_username</column>
+		<column>supplier_id</column>
+		<column>date</column>
+		<column>shipment_number</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+	
+	<table name="withdraw_adjustment">
+		<column>withdraw_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+	
+	<table name="discount">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>percentage</column>
+	</table>
+</dataset>

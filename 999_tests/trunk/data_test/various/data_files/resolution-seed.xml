@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	
+	<table name="resolution_log">
+		<column>entry_id</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>serial_number</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>created_date</column>
+		<column>document_type</column>
+		
+		<row>
+			<value>1</value>
+			<value>100-3930</value>
+			<value>2010-12-05</value>
+			<value>A021</value>
+			<value>1000</value>
+			<value>4000</value>
+			<value>2011-03-01</value>
+			<value>FACTURA</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>100-3931</value>
+			<value>2010-12-31</value>
+			<value>A021</value>
+			<value>5000</value>
+			<value>9999</value>
+			<value>2011-03-05</value>
+			<value>FACTURA</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>100-3932</value>
+			<value>2011-01-01</value>
+			<value>A021</value>
+			<value>10000</value>
+			<value>15000</value>
+			<value>2011-03-15</value>
+			<value>FACTURA</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>100-3933</value>
+			<value>2011-01-15</value>
+			<value>B055</value>
+			<value>5000</value>
+			<value>9999</value>
+			<value>2011-04-01</value>
+			<value>FACTURA</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>100-3940</value>
+			<value>2011-02-01</value>
+			<value>B055</value>
+			<value>10000</value>
+			<value>15000</value>
+			<value>2011-04-30</value>
+			<value>FACTURA</value>
+		</row>
+	</table>
+</dataset>

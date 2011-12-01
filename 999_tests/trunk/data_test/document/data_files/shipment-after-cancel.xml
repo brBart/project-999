@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="shipment">
+		<column>shipment_id</column>
+		<column>user_account_username</column>
+		<column>branch_id</column>
+		<column>date</column>
+		<column>contact</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-15 09:09:09</value>
+			<value>Robs</value>
+			<value>23.45</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-16 08:08:08</value>
+			<null />
+			<value>33.44</value>
+			<value>2</value>
+		</row>
+	</table>
+	
+	<table name="shipment_cancelled">
+		<column>shipment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-17 00:00:00</value>
+		</row>
+	</table>
+</dataset>

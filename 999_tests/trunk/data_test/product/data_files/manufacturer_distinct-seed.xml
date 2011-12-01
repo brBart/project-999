@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="manufacturer">
+		<column>name</column>
+	
+		<row>
+			<value>AOC</value>
+		</row>
+		
+		<row>
+			<value>AOC</value>
+		</row>
+		
+		<row>
+			<value>Mattel</value>
+		</row>
+		
+		<row>
+			<value>Sony</value>
+		</row>
+		
+		<row>
+			<value>Sony</value>
+		</row>
+		
+		<row>
+			<value>Xerox</value>
+		</row>
+	</table>
+</dataset>

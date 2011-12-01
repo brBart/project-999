@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bonus">
+		<column>bonus_id</column>
+		<column>user_account_username</column>
+		<column>product_id</column>
+		<column>quantity</column>
+		<column>percentage</column>
+		<column>created_date</column>
+		<column>expiration_date</column>
+	</table>
+</dataset>

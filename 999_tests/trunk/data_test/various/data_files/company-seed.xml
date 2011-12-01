@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="company">
+		<column>nit</column>
+		<column>name</column>
+		<column>corporate_name</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>warehouse_name</column>
+		
+		<row>
+			<value>35-2</value>
+			<value>Jose Gil</value>
+			<value>Comercial y Drogueria</value>
+			<value>24129900</value>
+			<value>zona 1</value>
+			<value>Tienda 999</value>
+		</row>
+	</table>
+</dataset>

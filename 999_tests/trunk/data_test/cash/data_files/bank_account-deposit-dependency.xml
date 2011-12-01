@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bank_account">
+		<column>bank_account_number</column>
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>29-500</value>
+			<value>2</value>
+			<value>Roberts</value>
+		</row>
+	</table>
+	
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-02</value>
+			<value>123</value>
+			<value>13.45</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="working_day">
+		<column>working_day</column>
+		<column>open</column>
+		
+		<row>
+			<value>2009-06-08</value>
+			<value>1</value>
+		</row>
+				
+		<row>
+			<value>2009-06-09</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

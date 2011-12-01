@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="role">
+		<column>role_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Administrador</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Operador</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>Auditor</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>Supervisor</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Cajero</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>Contador</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A021</value>
+			<value>2009-101</value>
+			<value>2008-05-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>A099</value>
+			<value>2009-102</value>
+			<value>2008-05-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>C021</value>
+			<value>2009-103</value>
+			<value>2008-05-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>B021</value>
+			<value>2009-104</value>
+			<value>2008-05-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Z021</value>
+			<value>2009-106</value>
+			<value>2008-05-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>N099</value>
+			<value>2009-107</value>
+			<value>2008-05-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+		</row>
+	</table>
+</dataset>

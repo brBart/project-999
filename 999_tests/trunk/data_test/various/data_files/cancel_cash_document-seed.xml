@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A021</value>
+			<value>2009-11</value>
+			<value>2008-05-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>12345</value>
+			<value>roboli</value>
+			<value>2009-06-17 09:09:12</value>
+			<value>1725-5</value>
+			<value>Robs</value>
+			<value>321.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>12346</value>
+			<value>roboli</value>
+			<value>2009-06-18 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>14230</value>
+			<value>roboli</value>
+			<value>2009-06-19 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>1230</value>
+			<value>roboli</value>
+			<value>2009-06-25 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+	</table>
+	
+	<table name="invoice_cancelled">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-21 00:00:00</value>
+			<value>prueba</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2009-06-22 00:00:00</value>
+			<value>prueba 1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>roboli</value>
+			<value>2009-06-25 00:00:00</value>
+			<value>prueba 2</value>
+		</row>
+	</table>
+	
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>3</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-20 00:00:00</value>
+			<value>456</value>
+			<value>500.00</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-23 00:00:00</value>
+			<value>456</value>
+			<value>500.00</value>
+			<value>2</value>
+		</row>
+	</table>
+	
+	<table name="deposit_cancelled">
+		<column>deposit_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2009-06-20 00:00:00</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>roboli</value>
+			<value>2009-06-26 00:00:00</value>
+		</row>
+	</table>
+</dataset>

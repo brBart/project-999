@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="role">
+		<column>role_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Administrador</value>
+		</row>
+	</table>
+</dataset>

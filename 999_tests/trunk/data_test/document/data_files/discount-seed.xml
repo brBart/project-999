@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="discount">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>percentage</column>
+	</table>
+	
+	<table name="cash_register">
+		<column>cash_register_id</column>
+		<column>working_day</column>
+		<column>shift_id</column>
+		<column>open</column>
+		
+		<row>
+			<value>1</value>
+			<value>2009-06-12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="shift">
+		<column>shift_id</column>
+		<column>name</column>
+		<column>time_table</column>
+		
+		<row>
+			<value>1</value>
+			<value>Diurno</value>
+			<value>8am - 12pm</value>
+		</row>
+	</table>
+	
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>2</value>
+			<value>Carlos</value>
+			<value>Gonzalez</value>
+			<value>baa3559aa4bf24bc1494d3f505c3bd25cc3800cf</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

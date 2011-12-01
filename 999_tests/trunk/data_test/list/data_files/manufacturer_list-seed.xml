@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="manufacturer">
+		<column>manufacturer_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Abbot</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Mattel</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>Tyko</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>Nikkon</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Hersheys</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>Sony</value>
+		</row>
+	</table>
+</dataset>

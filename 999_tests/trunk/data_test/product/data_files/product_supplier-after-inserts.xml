@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>BAY-001</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>ABB-010</value>
+		</row>
+	</table>
+</dataset>

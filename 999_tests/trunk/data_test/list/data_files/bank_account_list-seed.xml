@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bank_account">
+		<column>bank_account_number</column>
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>001-500</value>
+			<value>1</value>
+			<value>Noe Oliveros</value>
+		</row>
+		
+		<row>
+			<value>29-500</value>
+			<value>1</value>
+			<value>Drogueria Jose Gil</value>
+		</row>
+		
+		<row>
+			<value>001-600</value>
+			<value>1</value>
+			<value>Roberto Oliveros</value>
+		</row>
+		
+		<row>
+			<value>124-567</value>
+			<value>1</value>
+			<value>Jose</value>
+		</row>
+		
+		<row>
+			<value>2345-678</value>
+			<value>1</value>
+			<value>Vicks</value>
+		</row>
+		
+		<row>
+			<value>900-100</value>
+			<value>1</value>
+			<value>Samuel</value>
+		</row>
+	</table>
+</dataset>

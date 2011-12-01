@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="unit_of_measure">
+		<column>unit_of_measure_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Unidad</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Docena</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>Yarda</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>Metro</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Pulgada</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>Pie</value>
+		</row>
+	</table>
+</dataset>

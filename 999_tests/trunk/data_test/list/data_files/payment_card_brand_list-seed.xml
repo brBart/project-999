@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="payment_card_brand">
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Visa</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Master Card</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>American Express</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>Bi Club</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Horizon</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>Visa Electron</value>
+		</row>
+	</table>
+</dataset>

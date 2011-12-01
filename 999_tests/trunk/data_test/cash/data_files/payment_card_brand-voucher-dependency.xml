@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="payment_card_brand">
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Visa</value>
+		</row>
+	</table>
+	
+	<table name="voucher">
+		<column>cash_receipt_id</column>
+		<column>transaction</column>
+		<column>amount</column>
+		<column>payment_card_number</column>
+		<column>payment_card_type_id</column>
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		<column>expiration_date</column>
+		
+		<row>
+			<value>1</value>
+			<value>342223</value>
+			<value>50.54</value>
+			<value>4321</value>
+			<value>1</value>
+			<value>1</value>
+			<value>Roberts</value>
+			<value>2010-10-01</value>
+		</row>
+	</table>
+</dataset>

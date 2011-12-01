@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+
+		<row>
+	        <value>1</value>
+	        <value>54321</value>
+	        <value>Barby</value>
+	        <value>Muneca para nina.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>82.34</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>2</value>
+	        <value>32082309</value>
+	        <value>Carrito Veloz</value>
+	        <value>Carro de control remoto.</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>23.45</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>3</value>
+	        <value>324928492</value>
+	        <value>Chino Karate</value>
+	        <value>Pelicula famosa.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>23.23</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>4</value>
+	        <value>908983422</value>
+	        <value>Juan Talaber</value>
+	        <value>Muñeco jugueton.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>43.32</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>5</value>
+	        <value>984398349</value>
+	        <value>Barbosa</value>
+	        <value>Librito simpateico</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>432.30</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>6</value>
+	        <value>423492842</value>
+	        <value>Zesa redonda.</value>
+	        <value>Para la casa.</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>433.21</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>7</value>
+	        <value>434398429</value>
+	        <value>Telefono porattil</value>
+	        <value>Celular unico.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>232.45</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>8</value>
+	        <value>5657383893</value>
+	        <value>Monitor</value>
+	        <value>Para la comput.</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>432.11</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>9</value>
+	        <value>875949393</value>
+	        <value>Silla</value>
+	        <value>Para la office.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>588.40</value>
+	        <value>1</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>10</value>
+	        <value>424802</value>
+	        <value>Reloj pulser</value>
+	        <value>Para caballero.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>42.23</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	</table>
+	
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>Abb-001</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>Abb-101</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>Abb-201</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>1</value>
+			<value>Abb-801</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>1</value>
+			<value>Abb-601</value>
+		</row>
+		
+		<row>
+			<value>9</value>
+			<value>1</value>
+			<value>Acb-101</value>
+		</row>
+		
+		<row>
+			<value>10</value>
+			<value>1</value>
+			<value>Aqb-101</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>2</value>
+			<value>Sqb-101</value>
+		</row>
+	</table>
+	
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+	
+		<row>
+			<value>1</value>
+			<value>Distelsa</value>
+			<value>12345-6</value>
+			<value>2412-9999</value>
+			<value>zona 10.</value>
+			<value>distelsa@hotmail.com</value>
+			<value>ruben</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Max</value>
+			<value>23456-7</value>
+			<value>2412-0000</value>
+			<value>zona 11.</value>
+			<null />
+			<null />
+		</row>
+	</table>
+</dataset>

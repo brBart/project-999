@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="count_product">
+		<column>count_id</column>
+		<column>product_id</column>
+		<column>quantity</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>5</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>2</value>
+			<value>7</value>
+		</row>
+	</table>
+</dataset>

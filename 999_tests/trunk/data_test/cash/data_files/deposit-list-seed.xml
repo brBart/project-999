@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-03 00:00:00</value>
+			<value>123</value>
+			<value>342.56</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>29-500</value>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-04 00:00:00</value>
+			<value>456</value>
+			<value>500.00</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-03 00:00:00</value>
+			<value>1234</value>
+			<value>342.56</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>29-500</value>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-04 00:00:00</value>
+			<value>456</value>
+			<value>500.00</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-03 00:00:00</value>
+			<value>1235</value>
+			<value>342.56</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="cash_register">
+		<column>cash_register_id</column>
+		<column>working_day</column>
+		<column>shift_id</column>
+		<column>open</column>
+		
+		<row>
+			<value>1</value>
+			<value>2009-06-04</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>2009-06-04</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="shift">
+		<column>shift_id</column>
+		<column>name</column>
+		<column>time_table</column>
+		
+		<row>
+			<value>1</value>
+			<value>diurno</value>
+			<value>8am - 12pm</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>nocturno</value>
+			<value>8pm - 1am</value>
+		</row>
+	</table>
+	
+	<table name="bank">
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Bi</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Gyt</value>
+		</row>
+	</table>
+	
+	<table name="bank_account">
+		<column>bank_account_number</column>
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>29-500</value>
+			<value>2</value>
+			<value>Roberts</value>
+		</row>
+		
+		<row>
+			<value>1-700</value>
+			<value>1</value>
+			<value>Joses</value>
+		</row>
+	</table>
+</dataset>

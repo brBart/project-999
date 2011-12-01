@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="deposit">
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-03 00:00:00</value>
+			<value>123</value>
+			<value>342.56</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-04 00:00:00</value>
+			<value>456</value>
+			<value>500.00</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="deposit_cash_receipt">
+		<column>cash_receipt_id</column>
+		<column>amount</column>
+		
+		<row>
+			<value>1</value>
+			<value>100.00</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>200.00</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>300.00</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>400.00</value>
+		</row>
+	</table>
+</dataset>

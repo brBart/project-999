@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>regime</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>current</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A031</value>
+			<value>2009-091</value>
+			<value>2008-06-01</value>
+			<value>Sujeto pagos</value>
+			<value>10000</value>
+			<value>90000</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>A032</value>
+			<value>2009-1440</value>
+			<value>2008-10-01</value>
+			<value>Sujeto pagos</value>
+			<value>10000</value>
+			<value>30000</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>12345</value>
+			<value>roboli</value>
+			<value>2010-06-17 09:09:12</value>
+			<value>1725-5</value>
+			<value>Robs</value>
+			<value>321.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>12346</value>
+			<value>roboli</value>
+			<value>2010-06-17 10:09:12</value>
+			<value>C.F</value>
+			<value />
+			<value>321.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>12347</value>
+			<value>roboli</value>
+			<value>2010-06-17 11:09:12</value>
+			<value>1725-5</value>
+			<value>Robs</value>
+			<value>321.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>12348</value>
+			<value>roboli</value>
+			<value>2010-06-18 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>1</value>
+			<value>12349</value>
+			<value>roboli</value>
+			<value>2010-06-19 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>1</value>
+			<value>12350</value>
+			<value>roboli</value>
+			<value>2010-06-25 10:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>12.20</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>2</value>
+			<value>12300</value>
+			<value>roboli</value>
+			<value>2010-06-25 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>23.00</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>8</value>
+			<value>1</value>
+			<value>12351</value>
+			<value>roboli</value>
+			<value>2010-06-25 12:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>23.00</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="discount">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>percentage</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>25.00</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>roboli</value>
+			<value>15.00</value>
+		</row>
+	</table>
+</dataset>

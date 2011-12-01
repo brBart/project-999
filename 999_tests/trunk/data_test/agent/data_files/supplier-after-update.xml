@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="supplier">
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+	
+		<row>
+			<value>Jose Gil</value>
+			<value>350682-7</value>
+			<value>1740</value>
+			<value>zona 1.</value>
+			<value>jose@jose.net</value>
+			<value>roberto</value>
+		</row>
+	</table>
+</dataset>

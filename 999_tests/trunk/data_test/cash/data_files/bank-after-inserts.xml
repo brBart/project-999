@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bank">
+		<column>name</column>
+	
+		<row>
+			<value>Gyt Continental</value>
+		</row>
+		
+		<row>
+			<value>Bi</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="payment_card_brand">
+		<column>name</column>
+	
+		<row>
+			<value>American Express</value>
+		</row>
+	</table>
+</dataset>

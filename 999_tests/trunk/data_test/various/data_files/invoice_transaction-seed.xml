@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	
+	<table name="invoice_transaction_log">
+		<column>entry_id</column>
+		<column>serial_number</column>
+		<column>number</column>
+		<column>date</column>
+		<column>total</column>
+		<column>state</column>
+		
+		<row>
+			<value>1</value>
+			<value>A021</value>
+			<value>1000</value>
+			<value>2010-03-01</value>
+			<value>150.00</value>
+			<value>EMITIDO</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>A021</value>
+			<value>1001</value>
+			<value>2010-03-01</value>
+			<value>200.50</value>
+			<value>EMITIDO</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>A021</value>
+			<value>1001</value>
+			<value>2010-03-02</value>
+			<value>200.50</value>
+			<value>ANULADO</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>B055</value>
+			<value>5000</value>
+			<value>2010-03-20</value>
+			<value>15.30</value>
+			<value>EMITIDO</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>B055</value>
+			<value>5001</value>
+			<value>2010-03-30</value>
+			<value>20.00</value>
+			<value>EMITIDO</value>
+		</row>
+	</table>
+</dataset>

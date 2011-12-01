@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="shift">
+		<column>shift_id</column>
+		<column>name</column>
+		<column>time_table</column>
+	</table>
+</dataset>

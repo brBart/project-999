@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="shift">
+		<column>shift_id</column>
+		<column>name</column>
+		<column>time_table</column>
+		
+		<row>
+			<value>1</value>
+			<value>Diurno</value>
+			<value>8am - 12pm</value>
+		</row>
+	</table>
+	
+	<table name="cash_register">
+		<column>cash_register_id</column>
+		<column>working_day</column>
+		<column>shift_id</column>
+		<column>open</column>
+		
+		<row>
+			<value>1</value>
+			<value>2009-06-02</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

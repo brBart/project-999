@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="discount">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>percentage</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>25.00</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>15.00</value>
+		</row>
+	</table>
+</dataset>

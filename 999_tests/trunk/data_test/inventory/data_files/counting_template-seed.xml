@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+
+		<row>
+	        <value>1</value>
+	        <value>54321</value>
+	        <value>Barby</value>
+	        <value>Muneca para nina.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>82.34</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>2</value>
+	        <value>32082309</value>
+	        <value>Carrito Veloz</value>
+	        <value>Carro de control remoto.</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>23.45</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>3</value>
+	        <value>324928492</value>
+	        <value>Chino Karate</value>
+	        <value>Pelicula famosa.</value>
+	        <value>1</value>
+	        <value>3</value>
+	        <value>23.23</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>4</value>
+	        <value>908983422</value>
+	        <value>Juan Talaber</value>
+	        <value>Muñeco jugueton.</value>
+	        <value>1</value>
+	        <value>4</value>
+	        <value>43.32</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>5</value>
+	        <value>984398349</value>
+	        <value>Libro Simon</value>
+	        <value>Librito simpateico</value>
+	        <value>1</value>
+	        <value>5</value>
+	        <value>432.30</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>6</value>
+	        <value>423492842</value>
+	        <value>Mesa redonda.</value>
+	        <value>Para la casa.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>433.21</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>7</value>
+	        <value>434398429</value>
+	        <value>Telefono porattil</value>
+	        <value>Celular unico.</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>232.45</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>8</value>
+	        <value>5657383893</value>
+	        <value>Monitor</value>
+	        <value>Para la comput.</value>
+	        <value>1</value>
+	        <value>3</value>
+	        <value>432.11</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>9</value>
+	        <value>875949393</value>
+	        <value>Silla</value>
+	        <value>Para la office.</value>
+	        <value>1</value>
+	        <value>4</value>
+	        <value>588.40</value>
+	        <value>1</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>10</value>
+	        <value>424802</value>
+	        <value>Reloj pulser</value>
+	        <value>Para caballero.</value>
+	        <value>1</value>
+	        <value>4</value>
+	        <value>42.23</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>11</value>
+	        <value>45389394332</value>
+	        <value>Reloj pared.</value>
+	        <value>Para niño.</value>
+	        <value>1</value>
+	        <value>3</value>
+	        <value>322.22</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>12</value>
+	        <value>4039493838</value>
+	        <value>Armario</value>
+	        <value>Para libros.</value>
+	        <value>1</value>
+	        <value>3</value>
+	        <value>873.22</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>13</value>
+	        <value>489383983</value>
+	        <value>Puerta</value>
+	        <value>Para casota.</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>743.22</value>
+	        <value>1</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>14</value>
+	        <value>5839394839</value>
+	        <value>Zapatos</value>
+	        <value>Para atleta.</value>
+	        <value>1</value>
+	        <value>3</value>
+	        <value>3422.43</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>15</value>
+	        <value>438938928</value>
+	        <value>Agua Pura</value>
+	        <value>Para todos.</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>23.12</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>16</value>
+	        <value>4839824982</value>
+	        <value>Reportes</value>
+	        <value>Para la foicna.</value>
+	        <value>1</value>
+	        <value>9</value>
+	        <value>322.32</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>17</value>
+	        <value>99839828</value>
+	        <value>Calendario</value>
+	        <value>Para cualquiera.</value>
+	        <value>1</value>
+	        <value>8</value>
+	        <value>34.32</value>
+	        <value>1</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>18</value>
+	        <value>46376328</value>
+	        <value>Bolson</value>
+	        <value>para patojo.</value>
+	        <value>1</value>
+	        <value>8</value>
+	        <value>32.23</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>19</value>
+	        <value>428928</value>
+	        <value>Calculadora</value>
+	        <value>Para contador.</value>
+	        <value>1</value>
+	        <value>7</value>
+	        <value>76.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>20</value>
+	        <value>4829</value>
+	        <value>Cepillo</value>
+	        <value>Par dientes</value>
+	        <value>1</value>
+	        <value>6</value>
+	        <value>32.11</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>21</value>
+	        <value>32892832</value>
+	        <value>Pasta</value>
+	        <value>Para dientes tambien.</value>
+	        <value>1</value>
+	        <value>6</value>
+	        <value>23.12</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>22</value>
+	        <value>3282323</value>
+	        <value>Impresora</value>
+	        <value>para la ya sabe.</value>
+	        <value>1</value>
+	        <value>9</value>
+	        <value>2499.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>23</value>
+	        <value>22092039</value>
+	        <value>Cables</value>
+	        <value>par cruszar</value>
+	        <value>1</value>
+	        <value>8</value>
+	        <value>32.45</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>24</value>
+	        <value>4289283</value>
+	        <value>Enciblopedia</value>
+	        <value>ya ajes u que?</value>
+	        <value>1</value>
+	        <value>7</value>
+	        <value>342.44</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>25</value>
+	        <value>43439932</value>
+	        <value>Teclado</value>
+	        <value>para la compus.</value>
+	        <value>1</value>
+	        <value>6</value>
+	        <value>232.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>26</value>
+	        <value>9348029850</value>
+	        <value>Porta vasos</value>
+	        <value>para lavasos</value>
+	        <value>1</value>
+	        <value>5</value>
+	        <value>392.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>27</value>
+	        <value>13229302902</value>
+	        <value>Papeleria</value>
+	        <value>sjfljflskdfjlskj</value>
+	        <value>1</value>
+	        <value>4</value>
+	        <value>23.11</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>28</value>
+	        <value>842982892</value>
+	        <value>Bote</value>
+	        <value>Pa la basura</value>
+	        <value>1</value>
+	        <value>3</value>
+	        <value>929.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>29</value>
+	        <value>4729829</value>
+	        <value>Azulejo</value>
+	        <value>Pal pizop.</value>
+	        <value>1</value>
+	        <value>1</value>
+	        <value>328.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>30</value>
+	        <value>4289292988</value>
+	        <value>Sbaber</value>
+	        <value>asdlsdkfjl</value>
+	        <value>1</value>
+	        <value>9</value>
+	        <value>382.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	    <row>
+	        <value>31</value>
+	        <value>328238928</value>
+	        <value>Ventano</value>
+	        <value>sdfoafp</value>
+	        <value>1</value>
+	        <value>2</value>
+	        <value>392.00</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	        <value>0</value>
+	    </row>
+	</table>
+	
+	<table name="manufacturer">
+		<column>manufacturer_id</column>
+		<column>name</column>
+
+		<row>
+	        <value>1</value>
+	        <value>Mattel</value>
+	    </row>
+	    <row>
+	        <value>2</value>
+	        <value>Procter &amp; Gamble</value>
+	    </row>
+	    <row>
+	        <value>3</value>
+	        <value>Nikkon</value>
+	    </row>
+	    <row>
+	        <value>4</value>
+	        <value>Bayer</value>
+	    </row>
+	    <row>
+	        <value>5</value>
+	        <value>Abbot</value>
+	    </row>
+	    <row>
+	        <value>6</value>
+	        <value>Zara</value>
+	    </row>
+	    <row>
+	        <value>7</value>
+	        <value>Western</value>
+	    </row>
+	    <row>
+	        <value>8</value>
+	        <value>Bretton</value>
+	    </row>
+	    <row>
+	        <value>9</value>
+	        <value>Apress</value>
+	    </row>
+	</table>
+</dataset>

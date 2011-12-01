@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>current</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A021</value>
+			<value>2009-100</value>
+			<value>2008-06-01</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+	
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2008-07-12</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2008-07-22</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2008-08-12</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>4</value>
+			<value>roboli</value>
+			<value>2008-08-22</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>1</value>
+			<value>5</value>
+			<value>roboli</value>
+			<value>2008-09-12</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>1</value>
+			<value>6</value>
+			<value>roboli</value>
+			<value>2008-09-22</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>1</value>
+			<value>7</value>
+			<value>roboli</value>
+			<value>2008-10-12</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>8</value>
+			<value>1</value>
+			<value>8</value>
+			<value>roboli</value>
+			<value>2008-10-22</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>9</value>
+			<value>1</value>
+			<value>9</value>
+			<value>roboli</value>
+			<value>2008-11-12</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>10</value>
+			<value>1</value>
+			<value>10</value>
+			<value>roboli</value>
+			<value>2008-11-22</value>
+			<value>cf</value>
+			<value>ruben</value>
+			<value>10</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

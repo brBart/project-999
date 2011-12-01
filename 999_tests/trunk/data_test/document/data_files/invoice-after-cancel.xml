@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>12345</value>
+			<value>roboli</value>
+			<value>2009-06-17 09:09:09</value>
+			<value>1725-5</value>
+			<value>Robs</value>
+			<value>321.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>12346</value>
+			<value>roboli</value>
+			<value>2009-06-18 08:08:08</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+	</table>
+	
+	<table name="invoice_cancelled">
+		<column>invoice_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-18 00:00:00</value>
+			<value>Prueba.</value>
+		</row>
+	</table>
+</dataset>

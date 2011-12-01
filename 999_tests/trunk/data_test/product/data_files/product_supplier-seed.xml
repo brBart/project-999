@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+	</table>
+
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+		
+		<row>
+			<value>1</value>
+			<value>JyCohen</value>
+			<value>34232-5</value>
+			<value>323244</value>
+			<value>ciudad</value>
+			<null />
+			<null />
+		</row>
+	</table>
+</dataset>

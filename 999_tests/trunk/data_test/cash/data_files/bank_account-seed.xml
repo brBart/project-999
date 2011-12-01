@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bank_account">
+		<column>bank_account_number</column>
+		<column>bank_id</column>
+		<column>name</column>
+	</table>
+	
+	<table name="bank">
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Bi</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Gyt</value>
+		</row>
+	</table>
+	
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+</dataset>

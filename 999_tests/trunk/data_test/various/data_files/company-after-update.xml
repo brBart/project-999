@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="company">
+		<column>nit</column>
+		<column>name</column>
+		<column>corporate_name</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>warehouse_name</column>
+		
+		<row>
+			<value>1735-5</value>
+			<value>Infodes</value>
+			<value>Infodes S.A.</value>
+			<value>123</value>
+			<value>zona</value>
+			<value>999 Chiqui</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="resolution_log">
+		<column>entry_id</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>serial_number</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>created_date</column>
+		<column>document_type</column>
+	</table>
+	
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>created_date</column>
+		<column>resolution_date</column>
+		<column>regime</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>current</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A031</value>
+			<value>20091-1050</value>
+			<value>2008-06-05</value>
+			<value>2008-06-01</value>
+			<value>Sujeto pagos</value>
+			<value>1000</value>
+			<value>9000</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>A032</value>
+			<value>20091-10109</value>
+			<value>2008-10-05</value>
+			<value>2008-10-01</value>
+			<value>Sujeto pagos</value>
+			<value>10000</value>
+			<value>30000</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+</dataset>

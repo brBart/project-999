@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="manufacturer">
+		<column>manufacturer_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Mattel</value>
+		</row>
+	</table>
+
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+		
+		<row>
+			<value>1</value>
+			<value>54321</value>
+			<value>Barby</value>
+			<value>Muneca para nina.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>15</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>5433221</value>
+			<value>Transformer</value>
+			<value>Rojo</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>50</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>54323</value>
+			<value>Monitor</value>
+			<value>Total colors.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>15</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>5433224</value>
+			<value>Reloj</value>
+			<value>Suizo y que.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>50</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>5433225</value>
+			<value>Lapicero</value>
+			<value>Jumbo bumbo</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>50</value>
+		</row>
+	</table>
+	
+	<table name="lot">
+		<column>lot_id</column>
+		<column>product_id</column>
+		<column>entry_date</column>
+		<column>expiration_date</column>
+		<column>price</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		
+		<row>
+			<value>1</value>
+			<value>2</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>2</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>2</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>2</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>2</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>2</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>1</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>8</value>
+			<value>3</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>9</value>
+			<value>4</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>10</value>
+			<value>5</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>12345</value>
+			<value>roboli</value>
+			<value>2009-06-17 09:09:12</value>
+			<value>1725-5</value>
+			<value>Robs</value>
+			<value>321.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>12346</value>
+			<value>roboli</value>
+			<value>2009-06-18 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>14230</value>
+			<value>roboli</value>
+			<value>2009-06-19 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>1230</value>
+			<value>roboli</value>
+			<value>2009-06-25 08:08:13</value>
+			<value>cf</value>
+			<null />
+			<value>123.21</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="invoice_lot">
+		<column>invoice_id</column>
+		<column>lot_id</column>
+		<column>number</column>
+		<column>quantity</column>
+		<column>price</column>
+		
+		<row>
+			<value>1</value>
+			<value>3</value>
+			<value>4</value>
+			<value>6</value>
+			<value>10</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>2</value>
+			<value>2</value>
+			<value>1</value>
+			<value>32.45</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>2</value>
+			<value>2</value>
+			<value>1</value>
+			<value>32.45</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>1</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>7</value>
+			<value>2</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>10</value>
+			<value>1</value>
+			<value>6</value>
+			<value>10</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>9</value>
+			<value>8</value>
+			<value>1</value>
+			<value>32.45</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>8</value>
+			<value>2</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>6</value>
+			<value>3</value>
+			<value>1</value>
+			<value>32.45</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>5</value>
+			<value>4</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>4</value>
+			<value>9</value>
+			<value>5</value>
+			<value>45.23</value>
+		</row>
+	</table>
+</dataset>

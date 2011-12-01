@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="subject">
+		<column>subject_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>inventory</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>cash_register</value>
+		</row>
+	</table>
+</dataset>

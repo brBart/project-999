@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+	
+	<table name="deposit_cash_receipt">
+		<column>deposit_cash_receipt_id</column>
+		<column>deposit_id</column>
+		<column>cash_receipt_id</column>
+		<column>amount</column>
+	</table>
+	
+	<table name="cash_register">
+		<column>cash_register_id</column>
+		<column>working_day</column>
+		<column>shift_id</column>
+		<column>open</column>
+		
+		<row>
+			<value>1</value>
+			<value>2009-06-04</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>2</value>
+			<value>Carlos</value>
+			<value>Gonzalez</value>
+			<value>baa3559aa4bf24bc1494d3f505c3bd25cc3800cf</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="bank_account">
+		<column>bank_account_number</column>
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>29-500</value>
+			<value>2</value>
+			<value>Roberts</value>
+		</row>
+	</table>
+	
+	<table name="deposit_cancelled">
+		<column>deposit_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+	</table>
+	
+	<table name="cash_receipt">
+		<column>cash_receipt_id</column>
+		<column>change_amount</column>
+		<column>cash</column>
+		<column>total_vouchers</column>
+		<column>reserved</column>
+		<column>deposited</column>
+		
+		<row>
+			<value>1</value>
+			<value>0</value>
+			<value>432.45</value>
+			<value>0</value>
+			<value>12.45</value>
+			<value>20</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>0</value>
+			<value>0</value>
+			<value>123.45</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>135.79</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>0</value>
+			<value>23.32</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>0</value>
+			<value>87.65</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>0</value>
+			<value>99.88</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>0</value>
+			<value>0</value>
+			<value>76.32</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>8</value>
+			<value>0</value>
+			<value>0</value>
+			<value>54.87</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>9</value>
+			<value>0</value>
+			<value>194.32</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>10</value>
+			<value>0</value>
+			<value>432.45</value>
+			<value>0</value>
+			<value>12.45</value>
+			<value>20</value>
+		</row>
+		
+		<row>
+			<value>11</value>
+			<value>0</value>
+			<value>0</value>
+			<value>123.45</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>12</value>
+			<value>0</value>
+			<value>0</value>
+			<value>135.79</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>13</value>
+			<value>0</value>
+			<value>23.32</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>14</value>
+			<value>0</value>
+			<value>87.65</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>15</value>
+			<value>0</value>
+			<value>99.88</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>16</value>
+			<value>0</value>
+			<value>0</value>
+			<value>76.32</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>17</value>
+			<value>0</value>
+			<value>0</value>
+			<value>54.87</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>18</value>
+			<value>0</value>
+			<value>194.32</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>19</value>
+			<value>0</value>
+			<value>0</value>
+			<value>54.87</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>20</value>
+			<value>0</value>
+			<value>194.32</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>current</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A021</value>
+			<value>10-9007</value>
+			<value>2009-10-10</value>
+			<value>100</value>
+			<value>200</value>
+			<value>127</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>123</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>23456-7</value>
+			<value>Juan Perez</value>
+			<value>234.56</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>124</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>123.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>125</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>93456-8</value>
+			<value>Benito Juarez</value>
+			<value>135.79</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>126</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>43456-5</value>
+			<value>Charles Brwon</value>
+			<value>23.32</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>1</value>
+			<value>127</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>87.65</value>
+			<value>12</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>1</value>
+			<value>128</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>47272-1</value>
+			<value>Juna Lupe</value>
+			<value>99.88</value>
+			<value>12</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>1</value>
+			<value>129</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>76.32</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>8</value>
+			<value>1</value>
+			<value>130</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>54.87</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>9</value>
+			<value>1</value>
+			<value>131</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>32434-3</value>
+			<value>Simoncho</value>
+			<value>194.32</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>10</value>
+			<value>1</value>
+			<value>132</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>23456-7</value>
+			<value>Juan Perez</value>
+			<value>234.56</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>11</value>
+			<value>1</value>
+			<value>133</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>123.45</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>12</value>
+			<value>1</value>
+			<value>134</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>93456-8</value>
+			<value>Benito Juarez</value>
+			<value>135.79</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>13</value>
+			<value>1</value>
+			<value>135</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>43456-5</value>
+			<value>Charles Brwon</value>
+			<value>23.32</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>14</value>
+			<value>1</value>
+			<value>136</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>87.65</value>
+			<value>12</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>15</value>
+			<value>1</value>
+			<value>137</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>47272-1</value>
+			<value>Juna Lupe</value>
+			<value>99.88</value>
+			<value>12</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>16</value>
+			<value>1</value>
+			<value>138</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>76.32</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>17</value>
+			<value>1</value>
+			<value>139</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>54.87</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>18</value>
+			<value>1</value>
+			<value>140</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>32434-3</value>
+			<value>Simoncho</value>
+			<value>194.32</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>19</value>
+			<value>1</value>
+			<value>141</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>54.87</value>
+			<value>12</value>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>20</value>
+			<value>1</value>
+			<value>142</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>32434-3</value>
+			<value>Simoncho</value>
+			<value>194.32</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

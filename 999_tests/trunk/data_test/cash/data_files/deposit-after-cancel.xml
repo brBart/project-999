@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="deposit_cancelled">
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>2009-06-04 00:00:00</value>
+		</row>
+	</table>
+</dataset>

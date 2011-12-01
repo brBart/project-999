@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="change_price_log">
+		<column>entry_id</column>
+		<column>user_account_username</column>
+		<column>product_id</column>
+		<column>date</column>
+		<column>last_price</column>
+		<column>new_price</column>
+	</table>
+
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+		
+		<row>
+			<value>1</value>
+			<value>54321</value>
+			<value>Barby</value>
+			<value>Muneca para nina.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>2</value>
+			<value>Carlos</value>
+			<value>Gonzalez</value>
+			<value>baa3559aa4bf24bc1494d3f505c3bd25cc3800cf</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

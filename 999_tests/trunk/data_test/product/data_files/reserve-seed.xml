@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="reserve">
+		<column>reserve_id</column>
+		<column>user_account_username</column>
+		<column>lot_id</column>
+		<column>date</column>
+		<column>quantity</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-18 00:00:00</value>
+			<value>12</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2</value>
+			<value>2009-06-17 00:00:00</value>
+			<value>30</value>
+		</row>
+	</table>
+	
+	<table name="lot">
+		<column>lot_id</column>
+		<column>product_id</column>
+		<column>entry_date</column>
+		<column>expiration_date</column>
+		<column>price</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>2009-06-16</value>
+			<value>2009-10-10</value>
+			<value>12.50</value>
+			<value>5</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>2009-06-17</value>
+			<null/>
+			<value>31.50</value>
+			<value>10</value>
+			<value>0</value>
+		</row>
+	</table>
+</dataset>

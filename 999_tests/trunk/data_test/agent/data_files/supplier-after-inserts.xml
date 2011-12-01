@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="supplier">
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+	
+		<row>
+			<value>Distelsa</value>
+			<value>12345-6</value>
+			<value>2412-9999</value>
+			<value>zona 10.</value>
+			<value>distelsa@hotmail.com</value>
+			<value>ruben</value>
+		</row>
+		
+		<row>
+			<value>Max</value>
+			<value>23456-7</value>
+			<value>2412-0000</value>
+			<value>zona 11.</value>
+			<null />
+			<null />
+		</row>
+	</table>
+</dataset>

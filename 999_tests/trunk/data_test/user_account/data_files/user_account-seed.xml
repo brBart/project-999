@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+	</table>
+	
+	<table name="role">
+		<column>role_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Administrador</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Operador</value>
+		</row>
+	</table>
+</dataset>

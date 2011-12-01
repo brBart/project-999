@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product">
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+		
+		<row>
+			<value>54321</value>
+			<value>Barby</value>
+			<value>Muneca para nina.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>82.34</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		
+		<row>
+			<null />
+			<value>Pringles</value>
+			<null />
+			<value>1</value>
+			<value>1</value>
+			<value>15.50</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+</dataset>

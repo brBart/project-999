@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+
+		<row>
+			<value>1</value>
+			<value>123456</value>
+			<value>Pringles</value>
+			<value>Papalinas.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>15.50</value>
+			<value>1</value>
+			<value>73</value>
+			<value>10</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>BAY-001</value>
+		</row>
+	</table>
+	
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+		
+		<row>
+			<value>1</value>
+			<value>JyCohen</value>
+			<value>34232-5</value>
+			<value>323244</value>
+			<value>ciudad</value>
+			<null />
+			<null />
+		</row>
+	</table>
+	
+	<table name="unit_of_measure">
+		<column>unit_of_measure_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>unidad</value>
+		</row>
+	</table>
+	
+	<table name="manufacturer">
+		<column>manufacturer_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Mattel</value>
+		</row>
+	</table>
+</dataset>

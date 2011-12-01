@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+	</table>
+	
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+	</table>
+	
+	<table name="unit_of_measure">
+		<column>unit_of_measure_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>unidad</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>docena</value>
+		</row>
+	</table>
+	
+	<table name="manufacturer">
+		<column>manufacturer_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Mattel</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Nikko</value>
+		</row>
+	</table>
+	
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+		
+		<row>
+			<value>1</value>
+			<value>JyCohen</value>
+			<value>34232-5</value>
+			<value>323244</value>
+			<value>ciudad</value>
+			<null />
+			<null />
+		</row>
+	</table>
+</dataset>

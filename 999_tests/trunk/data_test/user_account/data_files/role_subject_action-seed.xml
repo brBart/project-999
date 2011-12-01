@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="role_subject_action">
+		<column>role_id</column>
+		<column>subject_id</column>
+		<column>action_id</column>
+		<column>value</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>2</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>2</value>
+			<value>2</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>edglem</value>
+			<value>1</value>
+			<value>Edgar</value>
+			<value>Lemus</value>
+			<value>5867f7b5e8ea1d5032a643a92b4f6f23c74e2e14</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>roboli</value>
+			<value>2</value>
+			<value>Roberto</value>
+			<value>Oliveros</value>
+			<value>36a9fc86e20ec727f782d1e27f877303d866fbbd</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="role">
+		<column>role_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Administrador</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Operador</value>
+		</row>
+	</table>
+</dataset>

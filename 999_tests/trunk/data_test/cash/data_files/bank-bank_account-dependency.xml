@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bank">
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Bi</value>
+		</row>
+	</table>
+	
+	<table name="bank_account">
+		<column>bank_account_number</column>
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>29-5000-355</value>
+			<value>1</value>
+			<value>Noe Oliveros</value>
+		</row>
+	</table>
+</dataset>

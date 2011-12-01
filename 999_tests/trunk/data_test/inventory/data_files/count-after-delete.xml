@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="count">
+		<column>count_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-20 12:00:00</value>
+			<value>yeah!!</value>
+			<value>65</value>
+		</row>
+	</table>
+	
+	<table name="count_product">
+		<column>count_product_id</column>
+		<column>count_id</column>
+		<column>product_id</column>
+		<column>quantity</column>
+
+		<row>
+			<value>2</value>
+			<value>2</value>
+			<value>1</value>
+			<value>7</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>2</value>
+			<value>2</value>
+			<value>12</value>
+		</row>
+	</table>
+</dataset>

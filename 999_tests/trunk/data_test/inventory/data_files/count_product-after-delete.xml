@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="count_product">
+		<column>count_product_id</column>
+		<column>count_id</column>
+		<column>product_id</column>
+		<column>quantity</column>
+	</table>
+</dataset>

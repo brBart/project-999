@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="reserve">
+		<column>user_account_username</column>
+		<column>lot_id</column>
+		<column>date</column>
+		<column>quantity</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-18 00:00:00</value>
+			<value>5</value>
+		</row>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-06-19 00:00:00</value>
+			<value>10</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="shift">
+		<column>name</column>
+		<column>time_table</column>
+		
+		<row>
+			<value>Diurno</value>
+			<value>8am - 12pm</value>
+		</row>
+		
+		<row>
+			<value>Nocturno</value>
+			<value>6pm - 11pm</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="cash_receipt">
+		<column>cash_receipt_id</column>
+		<column>change_amount</column>
+		<column>cash</column>
+		<column>total_vouchers</column>
+		<column>reserved</column>
+		<column>deposited</column>
+	</table>
+	
+	<table name="voucher">
+		<column>cash_receipt_id</column>
+		<column>transaction</column>
+		<column>amount</column>
+		<column>payment_card_number</column>
+		<column>payment_card_type_id</column>
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		<column>expiration_date</column>
+	</table>
+
+	<table name="cash_register">
+		<column>cash_register_id</column>
+		<column>working_day</column>
+		<column>shift_id</column>
+		<column>open</column>
+		
+		<row>
+			<value>1</value>
+			<value>2009-06-10</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>Roberto</value>
+			<value>Oliveros</value>
+			<value>b69afb4e0ba2bb78ec682f59602f6140774089aa</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="payment_card_type">
+		<column>payment_card_type_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Credito</value>
+		</row>
+	</table>
+	
+	<table name="payment_card_brand">
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Visa</value>
+		</row>
+	</table>
+</dataset>

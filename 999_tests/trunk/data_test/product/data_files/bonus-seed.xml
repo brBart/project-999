@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>2</value>
+			<value>Carlos</value>
+			<value>Gonzalez</value>
+			<value>baa3559aa4bf24bc1494d3f505c3bd25cc3800cf</value>
+			<value>1</value>
+		</row>
+	</table>
+
+	<table name="bonus">
+		<column>bonus_id</column>
+		<column>product_id</column>
+		<column>quantity</column>
+		<column>percentage</column>
+		<column>created_date</column>
+		<column>expiration_date</column>
+	</table>
+
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+		
+		<row>
+			<value>1</value>
+			<value>3242</value>
+			<value>Shampoo</value>
+			<value>Para cabello de hombre.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>43.50</value>
+			<value>0</value>
+			<value>21</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>ABB-999</value>
+		</row>
+	</table>
+	
+	<table name="unit_of_measure">
+		<column>unit_of_measure_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>unidad</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>docena</value>
+		</row>
+	</table>
+	
+	<table name="manufacturer">
+		<column>manufacturer_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Mattel</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Nikko</value>
+		</row>
+	</table>
+	
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+		
+		<row>
+			<value>1</value>
+			<value>JyCohen</value>
+			<value>34232-5</value>
+			<value>323244</value>
+			<value>ciudad</value>
+			<null />
+			<null />
+		</row>
+	</table>
+	
+	<table name="invoice_bonus">
+		<column>invoice_id</column>
+		<column>bonus_id</column>
+		<column>number</column>
+		<column>price</column>
+	</table>
+</dataset>

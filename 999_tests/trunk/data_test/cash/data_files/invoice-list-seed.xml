@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>current</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A021</value>
+			<value>10-9003</value>
+			<value>2009-10-10</value>
+			<value>100</value>
+			<value>200</value>
+			<value>127</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>123</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>23456-7</value>
+			<value>Juan Perez</value>
+			<value>234.56</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>124</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>cf</value>
+			<value></value>
+			<value>123.45</value>
+			<value>12</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>1</value>
+			<value>125</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>93456-8</value>
+			<value>Benito Juarez</value>
+			<value>135.79</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>1</value>
+			<value>126</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>93456-8</value>
+			<value>Benito Juarez</value>
+			<value>135.79</value>
+			<value>12</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>1</value>
+			<value>127</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>93456-8</value>
+			<value>Benito Juarez</value>
+			<value>135.79</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="cash_register">
+		<column>cash_register_id</column>
+		<column>working_day</column>
+		<column>shift_id</column>
+		<column>open</column>
+		
+		<row>
+			<value>1</value>
+			<value>2009-06-04</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>2009-06-05</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="shift">
+		<column>shift_id</column>
+		<column>name</column>
+		<column>time_table</column>
+		
+		<row>
+			<value>1</value>
+			<value>diurno</value>
+			<value>8am - 12pm</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="cash_receipt">
+		<column>cash_receipt_id</column>
+		<column>change_amount</column>
+		<column>cash</column>
+		<column>total_vouchers</column>
+		<column>reserved</column>
+		<column>deposited</column>
+		
+		<row>
+			<value>1</value>
+			<value>1.50</value>
+			<value>30.00</value>
+			<value>21.50</value>
+			<value>0.00</value>
+			<value>0.00</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>0.00</value>
+			<value>123.45</value>
+			<value>0.00</value>
+			<value>0.00</value>
+			<value>0.00</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>0.00</value>
+			<value>0.00</value>
+			<value>114.90</value>
+			<value>0.00</value>
+			<value>0.00</value>
+		</row>
+	</table>
+	
+	<table name="voucher">
+		<column>cash_receipt_id</column>
+		<column>transaction</column>
+		<column>amount</column>
+		<column>payment_card_number</column>
+		<column>payment_card_type_id</column>
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		<column>expiration_date</column>
+		
+		<row>
+			<value>1</value>
+			<value>65432</value>
+			<value>11.50</value>
+			<value>4321</value>
+			<value>1</value>
+			<value>1</value>
+			<value>Carlos</value>
+			<value>2010-06-01</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>54321</value>
+			<value>10.00</value>
+			<value>4321</value>
+			<value>1</value>
+			<value>1</value>
+			<value>Carlos</value>
+			<value>2010-06-01</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>76543</value>
+			<value>114.90</value>
+			<value>1234</value>
+			<value>1</value>
+			<value>1</value>
+			<value>John</value>
+			<value>2010-07-01</value>
+		</row>
+	</table>
+</dataset>

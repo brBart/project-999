@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="withdraw_adjustment">
+		<column>withdraw_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-15 09:09:09</value>
+			<value>pq si.</value>
+			<value>23.45</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-16 08:08:08</value>
+			<value>pq no.</value>
+			<value>33.44</value>
+			<value>2</value>
+		</row>
+	</table>
+	
+	<table name="withdraw_adjustment_cancelled">
+		<column>withdraw_adjustment_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		
+		<row>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2009-06-17 00:00:00</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="cash_receipt">
+		<column>cash_receipt_id</column>
+		<column>change_amount</column>
+		<column>cash</column>
+		<column>total_vouchers</column>
+		<column>reserved</column>
+		<column>deposited</column>
+		
+		<row>
+			<value>1</value>
+			<value>0</value>
+			<value>432.45</value>
+			<value>0</value>
+			<value>12.45</value>
+			<value>20</value>
+		</row>
+	</table>
+	
+	<table name="correlative">
+		<column>correlative_id</column>
+		<column>serial_number</column>
+		<column>resolution_number</column>
+		<column>resolution_date</column>
+		<column>initial_number</column>
+		<column>final_number</column>
+		<column>current</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>A021</value>
+			<value>10-9006</value>
+			<value>2009-10-10</value>
+			<value>100</value>
+			<value>200</value>
+			<value>127</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="invoice">
+		<column>invoice_id</column>
+		<column>correlative_id</column>
+		<column>number</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>nit</column>
+		<column>name</column>
+		<column>total</column>
+		<column>vat</column>
+		<column>cash_register_id</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>123</value>
+			<value>roboli</value>
+			<value>2009-06-05</value>
+			<value>23456-7</value>
+			<value>Juan Perez</value>
+			<value>234.56</value>
+			<value>12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

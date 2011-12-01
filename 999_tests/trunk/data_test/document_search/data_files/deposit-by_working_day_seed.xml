@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+	
+		<row>
+			<value>1</value>
+			<value>29-5000036-6</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2008-07-12 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>29-5000036-6</value>
+			<value>2</value>
+			<value>roboli</value>
+			<value>2008-07-22 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>29-5000036-6</value>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2008-08-12 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>29-5000036-6</value>
+			<value>4</value>
+			<value>roboli</value>
+			<value>2008-08-22 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>29-5000036-6</value>
+			<value>5</value>
+			<value>roboli</value>
+			<value>2008-09-12 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>29-5000036-6</value>
+			<value>6</value>
+			<value>roboli</value>
+			<value>2008-09-22 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>29-5000036-6</value>
+			<value>7</value>
+			<value>roboli</value>
+			<value>2008-10-12 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>8</value>
+			<value>29-5000036-6</value>
+			<value>8</value>
+			<value>roboli</value>
+			<value>2008-10-22 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>9</value>
+			<value>29-5000036-6</value>
+			<value>9</value>
+			<value>roboli</value>
+			<value>2008-11-12 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>10</value>
+			<value>29-5000036-6</value>
+			<value>10</value>
+			<value>roboli</value>
+			<value>2008-11-22 12:00:00</value>
+			<value>321</value>
+			<value>23.54</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="shift">
+		<column>shift_id</column>
+		<column>name</column>
+		<column>time_table</column>
+		
+		<row>
+			<value>1</value>
+			<value>Diurno</value>
+			<value>8am - 12pm</value>
+		</row>
+	</table>
+	
+	<table name="cash_register">
+		<column>cash_register_id</column>
+		<column>working_day</column>
+		<column>shift_id</column>
+		<column>open</column>
+		
+		<row>
+			<value>1</value>
+			<value>2008-07-12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>2008-07-22</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>2008-08-12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>2008-08-22</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>2008-09-12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>2008-09-22</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>2008-10-12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>8</value>
+			<value>2008-10-22</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>9</value>
+			<value>2008-11-12</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>10</value>
+			<value>2008-11-22</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>

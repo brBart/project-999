@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+	
+		<row>
+			<value>1</value>
+			<value>Jose Gil</value>
+			<value>350682-7</value>
+			<value>1740</value>
+			<value>zona 1.</value>
+			<value>jose@jose.net</value>
+			<value>roberto</value>
+		</row>
+	</table>
+	
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+	</table>
+	
+	<table name="receipt">
+		<column>receipt_id</column>
+		<column>user_account_username</column>
+		<column>supplier_id</column>
+		<column>date</column>
+		<column>shipment_number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>roboli</value>
+			<value>1</value>
+			<value>2009-05-28</value>
+			<value>3214</value>
+			<value>32.98</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="purchase_return">
+		<column>purchase_return_id</column>
+		<column>user_account_username</column>
+		<column>supplier_id</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>contact</column>
+		<column>total</column>
+		<column>status</column>
+	</table>
+</dataset>

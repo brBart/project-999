@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="deposit">
+		<column>deposit_id</column>
+		<column>bank_account_number</column>
+		<column>cash_register_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>number</column>
+		<column>total</column>
+		<column>status</column>
+		
+		<row>
+			<value>1</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-03</value>
+			<value>123</value>
+			<value>342.56</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-04</value>
+			<value>456</value>
+			<value>500.00</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>001-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-01</value>
+			<value>986</value>
+			<value>800.00</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>001-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-09</value>
+			<value>74</value>
+			<value>500.00</value>
+			<value>2</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>001-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-09</value>
+			<value>432</value>
+			<value>500.00</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>001-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-11</value>
+			<value>098</value>
+			<value>300.00</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>7</value>
+			<value>29-500</value>
+			<value>1</value>
+			<value>roboli</value>
+			<value>2009-06-15</value>
+			<value>3298</value>
+			<value>100.00</value>
+			<value>1</value>
+		</row>
+	</table>
+	
+	<table name="bank_account">
+		<column>bank_account_number</column>
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>29-500</value>
+			<value>1</value>
+			<value>Roberts</value>
+		</row>
+		
+		<row>
+			<value>001-500</value>
+			<value>2</value>
+			<value>Carlos</value>
+		</row>
+	</table>
+	
+	<table name="bank">
+		<column>bank_id</column>
+		<column>name</column>
+	
+		<row>
+			<value>1</value>
+			<value>Gyt Continental</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Bi</value>
+		</row>
+	</table>
+</dataset>

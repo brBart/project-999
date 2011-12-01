@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="user_account">
+		<column>user_account_username</column>
+		<column>role_id</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>password</column>
+		<column>deactivated</column>
+		
+		<row>
+			<value>edglem</value>
+			<value>1</value>
+			<value>Edgar</value>
+			<value>Lemus</value>
+			<value>af3a5b864250e0d2c760d5f017b0d0cddd89cd7a</value>
+			<value>1</value>
+		</row>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>Roberto</value>
+			<value>Oliveros</value>
+			<value>ad55e8df7a2818970222712d3809cecfb32761ea</value>
+			<value>0</value>
+		</row>
+	</table>
+</dataset>

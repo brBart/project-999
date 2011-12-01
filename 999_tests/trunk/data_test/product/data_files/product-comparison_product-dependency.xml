@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="product">
+		<column>product_id</column>
+		<column>bar_code</column>
+		<column>name</column>
+		<column>description</column>
+		<column>unit_of_measure_id</column>
+		<column>manufacturer_id</column>
+		<column>price</column>
+		<column>deactivated</column>
+		<column>quantity</column>
+		<column>reserved</column>
+		<column>balance_forward</column>
+		
+		<row>
+			<value>1</value>
+			<value>232</value>
+			<value>Hello Kitty</value>
+			<value>Muñeca gatita.</value>
+			<value>1</value>
+			<value>1</value>
+			<value>134.52</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+	</table>
+	
+	<table name="product_supplier">
+		<column>product_id</column>
+		<column>supplier_id</column>
+		<column>sku</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>ABB-001</value>
+		</row>
+	</table>
+	
+	<table name="unit_of_measure">
+		<column>unit_of_measure_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>unidad</value>
+		</row>
+	</table>
+	
+	<table name="manufacturer">
+		<column>manufacturer_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>Mattel</value>
+		</row>
+	</table>
+	
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+		
+		<row>
+			<value>1</value>
+			<value>JyCohen</value>
+			<value>34232-5</value>
+			<value>323244</value>
+			<value>ciudad</value>
+			<null />
+			<null />
+		</row>
+	</table>
+	
+	<table name="lot">
+		<column>lot_id</column>
+		<column>product_id</column>
+		<column>entry_date</column>
+		<column>expiration_date</column>
+		<column>price</column>
+		<column>quantity</column>
+		<column>reserved</column>
+	</table>
+	
+	<table name="bonus">
+		<column>bonus_id</column>
+		<column>product_id</column>
+		<column>quantity</column>
+		<column>percentage</column>
+		<column>created_date</column>
+		<column>expiration_date</column>
+	</table>
+	
+	<table name="comparison_product">
+		<column>comparison_id</column>
+		<column>product_id</column>
+		<column>physical</column>
+		<column>system</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>10</value>
+			<value>10</value>
+		</row>
+	</table>
+	
+	<table name="count_product">
+		<column>count_id</column>
+		<column>product_id</column>
+		<column>quantity</column>
+	</table>
+</dataset>

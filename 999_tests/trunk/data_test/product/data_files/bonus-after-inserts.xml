@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bonus">
+		<column>user_account_username</column>
+		<column>product_id</column>
+		<column>quantity</column>
+		<column>percentage</column>
+		<column>created_date</column>
+		<column>expiration_date</column>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>3</value>
+			<value>5.00</value>
+			<value>2009-06-17</value>
+			<value>2009-07-15</value>
+		</row>
+		
+		<row>
+			<value>roboli</value>
+			<value>1</value>
+			<value>12</value>
+			<value>15.00</value>
+			<value>2009-06-18</value>
+			<value>2009-10-01</value>
+		</row>
+	</table>
+</dataset>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bank">
+		<column>bank_id</column>
+		<column>name</column>
+		
+		<row>
+			<value>1</value>
+			<value>GytContinental</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>Bi</value>
+		</row>
+		
+		<row>
+			<value>3</value>
+			<value>Bantrab</value>
+		</row>
+		
+		<row>
+			<value>4</value>
+			<value>Banrural</value>
+		</row>
+		
+		<row>
+			<value>5</value>
+			<value>Bac</value>
+		</row>
+		
+		<row>
+			<value>6</value>
+			<value>City Bank</value>
+		</row>
+	</table>
+</dataset>

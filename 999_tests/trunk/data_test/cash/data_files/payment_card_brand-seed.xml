@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="payment_card_brand">
+		<column>brand_id</column>
+		<column>name</column>
+	</table>
+	
+	<table name="voucher">
+		<column>cash_receipt_id</column>
+		<column>transaction</column>
+		<column>amount</column>
+		<column>payment_card_number</column>
+		<column>payment_card_type_id</column>
+		<column>payment_card_brand_id</column>
+		<column>name</column>
+		<column>expiration_date</column>
+	</table>
+</dataset>

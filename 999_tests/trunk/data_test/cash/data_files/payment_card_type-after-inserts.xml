@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="payment_card_type">
+		<column>name</column>
+	
+		<row>
+			<value>Credito</value>
+		</row>
+		
+		<row>
+			<value>Debito</value>
+		</row>
+	</table>
+</dataset>
