@@ -1,0 +1,549 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Documentaci&oacute;n BOBS Retail</title>
+<link href="styles/style.css" rel="stylesheet" type="text/css" />
+<link href="styles/menu.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="scripts/menu.js"></script>
+</head>
+<body>
+	<h4>Tabla de Contenido:</h4>
+	<ul id="menu">
+		<li><b><a href="content.html" target="content_frame">Inicio</a></b></li>
+		<li><span><b><a href="reference.html#title" target="content_frame">Gu&iacute;a de Referencia</a></b></span>
+			<ul>
+				<li><span><b><a href="reference.html#generalities" target="content_frame">PARTE I: Generalidades</a></b></span>
+					<ul>
+						<li><span><b><a href="reference.html#security" target="content_frame">Seguridad</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#passwords" target="content_frame">Contrase&ntilde;as</a></b></span>
+									<ul>
+										<li><a href="reference.html#change_password" target="content_frame">Cambio de contrase&ntilde;a</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#privileges" target="content_frame">Privilegios</a></b></span>
+									<ul>
+										<li><a href="reference.html#roles_privileges" target="content_frame">Roles y sus privilegios</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><span><b><a href="reference.html#inventory_module" target="content_frame">PARTE II : Modulo de Inventario</a></b></span>
+					<ul>
+						<li><span><b><a href="reference.html#inventory_maintenance" target="content_frame">Mantenimiento</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#products" target="content_frame">Productos</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_product" target="content_frame">Crear un producto</a></li>
+										<li><a href="reference.html#get_product" target="content_frame">Consultar un producto por orden alfab&eacute;tico</a></li>
+										<li><a href="reference.html#search_product" target="content_frame">Consultar un producto por b&uacute;squeda de nombre</a></li>
+										<li><a href="reference.html#get_product_by_id" target="content_frame">Consultar un producto por c&oacute;digo</a></li>
+										<li><a href="reference.html#get_product_by_barcode" target="content_frame">Consultar un producto por c&oacute;digo de barras</a></li>
+										<li><a href="reference.html#get_product_by_supplier" target="content_frame">Consultar un producto por el c&oacute;digo interno del sistema del proveedor</a></li>
+										<li><a href="reference.html#get_kardex" target="content_frame">Consultar el kardex de un producto</a></li>
+										<li><a href="reference.html#get_lots" target="content_frame">Consultar los lotes de un producto</a></li>
+										<li><a href="reference.html#get_reserves" target="content_frame">Consultar los reservados de un producto</a></li>
+										<li><a href="reference.html#edit_product" target="content_frame">Editar un producto</a></li>
+										<li><a href="reference.html#add_remove_supplier_product" target="content_frame">Agregar o quitar un proveedor a un producto</a></li>
+										<li><a href="reference.html#delete_product" target="content_frame">Eliminar un producto</a></li>
+										<li><a href="reference.html#get_manufacturer_products" target="content_frame">Consultar lista de productos pertenecientes a una casa</a></li>
+										<li><a href="reference.html#get_supplier_products" target="content_frame">Consultar lista de productos pertenecientes a un proveedor</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#units_of_measure" target="content_frame">Unidades de Medida</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_unit_of_measure" target="content_frame">Crear una unidad de medida</a></li>
+										<li><a href="reference.html#get_unit_of_measure" target="content_frame">Consultar una unidad de medida</a></li>
+										<li><a href="reference.html#edit_unit_of_measure" target="content_frame">Editar una unidad de medida</a></li>
+										<li><a href="reference.html#delete_unit_of_measure" target="content_frame">Eliminar una unidad de medida</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#manufacturers" target="content_frame">Casas</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_manufacturer" target="content_frame">Crear una casa</a></li>
+										<li><a href="reference.html#get_manufacturer" target="content_frame">Consultar una casa</a></li>
+										<li><a href="reference.html#edit_manufacturer" target="content_frame">Editar una casa</a></li>
+										<li><a href="reference.html#delete_manufacturer" target="content_frame">Eliminar una casa</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#suppliers" target="content_frame">Proveedores</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_supplier" target="content_frame">Crear un proveedor</a></li>
+										<li><a href="reference.html#get_supplier" target="content_frame">Consultar un proveedor</a></li>
+										<li><a href="reference.html#edit_supplier" target="content_frame">Editar un proveedor</a></li>
+										<li><a href="reference.html#delete_supplier" target="content_frame">Eliminar un proveedor</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#branches" target="content_frame">Sucursales</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_branch" target="content_frame">Crear una sucursal</a></li>
+										<li><a href="reference.html#get_branch" target="content_frame">Consultar una sucursal</a></li>
+										<li><a href="reference.html#edit_branch" target="content_frame">Editar una sucursal</a></li>
+										<li><a href="reference.html#delete_branch" target="content_frame">Eliminar una sucursal</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><span><b><a href="reference.html#movements" target="content_frame">Movimientos</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#receipts" target="content_frame">Recibos (Compras)</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_receipt" target="content_frame">Crear una recibo</a></li>
+										<li><a href="reference.html#get_receipt_by_id" target="content_frame">Consultar un recibo por su numero</a></li>
+										<li><a href="reference.html#search_receipt" target="content_frame">Consultar un recibo en un rango de fechas</a></li>
+										<li><a href="reference.html#print_receipt" target="content_frame">Imprimir un recibo</a></li>
+										<li><a href="reference.html#cancel_receipt" target="content_frame">Anular un recibo</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#entry_adjustment" target="content_frame">Vales de Entrada</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_entry_adjustment" target="content_frame">Crear un vale de entrada</a></li>
+										<li><a href="reference.html#get_entry_adjustment_by_id" target="content_frame">Consultar un vale de entrada por su numero</a></li>
+										<li><a href="reference.html#search_entry_adjustment" target="content_frame">Consultar un vale de entrada en un rango de fechas</a></li>
+										<li><a href="reference.html#print_entry_adjustment" target="content_frame">Imprimir un vale de entrada</a></li>
+										<li><a href="reference.html#cancel_entry_adjustment" target="content_frame">Anular un vale de entrada</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#withdraw_adjustment" target="content_frame">Vale de Salida</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_withdraw_adjustment" target="content_frame">Crear un vale de salida</a></li>
+										<li><a href="reference.html#get_withdraw_adjustment_by_id" target="content_frame">Consultar un vale de salida por su numero</a></li>
+										<li><a href="reference.html#search_withdraw_adjustment" target="content_frame">Consultar un vale de salida en un rango de fechas</a></li>
+										<li><a href="reference.html#print_withdraw_adjustment" target="content_frame">Imprimir un vale de salida</a></li>
+										<li><a href="reference.html#cancel_withdraw_adjustment" target="content_frame">Anular un vale de salida</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#shipments" target="content_frame">Env&iacute;os</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_shipment" target="content_frame">Crear un env&iacute;o</a></li>
+										<li><a href="reference.html#get_shipment_by_id" target="content_frame">Consultar un env&iacute;o por su numero</a></li>
+										<li><a href="reference.html#search_shipment" target="content_frame">Consultar un env&iacute;o en un rango de fechas</a></li>
+										<li><a href="reference.html#print_shipment" target="content_frame">Imprimir un env&iacute;o</a></li>
+										<li><a href="reference.html#cancel_shipment" target="content_frame">Anular un env&iacute;o</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#purchase_returns" target="content_frame">Devoluciones</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_purchase_return" target="content_frame">Crear una devoluci&oacute;n</a></li>
+										<li><a href="reference.html#get_purchase_return_by_id" target="content_frame">Consultar una devoluci&oacute;n por su numero</a></li>
+										<li><a href="reference.html#search_purchase_return" target="content_frame">Consultar una devoluci&oacute;n en un rango de fechas</a></li>
+										<li><a href="reference.html#print_purchase_return" target="content_frame">Imprimir una devoluci&oacute;n</a></li>
+										<li><a href="reference.html#cancel_purchase_return" target="content_frame">Anular una devoluci&oacute;n</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#inventory_invoices" target="content_frame">Facturas</a></b></span>
+									<ul>
+										<li><a href="reference.html#inventory_get_invoice_by_serial_number" target="content_frame">Consultar una factura por su serie y numero</a></li>
+										<li><a href="reference.html#inventory_search_invoice" target="content_frame">Consultar una factura en un rango de fechas</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><span><b><a href="reference.html#inventory" target="content_frame">Inventariados</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#counting_templates" target="content_frame">Selectivos</a></b></span>
+									<ul>
+										<li><a href="reference.html#print_counting_templates_order_by_product" target="content_frame">Imprimir un selectivo ordenado por producto</a></li>
+										<li><a href="reference.html#print_counting_templates_order_by_manufacturer" target="content_frame">Imprimir un selectivo ordenado por casa</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#counts" target="content_frame">Conteos</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_count" target="content_frame">Crear un conteo</a></li>
+										<li><a href="reference.html#get_count_by_id" target="content_frame">Consultar un conteo por su numero</a></li>
+										<li><a href="reference.html#search_count" target="content_frame">Consultar un conteo en un rango de fechas</a></li>
+										<li><a href="reference.html#print_count" target="content_frame">Imprimir un conteo</a></li>
+										<li><a href="reference.html#edit_count" target="content_frame">Editar un conteo</a></li>
+										<li><a href="reference.html#delete_count" target="content_frame">Eliminar un conteo</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#comparisons" target="content_frame">Comparaciones</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_comparison" target="content_frame">Crear una comparaci&oacute;n</a></li>
+										<li><a href="reference.html#get_comparison_by_id" target="content_frame">Consultar una comparaci&oacute;n por su numero</a></li>
+										<li><a href="reference.html#search_comparison" target="content_frame">Consultar una comparaci&oacute;n en un rango de fechas</a></li>
+										<li><a href="reference.html#print_comparison" target="content_frame">Imprimir una comparaci&oacute;n</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><span><b><a href="reference.html#inventory_tools" target="content_frame">Herramientas</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#expired_lots_report" target="content_frame">Lotes Vencidos</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_expired_lots_report" target="content_frame">Consultar el reporte de lotes vencidos</a></li>
+										<li><a href="reference.html#print_expired_lots_report" target="content_frame">Imprimir el reporte de lotes vencidos</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#near_expiration_lots_report" target="content_frame">Lotes Pr&oacute;ximos a Vencer</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_near_expiration_lots_report" target="content_frame">Consultar el reporte de lotes pr&oacute;ximos a vencer</a></li>
+										<li><a href="reference.html#print_near_expiration_lots_report" target="content_frame">Imprimir el reporte de lotes pr&oacute;ximos a vencer</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#in_stock_report" target="content_frame">En Stock</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_in_stock_report" target="content_frame">Consultar el reporte de producto en stock</a></li>
+										<li><a href="reference.html#print_in_stock_report" target="content_frame">Imprimir el reporte de producto en stock</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#purchases_summary_by_product_report" target="content_frame">Resumen de Compras por Producto</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_purchases_summary_by_product_report" target="content_frame">Consultar el reporte de resumen compras por producto</a></li>
+										<li><a href="reference.html#print_purchases_summary_by_product_report" target="content_frame">Imprimir el reporte de resumen compras por producto</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#change_price_log" target="content_frame">Cambio de Precios a Productos</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_change_price_log" target="content_frame">Consultar la bit&aacute;cora de cambio de precios a productos</a></li>
+										<li><a href="reference.html#print_change_price_log" target="content_frame">Imprimir la bit&aacute;cora de cambio de precios a productos</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#cancel_documents_log" target="content_frame">Documentos Anulados</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_cancel_documents_log" target="content_frame">Consultar la bit&aacute;cora de documentos anulados</a></li>
+										<li><a href="reference.html#print_cancel_documents_log" target="content_frame">Imprimir la bit&aacute;cora de documentos anulados</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><span><b><a href="reference.html#pos_admin_module" target="content_frame">PARTE III: Modulo de POS Admin</a></b></span>
+					<ul>
+						<li><span><b><a href="reference.html#pos_admin_maintenance" target="content_frame">Mantenimiento</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#vat" target="content_frame">I.V.A.</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_vat" target="content_frame">Consultar el porcentaje del I.V.A.</a></li>
+										<li><a href="reference.html#edit_vat" target="content_frame">Editar el porcentaje del I.V.A.</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#correlatives" target="content_frame">Correlativos para Facturas</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_correlative" target="content_frame">Crear un correlativo</a></li>
+										<li><a href="reference.html#get_correlative" target="content_frame">Consultar un correlativo</a></li>
+										<li><a href="reference.html#delete_correlative" target="content_frame">Eliminar un correlativo</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#shifts" target="content_frame">Turnos de Caja</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_shift" target="content_frame">Crear un turno de caja</a></li>
+										<li><a href="reference.html#get_shift" target="content_frame">Consultar un turno de caja</a></li>
+										<li><a href="reference.html#edit_shift" target="content_frame">Editar un turno de caja</a></li>
+										<li><a href="reference.html#delete_shift" target="content_frame">Eliminar un turno de caja</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#banks" target="content_frame">Bancos</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_bank" target="content_frame">Crear un banco</a></li>
+										<li><a href="reference.html#get_bank" target="content_frame">Consultar un banco</a></li>
+										<li><a href="reference.html#edit_bank" target="content_frame">Editar un banco</a></li>
+										<li><a href="reference.html#delete_bank" target="content_frame">Eliminar un banco</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#bank_accounts" target="content_frame">Cuentas Bancarias</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_bank_account" target="content_frame">Crear una cuenta bancaria</a></li>
+										<li><a href="reference.html#get_bank_account" target="content_frame">Consultar una cuenta bancaria</a></li>
+										<li><a href="reference.html#edit_bank_account" target="content_frame">Editar una cuenta bancaria</a></li>
+										<li><a href="reference.html#delete_bank_account" target="content_frame">Eliminar una cuenta bancaria</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#payment_card_types" target="content_frame">Tipos de Tarjeta</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_payment_card_type" target="content_frame">Crear un tipo de tarjeta</a></li>
+										<li><a href="reference.html#get_payment_card_type" target="content_frame">Consultar un tipo de tarjeta</a></li>
+										<li><a href="reference.html#edit_payment_card_type" target="content_frame">Editar un tipo de tarjeta</a></li>
+										<li><a href="reference.html#delete_payment_card_type" target="content_frame">Eliminar un tipo de tarjeta</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#payment_card_brands" target="content_frame">Marcas de Tarjeta</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_payment_card_brand" target="content_frame">Crear una marca de tarjeta</a></li>
+										<li><a href="reference.html#get_payment_card_brand" target="content_frame">Consultar una marca de tarjeta</a></li>
+										<li><a href="reference.html#edit_payment_card_brand" target="content_frame">Editar una marca de tarjeta</a></li>
+										<li><a href="reference.html#delete_payment_card_brand" target="content_frame">Eliminar una marca de tarjeta</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#bonus" target="content_frame">Ofertas</a></b></span>
+									<ul>
+										<li><a href="reference.html#search_bonus" target="content_frame">Consultar las ofertas de un producto por b&uacute;squeda de nombre</a></li>
+										<li><a href="reference.html#get_bonus_by_product_id" target="content_frame">Consultar las ofertas de un producto por el c&oacute;digo</a></li>
+										<li><a href="reference.html#get_bonus_by_product_barcode" target="content_frame">Consultar las ofertas de un producto por el c&oacute;digo de barras</a></li>
+										<li><a href="reference.html#create_bonus" target="content_frame">Crear una oferta</a></li>
+										<li><a href="reference.html#delete_bonus" target="content_frame">Eliminar una oferta</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><span><b><a href="reference.html#pos_admin_cash_register" target="content_frame">Caja</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#pos_admin_invoices" target="content_frame">Facturas</a></b></span>
+									<ul>
+										<li><a href="reference.html#pos_admin_get_invoice_by_wday_serial_number" target="content_frame">Consultar una factura por jornada, por su serie y numero</a></li>
+										<li><a href="reference.html#pos_admin_search_invoice" target="content_frame">Consultar una factura en un rango de fechas de jornadas</a></li>
+										<li><a href="reference.html#pos_admin_get_invoice_payment_cards" target="content_frame">Consultar tarjetas de una factura</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#pos_admin_deposits" target="content_frame">Dep&oacute;sitos</a></b></span>
+									<ul>
+										<li><a href="reference.html#pos_admin_get_deposit_by_wday_id" target="content_frame">Consultar un deposito por jornada y por su numero</a></li>
+										<li><a href="reference.html#pos_admin_get_deposit_by_wday_slip_number" target="content_frame">Consultar un deposito por jornada y por su n&uacute;mero de boleta</a></li>
+										<li><a href="reference.html#pos_admin_search_deposit" target="content_frame">Consultar un deposito en un rango de fechas de jornadas</a></li>
+										<li><a href="reference.html#pos_admin_cancel_deposit" target="content_frame">Anular un deposito</a></li>
+										<li><a href="reference.html#pos_admin_confirm_deposit" target="content_frame">Confirmar un deposito</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><span><b><a href="reference.html#pos_admin_tools" target="content_frame">Herramientas</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#inactive_products_report" target="content_frame">Productos Sin Movimiento</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_inactive_products_report" target="content_frame">Consultar el reporte de productos sin movimiento</a></li>
+										<li><a href="reference.html#print_inactive_products_report" target="content_frame">Imprimir el reporte de productos sin movimiento</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#sales_ranking_report" target="content_frame">Ranking de Ventas por Producto</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_sales_ranking_report" target="content_frame">Consultar el reporte de ranking de ventas por producto</a></li>
+										<li><a href="reference.html#print_sales_ranking_report" target="content_frame">Imprimir el reporte de ranking de ventas por producto</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#sales_summary_by_product_report" target="content_frame">Resumen de Ventas por Producto</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_sales_summary_by_product_report" target="content_frame">Consultar el reporte de resumen de ventas por producto</a></li>
+										<li><a href="reference.html#print_sales_summary_by_product_report" target="content_frame">Imprimir el reporte de resumen de ventas por producto</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#sales_summary_by_user_account_report" target="content_frame">Resumen de Ventas por Usuario</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_sales_summary_by_user_account_report" target="content_frame">Consultar el reporte de resumen de ventas por usuario</a></li>
+										<li><a href="reference.html#print_sales_summary_by_user_account_report" target="content_frame">Imprimir el reporte de resumen de ventas por usuario</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#sales_purchases_stadistics_report" target="content_frame">Estad&iacute;sticas de Ventas y Compras</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_sales_purchases_stadistics_report_order_by_product" target="content_frame">Consultar el reporte de estad&iacute;sticas de ventas y compras ordenado por producto</a></li>
+										<li><a href="reference.html#get_sales_purchases_stadistics_report_order_by_manufacturer" target="content_frame">Consultar el reporte de estad&iacute;sticas de ventas y compras ordenado por casa</a></li>
+										<li><a href="reference.html#print_sales_purchases_stadistics_report" target="content_frame">Imprimir el reporte de estad&iacute;sticas de ventas y compras</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#in_stock_monetary_report" target="content_frame">En Stock (Monetario)</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_in_stock_monetary_report" target="content_frame">Consultar el reporte de producto en stock</a></li>
+										<li><a href="reference.html#print_in_stock_monetary_report" target="content_frame">Imprimir el reporte de producto en stock</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#bonus_created_report" target="content_frame">Ofertas Creadas</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_bonus_created_report" target="content_frame">Consultar el reporte de ofertas creadas</a></li>
+										<li><a href="reference.html#print_bonus_created_report" target="content_frame">Imprimir el reporte de ofertas creadas</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#discounts_log" target="content_frame">Descuentos a Facturas</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_discounts_log" target="content_frame">Consultar la bit&aacute;cora de descuentos a facturas</a></li>
+										<li><a href="reference.html#print_discounts_log" target="content_frame">Imprimir la bit&aacute;cora de descuentos</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#cash_cancel_document_log" target="content_frame">Documentos Anulados (Caja)</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_cash_cancel_document_log" target="content_frame">Consultar la bit&aacute;cora de documentos anulados</a></li>
+										<li><a href="reference.html#print_cash_cancel_document_log" target="content_frame">Imprimir la bit&aacute;cora de documentos anulados</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#invoice_transaction_log" target="content_frame">Transacciones de Facturas</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_invoice_transaction_log" target="content_frame">Consultar la bit&aacute;cora de transacciones de facturas</a></li>
+										<li><a href="reference.html#print_invoice_transaction_log" target="content_frame">Imprimir la bit&aacute;cora de transacciones de facturas</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#resolution_log" target="content_frame">Resoluciones</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_resolution_log" target="content_frame">Consultar la bit&aacute;cora de resoluciones</a></li>
+										<li><a href="reference.html#print_resolution_log" target="content_frame">Imprimir la bit&aacute;cora de resoluciones</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#sales_ledger" target="content_frame">Libro de Ventas</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_sales_ledger" target="content_frame">Obtener el libro de ventas</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><span><b><a href="reference.html#admin_module" target="content_frame">PARTE IV: Modulo de Administraci&oacute;n</a></b></span>
+					<ul>
+						<li><span><b><a href="reference.html#admin_maintenance" target="content_frame">Mantenimiento</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#user_accounts" target="content_frame">Cuentas de Usuario</a></b></span>
+									<ul>
+										<li><a href="reference.html#create_user_account" target="content_frame">Crear una cuenta de usuario</a></li>
+										<li><a href="reference.html#get_user_account" target="content_frame">Consultar una cuenta de usuario</a></li>
+										<li><a href="reference.html#edit_user_account" target="content_frame">Editar una cuenta de usuario</a></li>
+										<li><a href="reference.html#delete_user_account" target="content_frame">Eliminar una cuenta de usuario</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#company" target="content_frame">Empresa</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_company" target="content_frame">Consultar los datos de la empresa</a></li>
+										<li><a href="reference.html#edit_company" target="content_frame">Editar los datos de la empresa</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#reserves" target="content_frame">Reservados</a></b></span>
+									<ul>
+										<li><a href="reference.html#search_reserves" target="content_frame">Consultar los reservados de un producto por b&uacute;squeda de nombre</a></li>
+										<li><a href="reference.html#get_reserves_by_product_id" target="content_frame">Consultar los reservados de un producto por el c&oacute;digo</a></li>
+										<li><a href="reference.html#get_reserves_by_product_barcode" target="content_frame">Consultar los reservados de un producto por el c&oacute;digo de barras</a></li>
+										<li><a href="reference.html#delete_reserve" target="content_frame">Eliminar un reservado</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><span><b><a href="reference.html#admin_tools" target="content_frame">Herramientas</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#backup" target="content_frame">Backup</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_backup" target="content_frame">Obtener un backup</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#general_closure" target="content_frame">Cierre General</a></b></span>
+									<ul>
+										<li><a href="reference.html#apply_general_closure" target="content_frame">Realizar el cierre general</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><span><b><a href="reference.html#pos_module" target="content_frame">PARTE V: Modulo de P.O.S.</a></b></span>
+					<ul>
+						<li><span><b><a href="reference.html#point_of_sale" target="content_frame">P.O.S. (Punto de Venta)</a></b></span>
+							<ul>
+								<li><span><b><a href="reference.html#sales" target="content_frame">Facturaci&oacute;n</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_sales" target="content_frame">Ingresar a la secci&oacute;n de “Facturaci&oacute;n”</a></li>
+										<li><span><a href="reference.html#create_invoice" target="content_frame">Crear una factura</a></span>
+											<ul>
+												<li><a href="reference.html#set_customer_invoice" target="content_frame">Ingresar los datos del cliente</a></li>
+												<li><a href="reference.html#change_customer_invoice" target="content_frame">Cambiar los datos del cliente</a></li>
+												<li><a href="reference.html#add_detail_by_product_barcode_invoice" target="content_frame">Agregar un detalle por c&oacute;digo de barra del producto</a></li>
+												<li><a href="reference.html#add_detail_search_product_invoice" target="content_frame">Agregar un detalle por b&uacute;squeda de nombre del producto</a></li>
+												<li><a href="reference.html#remove_detail_invoice" target="content_frame">Quitar un detalle</a></li>
+												<li><a href="reference.html#create_discount" target="content_frame">Hacer un descuento a la factura</a></li>
+												<li><a href="reference.html#create_cash_receipt" target="content_frame">Crear un recibo de caja (Guardar factura)</a></li>
+												<li><a href="reference.html#set_cash_cash_receipt" target="content_frame">Ingresar efectivo al recibo de caja</a></li>
+												<li><a href="reference.html#add_voucher_cash_receipt" target="content_frame">Agregar un voucher al recibo de caja  (Tarjeta de Cr&eacute;dito/Debito)</a></li>
+												<li><a href="reference.html#remove_voucher_cash_receipt" target="content_frame">Quitar un voucher al recibo de caja  (Tarjeta de Cr&eacute;dito/Debito)</a></li>
+												<li><a href="reference.html#save_cash_receipt" target="content_frame">Guardar el recibo de caja</a></li>
+											</ul>
+										</li>
+										<li><a href="reference.html#pos_get_invoice_by_navigation" target="content_frame">Consultar una factura por navegaci&oacute;n</a></li>
+										<li><a href="reference.html#pos_get_invoice_by_serial_number" target="content_frame">Consultar una factura por serie y numero</a></li>
+										<li><a href="reference.html#pos_get_invoice_payment_cards" target="content_frame">Consultar las tarjetas de una factura</a></li>
+										<li><a href="reference.html#pos_cancel_invoice" target="content_frame">Anular una factura</a></li>
+										<li><a href="reference.html#sales_get_product_by_barcode" target="content_frame">Consultar un producto por c&oacute;digo de barra</a></li>
+										<li><a href="reference.html#sales_get_product_by_id" target="content_frame">Consultar un producto por c&oacute;digo</a></li>
+										<li><a href="reference.html#sales_search_product" target="content_frame">Consultar un producto por b&uacute;squeda de nombre</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#pos_deposits" target="content_frame">Dep&oacute;sitos</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_deposits" target="content_frame">Ingresar a la secci&oacute;n de “Dep&oacute;sitos”</a></li>
+										<li><span><a href="reference.html#create_deposit" target="content_frame">Crear un deposito</a></span>
+											<ul>
+												<li><a href="reference.html#set_slip_number_deposit" target="content_frame">Ingresar datos de la boleta</a></li>
+												<li><a href="reference.html#add_cash_deposit" target="content_frame">Agregar efectivo</a></li>
+												<li><a href="reference.html#remove_cash_deposit" target="content_frame">Quitar efectivo</a></li>
+												<li><a href="reference.html#save_deposit" target="content_frame">Guardar el deposito</a></li>
+											</ul>
+										</li>
+										<li><a href="reference.html#pos_get_deposit_by_navigation" target="content_frame">Consultar un deposito por navegaci&oacute;n</a></li>
+										<li><a href="reference.html#pos_get_deposit_by_id" target="content_frame">Consultar un deposito por numero</a></li>
+										<li><a href="reference.html#pos_get_deposit_by_slip_number" target="content_frame">Consultar un deposito por numero de boleta</a></li>
+										<li><a href="reference.html#pos_cancel_deposit" target="content_frame">Anular un deposito</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#pos_cash_register" target="content_frame">Caja Opciones</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_cash_register" target="content_frame">Ingresar a la secci&oacute;n de “Caja Opciones”</a></li>
+										<li><a href="reference.html#close_cash_register" target="content_frame">Cerrar una caja</a></li>
+										<li><a href="reference.html#get_preliminary_sales_report" target="content_frame">Consultar un corte de caja preliminar</a></li>
+										<li><a href="reference.html#get_sales_report" target="content_frame">Consultar un corte de caja</a></li>
+										<li><a href="reference.html#print_sales_report" target="content_frame">Imprimir un corte de caja</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#working_day" target="content_frame">Jornada Opciones</a></b></span>
+									<ul>
+										<li><a href="reference.html#get_working_day" target="content_frame">Ingresar a la secci&oacute;n de “Jornada Opciones”</a></li>
+										<li><a href="reference.html#close_working_day" target="content_frame">Cerrar una jornada</a></li>
+										<li><a href="reference.html#get_preliminary_general_sales_report" target="content_frame">Consultar un reporte de ventas preliminar</a></li>
+										<li><a href="reference.html#get_general_sales_report" target="content_frame">Consultar un reporte de ventas</a></li>
+										<li><a href="reference.html#print_general_sales_report" target="content_frame">Imprimir un reporte de ventas</a></li>
+									</ul>
+								</li>
+								<li><span><b><a href="reference.html#pos_products" target="content_frame">Productos</a></b></span>
+									<ul>
+										<li><a href="reference.html#pos_get_product_by_barcode" target="content_frame">Consultar un producto por c&oacute;digo de barra</a></li>
+										<li><a href="reference.html#pos_get_product_by_id" target="content_frame">Consultar un producto por c&oacute;digo</a></li>
+										<li><a href="reference.html#pos_search_product" target="content_frame">Consultar un producto por b&uacute;squeda de nombre</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><span>Manuales</span>
+			<ul>
+				<li><span><b><a href="generalities.html#title" target="content_frame">Generalidades</a></b></span>
+					<ul>
+						<li><a href="generalities.html#navigation" target="content_frame">Navegaci&oacute;n</a></li>
+						<li><a href="generalities.html#structure" target="content_frame">Estructura</a></li>
+						<li><a href="generalities.html#console" target="content_frame">Consola</a></li>
+						<li><a href="generalities.html#forms" target="content_frame">Formularios</a></li>
+					</ul>
+				</li>
+				<li><span><b><a href="entry_toolbar.html#title" target="content_frame">Barra de Ingresos</a></b></span>
+					<ul>
+						<li><a href="entry_toolbar.html#introduction" target="content_frame">Introducci&oacute;n</a></li>
+						<li><a href="entry_toolbar.html#specifications" target="content_frame">Especificaciones</a></li>
+						<li><a href="entry_toolbar.html#usage" target="content_frame">Modo de uso</a></li>
+					</ul>
+				</li>
+				<li><span><b><a href="withdraw_toolbar.html#title" target="content_frame">Barra de Egresos</a></b></span>
+					<ul>
+						<li><a href="withdraw_toolbar.html#introduction" target="content_frame">Introducci&oacute;n</a></li>
+						<li><a href="withdraw_toolbar.html#specifications" target="content_frame">Especificaciones</a></li>
+						<li><a href="withdraw_toolbar.html#usage" target="content_frame">Modo de uso</a></li>
+					</ul>
+				</li>
+				<li><span><b><a href="inventory.html#title" target="content_frame">Inventariados</a></b></span>
+					<ul>
+						<li><a href="inventory.html#introduction" target="content_frame">Introducci&oacute;n</a></li>
+						<li><a href="inventory.html#counting_templates" target="content_frame">Selectivos</a></li>
+						<li><a href="inventory.html#counts" target="content_frame">Conteos</a></li>
+						<li><a href="inventory.html#comparisons" target="content_frame">Comparaciones</a></li>
+					</ul>
+				</li>
+				<li><span><b><a href="count_toolbar.html#title" target="content_frame">Barra de Conteo</a></b></span>
+					<ul>
+						<li><a href="count_toolbar.html#introduction" target="content_frame">Introducci&oacute;n</a></li>
+						<li><a href="count_toolbar.html#specifications" target="content_frame">Especificaciones</a></li>
+						<li><a href="count_toolbar.html#manual_usage" target="content_frame">Modo de uso (manual)</a></li>
+						<li><a href="count_toolbar.html#file_usage" target="content_frame">Modo de uso (recolector de barras)</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>
