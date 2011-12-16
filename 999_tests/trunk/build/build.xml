@@ -23,6 +23,11 @@
 			   propertyName="libs_dir"
 			   promptChar=" >" />
 			   
+		<input message="Enter path for PEAR libs"
+			   defaultValue="C:\xampp\php\pear"
+			   propertyName="pear_dir"
+			   promptChar=" >" />
+			   
 		<input message="Enter path for MySQL bin files"
 			   defaultValue="C:\xampp\mysql\bin"
 			   propertyName="mysql_dir"
@@ -49,6 +54,17 @@
 			<param value="/"/>
 			<param value="${fixed_mysql_dir}"/>
 		</php>
+		
+		<php function="rtrim" returnProperty="fixed_pear_dir">
+			<param value="${pear_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_pear_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_pear_dir}"/>
+		</php>
 	</target>
 
 	<target name="build" depends="gather_info">
@@ -59,6 +75,7 @@
 			<filterchain>
 				<replacetokens>
 					<token key="libs_dir" value="${fixed_libs_dir}/" />
+					<token key="pear_dir" value="${fixed_pear_dir}/" />
 					<token key="mysql_dir" value="${fixed_mysql_dir}/" />
 					<token key="db_server" value="${db_server}" />
 					<token key="db_database" value="${db_database}" />

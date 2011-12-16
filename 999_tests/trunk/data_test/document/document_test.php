@@ -1,6 +1,4 @@
 <?php
-require_once('config/config.php');
-
 require_once('business/document.php');
 require_once('business/cash.php');
 require_once('business/user_account.php');

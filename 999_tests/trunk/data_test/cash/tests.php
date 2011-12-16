@@ -1,6 +1,5 @@
 <?php
-set_include_path(get_include_path() . ';c:\\Users\\pc\\999_project\\999_middle\\' .
-		';c:\\Users\\pc\\999_project\\999_tests\\');
+require_once('../../config/config.php');
 
 define('PHPUnit_MAIN_METHOD', 'AppTests::main');
 

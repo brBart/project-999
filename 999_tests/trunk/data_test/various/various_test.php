@@ -1,6 +1,5 @@
 <?php
 require_once('business/various.php');
-require_once('config/config.php');
 require_once('PHPUnit/Extensions/Database/TestCase.php');
 
 class CompanyDAMTest extends PHPUnit_Extensions_Database_TestCase{

@@ -20,5 +20,6 @@ define('SALES_LEDGER_DIR', SITE_ROOT . SALES_LEDGER_DIR_NAME);
 define('COMMANDS_DIR', SITE_ROOT . '/commands/');
 
 define('LIBS_999', '@libs_dir@');
-set_include_path(get_include_path() . ';' . LIBS_999 . ';' . SITE_ROOT);
+define('PEAR_DIR', '@pear_dir@');
+set_include_path(get_include_path() . ';' . LIBS_999 . ';' . SITE_ROOT . ';' . PEAR_DIR);
 ?>

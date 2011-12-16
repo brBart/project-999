@@ -1,6 +1,4 @@
 <?php
-require_once('config/config.php');
-
 require_once('business/list.php');
 require_once('PHPUnit/Extensions/Database/TestCase.php');
 

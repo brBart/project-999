@@ -1,6 +1,5 @@
 <?php
 require_once('business/agent.php');
-require_once('config/config.php');
 require_once('PHPUnit/Extensions/Database/TestCase.php');
 require_once('PHPUnit/Extensions/Database/DataSet/DataSetFilter.php');
 

@@ -1,6 +1,5 @@
 <?php
 require_once('business/document_search.php');
-require_once('config/config.php');
 require_once('PHPUnit/Extensions/Database/TestCase.php');
 
 class DepositSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
