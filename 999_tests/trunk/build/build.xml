@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="gather_info">
+		<input message="Enter database server DSN"
+			   defaultValue="localhost"
+			   propertyName="db_server"
+			   promptChar=" >" />
+			   
+		<input message="Enter database name"
+			   propertyName="db_database"
+			   promptChar=" >" />
+			   
+		<input message="Enter username to connect to database server"
+			   propertyName="db_user"
+			   promptChar=" >" />
+			   
+		<input message="Enter password"
+			   propertyName="db_password"
+			   promptChar=" >" />
+		
+		<input message="Enter path for the lib (middle) files"
+			   propertyName="libs_dir"
+			   promptChar=" >" />
+			   
+		<input message="Enter path for MySQL bin files"
+			   defaultValue="C:\xampp\mysql\bin"
+			   propertyName="mysql_dir"
+			   promptChar=" >" />
+			   
+		<php function="rtrim" returnProperty="fixed_libs_dir">
+			<param value="${libs_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_libs_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_libs_dir}"/>
+		</php>
+		
+		<php function="rtrim" returnProperty="fixed_mysql_dir">
+			<param value="${mysql_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_mysql_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_mysql_dir}"/>
+		</php>
+	</target>
+
+	<target name="build" depends="gather_info">
+		<copy todir="../config">
+			<fileset dir=".">
+				<exclude name="build.xml" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="libs_dir" value="${fixed_libs_dir}/" />
+					<token key="mysql_dir" value="${fixed_mysql_dir}/" />
+					<token key="db_server" value="${db_server}" />
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="db_password" value="${db_password}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		
+		<mkdir dir="../backup" />
+		<mkdir dir="../sales_ledger" />
+	</target>
+	
+	<target name="main" depends="build">
+		<echo>Build completed.</echo>
+	</target>
+	
+	<target name="clean">
+		<delete dir="../config" verbose="true" />
+		<delete dir="../backup" verbose="true" />
+		<delete dir="../sales_ledger" verbose="true" />
+	</target>
+</project>
