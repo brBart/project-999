@@ -70,6 +70,6 @@
 	</target>
 	
 	<target name="main" depends="remove_help">
-		<echo>Ya puede eliminar la carpeta @install_dir@.</echo>
+		<echo>YA PUEDE ELIMINAR LA CARPETA @install_dir@.</echo>
 	</target>
 </project>
