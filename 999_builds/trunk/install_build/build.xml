@@ -52,6 +52,10 @@
 			   propertyName="address"
 			   promptChar=" >" />
 			   
+		<input message="Ingrese el nombre de la bodega"
+			   propertyName="warehouse_name"
+			   promptChar=" >" />
+			   
 		<echo>Instalando la base de datos...</echo>
 		
 		<copy todir="tmp">
@@ -69,6 +73,7 @@
 					<token key="corporate_name" value="${corporate_name}" />
 					<token key="telephone" value="${telephone}" />
 					<token key="address" value="${address}" />
+					<token key="warehouse_name" value="${warehouse_name}" />
 				</replacetokens>
 			</filterchain>
 		</copy>

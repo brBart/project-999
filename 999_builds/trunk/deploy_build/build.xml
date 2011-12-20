@@ -61,8 +61,7 @@
 	<property name="qtxmlpatternsdll" value="QtXmlPatterns4.dll" />
 	
 	<target name="copy_exe_files" depends="copy_web_files">
-		<input message="Ingrese el nombre del ejecutable"
-			   defaultValue="bobs_pos.exe"
+		<input message="Ingrese el nombre del ejecutable del POS"
 			   propertyName="exe_file"
 			   promptChar=" >" />
 	

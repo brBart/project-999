@@ -31,16 +31,11 @@ INSERT INTO `action` (`action_id`, `name`) VALUES
 -- Volcar la base de datos para la tabla `bank`
 --
 
-INSERT INTO `bank` (`bank_id`, `name`) VALUES
-(1, 'GyT Continental'),
-(2, 'Industrial')$$
 
 --
 -- Volcar la base de datos para la tabla `bank_account`
 --
 
-INSERT INTO `bank_account` (`bank_account_number`, `bank_id`, `name`) VALUES
-('29-5000036-6', 1, 'Drogueria Jose Gil Jutiapa')$$
 
 --
 -- Volcar la base de datos para la tabla `bonus`
@@ -515,8 +510,6 @@ INSERT INTO `root` (`password`) VALUES
 -- Volcar la base de datos para la tabla `shift`
 --
 
-INSERT INTO `shift` (`shift_id`, `name`, `time_table`) VALUES
-(1, 'Diurno', '8 am - 6 pm')$$
 
 --
 -- Volcar la base de datos para la tabla `shipment`
