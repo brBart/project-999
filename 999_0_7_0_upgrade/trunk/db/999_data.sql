@@ -1,5 +1,7 @@
 DELIMITER $$
 
+UPDATE bonus SET user_account_username = '@bonus_username@'$$
+
 UPDATE company SET warehouse_name = '@warehouse_name@'$$
 
 UPDATE role_subject_action SET value = 1 WHERE role_id = 5 AND subject_id = 1 AND action_id = 1;
