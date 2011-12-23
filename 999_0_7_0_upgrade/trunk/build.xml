@@ -37,9 +37,14 @@
 			   propertyName="db_database"
 			   promptChar=" >" />
 		
+		<input message="Ingrese el nombre del usuario con cual Bobs se conecta a la base de datos"
+			   defaultValue="bobs_user"
+			   propertyName="db_user"
+			   promptChar=" >" />
+		
 		<input message="Ingrese el nombre del usuario para identificar las creaciones de ofertas a la fecha"
-					   propertyName="bonus_username"
-					   promptChar=" >" />
+		  	   propertyName="bonus_username"
+			   promptChar=" >" />
 			   
 		<input message="Ingrese el nombre de la bodega"
 			   propertyName="warehouse_name"
@@ -51,10 +56,14 @@
 			<fileset dir="db" />
 			<filterchain>
 				<replacetokens>
+					<token key="db_database" value="${db_database}" />
 					<token key="db_user" value="${db_user}" />
 					<token key="warehouse_name" value="${warehouse_name}" />
 					<token key="bonus_username" value="${bonus_username}" />
 				</replacetokens>
+				<replaceregexp>
+						<regexp pattern="DELIMITER \$\$" replace="-- DELIMITER $$" />
+				</replaceregexp>
 			</filterchain>
 		</copy>
 		

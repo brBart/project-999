@@ -1,5 +1,7 @@
 DELIMITER $$
 
+USE @db_database@$$
+
 UPDATE bonus SET user_account_username = '@bonus_username@'$$
 
 UPDATE company SET warehouse_name = '@warehouse_name@'$$

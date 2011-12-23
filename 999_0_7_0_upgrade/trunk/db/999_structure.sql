@@ -1,5 +1,7 @@
 DELIMITER $$
 
+USE @db_database@$$
+
 ALTER TABLE bonus ADD COLUMN user_account_username varchar(10) collate utf8_unicode_ci NOT NULL AFTER bonus_id$$
 
 ALTER TABLE company MODIFY corporate_name varchar(100) collate utf8_unicode_ci NOT NULL$$
