@@ -97,6 +97,8 @@
 		
 		<append destFile="${bobs_dir}/front/config/config.php" file="files/front/config/config.php" />
 		
+		<copy file="files/front/config/site.conf" tofile="${bobs_dir}/front/config/site.conf" overwrite="true" />
+		
 		<delete file="${bobs_dir/front/smarty_plugins/function.get_company_name.php}" />
 		
 		<delete file="${bobs_dir/front/templates/log_form_html.tpl}" />
