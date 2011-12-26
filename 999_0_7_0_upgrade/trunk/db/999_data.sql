@@ -32,3 +32,4 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (43, 'sales_summary_user_account_report'),
 (44, 'purchases_summary_product_report')$$
 
+DELETE FROM discount WHERE percentage = 0;
