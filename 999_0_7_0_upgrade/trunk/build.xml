@@ -75,11 +75,11 @@
 	<target name="update_middle" depends="update_database">
 		<echo>Actualizando las librerias (middle)...</echo>
 		
-		<copy todir="${bobs_dir}/middle/business">
+		<copy todir="${bobs_dir}/middle/business" overwrite="true">
 			<fileset dir="files/middle/business" />
 		</copy>
 		
-		<copy todir="${bobs_dir}/middle/data">
+		<copy todir="${bobs_dir}/middle/data" overwrite="true">
 			<fileset dir="files/middle/data" />
 		</copy>
 	</target>
@@ -101,19 +101,19 @@
 		
 		<delete file="${bobs_dir/front/templates/log_form_html.tpl}" />
 		
-		<copy todir="${bobs_dir}/front/commands">
+		<copy todir="${bobs_dir}/front/commands" overwrite="true">
 			<fileset dir="files/front/commands" />
 		</copy>
 		
-		<copy todir="${bobs_dir}/front/scripts">
+		<copy todir="${bobs_dir}/front/scripts" overwrite="true">
 			<fileset dir="files/front/scripts" />
 		</copy>
 		
-		<copy todir="${bobs_dir}/front/smarty_plugins">
+		<copy todir="${bobs_dir}/front/smarty_plugins" overwrite="true">
 			<fileset dir="files/front/smarty_plugins" />
 		</copy>
 		
-		<copy todir="${bobs_dir}/front/templates">
+		<copy todir="${bobs_dir}/front/templates" overwrite="true">
 			<fileset dir="files/front/templates" />
 		</copy>
 	</target>
@@ -121,11 +121,11 @@
 	<target name="update_help" depends="update_front">
 		<echo>Actualizando los archivos para el soporte (help)...</echo>
 	
-		<copy todir="${bobs_dir}/help/WebContent/styles">
+		<copy todir="${bobs_dir}/help/WebContent/styles" overwrite="true">
 			<fileset dir="files/help/WebContent/styles" />
 		</copy>
 		
-		<copy todir="${bobs_dir}/help/WebContent">
+		<copy todir="${bobs_dir}/help/WebContent" overwrite="true">
 			<fileset dir="files/help/WebContent">
 				<exclude name="styles/" />
 			</fileset>
@@ -133,7 +133,7 @@
 	</target>
 	
 	<target name="copy_version" depends="update_help">
-		<copy file="version.txt" tofile="${bobs_dir}/version.txt" />
+		<copy file="version.txt" tofile="${bobs_dir}/version.txt" overwrite="true" />
 	</target>
 	
 	<target name="main" depends="copy_version">
