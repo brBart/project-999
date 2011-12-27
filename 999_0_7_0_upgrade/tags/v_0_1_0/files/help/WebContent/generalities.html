@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Documentaci&oacute;n BOBS Retail</title>
+<link href="styles/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1><a name="title">Generalidades</a></h1>
+	<h4><a name="navigation">Navegaci&oacute;n</a></h4>
+	<p>El sistema BOBS Retail que al igual que otros sistemas de informaci&oacute;n de &uacute;ltima generaci&oacute;n se utiliza o se manipula a trav&eacute;s de una interfaz grafica que normalmente vemos en ambientes Windows. Esto significa que para poder navegar a trav&eacute;s de los men&uacute;s y formularios del sistema basta con tener una familiarizaci&oacute;n con Windows y una experiencia b&aacute;sica en navegaci&oacute;n en internet.</p>
+	<p>Para usuarios cuya experiencia se basa solamente en los antiguos sistemas de consola (como DOS) pr&aacute;cticamente lo que cambia es la navegaci&oacute;n entre campos utilizando el teclado, que anteriormente se realizaba con la tecla ENTER, ahora se navega con la tecla TAB (un est&aacute;ndar en todos los ambientes gr&aacute;ficos). Y para tener una experiencia m&aacute;s natural e intuitiva se utiliza el mouse.</p>
+	<p>Si vemos la siguiente figura 1, vemos que el formulario para ingresar al sistema contiene 3 elementos; 2 campos y un bot&oacute;n. Para navegar este formulario sin necesidad del mouse, se presiona la tecla Tab.</p>
+	<div class="img_example">
+		<img alt="formulario login" src="images/login.jpg" /><br />
+		<span>Figura 1.</span>
+	</div>
+	<p>Volviendo a la figura 1, vemos que el cursor se encuentra posicionado en el campo “Usuario”. Si quisi&eacute;ramos posicionarnos en el bot&oacute;n “Iniciar Sesi&oacute;n” sin la ayuda del mouse, hacemos lo siguiente:</p>
+	<ol>
+		<li>Presionamos la tecla TAB y el cursor se posicionara en el siguiente elemento, en este caso se trata del campo “Contrase&ntilde;a”.</li>
+		<li>Volvemos a presionar la tecla TAB y el cursor se posicionara en el siguiente elemento, el bot&oacute;n “Iniciar Sesi&oacute;n”.</li>
+	</ol>
+	<p>En el caso que el formulario tuviera m&aacute;s elementos, seguimos navegando con la tecla TAB. Para regresar se utiliza una combinaci&oacute;n de teclas, SHIFT + TAB que trabaja de la misma manera solo que en sentido contrario.</p>
+	<h4><a name="structure">Estructura</a></h4>
+	<p>Cada modulo del sistema cuenta con una “Barra de Informaci&oacute;n” posicionado en la parte superior  el cual se divide en 3 partes (ver figura 2):</p>
+	<ol>
+		<li>La primera parte que se encuentra del lado izquierdo indica el nombre de la bodega y el modulo en que se encuentra, ej.: NOMBRE BODEGA – MODULO.</li>
+		<li>La parte de en medio indica que usuario est&aacute; operando el modulo actualmente.</li>
+		<li>Y por ultimo del lado derecho nos indica la ubicaci&oacute;n dentro del modulo o en que secci&oacute;n se est&aacute; actualmente.</li>
+	</ol>
+	<div class="img_example">
+		<img alt="barra de informaci&oacute;n" src="images/information_bar.jpg" /><br />
+		<span>Figura 2.</span>
+	</div>
+	<p>Debajo de la barra de informaci&oacute;n se encuentra el “Men&uacute; Principal”. Cada modulo en el sistema cuenta con uno en forma horizontal excepto el POS que lo tiene en forma vertical (ver figura 3).</p>
+	<div class="img_example">
+		<img alt="menu principal" src="images/main_menu.jpg" /><br />
+		<span>Figura 3.</span>
+	</div>
+	<p>El men&uacute; principal al igual que cualquier otro men&uacute; en el sistema, est&aacute; compuesto por varias opciones o links que llevan al usuario a otra secci&oacute;n del modulo. Por ejemplo, viendo la figura 3, si se presiona el link “Mantenimiento”, el sistema se ir&aacute; a la secci&oacute;n de “Mantenimiento” en el cual aparecer&aacute; un men&uacute; secundario o “Men&uacute; de secci&oacute;n” (ver figura 4).</p>
+	<div class="img_example">
+		<img alt="menu secundario" src="images/second_menu.jpg" /><br />
+		<span>Figura 4.</span>
+	</div>
+	<p>Si presiona alg&uacute;n link del men&uacute; de la secci&oacute;n, un formulario o un “Men&uacute; de Subsecci&oacute;n” aparecer&aacute; del lado derecho. En caso fuere un men&uacute; de subsecci&oacute;n este tendr&aacute; m&aacute;s links que llevan a m&aacute;s formularios (ver figura 5).</p>
+	<div class="img_example">
+		<img alt="tercer menu" src="images/third_menu.jpg" /><br />
+		<span>Figura 5.</span>
+	</div>
+	<h4><a name="console">Consola</a></h4>
+	<p>Debajo del men&uacute; principal se encuentra la consola. El sistema da retroalimentaci&oacute;n de las acciones de los usuarios desplegando mensajes a trav&eacute;s de la consola. Por ejemplo si un usuario ingresa un campo con un valor invalido en un formulario, el sistema desplegara un mensaje de advertencia en la consola (ver figura 6).</p>
+	<div class="img_example">
+		<img alt="consola advertencia" src="images/console_warning.jpg" /><br />
+		<span>Figura 6.</span>
+	</div>
+	<p>Otro ejemplo seria si se consultaran las casas creadas en el sistema y en caso no hay ninguna, el sistema notificara de esto con un mensaje a trav&eacute;s de la consola (ver figura 7).</p>
+	<div class="img_example">
+		<img alt="consola mensaje" src="images/console_message.jpg" /><br />
+		<span>Figura 7.</span>
+	</div>
+	<h4><a name="forms">Formularios</a></h4>
+	<p>El sistema BOBS Retail utiliza una variedad de formularios para la captaci&oacute;n de informaci&oacute;n. B&aacute;sicamente todos los formularios se rigen a un dise&ntilde;o en el cual se divide en 3 partes (Ver figura 8 y 9):</p>
+	<ol>
+		<li>Encabezado: Contiene informaci&oacute;n fundamental acerca del formulario. Por ejemplo vemos en la figura 9 que el recibo numero 2 se encuentra cerrado, fue creado el 01/03/2011 por el usuario roboli.</li>
+		<li>Contenido: Tiene los detalles o la informaci&oacute;n del formulario.</li>
+		<li>Acciones: Son las acciones disponibles a tomar como anular un documento, editar, eliminar, etc.</li>
+	</ol>
+	<div class="img_example">
+		<img alt="formulario objecto" src="images/form_object.jpg" /><br />
+		<span>Figura 8.</span>
+	</div>
+	<div class="img_example">
+		<img alt="formulario documento" src="images/form_document.jpg" /><br />
+		<span>Figura 9.</span>
+	</div>
+	<p>Todos los formularios contienen un “Status” (Estado) el cual aparece en el encabezado (ver figura 10).</p>
+	<div class="img_example">
+		<img alt="status" src="images/status.jpg" /><br />
+		<span>Figura 10.</span>
+	</div>
+	<p>El status indica el estado en que se encuentra el formulario en ese momento. Si miramos la figura 10, vemos que el status del formulario se encuentra en “Consulta”, esto significa que el formulario solo despliega la informaci&oacute;n para que solo pueda ser le&iacute;da o consultada, no para ser editada. En total hay 5 status para los formularios que son:</p>
+	<ol>
+		<li>Creando…: Significa que el formulario est&aacute; creando algo, por ejemplo un documento.</li>
+		<li>Editando…: Se est&aacute; modificando.</li>
+		<li>Consulta: En modo de solo lectura.</li>
+		<li>Cerrado: Cuando un documento ya fue guardado pasa a un estado cerrado o que no se puede alterar.</li>
+		<li>Anulado: El documento fue anulado o sus efectos fueron revertidos.</li>
+	</ol>
+	<p>Algunos status aplican para ciertos formularios y otros para otros.</p>
+	<p>Volviendo a la figura 10, tambi&eacute;n podemos ver que en las acciones, el bot&oacute;n “Guardar” y “Cancelar” se encuentran deshabilitados. Esto significa que las &uacute;nicas acciones a tomar pueden ser presionar el bot&oacute;n “Editar” o “Eliminar”. Las acciones disponibles siempre dependen del status actual del formulario.</p>
+	<p>Cuando un formulario entra al status “Creando…” o “Editando…”, varios botones que estaban deshabilitados quedan habilitados, como lo es “Guardar” o “Cancelar”. Si este es el caso vemos dentro del contenido de cualquier formulario que se compone de campos. Algunos son obligatorios (tienen un *) y otros son opcionales (ver figura 11).</p>
+	<div class="img_example">
+		<img alt="campos obligatorios" src="images/obligatory_fields.jpg" /><br />
+		<span>Figura 11.</span>
+	</div>
+	<p>Con los campos obligatorios es necesario ingresarlos antes de poder presionar el bot&oacute;n “Guardar”, de lo contrario el formulario desplegara una advertencia en la consola y posicionara un asterisco de color naranja al lado derecho del campo que hace falta (ver figura 12).</p>
+	<div class="img_example">
+		<img alt="campo invalido" src="images/invalid_field.jpg" /><br />
+		<span>Figura 12.</span>
+	</div>
+	<p>Una vez todos los campo obligatorios sean llenados el formulario se podr&aacute; guardar.</p>
+	<hr class="footer" />
+</body>
+</html>

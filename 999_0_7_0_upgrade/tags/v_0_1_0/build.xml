@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="check_version">
+		<input message="Ingrese la ruta donde esta instalado Bobs"
+					   propertyName="bobs_dir"
+					   promptChar=" >" />
+		
+		<property file="${bobs_dir}/version.txt" />
+		
+		<if>
+			<not><equals arg1="${bobs_version}" arg2="0.6.0" /></not>
+			<then>
+				<fail message="VERSION DE BOBS DEBE SER 0.6.0" />
+			</then>
+		</if>
+	</target>
+	
+	<target name="update_database" depends="check_version">
+		<echo>Recolectando informacion para actualizar la base de datos...</echo>
+		
+		<input message="Ingrese el DSN del servidor"
+			   defaultValue="localhost"
+			   propertyName="db_server"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre del usuario para conectarse"
+			   propertyName="db_install_user"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el password"
+			   propertyName="db_install_password"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre de la base de datos"
+			   defaultValue="bobs_store"
+			   propertyName="db_database"
+			   promptChar=" >" />
+		
+		<input message="Ingrese el nombre del usuario con cual Bobs se conecta a la base de datos"
+			   defaultValue="bobs_user"
+			   propertyName="db_user"
+			   promptChar=" >" />
+		
+		<input message="Ingrese el nombre del usuario para identificar las creaciones de ofertas a la fecha"
+		  	   propertyName="bonus_username"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre de la bodega"
+			   propertyName="warehouse_name"
+			   promptChar=" >" />
+			   
+		<echo>Actualizando la base de datos...</echo>
+		
+		<copy todir="tmp">
+			<fileset dir="db" />
+			<filterchain>
+				<replacetokens>
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="warehouse_name" value="${warehouse_name}" />
+					<token key="bonus_username" value="${bonus_username}" />
+				</replacetokens>
+				<replaceregexp>
+						<regexp pattern="DELIMITER \$\$" replace="-- DELIMITER $$" />
+				</replaceregexp>
+			</filterchain>
+		</copy>
+		
+		<pdosqlexec url="mysql:host=${db_server}" userid="${db_install_user}" password="${db_install_password}" delimiter="$$">
+			<filelist dir="tmp/" files="999_structure.sql,999_data.sql"/>
+		</pdosqlexec>
+	</target>
+
+	<target name="update_middle" depends="update_database">
+		<echo>Actualizando las librerias (middle)...</echo>
+		
+		<copy todir="${bobs_dir}/middle/business" overwrite="true">
+			<fileset dir="files/middle/business" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/middle/data" overwrite="true">
+			<fileset dir="files/middle/data" />
+		</copy>
+	</target>
+	
+	<target name="update_front" depends="update_middle">
+		<echo>Actualizando los archivos web (front)...</echo>
+		
+		<reflexive file="${bobs_dir}/front/config/config.php">
+			<filterchain>
+				<replaceregexp>
+					<regexp pattern="\?>" replace="" />
+				</replaceregexp>
+			</filterchain>
+		</reflexive>
+		
+		<append destFile="${bobs_dir}/front/config/config.php" file="files/front/config/config.php" />
+		
+		<copy file="files/front/config/site.conf" tofile="${bobs_dir}/front/config/site.conf" overwrite="true" />
+		
+		<delete file="${bobs_dir/front/smarty_plugins/function.get_company_name.php}" />
+		
+		<delete file="${bobs_dir/front/templates/log_form_html.tpl}" />
+		
+		<copy todir="${bobs_dir}/front/commands" overwrite="true">
+			<fileset dir="files/front/commands" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/scripts" overwrite="true">
+			<fileset dir="files/front/scripts" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/smarty_plugins" overwrite="true">
+			<fileset dir="files/front/smarty_plugins" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/templates" overwrite="true">
+			<fileset dir="files/front/templates" />
+		</copy>
+	</target>
+	
+	<target name="update_help" depends="update_front">
+		<echo>Actualizando los archivos para el soporte (help)...</echo>
+	
+		<copy todir="${bobs_dir}/help/WebContent/styles" overwrite="true">
+			<fileset dir="files/help/WebContent/styles" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/help/WebContent" overwrite="true">
+			<fileset dir="files/help/WebContent">
+				<exclude name="styles/" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="copy_version" depends="update_help">
+		<copy file="version.txt" tofile="${bobs_dir}/version.txt" overwrite="true" />
+	</target>
+	
+	<target name="main" depends="copy_version">
+		<echo>ACTUALIZACION TERMINADA.</echo>
+	</target>
+	
+	<target name="clean">
+		<delete dir="tmp" verbose="true" />
+	</target>
+</project>

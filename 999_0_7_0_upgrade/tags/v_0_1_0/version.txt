@@ -1,0 +1,5 @@
+bobs_version=0.7.0
+front_version=0.5.0
+pos_version=0.5.0
+middle_version=0.10.0
+help_version=0.1.4
