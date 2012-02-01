@@ -130,4 +130,8 @@ define('LOG_TYPE', 'Bitacora');
  * Name for the list type reference list.
  */
 define('LIST_TYPE', 'Reporte');
+/**
+ * Maximum value a count detail's quantity could have.
+ */
+define('MAX_QUANTITY', 9999);
 ?>
