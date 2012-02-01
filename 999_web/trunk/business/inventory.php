@@ -834,8 +834,11 @@ class Parser{
 			$detail[0] = trim($line[0]);
 			$detail[1] = trim($line[1]);
 			
-			String::validateString($detail[0], 'Barra inv&aacute;lida en linea: ' . ($i + 1));
-			Number::validateUnsignedNumber($detail[1], 'Cantidad inv&aacute;lida en linea: ' . ($i + 1));
+			String::validateString($detail[0], 'Barra inv&aacute;lida en linea: ' . ($i + 1) . '.');
+			Number::validateUnsignedNumber($detail[1], 'Cantidad inv&aacute;lida en linea: ' . ($i + 1) . '.');
+			if($detail[1] > MAX_QUANTITY)
+				throw new ValidateException('Cantidad inv&aacute;lida en linea: ' . ($i + 1) .
+						'. Excede valor maximo de '. MAX_QUANTITY . '.');
 			
 			$newDetails[] = $detail;
 		}
@@ -856,7 +859,7 @@ class Parser{
 		for($i = 0; $i < count($newDetails); $i++){
 			$id = Product::getProductIdByBarCode($newDetails[$i][0]);
 			if($id == 0)
-				throw new Exception('Codigo barra de producto no existe: ' . $newDetails[$i][0] . ' . Linea: ' .
+				throw new Exception('Codigo barra de producto no existe: ' . $newDetails[$i][0] . '. Linea: ' .
 						($i + 1));
 			else
 				$product = Product::getInstance($id);
