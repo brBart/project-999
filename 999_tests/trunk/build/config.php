@@ -1,6 +1,7 @@
 <?php
 define('ITEMS_PER_PAGE', 4);
 define('PRODUCTS_PER_PAGE', 4);
+define('MAX_QUANTITY', 9999);
 
 define('MYSQL_DIR', '@mysql_dir@');
 define('DB_PERSISTENCY', 'true');
