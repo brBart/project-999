@@ -581,10 +581,6 @@ class DocProductDetail extends DocumentDetail{
 		// For new lots that has their id equal to cero must be distinguish.
 		$lot_id = (!$lot->getId()) ? str_replace('/', '', $lot->getExpirationDate()) : $lot->getId();
 		
-		/**
-		 * @TODO Check if this is OK.
-		 * For distinguish new lots with same product same expiration date but with different price.
-		 */
 		if($this->_mTransaction instanceof Entry)
 			$lot_id = $lot_id . number_format($this->_mPrice, 2);
 		
@@ -1615,11 +1611,8 @@ class Invoice extends Document{
 	 * @return float
 	 */
 	public function getTotalDiscount(){
-		/**
-		 * @TODO Verify it it the result needs rounding.
-		 */
 		$discount = (is_null($this->_mDiscount)) ? 0.00 :
-				$this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100);
+				(float)number_format($this->getSubTotal() * ($this->_mDiscount->getPercentage() / 100), 2);
 		return $discount;
 	}
 	
