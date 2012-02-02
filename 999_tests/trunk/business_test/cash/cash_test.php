@@ -1036,7 +1036,7 @@ class CashReceiptTest extends PHPUnit_Framework_TestCase{
 		
 		$receipt = $invoice->createCashReceipt();
 		$card = PaymentCard::create(9876, PaymentCardType::getInstance(123),
-				PaymentCardBrand::getInstance(123), 'Jose', '01/12/2010');
+				PaymentCardBrand::getInstance(123), 'Jose', '01/14/2010');
 		$receipt->addVoucher(new Voucher('6541', $card, 50.60));
 		$receipt->save();
 		$this->assertEquals(PersistDocument::CREATED, $receipt->getStatus());
