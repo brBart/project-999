@@ -1499,15 +1499,17 @@ class InvoiceTest extends PHPUnit_Framework_TestCase{
 		$correlative = Correlative::getInstance(1);
 		$cash_register = CashRegister::getInstance(123);
 		$discount = new Discount(UserAccount::getInstance('roboli'), Persist::CREATED);
+		$discount->setPercentage(15.33);
 		$details[] = new DocProductDetail(Lot::getInstance(123), new Withdraw(), 5, 21.90);
 		$this->_mInvoice->setData(1234, $correlative, '1725045-5', 12.00,
-				32.54, $details, 'Infodes', $discount);
+				109.50, $details, 'Infodes', $discount);
 		$this->assertEquals(1234, $this->_mInvoice->getNumber());
 		$this->assertEquals($correlative, $this->_mInvoice->getCorrelative());
 		$this->assertEquals('1725045-5', $this->_mInvoice->getCustomerNit());
 		$this->assertEquals('Infodes', $this->_mInvoice->getCustomerName());
 		$this->assertEquals(12.00, $this->_mInvoice->getVatPercentage());
-		$this->assertEquals(32.54, $this->_mInvoice->getTotal());
+		$this->assertEquals(16.79, $this->_mInvoice->getTotalDiscount());
+		$this->assertEquals('92.71', (string)$this->_mInvoice->getTotal()); // Tried with pure doubles but didn't work.
 		$detail = $this->_mInvoice->getDetail('123123');
 		$this->assertEquals('123123', $detail->getId());
 	}
