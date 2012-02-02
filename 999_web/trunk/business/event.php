@@ -150,9 +150,6 @@ class RetailEvent{
 			$id = Bonus::getBonusIdByProduct($product, $quantity);
 			if($id > 0){
 				$bonus = Bonus::getInstance($id);
-				/**
-			 	* @TODO Verify if the result needs rounding.
-			 	*/
 				$invoice->addDetail(new DocBonusDetail($bonus,
 						(float)number_format(-1 * ((($product->getPrice() * $bonus->getQuantity()) *
 						($bonus->getPercentage() / 100)) * floor($quantity / $bonus->getQuantity())), 2)));
