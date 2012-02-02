@@ -601,6 +601,14 @@ class ParserTest extends PHPUnit_Framework_TestCase{
 		$this->fail('Exception expected.');
 	}
 	
+	public function testParseFile_BadQuantityGreaterMaximum(){
+		$count = new Count();
+		try{
+			Parser::parseFile($count, 'bad_quantity_greater.txt');
+		} catch(Exception $e){ return; }
+		$this->fail('Exception expected.');
+	}
+	
 	public function testParseFile_NoProduct(){
 		$count = new Count();
 		try{
