@@ -3,11 +3,13 @@
 	<div id="frm" class="content_large">
 		<fieldset id="header_data">
 			<p>
-				<label>Reporte:</label><span>Ofertas Creadas</span>
+				<label>Reporte:</label><span>Ofertas {if $bonus_used eq 1}Usadas{else}Creadas{/if}</span>
 			</p>
+			{if $bonus_used eq 0}
 			<p>
 				<label>Fecha:</label><span>{$date}</span>
 			</p>
+			{/if}
 			<p>
 				<label>Fecha Inicial:</label><span>{$start_date}</span>
 			</p>
@@ -48,7 +50,7 @@
 			</table>
 		</fieldset>
 		<fieldset>
-			<input type="button" value="Imprimir" onclick="window.open('index.php?cmd=print_bonus_created_list&start_date={$start_date|escape:'url'}&end_date={$end_date|escape:'url'}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+			<input type="button" value="Imprimir" onclick="window.open('index.php?cmd=print_bonus_{if $bonus_used eq 1}used{else}created{/if}_list&start_date={$start_date|escape:'url'}&end_date={$end_date|escape:'url'}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
 		</fieldset>
 	</div>
 </div>

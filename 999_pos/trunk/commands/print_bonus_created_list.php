@@ -32,11 +32,11 @@ class PrintBonusCreatedListCommand extends Command{
 	public function execute(Request $request, SessionHelper $helper){
 		$start_date = $request->getProperty('start_date');
 		$end_date = $request->getProperty('end_date');
-		$list = BonusCreatedList::getList($start_date, $end_date);
+		$list = BonusList::getCreatedList($start_date, $end_date);
 		
 		Page::display(array('total_items' => count($list), 'start_date' => $start_date,
-				'end_date' => $end_date, 'list' => $list, 'date' => date('d/m/Y')),
-				'bonus_created_list_print_html.tpl');
+				'end_date' => $end_date, 'list' => $list, 'date' => date('d/m/Y'),
+				'bonus_used' => 0),	'bonus_list_print_html.tpl');
 	}
 }
 ?>

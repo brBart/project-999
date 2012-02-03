@@ -48,7 +48,7 @@ class ShowBonusCreatedListCommand extends Command{
 		$end_date = $request->getProperty('end_date');
 		
 		try{
-			$list = BonusCreatedList::getList($start_date, $end_date, $total_pages, $total_items, $page);
+			$list = BonusList::getCreatedList($start_date, $end_date, $total_pages, $total_items, $page);
 		} catch(Exception $e){
 			$msg = $e->getMessage();
 			
@@ -76,11 +76,11 @@ class ShowBonusCreatedListCommand extends Command{
 			
 			Page::display(array('module_title' => POS_ADMIN_TITLE, 'main_menu' => 'back_link.tpl',
 					'back_link' => 'index.php?cmd=show_report_menu_pos_admin', 'back_trace' => $back_trace,
-					'second_menu' => 'none', 'content' => 'bonus_created_list_html.tpl', 'list' => $list,
+					'second_menu' => 'none', 'content' => 'bonus_list_html.tpl', 'list' => $list,
 					'total_items' => $total_items, 'total_pages' => $total_pages, 'page' => $page,
 					'first_item' => $first_item, 'last_item' => $last_item, 'previous_link' => $previous_link,
 					'next_link' => $next_link, 'start_date' => $start_date, 'end_date' => $end_date,
-					 'date' => date('d/m/Y')), 'site_html.tpl');
+					 'date' => date('d/m/Y'), 'bonus_used' => 0), 'site_html.tpl');
 		}
 		else {
 			$msg = 'No hay ofertas creadas en esas fechas en la base de datos.';

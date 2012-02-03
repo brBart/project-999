@@ -10,11 +10,13 @@
 	<div id="wrapper">
 		<fieldset id="header_data">
 			<p>
-				<label>Reporte:</label><span>Ofertas Creadas</span>
+				<label>Reporte:</label><span>Ofertas {if $bonus_used eq 1}Usadas{else}Creadas{/if}</span>
 			</p>
+			{if $bonus_used eq 0}
 			<p>
 				<label>Fecha:</label><span>{$date}</span>
 			</p>
+			{/if}
 			<p>
 				<label>Fecha Inicial:</label><span>{$start_date}</span>
 			</p>
