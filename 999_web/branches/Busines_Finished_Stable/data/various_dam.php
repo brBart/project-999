@@ -489,16 +489,16 @@ class PurchasesSummaryListDAM{
 
 
 /**
- * Utility class for accessing database information regarding bonus creation.
+ * Utility class for accessing database information regarding bonus creation and usage.
  * @package VariousDAM
  * @author Roberto Oliveros
  */
-class BonusCreatedListDAM{
+class BonusListDAM{
 	/**
-	 * Returns an array with data regarding invoice transactions that ocurred between the provided dates.
+	 * Returns an array with data regarding bonus creation that ocurred between the provided dates.
 	 *
 	 * The array's fields are bar_code, manufacturer, name, quantity, percentage, created_date, expiration_date and username.
-	 * last_price and new_price. If no page argument or cero is passed all the details are returned. The
+	 * If no page argument or cero is passed all the details are returned. The
 	 * totalPages and totalItems arguments are necessary to return their respective values.
 	 * @param string $firstDate
 	 * @param string $lastDate
@@ -507,7 +507,26 @@ class BonusCreatedListDAM{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($firstDate, $lastDate, &$totalPages, &$totalItems, $page){
+	static public function getCreatedList($firstDate, $lastDate, &$totalPages, &$totalItems, $page){
+		$totalPages = 1;
+		$totalItems = 2;
+		return array('uno' => 'one', 'dos' => 'two');
+	}
+	
+	/**
+	 * Returns an array with data regarding bonus usage that ocurred between the provided dates.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, quantity, percentage, created_date, expiration_date and username.
+	 * If no page argument or cero is passed all the details are returned. The
+	 * totalPages and totalItems arguments are necessary to return their respective values.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getUsedList($firstDate, $lastDate, &$totalPages, &$totalItems, $page){
 		$totalPages = 1;
 		$totalItems = 2;
 		return array('uno' => 'one', 'dos' => 'two');
