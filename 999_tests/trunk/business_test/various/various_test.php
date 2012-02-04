@@ -688,43 +688,82 @@ class PurchasesSummaryListTest extends PHPUnit_Framework_TestCase{
 	}
 }
 
-class BonusCreatedListTest extends PHPUnit_Framework_TestCase{
+class BonusListTest extends PHPUnit_Framework_TestCase{
 	
-	public function testGetList(){
-		$data = BonusCreatedList::getList('12/04/2009', '15/05/2009', $pages, $items, 1);
+	public function testGetCreatedList(){
+		$data = BonusList::getCreatedList('12/04/2009', '15/05/2009', $pages, $items, 1);
 		$this->assertEquals(1, $pages);
 		$this->assertEquals(2, $items);
 	}
 	
-	public function testGetList_Defaults(){
-		$data = BonusCreatedList::getList('12/04/2009', '15/05/2009');
+	public function testGetCreatedList_Defaults(){
+		$data = BonusList::getCreatedList('12/04/2009', '15/05/2009');
 		$this->assertEquals(2, count($data));
 	}
 	
-	public function testGetList_BadFirstDate(){
+	public function testGetCreatedList_BadFirstDate(){
 		try{
-			$data = BonusCreatedList::getList('abs04/2009', '15/05/2009', $pages, $items, 1);
+			$data = BonusList::getCreatedList('abs04/2009', '15/05/2009', $pages, $items, 1);
 		} catch(Exception $e){ return; }
 		$this->fail('Exception expected.');
 	}
 	
-	public function testGetListt_BadLastDate(){
+	public function testGetCreatedListt_BadLastDate(){
 		try{
-			$data = BonusCreatedList::getList('15/05/2009', 'abs04/2009', $pages, $items, 1);
+			$data = BonusList::getCreatedList('15/05/2009', 'abs04/2009', $pages, $items, 1);
 		} catch(Exception $e){ return; }
 		$this->fail('Exception expected.');
 	}
 	
-	public function testGetList_BadPageTxt(){
+	public function testGetCreatedList_BadPageTxt(){
 		try{
-			$data = BonusCreatedList::getList('15/05/2009', '21/05/2009', $pages, $items, 'abc');
+			$data = BonusList::getCreatedList('15/05/2009', '21/05/2009', $pages, $items, 'abc');
 		} catch(Exception $e){ return; }
 		$this->fail('Exception expected.');
 	}
 	
-	public function testGetList_BadPageNegative(){
+	public function testGetCreatedList_BadPageNegative(){
 		try{
-			$data = BonusCreatedList::getList('15/05/2009', '21/05/2009', $pages, $items, -1);
+			$data = BonusList::getCreatedList('15/05/2009', '21/05/2009', $pages, $items, -1);
+		} catch(Exception $e){ return; }
+		$this->fail('Exception expected.');
+	}
+	
+	public function testGetUsedList(){
+		$data = BonusList::getUsedList('12/04/2009', '15/05/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(2, $items);
+	}
+	
+	public function testGetUsedList_Defaults(){
+		$data = BonusList::getUsedList('12/04/2009', '15/05/2009');
+		$this->assertEquals(2, count($data));
+	}
+	
+	public function testGetUsedList_BadFirstDate(){
+		try{
+			$data = BonusList::getUsedList('abs04/2009', '15/05/2009', $pages, $items, 1);
+		} catch(Exception $e){ return; }
+		$this->fail('Exception expected.');
+	}
+	
+	public function testGetUsedListt_BadLastDate(){
+		try{
+			$data = BonusList::getUsedList('15/05/2009', 'abs04/2009', $pages, $items, 1);
+		} catch(Exception $e){ return; }
+		$this->fail('Exception expected.');
+	}
+	
+	public function testGetUsedList_BadPageTxt(){
+		try{
+			$data = BonusList::getUsedList('15/05/2009', '21/05/2009', $pages, $items, 'abc');
+		} catch(Exception $e){ return; }
+		$this->fail('Exception expected.');
+	}
+	
+	public function testGetUsedList_BadPageNegative(){
+		try{
+			$data = BonusList::getUsedList('15/05/2009', '21/05/2009', $pages, $items, -1);
 		} catch(Exception $e){ return; }
 		$this->fail('Exception expected.');
 	}

@@ -23,7 +23,7 @@ class AppTests{
 		$ts->addTestSuite('ResolutionListTest');
 		$ts->addTestSuite('SalesSummaryListTest');
 		$ts->addTestSuite('PurchasesSummaryListTest');
-		$ts->addTestSuite('BonusCreatedListTest');
+		$ts->addTestSuite('BonusListTest');
 		PHPUnit_TextUI_TestRunner::run($ts);
 	}
 }
