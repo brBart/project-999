@@ -779,13 +779,13 @@ class PurchasesSummaryList{
 
 
 /**
- * Utility class for obtaining the history of bonus creation.
+ * Utility class for obtaining the history of bonus creation and usage.
  * @package Various
  * @author Roberto Oliveros
  */
-class BonusCreatedList{
+class BonusList{
 	/**
-	 * Retuns an array with the report information.
+	 * Retuns an array with the report information of bonus creation.
 	 *
 	 * The array's fields are bar_code, manufacturer, name, quantity, percentage, created_date, expiration_date and username.
 	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
@@ -797,13 +797,35 @@ class BonusCreatedList{
 	 * @param integer $page
 	 * @return array
 	 */
-	static public function getList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
+	static public function getCreatedList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
 		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
 		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
 		if($page !== 0)
 			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 			
-		return BonusCreatedListDAM::getList($firstDate, $lastDate, $totalPages, $totalItems, $page);
+		return BonusListDAM::getCreatedList($firstDate, $lastDate, $totalPages, $totalItems, $page);
+	}
+	
+	/**
+	 * Retuns an array with the report information of bonus usage.
+	 *
+	 * The array's fields are bar_code, manufacturer, name, quantity, percentage, created_date, expiration_date and username.
+	 * If no page argument or cero is passed all the details are returned. The total_pages and total_items
+	 * arguments are necessary to return their respective values. Date format: 'dd/mm/yyyy'.
+	 * @param string $firstDate
+	 * @param string $lastDate
+	 * @param integer &$total_pages
+	 * @param integer &$total_items
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function getUsedList($firstDate, $lastDate, &$totalPages = 0, &$totalItems = 0, $page = 0){
+		Date::validateDate($firstDate, 'Fecha inicial inv&aacute;lida.');
+		Date::validateDate($lastDate, 'Fecha final inv&aacute;lida.');
+		if($page !== 0)
+			Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+			
+		return BonusListDAM::getUsedList($firstDate, $lastDate, $totalPages, $totalItems, $page);
 	}
 }
 ?>
