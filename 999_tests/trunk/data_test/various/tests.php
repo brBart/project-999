@@ -25,7 +25,7 @@ class AppTests{
 		$ts->addTestSuite('ResolutionListDAMTest');
 		$ts->addTestSuite('SalesSummaryListDAMTest');
 		$ts->addTestSuite('PurchasesSummaryListDAMTest');
-		$ts->addTestSuite('BonusCreatedListDAMTest');
+		$ts->addTestSuite('BonusListDAMTest');
 		PHPUnit_TextUI_TestRunner::run($ts);
 	}
 }

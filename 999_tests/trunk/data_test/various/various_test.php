@@ -925,17 +925,17 @@ class PurchasesSummaryListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	}
 }
 
-class BonusCreatedListDAMTest extends PHPUnit_Extensions_Database_TestCase{
+class BonusListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	protected function getConnection(){
 		$pdo = new PDO(PDO_DSN, DB_USERNAME, DB_PASSWORD);
 		return $this->createDefaultDBConnection($pdo, '999_store');
 	}
 	
 	protected function getDataSet(){
-		return $this->createXMLDataSet('data_files/bonus_created-seed.xml');
+		return $this->createXMLDataSet('data_files/bonus-seed.xml');
 	}
 	
-	public function testGetList(){
+	public function testGetCreatedList(){
 		$list = array(array('bar_code' => '3242', 'manufacturer' => 'Mattel', 'name' => 'Shampoo',
 				'quantity' => '3', 'percentage' => '5.00', 'created_date' => '18/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'),
 				array('bar_code' => '3242', 'manufacturer' => 'Mattel', 'name' => 'Shampoo',
@@ -945,28 +945,60 @@ class BonusCreatedListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 				array('bar_code' => '32425', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
 				'quantity' => '3', 'percentage' => '15.00', 'created_date' => '21/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'));
 				
-		$data_list = BonusCreatedListDAM::getList('15/06/2009', '30/06/2009', $pages, $items, 1);
+		$data_list = BonusListDAM::getCreatedList('15/06/2009', '30/06/2009', $pages, $items, 1);
 		$this->assertEquals(2, $pages);
 		$this->assertEquals(6, $items);
 		
 		$this->assertEquals($list, $data_list);
 	}
 	
-	public function testGetList_2(){
+	public function testGetCreatedList_2(){
 		$list = array(array('bar_code' => '32425', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
 				'quantity' => '10', 'percentage' => '25.00', 'created_date' => '21/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'josoli'),
 				array('bar_code' => '32425', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
 				'quantity' => '18', 'percentage' => '35.00', 'created_date' => '25/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'));
 				
-		$data_list = BonusCreatedListDAM::getList('15/06/2009', '30/06/2009', $pages, $items, 2);
+		$data_list = BonusListDAM::getCreatedList('15/06/2009', '30/06/2009', $pages, $items, 2);
 		$this->assertEquals(2, $pages);
 		$this->assertEquals(6, $items);
 		
 		$this->assertEquals($list, $data_list);
 	}
 	
-	public function testGetList_3(){
-		$this->assertEquals(0, count(BonusCreatedListDAM::getList('15/07/2009', '20/07/2009', $pages, $items, 1)));
+	public function testGetCreatedList_3(){
+		$this->assertEquals(0, count(BonusListDAM::getCreatedList('15/07/2009', '20/07/2009', $pages, $items, 1)));
+	}
+	
+	public function testGetUsedList(){
+		$list = array(array('bar_code' => '3242', 'manufacturer' => 'Mattel', 'name' => 'Shampoo',
+				'quantity' => '3', 'percentage' => '5.00', 'created_date' => '18/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'),
+				array('bar_code' => '3242', 'manufacturer' => 'Mattel', 'name' => 'Shampoo',
+				'quantity' => '8', 'percentage' => '10.00', 'created_date' => '19/06/2009', 'expiration_date' => '01/02/2015', 'username' => 'josoli'),
+				array('bar_code' => '32425', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
+				'quantity' => '3', 'percentage' => '15.00', 'created_date' => '21/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'),
+				array('bar_code' => '32425', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
+				'quantity' => '10', 'percentage' => '25.00', 'created_date' => '21/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'josoli'));
+				
+		$data_list = BonusListDAM::getUsedList('15/06/2009', '30/06/2009', $pages, $items, 1);
+		$this->assertEquals(2, $pages);
+		$this->assertEquals(5, $items);
+		
+		$this->assertEquals($list, $data_list);
+	}
+	
+	public function testGetUsedList_2(){
+		$list = array(array('bar_code' => '32425', 'manufacturer' => 'Mattel', 'name' => 'Transformer',
+				'quantity' => '18', 'percentage' => '35.00', 'created_date' => '25/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'));
+				
+		$data_list = BonusListDAM::getUsedList('15/06/2009', '30/06/2009', $pages, $items, 2);
+		$this->assertEquals(2, $pages);
+		$this->assertEquals(5, $items);
+		
+		$this->assertEquals($list, $data_list);
+	}
+	
+	public function testGetUsedList_3(){
+		$this->assertEquals(0, count(BonusListDAM::getUsedList('15/07/2009', '20/07/2009', $pages, $items, 1)));
 	}
 }
 ?>

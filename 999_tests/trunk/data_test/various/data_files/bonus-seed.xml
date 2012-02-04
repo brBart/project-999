@@ -148,4 +148,46 @@
 			<value>Mattel</value>
 		</row>
 	</table>
+	
+	<table name="invoice_bonus">
+		<column>invoice_id</column>
+		<column>bonus_id</column>
+		<column>number</column>
+		<column>price</column>
+		
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1.00</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>2</value>
+			<value>2</value>
+			<value>1.00</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>4</value>
+			<value>3</value>
+			<value>1.00</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>5</value>
+			<value>4</value>
+			<value>1.00</value>
+		</row>
+		
+		<row>
+			<value>1</value>
+			<value>6</value>
+			<value>5</value>
+			<value>1.00</value>
+		</row>
+	</table>
 </dataset>
