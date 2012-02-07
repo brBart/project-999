@@ -794,7 +794,7 @@ class SalesSummaryListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	
 	public function testGetListByUserAccount(){
 		$list = array(array('rank' => '1', 'username' => 'roboli', 'name' => 'Roberto Oliveros',
-				'subtotal' => '1037.73', 'discount_total' => '96.01', 'total' => '941.73'),
+				'subtotal' => '1120.18', 'discount_total' => '96.01', 'total' => '1,024.18'),
 				array('rank' => '2', 'username' => 'josoli', 'name' => 'Jose Oliveros',
 				'subtotal' => '562.43', 'discount_total' => '0.00', 'total' => '562.43'),
 				array('rank' => '3', 'username' => 'lizram', 'name' => 'Lizeth Ramirez',
@@ -814,7 +814,7 @@ class SalesSummaryListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 					'total' => number_format($product['total'], 2));
 		}
 		
-		$this->assertEquals('2,210.04', number_format($total, 2));
+		$this->assertEquals('2,292.49', number_format($total, 2));
 		$this->assertEquals(2, $pages);
 		$this->assertEquals(5, $items);
 		
@@ -837,7 +837,7 @@ class SalesSummaryListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 					'total' => number_format($product['total'], 2));
 		}
 		
-		$this->assertEquals('2,210.04', number_format($total, 2));
+		$this->assertEquals('2,292.49', number_format($total, 2));
 		$this->assertEquals(2, $pages);
 		$this->assertEquals(5, $items);
 		
