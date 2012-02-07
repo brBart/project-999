@@ -1522,13 +1522,13 @@ BEGIN
 
        (SELECT COUNT(*) AS count_rows FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id WHERE inv_can.date BETWEEN inFirstDate AND inLastDate
+            ON inv.invoice_id = inv_can.invoice_id WHERE CAST(inv_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM deposit dep INNER JOIN deposit_cancelled dep_can ON dep.deposit_id = dep_can.deposit_id
 
-            WHERE dep_can.date BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
+            WHERE CAST(dep_can.date AS DATE) BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
 
 END$$
 
@@ -1544,7 +1544,7 @@ BEGIN
 
             CONCAT(cor.serial_number, '-', inv.number) AS number, inv.total FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE inv_can.date BETWEEN ? AND ?
+            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE CAST(inv_can.date AS DATE) BETWEEN ? AND ?
 
         UNION
 
@@ -1552,7 +1552,7 @@ BEGIN
 
             dep.deposit_id AS number, dep.total FROM deposit dep INNER JOIN deposit_cancelled dep_can ON dep.deposit_id = dep_can.deposit_id
 
-            WHERE dep_can.date BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
+            WHERE CAST(dep_can.date AS DATE) BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
 
       LIMIT ?, ?";
 
@@ -1581,37 +1581,37 @@ BEGIN
 
        (SELECT COUNT(*) AS count_rows FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id WHERE inv_can.date BETWEEN inFirstDate AND inLastDate
+            ON inv.invoice_id = inv_can.invoice_id WHERE CAST(inv_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM receipt rec INNER JOIN receipt_cancelled rec_can ON rec.receipt_id = rec_can.receipt_id
 
-            WHERE rec_can.date BETWEEN inFirstDate AND inLastDate
+            WHERE CAST(rec_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM purchase_return pur INNER JOIN purchase_return_cancelled pur_can
 
-            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE pur_can.date BETWEEN inFirstDate AND inLastDate
+            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE CAST(pur_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM shipment shi INNER JOIN shipment_cancelled shi_can ON shi.shipment_id = shi_can.shipment_id
 
-            WHERE shi_can.date BETWEEN inFirstDate AND inLastDate
+            WHERE CAST(shi_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM entry_adjustment ent INNER JOIN entry_adjustment_cancelled ent_can ON
 
-            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE ent_can.date BETWEEN inFirstDate AND inLastDate
+            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE CAST(ent_can.date AS DATE) BETWEEN inFirstDate AND inLastDate
 
         UNION ALL
 
         SELECT COUNT(*) AS count_rows FROM withdraw_adjustment wit INNER JOIN withdraw_adjustment_cancelled wit_can
 
-            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE wit_can.date BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
+            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE CAST(wit_can.date AS DATE) BETWEEN inFirstDate AND inLastDate) AS documents_cancelled;
 
 END$$
 
@@ -1627,7 +1627,7 @@ BEGIN
 
             CONCAT(cor.serial_number, '-', inv.number) AS number, inv.total FROM invoice inv INNER JOIN invoice_cancelled inv_can
 
-            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE inv_can.date BETWEEN ? AND ?
+            ON inv.invoice_id = inv_can.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id WHERE CAST(inv_can.date AS DATE) BETWEEN ? AND ?
 
         UNION
 
@@ -1635,7 +1635,7 @@ BEGIN
 
             rec.receipt_id AS number, rec.total FROM receipt rec INNER JOIN receipt_cancelled rec_can ON rec.receipt_id = rec_can.receipt_id
 
-            WHERE rec_can.date BETWEEN ? AND ?
+            WHERE CAST(rec_can.date AS DATE) BETWEEN ? AND ?
 
         UNION
 
@@ -1643,7 +1643,7 @@ BEGIN
 
             pur.purchase_return_id AS number, pur.total FROM purchase_return pur INNER JOIN purchase_return_cancelled pur_can
 
-            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE pur_can.date BETWEEN ? AND ?
+            ON pur.purchase_return_id = pur_can.purchase_return_id WHERE CAST(pur_can.date AS DATE) BETWEEN ? AND ?
 
         UNION
 
@@ -1651,7 +1651,7 @@ BEGIN
 
             shi.shipment_id AS number, shi.total FROM shipment shi INNER JOIN shipment_cancelled shi_can ON shi.shipment_id = shi_can.shipment_id
 
-            WHERE shi_can.date BETWEEN ? AND ?
+            WHERE CAST(shi_can.date AS DATE) BETWEEN ? AND ?
 
         UNION
 
@@ -1659,7 +1659,7 @@ BEGIN
 
             ent.entry_adjustment_id AS number, ent.total FROM entry_adjustment ent INNER JOIN entry_adjustment_cancelled ent_can ON
 
-            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE ent_can.date BETWEEN ? AND ?
+            ent.entry_adjustment_id = ent_can.entry_adjustment_id WHERE CAST(ent_can.date AS DATE) BETWEEN ? AND ?
 
         UNION
 
@@ -1667,7 +1667,7 @@ BEGIN
 
             wit.withdraw_adjustment_id AS number, wit.total FROM withdraw_adjustment wit INNER JOIN withdraw_adjustment_cancelled wit_can
 
-            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE wit_can.date BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
+            ON wit.withdraw_adjustment_id = wit_can.withdraw_adjustment_id WHERE CAST(wit_can.date AS DATE) BETWEEN ? AND ?) AS documents_cancelled ORDER BY date
 
       LIMIT ?, ?";
 
@@ -1868,7 +1868,7 @@ BEGIN
 
   SELECT COUNT(*) FROM change_price_log
 
-    WHERE date BETWEEN inFirstDate AND inLastDate;
+    WHERE CAST(date AS DATE) BETWEEN inFirstDate AND inLastDate;
 
 END$$
 
@@ -1884,7 +1884,7 @@ BEGIN
 
          INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-     WHERE date BETWEEN ? AND ?
+     WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
      ORDER BY log.entry_id
 
@@ -2055,7 +2055,7 @@ BEGIN
 
   SELECT COUNT(*) FROM comparison
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2067,7 +2067,7 @@ BEGIN
 
     "SELECT comparison_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM comparison
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -2384,7 +2384,7 @@ BEGIN
 
   SELECT COUNT(*) FROM count
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2396,7 +2396,7 @@ BEGIN
 
     "SELECT count_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM count
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -2886,7 +2886,7 @@ BEGIN
 
   SELECT COUNT(*) FROM deposit
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -2898,7 +2898,7 @@ BEGIN
 
     "SELECT deposit_id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM deposit
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -2946,7 +2946,7 @@ BEGIN
 
   SELECT COUNT(*) FROM discount dis INNER JOIN invoice inv ON dis.invoice_id = inv.invoice_id
 
-    WHERE inv.status = 1 AND inv.date BETWEEN inFirstDate AND inLastDate;
+    WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate;
 
 END$$
 
@@ -2966,7 +2966,7 @@ BEGIN
 
          ON dis.invoice_id = inv.invoice_id INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
-     WHERE inv.status = 1 AND inv.date BETWEEN ? AND ?
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ?
 
      ORDER BY inv.invoice_id
 
@@ -3062,7 +3062,7 @@ BEGIN
 
   SELECT COUNT(*) FROM entry_adjustment
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -3074,7 +3074,7 @@ BEGIN
 
     "SELECT entry_adjustment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM entry_adjustment
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -3362,7 +3362,7 @@ BEGIN
 
   SELECT COUNT(*) FROM invoice
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -3376,7 +3376,7 @@ BEGIN
 
       INNER JOIN correlative cor ON inv.correlative_id = cor.correlative_id
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -4142,7 +4142,7 @@ BEGIN
 
           rec_lot ON lot.lot_id = rec_lot.lot_id INNER JOIN receipt rec ON rec_lot.receipt_id = rec.receipt_id WHERE rec.status = 1 AND 
 
-          rec.date >= ? AND rec.date < ?) AS rec
+          CAST(rec.date AS DATE) >= ? AND CAST(rec.date AS DATE) < ?) AS rec
 
        ON pro.product_id = rec.product_id GROUP BY pro.product_id ORDER BY pro.manufacturer, pro.name
 
@@ -4190,7 +4190,7 @@ BEGIN
 
           inv_lot ON lot.lot_id = inv_lot.lot_id INNER JOIN invoice inv ON inv_lot.invoice_id = inv.invoice_id WHERE inv.status = 1 AND 
 
-          inv.date >= ? AND inv.date < ?) AS inv
+          CAST(inv.date AS DATE) >= ? AND CAST(inv.date AS DATE) < ?) AS inv
 
        ON pro.product_id = inv.product_id GROUP BY pro.product_id ORDER BY pro.manufacturer, pro.name
 
@@ -4926,7 +4926,7 @@ BEGIN
 
           rec_lot ON lot.lot_id = rec_lot.lot_id INNER JOIN receipt rec ON rec_lot.receipt_id = rec.receipt_id WHERE rec.status = 1 AND 
 
-          rec.date >= ? AND rec.date < ?) AS rec
+          CAST(rec.date AS DATE) >= ? AND CAST(rec.date AS DATE) < ?) AS rec
 
        ON pro.product_id = rec.product_id GROUP BY pro.product_id ORDER BY pro.name, pro.manufacturer
 
@@ -4984,7 +4984,7 @@ BEGIN
 
           inv_lot ON lot.lot_id = inv_lot.lot_id INNER JOIN invoice inv ON inv_lot.invoice_id = inv.invoice_id WHERE inv.status = 1 AND 
 
-          inv.date >= ? AND inv.date < ?) AS inv
+          CAST(inv.date AS DATE) >= ? AND CAST(inv.date AS DATE) < ?) AS inv
 
        ON pro.product_id = inv.product_id GROUP BY pro.product_id ORDER BY pro.name, pro.manufacturer
 
@@ -5211,7 +5211,7 @@ BEGIN
 
         INNER JOIN product pro ON lot.product_id = pro.product_id
 
-    WHERE rec.status = 1 AND rec.date BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS purchases_summary;
+    WHERE rec.status = 1 AND CAST(rec.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS purchases_summary;
 
 END$$
 
@@ -5237,7 +5237,7 @@ BEGIN
 
          INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-       WHERE rec.status = 1 AND rec.date BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS purchases_summary
+       WHERE rec.status = 1 AND CAST(rec.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS purchases_summary
 
   LIMIT ?, ?;";
 
@@ -5258,7 +5258,7 @@ DROP PROCEDURE IF EXISTS `purchases_summary_total_get`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `purchases_summary_total_get`(IN inFirstDate DATE, IN inLastDate DATE)
 BEGIN
 
-  SELECT SUM(total) FROM receipt WHERE date BETWEEN inFirstDate AND inLastDate AND status = 1;
+  SELECT SUM(total) FROM receipt WHERE CAST(date AS DATE) BETWEEN inFirstDate AND inLastDate AND status = 1;
 
 END$$
 
@@ -5334,7 +5334,7 @@ BEGIN
 
   SELECT COUNT(*) FROM purchase_return
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -5346,7 +5346,7 @@ BEGIN
 
     "SELECT purchase_return_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM purchase_return
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -5442,7 +5442,7 @@ BEGIN
 
   SELECT COUNT(*) FROM receipt
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -5454,7 +5454,7 @@ BEGIN
 
     "SELECT receipt_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM receipt
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -5731,7 +5731,7 @@ BEGIN
 
          lot.product_id = pro.product_id INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-         WHERE inv.status = 1 AND inv.date BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS sales_ranking
+         WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id ORDER BY quantity DESC, name) AS sales_ranking
 
       LIMIT ?, ?";
 
@@ -5758,7 +5758,7 @@ BEGIN
 
          lot.product_id = pro.product_id WHERE inv.status = 1 AND
 
-       inv.date BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
+       CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS sales_ranking;
 
 END$$
 
@@ -5862,7 +5862,7 @@ BEGIN
 
   SELECT IFNULL(SUM(inv.total * (dis.percentage / 100)), 0) FROM invoice inv INNER JOIN discount dis
 
-    ON inv.invoice_id = dis.invoice_id WHERE inv.date BETWEEN inFirstDate AND inLastDate AND inv.status = 1;
+    ON inv.invoice_id = dis.invoice_id WHERE CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate AND inv.status = 1;
 
 END$$
 
@@ -5894,7 +5894,7 @@ BEGIN
 
        INNER JOIN manufacturer man ON pro.manufacturer_id = man.manufacturer_id
 
-     WHERE inv.status = 1 AND inv.date BETWEEN ? AND ? GROUP BY pro.product_id) AS pro_sum
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY pro.product_id) AS pro_sum
 
   LEFT JOIN
 
@@ -5904,7 +5904,7 @@ BEGIN
 
        INNER JOIN invoice inv ON inv_bon.invoice_id = inv.invoice_id
 
-     WHERE inv.status = 1 AND inv.date BETWEEN ? AND ? GROUP BY bon.product_id) AS bon_sum
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN ? AND ? GROUP BY bon.product_id) AS bon_sum
 
   ON pro_sum.product_id = bon_sum.product_id ORDER BY quantity DESC, name
 
@@ -5943,7 +5943,7 @@ BEGIN
 
        INNER JOIN product pro ON lot.product_id = pro.product_id
 
-     WHERE inv.status = 1 AND inv.date BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS pro_sum
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY pro.product_id) AS pro_sum
 
   LEFT JOIN
 
@@ -5953,7 +5953,7 @@ BEGIN
 
        INNER JOIN invoice inv ON inv_bon.invoice_id = inv.invoice_id
 
-     WHERE inv.status = 1 AND inv.date BETWEEN inFirstDate AND inLastDate GROUP BY bon.product_id) AS bon_sum
+     WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY bon.product_id) AS bon_sum
 
   ON pro_sum.product_id = bon_sum.product_id;
 
@@ -5965,7 +5965,7 @@ BEGIN
 
   SELECT SUM(inv.total - (inv.total * (IFNULL(dis.percentage, 0) / 100))) FROM invoice inv LEFT JOIN discount dis
 
-    ON inv.invoice_id = dis.invoice_id WHERE inv.date BETWEEN inFirstDate AND inLastDate AND inv.status = 1;
+    ON inv.invoice_id = dis.invoice_id WHERE CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate AND inv.status = 1;
 
 END$$
 
@@ -5975,7 +5975,7 @@ BEGIN
 
        SELECT COUNT(*) FROM (SELECT 1 FROM invoice inv INNER JOIN user_account use_acc ON inv.user_account_username = use_acc.user_account_username
 
-         WHERE inv.status = 1 AND inv.date BETWEEN inFirstDate AND inLastDate GROUP BY inv.user_account_username) AS sales_summary;
+         WHERE inv.status = 1 AND CAST(inv.date AS DATE) BETWEEN inFirstDate AND inLastDate GROUP BY inv.user_account_username) AS sales_summary;
 
 END$$
 
@@ -5999,7 +5999,7 @@ BEGIN
 
        LEFT JOIN discount dis ON inv.invoice_id = dis.invoice_id
 
-     WHERE inv.date BETWEEN ? AND ? AND inv.status = 1 GROUP BY inv.user_account_username ORDER BY total DESC, username) AS sales_summary
+     WHERE CAST(inv.date AS DATE) BETWEEN ? AND ? AND inv.status = 1 GROUP BY inv.user_account_username ORDER BY total DESC, username) AS sales_summary
 
       LIMIT ?, ?";
 
@@ -6198,7 +6198,7 @@ BEGIN
 
   SELECT COUNT(*) FROM shipment
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -6210,7 +6210,7 @@ BEGIN
 
     "SELECT shipment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM shipment
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
@@ -7017,7 +7017,7 @@ BEGIN
 
   SELECT COUNT(*) FROM withdraw_adjustment
 
-    WHERE date BETWEEN inStartDate AND inEndDate;
+    WHERE CAST(date AS DATE) BETWEEN inStartDate AND inEndDate;
 
 END$$
 
@@ -7029,7 +7029,7 @@ BEGIN
 
     "SELECT withdraw_adjustment_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM withdraw_adjustment
 
-      WHERE date BETWEEN ? AND ?
+      WHERE CAST(date AS DATE) BETWEEN ? AND ?
 
       ORDER BY date
 
