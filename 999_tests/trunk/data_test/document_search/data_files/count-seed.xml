@@ -10,7 +10,7 @@
 		<row>
 			<value>1</value>
 			<value>roboli</value>
-			<value>2008-07-12</value>
+			<value>2008-07-12 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -18,7 +18,7 @@
 		<row>
 			<value>2</value>
 			<value>roboli</value>
-			<value>2008-07-22</value>
+			<value>2008-07-22 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -26,7 +26,7 @@
 		<row>
 			<value>3</value>
 			<value>roboli</value>
-			<value>2008-08-12</value>
+			<value>2008-08-12 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -34,7 +34,7 @@
 		<row>
 			<value>4</value>
 			<value>roboli</value>
-			<value>2008-08-22</value>
+			<value>2008-08-22 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -42,7 +42,7 @@
 		<row>
 			<value>5</value>
 			<value>roboli</value>
-			<value>2008-09-12</value>
+			<value>2008-09-12 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -50,7 +50,7 @@
 		<row>
 			<value>6</value>
 			<value>roboli</value>
-			<value>2008-09-22</value>
+			<value>2008-09-22 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -58,7 +58,7 @@
 		<row>
 			<value>7</value>
 			<value>roboli</value>
-			<value>2008-10-12</value>
+			<value>2008-10-12 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -66,7 +66,7 @@
 		<row>
 			<value>8</value>
 			<value>roboli</value>
-			<value>2008-10-22</value>
+			<value>2008-10-22 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -74,7 +74,7 @@
 		<row>
 			<value>9</value>
 			<value>roboli</value>
-			<value>2008-11-12</value>
+			<value>2008-11-12 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>
@@ -82,7 +82,7 @@
 		<row>
 			<value>10</value>
 			<value>roboli</value>
-			<value>2008-11-22</value>
+			<value>2008-11-22 14:00:00</value>
 			<value>Pq si.</value>
 			<value>10</value>
 		</row>

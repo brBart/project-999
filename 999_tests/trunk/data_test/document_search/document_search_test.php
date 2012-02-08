@@ -65,6 +65,14 @@ class DepositSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
 	}
+	
+	public function testSearch_7(){
+		$list = array(array('deposit_id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = DepositSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 2);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+	}
 }
 
 class DepositByWorkingDaySearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -129,6 +137,14 @@ class DepositByWorkingDaySearchDAMTest extends PHPUnit_Extensions_Database_TestC
 		$this->assertEquals(0, count($data_list));
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
+	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'working_day' => '12/07/2008'));
+		$data_list = DepositByWorkingDaySearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
 	}
 }
 
@@ -195,6 +211,14 @@ class ComparisonSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
 	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = ComparisonSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+	}
 }
 
 class CountSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -259,6 +283,14 @@ class CountSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, count($data_list));
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
+	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = CountSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
 	}
 }
 
@@ -325,6 +357,14 @@ class PurchaseReturnSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
 	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = PurchaseReturnSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+	}
 }
 
 class ShipmentSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -390,6 +430,14 @@ class ShipmentSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
 	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = ShipmentSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+	}
 }
 
 class InvoiceSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -442,7 +490,7 @@ class InvoiceSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(3, $pages);
 		$this->assertEquals(10, $items);
 	}
-	
+
 	public function testSearch_4(){
 		$list = array(array('invoice_id' => '1', 'serial_number' => 'A021', 'number' => '1',
 				'created_date' => '12/07/2008'),
@@ -466,6 +514,15 @@ class InvoiceSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, count($data_list));
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
+	}
+	
+	public function testSearch_7(){
+		$list = array(array('invoice_id' => '1', 'serial_number' => 'A021', 'number' => '1',
+				'created_date' => '12/07/2008'));
+		$data_list = InvoiceSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
 	}
 }
 
@@ -544,6 +601,15 @@ class InvoiceByWorkingDaySearchDAMTest extends PHPUnit_Extensions_Database_TestC
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
 	}
+	
+	public function testSearch_7(){
+		$list = array(array('invoice_id' => '1', 'serial_number' => 'A021', 'number' => '1',
+				'working_day' => '12/07/2008'));
+		$data_list = InvoiceByWorkingDaySearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+	}
 }
 
 class ReceiptSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -608,6 +674,14 @@ class ReceiptSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, count($data_list));
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
+	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = ReceiptSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
 	}
 }
 
@@ -674,6 +748,14 @@ class EntryIASearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
 	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = EntryIASearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+	}
 }
 
 class WithdrawIASearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -738,6 +820,14 @@ class WithdrawIASearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, count($data_list));
 		$this->assertEquals(0, $pages);
 		$this->assertEquals(0, $items);
+	}
+	
+	public function testSearch_7(){
+		$list = array(array('id' => '1', 'created_date' => '12/07/2008'));
+		$data_list = WithdrawIASearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
 	}
 }
 ?>
