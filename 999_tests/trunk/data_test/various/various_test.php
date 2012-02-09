@@ -45,16 +45,16 @@ class ChangePriceListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	}
 	
 	public function testGetList(){
-		$list = array(array('logged_date' => '22/06/2009 00:00:00', 'username' => 'roboli',
+		$list = array(array('logged_date' => '22/06/2009 14:00:00', 'username' => 'roboli',
 				'bar_code' => '54321', 'manufacturer' => 'Mattel', 'name' => 'Barby',
 				'last_price' => '12.12', 'new_price' => '23.23'),
-				array('logged_date' => '23/06/2009 00:00:00', 'username' => 'edglem',
+				array('logged_date' => '23/06/2009 14:00:00', 'username' => 'edglem',
 				'bar_code' => '543', 'manufacturer' => 'Mattel', 'name' => 'Pringles',
 				'last_price' => '1.00', 'new_price' => '2.00'),
-				array('logged_date' => '25/06/2009 00:00:00', 'username' => 'roboli',
+				array('logged_date' => '25/06/2009 14:00:00', 'username' => 'roboli',
 				'bar_code' => '54321', 'manufacturer' => 'Mattel', 'name' => 'Barby',
 				'last_price' => '12.12', 'new_price' => '23.23'),
-				array('logged_date' => '26/06/2009 00:00:00', 'username' => 'roboli',
+				array('logged_date' => '26/06/2009 14:00:00', 'username' => 'roboli',
 				'bar_code' => '54321', 'manufacturer' => 'Mattel', 'name' => 'Barby',
 				'last_price' => '1.00', 'new_price' => '2.00'));
 				
@@ -65,10 +65,10 @@ class ChangePriceListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	}
 	
 	public function testGetList_2(){
-		$list = array(array('logged_date' => '28/06/2009 00:00:00', 'username' => 'roboli',
+		$list = array(array('logged_date' => '28/06/2009 14:00:00', 'username' => 'roboli',
 				'bar_code' => '54321', 'manufacturer' => 'Mattel', 'name' => 'Barby',
 				'last_price' => '12.12', 'new_price' => '23.23'),
-				array('logged_date' => '29/06/2009 00:00:00', 'username' => 'roboli',
+				array('logged_date' => '29/06/2009 14:00:00', 'username' => 'roboli',
 				'bar_code' => '543', 'manufacturer' => 'Mattel', 'name' => 'Pringles',
 				'last_price' => '1.00', 'new_price' => '2.00'));
 				
@@ -77,11 +77,29 @@ class ChangePriceListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	}
 	
 	public function testGetList_3(){
-		$list = array(array('logged_date' => '29/06/2009 00:00:00', 'username' => 'roboli',
+		$list = array(array('logged_date' => '29/06/2009 14:00:00', 'username' => 'roboli',
 				'bar_code' => '543', 'manufacturer' => 'Mattel', 'name' => 'Pringles',
 				'last_price' => '1.00', 'new_price' => '2.00'));
 				
 		$data_list = ChangePriceListDAM::getList('29/06/2009', '30/06/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		$this->assertEquals($list, $data_list);
+	}
+	
+	public function testGetList_4(){
+		$data_list = ChangePriceListDAM::getList('29/08/2009', '30/09/2009', $pages, $items, 1);
+		$this->assertEquals(0, count($data_list));
+		$this->assertEquals(0, $pages);
+		$this->assertEquals(0, $items);
+	}
+	
+	public function testGetList_5(){
+		$list = array(array('logged_date' => '22/06/2009 14:00:00', 'username' => 'roboli',
+				'bar_code' => '54321', 'manufacturer' => 'Mattel', 'name' => 'Barby',
+				'last_price' => '12.12', 'new_price' => '23.23'));
+				
+		$data_list = ChangePriceListDAM::getList('22/06/2009', '22/06/2009', $pages, $items, 1);
 		$this->assertEquals(1, $pages);
 		$this->assertEquals(1, $items);
 		$this->assertEquals($list, $data_list);
@@ -148,6 +166,26 @@ class DiscountListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	public function testGetList_3(){
 		$this->assertEquals(0, count(DiscountListDAM::getList('15/07/2009', '20/07/2009', $pages, $items, 1)));
 	}
+	
+	public function testGetList_4(){
+		$list = array(array('created_date' => '22/06/2009 10:00:00', 'username' => 'roboli',
+				'serial_number' => 'A021', 'number' => '123', 'subtotal' => '120.00', 'percentage' => '10.00',
+				'amount' => '12.00', 'total' => '108.00'));
+				
+		$data_list = DiscountListDAM::getList('22/06/2009', '22/06/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		for($i = 0; $i < count($data_list); $i++)
+			$new_list[] = array('created_date' => $data_list[$i]['created_date'], 
+					'username' => $data_list[$i]['username'],
+					'serial_number' => $data_list[$i]['serial_number'], 'number' => $data_list[$i]['number'],
+					'subtotal' => $data_list[$i]['subtotal'], 'percentage' => $data_list[$i]['percentage'],
+					'amount' => number_format($data_list[$i]['amount'], 2),
+					'total' => number_format($data_list[$i]['total'], 2));
+		
+		$this->assertEquals($list, $new_list);
+	}
 }
 
 class CancelDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -165,7 +203,7 @@ class CancelDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 				'document' => 'Devolucion', 'number' => '3', 'total' => '33.44'),
 				array('cancelled_date' => '21/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Vale Entrada', 'number' => '2', 'total' => '33.44'),
-				array('cancelled_date' => '22/06/2009 00:00:00', 'username' => 'roboli',
+				array('cancelled_date' => '22/06/2009 00:00:02', 'username' => 'roboli',
 				'document' => 'Factura', 'number' => 'A021-14230', 'total' => '123.21'),
 				array('cancelled_date' => '22/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Recibo', 'number' => '2', 'total' => '33.44'));
@@ -185,7 +223,7 @@ class CancelDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	}
 	
 	public function testGetList_2(){
-		$list = array(array('cancelled_date' => '23/06/2009 00:00:00', 'username' => 'roboli',
+		$list = array(array('cancelled_date' => '23/06/2009 00:00:02', 'username' => 'roboli',
 				'document' => 'Envio', 'number' => '2', 'total' => '33.44'),
 				array('cancelled_date' => '23/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Vale Salida', 'number' => '2', 'total' => '33.44'));
@@ -205,6 +243,24 @@ class CancelDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	public function testGetList_3(){
 		$this->assertEquals(0, count(CancelDocumentListDAM::getList('15/07/2009', '20/07/2009', $pages, $items, 1)));
 	}
+	
+	public function testGetList_4(){
+		$list = array(array('cancelled_date' => '21/06/2009 00:00:01', 'username' => 'roboli',
+				'document' => 'Devolucion', 'number' => '3', 'total' => '33.44'));
+				
+		$data_list = CancelDocumentListDAM::getList('21/06/2009', '21/06/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		for($i = 0; $i < count($data_list); $i++)
+			$new_list[] = array('cancelled_date' => $data_list[$i]['cancelled_date'], 
+					'username' => $data_list[$i]['username'],
+					'document' => $data_list[$i]['document'],
+					'number' => $data_list[$i]['number'],
+					'total' => number_format($data_list[$i]['total'], 2));
+		
+		$this->assertEquals($list, $new_list);
+	}
 }
 
 class CancelCashDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -218,13 +274,13 @@ class CancelCashDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase
 	}
 	
 	public function testGetList(){
-		$list = array(array('cancelled_date' => '20/06/2009 00:00:00', 'username' => 'roboli',
+		$list = array(array('cancelled_date' => '20/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Deposito', 'number' => '3', 'total' => '500.00'),
-				array('cancelled_date' => '21/06/2009 00:00:00', 'username' => 'roboli',
+				array('cancelled_date' => '21/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Factura', 'number' => 'A021-12346', 'total' => '123.21'),
-				array('cancelled_date' => '22/06/2009 00:00:00', 'username' => 'roboli',
+				array('cancelled_date' => '22/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Factura', 'number' => 'A021-14230', 'total' => '123.21'),
-				array('cancelled_date' => '25/06/2009 00:00:00', 'username' => 'roboli',
+				array('cancelled_date' => '25/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Factura', 'number' => 'A021-1230', 'total' => '123.21'));
 				
 		$data_list = CancelCashDocumentListDAM::getList('20/06/2009', '30/06/2009', $pages, $items, 1);
@@ -242,7 +298,7 @@ class CancelCashDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase
 	}
 	
 	public function testGetList_2(){
-		$list = array(array('cancelled_date' => '26/06/2009 00:00:00', 'username' => 'roboli',
+		$list = array(array('cancelled_date' => '26/06/2009 00:00:05', 'username' => 'roboli',
 				'document' => 'Deposito', 'number' => '4', 'total' => '500.00'));
 				
 		$data_list = CancelCashDocumentListDAM::getList('20/06/2009', '30/06/2009', $pages, $items, 2);
@@ -259,6 +315,24 @@ class CancelCashDocumentListDAMTest extends PHPUnit_Extensions_Database_TestCase
 	
 	public function testGetList_3(){
 		$this->assertEquals(0, count(CancelDocumentListDAM::getList('15/07/2009', '20/07/2009', $pages, $items, 1)));
+	}
+	
+	public function testGetList_4(){
+		$list = array(array('cancelled_date' => '20/06/2009 00:00:05', 'username' => 'roboli',
+				'document' => 'Deposito', 'number' => '3', 'total' => '500.00'));
+				
+		$data_list = CancelCashDocumentListDAM::getList('20/06/2009', '20/06/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		for($i = 0; $i < count($data_list); $i++)
+			$new_list[] = array('cancelled_date' => $data_list[$i]['cancelled_date'], 
+					'username' => $data_list[$i]['username'],
+					'document' => $data_list[$i]['document'],
+					'number' => $data_list[$i]['number'],
+					'total' => number_format($data_list[$i]['total'], 2));
+		
+		$this->assertEquals($list, $new_list);
 	}
 }
 
@@ -302,6 +376,19 @@ class SalesRankingListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	
 	public function testGetList_3(){
 		$this->assertEquals(0, count(SalesRankingListDAM::getList('15/07/2009', '20/07/2009', $pages, $items, 1)));
+	}
+	
+	public function testGetList_4(){
+		$list = array(array('rank' => '1', 'bar_code' => '5433221', 'manufacturer' => 'Mattel',
+				'name' => 'Transformer', 'quantity' => '27'),
+				array('rank' => '2', 'bar_code' => '5433225', 'manufacturer' => 'Mattel',
+				'name' => 'Lapicero', 'quantity' => '6'));
+				
+		$data_list = SalesRankingListDAM::getList('17/06/2009', '17/06/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		$this->assertEquals($list, $data_list);
 	}
 }
 
@@ -622,6 +709,24 @@ class SalesLedgerDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals($data, $file_data);
 	}
 	
+	public function testGenerate_2(){
+		$data = array(array('18/06/2010', 'A031', '12348', '12348', '123.21'));
+		
+		$file = SalesLedgerDAM::generate('18/06/2010', '18/06/2010');
+		
+		$this->assertTrue($file != '');
+		
+		$fp = fopen(SALES_LEDGER_DIR . $file, 'r');
+		
+		$file_data = array();
+		
+		while (($line = fgetcsv($fp)) !== FALSE) {
+			$file_data[] = $line;
+		}
+		
+		$this->assertEquals($data, $file_data);
+	}
+	
 	public function testGenerate_Empty(){
 		$file = SalesLedgerDAM::generate('01/07/2010', '30/07/2010');
 		
@@ -668,6 +773,17 @@ class InvoiceTransactionListDAMTest extends PHPUnit_Extensions_Database_TestCase
 	public function testGetList_3(){
 		$this->assertEquals(0, count(InvoiceTransactionListDAM::getList('15/07/2009', '20/07/2009', $pages, $items, 1)));
 	}
+	
+	public function testGetList_4(){
+		$list = array(array('serial_number' => 'A021', 'number' => '1001', 'date' => '02/03/2010', 'total' => '200.50',
+						'state' => 'ANULADO'));
+				
+		$data_list = InvoiceTransactionListDAM::getList('02/03/2010', '02/03/2010', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		$this->assertEquals($list, $data_list);
+	}
 }
 
 class ResolutionListDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -708,6 +824,17 @@ class ResolutionListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	
 	public function testGetList_3(){
 		$this->assertEquals(0, count(ResolutionListDAM::getList('15/07/2009', '20/07/2009', $pages, $items, 1)));
+	}
+	
+	public function testGetList_4(){
+		$list = array(array('resolution_number' => '100-3930', 'resolution_date' => '05/12/2010', 'serial_number' => 'A021',
+					'initial_number' => '1000', 'final_number' => '4000', 'created_date' => '01/03/2011', 'document_type' => 'FACTURA'));
+				
+		$data_list = ResolutionListDAM::getList('01/03/2011', '01/03/2011', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		$this->assertEquals($list, $data_list);
 	}
 }
 
@@ -792,6 +919,44 @@ class SalesSummaryListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, count(SalesSummaryListDAM::getListByProduct('01/07/2009', '15/07/2009', $subtotal, $discount_total, $pages, $items, 1)));
 	}
 	
+	public function testGetListByProduct_4(){
+		$list = array(array('rank' => '1', 'bar_code' => '5433221', 'manufacturer' => 'Mattel',
+				'name' => 'Transformer', 'actual_price' => '82.34', 'avg_price' => '37.23', 'quantity' => '27',
+				'subtotal' => '997.05', 'bonus_total' => '-37.00', 'total' => '960.05'),
+				array('rank' => '2', 'bar_code' => '5433225', 'manufacturer' => 'Mattel',
+				'name' => 'Lapicero', 'actual_price' => '82.34', 'avg_price' => '10.00', 'quantity' => '6',
+				'subtotal' => '60.00', 'bonus_total' => '0.00', 'total' => '60.00'),
+				array('rank' => '3', 'bar_code' => '54321', 'manufacturer' => 'Mattel',
+				'name' => 'Barby', 'actual_price' => '82.34', 'avg_price' => '45.23',  'quantity' => '5',
+				'subtotal' => '226.15', 'bonus_total' => '0.00', 'total' => '226.15'),
+				array('rank' => '4', 'bar_code' => '54323', 'manufacturer' => 'Mattel',
+				'name' => 'Monitor', 'actual_price' => '82.34', 'avg_price' => '45.23', 'quantity' => '5',
+				'subtotal' => '226.15', 'bonus_total' => '0.00', 'total' => '226.15'));
+				
+		$db_list = SalesSummaryListDAM::getListByProduct('17/06/2009', '17/06/2009', $subtotal, $discount_total, $pages, $items, 1);
+		
+		foreach($db_list as $product){
+			$data_list[] = array(
+					'rank' => $product['rank'],
+					'bar_code' => $product['bar_code'],
+					'manufacturer' => $product['manufacturer'],
+					'name' => $product['name'],
+					'actual_price' => $product['actual_price'],
+					'avg_price' => number_format($product['avg_price'], 2),
+					'quantity' => $product['quantity'],
+					'subtotal' => $product['subtotal'],
+					'bonus_total' => $product['bonus_total'],
+					'total' => $product['total']);
+		}
+		
+		$this->assertEquals(1504.8, $subtotal);
+		$this->assertEquals(86.76, number_format($discount_total, 2));
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(5, $items);
+		
+		$this->assertEquals($list, $data_list);
+	}
+	
 	public function testGetListByUserAccount(){
 		$list = array(array('rank' => '1', 'username' => 'roboli', 'name' => 'Roberto Oliveros',
 				'subtotal' => '1120.18', 'discount_total' => '96.01', 'total' => '1,024.18'),
@@ -846,6 +1011,35 @@ class SalesSummaryListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	
 	public function testGetListByUserAccount_3(){
 		$this->assertEquals(0, count(SalesSummaryListDAM::getListByUserAccount('01/07/2009', '15/07/2009', $total, $pages, $items, 1)));
+	}
+	
+	public function testGetListByUserAccount_4(){
+		$list = array(array('rank' => '1', 'username' => 'roboli', 'name' => 'Roberto Oliveros',
+				'subtotal' => '1120.18', 'discount_total' => '96.01', 'total' => '1,024.18'),
+				array('rank' => '2', 'username' => 'josoli', 'name' => 'Jose Oliveros',
+				'subtotal' => '562.43', 'discount_total' => '0.00', 'total' => '562.43'),
+				array('rank' => '3', 'username' => 'lizram', 'name' => 'Lizeth Ramirez',
+				'subtotal' => '484.75', 'discount_total' => '0.00', 'total' => '484.75'),
+				array('rank' => '4', 'username' => 'edglem', 'name' => 'Edgar Lemus',
+				'subtotal' => '197.68', 'discount_total' => '9.00', 'total' => '188.68'));
+				
+		$db_list = SalesSummaryListDAM::getListByUserAccount('17/06/2009', '17/06/2009', $total, $pages, $items, 1);
+		
+		foreach($db_list as $product){
+			$data_list[] = array(
+					'rank' => $product['rank'],
+					'username' => $product['username'],
+					'name' => $product['name'],
+					'subtotal' => $product['subtotal'],
+					'discount_total' => number_format($product['discount_total'], 2),
+					'total' => number_format($product['total'], 2));
+		}
+		
+		$this->assertEquals('2,292.49', number_format($total, 2));
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(5, $items);
+		
+		$this->assertEquals($list, $data_list);
 	}
 }
 
@@ -923,6 +1117,41 @@ class PurchasesSummaryListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	public function testGetListByProduct_3(){
 		$this->assertEquals(0, count(PurchasesSummaryListDAM::getListByProduct('01/07/2009', '15/07/2009', $total, $pages, $items, 1)));
 	}
+	
+	public function testGetListByProduct_4(){
+		$list = array(array('rank' => '1', 'bar_code' => '5433221', 'manufacturer' => 'Mattel',
+				'name' => 'Transformer', 'actual_price' => '82.34', 'avg_price' => '37.23', 'quantity' => '27',
+				'total' => '997.05'),
+				array('rank' => '2', 'bar_code' => '5433225', 'manufacturer' => 'Mattel',
+				'name' => 'Lapicero', 'actual_price' => '82.34', 'avg_price' => '10.00', 'quantity' => '6',
+				'total' => '60.00'),
+				array('rank' => '3', 'bar_code' => '54321', 'manufacturer' => 'Mattel',
+				'name' => 'Barby', 'actual_price' => '82.34', 'avg_price' => '45.23',  'quantity' => '5',
+				'total' => '226.15'),
+				array('rank' => '4', 'bar_code' => '54323', 'manufacturer' => 'Mattel',
+				'name' => 'Monitor', 'actual_price' => '82.34', 'avg_price' => '45.23', 'quantity' => '5',
+				'total' => '226.15'));
+				
+		$db_list = PurchasesSummaryListDAM::getListByProduct('17/06/2009', '17/06/2009', $total, $pages, $items, 1);
+		
+		foreach($db_list as $product){
+			$data_list[] = array(
+					'rank' => $product['rank'],
+					'bar_code' => $product['bar_code'],
+					'manufacturer' => $product['manufacturer'],
+					'name' => $product['name'],
+					'actual_price' => $product['actual_price'],
+					'avg_price' => number_format($product['avg_price'], 2),
+					'quantity' => $product['quantity'],
+					'total' => $product['total']);
+		}
+		
+		$this->assertEquals(1504.8, $total);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(5, $items);
+		
+		$this->assertEquals($list, $data_list);
+	}
 }
 
 class BonusListDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -969,6 +1198,17 @@ class BonusListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals(0, count(BonusListDAM::getCreatedList('15/07/2009', '20/07/2009', $pages, $items, 1)));
 	}
 	
+	public function testGetCreatedList_4(){
+		$list = array(array('bar_code' => '3242', 'manufacturer' => 'Mattel', 'name' => 'Shampoo',
+				'quantity' => '3', 'percentage' => '5.00', 'created_date' => '18/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'));
+				
+		$data_list = BonusListDAM::getCreatedList('18/06/2009', '18/06/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		$this->assertEquals($list, $data_list);
+	}
+	
 	public function testGetUsedList(){
 		$list = array(array('bar_code' => '3242', 'manufacturer' => 'Mattel', 'name' => 'Shampoo',
 				'quantity' => '3', 'percentage' => '5.00', 'created_date' => '18/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'),
@@ -999,6 +1239,17 @@ class BonusListDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	
 	public function testGetUsedList_3(){
 		$this->assertEquals(0, count(BonusListDAM::getUsedList('15/07/2009', '20/07/2009', $pages, $items, 1)));
+	}
+	
+	public function testGetUsedList_4(){
+		$list = array(array('bar_code' => '3242', 'manufacturer' => 'Mattel', 'name' => 'Shampoo',
+				'quantity' => '3', 'percentage' => '5.00', 'created_date' => '18/06/2009', 'expiration_date' => '01/01/2015', 'username' => 'roboli'));
+				
+		$data_list = BonusListDAM::getUsedList('18/06/2009', '18/06/2009', $pages, $items, 1);
+		$this->assertEquals(1, $pages);
+		$this->assertEquals(1, $items);
+		
+		$this->assertEquals($list, $data_list);
 	}
 }
 ?>
