@@ -68,7 +68,7 @@ class DepositSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 	
 	public function testSearch_7(){
 		$list = array(array('deposit_id' => '1', 'created_date' => '12/07/2008'));
-		$data_list = DepositSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 2);
+		$data_list = DepositSearchDAM::search('2008/07/12', '2008/07/12', $pages, $items, 1);
 		$this->assertEquals($list, $data_list);
 		$this->assertEquals(1, $pages);
 		$this->assertEquals(1, $items);
