@@ -619,7 +619,7 @@ class DocProductDetail extends DocumentDetail{
 		$expiration_date =
 				(is_null($this->_mLot->getExpirationDate())) ? 'N/A' : $this->_mLot->getExpirationDate();
 
-		return array('id' => $this->getId(), 'bar_code' => $product->getBarCode(),
+		return array('id' => $this->getId(), 'bar_code' => $product->getBarCode(), 'product_id' => $product->getId(),
 				'manufacturer' => $manufacturer->getName(), 'product' => $product->getName(),
 				'um' => $um->getName(), 'quantity' => $this->_mQuantity,
 				'price' => $this->_mPrice, 'total' => $this->getTotal(),
