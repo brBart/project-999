@@ -19,6 +19,9 @@
 		      			</xsl:attribute>
 	      			</xsl:if>
 	        		<th>Barra</th> 
+	        		<xsl:if test="response/params/include_product_id = 1">
+	        			<th>Cod.</th>
+	        		</xsl:if>
 	         		<th>Casa</th>
 	         		<th>Nombre</th>
 	         		<th>UM</th>
@@ -48,15 +51,31 @@
 		  				<xsl:call-template name="body" />
 		  			</xsl:when>
 		  			<xsl:otherwise>
-		  				<tr>
-			       			<td colspan="9"></td>
-			       		</tr>
+		  				<xsl:choose>
+			  				<xsl:when test="response/params/include_product_id = 1">
+				  				<tr>
+					       			<td colspan="10"></td>
+					       		</tr>
+					       	</xsl:when>
+				       		<xsl:otherwise>
+				       			<tr>
+					       			<td colspan="9"></td>
+					       		</tr>
+				       		</xsl:otherwise>
+			       		</xsl:choose>
 		  			</xsl:otherwise>
 		  		</xsl:choose>
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
-	       			<td colspan="5"></td>
+	       			<xsl:choose>
+		       			<xsl:when test="response/params/include_product_id = 1">
+				       		<td colspan="6"></td>
+				       	</xsl:when>
+			       		<xsl:otherwise>
+				       		<td colspan="5"></td>
+			       		</xsl:otherwise>
+		       		</xsl:choose>
 	       			<td class="total_col">Total:</td>
 	       			<td class="total_col"><xsl:value-of select="response/params/total" /></td>
 	       			<td colspan="2"></td>
@@ -124,6 +143,9 @@
 		           	</xsl:attribute>
 	       			<xsl:value-of select="bar_code" />
 	       		</td>
+	       		<xsl:if test="product_id != ''">
+	       			<td><xsl:value-of select="product_id" /></td>
+	       		</xsl:if>
 	       		<td><xsl:value-of select="manufacturer" /></td>
 	       		<td><xsl:value-of select="product" /></td>
 	       		<td><xsl:value-of select="um" /></td>

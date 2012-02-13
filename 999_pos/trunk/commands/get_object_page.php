@@ -66,7 +66,7 @@ abstract class GetObjectPageCommand extends Command{
 				'previous_page' => $previous_page, 'next_page' => $next_page, 'page_items' => $page_items,
 				'total' => $obj->getTotal());
 		
-		$params = array_merge($params, $this->getObjectParams($obj));
+		$params = array_merge($params, $this->getObjectParams($obj, $request));
 		
 		Page::display($params, $this->getTemplate());
 	}
@@ -81,6 +81,6 @@ abstract class GetObjectPageCommand extends Command{
 	 * Returns the params to display for the object.
 	 * @param variant $obj
 	 */
-	abstract protected function getObjectParams($obj);
+	abstract protected function getObjectParams($obj, Request $request);
 }
 ?>

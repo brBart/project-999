@@ -28,7 +28,7 @@ class GetDepositPageCommand extends GetObjectPageCommand{
 	 * Returns the params to display for the object.
 	 * @param variant $obj
 	 */
-	protected function getObjectParams($obj){
+	protected function getObjectParams($obj, Request $request){
 		return array('total' => $obj->getTotal());
 	}
 }

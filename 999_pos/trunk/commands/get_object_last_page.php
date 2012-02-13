@@ -44,7 +44,7 @@ abstract class GetObjectLastPageCommand extends Command{
 				'total_items' => $total_items, 'first_item' => $first_item, 'last_item' => $last_item,
 				'previous_page' => $previous_page, 'next_page' => $next_page, 'page_items' => $page_items);
 		
-		$params = array_merge($params, $this->getObjectParams($obj));
+		$params = array_merge($params, $this->getObjectParams($obj, $request));
 		
 		Page::display($params, $this->getTemplate());
 	}
@@ -59,6 +59,6 @@ abstract class GetObjectLastPageCommand extends Command{
 	 * Returns the params to display for the object.
 	 * @param variant $obj
 	 */
-	abstract protected function getObjectParams($obj);
+	abstract protected function getObjectParams($obj, Request $request);
 }
 ?>

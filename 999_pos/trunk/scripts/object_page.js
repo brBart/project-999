@@ -1,5 +1,5 @@
 /**
- * @fileOverview Library with the ObjectPage class.
+  * @fileOverview Library with the ObjectPage class.
  * @author Roberto Oliveros
  */
 
@@ -46,6 +46,7 @@ ObjectPage.prototype.displaySuccess = function(xmlDoc){
  */
 ObjectPage.prototype.getLastPage = function(){
 	var str = Url.addUrlParam(Url.getUrl(), 'cmd', this.getLastPageCmd());
+	str = this.addUrlParamHook(str);
 	str = Url.addUrlParam(str, 'key', this._mKey);
 	this.sendRequest(str);
 }
@@ -60,6 +61,7 @@ ObjectPage.prototype.getPage = function(iPage){
 	else{
 		var str = Url.addUrlParam(Url.getUrl(), 'cmd', this.getPageCmd());
 		str = Url.addUrlParam(str, 'page', iPage);
+		str = this.addUrlParamHook(str);
 		str = Url.addUrlParam(str, 'key', this._mKey);
 		this.sendRequest(str);
 	}
@@ -109,7 +111,13 @@ ObjectPage.prototype.moveNext = function(){
  	else if(this._mTotalPages > 0 && this._mPage < this._mTotalPages)
  		this.moveToNextPage();
 }
- 
+
+/**
+ * Add another param to the Url if needed. 
+ */
+ObjectPage.prototype.addUrlParamHook = function(sUrl){
+	return sUrl;
+}
 
 /**
  * Abstract method.

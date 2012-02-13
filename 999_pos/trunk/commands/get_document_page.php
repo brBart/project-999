@@ -28,8 +28,9 @@ class GetDocumentPageCommand extends GetObjectPageCommand{
 	 * Returns the params to display for the object.
 	 * @param variant $obj
 	 */
-	protected function getObjectParams($obj){
-		return array('total' => $obj->getTotal());
+	protected function getObjectParams($obj, Request $request){
+		return array('total' => $obj->getTotal(),
+				'include_product_id' => (int)$request->getProperty('include_product_id'));
 	}
 }
 ?>

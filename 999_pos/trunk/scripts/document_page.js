@@ -14,9 +14,11 @@
  * @param {StateMachine} oMachine
  * @param {EventDelegator} oEventDelegator
  */
-function DocumentPage(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator){
+function DocumentPage(oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator, sIncludeProductId){
 	// Call the parent constructor.
 	ObjectPage.call(this, oSession, oConsole, oRequest, sKey, oMachine, oEventDelegator);
+	
+	this._mIncludeProductId = sIncludeProductId;
 }
 
 /**
@@ -38,4 +40,14 @@ DocumentPage.prototype.getLastPageCmd = function(){
  */
 DocumentPage.prototype.getPageCmd = function(){
 	return 'get_document_page';
+}
+
+/**
+ * Add another param to the Url if needed. 
+ */
+DocumentPage.prototype.addUrlParamHook = function(sUrl){
+	if(this._mIncludeProductId)
+		return Url.addUrlParam(sUrl, 'include_product_id', '1');
+	else
+		return sUrl;
 }

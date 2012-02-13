@@ -15,12 +15,16 @@ header('Content-Type: text/xml');
 		<previous_page>{$previous_page}</previous_page>
 		<next_page>{$next_page}</next_page>
 		<total>{$total|nf:2}</total>
+		<include_product_id>{$include_product_id}</include_product_id>
 	</params>
 	<grid>
 		{section name=i loop=$details}
 		<row>
 			<detail_id>{$details[i].id}</detail_id>
 			<bar_code><![CDATA[{$details[i].bar_code|wordwrap:16:"\n":true}]]></bar_code>
+			{if $include_product_id eq 1}
+			<product_id>{$details[i].product_id}</product_id>
+			{/if}
 			<manufacturer><![CDATA[{$details[i].manufacturer|wordwrap:11:"\n":true}]]></manufacturer>
 			<product><![CDATA[{$details[i].product|wordwrap:22:"\n":true}]]></product>
 			<um><![CDATA[{$details[i].um|wordwrap:8:"\n":true}]]></um>

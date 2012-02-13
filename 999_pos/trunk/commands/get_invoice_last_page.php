@@ -28,7 +28,7 @@ class GetInvoiceLastPageCommand extends GetObjectLastPageCommand{
 	 * Returns the params to display for the object.
 	 * @param variant $obj
 	 */
-	protected function getObjectParams($obj){
+	protected function getObjectParams($obj, Request $request){
 		return array('sub_total' => $obj->getSubTotal(),
 				'discount_percentage' => $obj->getDiscountPercentage(),
 				'discount' => $obj->getTotalDiscount(), 'total' => $obj->getTotal());
