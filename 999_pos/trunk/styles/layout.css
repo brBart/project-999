@@ -155,7 +155,7 @@ input[type="text"], input[type="password"] {
 	width: 9.5em;
 }
 
-.working_day_search div span {
+.working_day_search div span, .receipt_search div span {
 	position: absolute;
 	top: -1.2em;
 	left: 7em;
@@ -265,7 +265,7 @@ input[type="text"], input[type="password"] {
 	margin: 1em auto;
 }
 
-#dates_range div, .working_day_search div, #working_dates_range div {
+#dates_range div, .working_day_search div, .receipt_search div, #working_dates_range div {
 	float: left;
 	position: relative;
 }

@@ -25,6 +25,10 @@ require_once('business/agent.php');
  * Library with the entry transaction class.
  */
 require_once('business/transaction.php');
+/**
+ * For creating the select options.
+ */
+require_once('business/list.php');
 
 /**
  * Displays the receipt form in idle mode.
@@ -53,12 +57,14 @@ class GetReceiptCommand extends GetObjectCommand{
 		
 		$id = $this->_mRequest->getProperty('id');
 		
+		// Get the lists for the select options.
+		$empty_item = array(array());
+		$supplier_list = array_merge($empty_item, SupplierList::getList($pages, $items, 0));
+		
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
-				'content' => 'document_menu_html.tpl', 'document_name' => 'Recibo',
-				'create_link' => 'index.php?cmd=create_receipt', 'get_link' => 'index.php?cmd=get_receipt',
-				'search_link' => 'index.php?cmd=search_receipt&page=1', 'notify' => '1', 'type' => 'error',
-				'message' => $msg, 'id' => $id), 'site_html.tpl');
+				'content' => 'receipt_menu_html.tpl', 'notify' => '1', 'type' => 'error',
+				'message' => $msg, 'id' => $id, 'supplier_list' => $supplier_list), 'site_html.tpl');
 	}
 	
 	/**
@@ -69,12 +75,18 @@ class GetReceiptCommand extends GetObjectCommand{
 	 */
 	protected function displayObject($key, $obj, $backQuery){
 		$back_trace = array('Inicio', 'Movimientos', 'Recibos');
-		
+
 		// Build the back link.
-		$back_link = (is_null($backQuery)) ? 'index.php?cmd=show_receipt_menu' :
-				'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'] . '&start_date=' .
-				$this->_mRequest->getProperty('start_date') . '&end_date=' .
-				$this->_mRequest->getProperty('end_date');
+		if(is_null($backQuery))
+			$back_link = 'index.php?cmd=show_receipt_menu';
+		elseif($this->_mRequest->getProperty('start_date') != '') // Called from date search.
+			$back_link = 'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'] . '&start_date=' .
+					$this->_mRequest->getProperty('start_date') . '&end_date=' .
+					$this->_mRequest->getProperty('end_date');
+		else // Called from supplier and shipment search.
+			$back_link = 'index.php?cmd=' . $backQuery['cmd'] . '&page=' . $backQuery['page'] . '&supplier_id=' .
+					$this->_mRequest->getProperty('supplier_id') . '&shipment_number=' .
+					$this->_mRequest->getProperty('shipment_number');
 		
 		$user = $obj->getUser();
 		$supplier = $obj->getSupplier();

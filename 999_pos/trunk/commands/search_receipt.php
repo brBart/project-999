@@ -13,6 +13,10 @@ require_once('commands/search_object_by_date.php');
  * For making the search.
  */
 require_once('business/document_search.php');
+/**
+ * For creating the select options.
+ */
+require_once('business/list.php');
 
 /**
  * Implements functionality for searching a receipt in a given range of dates.
@@ -43,12 +47,15 @@ class SearchReceiptCommand extends SearchObjectByDateCommand{
 		$start_date = $this->_mRequest->getProperty('start_date');
 		$end_date = $this->_mRequest->getProperty('end_date');
 		
+		// Get the lists for the select options.
+		$empty_item = array(array());
+		$supplier_list = array_merge($empty_item, SupplierList::getList($pages, $items, 0));
+		
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'movements_menu_html.tpl',
-				'content' => 'document_menu_html.tpl', 'document_name' => 'Recibo',
-				'create_link' => 'index.php?cmd=create_receipt', 'get_link' => 'index.php?cmd=get_receipt',
-				'search_link' => 'index.php?cmd=search_receipt&page=1', 'notify' => '1', 'type' => 'error',
-				'message' => $msg, 'start_date' => $start_date, 'end_date' => $end_date), 'site_html.tpl');
+				'content' => 'receipt_menu_html.tpl', 'notify' => '1', 'type' => 'error',
+				'message' => $msg, 'start_date' => $start_date, 'end_date' => $end_date,
+				 'supplier_list' => $supplier_list), 'site_html.tpl');
 	}
 	
 	/**
