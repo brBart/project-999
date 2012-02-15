@@ -1,4 +1,6 @@
 <?php
+define('DEBUG_MODE', true);
+
 define('ITEMS_PER_PAGE', 4);
 define('PRODUCTS_PER_PAGE', 4);
 define('MAX_QUANTITY', 9999);
