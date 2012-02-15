@@ -7,6 +7,10 @@
  */
 
 /**
+ * Keep to false for production.
+ */
+define('DEBUG_MODE', false);
+/**
  * Web site path.
  */
 define('SITE_ROOT', dirname(dirname(__FILE__)));
