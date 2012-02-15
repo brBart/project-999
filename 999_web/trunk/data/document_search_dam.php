@@ -295,6 +295,30 @@ class ReceiptSearchDAM{
 				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
 		return DatabaseHandler::getAll($sql, $params);
 	}
+	
+	/**
+	 * Returns an array with the found data in the database. The array fields are created_date & receipt_id which
+	 * is the date when the document was created and its respective id.
+	 *
+	 * @param Supplier $supplier
+	 * @param string $shipmentNumber
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function searchBySupplier(Supplier $supplier, $shipmentNumber, &$totalPages, &$totalItems, $page){
+		$sql = 'CALL receipt_supplier_search_count(:supplier_id, :shipment_number)';
+		$params = array(':supplier_id' => $supplier->getId(), ':shipment_number' => $shipmentNumber);
+		$totalItems = DatabaseHandler::getOne($sql, $params);
+		
+		$totalPages = ceil($totalItems / ITEMS_PER_PAGE);
+		
+		$sql = 'CALL receipt_supplier_search_get(:supplier_id, :shipment_number, :start_item, :items_per_page)';
+		$params = array(':supplier_id' => $supplier->getId(), ':shipment_number' => $shipmentNumber,
+				':start_item' => ($page - 1) * ITEMS_PER_PAGE, ':items_per_page' => ITEMS_PER_PAGE);
+		return DatabaseHandler::getAll($sql, $params);
+	}
 }
 
 

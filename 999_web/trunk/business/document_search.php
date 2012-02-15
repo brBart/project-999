@@ -312,6 +312,26 @@ class ReceiptSearch extends DocumentSearch{
 		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
 		return ReceiptSearchDAM::search($startDate, $endDate, $totalPages, $totalItems, $page);
 	}
+	
+	/**
+	 * Realizes a receipt search by supplier and shipment number in the database.
+	 * 
+	 * Returns an array with the found data in the database. The array fields are created_date & receipt_id which
+	 * is the date when the document was created and its respective id. The first 2 paramters must be in the
+	 * the format dd/mm/YYYY. The $page parameter is necesary because of the use of pagination. The last 2 
+	 * arguments are passed by reference so the respective values can be return.
+	 * @param Supplier $supplier
+	 * @param string $shipmentNumber
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function searchBySupplier(Supplier $supplier, $shipmentNumber, &$totalPages = 0, &$totalItems = 0, $page = 1){
+		String::validateString($shipmentNumber, 'N&uacute;mero de envio inv&aacute;lido.');
+		Number::validatePositiveInteger($page, 'Pagina inv&aacute;lida.');
+		return ReceiptSearchDAM::searchBySupplier($supplier, $shipmentNumber, $totalPages, $totalItems, $page);
+	}
 }
 
 
