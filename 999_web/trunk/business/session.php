@@ -53,7 +53,7 @@ abstract class SessionHelper{
 	 *
 	 */
 	protected function __construct(){
-		session_start();
+		if(!DEBUG_MODE) session_start();
 	}
 	
 	/**
