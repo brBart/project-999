@@ -1,6 +1,4 @@
 <?php
-require_once('config/config.php');
-
 require_once('business/document.php');
 require_once('business/product.php');
 require_once('business/agent.php');
