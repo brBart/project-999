@@ -1,5 +1,6 @@
 <?php
 require_once('business/document_search.php');
+require_once('business/agent.php');
 require_once('PHPUnit/Framework/TestCase.php');
 
 class DepositSearchTest extends PHPUnit_Framework_TestCase{
@@ -365,6 +366,32 @@ class ReceiptSearchTest extends PHPUnit_Framework_TestCase{
 	public function testSearch_BadPage(){
 		try{
 			$new_array = ReceiptSearch::search('10/01/2009', '15/01/2009', $totalPages, $totalItems, -4);
+		} catch(Exception $e){ return; }
+		$this->fail('Page exception expected');
+	}
+	
+	public function testSearchBySupplier(){
+		$new_array = ReceiptSearch::searchBySupplier(Supplier::getInstance(123), '321', $totalPages, $totalItems, 1); 
+		$this->assertEquals(2, count($new_array));
+		$this->assertEquals($totalPages, 1);
+		$this->assertEquals($totalItems, 2);
+	}
+	
+	public function testSearchBySupplier_Defaults(){
+		$new_array = ReceiptSearch::searchBySupplier(Supplier::getInstance(123), '321'); 
+		$this->assertEquals(2, count($new_array));
+	}
+	
+	public function testSearchBySupplier_BlankShipmentNumber(){
+		try{
+			$new_array = ReceiptSearch::searchBySupplier(Supplier::getInstance(123), '', $totalPages, $totalItems, 1);
+		} catch(Exception $e){ return; }
+		$this->fail('Date exception expected');
+	}
+	
+	public function testSearchBySupplier_BadPage(){
+		try{
+			$new_array = ReceiptSearch::searchBySupplier(Supplier::getInstance(123), '1009', $totalPages, $totalItems, -4);
 		} catch(Exception $e){ return; }
 		$this->fail('Page exception expected');
 	}
