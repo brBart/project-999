@@ -14,6 +14,7 @@
 class XmlTransformer
 {
 public:
+	virtual ~XmlTransformer() {};
 	virtual void transform(QDomDocument *document) = 0;
 	QList<QMap<QString, QString>*> content();
 

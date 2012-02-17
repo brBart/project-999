@@ -15,6 +15,7 @@
 class Console
 {
 public:
+	virtual ~Console() {};
 	virtual void setFrame(QWebFrame *frame);
 	void displayFailure(QString msg, QString elementId);
 	void cleanFailure(QString elementId);

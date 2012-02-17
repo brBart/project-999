@@ -15,6 +15,7 @@
 class RecordsetSearcher
 {
 public:
+	virtual ~RecordsetSearcher() {};
 	virtual bool search(QString value, QList<QMap<QString, QString>*> *list) = 0;
 	virtual QList<QMap<QString, QString>*>::const_iterator newIterator();
 	virtual int newIndex();

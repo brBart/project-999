@@ -13,6 +13,7 @@
 class PluginWidget
 {
 public:
+	virtual ~PluginWidget() {};
 	virtual void init(const QStringList &argumentNames,
 			const QStringList &argumentValues) = 0;
 };
