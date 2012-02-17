@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
+	<table name="supplier">
+		<column>supplier_id</column>
+		<column>name</column>
+		<column>nit</column>
+		<column>telephone</column>
+		<column>address</column>
+		<column>email</column>
+		<column>contact</column>
+		
+		<row>
+			<value>1</value>
+			<value>Amicelco</value>
+			<value>12345-6</value>
+			<value>23232323</value>
+			<value>zona 1</value>
+		</row>
+		
+		<row>
+			<value>2</value>
+			<value>J.I.Cohen</value>
+			<value>54321-6</value>
+			<value>32323232</value>
+			<value>zona 6</value>
+		</row>
+	</table>
+
 	<table name="receipt">
 		<column>receipt_id</column>
 		<column>user_account_username</column>
@@ -12,7 +38,7 @@
 		<row>
 			<value>1</value>
 			<value>roboli</value>
-			<value>1</value>
+			<value>2</value>
 			<value>2008-07-12 14:00:00</value>
 			<value>321</value>
 			<value>10</value>
@@ -24,7 +50,7 @@
 			<value>roboli</value>
 			<value>1</value>
 			<value>2008-07-22 14:00:00</value>
-			<value>321</value>
+			<value>A21</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -34,7 +60,7 @@
 			<value>roboli</value>
 			<value>1</value>
 			<value>2008-08-12 14:00:00</value>
-			<value>321</value>
+			<value>A21</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -42,9 +68,9 @@
 		<row>
 			<value>4</value>
 			<value>roboli</value>
-			<value>1</value>
+			<value>2</value>
 			<value>2008-08-22 14:00:00</value>
-			<value>321</value>
+			<value>322</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -54,7 +80,7 @@
 			<value>roboli</value>
 			<value>1</value>
 			<value>2008-09-12 14:00:00</value>
-			<value>321</value>
+			<value>A21</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -64,7 +90,7 @@
 			<value>roboli</value>
 			<value>1</value>
 			<value>2008-09-22 14:00:00</value>
-			<value>321</value>
+			<value>A21</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -74,7 +100,7 @@
 			<value>roboli</value>
 			<value>1</value>
 			<value>2008-10-12 14:00:00</value>
-			<value>321</value>
+			<value>A21</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -82,9 +108,9 @@
 		<row>
 			<value>8</value>
 			<value>roboli</value>
-			<value>1</value>
+			<value>2</value>
 			<value>2008-10-22 14:00:00</value>
-			<value>321</value>
+			<value>323</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -94,7 +120,7 @@
 			<value>roboli</value>
 			<value>1</value>
 			<value>2008-11-12 14:00:00</value>
-			<value>321</value>
+			<value>A22</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
@@ -104,7 +130,7 @@
 			<value>roboli</value>
 			<value>1</value>
 			<value>2008-11-22 14:00:00</value>
-			<value>321</value>
+			<value>A23</value>
 			<value>10</value>
 			<value>1</value>
 		</row>
