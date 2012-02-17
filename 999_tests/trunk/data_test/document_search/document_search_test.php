@@ -1,5 +1,6 @@
 <?php
 require_once('business/document_search.php');
+require_once('business/agent.php');
 require_once('PHPUnit/Extensions/Database/TestCase.php');
 
 class DepositSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
@@ -682,6 +683,36 @@ class ReceiptSearchDAMTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals($list, $data_list);
 		$this->assertEquals(1, $pages);
 		$this->assertEquals(1, $items);
+	}
+	
+	public function testSearchBySupplier(){
+		$list = array(array('id' => '2', 'created_date' => '22/07/2008'),
+				array('id' => '3', 'created_date' => '12/08/2008'),
+				array('id' => '5', 'created_date' => '12/09/2008'),
+				array('id' => '6', 'created_date' => '22/09/2008'));
+				
+		$supplier = Supplier::getInstance(1);
+		$data_list = ReceiptSearchDAM::searchBySupplier($supplier, 'A21', $pages, $items, 1);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(2, $pages);
+		$this->assertEquals(5, $items);
+	}
+	
+	public function testSearchBySupplier_2(){
+		$list = array(array('id' => '7', 'created_date' => '12/10/2008'));
+				
+		$supplier = Supplier::getInstance(1);
+		$data_list = ReceiptSearchDAM::searchBySupplier($supplier, 'A21', $pages, $items, 2);
+		$this->assertEquals($list, $data_list);
+		$this->assertEquals(2, $pages);
+		$this->assertEquals(5, $items);
+	}
+	
+	public function testSearchBySupplier_3(){
+		$supplier = Supplier::getInstance(2);
+		$data_list = ReceiptSearchDAM::searchBySupplier($supplier, '555', $pages, $items, 2);
+		$this->assertEquals(0, $pages);
+		$this->assertEquals(0, $items);
 	}
 }
 
