@@ -322,6 +322,23 @@ class ReceiptSearchDAM{
 		
 		return $data_array;
 	}
+	
+	/**
+	 * Returns an array with the found data in the database. The array fields are created_date & receipt_id which
+	 * is the date when the document was created and its respective id.
+	 *
+	 * @param Supplier $supplier
+	 * @param string $shipmentNumber
+	 * @param integer &$totalPages
+	 * @param integer &$totalItems
+	 * @param integer $page
+	 * @return array
+	 */
+	static public function searchBySupplier(Supplier $supplier, $shipmentNumber, &$totalPages, &$totalItems, $page){
+		$totalPages = 1;
+		$totalItems = 2;
+		return array(array('one' => 'uno'), array('two' => 'dos'));
+	}
 }
 
 
