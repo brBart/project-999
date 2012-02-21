@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-02-2012 a las 11:55:06
+-- Tiempo de generación: 21-02-2012 a las 12:45:02
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `branch` (
   `email` varchar(50) collate utf8_unicode_ci default NULL,
   `contact` varchar(50) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`branch_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `change_price_log` (
   PRIMARY KEY  (`entry_id`),
   KEY `idx_change_price_log_user_account_username` (`user_account_username`),
   KEY `idx_change_price_log_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -361,7 +361,7 @@ CREATE TABLE IF NOT EXISTS `entry_adjustment` (
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`entry_adjustment_id`),
   KEY `idx_entry_adjustment_user_account_username` (`user_account_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -601,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `purchase_return` (
   PRIMARY KEY  (`purchase_return_id`),
   KEY `idx_purchase_return_user_account_username` (`user_account_username`),
   KEY `idx_purchase_return_supplier_id` (`supplier_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -701,7 +701,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -793,7 +793,7 @@ CREATE TABLE IF NOT EXISTS `shipment` (
   PRIMARY KEY  (`shipment_id`),
   KEY `idx_shipment_user_account_username` (`user_account_username`),
   KEY `idx_shipment_branch_id` (`branch_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -937,7 +937,7 @@ CREATE TABLE IF NOT EXISTS `withdraw_adjustment` (
   `total` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY  (`withdraw_adjustment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -5465,6 +5465,44 @@ BEGIN
   SET @p1 = inStartDate;
 
   SET @p2 = inEndDate;
+
+  SET @p3 = inStartItem;
+
+  SET @p4 = inItemsPerPage;
+
+
+
+  EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `receipt_supplier_search_count`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_supplier_search_count`(IN inSupplierId INT, inShipmentNumber VARCHAR(50))
+BEGIN
+
+  SELECT COUNT(*) FROM receipt
+
+    WHERE supplier_id = inSupplierId AND shipment_number = inShipmentNumber;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `receipt_supplier_search_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `receipt_supplier_search_get`(IN inSupplierId INT, IN inShipmentNumber VARCHAR(50), IN inStartItem INT, IN inItemsPerPage INT)
+BEGIN
+
+  PREPARE statement FROM
+
+    "SELECT receipt_id AS id, DATE_FORMAT(date, '%d/%m/%Y') AS created_date FROM receipt
+
+      WHERE supplier_id = ? AND shipment_number = ?
+
+      ORDER BY date
+
+      LIMIT ?, ?";
+
+  SET @p1 = inSupplierId;
+
+  SET @p2 = inShipmentNumber;
 
   SET @p3 = inStartItem;
 
