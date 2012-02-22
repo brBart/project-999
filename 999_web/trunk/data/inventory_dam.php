@@ -79,6 +79,18 @@ class ComparisonDAM{
 		
 		return $id;
 	}
+	
+	/**
+	 * Returns true if the comparison exists.
+	 * 
+	 * @param integer $id
+	 * @return boolean
+	 */
+	static public function exists($id){
+		$sql = 'CALL comparison_exists(:comparison_id)';
+		$params = array(':comparison_id' => $id);
+		return (boolean)DatabaseHandler::getOne($sql, $params);
+	}
 }
 
 
