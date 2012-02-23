@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-02-2012 a las 12:45:02
+-- Tiempo de generación: 22-02-2012 a las 18:16:19
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -1936,6 +1936,16 @@ BEGIN
     SET nit = inNit, name = inName, corporate_name = inCorporateName, telephone = inTelephone, address = inAddress,
 
       warehouse_name = inWareHouseName;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `comparison_exists`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_exists`(IN inComparisonId INT)
+BEGIN
+
+  SELECT COUNT(*) FROM comparison
+
+  WHERE comparison_id = inComparisonId;
 
 END$$
 
