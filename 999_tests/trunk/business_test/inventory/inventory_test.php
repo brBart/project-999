@@ -197,6 +197,14 @@ class ComparisonTest extends PHPUnit_Framework_TestCase{
 		} catch(Exception $e){ return; }
 		$this->fail('Exception expected.');
 	}
+	
+	public function testExists(){
+		$this->assertTrue(Comparison::exists(123));
+	}
+	
+	public function testExists_2(){
+		$this->assertFalse(Comparison::exists(122));
+	}
 }
 
 class CountDetailTest extends PHPUnit_Framework_TestCase{
