@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="comparison">
+		<column>comparison_id</column>
+		<column>user_account_username</column>
+		<column>date</column>
+		<column>reason</column>
+		<column>general</column>
+		<column>physical_total</column>
+		<column>system_total</column>
+		
+		<row>
+			<value>123</value>
+			<value>roboli</value>
+			<value>2009-06-19 12:00:00</value>
+			<value>pq simoncho.</value>
+			<value>0</value>
+			<value>48</value>
+			<value>47</value>
+		</row>
+	</table>
+</dataset>

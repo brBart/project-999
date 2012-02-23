@@ -276,4 +276,23 @@ class ComparisonDAMGetInstanceTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertNull(ComparisonDAM::getInstance(99));
 	}
 }
+
+class ComparisonDAMExistsTest extends PHPUnit_Extensions_Database_TestCase{
+	protected function getConnection(){
+		$pdo = new PDO(PDO_DSN, DB_USERNAME, DB_PASSWORD);
+		return $this->createDefaultDBConnection($pdo, '999_store');
+	}
+	
+	protected function getDataSet(){
+		return $this->createXMLDataSet('data_files/comparison_exists-seed.xml');
+	}
+	
+	public function testExists(){
+		$this->assertTrue(ComparisonDAM::exists(123));
+	}
+	
+	public function testExists_2(){
+		$this->assertFalse(ComparisonDAM::exists(122));
+	}
+}
 ?>
