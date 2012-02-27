@@ -17,6 +17,8 @@ class AppTests{
 		$ts->addTestSuite('ComparisonEventTest');
 		$ts->addTestSuite('ParserTest');
 		$ts->addTestSuite('CountingTemplateTest');
+		$ts->addTestSuite('ComparisonFilterDetailTest');
+		$ts->addTestSuite('ComparisonFilterTest');
 		PHPUnit_TextUI_TestRunner::run($ts);
 	}
 }

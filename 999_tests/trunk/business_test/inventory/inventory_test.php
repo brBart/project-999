@@ -656,4 +656,74 @@ class CountingTemplateTest extends PHPUnit_Framework_TestCase{
 		$this->fail('Exception expected.');
 	}
 }
+
+class ComparisonFilterDetailTest extends PHPUnit_Framework_TestCase{
+	
+	public function testShow(){
+		$detail = new ComparisonFilterDetail(Product::getInstance(125), 10, 10);
+		$data = $detail->show();
+		$this->assertEquals('35138', $data['bar_code']);
+		$this->assertEquals('Bayer', $data['manufacturer']);
+		$this->assertEquals('Pharmaton', $data['product']);
+		$this->assertEquals('Unitario', $data['um']);
+		$this->assertEquals(10, $data['physical']);
+		$this->assertEquals(10, $data['system']);
+		$this->assertEquals(0, $data['diference']);
+		$this->assertEquals(65.73, $data['price']);
+		$this->assertEquals('0.00', $data['total']);
+	}
+	
+	public function testShow_2(){
+		$detail = new ComparisonFilterDetail(Product::getInstance(125), 2, 0);
+		$data = $detail->show();
+		$this->assertEquals('35138', $data['bar_code']);
+		$this->assertEquals('Bayer', $data['manufacturer']);
+		$this->assertEquals('Pharmaton', $data['product']);
+		$this->assertEquals('Unitario', $data['um']);
+		$this->assertEquals(2, $data['physical']);
+		$this->assertEquals(0, $data['system']);
+		$this->assertEquals('+2', $data['diference']);
+		$this->assertEquals(65.73, $data['price']);
+		$this->assertEquals('+131.46', $data['total']);
+	}
+	
+	public function testShow_3(){
+		$detail = new ComparisonFilterDetail(Product::getInstance(125), 8, 10);
+		$data = $detail->show();
+		$this->assertEquals('35138', $data['bar_code']);
+		$this->assertEquals('Bayer', $data['manufacturer']);
+		$this->assertEquals('Pharmaton', $data['product']);
+		$this->assertEquals('Unitario', $data['um']);
+		$this->assertEquals(8, $data['physical']);
+		$this->assertEquals(10, $data['system']);
+		$this->assertEquals('-2', $data['diference']);
+		$this->assertEquals(65.73, $data['price']);
+		$this->assertEquals('-131.46', $data['total']);
+	}
+}
+
+class ComparisonFilterTest extends PHPUnit_Framework_TestCase{
+	
+	public function testConstructor(){
+		$user = UserAccount::getInstance('roboli');
+		$details[] = 'uno';
+		$comparison = new ComparisonFilter(321, '05/05/2009 12:00:00', $user, 'simon', true, $details, 100, 95, true, 85.9);
+		$this->assertEquals(321, $comparison->getId());
+		$this->assertEquals('05/05/2009 12:00:00', $comparison->getDateTime());
+		$this->assertEquals($user, $comparison->getUser());
+		$this->assertEquals('simon', $comparison->getReason());
+		$this->assertTrue($comparison->isGeneral());
+		$this->assertEquals(1, count($comparison->getDetails()));
+		$this->assertEquals(100, $comparison->getPhysicalTotal());
+		$this->assertEquals(95, $comparison->getSystemTotal());
+		$this->assertEquals('+5', $comparison->getTotalDiference());
+		$this->assertTrue($comparison->includePrices());
+		$this->assertEquals('+85.90', $comparison->getPriceTotal());
+	}
+	
+	public function testCreate(){
+		$comparison = ComparisonFilter::create(123);
+		$this->assertEquals(123, $comparison->getId());
+	}
+}
 ?>

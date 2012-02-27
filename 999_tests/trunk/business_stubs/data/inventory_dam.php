@@ -205,4 +205,34 @@ class CountingTemplateDAM{
 				'name' => 'Racomin', 'packaging' => 'caja'));
 	}
 }
+
+
+/**
+ * Utility class for accessing comparison data with filter.
+ * @package InventoryDAM
+ * @author Roberto Oliveros
+ */
+class ComparisonFilterDAM{
+	/**
+	 * Returns a comparison with the details filtered.
+	 * 
+	 * @param integer $id
+	 * @param integer $filterType
+	 * @param boolean $includePrices
+	 * @return ComparisonFilter
+	 */
+	static public function getInstance($id, $filterType, $includePrices){
+		switch($id){
+			case 123:
+				$details[] = new ComparisonFilterDetail(Product::getInstance(125), 10, 10);
+				$comparison = new ComparisonFilter($id, '01/05/2009 12:00:00', UserAccount::getInstance('roboli'), 'Los hay.',
+						false, $details, 10, 10, true, 0);
+				return $comparison;
+				break;
+				
+			default:
+				return NULL;
+		}
+	}
+}
 ?>
