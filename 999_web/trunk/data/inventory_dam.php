@@ -17,10 +17,9 @@ require_once('data/database_handler.php');
  */
 class ComparisonDAM{
 	/**
-	 * Returns a comparison with the details corresponding to the requested page.
+	 * Returns a comparison with the details.
 	 *
-	 * The total_pages and total_items arguments are necessary to return their respective values. Returns NULL
-	 * if there was no match for the provided id in the database. 
+	 * Returns NULL if there was no match for the provided id in the database. 
 	 * @param integer $id
 	 * @return Comparison
 	 */
@@ -242,6 +241,82 @@ class CountingTemplateDAM{
 		$sql = 'CALL manufacturer_counting_template_get(:first, :last)';
 		$params = array(':first' => $first, ':last' => $last);
 		return DatabaseHandler::getAll($sql, $params);
+	}
+}
+
+
+/**
+ * Utility class for accessing comparison data with filter.
+ * @package InventoryDAM
+ * @author Roberto Oliveros
+ */
+class ComparisonFilterDAM{
+	/**
+	 * Returns a comparison with the details filtered.
+	 * 
+	 * @param integer $id
+	 * @param integer $filterType
+	 * @param boolean $includePrices
+	 * @return ComparisonFilter
+	 */
+	static public function getInstance($id, $filterType, $includePrices){
+		$sql = 'CALL comparison_get(:comparison_id)';
+		$params = array(':comparison_id' => $id);
+		$result = DatabaseHandler::getRow($sql, $params);
+		
+		if(!empty($result)){
+			switch($filterType){
+				case ComparisonFilter::FILTER_NONE:
+					$sql = 'CALL comparison_product_get(:comparison_id)';
+					break;
+					
+				case ComparisonFilter::FILTER_POSITIVES:
+					$sql = 'CALL comparison_positives_product_get(:comparison_id)';
+					break;
+					
+				case ComparisonFilter::FILTER_NEGATIVES:
+					$sql = 'CALL comparison_negatives_product_get(:comparison_id)';
+					break;
+			}
+			
+			$items_result = DatabaseHandler::getAll($sql, $params);
+			
+			$details = array();
+			foreach($items_result as $detail){
+				$product = Product::getInstance((int)$detail['product_id']);
+				$details[] = new ComparisonFilterDetail($product, (int)$detail['physical'], (int)$detail['system']);
+			}
+			
+			$user = UserAccount::getInstance($result['user_account_username']);
+			
+			if($includePrices){
+				switch($filterType){
+					case ComparisonFilter::FILTER_NONE:
+						$sql = 'CALL comparison_total_price_get(:comparison_id)';
+						break;
+						
+					case ComparisonFilter::FILTER_POSITIVES:
+						$sql = 'CALL comparison_positives_total_price_get(:comparison_id)';
+						break;
+						
+					case ComparisonFilter::FILTER_NEGATIVES:
+						$sql = 'CALL comparison_negatives_total_price_get(:comparison_id)';
+						break;
+				}
+				
+				$total_price = DatabaseHandler::getOne($sql, $params);
+				
+				return new ComparisonFilter($id, $result['created_date'], $user, $result['reason'],
+						(boolean)$result['general'], $details, (int)$result['physical_total'],
+						(int)$result['system_total'], $includePrices, $total_price);
+			}
+			
+			return new ComparisonFilter($id, $result['created_date'], $user, $result['reason'],
+					(boolean)$result['general'], $details, (int)$result['physical_total'],
+					(int)$result['system_total']);
+		}
+		else
+			return NULL;
 	}
 }
 ?>
