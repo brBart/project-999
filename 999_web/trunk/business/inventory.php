@@ -945,7 +945,7 @@ class ComparisonFilterDetail extends ComparisonDetail{
 		$total = $price * $this->_mDiference; 
 		
 		return array_merge(parent::show(), array('price' => $price,
-				'total' => ($total == 0) ? '0.00' : sprintf('%+f.2', $total)));
+				'total' => ($total == 0) ? '0.00' : sprintf('%+.2f', $total)));
 	}
 }
 
