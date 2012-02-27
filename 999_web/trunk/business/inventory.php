@@ -1187,6 +1187,16 @@ class ComparisonFilter{
 	public function includePrices(){
 		return $this->_mIncludePrices;
 	}
+	
+	/**
+	 * Returns the sum of all the subtotals.
+	 *
+	 * Returns an string to display the integer sign also.
+	 * @return string
+	 */
+	public function getPriceTotal(){
+		return ($this->_mPriceTotal == 0) ? '0.00' : sprintf('%+.2f', $this->_mPriceTotal);
+	}
 
 	/**
 	 * Returns an instances of a comparison with a filter or not, applied.
