@@ -260,9 +260,9 @@ class ComparisonFilterDAM{
 	 * @return ComparisonFilter
 	 */
 	static public function getInstance($id, $filterType, $includePrices){
-		$sql = 'CALL comparison_get(:comparison_id)';
+		$sql = 'CALL comparison_filter_get(:comparison_id, :filter)';
 		$params = array(':comparison_id' => $id);
-		$result = DatabaseHandler::getRow($sql, $params);
+		$result = DatabaseHandler::getRow($sql, array_merge($params, array(':filter' => $filterType)));
 		
 		if(!empty($result)){
 			switch($filterType){
