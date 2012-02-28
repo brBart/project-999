@@ -721,8 +721,8 @@ class ComparisonFilterTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals('+85.90', $comparison->getPriceTotal());
 	}
 	
-	public function testCreate(){
-		$comparison = ComparisonFilter::create(123);
+	public function testGetInstance(){
+		$comparison = ComparisonFilter::getInstance(123);
 		$this->assertEquals(123, $comparison->getId());
 	}
 }
