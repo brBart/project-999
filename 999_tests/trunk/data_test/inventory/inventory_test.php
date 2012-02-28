@@ -295,4 +295,93 @@ class ComparisonDAMExistsTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertFalse(ComparisonDAM::exists(122));
 	}
 }
+
+class ComparisonFilterDAMGetInstanceTest extends PHPUnit_Extensions_Database_TestCase{
+	protected function getConnection(){
+		$pdo = new PDO(PDO_DSN, DB_USERNAME, DB_PASSWORD);
+		return $this->createDefaultDBConnection($pdo, '999_store');
+	}
+	
+	protected function getDataSet(){
+		return $this->createXMLDataSet('data_files/comparison_get_instance-seed.xml');
+	}
+	
+	public function testGetInstance(){
+		$user = UserAccountDAM::getInstance('roboli');
+		$comparison = ComparisonFilterDAM::getInstance(1, ComparisonFilter::FILTER_NONE, true);
+		
+		$this->assertEquals(1, $comparison->getId());
+		$this->assertEquals($user, $comparison->getUser());
+		$this->assertEquals('19/06/2009 12:00:00', $comparison->getDateTime());
+		$this->assertEquals('pq simoncho.', $comparison->getReason());
+		$this->assertFalse($comparison->isGeneral());
+		$this->assertEquals(48, $comparison->getPhysicalTotal());
+		$this->assertEquals(47, $comparison->getSystemTotal());
+		$this->assertTrue($comparison->includePrices());
+		$this->assertEquals('-23133.96', $comparison->getPriceTotal());
+		
+		$details = $comparison->getDetails();
+		
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(10), 5, 2), $details[0]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(2), 7, 11), $details[1]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(15), 19, 34), $details[2]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(21), 17, 0), $details[3]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(1), 1, 0), $details[4]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(30), 5, 74), $details[5]);
+	}
+	
+	public function testGetInstance_NoPrice(){
+		$user = UserAccountDAM::getInstance('roboli');
+		$comparison = ComparisonFilterDAM::getInstance(1, ComparisonFilter::FILTER_NONE, false);
+		
+		$this->assertFalse($comparison->includePrices());
+		$this->assertEquals('0.00', $comparison->getPriceTotal());
+	}
+	
+	public function testGetInstance_Positives(){
+		$user = UserAccountDAM::getInstance('roboli');
+		$comparison = ComparisonFilterDAM::getInstance(1, ComparisonFilter::FILTER_POSITIVES, true);
+		
+		$this->assertEquals(1, $comparison->getId());
+		$this->assertEquals($user, $comparison->getUser());
+		$this->assertEquals('19/06/2009 12:00:00', $comparison->getDateTime());
+		$this->assertEquals('pq simoncho.', $comparison->getReason());
+		$this->assertFalse($comparison->isGeneral());
+		$this->assertEquals(23, $comparison->getPhysicalTotal());
+		$this->assertEquals(2, $comparison->getSystemTotal());
+		$this->assertTrue($comparison->includePrices());
+		$this->assertEquals('+7501.13', $comparison->getPriceTotal());
+		
+		$details = $comparison->getDetails();
+		
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(10), 5, 2), $details[0]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(21), 17, 0), $details[1]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(1), 1, 0), $details[2]);
+	}
+	
+	public function testGetInstance_Negatives(){
+		$user = UserAccountDAM::getInstance('roboli');
+		$comparison = ComparisonFilterDAM::getInstance(1, ComparisonFilter::FILTER_NEGATIVES, true);
+		
+		$this->assertEquals(1, $comparison->getId());
+		$this->assertEquals($user, $comparison->getUser());
+		$this->assertEquals('19/06/2009 12:00:00', $comparison->getDateTime());
+		$this->assertEquals('pq simoncho.', $comparison->getReason());
+		$this->assertFalse($comparison->isGeneral());
+		$this->assertEquals(31, $comparison->getPhysicalTotal());
+		$this->assertEquals(119, $comparison->getSystemTotal());
+		$this->assertTrue($comparison->includePrices());
+		$this->assertEquals('-30635.09', $comparison->getPriceTotal());
+		
+		$details = $comparison->getDetails();
+		
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(2), 7, 11), $details[0]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(15), 19, 34), $details[1]);
+		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(30), 5, 74), $details[2]);
+	}
+	
+	public function testGetInstance_NonExistent(){
+		$this->assertNull(ComparisonFilterDAM::getInstance(99, ComparisonFilter::FILTER_NONE, false));
+	}
+}
 ?>
