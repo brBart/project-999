@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-02-2012 a las 18:16:19
+-- Tiempo de generación: 27-02-2012 a las 17:30:34
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `bank` (
   `bank_id` int(11) NOT NULL auto_increment,
   `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`bank_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `bonus` (
   `expiration_date` date NOT NULL,
   PRIMARY KEY  (`bonus_id`),
   KEY `idx_bonus_product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `cash_register` (
   `open` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cash_register_id`),
   UNIQUE KEY `unique_working_day_shift_id` (`working_day`,`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `correlative` (
   PRIMARY KEY  (`correlative_id`),
   UNIQUE KEY `unique_serial_number_initial_number_final_number` (`serial_number`,`initial_number`,`final_number`),
   UNIQUE KEY `unique_resolution_number` (`resolution_number`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   KEY `idx_deposit_cash_register_id` (`cash_register_id`),
   KEY `idx_deposit_user_account_username` (`user_account_username`),
   KEY `idx_deposit_date` (`date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `deposit_cash_receipt` (
   `amount` decimal(13,2) NOT NULL,
   PRIMARY KEY  (`deposit_cash_receipt_id`),
   UNIQUE KEY `unique_deposit_id_cash_receipt_id` (`deposit_id`,`cash_receipt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   KEY `idx_invoice_user_account_username` (`user_account_username`),
   KEY `idx_invoice_cash_register_id` (`cash_register_id`),
   KEY `idx_invoice_correlative_id` (`correlative_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -482,7 +482,7 @@ CREATE TABLE IF NOT EXISTS `invoice_transaction_log` (
   `total` decimal(13,2) NOT NULL,
   `state` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1$$
+) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
 
 -- --------------------------------------------------------
 
@@ -701,7 +701,7 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   PRIMARY KEY  (`reserve_id`),
   KEY `idx_reserve_user_account_username` (`user_account_username`),
   KEY `idx_reserve_lot_id` (`lot_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -720,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `resolution_log` (
   `created_date` date NOT NULL,
   `document_type` varchar(10) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1$$
+) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
 
 -- --------------------------------------------------------
 
@@ -773,7 +773,7 @@ CREATE TABLE IF NOT EXISTS `shift` (
   `name` varchar(15) collate utf8_unicode_ci NOT NULL,
   `time_table` varchar(30) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -920,7 +920,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   UNIQUE KEY `unique_cash_receipt_id_transaction` (`cash_receipt_id`,`transaction`),
   KEY `idx_voucher_payment_card_type_id` (`payment_card_type_id`),
   KEY `idx_voucher_payment_card_brand_id` (`payment_card_brand_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci$$
 
 -- --------------------------------------------------------
 
@@ -1973,6 +1973,54 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE IF EXISTS `comparison_negatives_product_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_negatives_product_get`(IN inComparisonId INT)
+BEGIN
+
+  SELECT product_id, physical, system FROM comparison_product
+
+      WHERE comparison_id = inComparisonId AND physical < system
+
+      ORDER BY comparison_product_id;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `comparison_negatives_total_price_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_negatives_total_price_get`(IN inComparisonId INT)
+BEGIN
+
+  SELECT SUM((com_pro.physical - com_pro.system) * pro.price)
+
+      FROM product pro INNER JOIN comparison_product com_pro ON pro.product_id = com_pro.product_id
+
+    WHERE comparison_id = inComparisonId AND com_pro.system > com_pro.physical;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `comparison_positives_product_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_positives_product_get`(IN inComparisonId INT)
+BEGIN
+
+  SELECT product_id, physical, system FROM comparison_product
+
+      WHERE comparison_id = inComparisonId AND physical > system
+
+      ORDER BY comparison_product_id;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `comparison_positives_total_price_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_positives_total_price_get`(IN inComparisonId INT)
+BEGIN
+
+  SELECT SUM((com_pro.physical - com_pro.system) * pro.price)
+
+      FROM product pro INNER JOIN comparison_product com_pro ON pro.product_id = com_pro.product_id
+
+    WHERE comparison_id = inComparisonId AND com_pro.system < com_pro.physical;
+
+END$$
+
 DROP PROCEDURE IF EXISTS `comparison_product_general_insert`$$
 CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_product_general_insert`(IN inComparisonId INT, IN inCountId INT)
 BEGIN
@@ -2096,6 +2144,18 @@ BEGIN
 
 
   EXECUTE statement USING @p1, @p2, @p3, @p4;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `comparison_total_price_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_total_price_get`(IN inComparisonId INT)
+BEGIN
+
+  SELECT SUM((com_pro.physical - com_pro.system) * pro.price)
+
+      FROM product pro INNER JOIN comparison_product com_pro ON pro.product_id = com_pro.product_id
+
+    WHERE comparison_id = inComparisonId;
 
 END$$
 
