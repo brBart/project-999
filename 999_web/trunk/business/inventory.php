@@ -96,6 +96,28 @@ class ComparisonDetail{
 
 
 /**
+ * Represents a detail in a comparison filter report.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
+class ComparisonFilterDetail extends ComparisonDetail{
+	/**
+	 * Returns an array with the detail's data.
+	 *
+	 * The fields in the array are bar_code, manufacturer, name, um, physical, system, diference, price and total.
+	 * @return array
+	 */
+	public function show(){
+		$price = $this->_mProduct->getPrice();
+		$total = $price * $this->_mDiference; 
+		
+		return array_merge(parent::show(), array('price' => $price,
+				'total' => ($total == 0) ? '0.00' : sprintf('%+.2f', $total)));
+	}
+}
+
+
+/**
  * Represents a comparison report of a physical count of the inventory against the system's inventory.
  * @package Inventory
  * @author Roberto Oliveros
@@ -301,6 +323,119 @@ class Comparison implements Itemized{
 	 */
 	static public function exists($id){
 		return ComparisonDAM::exists($id);
+	}
+}
+
+
+/**
+ * Class that acts as a filter to modify a comparison information.
+ * @package Inventory
+ * @author Roberto Oliveros
+ */
+class ComparisonFilter extends Comparison{
+	/**
+	 * Filter type.
+	 * Indicates that no filter will be applied to the details.
+	 * @var integer
+	 */
+	const FILTER_NONE = 0;
+	
+	/**
+	 * Filter type.
+	 * Indicates that only the details with positive diferences will be return.
+	 * @var integer
+	 */
+	const FILTER_POSITIVES = 1;
+	
+	/**
+	 * Filter type.
+	 * Indicates that only the details with negative diferences will be return.
+	 * @var integer
+	 */
+	const FILTER_NEGATIVES = 2;
+	
+	/**
+	 * Holds the filter's creation date.
+	 *
+	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
+	 * @var string
+	 */
+	private $_mFilterDateTime;
+	
+	/**
+	 * True if the details include the product price and subtotal.
+	 * 
+	 * @var boolean
+	 */
+	private $_mIncludePrices;
+	
+	/**
+	 * Holds the sum of all the prices, only if $_mIncludePrices is true.
+	 * 
+	 * @var float
+	 */
+	private $_mPriceTotal;
+	
+	/**
+	 * Constructs the filter with the provided data.
+	 *
+	 * Call only from the database layer please.
+	 * @param integer $id
+	 * @param string $dateTime
+	 * @param UserAccount $user
+	 * @param string $reason
+	 * @param boolean $general
+	 * @param array<ComparisonFilterDetail> $details
+	 * @param integer $physical
+	 * @param integer $system
+	 * @param boolean $includePrices
+	 * @param float $priceTotal
+	 * @throws Exception
+	 */
+	public function __construct($id, $dateTime, UserAccount $user, $reason, $general, $details, $physical, $system, $includePrices = false, $priceTotal = 0.0){
+		parent::__construct($id, $dateTime, $user, $reason, $general, $details, $physical, $system);
+		
+		$this->_mFilterDateTime = date('d/m/Y H:i:s');
+		$this->_mIncludePrices = $includePrices;
+		$this->_mPriceTotal = $priceTotal;
+	}
+	
+	/**
+	 * Returns the date and time of the filter creation.
+	 * 
+	 * @return string
+	 */
+	public function getFilterDateTime(){
+		return $this->_mFilterDateTime;
+	}
+	
+	/**
+	 * Returns true if the details include the price and subtotal fields.
+	 * 
+	 * @return boolean
+	 */
+	public function includePrices(){
+		return $this->_mIncludePrices;
+	}
+	
+	/**
+	 * Returns the sum of all the subtotals.
+	 *
+	 * Returns an string to display the integer sign also.
+	 * @return string
+	 */
+	public function getPriceTotal(){
+		return ($this->_mPriceTotal == 0) ? '0.00' : sprintf('%+.2f', $this->_mPriceTotal);
+	}
+
+	/**
+	 * Returns an instances of a comparison with a filter or not, applied.
+	 * @param integer $id
+	 * @param integer $filterType
+	 * @param boolean $includePrices
+	 */
+	static function getInstance($id, $filterType = ComparisonFilter::FILTER_NONE, $includePrices = false){
+		return ComparisonFilterDAM::getInstance($id, $filterType, $includePrices);
 	}
 }
 
@@ -924,288 +1059,6 @@ class CountingTemplate{
 		String::validateString($last, 'Seleccione la segunda casa.');
 
 		return CountingTemplateDAM::getDataByManufacturer($first, $last);
-	}
-}
-
-
-/**
- * Represents a detail in a comparison filter report.
- * @package Inventory
- * @author Roberto Oliveros
- */
-class ComparisonFilterDetail extends ComparisonDetail{
-	/**
-	 * Returns an array with the detail's data.
-	 *
-	 * The fields in the array are bar_code, manufacturer, name, um, physical, system, diference, price and total.
-	 * @return array
-	 */
-	public function show(){
-		$price = $this->_mProduct->getPrice();
-		$total = $price * $this->_mDiference; 
-		
-		return array_merge(parent::show(), array('price' => $price,
-				'total' => ($total == 0) ? '0.00' : sprintf('%+.2f', $total)));
-	}
-}
-
-
-/**
- * Class that acts as a filter to modify a comparison information.
- * @package Inventory
- * @author Roberto Oliveros
- */
-class ComparisonFilter{
-	/**
-	 * Filter type.
-	 * Indicates that no filter will be applied to the details.
-	 * @var integer
-	 */
-	const FILTER_NONE = 0;
-	
-	/**
-	 * Filter type.
-	 * Indicates that only the details with positive diferences will be return.
-	 * @var integer
-	 */
-	const FILTER_POSITIVES = 1;
-	
-	/**
-	 * Filter type.
-	 * Indicates that only the details with negative diferences will be return.
-	 * @var integer
-	 */
-	const FILTER_NEGATIVES = 2;
-	
-	/**
-	 * Holds the filter's creation date.
-	 *
-	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
-	 * @var string
-	 */
-	private $_mFilterDateTime;
-	
-	/**
-	 * Holds the comparison's internal id.
-	 *
-	 * @var integer
-	 */
-	private $_mId;
-	
-	/**
-	 * Holds the comparison's creation date.
-	 *
-	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
-	 * @var string
-	 */
-	private $_mDateTime;
-	
-	/**
-	 * Holds the user who created the comparison.
-	 *
-	 * @var UserAccount
-	 */
-	private $_mUser;
-	
-	/**
-	 * Holds the reason of why the creation of the comparison.
-	 *
-	 * @var string
-	 */
-	private $_mReason;
-	
-	/**
-	 * Holds the flag that indicates if the comparison was made against the whole inventory.
-	 *
-	 * @var boolean
-	 */
-	private $_mGeneral;
-	
-	/**
-	 * Holds the sum of all the physical quantities.
-	 *
-	 * @var integer
-	 */
-	private $_mPhysicalTotal;
-	
-	/**
-	 * Holds the sum of all the system quantities.
-	 *
-	 * @var integer
-	 */
-	private $_mSystemTotal;
-	
-	/**
-	 * True if the details include the product price and subtotal.
-	 * 
-	 * @var boolean
-	 */
-	private $_mIncludePrices;
-	
-	/**
-	 * Holds the sum of all the prices, only if $_mIncludePrices is true.
-	 * 
-	 * @var float
-	 */
-	private $_mPriceTotal;
-	
-	/**
-	 * Holds bar_code, manufacturer, product, um, physical, system and diference.
-	 * If $_mIncludePrices is true will also include price and subtotal.
-	 * 
-	 * @var array<ComparisonFilterDetail>
-	 */
-	private $_mDetails;
-	
-	/**
-	 * Constructs the filter with the provided data.
-	 *
-	 * Call only from the database layer please.
-	 * @param integer $id
-	 * @param string $dateTime
-	 * @param UserAccount $user
-	 * @param string $reason
-	 * @param boolean $general
-	 * @param array<ComparisonFilterDetail> $details
-	 * @param integer $physical
-	 * @param integer $system
-	 * @param boolean $includePrices
-	 * @param float $priceTotal
-	 * @throws Exception
-	 */
-	public function __construct($id, $dateTime, UserAccount $user, $reason, $general, $details, $physical, $system, $includePrices = false, $priceTotal = 0.0){
-		$this->_mFilterDateTime = date('d/m/Y H:i:s');
-		$this->_mId = $id;
-		$this->_mDateTime = $dateTime;
-		$this->_mUser = $user;
-		$this->_mReason = $reason;
-		$this->_mGeneral = (boolean)$general;
-		$this->_mDetails = $details;
-		$this->_mPhysicalTotal = $physical;
-		$this->_mSystemTotal = $system;
-		$this->_mIncludePrices = $includePrices;
-		$this->_mPriceTotal = $priceTotal;
-	}
-	
-	/**
-	 * Returns the date and time of the filter creation.
-	 * 
-	 * @return string
-	 */
-	public function getFilterDateTime(){
-		return $this->_mFilterDateTime;
-	}
-	
-	/**
-	 * Returns the comparison's id.
-	 *
-	 * @return integer
-	 */
-	public function getId(){
-		return $this->_mId;
-	}
-	
-	/**
-	 * Returns the comparison's date and time.
-	 *
-	 * @return string
-	 */
-	public function getDateTime(){
-		return $this->_mDateTime;
-	}
-	
-	/**
-	 * Returns the comparison's creator.
-	 *
-	 * @return UserAccount
-	 */
-	public function getUser(){
-		return $this->_mUser;
-	}
-	
-	/**
-	 * Returns the comparison's reason.
-	 *
-	 * @return string
-	 */
-	public function getReason(){
-		return $this->_mReason;
-	}
-	
-	/**
-	 * Return an array with all the comparison's details.
-	 *
-	 * @return array<ComparisonFilterDetail>
-	 */
-	public function getDetails(){
-		return $this->_mDetails;
-	}
-	
-	/**
-	 * Returns true if the comparison was against the whole inventory.
-	 *
-	 * @return boolean
-	 */
-	public function isGeneral(){
-		return $this->_mGeneral;
-	}
-	
-	/**
-	 * Returns the comparison's physical total.
-	 *
-	 * @return integer
-	 */
-	public function getPhysicalTotal(){
-		return $this->_mPhysicalTotal;
-	}
-	
-	/**
-	 * Returns the comparison's system total.
-	 *
-	 * @return integer
-	 */
-	public function getSystemTotal(){
-		return $this->_mSystemTotal;
-	}
-	
-	/**
-	 * Returns the diference between the total physical and total system quantities.
-	 *
-	 * Returns an string to display the integer sign also.
-	 * @return string
-	 */
-	public function getTotalDiference(){
-		$diference = $this->_mPhysicalTotal - $this->_mSystemTotal;
-		return ($diference == 0) ? '0' : sprintf('%+d', $diference);
-	}
-	
-	/**
-	 * Returns true if the details include the price and subtotal fields.
-	 * 
-	 * @return boolean
-	 */
-	public function includePrices(){
-		return $this->_mIncludePrices;
-	}
-	
-	/**
-	 * Returns the sum of all the subtotals.
-	 *
-	 * Returns an string to display the integer sign also.
-	 * @return string
-	 */
-	public function getPriceTotal(){
-		return ($this->_mPriceTotal == 0) ? '0.00' : sprintf('%+.2f', $this->_mPriceTotal);
-	}
-
-	/**
-	 * Returns an instances of a comparison with a filter or not, applied.
-	 * @param integer $id
-	 * @param integer $filterType
-	 * @param boolean $includePrices
-	 */
-	static function create($id, $filterType = ComparisonFilter::FILTER_NONE, $includePrices = false){
-		return ComparisonFilterDAM::getInstance($id, $filterType, $includePrices);
 	}
 }
 ?>
