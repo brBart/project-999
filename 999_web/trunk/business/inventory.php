@@ -335,24 +335,24 @@ class Comparison implements Itemized{
 class ComparisonFilter extends Comparison{
 	/**
 	 * Filter type.
-	 * Indicates that no filter will be applied to the details.
-	 * @var integer
-	 */
-	const FILTER_NONE = 0;
-	
-	/**
-	 * Filter type.
 	 * Indicates that only the details with positive diferences will be return.
 	 * @var integer
 	 */
-	const FILTER_POSITIVES = 1;
+	const FILTER_POSITIVES = 0;
 	
 	/**
 	 * Filter type.
 	 * Indicates that only the details with negative diferences will be return.
 	 * @var integer
 	 */
-	const FILTER_NEGATIVES = 2;
+	const FILTER_NEGATIVES = 1;
+	
+	/**
+	 * Filter type.
+	 * Indicates that the details with diferences will be return.
+	 * @var integer
+	 */
+	const FILTER_DIFERENCES = 2;
 	
 	/**
 	 * Holds the filter's creation date.
@@ -361,6 +361,13 @@ class ComparisonFilter extends Comparison{
 	 * @var string
 	 */
 	private $_mFilterDateTime;
+	
+	/**
+	 * Holds what type filter this filter is.
+	 * 
+	 * @var integer
+	 */
+	private $_mFilterType;
 	
 	/**
 	 * True if the details include the product price and subtotal.
@@ -392,10 +399,12 @@ class ComparisonFilter extends Comparison{
 	 * @param float $priceTotal
 	 * @throws Exception
 	 */
-	public function __construct($id, $dateTime, UserAccount $user, $reason, $general, $details, $physical, $system, $includePrices = false, $priceTotal = 0.0){
+	public function __construct($id, $dateTime, UserAccount $user, $reason, $general, $details, $physical, $system,
+			$filterType, $includePrices = false, $priceTotal = 0.0){
 		parent::__construct($id, $dateTime, $user, $reason, $general, $details, $physical, $system);
 		
 		$this->_mFilterDateTime = date('d/m/Y H:i:s');
+		$this->_mFilterType = $filterType;
 		$this->_mIncludePrices = $includePrices;
 		$this->_mPriceTotal = $priceTotal;
 	}
@@ -407,6 +416,15 @@ class ComparisonFilter extends Comparison{
 	 */
 	public function getFilterDateTime(){
 		return $this->_mFilterDateTime;
+	}
+	
+	/**
+	 * Returns the type of filter.
+	 * 
+	 * @return integer
+	 */
+	public function getFilterType(){
+		return $this->_mFilterType;
 	}
 	
 	/**

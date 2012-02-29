@@ -266,16 +266,16 @@ class ComparisonFilterDAM{
 		
 		if(!empty($result)){
 			switch($filterType){
-				case ComparisonFilter::FILTER_NONE:
-					$sql = 'CALL comparison_product_get(:comparison_id)';
-					break;
-					
 				case ComparisonFilter::FILTER_POSITIVES:
 					$sql = 'CALL comparison_positives_product_get(:comparison_id)';
 					break;
 					
 				case ComparisonFilter::FILTER_NEGATIVES:
 					$sql = 'CALL comparison_negatives_product_get(:comparison_id)';
+					break;
+					
+				case ComparisonFilter::FILTER_DIFERENCES:
+					$sql = 'CALL comparison_diferences_product_get(:comparison_id)';
 					break;
 			}
 			
@@ -291,10 +291,6 @@ class ComparisonFilterDAM{
 			
 			if($includePrices){
 				switch($filterType){
-					case ComparisonFilter::FILTER_NONE:
-						$sql = 'CALL comparison_total_price_get(:comparison_id)';
-						break;
-						
 					case ComparisonFilter::FILTER_POSITIVES:
 						$sql = 'CALL comparison_positives_total_price_get(:comparison_id)';
 						break;
@@ -302,18 +298,22 @@ class ComparisonFilterDAM{
 					case ComparisonFilter::FILTER_NEGATIVES:
 						$sql = 'CALL comparison_negatives_total_price_get(:comparison_id)';
 						break;
+						
+					case ComparisonFilter::FILTER_DIFERENCES:
+						$sql = 'CALL comparison_diferences_total_price_get(:comparison_id)';
+						break;
 				}
 				
 				$total_price = DatabaseHandler::getOne($sql, $params);
 				
 				return new ComparisonFilter($id, $result['created_date'], $user, $result['reason'],
 						(boolean)$result['general'], $details, (int)$result['physical_total'],
-						(int)$result['system_total'], $includePrices, $total_price);
+						(int)$result['system_total'], $filterType, $includePrices, $total_price);
 			}
 			
 			return new ComparisonFilter($id, $result['created_date'], $user, $result['reason'],
 					(boolean)$result['general'], $details, (int)$result['physical_total'],
-					(int)$result['system_total']);
+					(int)$result['system_total'], $filterType);
 		}
 		else
 			return NULL;
