@@ -226,7 +226,7 @@ class ComparisonFilterDAM{
 			case 123:
 				$details[] = new ComparisonFilterDetail(Product::getInstance(125), 10, 10);
 				$comparison = new ComparisonFilter($id, '01/05/2009 12:00:00', UserAccount::getInstance('roboli'), 'Los hay.',
-						false, $details, 10, 10, true, 0);
+						false, $details, 10, 10, $filterType, true, 0);
 				return $comparison;
 				break;
 				
