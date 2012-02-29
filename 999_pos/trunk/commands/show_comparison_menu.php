@@ -29,10 +29,7 @@ class ShowComparisonMenuCommand extends Command{
 		$back_trace = array('Inicio', 'Inventariados', 'Comparaciones');
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
-				'content' => 'document_menu_html.tpl', 'document_name' => 'Comparaci&oacute;n',
-				'create_link' => 'index.php?cmd=show_create_comparison_form',
-				'get_link' => 'index.php?cmd=get_comparison',
-				'search_link' => 'index.php?cmd=search_comparison&page=1'), 'site_html.tpl');
+				'content' => 'comparison_menu_html.tpl'), 'site_html.tpl');
 	}
 }
 ?>
