@@ -314,16 +314,6 @@ class Comparison implements Itemized{
 		Number::validatePositiveNumber($id, 'N&uacute;mero inv&aacute;lido.');
 		return ComparisonDAM::getInstance($id);
 	}
-	
-	/**
-	 * Returns true if the comparison exists.
-	 * 
-	 * @param integer $id
-	 * @return boolean
-	 */
-	static public function exists($id){
-		return ComparisonDAM::exists($id);
-	}
 }
 
 
