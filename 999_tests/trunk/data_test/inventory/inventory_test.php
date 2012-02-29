@@ -259,8 +259,8 @@ class ComparisonDAMGetInstanceTest extends PHPUnit_Extensions_Database_TestCase{
 		$this->assertEquals('19/06/2009 12:00:00', $comparison->getDateTime());
 		$this->assertEquals('pq simoncho.', $comparison->getReason());
 		$this->assertFalse($comparison->isGeneral());
-		$this->assertEquals(48, $comparison->getPhysicalTotal());
-		$this->assertEquals(47, $comparison->getSystemTotal());
+		$this->assertEquals(54, $comparison->getPhysicalTotal());
+		$this->assertEquals(121, $comparison->getSystemTotal());
 		
 		$details = $comparison->getDetails();
 		
@@ -308,15 +308,16 @@ class ComparisonFilterDAMGetInstanceTest extends PHPUnit_Extensions_Database_Tes
 	
 	public function testGetInstance(){
 		$user = UserAccountDAM::getInstance('roboli');
-		$comparison = ComparisonFilterDAM::getInstance(1, ComparisonFilter::FILTER_NONE, true);
+		$comparison = ComparisonFilterDAM::getInstance(2, ComparisonFilter::FILTER_DIFERENCES, true);
 		
-		$this->assertEquals(1, $comparison->getId());
+		$this->assertEquals(2, $comparison->getId());
 		$this->assertEquals($user, $comparison->getUser());
-		$this->assertEquals('19/06/2009 12:00:00', $comparison->getDateTime());
-		$this->assertEquals('pq simoncho.', $comparison->getReason());
-		$this->assertFalse($comparison->isGeneral());
-		$this->assertEquals(48, $comparison->getPhysicalTotal());
-		$this->assertEquals(47, $comparison->getSystemTotal());
+		$this->assertEquals('20/07/2010 12:00:00', $comparison->getDateTime());
+		$this->assertEquals('Solo prueba.', $comparison->getReason());
+		$this->assertTrue($comparison->isGeneral());
+		$this->assertEquals(54, $comparison->getPhysicalTotal());
+		$this->assertEquals(121, $comparison->getSystemTotal());
+		$this->assertEquals(ComparisonFilter::FILTER_DIFERENCES, $comparison->getFilterType());
 		$this->assertTrue($comparison->includePrices());
 		$this->assertEquals('-23133.96', $comparison->getPriceTotal());
 		
@@ -332,7 +333,7 @@ class ComparisonFilterDAMGetInstanceTest extends PHPUnit_Extensions_Database_Tes
 	
 	public function testGetInstance_NoPrice(){
 		$user = UserAccountDAM::getInstance('roboli');
-		$comparison = ComparisonFilterDAM::getInstance(1, ComparisonFilter::FILTER_NONE, false);
+		$comparison = ComparisonFilterDAM::getInstance(1, ComparisonFilter::FILTER_DIFERENCES, false);
 		
 		$this->assertFalse($comparison->includePrices());
 		$this->assertEquals('0.00', $comparison->getPriceTotal());
@@ -381,7 +382,7 @@ class ComparisonFilterDAMGetInstanceTest extends PHPUnit_Extensions_Database_Tes
 	}
 	
 	public function testGetInstance_NonExistent(){
-		$this->assertNull(ComparisonFilterDAM::getInstance(99, ComparisonFilter::FILTER_NONE, false));
+		$this->assertNull(ComparisonFilterDAM::getInstance(99, ComparisonFilter::FILTER_POSITIVES, false));
 	}
 }
 ?>
