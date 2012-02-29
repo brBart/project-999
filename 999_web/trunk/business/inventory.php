@@ -452,7 +452,7 @@ class ComparisonFilter extends Comparison{
 	 * @param integer $filterType
 	 * @param boolean $includePrices
 	 */
-	static function getInstance($id, $filterType = ComparisonFilter::FILTER_NONE, $includePrices = false){
+	static function getInstance($id, $filterType, $includePrices = false){
 		return ComparisonFilterDAM::getInstance($id, $filterType, $includePrices);
 	}
 }
