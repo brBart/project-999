@@ -49,19 +49,6 @@ class ComparisonDAM{
 	static public function insert($date, UserAccount $user, Count $count, $reason, $general){
 		return 123;
 	}
-	
-	/**
-	 * Returns true if the comparison exists.
-	 * 
-	 * @param integer $id
-	 * @return boolean
-	 */
-	static public function exists($id){
-		if($id == 123)
-			return true;
-		else
-			return false;
-	}
 }
 
 

@@ -17,7 +17,6 @@ class AppTests{
 		$ts->addTestSuite('CountDAMGetInstanceTest');
 		$ts->addTestSuite('ComparisonDAMInsertTest');
 		$ts->addTestSuite('ComparisonDAMGetInstanceTest');
-		$ts->addTestSuite('ComparisonDAMExistsTest');
 		$ts->addTestSuite('ComparisonFilterDAMGetInstanceTest');
 		PHPUnit_TextUI_TestRunner::run($ts);
 	}
