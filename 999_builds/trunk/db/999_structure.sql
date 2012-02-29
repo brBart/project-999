@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-02-2012 a las 13:20:30
+-- Tiempo de generación: 29-02-2012 a las 12:54:02
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -1939,13 +1939,27 @@ BEGIN
 
 END$$
 
-DROP PROCEDURE IF EXISTS `comparison_exists`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_exists`(IN inComparisonId INT)
+DROP PROCEDURE IF EXISTS `comparison_diferences_product_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_diferences_product_get`(IN inComparisonId INT)
 BEGIN
 
-  SELECT COUNT(*) FROM comparison
+  SELECT product_id, physical, system FROM comparison_product
 
-  WHERE comparison_id = inComparisonId;
+      WHERE comparison_id = inComparisonId AND physical != system
+
+      ORDER BY comparison_product_id;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `comparison_diferences_total_price_get`$$
+CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_diferences_total_price_get`(IN inComparisonId INT)
+BEGIN
+
+  SELECT SUM((com_pro.physical - com_pro.system) * pro.price)
+
+      FROM product pro INNER JOIN comparison_product com_pro ON pro.product_id = com_pro.product_id
+
+    WHERE comparison_id = inComparisonId AND com_pro.system != com_pro.physical;
 
 END$$
 
@@ -1955,14 +1969,6 @@ BEGIN
 
   IF inFilter = 0 THEN
 
-    SELECT user_account_username, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%s') AS created_date, reason, general, physical_total, system_total
-
-        FROM comparison
-
-      WHERE comparison_id = inComparisonId;
-
-  ELSEIF inFilter = 1 THEN
-
     SELECT com.user_account_username, DATE_FORMAT(com.date, '%d/%m/%Y %H:%i:%s') AS created_date, com.reason, com.general,
 
           SUM(com_pro.physical) AS physical_total, SUM(com_pro.system) AS system_total
@@ -1970,6 +1976,16 @@ BEGIN
         FROM comparison com INNER JOIN comparison_product com_pro ON com.comparison_id = com_pro.comparison_id
 
       WHERE com.comparison_id = inComparisonId AND com_pro.physical > com_pro.system GROUP BY com.comparison_id;
+
+  ELSEIF inFilter = 1 THEN
+
+    SELECT com.user_account_username, DATE_FORMAT(com.date, '%d/%m/%Y %H:%i:%s') AS created_date, com.reason, com.general,
+
+          SUM(com_pro.physical) AS physical_total, SUM(com_pro.system) AS system_total 
+
+        FROM comparison com INNER JOIN comparison_product com_pro ON com.comparison_id = com_pro.comparison_id
+
+      WHERE com.comparison_id = inComparisonId AND com_pro.physical < com_pro.system GROUP BY com.comparison_id;
 
   ELSEIF inFilter = 2 THEN
 
@@ -1979,7 +1995,7 @@ BEGIN
 
         FROM comparison com INNER JOIN comparison_product com_pro ON com.comparison_id = com_pro.comparison_id
 
-      WHERE com.comparison_id = inComparisonId AND com_pro.physical < com_pro.system GROUP BY com.comparison_id;
+      WHERE com.comparison_id = inComparisonId AND com_pro.physical != com_pro.system GROUP BY com.comparison_id;
 
   END IF;
 
@@ -2180,18 +2196,6 @@ BEGIN
 
 
   EXECUTE statement USING @p1, @p2, @p3, @p4;
-
-END$$
-
-DROP PROCEDURE IF EXISTS `comparison_total_price_get`$$
-CREATE DEFINER=`@db_user@`@`localhost` PROCEDURE `comparison_total_price_get`(IN inComparisonId INT)
-BEGIN
-
-  SELECT SUM((com_pro.physical - com_pro.system) * pro.price)
-
-      FROM product pro INNER JOIN comparison_product com_pro ON pro.product_id = com_pro.product_id
-
-    WHERE comparison_id = inComparisonId;
 
 END$$
 
