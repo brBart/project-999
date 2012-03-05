@@ -719,5 +719,19 @@ class ComparisonFilterTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals(123, $comparison->getId());
 		$this->assertEquals(ComparisonFilter::FILTER_NEGATIVES, $comparison->getFilterType());
 	}
+	
+	public function testGetInstance_BadIdTxt(){
+		try{
+			$comparison = ComparisonFilter::getInstance('sdf');
+		} catch(Exception $e){ return; }
+		$this->fail('Exception expected.');
+	}
+	
+	public function testGetInstance_BadIdNoPositive(){
+		try{
+			$comparison = ComparisonFilter::getInstance(0);
+		} catch(Exception $e){ return; }
+		$this->fail('Exception expected.');
+	}
 }
 ?>
