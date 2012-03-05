@@ -27,6 +27,6 @@
 		    	</form>
 	    	</div>
 	    </li>
-	    <li id="li_last"><a href="index.php?cmd=show_get_comparison_filter_form" onclick="return oSession.setIsLink(true);">Filtrar Comparaci&oacute;n</a></li>
+	    <li id="li_last"><a href="index.php?cmd=get_comparison_filter" onclick="return oSession.setIsLink(true);">Filtrar Comparaci&oacute;n</a></li>
 	</ul>
 </div>
