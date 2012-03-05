@@ -443,6 +443,7 @@ class ComparisonFilter extends Comparison{
 	 * @param boolean $includePrices
 	 */
 	static function getInstance($id, $filterType, $includePrices = false){
+		Number::validatePositiveNumber($id, 'N&uacute;mero inv&aacute;lido.');
 		return ComparisonFilterDAM::getInstance($id, $filterType, $includePrices);
 	}
 }
