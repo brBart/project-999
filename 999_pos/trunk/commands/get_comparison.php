@@ -69,7 +69,7 @@ class GetComparisonCommand extends GetObjectCommand{
 		$forward_link = 'index.php?cmd=get_comparison';
 		$forward_link .= (is_null($backQuery)) ? '' : '&last_cmd=' . $backQuery['cmd'] . '&page=' .
 				$backQuery['page'] . '&start_date=' . $this->_mRequest->getProperty('start_date') .
-				'&end_date=' . $this->_mRequest->getProperty('end_date');;
+				'&end_date=' . $this->_mRequest->getProperty('end_date');
 				
 		$user = $obj->getUser();
 		
