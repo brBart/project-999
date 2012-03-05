@@ -137,6 +137,10 @@ function __autoload($className){
 			require_once('business/cash.php');
 			break;
 			
+		case 'ComparisonFilter':
+			require_once('business/inventory.php');
+			break;
+			
 		default:
 	}
 }
