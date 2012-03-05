@@ -47,10 +47,7 @@ class GetComparisonCommand extends GetObjectCommand{
 		
 		Page::display(array('module_title' => INVENTORY_TITLE, 'main_menu' => 'main_menu_inventory_html.tpl',
 				'back_trace' => $back_trace, 'second_menu' => 'inventory_menu_html.tpl',
-				'content' => 'document_menu_html.tpl', 'document_name' => 'Comparaci&oacute;n',
-				'create_link' => 'index.php?cmd=show_create_comparison_form',
-				'get_link' => 'index.php?cmd=get_comparison',
-				'search_link' => 'index.php?cmd=search_comparison&page=1', 'notify' => '1', 'type' => 'error',
+				'content' => 'comparison_menu_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'id' => $id), 'site_html.tpl');
 	}
 	
