@@ -8,7 +8,7 @@
 <script type="text/javascript" src="../scripts/comparison_page.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console('console');
-	var oMachine = new StateMachine({$status});
+	var oMachine = new StateMachine('1');
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
 	oEventDelegator.init();
@@ -31,14 +31,17 @@
 			</p>
 			<p>
 				<label>Incluye precios:</label>
-				<input name="include_prices" id="include_prices" type="checkbox"
-			  				checked="checked" disabled="disabled" />
+				<span>{if $include_prices eq '1'}Si{else}No{/if}</span>
 			</p>
 		</fieldset>
 		<fieldset id="main_data">
 		  	<p>
 		  		<label>Comparaci&oacute;n No:</label>
-		  		<span>{$comparison_id}</span>
+		  		<span>{$id}</span>
+		  	</p>
+		  	<p>
+		  		<label>Fecha:</label>
+		  		<span>{$date_time}</span>
 		  	</p>
 			<p>
 		  		<label>Motivo:</label>
@@ -49,10 +52,8 @@
 		  		<input name="form_widget" id="general" type="checkbox"
 		  				checked="checked" disabled="disabled" />
 		  	</p>
-		  	{if $status eq 1}
-		  		<p>&nbsp;</p>
-		  		<div id="details" class="items"></div>
-		  	{/if}
+	  		<p>&nbsp;</p>
+	  		<div id="details" class="items"></div>
 		</fieldset>
 		<fieldset id="controls">
 		  	<input name="form_widget" id="print" type="button" value="Imprimir"
