@@ -24,7 +24,25 @@
 	         	</xsl:element>
 	       	</thead>
 	       	<tbody>
-		  		<xsl:call-template name="body" />
+	       		<xsl:choose>
+	       			<xsl:when test="response/params/total_items > 0">
+		  				<xsl:call-template name="body" />
+		  			</xsl:when>
+		  			<xsl:otherwise>
+		  				<xsl:choose>
+		  					<xsl:when test="response/params/include_prices = 1">
+				  				<tr>
+					       			<td colspan="9"></td>
+					       		</tr>
+					       	</xsl:when>
+				       		<xsl:otherwise>
+				       			<tr>
+					       			<td colspan="7"></td>
+					       		</tr>
+				       		</xsl:otherwise>
+		  				</xsl:choose>
+		  			</xsl:otherwise>
+		  		</xsl:choose>
 	       	</tbody>
 	       	<tfoot>
 	       		<tr>
