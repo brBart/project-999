@@ -497,7 +497,12 @@ INSERT INTO `role_subject_action` (`role_id`, `subject_id`, `action_id`, `value`
 (2, 44, 6, 1),
 (3, 44, 6, 1),
 (4, 44, 6, 0),
-(5, 44, 6, 1)$$
+(5, 44, 6, 1),
+(1, 45, 6, 1),
+(2, 45, 6, 1),
+(3, 45, 6, 0),
+(4, 45, 6, 0),
+(5, 45, 6, 0)$$
 
 --
 -- Volcar la base de datos para la tabla `root`
@@ -573,7 +578,8 @@ INSERT INTO `subject` (`subject_id`, `name`) VALUES
 (41, 'resolution_log'),
 (42, 'sales_summary_product_report'),
 (43, 'sales_summary_user_account_report'),
-(44, 'purchases_summary_product_report')$$
+(44, 'purchases_summary_product_report'),
+(45, 'comparison_filter_prices')$$
 
 --
 -- Volcar la base de datos para la tabla `supplier`
