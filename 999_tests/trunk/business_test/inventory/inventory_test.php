@@ -714,6 +714,30 @@ class ComparisonFilterTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals('+85.90', $comparison->getPriceTotal());
 	}
 	
+	public function testConstructor_Defaults(){
+		$user = UserAccount::getInstance('roboli');
+		$details[] = 'uno';
+		$comparison = new ComparisonFilter(321, '05/05/2009 12:00:00', $user, 'simon', true, $details, 100, 95, ComparisonFilter::FILTER_DIFERENCES);
+		$this->assertEquals(321, $comparison->getId());
+		$this->assertEquals('05/05/2009 12:00:00', $comparison->getDateTime());
+		$this->assertEquals($user, $comparison->getUser());
+		$this->assertEquals('simon', $comparison->getReason());
+		$this->assertTrue($comparison->isGeneral());
+		$this->assertEquals(1, count($comparison->getDetails()));
+		$this->assertEquals(100, $comparison->getPhysicalTotal());
+		$this->assertEquals(95, $comparison->getSystemTotal());
+		$this->assertEquals('+5', $comparison->getTotalDiference());
+		$this->assertEquals(ComparisonFilter::FILTER_DIFERENCES, $comparison->getFilterType());
+		$this->assertFalse($comparison->includePrices());
+		$this->assertEquals('0.00', $comparison->getPriceTotal());
+	}
+	
+	public function testConstructor_EmptyDetails(){
+		$user = UserAccount::getInstance('roboli');
+		$details = array();
+		$comparison = new ComparisonFilter(321, '05/05/2009 12:00:00', $user, 'simon', true, $details, 100, 95, ComparisonFilter::FILTER_DIFERENCES, true, 85.9);
+	}
+	
 	public function testGetInstance(){
 		$comparison = ComparisonFilter::getInstance(123, ComparisonFilter::FILTER_NEGATIVES);
 		$this->assertEquals(123, $comparison->getId());
