@@ -105,7 +105,7 @@ class GetComparisonFilterCommand extends Command{
 				'back_trace' => $back_trace, 'second_menu' => 'none',
 				'content' => 'comparison_filter_request_form_html.tpl', 'notify' => '1', 'type' => 'error',
 				'message' => $msg, 'comparison_id' => $comparisonId, 'filter_type' => $filterType,
-				'include_price' => (int)$includePrices), 'site_html.tpl');
+				'include_prices' => (int)$includePrices), 'site_html.tpl');
 	}
 }
 ?>
