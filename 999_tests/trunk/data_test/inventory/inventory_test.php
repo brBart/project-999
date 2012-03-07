@@ -362,6 +362,23 @@ class ComparisonFilterDAMGetInstanceTest extends PHPUnit_Extensions_Database_Tes
 		$this->assertEquals(new ComparisonFilterDetail(ProductDAM::getInstance(30), 5, 74), $details[2]);
 	}
 	
+	public function testGetInstance_NoDetails(){
+		$user = UserAccountDAM::getInstance('roboli');
+		$comparison = ComparisonFilterDAM::getInstance(3, ComparisonFilter::FILTER_POSITIVES, true);
+		
+		$this->assertEquals(3, $comparison->getId());
+		$this->assertEquals($user, $comparison->getUser());
+		$this->assertEquals('20/08/2010 13:00:00', $comparison->getDateTime());
+		$this->assertEquals('Hoy no mas!', $comparison->getReason());
+		$this->assertTrue($comparison->isGeneral());
+		$this->assertEquals(0, $comparison->getPhysicalTotal());
+		$this->assertEquals(0, $comparison->getSystemTotal());
+		$this->assertTrue($comparison->includePrices());
+		$this->assertEquals('0.00', $comparison->getPriceTotal());
+		
+		$this->assertEquals(0, count($comparison->getDetails()));
+	}
+	
 	public function testGetInstance_NonExistent(){
 		$this->assertNull(ComparisonFilterDAM::getInstance(99, ComparisonFilter::FILTER_POSITIVES, false));
 	}

@@ -28,6 +28,16 @@
 			<value>59</value>
 			<value>126</value>
 		</row>
+		
+		<row>
+			<value>3</value>
+			<value>roboli</value>
+			<value>2010-08-20 13:00:00</value>
+			<value>Hoy no mas!</value>
+			<value>1</value>
+			<value>5</value>
+			<value>6</value>
+		</row>
 	</table>
 	
 	<table name="comparison_product">
@@ -139,6 +149,14 @@
 			<value>3</value>
 			<value>5</value>
 			<value>5</value>
+		</row>
+		
+		<row>
+			<value>14</value>
+			<value>3</value>
+			<value>3</value>
+			<value>5</value>
+			<value>6</value>
 		</row>
 	</table>
 	
