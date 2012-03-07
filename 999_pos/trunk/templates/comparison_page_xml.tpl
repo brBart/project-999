@@ -17,6 +17,9 @@ header('Content-Type: text/xml');
 		<physical_total>{$physical_total}</physical_total>
 		<system_total>{$system_total}</system_total>
 		<total_diference>{$total_diference}</total_diference>
+		{if $comparison_filter eq '1'}
+		<price_total>{$price_total}</price_total>
+		{/if}
 	</params>
 	<grid>
 		{section name=i loop=$details}
@@ -29,6 +32,10 @@ header('Content-Type: text/xml');
 			<physical>{$details[i].physical}</physical>
 			<system>{$details[i].system}</system>
 			<diference>{$details[i].diference}</diference>
+			{if $comparison_filter eq '1' && $include_prices eq '1'}
+			<price>{$details[i].price|nf:2}</price>
+			<total>{$details[i].total|nf:2}</total>
+			{/if}
 		</row>
 		{/section}
 	</grid>

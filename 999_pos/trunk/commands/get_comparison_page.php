@@ -61,11 +61,23 @@ class GetComparisonPageCommand extends Command{
 		$previous_page = ($page <= 1) ? '' : $page - 1;
 		$next_page = ($page == $total_pages) ? '' : $page + 1;
 		
-		Page::display(array('details' => $details, 'page' => $page, 'total_pages' => $total_pages,
+		$params = array('details' => $details, 'page' => $page, 'total_pages' => $total_pages,
 				'total_items' => $total_items, 'first_item' => $first_item, 'last_item' => $last_item,
 				'previous_page' => $previous_page, 'next_page' => $next_page, 'page_items' => $page_items,
 				'physical_total' => $obj->getPhysicalTotal(), 'system_total' => $obj->getSystemTotal(),
-				'total_diference' => $obj->getTotalDiference()), 'comparison_page_xml.tpl');
+				'total_diference' => $obj->getTotalDiference());
+		
+		$params = array_merge($params, $this->getObjectParams($obj));
+		
+		Page::display($params, 'comparison_page_xml.tpl');
+	}
+	
+	/**
+	 * Returns the params to display for the object.
+	 * @param variant $obj
+	 */
+	protected function getObjectParams($obj){
+		return array();
 	}
 }
 ?>

@@ -1,18 +1,17 @@
 {* Smarty *}
-{* status = 0 Edit, status = 1 Idle, status = 2 Cancelled *}
 <script type="text/javascript" src="../scripts/core_libs.js"></script>
 <script type="text/javascript" src="../scripts/form_libs.js"></script>
 <script type="text/javascript" src="../scripts/event_delegator.js"></script>
 <script type="text/javascript" src="../scripts/details.js"></script>
 <script type="text/javascript" src="../scripts/object_page.js"></script>
-<script type="text/javascript" src="../scripts/comparison_page.js"></script>
+<script type="text/javascript" src="../scripts/comparison_filter_page.js"></script>
 <script type="text/javascript">
 	var oConsole = new Console('console');
 	var oMachine = new StateMachine('1');
 	var oRemoveObject = new RemoveSessionObjectCommand(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key});
 	var oEventDelegator = new EventDelegator();
 	oEventDelegator.init();
-	var oDetails = new ComparisonPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
+	var oDetails = new ComparisonFilterPage(oSession, oConsole, Request.createXmlHttpRequestObject(), {$key}, oMachine, oEventDelegator);
 	{literal}
 	window.onunload = function(){
 		oRemoveObject.execute();
@@ -62,6 +61,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-oDetails.init('../xsl/comparison_page.xsl', 'details', 'oDetails');
+oDetails.init('../xsl/comparison_filter_page.xsl', 'details', 'oDetails');
 oDetails.getLastPage();
 </script>
