@@ -21,8 +21,7 @@ class GetComparisonFilterPageCommand extends GetComparisonPageCommand{
 	 * @param variant $obj
 	 */
 	protected function getObjectParams($obj){
-		return array('comparison_filter' => '1', 'price_total' => $obj->getPriceTotal(),
-				'include_prices' => (int)$obj->includePrices());
+		return array('price_total' => $obj->getPriceTotal(), 'include_prices' => (int)$obj->includePrices());
 	}
 }
 ?>

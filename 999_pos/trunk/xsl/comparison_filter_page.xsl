@@ -89,8 +89,10 @@
 	       		<td class="total_col"><xsl:value-of select="physical" /></td>
 	       		<td class="total_col"><xsl:value-of select="system" /></td>
 	       		<td class="total_col"><xsl:value-of select="diference" /></td>
-	       		<xsl:if test="response/params/include_prices = 1">
+	       		<xsl:if test="price != ''">
 	       		<td><xsl:value-of select="price" /></td>
+	       		</xsl:if>
+	       		<xsl:if test="total != ''">
 	       		<td class="total_col"><xsl:value-of select="total" /></td>
 	       		</xsl:if>
 			</xsl:element>
