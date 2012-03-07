@@ -128,7 +128,7 @@ class Comparison implements Itemized{
 	 *
 	 * @var integer
 	 */
-	private $_mId;
+	protected $_mId;
 	
 	/**
 	 * Holds the comparison's creation date.
@@ -136,49 +136,49 @@ class Comparison implements Itemized{
 	 * Date and time format: 'dd/mm/yyyy hh:mm:ss'.
 	 * @var string
 	 */
-	private $_mDateTime;
+	protected $_mDateTime;
 	
 	/**
 	 * Holds the user who created the comparison.
 	 *
 	 * @var UserAccount
 	 */
-	private $_mUser;
+	protected $_mUser;
 	
 	/**
 	 * Holds the reason of why the creation of the comparison.
 	 *
 	 * @var string
 	 */
-	private $_mReason;
+	protected $_mReason;
 	
 	/**
 	 * Holds the flag that indicates if the comparison was made against the whole inventory.
 	 *
 	 * @var boolean
 	 */
-	private $_mGeneral;
+	protected $_mGeneral;
 	
 	/**
 	 * Holds the comparison details.
 	 *
 	 * @var array<ComparisonDetail>
 	 */
-	private $_mDetails;
+	protected $_mDetails;
 	
 	/**
 	 * Holds the sum of all the physical quantities.
 	 *
 	 * @var integer
 	 */
-	private $_mPhysicalTotal;
+	protected $_mPhysicalTotal;
 	
 	/**
 	 * Holds the sum of all the system quantities.
 	 *
 	 * @var integer
 	 */
-	private $_mSystemTotal;
+	protected $_mSystemTotal;
 	
 	/**
 	 * Constructs the comparison with the provided data.
@@ -391,7 +391,26 @@ class ComparisonFilter extends Comparison{
 	 */
 	public function __construct($id, $dateTime, UserAccount $user, $reason, $general, $details, $physical, $system,
 			$filterType, $includePrices = false, $priceTotal = 0.0){
-		parent::__construct($id, $dateTime, $user, $reason, $general, $details, $physical, $system);
+		try{
+			Number::validatePositiveNumber($id, 'Id inv&aacute;lido.');
+			Date::validateDateTime($dateTime, 'Fecha y hora inv&aacute;lida.');
+			String::validateString($reason, 'Motivo inv&aacute;lido.');
+			Number::validateUnsignedInteger($physical, 'Total fisico inv&aacute;lido.');
+			Number::validateUnsignedInteger($system, 'Total del sistema inv&aacute;lido.');
+		} catch(Exception $e){
+			$et = new Exception('Interno: Llamando al metodo construct en ComparisonFilter con datos erroneos! ' .
+					$e->getMessage());
+			throw $et;
+		}
+		
+		$this->_mId = $id;
+		$this->_mDateTime = $dateTime;
+		$this->_mUser = $user;
+		$this->_mReason = $reason;
+		$this->_mGeneral = (boolean)$general;
+		$this->_mDetails = $details;
+		$this->_mPhysicalTotal = $physical;
+		$this->_mSystemTotal = $system;
 		
 		$this->_mFilterDateTime = date('d/m/Y H:i:s');
 		$this->_mFilterType = $filterType;
