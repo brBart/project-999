@@ -32,25 +32,25 @@ class ComparisonDetail{
 	protected $_mProduct;
 	
 	/**
+	 * Holds the diference between the physical and system quantities.
+	 * 
+	 * @var integer
+	 */
+	protected $_mDiference;
+	
+	/**
 	 * Holds the physical quantity of the product.
 	 *
 	 * @var integer
 	 */
-	protected $_mPhysical;
+	private $_mPhysical;
 	
 	/**
 	 * Holds the system's quantity of the product.
 	 *
 	 * @var integer
 	 */
-	protected $_mSystem;
-	
-	/**
-	 * Holds the diference between the physical and system quantities.
-	 * 
-	 * @var integer
-	 */
-	protected $_mDiference;
+	private $_mSystem;
 	
 	/**
 	 * Constructs the detail with the provided data.
