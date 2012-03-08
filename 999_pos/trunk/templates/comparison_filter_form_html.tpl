@@ -23,10 +23,10 @@
 		{include file='status_bar_doc_html.tpl' status='1'}
 		<fieldset id="header_data">
 			<p>
-				<label>Filtro:</label><span id="document_id">{$filter_name}</span>
+				<label>Filtro:</label><span>{$filter_name}</span>
 			</p>
 			<p>
-				<label>Fecha:</label><span id="date_time">{$filter_date_time}</span>
+				<label>Fecha:</label><span>{$filter_date_time}</span>
 			</p>
 			<p>
 				<label>Incluye precios:</label>
@@ -56,7 +56,7 @@
 		</fieldset>
 		<fieldset id="controls">
 		  	<input name="form_widget" id="print" type="button" value="Imprimir"
-  				onclick="window.open('index.php?cmd=print_comparison&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+  				onclick="window.open('index.php?cmd=print_comparison_filter&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
 		</fieldset>
 	</div>
 </div>
