@@ -57,6 +57,8 @@
 		<fieldset id="controls">
 		  	<input name="form_widget" id="print" type="button" value="Imprimir"
   				onclick="window.open('index.php?cmd=print_comparison_filter&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
+  			<input name="form_widget" id="print_template" type="button" value="Imprimir selectivo"
+  				onclick="window.open('index.php?cmd=print_comparison_filter_counting_template&key={$key}', '', 'left=0,top=0,width=' + (screen.availWidth - 50) + ',height=' + (screen.availHeight - 100) + ',menubar=0,toolbar=0,resizable=0,scrollbars=1');" />
 		</fieldset>
 	</div>
 </div>
