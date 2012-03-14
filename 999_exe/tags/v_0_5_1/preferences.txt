@@ -1,0 +1,18 @@
+# Direccion del servidor donde los comandos se ejecutaran.
+# Ej: direccion_servidor/ruta/al/directorio/pos/
+commands_address = 127.0.0.1/@alias_dir@/pos/
+
+# Direccion del servidor de donde los archivos xsl se descargaran.
+# Ej: direccion_servidor/ruta/al/directorio/xsl/
+xsl_address = 127.0.0.1/@alias_dir@/xsl/
+
+# Direccion del servidor donde estan los archivos de documentacion.
+# Ej: direccion_servidor/ruta/al/directorio/documentacion/
+help_address = 127.0.0.1/@help_alias@/
+
+# Nombre de la impresora que se va usar.
+# Ej: Epson TM-U220 Receipt
+printer_name = @printer_name@
+
+# Si la impresora a usar es una Epson TM-U220 (true o false).
+is_tmu_printer = @is_tmu_printer@

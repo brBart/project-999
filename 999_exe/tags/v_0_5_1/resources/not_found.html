@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+body {
+	font-size: 10px;
+}
+
+h1 {
+	font-size: 1.8em;
+}
+
+.error {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	background-color: #FFB5B5;
+}
+
+.console_display {
+	height: 5em;
+	padding: 0;
+	overflow: auto;
+}
+
+.console_display p {
+	width: 60%;
+	margin: 1em auto;
+	padding: 0.5em 0.5em 0.5em 2em;
+}
+</style>
+</head>
+<body>
+	<h1></h1>
+	<div id="console" class="console_display">
+		<p class="error">
+			Servidor no se encuentra. Verifique que la direcci&oacute;n ingresada
+			sea la correcta o que el servidor este en linea.
+		</p>
+	</div>
+	<input name="close" type="button" value="Salir" onclick="mainWindow.close();" />
+</body>
+</html>
