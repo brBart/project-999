@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = bobs_pos_0_5_0
+TARGET = bobs_pos_0_5_1
 QT += core \
     gui \
     xml \
