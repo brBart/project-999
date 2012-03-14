@@ -250,6 +250,7 @@
 					<filterchain>
 						<replacetokens>
 							<token key="alias_dir" value="${alias}" />
+							<token key="help_alias" value="help_${alias}" />
 							<token key="printer_name" value="${printer_name}" />
 							<token key="is_tmu_printer" value="false" />
 						</replacetokens>
