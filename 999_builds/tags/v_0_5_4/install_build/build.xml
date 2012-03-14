@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="install_database">
+		<echo>Recolectando informacion para instalar la base de datos...</echo>
+		
+		<input message="Ingrese el DSN del servidor"
+			   defaultValue="localhost"
+			   propertyName="db_server"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre del usuario para conectarse"
+			   propertyName="db_install_user"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el password"
+			   propertyName="db_install_password"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre que desea asignarle a la base de datos"
+			   defaultValue="bobs_store"
+			   propertyName="db_database"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre que desea asignarle al usuario con que Bobs se conectara a la base de datos"
+			   defaultValue="bobs_user"
+			   propertyName="db_user"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el password"
+			   defaultValue="r5obu999es_db"
+			   propertyName="db_password"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre de la empresa en donde el Bobs sera instalado"
+			   propertyName="company_name"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nit de la empresa"
+			   propertyName="nit"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la razon social de la empresa"
+			   propertyName="corporate_name"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el telefono de la empresa"
+			   propertyName="telephone"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la direccion de la empresa"
+			   propertyName="address"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el nombre de la bodega"
+			   propertyName="warehouse_name"
+			   promptChar=" >" />
+			   
+		<echo>Instalando la base de datos...</echo>
+		
+		<copy todir="tmp">
+			<fileset dir="db">
+				<exclude name="truncate_data.sql" />
+				<exclude name="uninstall_base_and_user.sql" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="db_password" value="${db_password}" />
+					<token key="nit" value="${nit}" />
+					<token key="company_name" value="${company_name}" />
+					<token key="corporate_name" value="${corporate_name}" />
+					<token key="telephone" value="${telephone}" />
+					<token key="address" value="${address}" />
+					<token key="warehouse_name" value="${warehouse_name}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		
+		<pdosqlexec url="mysql:host=${db_server}" userid="${db_install_user}" password="${db_install_password}" delimiter="$$">
+			<filelist dir="tmp/" files="create_base_and_user.sql,999_structure.sql,999_data.sql"/>
+		</pdosqlexec>
+	</target>
+	
+	<target name="create_directories" depends="install_database">
+		<input message="Ingrese la ruta donde desea que se instale Bobs"
+			   defaultValue="C:\Bobs"
+			   propertyName="install_dir"
+			   promptChar=" >" />
+			   
+		<mkdir dir="${install_dir}" />
+	</target>
+
+	<target name="install_middle" depends="create_directories">
+		<echo>Instalando las librerias (middle)...</echo>
+		
+		<copy todir="${install_dir}/middle">
+			<fileset dir="middle" />
+		</copy>
+	</target>
+	
+	<target name="configure_httpdconf" depends="install_middle">
+		<input message="Ingrese la ruta donde se encuentra httpd.conf"
+			   defaultValue="C:\xampp\apache\conf"
+			   propertyName="httpdconf_dir"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese el alias que Bobs utilizara en el servidor web"
+			   defaultValue="bobs"
+			   propertyName="alias"
+			   promptChar=" >" />
+			   
+		<append destFile="${httpdconf_dir}/httpd.conf" file="conf.httpd">
+			<filterchain>
+				<headfilter lines="4" />
+			</filterchain>
+		</append>
+		
+		<php function="rtrim" returnProperty="fixed_install_dir">
+			<param value="${install_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_install_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_install_dir}"/>
+		</php>
+			   
+		<copy file="conf.httpd" tofile="${httpdconf_dir}/extra/httpd-bobs.conf">
+			<filterchain>
+				<tailfilter lines="25" />
+				<replacetokens>
+					<token key="alias" value="${alias}" />
+					<token key="help_alias" value="help_${alias}" />
+					<token key="install_dir" value="${fixed_install_dir}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+	
+	<target name="install_front" depends="configure_httpdconf">
+		<echo>Instalando los archivos web (front)...</echo>
+		
+		<input message="Ingrese la ruta donde se encuentran las librerias de Smarty"
+			   propertyName="smarty_dir"
+			   promptChar=" >" />
+			   
+		<input message="Ingrese la ruta donde se encuentran los ejecutables de MySQL"
+			   defaultValue="C:\xampp\mysql\bin"
+			   propertyName="mysql_dir"
+			   promptChar=" >" />
+		
+		<copy todir="${install_dir}/front">
+			<fileset dir="front">
+				<exclude name="config/config.php" />
+			</fileset>
+		</copy>
+		
+		<php function="rtrim" returnProperty="fixed_smarty_dir">
+			<param value="${smarty_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_smarty_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_smarty_dir}"/>
+		</php>
+		
+		<php function="rtrim" returnProperty="fixed_mysql_dir">
+			<param value="${mysql_dir}"/>
+			<param value="\"/>
+		</php>
+		
+		<php function="str_replace" returnProperty="fixed_mysql_dir">
+			<param value="\"/>
+			<param value="/"/>
+			<param value="${fixed_mysql_dir}"/>
+		</php>
+		
+		<copy file="front/config/config.php" tofile="${install_dir}/front/config/config.php">
+			<filterchain>
+				<replacetokens>
+					<token key="libs_dir" value="${fixed_install_dir}/middle/" />
+					<token key="smarty_dir" value="${fixed_smarty_dir}/" />
+					<token key="help_alias" value="help_${alias}" />
+					<token key="mysql_dir" value="${fixed_mysql_dir}/" />
+					<token key="db_server" value="${db_server}" />
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="db_password" value="${db_password}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		
+		<mkdir dir="${install_dir}/front/backup" />
+		<mkdir dir="${install_dir}/front/sales_ledger" />
+		<mkdir dir="${install_dir}/front/templates_c" />
+	</target>
+	
+	<target name="install_pos" depends="install_front">
+		<echo>Instalando el POS...</echo>
+		
+		<input message="Ingrese la ruta donde desea que se instale el POS"
+			   defaultValue="${install_dir}\pos"
+			   propertyName="pos_install_dir"
+			   promptChar=" >" />
+			   
+		<mkdir dir="${pos_install_dir}" />
+		
+		<copy todir="${pos_install_dir}/">
+			<fileset dir="pos">
+				<exclude name="preferences.txt" />
+			</fileset>
+		</copy>
+		
+		<input message="Ingrese el nombre de la impresora que POS va utilizar"
+			   defaultValue="Epson TM-U220 Receipt"
+			   propertyName="printer_name"
+			   promptChar=" >" />
+			   
+		<input message="Es esta impresora una Epson TM-U?"
+			   defaultValue="si"
+			   propertyName="is_tmu_printer"
+			   validArgs="si,no"
+			   promptChar=" >" />
+		
+		<!-- Had to do it this way because "yes" transform to boolean value -->
+		<if>
+			<equals arg1="${is_tmu_printer}" arg2="si" />
+			<then>
+			
+				<copy file="pos/preferences.txt" tofile="${pos_install_dir}/preferences.txt">
+					<filterchain>
+						<replacetokens>
+							<token key="alias_dir" value="${alias}" />
+							<token key="help_alias" value="help_${alias}" />
+							<token key="printer_name" value="${printer_name}" />
+							<token key="is_tmu_printer" value="true" />
+						</replacetokens>
+					</filterchain>
+				</copy>
+				
+			</then>
+			<else>
+			
+				<copy file="pos/preferences.txt" tofile="${pos_install_dir}/preferences.txt">
+					<filterchain>
+						<replacetokens>
+							<token key="alias_dir" value="${alias}" />
+							<token key="help_alias" value="help_${alias}" />
+							<token key="printer_name" value="${printer_name}" />
+							<token key="is_tmu_printer" value="false" />
+						</replacetokens>
+					</filterchain>
+				</copy>
+			
+			</else>
+		</if>
+		
+		
+	</target>
+	
+	<target name="install_help" depends="install_pos">
+		<echo>Instalando los archivos para el soporte (help)...</echo>
+	
+		<copy todir="${install_dir}/help">
+			<fileset dir="help" />
+		</copy>
+	</target>
+	
+	<target name="copy_version" depends="install_help">
+		<copy file="version.txt" tofile="${install_dir}/version.txt" />
+	</target>
+	
+	
+	<target name="install_uninstall" depends="copy_version">
+		<echo>Instalando los archivos necesarios para la desinstalacion...</echo>
+		
+		<copy todir="${install_dir}/uninstall">
+			<fileset dir="uninstall">
+				<include name="build.xml" />
+			</fileset>
+			<fileset dir="db">
+				<include name="uninstall_base_and_user.sql" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="httpdconf_dir" value="${httpdconf_dir}" />
+					<token key="db_server" value="${db_server}" />
+					<token key="db_database" value="${db_database}" />
+					<token key="db_user" value="${db_user}" />
+					<token key="install_dir" value="${install_dir}" />
+					<token key="pos_install_dir" value="${pos_install_dir}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+	
+	<target name="main" depends="install_uninstall">
+		<echo>INSTALACION TERMINADA. REINICIE EL SERVIDOR WEB Y ENTRE A http:://localhost/${alias}</echo>
+	</target>
+	
+	<target name="clean">
+		<delete dir="tmp" verbose="true" />
+	</target>
+</project>
