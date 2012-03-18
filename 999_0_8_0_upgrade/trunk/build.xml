@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bobs_retail" default="main">
+	<target name="check_version">
+		<input message="Ingrese la ruta donde esta instalado Bobs"
+					   propertyName="bobs_dir"
+					   promptChar=" >" />
+		
+		<property file="${bobs_dir}/version.txt" />
+		
+		<if>
+			<not><equals arg1="${bobs_version}" arg2="0.7.0" /></not>
+			<then>
+				<fail message="VERSION DE BOBS DEBE SER 0.7.0" />
+			</then>
+		</if>
+	</target>
+	
+	<target name="update_middle" depends="update_database">
+		<echo>Actualizando las librerias (middle)...</echo>
+		
+		<copy todir="${bobs_dir}/middle/business" overwrite="true">
+			<fileset dir="files/middle/business" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/middle/data" overwrite="true">
+			<fileset dir="files/middle/data" />
+		</copy>
+	</target>
+	
+	<target name="update_front" depends="update_middle">
+		<echo>Actualizando los archivos web (front)...</echo>
+		
+		<reflexive file="${bobs_dir}/front/config/config.php">
+			<filterchain>
+				<replaceregexp>
+					<regexp pattern="\?>" replace="" />
+				</replaceregexp>
+			</filterchain>
+		</reflexive>
+		
+		<append destFile="${bobs_dir}/front/config/config.php" file="files/front/config/config.php" />
+		
+		<copy file="files/front/config/site.conf" tofile="${bobs_dir}/front/config/site.conf" overwrite="true" />
+		
+		<delete file="${bobs_dir/front/templates/bonus_created_list_html.tpl}" />
+		
+		<delete file="${bobs_dir/front/templates/bonus_created_list_print_html.tpl}" />
+		
+		<copy todir="${bobs_dir}/front/commands" overwrite="true">
+			<fileset dir="files/front/commands" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/include" overwrite="true">
+			<fileset dir="files/front/include" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/scripts" overwrite="true">
+			<fileset dir="files/front/scripts" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/styles" overwrite="true">
+			<fileset dir="files/front/styles" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/templates" overwrite="true">
+			<fileset dir="files/front/templates" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/front/xsl" overwrite="true">
+			<fileset dir="files/front/xsl" />
+		</copy>
+	</target>
+</project>
