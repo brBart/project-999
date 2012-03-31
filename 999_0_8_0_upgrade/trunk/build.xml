@@ -16,6 +16,9 @@
 		</if>
 	</target>
 	
+	<target name="update_database" depends="check_version">
+	</target>
+	
 	<target name="update_middle" depends="update_database">
 		<echo>Actualizando las librerias (middle)...</echo>
 		
@@ -78,5 +81,12 @@
 		<xmlproperty file="tmp.xml" />
 		
 		<copy file="files/pos/bobs_pos.exe" tofile="${root.pos_dir}/bobs_pos.exe" overwrite="true" />
+	</target>
+	
+	<target name="main" depends="update_pos">
+	</target>
+	
+	<target name="clean">
+		<delete file="tmp.xml" verbose="true" />
 	</target>
 </project>
