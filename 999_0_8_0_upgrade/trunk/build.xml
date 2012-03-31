@@ -71,4 +71,12 @@
 			<fileset dir="files/front/xsl" />
 		</copy>
 	</target>
+	
+	<target name="update_pos" depends="update_front">
+		<xslt style="files/pos/get_property.xsl" file="${bobs_dir}/uninstall/build.xml" tofile="tmp.xml" />
+		
+		<xmlproperty file="tmp.xml" />
+		
+		<copy file="files/pos/bobs_pos.exe" tofile="${root.pos_dir}/bobs_pos.exe" overwrite="true" />
+	</target>
 </project>
