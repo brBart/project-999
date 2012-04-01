@@ -83,7 +83,24 @@
 		<copy file="files/pos/bobs_pos.exe" tofile="${root.pos_dir}/bobs_pos.exe" overwrite="true" />
 	</target>
 	
-	<target name="main" depends="update_pos">
+	<target name="update_help" depends="update_pos">
+		<copy todir="${bobs_dir}/help/WebContent/images" overwrite="true">
+			<fileset dir="files/help/WebContent/images" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/help/WebContent/styles" overwrite="true">
+			<fileset dir="files/help/WebContent/styles" />
+		</copy>
+		
+		<copy todir="${bobs_dir}/help/WebContent" overwrite="true">
+			<fileset dir="files/help/WebContent">
+				<exclude name="images/" />
+				<exclude name="styles/" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="main" depends="update_help">
 	</target>
 	
 	<target name="clean">
