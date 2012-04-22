@@ -1,0 +1,10 @@
+REQUERIMIENTOS:
+
+1. BOBS 0.7.0
+
+INSTRUCCIONES:
+
+Para INSTALAR se utiliza la herramienta Phing. Abra la consola DOS e ingrese a la
+carpeta donde estan los archivos de actualizacion. Ejecute: phing.
+
+No es posible revertir los efectos una vez se haya terminado la actualizacion!
