@@ -143,10 +143,16 @@
 		</copy>
 	</target>
 	
-	<target name="main" depends="update_help">
+	<target name="copy_version" depends="update_help">
+		<copy file="version.txt" tofile="${bobs_dir}/version.txt" overwrite="true" />
+	</target>
+	
+	<target name="main" depends="copy_version">
+		<echo>ACTUALIZACION TERMINADA.</echo>
 	</target>
 	
 	<target name="clean">
+		<delete dir="tmp" verbose="true" />
 		<delete file="tmp.xml" verbose="true" />
 	</target>
 </project>
