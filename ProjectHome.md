@@ -1,0 +1,1 @@
+Manage your store's inventory with a easy to use module developed in PHP. And keep control of your daily sales with a practical, light weight POS developed in Qt.
